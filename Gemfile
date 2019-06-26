@@ -13,6 +13,10 @@ gem 'uglifier', '>= 1.3.0'
 gem 'turbolinks', '~> 5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
+gem 'activeadmin'
+gem 'activeadmin_addons'
+gem 'devise'
+
 gem 'simplecov', require: false, group: :test
 
 group :development, :test do
