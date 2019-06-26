@@ -1,24 +1,34 @@
-# README
+# Laws and Pathways backoffice
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The backoffice for laws and pathways
 
-Things you may want to cover:
+## Dependencies:
 
-* Ruby version
+- Ruby v2.5.5
+- Rails v5.2.3
 
-* System dependencies
+## Local installation
 
-* Configuration
+These are the steps to run the project locally:
 
-* Database creation
+### Installing ruby dependencies
 
-* Database initialization
+On the project's root run `bundle install`.
 
-* How to run the test suite
+### Database
 
-* Services (job queues, cache servers, search engines, etc.)
+#### Create database schema
 
-* Deployment instructions
+`bundle exec rails db:setup` to setup the database
 
-* ...
+### Run the server
+
+`bundle exec rails s'` and access the project on `http://localhost:3000`
+
+## Docker
+
+TODO
+
+## Configuration
+
+## API
