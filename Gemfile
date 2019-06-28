@@ -17,6 +17,8 @@ gem 'activeadmin'
 gem 'activeadmin_addons'
 gem 'devise'
 
+gem 'friendly_id'
+
 gem 'simplecov', require: false, group: :test
 
 group :development, :test do
@@ -27,8 +29,11 @@ group :development, :test do
 end
 
 group :development do
+  gem 'annotate'
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'rubocop'
+  gem 'rubocop-performance'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end

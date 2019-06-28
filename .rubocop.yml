@@ -1,0 +1,83 @@
+AllCops:
+  TargetRubyVersion: 2.5
+  Exclude:
+    - 'bin/*'
+    - 'db/schema.rb'
+    - 'db/migrate/*'
+    - 'config/environments/*'
+    - 'config/initializers/*'
+    - 'config/*'
+    - 'node_modules/**/*'
+
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+Naming/HeredocDelimiterNaming:
+  Enabled: false
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/PercentLiteralDelimiters:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/AndOr:
+  Enabled: false
+
+Style/BlockComments:
+  Exclude:
+    - 'spec/spec_helper.rb'
+
+Style/BlockDelimiters:
+  Exclude:
+    - 'spec/**/*'
+
+Style/RegexpLiteral:
+  EnforcedStyle: slashes
+  AllowInnerSlashes: true
+
+Metrics/LineLength:
+  Max: 100
+  Exclude:
+    - 'db/**/*'
+    - 'spec/spec_helper.rb'
+    - 'spec/rails_helper.rb'
+    - 'Gemfile'
+    - 'Rakefile'
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 25
+  Exclude:
+    - 'lib/modules/*'
+
+Metrics/MethodLength:
+  Max: 25
+  Exclude:
+    - 'lib/modules/*'
+
+Metrics/ClassLength:
+  Max: 150
+
+Bundler/OrderedGems:
+  Enabled: false
