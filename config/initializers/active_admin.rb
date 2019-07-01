@@ -313,3 +313,7 @@ ActiveAdmin.setup do |config|
   #
   # config.order_clause = MyOrderClause
 end
+
+class ActiveAdmin::ResourceDSL
+  include SelectHelper
+end

@@ -3,9 +3,8 @@ ActiveAdmin.register Location do
                 :legislative_process, :location_type
 
   filter :federal
-  filter :id_equals
-  filter :iso_equals
-  filter :name_contains
+  filter :iso_equals, label: 'ISO'
+  filter :name_contains, label: 'Name'
   filter :region, as: :check_boxes, collection: Location::REGIONS
 
   index do
@@ -13,8 +12,10 @@ ActiveAdmin.register Location do
     column :name do |location|
       link_to location.name, admin_location_path(location)
     end
-    column :location_type
-    column :iso
+    column :location_type do |location|
+      location.location_type.humanize
+    end
+    column 'ISO', :iso
     actions
   end
 
