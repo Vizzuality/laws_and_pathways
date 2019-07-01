@@ -7,7 +7,6 @@ ActiveAdmin.register Location do
   filter :iso_equals
   filter :name_contains
   filter :region, as: :check_boxes, collection: Location::REGIONS
-  filter :location_type, as: :select, collection: Location::TYPES
 
   index do
     selectable_column
@@ -22,7 +21,8 @@ ActiveAdmin.register Location do
   form do |f|
     f.semantic_errors(*f.object.errors.keys)
 
-    f.inputs 'Location' do
+    f.inputs do
+      f.input :location_type, as: :hidden, input_html: {value: 'country'}
       f.input :name
       f.input :iso
       f.input :region, as: :select, collection: Location::REGIONS
@@ -33,5 +33,11 @@ ActiveAdmin.register Location do
     end
 
     f.actions
+  end
+
+  controller do
+    def find_resource
+      scoped_collection.friendly.find(params[:id])
+    end
   end
 end

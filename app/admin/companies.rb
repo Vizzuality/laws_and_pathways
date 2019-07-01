@@ -23,15 +23,22 @@ ActiveAdmin.register Company do
   form do |f|
     f.semantic_errors(*f.object.errors.keys)
 
-    f.inputs 'Company' do
+    f.inputs do
       f.input :name
       f.input :isin, label: 'ISIN'
       f.input :sector
       f.input :location
       f.input :headquarter_location
+      f.input :ca100
       f.input :size, as: :select, collection: Company::SIZES
     end
 
     f.actions
+  end
+
+  controller do
+    def find_resource
+      scoped_collection.friendly.find(params[:id])
+    end
   end
 end
