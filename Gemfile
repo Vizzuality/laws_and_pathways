@@ -17,11 +17,15 @@ gem 'activeadmin'
 gem 'activeadmin_addons'
 gem 'devise'
 
+gem 'aws-sdk-rails'
+gem 'aws-sdk-s3'
+
 gem 'friendly_id'
 
 gem 'simplecov', require: false, group: :test
 
 group :development, :test do
+  gem 'dotenv-rails'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'factory_bot_rails'
   gem 'rspec-collection_matchers'
@@ -40,3 +44,7 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+git 'https://github.com/ClimateWatch-Vizzuality/climate-watch-gems.git' do
+  gem 'climate_watch_engine', '~> 1.4.3'
+end
