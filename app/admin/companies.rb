@@ -1,5 +1,5 @@
 ActiveAdmin.register Company do
-  permit_params :name, :isin, :sector_id, :location_id, :headquarter_location_id,
+  permit_params :name, :isin, :sector_id, :location_id, :headquarter_location_id, :ca100,
                 :size
 
   filter :isin_contains, label: 'ISIN'

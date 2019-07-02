@@ -14,4 +14,7 @@ class Sector < ApplicationRecord
   friendly_id :name, use: :slugged
 
   has_many :companies
+
+  validates_presence_of :name, :slug
+  validates_uniqueness_of :name, :slug
 end
