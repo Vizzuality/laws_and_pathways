@@ -1,0 +1,2 @@
+class PoliticalGroup < Tag
+end

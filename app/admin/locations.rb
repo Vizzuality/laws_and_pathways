@@ -1,11 +1,12 @@
 ActiveAdmin.register Location do
   permit_params :name, :iso, :region, :federal, :federal_details, :approach_to_climate_change,
-                :legislative_process, :location_type
+                :legislative_process, :location_type, :political_groups_list
 
   filter :federal
   filter :iso_equals, label: 'ISO'
   filter :name_contains, label: 'Name'
   filter :region, as: :check_boxes, collection: Location::REGIONS
+  filter :political_groups, as: :check_boxes, collection: PoliticalGroup.all
 
   index do
     selectable_column
@@ -31,6 +32,7 @@ ActiveAdmin.register Location do
       f.input :federal_details
       f.input :approach_to_climate_change
       f.input :legislative_process
+      f.input :political_groups_list, as: :tags, collection: PoliticalGroup.all.map(&:name)
     end
 
     f.actions
@@ -39,6 +41,10 @@ ActiveAdmin.register Location do
   controller do
     def find_resource
       scoped_collection.friendly.find(params[:id])
+    end
+
+    def apply_filtering(chain)
+      super(chain).distinct
     end
   end
 end

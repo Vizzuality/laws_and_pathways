@@ -5,11 +5,16 @@ class ImportLocations
 
   def call
     ActiveRecord::Base.transaction do
+      cleanup
       import
     end
   end
 
   private
+
+  def cleanup
+    PoliticalGroup.destroy_all
+  end
 
   def import
     import_each_with_logging(csv, FILEPATH) do |row|
@@ -29,8 +34,20 @@ class ImportLocations
       iso: row[:country_iso],
       federal: parse_boolean(row[:federal]),
       federal_details: row[:federal_details],
-      location_type: 'country'
+      location_type: 'country',
+      political_groups: parse_political_groups(row[:main_groups])
     }
+  end
+
+  def parse_political_groups(groups)
+    return unless groups.present?
+
+    groups.split(/[,;]/).map(&:strip).map do |name|
+      next if name.downcase == 'n/a'
+
+      group = PoliticalGroup.where('lower(name) = ?', name.downcase).first
+      group || PoliticalGroup.create!(name: name)
+    end.compact
   end
 
   def parse_boolean(value)

@@ -17,7 +17,9 @@
 #
 
 class Location < ApplicationRecord
+  include Taggable
   extend FriendlyId
+
   friendly_id :name, use: :slugged
 
   TYPES = %w[country].freeze
@@ -33,6 +35,8 @@ class Location < ApplicationRecord
   ].freeze
 
   enum location_type: array_to_enum_hash(TYPES)
+
+  tag_with :political_groups
 
   validates_uniqueness_of :slug, :iso
   validates_presence_of :name, :slug, :iso, :location_type
