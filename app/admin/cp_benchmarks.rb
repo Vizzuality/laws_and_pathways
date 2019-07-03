@@ -18,12 +18,7 @@ ActiveAdmin.register CP::Benchmark do
     f.inputs do
       f.input :sector
       f.input :date
-      f.input :benchmarks, as: :text, wrapper_html: {data: {controller: 'handsontable'}}
-
-      # f.fields_for :benchmarks do |b|
-      #   b.input :name
-      #   b.input :emissions, as: :text
-      # end
+      f.input :benchmarks, as: :text
     end
 
     f.actions

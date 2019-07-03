@@ -6,7 +6,7 @@ class CreateMqAssessments < ActiveRecord::Migration[5.2]
       t.text :notes
       t.date :assessment_date, null: false
       t.date :publication_date, null: false
-      t.jsonb :form
+      t.jsonb :questions
 
       t.timestamps
     end

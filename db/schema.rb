@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(version: 2019_07_03_153230) do
     t.text "notes"
     t.date "assessment_date", null: false
     t.date "publication_date", null: false
-    t.jsonb "form"
+    t.jsonb "questions"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_mq_assessments_on_company_id"

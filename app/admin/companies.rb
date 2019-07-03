@@ -20,6 +20,13 @@ ActiveAdmin.register Company do
       row :headquarter_location
       row :ca100
       row :size
+      row 'Management Quality Level' do
+        return unless resource.mq_level.present?
+
+        div do
+          "#{resource.mq_level} (#{resource.mq_status})"
+        end
+      end
       row :created_at
       row :updated_at
     end
@@ -32,9 +39,9 @@ ActiveAdmin.register Company do
           column :publication_date
           column :assessment_date
           column :level
-          column :form do |c|
+          column :questions do |c|
             div do
-              c.form.map.with_index do |q, index|
+              c.questions.map.with_index do |q, index|
                 div do
                   "#{index + 1}. ".html_safe << q['question'].html_safe << '  '.html_safe <<
                     content_tag(:strong, q['answer'])
@@ -55,10 +62,11 @@ ActiveAdmin.register Company do
     column :name do |company|
       link_to company.name, admin_company_path(company)
     end
-    column 'ISIN', :isin
+    column :isin
     column :size do |company|
       company.size.humanize
     end
+    column :level, &:mq_status_description_short
     column :location
     column :headquarter_location
     actions
@@ -69,8 +77,8 @@ ActiveAdmin.register Company do
 
     f.inputs do
       columns do
-        column { f.input :name  }
-        column { f.input :isin, label: 'ISIN' }
+        column { f.input :name }
+        column { f.input :isin }
       end
 
       columns do
@@ -90,6 +98,10 @@ ActiveAdmin.register Company do
   end
 
   controller do
+    def scoped_collection
+      super.includes(:location, :headquarter_location, :mq_assessments)
+    end
+
     def find_resource
       scoped_collection.friendly.find(params[:id])
     end

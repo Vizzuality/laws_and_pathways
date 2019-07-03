@@ -26,8 +26,15 @@ class Company < ApplicationRecord
   belongs_to :location
   belongs_to :headquarter_location, class_name: 'Location'
 
-  has_many :mq_assessments, class_name: 'MQ::Assessment'
+  has_many :mq_assessments, -> { latest_first }, class_name: 'MQ::Assessment'
+
+  delegate :level, :status, :status_description_short,
+           to: :latest_assessment, prefix: :mq, allow_nil: true
 
   validates_presence_of :name, :slug, :isin, :size
   validates :ca100, inclusion: {in: [true, false]}
+
+  def latest_assessment
+    mq_assessments.first
+  end
 end

@@ -13,6 +13,16 @@ ActiveAdmin.register Sector do
     actions
   end
 
+  show do
+    attributes_table do
+      row :id
+      row :name
+      row :slug
+      row :created_at
+      row :updated_at
+    end
+  end
+
   form do |f|
     f.semantic_errors(*f.object.errors.keys)
 

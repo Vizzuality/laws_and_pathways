@@ -57,11 +57,11 @@ class ImportCompanies
       publication_date: normalize_date(row[:publication_date]),
       assessment_date: normalize_date(row[:management_quality_assessment_date]),
       level: row[:level],
-      form: parse_form(row)
+      questions: get_questions(row)
     }
   end
 
-  def parse_form(row)
+  def get_questions(row)
     question_headers = row.headers.map(&:to_s)
                          .select { |h| h.strip.end_with?('?') }
                          .reject { |h| h.start_with?('CA100') }
