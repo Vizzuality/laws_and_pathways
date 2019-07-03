@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "@rails/webpacker": "^4.0.7",
-    "stimulus": "^1.1.1"
+    "stimulus": "^1.1.1",
+    "trix": "^1.1.1"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.5",

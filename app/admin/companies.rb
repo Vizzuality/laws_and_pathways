@@ -27,13 +27,22 @@ ActiveAdmin.register Company do
     f.semantic_errors(*f.object.errors.keys)
 
     f.inputs do
-      f.input :name
-      f.input :isin, label: 'ISIN'
-      f.input :sector
-      f.input :location
-      f.input :headquarter_location
+      columns do
+        column { f.input :name  }
+        column { f.input :isin, label: 'ISIN' }
+      end
+
+      columns do
+        column { f.input :sector }
+        column { f.input :size, as: :select, collection: array_to_select_collection(Company::SIZES) }
+      end
+
+      columns do
+        column { f.input :location }
+        column { f.input :headquarter_location }
+      end
+
       f.input :ca100
-      f.input :size, as: :select, collection: array_to_select_collection(Company::SIZES)
     end
 
     f.actions

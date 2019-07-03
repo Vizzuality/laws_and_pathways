@@ -31,8 +31,8 @@ ActiveAdmin.register Location do
       f.input :region, as: :select, collection: Location::REGIONS
       f.input :federal, input_html: {id: 'federal'}
       f.input :federal_details, wrapper_html: {data: {controller: 'dependent-input', depends_on: 'federal'}}
-      f.input :approach_to_climate_change
-      f.input :legislative_process
+      f.input :approach_to_climate_change, as: :trix
+      f.input :legislative_process, as: :trix
       f.input :political_group_ids, label: 'Political Groups', as: :tags, collection: PoliticalGroup.all
     end
 

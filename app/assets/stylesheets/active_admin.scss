@@ -2,6 +2,7 @@ $am-theme-primary: #00689f;
 $am-theme-accent: #7dd2f7;
 $am-theme-accent-fallback: #ff7547;
 
+@import 'trix/dist/trix';
 @import 'activeadmin_addons/all';
 // SASS variable overrides must be declared before loading up Active Admin's styles.
 //
@@ -32,6 +33,12 @@ $am-theme-accent-fallback: #ff7547;
         color: white;
       }
     }
+  }
+}
+
+.columns {
+  .column {
+    float: left;
   }
 }
 
