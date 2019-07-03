@@ -5,6 +5,7 @@ class ImportCompanies
 
   def call
     ActiveRecord::Base.transaction do
+      cleanup
       import
     end
   end
@@ -15,11 +16,27 @@ class ImportCompanies
     import_each_with_logging(csv, FILEPATH) do |row|
       company = Company.find_or_initialize_by(isin: row[:isin])
       company.update!(company_attributes(row))
+
+      MQ::Assessment.create!(
+        mq_assessment_attributes(row).merge(company_id: company.id)
+      )
     end
   end
 
+  def cleanup
+    MQ::Assessment.destroy_all
+  end
+
   def csv
-    @csv ||= S3CSVReader.read(FILEPATH)
+    @csv ||= S3CSVReader.read(FILEPATH, header_converters: header_converter)
+  end
+
+  def header_converter
+    lambda do |h|
+      return h if h.strip.end_with?('?')
+
+      CSV::HeaderConverters[:symbol].call(h)
+    end
   end
 
   def company_attributes(row)
@@ -33,6 +50,57 @@ class ImportCompanies
       sector: Sector.find_or_create_by!(name: row[:sector_code]),
       size: row[:largemedium_classification]&.downcase
     }
+  end
+
+  def mq_assessment_attributes(row)
+    {
+      publication_date: normalize_date(row[:publication_date]),
+      assessment_date: normalize_date(row[:management_quality_assessment_date]),
+      level: row[:level],
+      form: parse_form(row)
+    }
+  end
+
+  def parse_form(row)
+    question_headers = row.headers.map(&:to_s)
+                         .select { |h| h.strip.end_with?('?') }
+                         .reject { |h| h.start_with?('CA100') }
+
+    question_headers.map do |q_header|
+      answer = row[q_header]
+
+      next if answer.nil?
+      next if answer.include?('Not applicable to the methodology')
+
+      {
+        question: parse_question(q_header),
+        answer: answer
+      }
+    end.compact
+  end
+
+  def normalize_date(date)
+    return if date.nil?
+
+    try_to_parse_date(date) || date
+  end
+
+  def try_to_parse_date(date)
+    expected_formats = ['%m/%d/%Y', '%a-%y']
+
+    expected_formats.map { |format| parse_date(date, format) }.compact.first
+  end
+
+  def parse_date(date, format)
+    Date.strptime(date, format)
+  rescue ArgumentError
+    nil
+  end
+
+  def parse_question(q)
+    return unless q.present?
+
+    q[((q.index('|') || -1) + 1)..-1]
   end
 
   def parse_boolean(value)

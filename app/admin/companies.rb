@@ -10,6 +10,47 @@ ActiveAdmin.register Company do
 
   config.batch_actions = false
 
+  show do
+    attributes_table do
+      row :id
+      row :name
+      row :slug
+      row :isin
+      row :location
+      row :headquarter_location
+      row :ca100
+      row :size
+      row :created_at
+      row :updated_at
+    end
+
+    panel 'Management Quality Assessments' do
+      if resource.mq_assessments.empty?
+        'No Management Quality Assessments for this company yet'
+      else
+        table_for resource.mq_assessments.latest_first do
+          column :publication_date
+          column :assessment_date
+          column :level
+          column :form do |c|
+            div do
+              c.form.map.with_index do |q, index|
+                div do
+                  "#{index + 1}. ".html_safe << q['question'].html_safe << '  '.html_safe <<
+                    content_tag(:strong, q['answer'])
+                end
+              end
+            end
+          end
+          column 'Actions' do |c|
+            div class: 'table_actions' do
+            end
+          end
+        end
+      end
+    end
+  end
+
   index do
     column :name do |company|
       link_to company.name, admin_company_path(company)

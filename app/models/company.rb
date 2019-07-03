@@ -26,6 +26,8 @@ class Company < ApplicationRecord
   belongs_to :location
   belongs_to :headquarter_location, class_name: 'Location'
 
+  has_many :mq_assessments, class_name: 'MQ::Assessment'
+
   validates_presence_of :name, :slug, :isin, :size
   validates :ca100, inclusion: {in: [true, false]}
 end
