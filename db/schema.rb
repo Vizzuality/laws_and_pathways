@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_02_165934) do
+ActiveRecord::Schema.define(version: 2019_07_03_130037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,16 @@ ActiveRecord::Schema.define(version: 2019_07_02_165934) do
     t.index ["slug"], name: "index_companies_on_slug", unique: true
   end
 
+  create_table "cp_benchmarks", force: :cascade do |t|
+    t.bigint "sector_id"
+    t.string "date"
+    t.boolean "current", default: false, null: false
+    t.jsonb "benchmarks"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sector_id"], name: "index_cp_benchmarks_on_sector_id"
+  end
+
   create_table "locations", force: :cascade do |t|
     t.string "location_type", null: false
     t.string "iso", null: false
@@ -107,5 +117,6 @@ ActiveRecord::Schema.define(version: 2019_07_02_165934) do
   add_foreign_key "companies", "locations"
   add_foreign_key "companies", "locations", column: "headquarter_location_id"
   add_foreign_key "companies", "sectors"
+  add_foreign_key "cp_benchmarks", "sectors", on_delete: :cascade
   add_foreign_key "taggings", "tags", on_delete: :cascade
 end
