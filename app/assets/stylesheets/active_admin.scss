@@ -16,7 +16,23 @@ $am-theme-accent-fallback: #ff7547;
 @import "active_admin/mixins";
 @import 'activeadmin_addons/material';
 
-// Overriding any non-variable SASS must be done after the fact.
-// For example, to change the default status-tag color:
-//
-//   .status_tag { background: #6090DB; }
+.table_tools {
+  .scope {
+    margin: 0;
+    padding: 10px;
+
+    &.selected {
+      background: $am-theme-primary;
+
+      a {
+        color: white;
+      }
+    }
+  }
+}
+
+#search_status_sidebar_section {
+  .panel_contents {
+    padding: 16px;
+  }
+}
