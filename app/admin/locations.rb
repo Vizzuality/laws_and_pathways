@@ -1,6 +1,6 @@
 ActiveAdmin.register Location do
   permit_params :name, :iso, :region, :federal, :federal_details, :approach_to_climate_change,
-                :legislative_process, :location_type, :political_groups_list
+                :legislative_process, :location_type, political_group_ids: []
 
   filter :federal
   filter :iso_equals, label: 'ISO'
@@ -8,8 +8,9 @@ ActiveAdmin.register Location do
   filter :region, as: :check_boxes, collection: Location::REGIONS
   filter :political_groups, as: :check_boxes, collection: PoliticalGroup.all
 
+  config.batch_actions = false
+
   index do
-    selectable_column
     column :name do |location|
       link_to location.name, admin_location_path(location)
     end
@@ -28,11 +29,11 @@ ActiveAdmin.register Location do
       f.input :name
       f.input :iso
       f.input :region, as: :select, collection: Location::REGIONS
-      f.input :federal
-      f.input :federal_details
+      f.input :federal, input_html: {id: 'federal'}
+      f.input :federal_details, wrapper_html: {data: {controller: 'dependent-input', depends_on: 'federal'}}
       f.input :approach_to_climate_change
       f.input :legislative_process
-      f.input :political_groups_list, as: :tags, collection: PoliticalGroup.all.map(&:name)
+      f.input :political_group_ids, label: 'Political Groups', as: :tags, collection: PoliticalGroup.all
     end
 
     f.actions

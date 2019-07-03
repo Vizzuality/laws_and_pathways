@@ -8,8 +8,9 @@ ActiveAdmin.register Company do
   filter :headquarter_location
   filter :size, as: :check_boxes, collection: array_to_select_collection(Company::SIZES)
 
+  config.batch_actions = false
+
   index do
-    selectable_column
     column :name do |company|
       link_to company.name, admin_company_path(company)
     end

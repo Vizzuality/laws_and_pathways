@@ -3,8 +3,9 @@ ActiveAdmin.register Sector do
 
   filter :name_contains
 
+  config.batch_actions = false
+
   index do
-    selectable_column
     column :name do |sector|
       link_to sector.name, admin_sector_path(sector)
     end

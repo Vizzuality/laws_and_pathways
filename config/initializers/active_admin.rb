@@ -317,3 +317,12 @@ end
 class ActiveAdmin::ResourceDSL
   include SelectHelper
 end
+
+ActiveAdmin::Views::Header.class_eval do
+  alias original_build build
+
+  def build(*args)
+    original_build(*args)
+    render 'admin/custom_header'
+  end
+end

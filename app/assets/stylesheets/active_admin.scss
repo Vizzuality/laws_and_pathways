@@ -16,6 +16,10 @@ $am-theme-accent-fallback: #ff7547;
 @import "active_admin/mixins";
 @import 'activeadmin_addons/material';
 
+.hidden {
+  display: none;
+}
+
 .table_tools {
   .scope {
     margin: 0;
