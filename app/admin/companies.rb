@@ -49,10 +49,6 @@ ActiveAdmin.register Company do
               end
             end
           end
-          column 'Actions' do |c|
-            div class: 'table_actions' do
-            end
-          end
         end
       end
     end

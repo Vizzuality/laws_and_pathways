@@ -15,7 +15,7 @@
 
 module MQ
   class Assessment < ApplicationRecord
-    belongs_to :company
+    belongs_to :company, inverse_of: :mq_assessments
 
     scope :latest_first, -> { order(assessment_date: :desc) }
 
