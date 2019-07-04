@@ -36,6 +36,21 @@ $am-theme-accent-fallback: #ff7547;
   }
 }
 
+.panel {
+  > h3 {
+    font-size: 18px;
+    padding: 20px 16px;
+    color: black;
+    border-bottom: 1px solid rgba(204, 204, 204, 0.35);
+  }
+}
+
+fieldset.actions .cancel a {
+  &:hover {
+    color: white;
+  }
+}
+
 .columns {
   .column {
     float: left;

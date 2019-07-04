@@ -30,6 +30,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  active_admin:
+    edit_model: 'Edit'
+    delete_model: 'Delete'
   activerecord:
     attributes:
       company:

@@ -10,46 +10,70 @@ ActiveAdmin.register Company do
 
   config.batch_actions = false
 
-  show do
+  sidebar 'Details', only: :show do
     attributes_table do
-      row :id
-      row :name
-      row :slug
-      row :isin
-      row :location
-      row :headquarter_location
-      row :ca100
-      row :size
-      row 'Management Quality Level' do
+      row :company, &:name
+      row :level do
         return unless resource.mq_level.present?
 
         div do
           "#{resource.mq_level} (#{resource.mq_status})"
         end
       end
-      row :created_at
       row :updated_at
     end
+  end
 
-    panel 'Management Quality Assessments' do
-      if resource.mq_assessments.empty?
-        'No Management Quality Assessments for this company yet'
-      else
-        table_for resource.mq_assessments.latest_first do
-          column :publication_date
-          column :assessment_date
-          column :level
-          column :questions do |c|
+  show do
+    tabs do
+      tab :details do
+        attributes_table do
+          row :id
+          row :name
+          row :slug
+          row :sector
+          row :isin
+          row :location
+          row :headquarter_location
+          row :ca100
+          row :size
+          row 'Management Quality Level' do
+            return unless resource.mq_level.present?
+
             div do
-              c.questions.map.with_index do |q, index|
+              "#{resource.mq_level} (#{resource.mq_status})"
+            end
+          end
+          row :created_at
+          row :updated_at
+        end
+      end
+
+      tab :mq_assessments do
+        panel 'Management Quality Assessments' do
+          if resource.mq_assessments.empty?
+            'No Management Quality Assessments for this company yet'
+          else
+            table_for resource.mq_assessments.latest_first do
+              column :publication_date
+              column :assessment_date
+              column :level
+              column :questions do |c|
                 div do
-                  "#{index + 1}. ".html_safe << q['question'].html_safe << '  '.html_safe <<
-                    content_tag(:strong, q['answer'])
+                  c.questions.map.with_index do |q, index|
+                    div do
+                      "#{index + 1}. ".html_safe << q['question'].html_safe << '  '.html_safe <<
+                        content_tag(:strong, q['answer'])
+                    end
+                  end
                 end
               end
             end
           end
         end
+      end
+
+      tab :cp_assessments do
       end
     end
   end
