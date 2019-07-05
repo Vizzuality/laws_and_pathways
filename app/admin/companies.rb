@@ -14,10 +14,10 @@ ActiveAdmin.register Company do
     attributes_table do
       row :company, &:name
       row :level do
-        return unless resource.mq_level.present?
-
-        div do
-          "#{resource.mq_level} (#{resource.mq_status})"
+        if resource.mq_level.present?
+          div do
+            "#{resource.mq_level} (#{resource.mq_status})"
+          end
         end
       end
       row :updated_at
@@ -38,10 +38,10 @@ ActiveAdmin.register Company do
           row :ca100
           row :size
           row 'Management Quality Level' do
-            return unless resource.mq_level.present?
-
-            div do
-              "#{resource.mq_level} (#{resource.mq_status})"
+            if resource.mq_level.present?
+              div do
+                "#{resource.mq_level} (#{resource.mq_status})"
+              end
             end
           end
           row :created_at
