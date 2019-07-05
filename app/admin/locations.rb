@@ -5,8 +5,8 @@ ActiveAdmin.register Location do
   filter :federal
   filter :iso_equals, label: 'ISO'
   filter :name_contains, label: 'Name'
-  filter :region, as: :check_boxes, collection: Location::REGIONS
-  filter :political_groups, as: :check_boxes, collection: PoliticalGroup.all
+  filter :region, as: :check_boxes, collection: proc { Location::REGIONS }
+  filter :political_groups, as: :check_boxes, collection: proc { PoliticalGroup.all }
 
   config.batch_actions = false
 

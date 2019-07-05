@@ -1,9 +1,9 @@
+return if Rails.env.test?
+
 # rubocop:disable LineLength
 S3_BUCKET_URL = "https://s3-#{ENV.fetch('AWS_REGION')}.amazonaws.com/#{ENV.fetch('S3_BUCKET_NAME')}".freeze
 # rubocop:enable LineLength
 FILES_PREFIX = ENV['FILES_PREFIX'] || 'imports/'
-
-return if Rails.env.test?
 
 # :nocov:
 ClimateWatchEngine.s3_bucket_name = ENV.fetch('S3_BUCKET_NAME')

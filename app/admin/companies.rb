@@ -6,7 +6,7 @@ ActiveAdmin.register Company do
   filter :name_contains, label: 'Name'
   filter :location
   filter :headquarter_location
-  filter :size, as: :check_boxes, collection: array_to_select_collection(Company::SIZES)
+  filter :size, as: :check_boxes, collection: proc { array_to_select_collection(Company::SIZES) }
 
   config.batch_actions = false
 
