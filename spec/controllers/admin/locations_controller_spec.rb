@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Admin::LocationsController, type: :controller do
   let(:admin) { create(:admin_user) }
-  let(:location) { create(:location) }
+  let!(:location) { create(:location) }
   let(:valid_attributes) { attributes_for(:location) }
   let(:invalid_attributes) { valid_attributes.merge(iso: nil) }
 

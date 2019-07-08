@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Admin::CompaniesController, type: :controller do
   let(:admin) { create(:admin_user) }
-  let(:company) { create(:company) }
+  let!(:company) { create(:company, :with_mq_assessments) }
   let(:sector) { create(:sector) }
   let(:location) { create(:location) }
   let(:valid_attributes) {

@@ -28,9 +28,9 @@ FactoryBot.define do
     size { Company::SIZES.sample }
 
     trait :with_mq_assessments do
-      after(:create) do |s|
-        create :mq_assessment, sector: s, date: 1.year.ago
-        create :mq_assessment, sector: s, date: 1.month.ago
+      after(:create) do |c|
+        create :mq_assessment, company: c, assessment_date: 1.year.ago
+        create :mq_assessment, company: c, assessment_date: 1.month.ago
       end
     end
   end
