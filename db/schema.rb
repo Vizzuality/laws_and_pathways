@@ -62,8 +62,7 @@ ActiveRecord::Schema.define(version: 2019_07_03_153230) do
 
   create_table "cp_benchmarks", force: :cascade do |t|
     t.bigint "sector_id"
-    t.string "date"
-    t.boolean "current", default: false, null: false
+    t.date "date", null: false
     t.jsonb "benchmarks"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
