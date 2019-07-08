@@ -4,12 +4,8 @@ module FactoryHelper
 
     (from..to).map do |year|
       value -= rand(1..5)
-
-      {
-        year: year,
-        value: value
-      }
-    end
+      {year => value}
+    end.reduce(&:merge)
   end
   module_function :fake_values
 end

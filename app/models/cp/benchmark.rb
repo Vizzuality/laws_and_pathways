@@ -15,5 +15,9 @@ module CP
     belongs_to :sector
 
     validates_presence_of :date
+
+    def benchmarks_all_years
+      benchmarks.map { |b| b['values'].keys }.flatten.uniq
+    end
   end
 end

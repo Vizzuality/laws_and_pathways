@@ -14,7 +14,7 @@ class Sector < ApplicationRecord
   friendly_id :name, use: :slugged
 
   has_many :companies
-  has_many :cp_benchmarks
+  has_many :cp_benchmarks, class_name: 'CP::Benchmark'
 
   validates_presence_of :name, :slug
   validates_uniqueness_of :name, :slug

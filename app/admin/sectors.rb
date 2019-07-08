@@ -14,12 +14,38 @@ ActiveAdmin.register Sector do
   end
 
   show do
-    attributes_table do
-      row :id
-      row :name
-      row :slug
-      row :created_at
-      row :updated_at
+    tabs do
+      tab :details do
+        attributes_table do
+          row :id
+          row :name
+          row :slug
+          row :created_at
+          row :updated_at
+        end
+      end
+      tab :cp_benchmarks do
+        panel 'Carbon Performance Benchmarks' do
+          if resource.cp_benchmarks.empty?
+            'No Carbon Performance Benchmarks for this sector yet'
+          else
+            resource.cp_benchmarks.map do |benchmark|
+              panel benchmark.date do
+                table_for benchmark.benchmarks do
+                  column :name do |b|
+                    b['name']
+                  end
+                  benchmark.benchmarks_all_years.map do |year|
+                    column year do |b|
+                      b['values'][year]
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
     end
   end
 

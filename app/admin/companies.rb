@@ -54,7 +54,7 @@ ActiveAdmin.register Company do
           if resource.mq_assessments.empty?
             'No Management Quality Assessments for this company yet'
           else
-            table_for resource.mq_assessments.latest_first do
+            table_for resource.mq_assessments do
               column :publication_date
               column :assessment_date
               column :level

@@ -48,7 +48,7 @@ class ImportCPBenchmarks
 
   def values(row)
     row.headers.grep(/\d{4}/).map do |year|
-      {year: year.to_s.to_i, value: row[year]&.to_f}
-    end
+      {year.to_s.to_i => row[year]&.to_f}
+    end.reduce(&:merge)
   end
 end
