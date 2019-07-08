@@ -15,4 +15,7 @@
 require 'rails_helper'
 
 RSpec.describe AdminUser, type: :model do
+  subject { build(:admin_user) }
+
+  it { is_expected.to be_valid }
 end
