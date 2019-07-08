@@ -15,9 +15,15 @@
 
 module MQ
   class Assessment < ApplicationRecord
+    LEVELS = %w[1 2 3 4 4STAR].freeze
+
     belongs_to :company, inverse_of: :mq_assessments
 
     scope :latest_first, -> { order(assessment_date: :desc) }
+    scope :by_assessment_date, -> { order(:assessment_date) }
+
+    validates :level, inclusion: {in: LEVELS}
+    validates_presence_of :assessment_date, :publication_date, :level
 
     def previous
       company.mq_assessments.second

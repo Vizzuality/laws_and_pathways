@@ -31,8 +31,9 @@ class Company < ApplicationRecord
   delegate :level, :status, :status_description_short,
            to: :latest_assessment, prefix: :mq, allow_nil: true
 
-  validates_presence_of :name, :slug, :isin, :size
   validates :ca100, inclusion: {in: [true, false]}
+  validates_presence_of :name, :slug, :isin, :size
+  validates_uniqueness_of :slug, :isin
 
   def latest_assessment
     mq_assessments.first

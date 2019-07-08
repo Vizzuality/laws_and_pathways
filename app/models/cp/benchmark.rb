@@ -4,7 +4,7 @@
 #
 #  id         :bigint(8)        not null, primary key
 #  sector_id  :bigint(8)
-#  date       :date
+#  date       :date             not null
 #  benchmarks :jsonb
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

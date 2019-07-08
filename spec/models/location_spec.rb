@@ -22,4 +22,25 @@ RSpec.describe Location, type: :model do
   subject { build(:location) }
 
   it { is_expected.to be_valid }
+
+  it 'should be invalid if iso is nil' do
+    subject.iso = nil
+    expect(subject).to have(1).errors_on(:iso)
+  end
+
+  it 'should be invalid if name is nil' do
+    subject.name = nil
+    expect(subject).to have(1).errors_on(:name)
+  end
+
+  it 'should be invalid if region is nil' do
+    subject.region = nil
+    expect(subject).to have(1).errors_on(:region)
+  end
+
+  it 'should be invalid if location_type is wrong' do
+    expect {
+      subject.location_type = 'WRONG'
+    }.to raise_error(ArgumentError)
+  end
 end
