@@ -29,8 +29,8 @@ ActiveAdmin.register Sector do
           if resource.cp_benchmarks.empty?
             'No Carbon Performance Benchmarks for this sector yet'
           else
-            resource.cp_benchmarks.map do |benchmark|
-              panel benchmark.date do
+            resource.cp_benchmarks.latest_first.map do |benchmark|
+              panel "Released in #{benchmark.date.strftime('%B %Y')}", class: 'benchmark' do
                 table_for benchmark.benchmarks do
                   column :name do |b|
                     b['name']

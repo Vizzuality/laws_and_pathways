@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Admin::SectorsController, type: :controller do
   let(:admin) { create(:admin_user) }
-  let(:sector) { create(:sector) }
+  let(:sector) { create(:sector, :with_benchmarks) }
   let(:valid_attributes) { attributes_for(:sector) }
   let(:invalid_attributes) { valid_attributes.merge(name: nil) }
+  let(:page) { Capybara::Node::Simple.new(response.body) }
 
   before { sign_in admin }
 
@@ -18,6 +19,23 @@ RSpec.describe Admin::SectorsController, type: :controller do
     subject { get :show, params: {id: sector.id} }
 
     it { is_expected.to be_successful }
+
+    context 'rendered' do
+      render_views
+
+      it 'should show sector benchmarks' do
+        subject
+
+        benchmark = sector.cp_benchmarks.by_date.last
+
+        expect(page).to have_selector '#cp-benchmarks .panel.benchmark',
+                                      count: sector.cp_benchmarks.count
+        latest_benchmark = page.find('#cp-benchmarks .panel.benchmark:nth-child(1) table tbody')
+        expect(latest_benchmark).to have_selector 'tr', count: benchmark.benchmarks.length
+        expect(latest_benchmark).to have_selector 'tr:nth-child(1) td:nth-child(1)',
+                                                  text: benchmark.benchmarks[0]['name']
+      end
+    end
   end
 
   describe 'GET new' do

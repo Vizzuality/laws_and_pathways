@@ -14,6 +14,9 @@ module CP
   class Benchmark < ApplicationRecord
     belongs_to :sector
 
+    scope :latest_first, -> { order(date: :desc) }
+    scope :by_date, -> { order(:date) }
+
     validates_presence_of :date
 
     def benchmarks_all_years

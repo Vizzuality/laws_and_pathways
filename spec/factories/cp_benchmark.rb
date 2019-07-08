@@ -14,7 +14,7 @@ FactoryBot.define do
   factory :cp_benchmark, class: 'CP::Benchmark' do
     association :sector
 
-    date { 5.days.ago }
+    date { 5.days.ago.to_date }
     benchmarks {
       [
         {name: 'Paris pledges', values: FactoryHelper.fake_values(from: 2013, to: 2030, starting_at: 200)},
