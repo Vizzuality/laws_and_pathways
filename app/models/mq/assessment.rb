@@ -26,7 +26,11 @@ module MQ
     validates_presence_of :assessment_date, :publication_date, :level
 
     def previous
-      company.mq_assessments.second
+      company.
+        mq_assessments.
+        where('assessment_date < ?', assessment_date).
+        latest_first.
+        first
     end
 
     def status

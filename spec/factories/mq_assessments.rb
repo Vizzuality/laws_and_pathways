@@ -13,18 +13,6 @@
 #  updated_at       :datetime         not null
 #
 
-# module FactoryHelper
-#   def fake_values(from:, to:, starting_at:)
-#     value = starting_at
-
-#     (from..to).map do |year|
-#       value -= rand(1..5)
-#       {year => value}
-#     end.reduce(&:merge)
-#   end
-#   module_function :fake_values
-# end
-
 FactoryBot.define do
   factory :mq_assessment, class: MQ::Assessment do
     association :company
@@ -34,5 +22,23 @@ FactoryBot.define do
 
     level { '1' }
     notes { 'Some notes' }
+
+    questions do
+      get_question_level = lambda do |nr|
+        return '0' if (0..1).include?(nr)
+        return '1' if (2..4).include?(nr)
+        return '3' if (5..8).include?(nr)
+
+        '4'
+      end
+
+      (1..14).map do |nr|
+        {
+          level: get_question_level.call(nr),
+          question: "Question nr #{nr}",
+          answer: %w[Yes No].sample
+        }
+      end
+    end
   end
 end
