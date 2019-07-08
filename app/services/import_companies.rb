@@ -72,10 +72,7 @@ class ImportCompanies
       next if answer.nil?
       next if answer.include?('Not applicable to the methodology')
 
-      {
-        question: parse_question(q_header),
-        answer: answer
-      }
+      parse_question(q_header).merge(answer: answer)
     end.compact
   end
 
@@ -100,7 +97,14 @@ class ImportCompanies
   def parse_question(q)
     return unless q.present?
 
-    q[((q.index('|') || -1) + 1)..-1]
+    matches = q.match(/Q\d+L(\d+)\|(.+)/)
+    level = matches[1]
+    text = matches[2]
+
+    {
+      question: text,
+      level: level
+    }
   end
 
   def parse_boolean(value)
@@ -110,7 +114,7 @@ class ImportCompanies
   def find_location(iso)
     Location.find_by!(iso: fix_iso(iso))
   rescue
-    puts "Coulnd't find Location with ISO: #{iso}"
+    puts "Couldn't find Location with ISO: #{iso}"
   end
 
   # TODO: remove this when they fix the file

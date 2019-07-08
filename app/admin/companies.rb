@@ -54,17 +54,25 @@ ActiveAdmin.register Company do
           if resource.mq_assessments.empty?
             'No Management Quality Assessments for this company yet'
           else
-            table_for resource.mq_assessments do
-              column :publication_date
-              column :assessment_date
-              column :level
-              column :questions do |c|
-                div do
-                  c.questions.map.with_index do |q, index|
-                    div do
-                      "#{index + 1}. ".html_safe << q['question'].html_safe << '  '.html_safe <<
-                        content_tag(:strong, q['answer'])
-                    end
+            resource.mq_assessments.latest_first.map do |a|
+              panel "Assessement taken on #{a.assessment_date}", class: 'mq_assessment' do
+                attributes_table_for a do
+                  row :level, &:status_description_short
+                  row :publication_date do
+                    "#{a.publication_date.strftime('%B %Y')}"
+                  end
+                  row :assessment_date
+                end
+
+                table_for a.questions do
+                  column :level do |q|
+                    q['level']
+                  end
+                  column :answer do |q|
+                    q['answer']
+                  end
+                  column :question do |q|
+                    q['question']
                   end
                 end
               end
