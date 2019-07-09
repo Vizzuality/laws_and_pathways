@@ -266,6 +266,8 @@ ActiveAdmin.setup do |config|
   #
   #   end
 
+  config.download_links = [:csv]
+
   # == Pagination
   #
   # Pagination is enabled by default for all resources.
