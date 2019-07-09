@@ -1,4 +1,6 @@
 ActiveAdmin.register Sector do
+  menu priority: 5
+
   permit_params :name
 
   filter :name_contains

@@ -1,4 +1,6 @@
 ActiveAdmin.register Company do
+  menu priority: 4
+
   permit_params :name, :isin, :sector_id, :location_id, :headquarter_location_id, :ca100,
                 :size
 

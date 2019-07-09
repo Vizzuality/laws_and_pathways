@@ -1,4 +1,6 @@
 ActiveAdmin.register Location do
+  menu priority: 3
+
   permit_params :name, :iso, :region, :federal, :federal_details, :approach_to_climate_change,
                 :legislative_process, :location_type, political_group_ids: []
 
