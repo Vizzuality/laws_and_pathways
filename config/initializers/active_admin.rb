@@ -134,7 +134,7 @@ ActiveAdmin.setup do |config|
   # config.comments_order = 'created_at ASC'
   #
   # You can disable the menu item for the comments index page:
-  # config.comments_menu = false
+  config.comments_menu = false
   #
   # You can customize the comment menu:
   # config.comments_menu = { parent: 'Admin', priority: 1 }
@@ -266,6 +266,8 @@ ActiveAdmin.setup do |config|
   #
   #   end
 
+  config.download_links = [:csv]
+
   # == Pagination
   #
   # Pagination is enabled by default for all resources.
@@ -312,4 +314,17 @@ ActiveAdmin.setup do |config|
   # You can inherit it with own class and inject it for all resources
   #
   # config.order_clause = MyOrderClause
+end
+
+class ActiveAdmin::ResourceDSL
+  include SelectHelper
+end
+
+ActiveAdmin::Views::Header.class_eval do
+  alias original_build build
+
+  def build(*args)
+    original_build(*args)
+    render 'admin/custom_header'
+  end
 end

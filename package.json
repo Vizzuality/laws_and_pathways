@@ -1,5 +1,18 @@
 {
   "name": "laws_and_pathways",
   "private": true,
-  "dependencies": {}
+  "scripts": {
+    "start": "run-p -r rails:server js:server",
+    "js:server": "yarn install && ./bin/webpack-dev-server",
+    "rails:server": "bundle exec rails s"
+  },
+  "dependencies": {
+    "@rails/webpacker": "^4.0.7",
+    "stimulus": "^1.1.1",
+    "trix": "^1.1.1"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "webpack-dev-server": "^3.7.2"
+  }
 }

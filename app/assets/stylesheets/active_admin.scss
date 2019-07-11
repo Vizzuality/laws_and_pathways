@@ -1,3 +1,8 @@
+$am-theme-primary: #00689f;
+$am-theme-accent: #7dd2f7;
+$am-theme-accent-fallback: #ff7547;
+
+@import 'trix/dist/trix';
 @import 'activeadmin_addons/all';
 // SASS variable overrides must be declared before loading up Active Admin's styles.
 //
@@ -10,9 +15,50 @@
 
 // Active Admin's got SASS!
 @import "active_admin/mixins";
-@import "active_admin/base";
+@import 'activeadmin_addons/material';
 
-// Overriding any non-variable SASS must be done after the fact.
-// For example, to change the default status-tag color:
-//
-//   .status_tag { background: #6090DB; }
+.hidden {
+  display: none;
+}
+
+.table_tools {
+  .scope {
+    margin: 0;
+    padding: 10px;
+
+    &.selected {
+      background: $am-theme-primary;
+
+      a {
+        color: white;
+      }
+    }
+  }
+}
+
+.panel {
+  > h3 {
+    font-size: 18px;
+    padding: 20px 16px;
+    color: black;
+    border-bottom: 1px solid rgba(204, 204, 204, 0.35);
+  }
+}
+
+fieldset.actions .cancel a {
+  &:hover {
+    color: white;
+  }
+}
+
+.columns {
+  .column {
+    float: left;
+  }
+}
+
+#search_status_sidebar_section {
+  .panel_contents {
+    padding: 16px;
+  }
+}
