@@ -69,6 +69,18 @@ fieldset.actions .cancel a {
   }
 }
 
+// Forms
+
+form {
+  ul.errors {
+    padding: $padding;
+    margin: 0;
+    margin-left: 20px;
+    list-style: disc;
+    color: $am-theme-error;
+  }
+}
+
 // Comments
 
 .comments {
@@ -76,8 +88,11 @@ fieldset.actions .cancel a {
     padding: $padding;
   }
 
-  .active_admin_comment {
+  div.active_admin_comment {
+    @include am-paper;
 
+    padding: $padding/2;
+    margin-bottom: 15px;
   }
 
   form {
