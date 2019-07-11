@@ -2,6 +2,8 @@ $am-theme-primary: #00689f;
 $am-theme-accent: #7dd2f7;
 $am-theme-accent-fallback: #ff7547;
 
+$padding: 20px;
+
 @import 'trix/dist/trix';
 @import 'activeadmin_addons/all';
 // SASS variable overrides must be declared before loading up Active Admin's styles.
@@ -45,6 +47,10 @@ $am-theme-accent-fallback: #ff7547;
   }
 }
 
+.padding-20 {
+  padding: $padding;
+}
+
 fieldset.actions .cancel a {
   &:hover {
     color: white;
@@ -60,5 +66,32 @@ fieldset.actions .cancel a {
 #search_status_sidebar_section {
   .panel_contents {
     padding: 16px;
+  }
+}
+
+// Comments
+
+.comments {
+  >.panel_contents {
+    padding: $padding;
+  }
+
+  .active_admin_comment {
+
+  }
+
+  form {
+    .inputs {
+      margin-bottom: 0;
+
+      .input {
+        padding: 0;
+      }
+    }
+
+    .actions {
+      padding: 0;
+      box-shadow: none;
+    }
   }
 }

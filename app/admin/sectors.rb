@@ -29,7 +29,9 @@ ActiveAdmin.register Sector do
       tab :cp_benchmarks do
         panel 'Carbon Performance Benchmarks' do
           if resource.cp_benchmarks.empty?
-            'No Carbon Performance Benchmarks for this sector yet'
+            div class: 'padding-20' do
+              'No Carbon Performance Benchmarks for this sector yet'
+            end
           else
             resource.cp_benchmarks.latest_first.map do |benchmark|
               panel "Released in #{benchmark.date.strftime('%B %Y')}", class: 'benchmark' do
