@@ -113,7 +113,7 @@ ActiveAdmin.register Company do
                       tr do
                         a.emissions_all_years.map do |year|
                           td do
-                            a.emissions[year]
+                            a.emissions[year] || 'N/A'
                           end
                         end
                       end
