@@ -54,7 +54,9 @@ ActiveAdmin.register Company do
       tab :mq_assessments do
         panel 'Management Quality Assessments' do
           if resource.mq_assessments.empty?
-            'No Management Quality Assessments for this company yet'
+            div class: 'padding-20' do
+              'No Management Quality Assessments for this company yet'
+            end
           else
             resource.mq_assessments.latest_first.map do |a|
               panel "Assessement taken on #{a.assessment_date}", class: 'mq_assessment' do
@@ -84,6 +86,44 @@ ActiveAdmin.register Company do
       end
 
       tab :cp_assessments do
+        panel 'Carbon Performance Assessments' do
+          if resource.cp_assessments.empty?
+            div class: 'padding-20' do
+              'No Carbon Performance Assessments for this company yet'
+            end
+          else
+            resource.cp_assessments.latest_first.map do |a|
+              div class: 'panel benchmark' do
+                attributes_table_for a do
+                  row :publication_date do
+                    "#{a.publication_date.strftime('%B %Y')}"
+                  end
+                  row :assessment_date
+                  row :assumptions
+                end
+
+                if a.emissions.present?
+                  table class: 'table cell-padding-sm cell-centered' do
+                    thead do
+                      a.emissions_all_years.map do |year|
+                        th year
+                      end
+                    end
+                    tbody do
+                      tr do
+                        a.emissions_all_years.map do |year|
+                          td do
+                            a.emissions[year]
+                          end
+                        end
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
       end
     end
   end

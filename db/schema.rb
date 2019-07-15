@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_03_153230) do
+ActiveRecord::Schema.define(version: 2019_07_15_092238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,17 @@ ActiveRecord::Schema.define(version: 2019_07_03_153230) do
     t.index ["sector_id"], name: "index_companies_on_sector_id"
     t.index ["size"], name: "index_companies_on_size"
     t.index ["slug"], name: "index_companies_on_slug", unique: true
+  end
+
+  create_table "cp_assessments", force: :cascade do |t|
+    t.bigint "company_id"
+    t.date "publication_date", null: false
+    t.date "assessment_date"
+    t.jsonb "emissions"
+    t.text "assumptions"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_cp_assessments_on_company_id"
   end
 
   create_table "cp_benchmarks", force: :cascade do |t|
@@ -128,6 +139,7 @@ ActiveRecord::Schema.define(version: 2019_07_03_153230) do
   add_foreign_key "companies", "locations"
   add_foreign_key "companies", "locations", column: "headquarter_location_id"
   add_foreign_key "companies", "sectors"
+  add_foreign_key "cp_assessments", "companies", on_delete: :cascade
   add_foreign_key "cp_benchmarks", "sectors", on_delete: :cascade
   add_foreign_key "mq_assessments", "companies", on_delete: :cascade
   add_foreign_key "taggings", "tags", on_delete: :cascade
