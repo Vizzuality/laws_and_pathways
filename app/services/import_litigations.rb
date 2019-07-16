@@ -6,6 +6,7 @@ class ImportLitigations
   def call
     ActiveRecord::Base.transaction do
       import
+      cleanup
     end
   end
 
@@ -16,6 +17,10 @@ class ImportLitigations
       l = Litigation.find_or_initialize_by(title: row[:title])
       l.update!(litigation_attributes(row))
     end
+  end
+
+  def cleanup
+    LitigationSide.delete_all
   end
 
   def csv

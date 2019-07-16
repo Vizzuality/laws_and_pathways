@@ -45,6 +45,20 @@ ActiveAdmin.register Litigation do
           row :updated_at
         end
       end
+
+      tab :sides do
+        panel 'Litigation Sides' do
+          table_for resource.litigation_sides.order(:side_type) do
+            column :side_type do |s|
+              s.side_type.humanize
+            end
+            column :name
+            column :party_type do |s|
+              s.party_type&.humanize
+            end
+          end
+        end
+      end
     end
   end
 
