@@ -19,7 +19,7 @@ Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
 
 Layout/DotPosition:
-  EnforcedStyle: trailing
+  EnforcedStyle: leading
 
 Naming/HeredocDelimiterNaming:
   Enabled: false
@@ -50,6 +50,9 @@ Style/BlockDelimiters:
 Style/RegexpLiteral:
   EnforcedStyle: slashes
   AllowInnerSlashes: true
+
+Style/ClassAndModuleChildren:
+  Enabled: false
 
 Metrics/LineLength:
   Max: 100

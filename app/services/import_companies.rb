@@ -84,8 +84,8 @@ class ImportCompanies
 
   def get_questions(row)
     question_headers = row.headers.map(&:to_s)
-                         .select { |h| h.strip.end_with?('?') }
-                         .reject { |h| h.start_with?('CA100') }
+      .select { |h| h.strip.end_with?('?') }
+      .reject { |h| h.start_with?('CA100') }
 
     question_headers.map do |q_header|
       answer = row[q_header]
@@ -122,10 +122,10 @@ class ImportCompanies
     nil
   end
 
-  def parse_question(q)
-    return unless q.present?
+  def parse_question(question)
+    return unless question.present?
 
-    matches = q.match(/Q\d+L(\d+)\|(.+)/)
+    matches = question.match(/Q\d+L(\d+)\|(.+)/)
     level = matches[1]
     text = matches[2]
 
@@ -141,7 +141,7 @@ class ImportCompanies
 
   def find_location(iso)
     Location.find_by!(iso: fix_iso(iso))
-  rescue
+  rescue StandardError
     puts "Couldn't find Location with ISO: #{iso}"
   end
 
