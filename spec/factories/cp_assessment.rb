@@ -5,7 +5,6 @@ FactoryBot.define do
     assessment_date { 1.year.ago }
     publication_date { 11.months.ago }
 
-    level { '1' }
     assumptions { 'Assumptions about the assessment' }
 
     emissions do

@@ -63,7 +63,7 @@ ActiveAdmin.register Company do
                 attributes_table_for a do
                   row :level, &:status_description_short
                   row :publication_date do
-                    "#{a.publication_date.strftime('%B %Y')}"
+                    a.publication_date.strftime('%B %Y')
                   end
                   row :assessment_date
                 end
@@ -96,7 +96,7 @@ ActiveAdmin.register Company do
               div class: 'panel benchmark' do
                 attributes_table_for a do
                   row :publication_date do
-                    "#{a.publication_date.strftime('%B %Y')}"
+                    a.publication_date.strftime('%B %Y')
                   end
                   row :assessment_date
                   row :assumptions
@@ -118,6 +118,10 @@ ActiveAdmin.register Company do
                         end
                       end
                     end
+                  end
+                else
+                  div class: 'padding-20' do
+                    'No emission or target values for this assessment'
                   end
                 end
               end

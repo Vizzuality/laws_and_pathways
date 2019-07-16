@@ -100,7 +100,7 @@ class ImportCompanies
   def get_emissions(row)
     row.headers.grep(/^\d{4}$/).map do |year|
       {year.to_s.to_i => row[year]&.to_f}
-    end.reduce(&:merge) # .reject { |_k, v| v.blank? }
+    end.reduce(&:merge).reject { |_k, v| v.blank? }
   end
 
   def normalize_date(date)
