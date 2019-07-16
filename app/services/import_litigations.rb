@@ -30,7 +30,32 @@ class ImportLitigations
       citation_reference_number: row[:citation_reference_number],
       core_objective: row[:core_objective],
       summary: row[:description],
-      keywords: row[:keywords]
+      keywords: row[:keywords],
+      litigation_sides: get_litigation_sides(row)
     }
+  end
+
+  def get_litigation_sides(row)
+    sides = []
+
+    sides << get_sides(row[:side_a], row[:side_a_type], 'a')
+    sides << get_sides(row[:side_b], row[:side_b_type], 'b')
+    sides << get_sides(row[:side_c], row[:side_c_type], 'c')
+
+    sides.flatten.compact
+  end
+
+  def get_sides(sides_string, party_types_string, side_type)
+    return if sides_string.blank?
+
+    party_types = party_types_string&.split(',')&.map(&:strip)&.map(&:underscore) || []
+
+    sides_string.split(',').map.with_index do |side, index|
+      LitigationSide.new(
+        name: side,
+        side_type: side_type,
+        party_type: party_types[index]
+      )
+    end
   end
 end

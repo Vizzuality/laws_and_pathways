@@ -7,6 +7,7 @@ class Litigation < ApplicationRecord
   enum document_type: array_to_enum_hash(DOCUMENT_TYPES)
 
   belongs_to :location
+  has_many :litigation_sides
 
   validates_presence_of :title, :slug, :document_type
 end

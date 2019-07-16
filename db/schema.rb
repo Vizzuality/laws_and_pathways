@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_16_100402) do
+ActiveRecord::Schema.define(version: 2019_07_16_113250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,16 @@ ActiveRecord::Schema.define(version: 2019_07_16_100402) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["sector_id"], name: "index_cp_benchmarks_on_sector_id"
+  end
+
+  create_table "litigation_sides", force: :cascade do |t|
+    t.bigint "litigation_id"
+    t.string "name"
+    t.string "side_type", null: false
+    t.string "party_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["litigation_id"], name: "index_litigation_sides_on_litigation_id"
   end
 
   create_table "litigations", force: :cascade do |t|
@@ -147,6 +157,7 @@ ActiveRecord::Schema.define(version: 2019_07_16_100402) do
   add_foreign_key "companies", "locations", column: "headquarter_location_id"
   add_foreign_key "companies", "sectors"
   add_foreign_key "cp_benchmarks", "sectors", on_delete: :cascade
+  add_foreign_key "litigation_sides", "litigations", on_delete: :cascade
   add_foreign_key "litigations", "locations", column: "jurisdiction_id", on_delete: :cascade
   add_foreign_key "litigations", "locations", on_delete: :cascade
   add_foreign_key "mq_assessments", "companies", on_delete: :cascade
