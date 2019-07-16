@@ -8,5 +8,5 @@ class Litigation < ApplicationRecord
 
   belongs_to :location
 
-  validates_presence_of :title, :slug
+  validates_presence_of :title, :slug, :document_type
 end

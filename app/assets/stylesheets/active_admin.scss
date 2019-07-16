@@ -51,6 +51,10 @@ $padding: 20px;
   padding: $padding;
 }
 
+.max-width-300 {
+  max-width: 300px;
+}
+
 fieldset.actions .cancel a {
   &:hover {
     color: white;

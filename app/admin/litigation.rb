@@ -1,21 +1,51 @@
 ActiveAdmin.register Litigation do
   menu priority: 3
 
-  permit_params :title, :location_id
+  permit_params :title, :location_id, :document_type, :summary, :core_objective
 
   filter :title_contains
+  filter :summary_contains
   filter :location
+  filter :document_type, as: :select, collection: proc {
+    array_to_select_collection(Litigation::DOCUMENT_TYPES)
+  }
 
   config.batch_actions = false
 
   index do
-    column :title do |l|
+    column :title, class: 'max-width-300' do |l|
       link_to l.title, admin_litigation_path(l)
     end
-    column :document_type, &:humanize
+    column :document_type do |l|
+      l.document_type.humanize
+    end
     column :location
     column :citation_reference_number
     actions
+  end
+
+  show do
+    tabs do
+      tab :details do
+        attributes_table do
+          row :id
+          row :title
+          row :slug
+          row :document_type do
+            resource.document_type.humanize
+          end
+          row :citation_reference_number
+          row :summary do
+            resource.summary.html_safe
+          end
+          row :core_objective do
+            resource.core_objective.html_safe
+          end
+          row :created_at
+          row :updated_at
+        end
+      end
+    end
   end
 
   form do |f|
@@ -24,7 +54,7 @@ ActiveAdmin.register Litigation do
     f.inputs do
       f.input :title
       f.input :location
-      f.input :document_type, as: :select, collection: Litigation::DOCUMENT_TYPES
+      f.input :document_type, as: :select, collection: array_to_select_collection(Litigation::DOCUMENT_TYPES)
       f.input :summary, as: :trix
       f.input :core_objective, as: :trix
     end

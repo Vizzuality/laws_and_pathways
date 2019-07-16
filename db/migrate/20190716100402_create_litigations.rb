@@ -12,6 +12,7 @@ class CreateLitigations < ActiveRecord::Migration[5.2]
                    }, index: true
       t.text :summary
       t.text :core_objective
+      t.text :keywords
 
       t.timestamps
     end

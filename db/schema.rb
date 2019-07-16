@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 2019_07_16_100402) do
     t.bigint "jurisdiction_id"
     t.text "summary"
     t.text "core_objective"
+    t.text "keywords"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["document_type"], name: "index_litigations_on_document_type"
