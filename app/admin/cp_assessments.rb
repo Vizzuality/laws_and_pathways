@@ -1,9 +1,9 @@
-ActiveAdmin.register MQ::Assessment do
+ActiveAdmin.register CP::Assessment do
   config.sort_order = 'publication_date_desc'
 
-  menu priority: 6, parent: 'Assessments', label: 'Management Quality Assessments'
+  menu priority: 6, parent: 'Assessments', label: 'Carbon Performance Assessments'
 
-  decorate_with MQ::AssessmentDecorator
+  decorate_with CP::AssessmentDecorator
 
   actions :all, except: [:new, :edit, :create, :update]
 
@@ -11,32 +11,20 @@ ActiveAdmin.register MQ::Assessment do
   filter :publication_date
   filter :company
   filter :company_sector_id, as: :select, collection: proc { Sector.all }
-  filter :level, as: :select, collection: MQ::Assessment::LEVELS
 
   show do
     attributes_table do
       row :id
       row :company
-      row :level, &:status_description_short
       row :assessment_date
       row :publication_date
-      row :notes
+      row :assumptions
       row :created_at
       row :updated_at
     end
 
-    panel 'Questions' do
-      table_for resource.questions do
-        column :level do |q|
-          q['level']
-        end
-        column :answer do |q|
-          q['answer']
-        end
-        column :question do |q|
-          q['question']
-        end
-      end
+    panel 'Emissions/Targets' do
+      render 'admin/cp/emissions_table', emissions: resource.emissions
     end
   end
 
@@ -44,7 +32,6 @@ ActiveAdmin.register MQ::Assessment do
     column :title, &:title_link
     column :assessment_date
     column :publication_date
-    column :level, &:status_description_short
     actions
   end
 

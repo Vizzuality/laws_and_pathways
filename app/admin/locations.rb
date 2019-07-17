@@ -1,7 +1,9 @@
 ActiveAdmin.register Location do
   menu priority: 3
 
-  permit_params :name, :iso, :region, :federal, :federal_details, :approach_to_climate_change,
+  decorate_with LocationDecorator
+
+  permit_params :name, :iso, :region, :federal, :federal_details,
                 :legislative_process, :location_type, political_group_ids: []
 
   filter :federal
@@ -12,13 +14,25 @@ ActiveAdmin.register Location do
 
   config.batch_actions = false
 
+  show do
+    attributes_table do
+      row :id
+      row :name
+      row :iso
+      row :location_type
+      row :region
+      row :federal
+      row :federal_details if resource.federal?
+      row :legislative_process
+      row :political_groups
+      row :created_at
+      row :updated_at
+    end
+  end
+
   index do
-    column :name do |location|
-      link_to location.name, admin_location_path(location)
-    end
-    column :location_type do |location|
-      location.location_type.humanize
-    end
+    column 'Name', :name_link
+    column :location_type
     column 'ISO', :iso
     actions
   end
@@ -33,7 +47,6 @@ ActiveAdmin.register Location do
       f.input :region, as: :select, collection: Location::REGIONS
       f.input :federal, input_html: {id: 'federal'}
       f.input :federal_details, wrapper_html: {data: {controller: 'dependent-input', depends_on: 'federal'}}
-      f.input :approach_to_climate_change, as: :trix
       f.input :legislative_process, as: :trix
       f.input :political_group_ids, label: 'Political Groups', as: :tags, collection: PoliticalGroup.all
     end

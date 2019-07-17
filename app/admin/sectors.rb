@@ -35,7 +35,7 @@ ActiveAdmin.register Sector do
           else
             resource.cp_benchmarks.latest_first.map do |benchmark|
               panel "Released in #{benchmark.date.strftime('%B %Y')}", class: 'benchmark' do
-                table_for benchmark.benchmarks do
+                table_for benchmark.benchmarks, class: 'cell-padding-sm cell-centered' do
                   column :name do |b|
                     b['name']
                   end

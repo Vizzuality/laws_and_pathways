@@ -33,5 +33,12 @@ FactoryBot.define do
         create :mq_assessment, company: c, assessment_date: 1.month.ago
       end
     end
+
+    trait :with_cp_assessments do
+      after(:create) do |c|
+        create :cp_assessment, company: c, assessment_date: 1.year.ago
+        create :cp_assessment, company: c, assessment_date: 1.month.ago
+      end
+    end
   end
 end

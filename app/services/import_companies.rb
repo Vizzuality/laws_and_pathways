@@ -17,14 +17,14 @@ class ImportCompanies
       company = Company.find_or_initialize_by(isin: row[:isin])
       company.update!(company_attributes(row))
 
-      MQ::Assessment.create!(
-        mq_assessment_attributes(row).merge(company_id: company.id)
-      )
+      create_mq_assessment!(row, company)
+      create_cp_assessment!(row, company)
     end
   end
 
   def cleanup
     MQ::Assessment.destroy_all
+    CP::Assessment.destroy_all
   end
 
   def csv
@@ -37,6 +37,27 @@ class ImportCompanies
 
       CSV::HeaderConverters[:symbol].call(h)
     end
+  end
+
+  def create_mq_assessment!(row, company)
+    MQ::Assessment.create!(
+      mq_assessment_attributes(row).merge(company_id: company.id)
+    )
+  end
+
+  def create_cp_assessment!(row, company)
+    assumptions = row[:assumptions]&.strip
+    cp_assessment_date = row[:carbon_performance_assessment_date]&.strip&.downcase
+
+    return if cp_assessment_date == 'not assessed' && assumptions.blank?
+
+    CP::Assessment.create!(
+      publication_date: normalize_date(row[:publication_date]),
+      assessment_date: normalize_date(cp_assessment_date),
+      emissions: get_emissions(row),
+      assumptions: assumptions,
+      company_id: company.id
+    )
   end
 
   def company_attributes(row)
@@ -74,6 +95,13 @@ class ImportCompanies
 
       parse_question(q_header).merge(answer: answer)
     end.compact
+  end
+
+  def get_emissions(row)
+    row.headers
+      .grep(/^\d{4}$/)
+      .map { |year| {year.to_s.to_i => row[year]&.to_f} }
+      .reduce(&:merge).reject { |_k, v| v.blank? }
   end
 
   def normalize_date(date)

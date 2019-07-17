@@ -57,6 +57,10 @@ GEM
       globalid (>= 0.3.6)
     activemodel (5.2.3)
       activesupport (= 5.2.3)
+    activemodel-serializers-xml (1.0.2)
+      activemodel (> 5.x)
+      activesupport (> 5.x)
+      builder (~> 3.1)
     activerecord (5.2.3)
       activemodel (= 5.2.3)
       activesupport (= 5.2.3)
@@ -136,6 +140,12 @@ GEM
     dotenv-rails (2.7.4)
       dotenv (= 2.7.4)
       railties (>= 3.2, < 6.1)
+    draper (3.1.0)
+      actionpack (>= 5.0)
+      activemodel (>= 5.0)
+      activemodel-serializers-xml (>= 1.0)
+      activesupport (>= 5.0)
+      request_store (>= 1.0)
     erubi (1.8.0)
     execjs (2.7.0)
     factory_bot (5.0.2)
@@ -247,6 +257,8 @@ GEM
     rb-inotify (0.10.0)
       ffi (~> 1.0)
     regexp_parser (1.5.1)
+    request_store (1.4.1)
+      rack (>= 1.4)
     require_all (1.5.0)
     responders (2.4.1)
       actionpack (>= 4.2.0, < 6.0)
@@ -371,6 +383,7 @@ DEPENDENCIES
   climate_watch_engine (~> 1.4.3)!
   devise
   dotenv-rails
+  draper
   factory_bot_rails
   friendly_id
   listen (>= 3.0.5, < 3.2)
