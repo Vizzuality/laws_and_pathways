@@ -86,28 +86,7 @@ ActiveAdmin.register Company do
                   row :assumptions
                 end
 
-                if a.emissions.present?
-                  table class: 'table cell-padding-sm cell-centered' do
-                    thead do
-                      a.emissions_all_years.map do |year|
-                        th year
-                      end
-                    end
-                    tbody do
-                      tr do
-                        a.emissions_all_years.map do |year|
-                          td do
-                            a.emissions[year] || 'N/A'
-                          end
-                        end
-                      end
-                    end
-                  end
-                else
-                  div class: 'padding-20' do
-                    'No emission or target values for this assessment'
-                  end
-                end
+                render 'admin/cp/emissions_table', emissions: a.emissions
               end
             end
           end
