@@ -55,7 +55,7 @@ class ImportCompanies
       publication_date: normalize_date(row[:publication_date]),
       assessment_date: normalize_date(cp_assessment_date),
       emissions: get_emissions(row),
-      assumptions: row[:assumptions],
+      assumptions: assumptions,
       company_id: company.id
     )
   end
