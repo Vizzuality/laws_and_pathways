@@ -8,6 +8,7 @@ AllCops:
     - 'config/initializers/*'
     - 'config/*'
     - 'node_modules/**/*'
+    - 'vendor/**/*'
 
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
