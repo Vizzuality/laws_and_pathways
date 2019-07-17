@@ -5,8 +5,8 @@ class ImportLitigations
 
   def call
     ActiveRecord::Base.transaction do
-      import
       cleanup
+      import
     end
   end
 
