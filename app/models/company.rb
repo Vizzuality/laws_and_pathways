@@ -26,7 +26,8 @@ class Company < ApplicationRecord
   belongs_to :location
   belongs_to :headquarter_location, class_name: 'Location'
 
-  has_many :mq_assessments, -> { latest_first }, class_name: 'MQ::Assessment', inverse_of: :company
+  has_many :mq_assessments, class_name: 'MQ::Assessment', inverse_of: :company
+  has_many :cp_assessments, class_name: 'CP::Assessment', inverse_of: :company
 
   delegate :level, :status, :status_description_short,
            to: :latest_assessment, prefix: :mq, allow_nil: true

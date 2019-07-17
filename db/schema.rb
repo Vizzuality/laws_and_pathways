@@ -60,6 +60,17 @@ ActiveRecord::Schema.define(version: 2019_07_16_113250) do
     t.index ["slug"], name: "index_companies_on_slug", unique: true
   end
 
+  create_table "cp_assessments", force: :cascade do |t|
+    t.bigint "company_id"
+    t.date "publication_date", null: false
+    t.date "assessment_date"
+    t.jsonb "emissions"
+    t.text "assumptions"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_cp_assessments_on_company_id"
+  end
+
   create_table "cp_benchmarks", force: :cascade do |t|
     t.bigint "sector_id"
     t.date "date", null: false
@@ -156,6 +167,7 @@ ActiveRecord::Schema.define(version: 2019_07_16_113250) do
   add_foreign_key "companies", "locations"
   add_foreign_key "companies", "locations", column: "headquarter_location_id"
   add_foreign_key "companies", "sectors"
+  add_foreign_key "cp_assessments", "companies", on_delete: :cascade
   add_foreign_key "cp_benchmarks", "sectors", on_delete: :cascade
   add_foreign_key "litigation_sides", "litigations", on_delete: :cascade
   add_foreign_key "litigations", "locations", column: "jurisdiction_id", on_delete: :cascade
