@@ -17,6 +17,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'activeadmin'
 gem 'activeadmin_addons'
 gem 'devise'
+gem 'draper'
 
 gem 'aws-sdk-rails'
 gem 'aws-sdk-s3'

@@ -1,6 +1,8 @@
 ActiveAdmin.register Location do
   menu priority: 3
 
+  decorate_with LocationDecorator
+
   permit_params :name, :iso, :region, :federal, :federal_details,
                 :legislative_process, :location_type, political_group_ids: []
 
@@ -17,16 +19,11 @@ ActiveAdmin.register Location do
       row :id
       row :name
       row :iso
+      row :location_type
       row :region
       row :federal
-      if resource.federal?
-        row :federal_details do
-          resource.federal_details&.html_safe
-        end
-      end
-      row :legislative_process do
-        resource.legislative_process&.html_safe
-      end
+      row :federal_details if resource.federal?
+      row :legislative_process
       row :political_groups
       row :created_at
       row :updated_at
@@ -34,12 +31,8 @@ ActiveAdmin.register Location do
   end
 
   index do
-    column :name do |location|
-      link_to location.name, admin_location_path(location)
-    end
-    column :location_type do |location|
-      location.location_type.humanize
-    end
+    column 'Name', :name_link
+    column :location_type
     column 'ISO', :iso
     actions
   end

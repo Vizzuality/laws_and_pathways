@@ -15,13 +15,7 @@ ActiveAdmin.register Company do
   sidebar 'Details', only: :show do
     attributes_table do
       row :company, &:name
-      row :level do
-        if resource.mq_level.present?
-          div do
-            "#{resource.mq_level} (#{resource.mq_status})"
-          end
-        end
-      end
+      row :level, &:mq_status_description_short
       row :updated_at
     end
   end
@@ -39,13 +33,7 @@ ActiveAdmin.register Company do
           row :headquarter_location
           row :ca100
           row :size
-          row 'Management Quality Level' do
-            if resource.mq_level.present?
-              div do
-                "#{resource.mq_level} (#{resource.mq_status})"
-              end
-            end
-          end
+          row 'Management Quality Level', &:mq_status_description_short
           row :created_at
           row :updated_at
         end
@@ -58,13 +46,11 @@ ActiveAdmin.register Company do
               'No Management Quality Assessments for this company yet'
             end
           else
-            resource.mq_assessments.latest_first.map do |a|
-              panel "Assessement taken on #{a.assessment_date}", class: 'mq_assessment' do
+            resource.mq_assessments.latest_first.decorate.map do |a|
+              panel a.title, class: 'mq_assessment' do
                 attributes_table_for a do
                   row :level, &:status_description_short
-                  row :publication_date do
-                    a.publication_date.strftime('%B %Y')
-                  end
+                  row :publication_date
                   row :assessment_date
                 end
 
@@ -92,12 +78,10 @@ ActiveAdmin.register Company do
               'No Carbon Performance Assessments for this company yet'
             end
           else
-            resource.cp_assessments.latest_first.map do |a|
+            resource.cp_assessments.latest_first.decorate.map do |a|
               div class: 'panel benchmark' do
                 attributes_table_for a do
-                  row :publication_date do
-                    a.publication_date.strftime('%B %Y')
-                  end
+                  row :publication_date
                   row :assessment_date
                   row :assumptions
                 end

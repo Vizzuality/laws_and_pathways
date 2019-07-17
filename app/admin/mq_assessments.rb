@@ -3,6 +3,8 @@ ActiveAdmin.register MQ::Assessment do
 
   menu priority: 6, parent: 'Assessments', label: 'Management Quality Assessments'
 
+  decorate_with MQ::AssessmentDecorator
+
   actions :all, except: [:new, :edit, :create, :update]
 
   filter :assessment_date
