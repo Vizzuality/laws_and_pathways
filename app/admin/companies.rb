@@ -8,7 +8,9 @@ ActiveAdmin.register Company do
   filter :name_contains, label: 'Name'
   filter :location
   filter :headquarter_location
-  filter :size, as: :check_boxes, collection: proc { array_to_select_collection(Company::SIZES) }
+  filter :size,
+         as: :check_boxes,
+         collection: proc { array_to_select_collection(Company::SIZES) }
 
   config.batch_actions = false
 
@@ -120,7 +122,11 @@ ActiveAdmin.register Company do
 
       columns do
         column { f.input :sector }
-        column { f.input :size, as: :select, collection: array_to_select_collection(Company::SIZES) }
+        column do
+          f.input :size,
+                  as: :select,
+                  collection: array_to_select_collection(Company::SIZES)
+        end
       end
 
       columns do

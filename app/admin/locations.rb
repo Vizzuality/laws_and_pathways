@@ -10,7 +10,9 @@ ActiveAdmin.register Location do
   filter :iso_equals, label: 'ISO'
   filter :name_contains, label: 'Name'
   filter :region, as: :check_boxes, collection: proc { Location::REGIONS }
-  filter :political_groups, as: :check_boxes, collection: proc { PoliticalGroup.all }
+  filter :political_groups,
+         as: :check_boxes,
+         collection: proc { PoliticalGroup.all }
 
   config.batch_actions = false
 
@@ -50,9 +52,13 @@ ActiveAdmin.register Location do
       f.input :iso
       f.input :region, as: :select, collection: Location::REGIONS
       f.input :federal, input_html: {id: 'federal'}
-      f.input :federal_details, wrapper_html: {data: {controller: 'dependent-input', depends_on: 'federal'}}
+      f.input :federal_details,
+              wrapper_html: {data: {controller: 'dependent-input', depends_on: 'federal'}}
       f.input :legislative_process, as: :trix
-      f.input :political_group_ids, label: 'Political Groups', as: :tags, collection: PoliticalGroup.all
+      f.input :political_group_ids,
+              label: 'Political Groups',
+              as: :tags,
+              collection: PoliticalGroup.all
     end
 
     f.actions

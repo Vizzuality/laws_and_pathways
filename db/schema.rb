@@ -80,6 +80,19 @@ ActiveRecord::Schema.define(version: 2019_07_16_113250) do
     t.index ["sector_id"], name: "index_cp_benchmarks_on_sector_id"
   end
 
+  create_table "legislations", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.integer "law_id"
+    t.string "framework"
+    t.string "slug", null: false
+    t.bigint "location_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_legislations_on_location_id"
+    t.index ["slug"], name: "index_legislations_on_slug", unique: true
+  end
+
   create_table "litigation_sides", force: :cascade do |t|
     t.bigint "litigation_id"
     t.string "name"
@@ -169,6 +182,7 @@ ActiveRecord::Schema.define(version: 2019_07_16_113250) do
   add_foreign_key "companies", "sectors"
   add_foreign_key "cp_assessments", "companies", on_delete: :cascade
   add_foreign_key "cp_benchmarks", "sectors", on_delete: :cascade
+  add_foreign_key "legislations", "locations"
   add_foreign_key "litigation_sides", "litigations", on_delete: :cascade
   add_foreign_key "litigations", "locations", column: "jurisdiction_id", on_delete: :cascade
   add_foreign_key "litigations", "locations", on_delete: :cascade
