@@ -1,10 +1,12 @@
 ActiveAdmin.register Legislation do
   permit_params :title, :description, :framework, :location_id, :law_id
 
-  filter :title
-  filter :description
-  filter :framework
+  filter :title_contains, label: 'Title'
+  filter :description_contains, label: 'Description'
   filter :location
+  filter :framework,
+         as: :select,
+         collection: array_to_select_collection(Legislation::FRAMEWORKS)
 
   index do
     column :title do |legislation|
