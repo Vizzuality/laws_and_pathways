@@ -4,6 +4,7 @@ namespace :import do
     Rake::Task['import:locations'].invoke
     Rake::Task['import:companies'].invoke
     Rake::Task['import:cp_benchmarks'].invoke
+    Rake::Task['import:litigations'].invoke
   end
 
   desc 'Imports Locations'
@@ -24,6 +25,13 @@ namespace :import do
   task cp_benchmarks: :environment do
     TimedLogger.log('import CP benchmarks') do
       ImportCPBenchmarks.new.call
+    end
+  end
+
+  desc 'Imports Litigations'
+  task litigations: :environment do
+    TimedLogger.log('import Litigations') do
+      ImportLitigations.new.call
     end
   end
 end

@@ -1,0 +1,73 @@
+ActiveAdmin.register Litigation do
+  menu priority: 3
+
+  decorate_with LitigationDecorator
+
+  permit_params :title, :location_id, :document_type, :summary, :core_objective
+
+  filter :title_contains
+  filter :summary_contains
+  filter :location
+  filter :document_type, as: :select, collection: proc {
+    array_to_select_collection(Litigation::DOCUMENT_TYPES)
+  }
+
+  config.batch_actions = false
+
+  index do
+    column :title, class: 'max-width-300', &:title_link
+    column :document_type
+    column :location
+    column :citation_reference_number
+    actions
+  end
+
+  show do
+    tabs do
+      tab :details do
+        attributes_table do
+          row :id
+          row :title
+          row :slug
+          row :location
+          row :document_type
+          row :citation_reference_number
+          row :summary
+          row :core_objective
+          row :created_at
+          row :updated_at
+        end
+      end
+
+      tab :sides do
+        panel 'Litigation Sides' do
+          table_for resource.litigation_sides.order(:side_type).decorate do
+            column :side_type
+            column :name
+            column :party_type
+          end
+        end
+      end
+    end
+  end
+
+  form do |f|
+    f.semantic_errors(*f.object.errors.keys)
+
+    f.inputs do
+      f.input :title
+      f.input :location
+      f.input :document_type, as: :select, collection: array_to_select_collection(Litigation::DOCUMENT_TYPES)
+      f.input :summary, as: :trix
+      f.input :core_objective, as: :trix
+    end
+
+    f.actions
+  end
+
+  controller do
+    def find_resource
+      scoped_collection.friendly.find(params[:id])
+    end
+  end
+end

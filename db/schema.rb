@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_15_150750) do
+ActiveRecord::Schema.define(version: 2019_07_16_113250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,6 +93,34 @@ ActiveRecord::Schema.define(version: 2019_07_15_150750) do
     t.index ["slug"], name: "index_legislations_on_slug", unique: true
   end
 
+  create_table "litigation_sides", force: :cascade do |t|
+    t.bigint "litigation_id"
+    t.string "name"
+    t.string "side_type", null: false
+    t.string "party_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["litigation_id"], name: "index_litigation_sides_on_litigation_id"
+  end
+
+  create_table "litigations", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "slug", null: false
+    t.string "citation_reference_number"
+    t.string "document_type"
+    t.bigint "location_id"
+    t.bigint "jurisdiction_id"
+    t.text "summary"
+    t.text "core_objective"
+    t.text "keywords"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_type"], name: "index_litigations_on_document_type"
+    t.index ["jurisdiction_id"], name: "index_litigations_on_jurisdiction_id"
+    t.index ["location_id"], name: "index_litigations_on_location_id"
+    t.index ["slug"], name: "index_litigations_on_slug", unique: true
+  end
+
   create_table "locations", force: :cascade do |t|
     t.string "location_type", null: false
     t.string "iso", null: false
@@ -155,6 +183,9 @@ ActiveRecord::Schema.define(version: 2019_07_15_150750) do
   add_foreign_key "cp_assessments", "companies", on_delete: :cascade
   add_foreign_key "cp_benchmarks", "sectors", on_delete: :cascade
   add_foreign_key "legislations", "locations"
+  add_foreign_key "litigation_sides", "litigations", on_delete: :cascade
+  add_foreign_key "litigations", "locations", column: "jurisdiction_id", on_delete: :cascade
+  add_foreign_key "litigations", "locations", on_delete: :cascade
   add_foreign_key "mq_assessments", "companies", on_delete: :cascade
   add_foreign_key "taggings", "tags", on_delete: :cascade
 end

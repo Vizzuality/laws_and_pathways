@@ -17,18 +17,22 @@ ActiveAdmin.register Location do
   config.batch_actions = false
 
   show do
-    attributes_table do
-      row :id
-      row :name
-      row :iso
-      row :location_type
-      row :region
-      row :federal
-      row :federal_details if resource.federal?
-      row :legislative_process
-      row :political_groups
-      row :created_at
-      row :updated_at
+    tabs do
+      tab :details do
+        attributes_table do
+          row :id
+          row :name
+          row :iso
+          row :location_type
+          row :region
+          row :federal
+          row :federal_details if resource.federal?
+          row :legislative_process
+          row :political_groups
+          row :created_at
+          row :updated_at
+        end
+      end
     end
   end
 

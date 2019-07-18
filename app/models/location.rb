@@ -38,6 +38,8 @@ class Location < ApplicationRecord
 
   tag_with :political_groups
 
+  has_many :litigations
+
   validates_uniqueness_of :slug, :iso
   validates_presence_of :name, :slug, :iso, :location_type
   validates :federal, inclusion: {in: [true, false]}
