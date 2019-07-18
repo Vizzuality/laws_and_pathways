@@ -9,7 +9,7 @@ module CSVImporter
       file.body.read,
       headers: true,
       skip_blanks: true,
-      converters: [hard_space_converter, strip_converter],
+      converters: [hard_space_converter, strip_converter]
     ).delete_if { |row| row.to_hash.values.all?(&:blank?) }
   end
 end
