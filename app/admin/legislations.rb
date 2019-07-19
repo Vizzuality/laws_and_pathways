@@ -8,6 +8,8 @@ ActiveAdmin.register Legislation do
          as: :select,
          collection: array_to_select_collection(Legislation::FRAMEWORKS)
 
+  config.batch_actions = false
+
   index do
     column :title do |legislation|
       link_to legislation.title, admin_legislation_path(legislation)
