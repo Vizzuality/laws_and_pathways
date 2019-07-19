@@ -3,7 +3,8 @@
 # Table name: documents
 #
 #  id                :bigint           not null, primary key
-#  name              :string
+#  name              :string           not null
+#  type              :string           not null
 #  external_url      :text
 #  language          :string
 #  last_verified_on  :date
@@ -18,5 +19,40 @@ require 'rails_helper'
 RSpec.describe Document, type: :model do
   subject { build(:document) }
 
-  it { is_expected.to be_valid }
+  it 'should not be valid without name' do
+    subject.name = nil
+    expect(subject).to have(1).errors_on(:name)
+  end
+
+  it 'should not be valid without type' do
+    subject.type = nil
+    expect(subject).to have(1).errors_on(:type)
+  end
+
+  describe 'uploaded' do
+    subject { FactoryBot.build(:document_uploaded) }
+
+    it { is_expected.to be_valid }
+
+    it 'should be invalid without file' do
+      subject.file.purge
+      expect(subject).to have(1).errors_on(:file)
+    end
+  end
+
+  describe 'external' do
+    subject { FactoryBot.build(:document) }
+
+    it { is_expected.to be_valid }
+
+    it 'should not be valid without external_url' do
+      subject.external_url = nil
+      expect(subject).to have(1).errors_on(:external_url)
+    end
+
+    it 'should be invalid if external_url is not a valid URL' do
+      subject.external_url = 'not a valid external_url'
+      expect(subject).to have(1).errors_on(:external_url)
+    end
+  end
 end
