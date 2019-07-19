@@ -34,6 +34,9 @@ en:
     edit_model: 'Edit'
     delete_model: 'Delete'
   activerecord:
+    errors:
+      messages:
+        attached: is not attached
     attributes:
       company:
         isin: 'ISIN'
