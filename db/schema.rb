@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_16_113250) do
+ActiveRecord::Schema.define(version: 2019_07_19_102422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,18 @@ ActiveRecord::Schema.define(version: 2019_07_16_113250) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["sector_id"], name: "index_cp_benchmarks_on_sector_id"
+  end
+
+  create_table "documents", force: :cascade do |t|
+    t.string "name"
+    t.text "external_url"
+    t.string "language"
+    t.date "last_verified_on"
+    t.string "documentable_type"
+    t.bigint "documentable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["documentable_type", "documentable_id"], name: "index_documents_on_documentable_type_and_documentable_id"
   end
 
   create_table "legislations", force: :cascade do |t|
