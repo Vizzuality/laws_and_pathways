@@ -20,11 +20,33 @@ class Document < ApplicationRecord
   has_one_attached :file
 
   TYPES = %w[uploaded external].freeze
-
   enum type: array_to_enum_hash(TYPES)
+
+  belongs_to :documentable, polymorphic: true
+
+  before_validation :set_type
 
   validates :external_url, url: true, presence: true, if: :external?
   validates :file, attached: true, if: :uploaded?
 
-  validates_presence_of :name, :type
+  validates_presence_of :name
+
+  def url
+    return file_url if uploaded?
+
+    external_url
+  end
+
+  private
+
+  def file_url
+    return unless file.attached?
+
+    Rails.application.routes.url_helpers.polymorphic_url(file, only_path: true)
+  end
+
+  def set_type
+    self.type = external_url.present? ? 'external' : 'uploaded'
+    file.purge if external?
+  end
 end

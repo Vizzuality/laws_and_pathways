@@ -3,7 +3,10 @@ ActiveAdmin.register Litigation do
 
   decorate_with LitigationDecorator
 
-  permit_params :title, :location_id, :document_type, :summary, :core_objective
+  permit_params :title, :location_id, :document_type, :summary, :core_objective,
+                documents_attributes: [
+                  :id, :_destroy, :name, :external_url, :file
+                ]
 
   filter :title_contains
   filter :summary_contains
@@ -36,6 +39,7 @@ ActiveAdmin.register Litigation do
           row :core_objective
           row :created_at
           row :updated_at
+          list_row 'Documents', :document_list
         end
       end
 
@@ -60,6 +64,12 @@ ActiveAdmin.register Litigation do
       f.input :document_type, as: :select, collection: array_to_select_collection(Litigation::DOCUMENT_TYPES)
       f.input :summary, as: :trix
       f.input :core_objective, as: :trix
+
+      f.has_many :documents, allow_destroy: true, new_record: true do |d|
+        d.input :file, as: :file
+        d.input :external_url, label: 'Or provide external url'
+        d.input :name
+      end
     end
 
     f.actions
