@@ -55,25 +55,7 @@ ActiveAdmin.register Litigation do
     end
   end
 
-  form do |f|
-    f.semantic_errors(*f.object.errors.keys)
-
-    f.inputs do
-      f.input :title
-      f.input :location
-      f.input :document_type, as: :select, collection: array_to_select_collection(Litigation::DOCUMENT_TYPES)
-      f.input :summary, as: :trix
-      f.input :core_objective, as: :trix
-
-      f.has_many :documents, allow_destroy: true, new_record: true do |d|
-        d.input :file, as: :file
-        d.input :external_url, label: 'Or provide external url'
-        d.input :name
-      end
-    end
-
-    f.actions
-  end
+  form partial: 'form'
 
   controller do
     def find_resource

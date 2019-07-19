@@ -1,0 +1,15 @@
+<div class="padding-20" data-controller="document-list">
+  <template data-target="document-list.template">
+    <%= form.semantic_fields_for :documents, Document.new, child_index: 'NEW_RECORD' do |document| %>
+      <%= render "admin/documents/fields", form: document %>
+    <% end %>
+  </template>
+
+  <%= form.semantic_fields_for :documents do |document| %>
+    <%= render "admin/documents/fields", form: document %>
+  <% end %>
+
+  <div data-target="document-list.links">
+    <%= link_to "Add Document", "#", class: 'button', data: { action: "click->document-list#add_association" } %>
+  </div>
+</div>

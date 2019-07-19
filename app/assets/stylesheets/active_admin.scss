@@ -128,3 +128,15 @@ form {
     }
   }
 }
+
+// Documents
+
+.inline-fields {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  .flex-grow-1 {
+    flex-grow: 1;
+  }
+}

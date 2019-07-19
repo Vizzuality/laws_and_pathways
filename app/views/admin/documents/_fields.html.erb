@@ -1,0 +1,10 @@
+<% is_new_record = form.object.new_record? %>
+
+<%= content_tag :div, class: "panel nested-fields inline-fields", data: { new_record: is_new_record } do %>
+  <%= form.input :file, as: :file %>
+  <%= form.input :external_url, as: :string, label: 'Or provide external url', wrapper_html: { class: 'flex-grow-1' } %>
+  <%= form.input :name, wrapper_html: { class: 'flex-grow-1' } %>
+
+  <%= link_to "Remove", "#", class: 'button', data: { action: "click->document-list#remove_association" } %>
+  <%= form.hidden_field :_destroy %>
+<% end %>
