@@ -24,12 +24,10 @@ class Document < ApplicationRecord
 
   belongs_to :documentable, polymorphic: true
 
-  before_validation :set_type
-
   validates :external_url, url: true, presence: true, if: :external?
   validates :file, attached: true, if: :uploaded?
 
-  validates_presence_of :name
+  validates_presence_of :name, :type
 
   def url
     return file_url if uploaded?
@@ -43,10 +41,5 @@ class Document < ApplicationRecord
     return unless file.attached?
 
     Rails.application.routes.url_helpers.polymorphic_url(file, only_path: true)
-  end
-
-  def set_type
-    self.type = external_url.present? ? 'external' : 'uploaded'
-    file.purge if external?
   end
 end

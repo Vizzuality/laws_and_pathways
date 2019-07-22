@@ -10,9 +10,19 @@ ActiveAdmin.register Document do
 
   actions :all, except: [:new, :edit, :create, :update]
 
+  show do
+    attributes_table do
+      row :id
+      row :name
+      row :link, &:open_link
+      row :last_verified_on
+      row :created_at
+      row :updated_at
+    end
+  end
+
   index do
-    column :name_link
-    column :open_link
+    column 'name', &:name_link
     column 'Attached To', :documentable
     column :last_verified_on
     actions

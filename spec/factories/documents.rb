@@ -22,6 +22,8 @@ FactoryBot.define do
     external_url { 'https://test.com' }
     last_verified_on { 10.days.ago }
 
+    documentable { |d| d.association(:legislation) }
+
     factory :document_uploaded do
       type { 'uploaded' }
       file { TestFiles.pdf }
