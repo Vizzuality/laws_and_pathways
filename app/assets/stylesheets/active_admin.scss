@@ -1,11 +1,7 @@
-$am-theme-primary: #00689f;
-$am-theme-accent: #7dd2f7;
-$am-theme-accent-fallback: #ff7547;
-
-$padding: 20px;
-
+@import 'admin/settings';
 @import 'trix/dist/trix';
 @import 'activeadmin_addons/all';
+
 // SASS variable overrides must be declared before loading up Active Admin's styles.
 //
 // To view the variables that Active Admin provides, take a look at
@@ -21,6 +17,22 @@ $padding: 20px;
 
 .hidden {
   display: none;
+}
+
+.button {
+  margin: 0;
+
+  &--raised {
+    @include am-btn-raised;
+  }
+
+  &--red {
+    background-color: $admin-red;
+
+    &:hover {
+      background-color: lighten($admin-red, 20%);
+    }
+  }
 }
 
 .table_tools {
@@ -131,10 +143,20 @@ form {
 
 // Documents
 
+.document-list {
+  &__actions {
+    padding: 16px;
+  }
+}
+
 .inline-fields {
   display: flex;
   justify-content: space-around;
-  align-items: center;
+  align-items: flex-end;
+
+  li {
+    margin: 0;
+  }
 
   .flex-grow-1 {
     flex-grow: 1;
