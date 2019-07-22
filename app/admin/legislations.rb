@@ -1,4 +1,6 @@
 ActiveAdmin.register Legislation do
+  decorate_with LegislationDecorator
+
   permit_params :title, :description, :framework, :location_id, :law_id
 
   filter :title_contains, label: 'Title'
@@ -11,12 +13,9 @@ ActiveAdmin.register Legislation do
   config.batch_actions = false
 
   index do
-    column :title do |legislation|
-      link_to legislation.title, admin_legislation_path(legislation)
-    end
+    column :title, &:title_summary_link
     column :framework
     column :location
-    column :slug
 
     actions
   end
@@ -26,7 +25,7 @@ ActiveAdmin.register Legislation do
 
     f.inputs do
       f.input :title
-      f.input :description
+      f.input :description, as: :trix
       columns do
         column { f.input :location }
         column do
