@@ -2,8 +2,8 @@
 #
 # Table name: mq_assessments
 #
-#  id               :bigint(8)        not null, primary key
-#  company_id       :bigint(8)
+#  id               :bigint           not null, primary key
+#  company_id       :bigint
 #  level            :string           not null
 #  notes            :text
 #  assessment_date  :date             not null

@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: litigation_sides
+#
+#  id            :bigint           not null, primary key
+#  litigation_id :bigint
+#  name          :string
+#  side_type     :string           not null
+#  party_type    :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
 class LitigationSide < ApplicationRecord
   SIDE_TYPES = %w[a b c].freeze
   PARTY_TYPES = %w[

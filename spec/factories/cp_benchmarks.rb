@@ -2,8 +2,8 @@
 #
 # Table name: cp_benchmarks
 #
-#  id         :bigint(8)        not null, primary key
-#  sector_id  :bigint(8)
+#  id         :bigint           not null, primary key
+#  sector_id  :bigint
 #  date       :date             not null
 #  benchmarks :jsonb
 #  created_at :datetime         not null
