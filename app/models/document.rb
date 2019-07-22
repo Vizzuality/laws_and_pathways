@@ -17,12 +17,14 @@
 class Document < ApplicationRecord
   self.inheritance_column = nil
 
-  has_one_attached :file
-
   TYPES = %w[uploaded external].freeze
   enum type: array_to_enum_hash(TYPES)
 
   belongs_to :documentable, polymorphic: true
+
+  has_one_attached :file
+
+  before_save :set_last_verified_on
 
   validates :external_url, url: true, presence: true, if: :external?
   validates :file, attached: true, if: :uploaded?
@@ -41,5 +43,9 @@ class Document < ApplicationRecord
     return unless file.attached?
 
     Rails.application.routes.url_helpers.polymorphic_url(file, only_path: true)
+  end
+
+  def set_last_verified_on
+    self.last_verified_on = Time.zone.now.to_date
   end
 end

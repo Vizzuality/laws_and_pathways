@@ -1,5 +1,6 @@
 module TestFiles
-  extend self
+  module_function
+
   extend ActionDispatch::TestProcess
 
   def pdf
