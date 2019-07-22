@@ -5,7 +5,7 @@ ActiveAdmin.register Litigation do
 
   permit_params :title, :location_id, :document_type, :summary, :core_objective,
                 documents_attributes: [
-                  :id, :_destroy, :name, :external_url, :file
+                  :id, :_destroy, :name, :external_url, :type, :file
                 ]
 
   filter :title_contains
@@ -58,6 +58,10 @@ ActiveAdmin.register Litigation do
   form partial: 'form'
 
   controller do
+    def scoped_collection
+      super.includes(:location)
+    end
+
     def find_resource
       scoped_collection.friendly.find(params[:id])
     end

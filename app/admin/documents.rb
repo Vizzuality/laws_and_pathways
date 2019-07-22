@@ -27,4 +27,10 @@ ActiveAdmin.register Document do
     column :last_verified_on
     actions
   end
+
+  controller do
+    def scoped_collection
+      super.includes(:documentable)
+    end
+  end
 end

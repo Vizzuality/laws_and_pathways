@@ -24,7 +24,7 @@ class Document < ApplicationRecord
 
   has_one_attached :file
 
-  before_save :set_last_verified_on
+  before_create :set_last_verified_on
 
   validates :external_url, url: true, presence: true, if: :external?
   validates :file, attached: true, if: :uploaded?
