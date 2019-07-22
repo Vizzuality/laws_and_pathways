@@ -12,4 +12,8 @@ class LegislationDecorator < Draper::Decorator
   def framework
     model.framework&.humanize
   end
+
+  def date_passed
+    model.date_passed&.to_s(:date_short)
+  end
 end

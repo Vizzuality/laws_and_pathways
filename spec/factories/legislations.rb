@@ -11,12 +11,14 @@
 #  location_id :bigint
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  date_passed :date
 #
 
 FactoryBot.define do
   factory :legislation do
     title { 'Test Legislation' }
     description { 'Test Legislation Description' }
+    date_passed { 2.years.ago }
     law_id { 1 }
     framework { Legislation::FRAMEWORKS.sample }
     location

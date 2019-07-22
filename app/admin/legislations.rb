@@ -16,8 +16,10 @@ ActiveAdmin.register Legislation do
 
   index do
     column :title, &:title_summary_link
+    column :date_passed
     column :framework
     column :location
+    column :document_types
 
     actions
   end
@@ -43,7 +45,7 @@ ActiveAdmin.register Legislation do
 
   controller do
     def scoped_collection
-      super.includes(:location)
+      super.includes(:location, :document_types)
     end
 
     def find_resource

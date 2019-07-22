@@ -11,6 +11,7 @@
 #  location_id :bigint
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  date_passed :date
 #
 
 require 'rails_helper'
