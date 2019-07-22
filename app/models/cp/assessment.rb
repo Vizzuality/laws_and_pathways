@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: cp_assessments
+#
+#  id               :bigint           not null, primary key
+#  company_id       :bigint
+#  publication_date :date             not null
+#  assessment_date  :date
+#  emissions        :jsonb
+#  assumptions      :text
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#
+
 module CP
   class Assessment < ApplicationRecord
     belongs_to :company
