@@ -6,6 +6,7 @@ The backoffice for laws and pathways
 
 - Ruby v2.5.5
 - Rails v5.2.3
+- Node v10
 
 ## Local installation
 
@@ -15,6 +16,10 @@ These are the steps to run the project locally:
 
 On the project's root run `bundle install`.
 
+### Installing npm dependencies
+
+`yarn`
+
 ### Database
 
 #### Create database schema
@@ -23,7 +28,11 @@ On the project's root run `bundle install`.
 
 ### Run the server
 
-`bundle exec rails s'` and access the project on `http://localhost:3000`
+`yarn start'` and access the project on `http://localhost:3000`
+
+### Run the tests
+
+`yarn test`
 
 ## Docker
 

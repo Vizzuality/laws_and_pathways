@@ -1,0 +1,16 @@
+<%= semantic_form_for [:admin, resource], builder: ActiveAdmin::FormBuilder do |f| %>
+  <%= f.semantic_errors(*f.object.errors.keys) %>
+  <%= f.inputs do %>
+    <%= f.input :title %>
+    <%= f.input :location %>
+    <%= f.input :document_type, as: :select, collection: array_to_select_collection(Litigation::DOCUMENT_TYPES) %>
+    <%= f.input :summary, as: :trix %>
+    <%= f.input :core_objective, as: :trix %>
+  <% end %>
+
+  <%= f.inputs 'List of related documents and links' do %>
+    <%= render 'admin/documents/list', form: f %>
+  <% end %>
+
+  <%= f.actions %>
+<% end %>

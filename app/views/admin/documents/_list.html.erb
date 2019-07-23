@@ -1,0 +1,22 @@
+<div class="document-list" data-controller="nested-list">
+  <template name="external">
+    <%= form.semantic_fields_for :documents, Document.new(type: 'external'), child_index: 'NEW_RECORD' do |document| %>
+      <%= render "admin/documents/fields", form: document %>
+    <% end %>
+  </template>
+
+  <template name="uploaded">
+    <%= form.semantic_fields_for :documents, Document.new(type: 'uploaded'), child_index: 'NEW_RECORD' do |document| %>
+      <%= render "admin/documents/fields", form: document %>
+    <% end %>
+  </template>
+
+  <%= form.semantic_fields_for :documents do |document| %>
+    <%= render "admin/documents/fields", form: document %>
+  <% end %>
+
+  <div class="document-list__actions" data-target="nested-list.links">
+    <%= button_tag "Add External URL", type: 'button', class: 'button button--raised', data: { action: "click->nested-list#addRecord", template: 'external' } %>
+    <%= button_tag "Upload a new file", type: 'button', class: 'button button--raised', data: { action: "click->nested-list#addRecord", template: 'uploaded' } %>
+  </div>
+</div>

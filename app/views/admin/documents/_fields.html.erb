@@ -1,0 +1,17 @@
+<% is_new_record = form.object.new_record? %>
+
+<%= content_tag :div, class: "nested-fields inline-fields", data: { new_record: is_new_record } do %>
+  <%= form.input :type, as: :hidden, input_html: { value: form.object.type } %>
+  <div style="width: 33%;">
+    <% if form.object.external? %>
+      <%= form.input :external_url, as: :string, label: 'Provide external url' %>
+    <% else %>
+      <%= form.input :file, as: :file %>
+    <% end %>
+  </div>
+  <%= form.input :name, wrapper_html: { class: 'flex-grow-1' } %>
+  <li class="input">
+    <%= button_tag "Remove", type: 'button', class: 'button button--raised button--red', data: { action: "click->nested-list#removeRecord" } %>
+  </li>
+  <%= form.hidden_field :_destroy %>
+<% end %>

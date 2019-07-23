@@ -16,4 +16,12 @@ class LitigationDecorator < Draper::Decorator
   def core_objective
     model.core_objective.html_safe
   end
+
+  def document_links
+    return [] if model.documents.empty?
+
+    model.documents.map do |document|
+      h.link_to document.name, document.url, target: '_blank'
+    end
+  end
 end

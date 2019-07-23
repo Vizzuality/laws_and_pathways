@@ -3,7 +3,10 @@ ActiveAdmin.register Litigation do
 
   decorate_with LitigationDecorator
 
-  permit_params :title, :location_id, :document_type, :summary, :core_objective
+  permit_params :title, :location_id, :document_type, :summary, :core_objective,
+                documents_attributes: [
+                  :id, :_destroy, :name, :external_url, :type, :file
+                ]
 
   filter :title_contains
   filter :summary_contains
@@ -36,6 +39,7 @@ ActiveAdmin.register Litigation do
           row :core_objective
           row :created_at
           row :updated_at
+          list_row 'Documents', :document_links
         end
       end
 
@@ -51,21 +55,13 @@ ActiveAdmin.register Litigation do
     end
   end
 
-  form do |f|
-    f.semantic_errors(*f.object.errors.keys)
-
-    f.inputs do
-      f.input :title
-      f.input :location
-      f.input :document_type, as: :select, collection: array_to_select_collection(Litigation::DOCUMENT_TYPES)
-      f.input :summary, as: :trix
-      f.input :core_objective, as: :trix
-    end
-
-    f.actions
-  end
+  form partial: 'form'
 
   controller do
+    def scoped_collection
+      super.includes(:location)
+    end
+
     def find_resource
       scoped_collection.friendly.find(params[:id])
     end
