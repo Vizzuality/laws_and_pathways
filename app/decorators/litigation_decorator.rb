@@ -17,7 +17,7 @@ class LitigationDecorator < Draper::Decorator
     model.core_objective.html_safe
   end
 
-  def document_list
+  def document_links
     return [] if model.documents.empty?
 
     model.documents.map do |document|

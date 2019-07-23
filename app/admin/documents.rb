@@ -14,7 +14,7 @@ ActiveAdmin.register Document do
     attributes_table do
       row :id
       row :name
-      row :link, &:open_link
+      row :link, &:document_url_link
       row :last_verified_on
       row :created_at
       row :updated_at
@@ -22,7 +22,7 @@ ActiveAdmin.register Document do
   end
 
   index do
-    column 'name', &:name_link
+    column 'Name', &:document_page_link
     column 'Attached To', :documentable
     column :last_verified_on
     actions

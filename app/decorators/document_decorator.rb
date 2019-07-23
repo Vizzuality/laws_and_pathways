@@ -1,11 +1,11 @@
 class DocumentDecorator < Draper::Decorator
   delegate_all
 
-  def name_link
+  def document_page_link
     h.link_to model.name, h.admin_document_path(model)
   end
 
-  def open_link
+  def document_url_link
     h.link_to model.name, model.url, target: '_blank'
   end
 

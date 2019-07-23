@@ -39,7 +39,7 @@ ActiveAdmin.register Litigation do
           row :core_objective
           row :created_at
           row :updated_at
-          list_row 'Documents', :document_list
+          list_row 'Documents', :document_links
         end
       end
 
