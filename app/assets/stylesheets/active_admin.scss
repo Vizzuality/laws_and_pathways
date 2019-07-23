@@ -152,10 +152,16 @@ form {
 .inline-fields {
   display: flex;
   justify-content: space-around;
-  align-items: flex-end;
+  align-items: center;
 
   li {
     margin: 0;
+
+    &.input:not(.error) {
+      input {
+        margin-bottom: 20px;
+      }
+    }
   }
 
   .flex-grow-1 {

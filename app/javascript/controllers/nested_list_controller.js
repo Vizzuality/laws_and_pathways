@@ -1,7 +1,7 @@
 import { Controller } from 'stimulus';
 
 export default class extends Controller {
-  static targets = [ 'links', 'templateExternal', 'templateUploaded']
+  static targets = ['links']
 
   connect() {
     this.wrapperClass = this.data.get('wrapperClass') || 'nested-fields';
@@ -11,7 +11,7 @@ export default class extends Controller {
     event.preventDefault();
 
     const templateName = event.target.dataset['template'];
-    const content = this[`template${templateName}Target`]
+    const content = this._getTemplateElement(templateName)
           .innerHTML
           .replace(/NEW_RECORD/g, new Date().getTime());
 
@@ -32,5 +32,11 @@ export default class extends Controller {
       wrapper.querySelector('input[name*="_destroy"]').value = 1;
       wrapper.style.display = 'none';
     }
+  }
+
+  _getTemplateElement(name) {
+    if (!name) return this.element.querySelector('template');
+
+    return this.element.querySelector(`template[name*=${name}]`);
   }
 }
