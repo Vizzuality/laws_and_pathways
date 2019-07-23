@@ -4,7 +4,7 @@
   "scripts": {
     "start": "run-p -r rails:server js:server",
     "js:server": "yarn install && ./bin/webpack-dev-server",
-    "test": "run-p -r rails:test rails:lint",
+    "test": "run-p rails:test rails:lint",
     "rails:server": "bundle exec rails s",
     "rails:test": "bundle exec rspec",
     "rails:lint": "bundle exec rubocop"
