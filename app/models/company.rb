@@ -39,4 +39,8 @@ class Company < ApplicationRecord
   def latest_assessment
     mq_assessments.first
   end
+
+  def to_s
+    name
+  end
 end

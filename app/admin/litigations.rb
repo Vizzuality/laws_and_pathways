@@ -5,7 +5,7 @@ ActiveAdmin.register Litigation do
 
   permit_params :title, :location_id, :document_type, :summary, :core_objective,
                 litigation_sides_attributes: [
-                  :id, :_destroy, :name, :side_type, :party_type
+                  :id, :_destroy, :name, :side_type, :party_type, :system_type, :company_id, :location_id
                 ],
                 documents_attributes: [
                   :id, :_destroy, :name, :external_url, :type, :file
@@ -48,7 +48,7 @@ ActiveAdmin.register Litigation do
 
       tab :sides do
         panel 'Litigation Sides' do
-          table_for resource.litigation_sides.order(:side_type).decorate do
+          table_for resource.litigation_sides.decorate do
             column :side_type
             column :name
             column :party_type

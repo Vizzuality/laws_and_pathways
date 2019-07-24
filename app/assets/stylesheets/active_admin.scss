@@ -184,6 +184,14 @@ form {
     min-width: 250px;
   }
 
+  li[id*=system_type] {
+    min-width: 200px;
+  }
+
+  li[id*=_name], li[id*=_company_id], li[id*=_location_id] {
+    flex-grow: 1;
+  }
+
   @include desktop-large {
     width: 70%;
   }

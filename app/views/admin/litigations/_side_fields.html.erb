@@ -1,8 +1,13 @@
 <% is_new_record = form.object.new_record? %>
 
-<%= content_tag :div, class: "litigation-sides-fields nested-fields inline-fields", data: { new_record: is_new_record } do %>
+<%= content_tag :div, class: "litigation-sides-fields nested-fields inline-fields", data: { controller: 'litigation-side', new_record: is_new_record } do %>
   <%= form.input :side_type, as: :select, collection: array_to_select_collection(LitigationSide::SIDE_TYPES) %>
-  <%= form.input :name, wrapper_html: { class: 'flex-grow-1' } %>
+  <%= form.input :system_type, as: :select, collection: array_to_select_collection(LitigationSide::SYSTEM_TYPES) %>
+
+  <%= form.input :company_id, as: :select, collection: Company.all  %>
+  <%= form.input :location_id, as: :select, collection: Location.all %>
+
+  <%= form.input :name %>
   <%= form.input :party_type, as: :select, collection: array_to_select_collection(LitigationSide::PARTY_TYPES) %>
 
   <li class="input">
