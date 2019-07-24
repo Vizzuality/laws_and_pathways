@@ -24,5 +24,7 @@ class LitigationSide < ApplicationRecord
   enum side_type: array_to_enum_hash(SIDE_TYPES)
   enum party_type: array_to_enum_hash(PARTY_TYPES)
 
+  validates_presence_of :side_type, :party_type
+
   belongs_to :litigation
 end

@@ -1,0 +1,15 @@
+<div data-controller="nested-list">
+  <template>
+    <%= form.semantic_fields_for :litigation_sides, LitigationSide.new, child_index: 'NEW_RECORD' do |side| %>
+      <%= render "side_fields", form: side %>
+    <% end %>
+  </template>
+
+  <%= form.semantic_fields_for :litigation_sides do |side| %>
+    <%= render "side_fields", form: side %>
+  <% end %>
+
+  <div class="nested-list__actions" data-target="nested-list.links">
+    <%= button_tag "Add Litigation Side", type: 'button', class: 'button button--raised', data: { action: "click->nested-list#addRecord" } %>
+  </div>
+</div>

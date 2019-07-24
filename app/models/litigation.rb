@@ -29,6 +29,7 @@ class Litigation < ApplicationRecord
   has_many :documents, as: :documentable, dependent: :destroy
 
   accepts_nested_attributes_for :documents, allow_destroy: true
+  accepts_nested_attributes_for :litigation_sides, allow_destroy: true
 
   validates_presence_of :title, :slug, :document_type
 end

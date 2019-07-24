@@ -1,4 +1,5 @@
 @import 'admin/settings';
+@import 'admin/mixins';
 @import 'trix/dist/trix';
 @import 'activeadmin_addons/all';
 
@@ -109,6 +110,13 @@ form {
     list-style: disc;
     color: $am-theme-error;
   }
+
+  fieldset.inputs {
+    > legend {
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
 }
 
 // Comments
@@ -141,9 +149,7 @@ form {
   }
 }
 
-// Documents
-
-.document-list {
+.nested-list {
   &__actions {
     padding: 16px;
   }
@@ -151,14 +157,14 @@ form {
 
 .inline-fields {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 
   li {
     margin: 0;
 
     &.input:not(.error) {
-      input {
+      input, .select2, select {
         margin-bottom: 20px;
       }
     }
@@ -166,5 +172,19 @@ form {
 
   .flex-grow-1 {
     flex-grow: 1;
+  }
+}
+
+.litigation-sides-fields {
+  li[id*=side_type] {
+    min-width: 100px;
+  }
+
+  li[id*=party_type] {
+    min-width: 250px;
+  }
+
+  @include desktop-large {
+    width: 70%;
   }
 }
