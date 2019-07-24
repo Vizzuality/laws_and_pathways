@@ -16,6 +16,10 @@ export default class extends Controller {
           .replace(/NEW_RECORD/g, new Date().getTime());
 
     this.linksTarget.insertAdjacentHTML('beforebegin', content);
+
+    // very nasty trick, using dynamic list instead of AA has_many forms
+    // many plugins listen to this event to reinitialize, for example select2 from activeadmin addons
+    $(document).trigger('has_many_add:after');
   }
 
   removeRecord(event) {
