@@ -18,6 +18,10 @@ RSpec.describe Admin::LitigationsController, type: :controller do
         attributes_for(:litigation_side, :location).merge(
           connected_with: "Location-#{side_location.id}"
         )
+      ],
+      documents_attributes: [
+        attributes_for(:document),
+        attributes_for(:document_uploaded)
       ]
     )
   }
