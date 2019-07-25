@@ -36,6 +36,7 @@ ActiveAdmin.register Litigation do
           row :title
           row :slug
           row :location
+          row :jurisdiction
           row :document_type
           row :citation_reference_number
           row :summary
