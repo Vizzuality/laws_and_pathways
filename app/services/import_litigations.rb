@@ -16,6 +16,10 @@ class ImportLitigations
     import_each_with_logging(csv, FILEPATH) do |row|
       l = Litigation.find_or_initialize_by(title: row[:title])
       l.update!(litigation_attributes(row))
+      get_litigation_sides(row).each do |side|
+        side.litigation_id = l.id
+        side.save!
+      end
     end
   end
 
@@ -31,12 +35,13 @@ class ImportLitigations
     {
       title: row[:title],
       document_type: row[:document_type],
-      location: Location.find_by!(iso: row[:country_iso]),
+      location: find_location(row[:country_iso]),
+      # TODO: change below when we know more about jurisdictions
+      jurisdiction: Location.find_by!(iso: row[:country_iso]),
       citation_reference_number: row[:citation_reference_number],
       core_objective: row[:core_objective],
       summary: row[:description],
-      keywords: row[:keywords],
-      litigation_sides: get_litigation_sides(row)
+      keywords: row[:keywords]
     }
   end
 
@@ -53,14 +58,32 @@ class ImportLitigations
   def get_sides(sides_string, party_types_string, side_type)
     return if sides_string.blank?
 
-    party_types = party_types_string&.split(',')&.map(&:strip)&.map(&:underscore) || []
+    party_types = party_types_string
+                    &.split(',')
+                    &.map(&:strip)
+                    &.map(&:underscore)
+                    &.map { |type| type == 'n/a' ? nil : type } || []
 
     sides_string.split(',').map.with_index do |side, index|
       LitigationSide.new(
         name: side,
         side_type: side_type,
-        party_type: party_types[index]
+        party_type: party_types[index],
+        connected_entity: get_side_connected_entity(side)
       )
     end
+  end
+
+  def get_side_connected_entity(name)
+    location = Location.find_by(name: name)
+    return location if location.present?
+
+    Company.find_by(name: name)
+  end
+
+  def find_location(iso)
+    Location.find_by!(iso: iso)
+  rescue StandardError
+    puts "Couldn't find Location with ISO: #{iso}"
   end
 end

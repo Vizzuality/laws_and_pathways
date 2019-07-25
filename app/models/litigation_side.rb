@@ -29,7 +29,7 @@ class LitigationSide < ApplicationRecord
   belongs_to :litigation
   belongs_to :connected_entity, polymorphic: true, optional: true
 
-  validates_presence_of :side_type, :party_type, :name
+  validates_presence_of :side_type, :name
 
   def connected_with
     return unless connected_entity.present?
