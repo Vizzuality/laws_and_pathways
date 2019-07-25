@@ -5,7 +5,7 @@ ActiveAdmin.register Litigation do
 
   permit_params :title, :location_id, :document_type, :summary, :core_objective,
                 litigation_sides_attributes: [
-                  :id, :_destroy, :name, :side_type, :party_type, :system_type, :company_id, :location_id
+                  :id, :_destroy, :name, :side_type, :party_type, :connected_with
                 ],
                 documents_attributes: [
                   :id, :_destroy, :name, :external_url, :type, :file

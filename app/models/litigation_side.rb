@@ -26,15 +26,38 @@ class LitigationSide < ApplicationRecord
   enum party_type: array_to_enum_hash(PARTY_TYPES)
   enum system_type: array_to_enum_hash(SYSTEM_TYPES)
 
-  validates_presence_of :side_type, :party_type, :system_type
-
   belongs_to :litigation
   belongs_to :company, optional: true
   belongs_to :location, optional: true
 
   before_validation :clear_location, unless: :location?
   before_validation :clear_company, unless: :company?
-  before_validation :clear_name, unless: :other?
+  before_validation :set_name, if: -> { location? || company? }
+
+  validates_presence_of :side_type, :party_type, :system_type, :name
+  validates :company_id, presence: true, if: :company?
+  validates :location_id, presence: true, if: :location?
+  validates :name, presence: true, if: :other?
+
+  def connected_with
+    return "Company-#{company_id}" if company_id.present?
+    return "Location-#{location_id}" if location_id.present?
+  end
+
+  def connected_with=(connected_with_string)
+    if connected_with_string.present?
+      klass, id = connected_with_string.split('-')
+      self.location_id = id if klass == 'Location'
+      self.company_id = id if klass == 'Company'
+    else
+      self.location = nil
+      self.company = nil
+    end
+  end
+
+  def self.available_connections
+    (Company.all + Location.all).map { |c| [c.name, "#{c.class}-#{c.id}"] }
+  end
 
   private
 
