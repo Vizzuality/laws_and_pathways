@@ -2,13 +2,15 @@
 #
 # Table name: litigation_sides
 #
-#  id            :bigint           not null, primary key
-#  litigation_id :bigint
-#  name          :string
-#  side_type     :string           not null
-#  party_type    :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id                    :bigint           not null, primary key
+#  litigation_id         :bigint
+#  name                  :string
+#  side_type             :string           not null
+#  party_type            :string
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  connected_entity_type :string
+#  connected_entity_id   :bigint
 #
 
 class LitigationSide < ApplicationRecord
@@ -41,7 +43,7 @@ class LitigationSide < ApplicationRecord
       self.connected_entity_type = klass
       self.connected_entity_id = id
     else
-      self.connected_entity = nil;
+      self.connected_entity = nil
     end
   end
 

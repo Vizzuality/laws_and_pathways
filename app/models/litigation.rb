@@ -25,7 +25,8 @@ class Litigation < ApplicationRecord
   enum document_type: array_to_enum_hash(DOCUMENT_TYPES)
 
   belongs_to :location
-  has_many :litigation_sides, -> { order(:side_type) }
+  belongs_to :jurisdiction, class_name: 'Location'
+  has_many :litigation_sides, -> { order(:side_type) }, inverse_of: :litigation
   has_many :documents, as: :documentable, dependent: :destroy
 
   accepts_nested_attributes_for :documents, allow_destroy: true

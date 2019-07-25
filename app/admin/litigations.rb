@@ -3,7 +3,7 @@ ActiveAdmin.register Litigation do
 
   decorate_with LitigationDecorator
 
-  permit_params :title, :location_id, :document_type, :summary, :core_objective,
+  permit_params :title, :location_id, :jurisdiction_id, :document_type, :summary, :core_objective,
                 litigation_sides_attributes: [
                   :id, :_destroy, :name, :side_type, :party_type, :connected_with
                 ],
