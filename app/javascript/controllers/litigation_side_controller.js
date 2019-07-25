@@ -2,32 +2,22 @@ import { Controller } from 'stimulus';
 
 export default class extends Controller {
   connect() {
-    $(this.systemTypeSelect).on('change', this._changeInputsVisibility.bind(this));
-
-    this._changeInputsVisibility();
+    $(this.connectedWithSelect).on('change', this._setDefaultName.bind(this));
   }
 
-  _changeInputsVisibility() {
-    const selected = this.systemTypeSelect.value;
+  _setDefaultName() {
+    const selectedOptions = this.connectedWithSelect.selectedOptions;
 
-    $(this.companyField).toggle(selected === 'company');
-    $(this.locationField).toggle(selected === 'location');
-    $(this.nameField).toggle(selected === 'other');
+    if (selectedOptions.length) {
+      this.nameInput.value = selectedOptions[0].text;
+    }
   }
 
-  get systemTypeSelect () {
-    return this.element.querySelector('select[id*="_system_type"');
+  get connectedWithSelect () {
+    return this.element.querySelector('select[id*="_connected_with"');
   }
 
-  get companyField() {
-    return this.element.querySelector('li[id*="_company_id"');
-  }
-
-  get locationField() {
-    return this.element.querySelector('li[id*="_location_id"');
-  }
-
-  get nameField() {
-    return this.element.querySelector('li[id*="_name"');
+  get nameInput() {
+    return this.element.querySelector('input[id*="_name"');
   }
 }

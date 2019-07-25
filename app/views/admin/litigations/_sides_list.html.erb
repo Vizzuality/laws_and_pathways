@@ -1,6 +1,6 @@
 <div data-controller="nested-list">
   <template>
-    <%= form.semantic_fields_for :litigation_sides, LitigationSide.new(system_type: 'other'), child_index: 'NEW_RECORD' do |side| %>
+    <%= form.semantic_fields_for :litigation_sides, LitigationSide.new, child_index: 'NEW_RECORD' do |side| %>
       <%= render "side_fields", form: side %>
     <% end %>
   </template>
