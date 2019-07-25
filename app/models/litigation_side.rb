@@ -25,39 +25,27 @@ class LitigationSide < ApplicationRecord
   enum party_type: array_to_enum_hash(PARTY_TYPES)
 
   belongs_to :litigation
-  belongs_to :company, optional: true
-  belongs_to :location, optional: true
-
-  before_validation :set_name
+  belongs_to :connected_entity, polymorphic: true, optional: true
 
   validates_presence_of :side_type, :party_type, :name
 
   def connected_with
-    return "Company-#{company_id}" if company_id.present?
-    return "Location-#{location_id}" if location_id.present?
+    return unless connected_entity.present?
+
+    "#{connected_entity.class}-#{connected_entity.id}"
   end
 
   def connected_with=(connected_with_string)
     if connected_with_string.present?
       klass, id = connected_with_string.split('-')
-      self.location_id = id if klass == 'Location'
-      self.company_id = id if klass == 'Company'
+      self.connected_entity_type = klass
+      self.connected_entity_id = id
     else
-      self.location = nil
-      self.company = nil
+      self.connected_entity = nil;
     end
   end
 
   def self.available_connections
     (Company.all + Location.all).map { |c| [c.name, "#{c.class}-#{c.id}"] }
-  end
-
-  private
-
-  def set_name
-    return if name.present?
-
-    self.name = location.name if location.present?
-    self.name = company.name if company.present?
   end
 end

@@ -28,6 +28,8 @@ class Company < ApplicationRecord
 
   has_many :mq_assessments, class_name: 'MQ::Assessment', inverse_of: :company
   has_many :cp_assessments, class_name: 'CP::Assessment', inverse_of: :company
+  has_many :litigation_sides, as: :connected_entity
+  has_many :litigations, through: :litigation_sides
 
   delegate :level, :status, :status_description_short,
            to: :latest_assessment, prefix: :mq, allow_nil: true

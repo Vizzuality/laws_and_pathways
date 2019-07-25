@@ -94,6 +94,20 @@ ActiveAdmin.register Company do
           end
         end
       end
+
+      tab :litigations do
+        panel 'Connected Litigations' do
+          if resource.litigations.empty?
+            div class: 'padding-20' do
+              'No Litigations connected with this company'
+            end
+          else
+            table_for resource.litigations.decorate do
+              column :title, &:title_link
+            end
+          end
+        end
+      end
     end
   end
 

@@ -134,11 +134,10 @@ ActiveRecord::Schema.define(version: 2019_07_24_164237) do
     t.string "party_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "company_id"
-    t.bigint "location_id"
-    t.index ["company_id"], name: "index_litigation_sides_on_company_id"
+    t.string "connected_entity_type"
+    t.bigint "connected_entity_id"
+    t.index ["connected_entity_type", "connected_entity_id"], name: "index_litigation_sides_connected_entity"
     t.index ["litigation_id"], name: "index_litigation_sides_on_litigation_id"
-    t.index ["location_id"], name: "index_litigation_sides_on_location_id"
   end
 
   create_table "litigations", force: :cascade do |t|
@@ -222,9 +221,7 @@ ActiveRecord::Schema.define(version: 2019_07_24_164237) do
   add_foreign_key "cp_assessments", "companies", on_delete: :cascade
   add_foreign_key "cp_benchmarks", "sectors", on_delete: :cascade
   add_foreign_key "legislations", "locations"
-  add_foreign_key "litigation_sides", "companies", on_delete: :cascade
   add_foreign_key "litigation_sides", "litigations", on_delete: :cascade
-  add_foreign_key "litigation_sides", "locations", on_delete: :cascade
   add_foreign_key "litigations", "locations", column: "jurisdiction_id", on_delete: :cascade
   add_foreign_key "litigations", "locations", on_delete: :cascade
   add_foreign_key "mq_assessments", "companies", on_delete: :cascade
