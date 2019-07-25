@@ -188,7 +188,7 @@ form {
     min-width: 300px;
   }
 
-  li[id*=_name], li[id*=_company_id], li[id*=_location_id] {
+  li[id*=_name] {
     flex-grow: 1;
   }
 
