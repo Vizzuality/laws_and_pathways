@@ -39,9 +39,15 @@ ActiveAdmin.setup do |config|
   # a namespace block. For example, to change the site title
   # within a namespace:
   #
-  #   config.namespace :admin do |admin|
-  #     admin.site_title = "Custom Admin Title"
-  #   end
+    config.namespace :admin do |admin|
+      # admin.site_title = "Custom Admin Title"
+      admin.build_menu do |menu|
+        menu.add label: 'Laws', priority: 2
+        menu.add label: 'TPI', priority: 3
+        menu.add label: 'Tags', priority: 4
+        menu.add label: 'Administration', priority: 7
+      end
+    end
   #
   # This will ONLY change the title for the admin section. Other
   # namespaces will continue to use the main "site_title" configuration.

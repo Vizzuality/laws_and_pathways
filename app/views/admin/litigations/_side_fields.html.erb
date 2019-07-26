@@ -1,0 +1,13 @@
+<% is_new_record = form.object.new_record? %>
+
+<%= content_tag :div, class: 'litigation-sides-fields nested-fields inline-fields', data: { controller: 'litigation-side', new_record: is_new_record } do %>
+  <%= form.input :side_type, as: :select, collection: array_to_select_collection(LitigationSide::SIDE_TYPES) %>
+  <%= form.input :connected_with, as: :select, collection: LitigationSide.available_connections %>
+  <%= form.input :name %>
+  <%= form.input :party_type, as: :select, collection: array_to_select_collection(LitigationSide::PARTY_TYPES) %>
+
+  <li class="input">
+    <%= button_tag 'Remove', type: 'button', class: 'button button--raised button--red', data: { action: 'click->nested-list#removeRecord' } %>
+  </li>
+  <%= form.hidden_field :_destroy %>
+<% end %>

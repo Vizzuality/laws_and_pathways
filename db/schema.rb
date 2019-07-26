@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_19_104815) do
+ActiveRecord::Schema.define(version: 2019_07_24_164237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -134,6 +134,9 @@ ActiveRecord::Schema.define(version: 2019_07_19_104815) do
     t.string "party_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "connected_entity_type"
+    t.bigint "connected_entity_id"
+    t.index ["connected_entity_type", "connected_entity_id"], name: "index_litigation_sides_connected_entity"
     t.index ["litigation_id"], name: "index_litigation_sides_on_litigation_id"
   end
 

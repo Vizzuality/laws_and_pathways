@@ -1,16 +1,42 @@
 <%= semantic_form_for [:admin, resource], builder: ActiveAdmin::FormBuilder do |f| %>
   <%= f.semantic_errors(*f.object.errors.keys) %>
-  <%= f.inputs do %>
-    <%= f.input :title %>
-    <%= f.input :location %>
-    <%= f.input :document_type, as: :select, collection: array_to_select_collection(Litigation::DOCUMENT_TYPES) %>
-    <%= f.input :summary, as: :trix %>
-    <%= f.input :core_objective, as: :trix %>
-  <% end %>
 
-  <%= f.inputs 'List of related documents and links' do %>
-    <%= render 'admin/documents/list', form: f %>
-  <% end %>
+  <div class="tabs" data-controller="tabs">
+    <ul class="nav nav-tabs" role="tablist">
+      <li><a href="#details">Details</a></li>
+      <li><a href="#documents">Documents</a></li>
+      <li><a href="#sides">Sides</a></li>
+    </ul>
+
+    <%= hidden_field_tag :active_tab, params[:active_tab], 'data-target' => 'tabs.activeTab' %>
+
+    <div class="tab-content">
+
+      <div id="details">
+        <%= f.inputs do %>
+          <%= f.input :title %>
+          <%= f.input :location %>
+          <%= f.input :jurisdiction %>
+          <%= f.input :document_type, as: :select, collection: array_to_select_collection(Litigation::DOCUMENT_TYPES) %>
+          <%= f.input :summary, as: :trix %>
+          <%= f.input :core_objective, as: :trix %>
+        <% end %>
+      </div>
+
+      <div id="documents">
+        <%= f.inputs 'List of related documents and links' do %>
+          <%= render 'admin/documents/list', form: f %>
+        <% end %>
+      </div>
+
+      <div id="sides">
+        <%= f.inputs 'Litigation Sides' do %>
+          <%= render 'sides_list', form: f %>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
 
   <%= f.actions %>
 <% end %>

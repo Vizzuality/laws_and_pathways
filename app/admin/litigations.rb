@@ -1,9 +1,12 @@
 ActiveAdmin.register Litigation do
-  menu priority: 3
+  menu parent: 'Laws', priority: 2
 
   decorate_with LitigationDecorator
 
-  permit_params :title, :location_id, :document_type, :summary, :core_objective,
+  permit_params :title, :location_id, :jurisdiction_id, :document_type, :summary, :core_objective,
+                litigation_sides_attributes: [
+                  :id, :_destroy, :name, :side_type, :party_type, :connected_with
+                ],
                 documents_attributes: [
                   :id, :_destroy, :name, :external_url, :type, :file
                 ]
@@ -33,6 +36,7 @@ ActiveAdmin.register Litigation do
           row :title
           row :slug
           row :location
+          row :jurisdiction
           row :document_type
           row :citation_reference_number
           row :summary
@@ -45,7 +49,7 @@ ActiveAdmin.register Litigation do
 
       tab :sides do
         panel 'Litigation Sides' do
-          table_for resource.litigation_sides.order(:side_type).decorate do
+          table_for resource.litigation_sides.decorate do
             column :side_type
             column :name
             column :party_type

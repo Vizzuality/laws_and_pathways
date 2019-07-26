@@ -1,5 +1,5 @@
 ActiveAdmin.register Company do
-  menu priority: 4
+  menu priority: 0, parent: 'TPI'
 
   permit_params :name, :isin, :sector_id, :location_id, :headquarter_location_id, :ca100,
                 :size
@@ -90,6 +90,20 @@ ActiveAdmin.register Company do
 
                 render 'admin/cp/emissions_table', emissions: a.emissions
               end
+            end
+          end
+        end
+      end
+
+      tab :litigations do
+        panel 'Connected Litigations' do
+          if resource.litigations.empty?
+            div class: 'padding-20' do
+              'No Litigations connected with this company'
+            end
+          else
+            table_for resource.litigations.decorate do
+              column :title, &:title_link
             end
           end
         end
