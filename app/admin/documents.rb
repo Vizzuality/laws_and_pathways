@@ -1,5 +1,5 @@
 ActiveAdmin.register Document do
-  menu priority: 3
+  menu priority: 3, parent: 'Administration'
 
   decorate_with DocumentDecorator
 

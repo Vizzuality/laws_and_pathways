@@ -1,5 +1,5 @@
 ActiveAdmin.register Litigation do
-  menu priority: 3
+  menu parent: 'Laws', priority: 2
 
   decorate_with LitigationDecorator
 

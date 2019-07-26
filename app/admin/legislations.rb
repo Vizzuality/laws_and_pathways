@@ -1,6 +1,8 @@
 ActiveAdmin.register Legislation do
   decorate_with LegislationDecorator
 
+  menu parent: 'Laws', priority: 1
+
   permit_params :title, :description, :framework, :location_id, :law_id
 
   filter :title_contains, label: 'Title'
