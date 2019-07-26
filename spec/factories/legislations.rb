@@ -16,11 +16,12 @@
 
 FactoryBot.define do
   factory :legislation do
-    title { 'Test Legislation' }
+    sequence(:title) { |n| "Legislation #{n} Title" }
     description { 'Test Legislation Description' }
     date_passed { 2.years.ago }
-    law_id { 1 }
+    sequence(:law_id)
     framework { Legislation::FRAMEWORKS.sample }
-    location
+
+    association :location
   end
 end

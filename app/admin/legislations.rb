@@ -3,7 +3,7 @@ ActiveAdmin.register Legislation do
 
   menu parent: 'Laws', priority: 1
 
-  permit_params :title, :description, :framework, :location_id, :law_id
+  permit_params :title, :date_passed, :description, :framework, :location_id, :law_id
 
   filter :title_contains, label: 'Title'
   filter :description_contains, label: 'Description'
@@ -32,6 +32,7 @@ ActiveAdmin.register Legislation do
       f.input :description, as: :trix
       columns do
         column { f.input :location }
+        column { f.input :date_passed }
         column do
           f.input :framework,
                   as: :select,
