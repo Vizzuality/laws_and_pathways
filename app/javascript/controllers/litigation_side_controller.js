@@ -11,12 +11,8 @@ export default class extends Controller {
   }
 
   _setDefaults() {
-    const selectedOption = this.connectedWithSelect.selectedOptions &&
-          this.connectedWithSelect.selectedOptions.length &&
-          this.connectedWithSelect.selectedOptions[0];
-
-    if (selectedOption) {
-      const entityType = selectedOption.value.split('-')[0];
+    if (this.connectedWithSelectedOption) {
+      const entityType = this.connectedWithSelectedOption.value.split('-')[0];
       const partyType = ENTITY_TYPE_PARTY_TYPE_MAP[entityType];
 
       if (partyType) {
@@ -24,12 +20,18 @@ export default class extends Controller {
         $(this.partyTypeSelect).trigger('change');
       }
 
-      this.nameInput.value = selectedOption.text;
+      this.nameInput.value = this.connectedWithSelectedOption.text;
     }
   }
 
   get connectedWithSelect () {
     return this.element.querySelector('select[id*="_connected_with"');
+  }
+
+  get connectedWithSelectedOption () {
+    return this.connectedWithSelect.selectedOptions &&
+      this.connectedWithSelect.selectedOptions.length &&
+      this.connectedWithSelect.selectedOptions[0];
   }
 
   get nameInput() {

@@ -14,11 +14,10 @@ class ImportLitigations
 
   def import
     import_each_with_logging(csv, FILEPATH) do |row|
-      l = Litigation.find_or_initialize_by(title: row[:title])
-      l.update!(litigation_attributes(row))
+      litigation = Litigation.find_or_initialize_by(title: row[:title])
+      litigation.update!(litigation_attributes(row))
       get_litigation_sides(row).each do |side|
-        side.litigation_id = l.id
-        side.save!
+        side.update!(litigation_id: litigation.id)
       end
     end
   end
