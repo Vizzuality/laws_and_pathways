@@ -1,5 +1,6 @@
 class ImportCPBenchmarks
   include ClimateWatchEngine::CSVImporter
+  include ImportHelpers
 
   FILEPATH = "#{FILES_PREFIX}cpbenchmarks.csv".freeze
 
@@ -43,7 +44,7 @@ class ImportCPBenchmarks
   end
 
   def parse_date(date)
-    Date.strptime(date, '%m-%Y')
+    try_to_parse_date(date, ['%m-%Y'])
   end
 
   def values(row)

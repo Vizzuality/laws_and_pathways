@@ -1,7 +1,10 @@
 class ImportCompanies
   include ClimateWatchEngine::CSVImporter
+  include ImportHelpers
 
   FILEPATH = "#{FILES_PREFIX}companydata.csv".freeze
+
+  DATES_VALID_FORMATS = %w[%m/%d/%Y %a-%y].freeze
 
   def call
     ActiveRecord::Base.transaction do
@@ -61,7 +64,7 @@ class ImportCompanies
   end
 
   def company_attributes(row)
-    location = find_location(row[:country_code])
+    location = find_location(fix_iso(row[:country_code]))
 
     {
       name: row[:company_name],
@@ -107,19 +110,7 @@ class ImportCompanies
   def normalize_date(date)
     return if date.nil?
 
-    try_to_parse_date(date) || date
-  end
-
-  def try_to_parse_date(date)
-    expected_formats = ['%m/%d/%Y', '%a-%y']
-
-    expected_formats.map { |format| parse_date(date, format) }.compact.first
-  end
-
-  def parse_date(date, format)
-    Date.strptime(date, format)
-  rescue ArgumentError
-    nil
+    try_to_parse_date(date, DATES_VALID_FORMATS) || date
   end
 
   def parse_question(question)
@@ -137,12 +128,6 @@ class ImportCompanies
 
   def parse_boolean(value)
     value.to_s == 'Yes'
-  end
-
-  def find_location(iso)
-    Location.find_by!(iso: fix_iso(iso))
-  rescue StandardError
-    puts "Couldn't find Location with ISO: #{iso}"
   end
 
   # TODO: remove this when they fix the file

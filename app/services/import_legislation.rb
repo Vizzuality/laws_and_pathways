@@ -1,5 +1,6 @@
 class ImportLegislation
   include ClimateWatchEngine::CSVImporter
+  include ImportHelpers
 
   FILEPATH = "#{FILES_PREFIX}legislation.csv".freeze
 
@@ -9,6 +10,21 @@ class ImportLegislation
     'Adaptation' => 'adaptation',
     'Mitigation and adaptation' => 'mitigation_and_adaptation'
   }.freeze
+
+  DOCUMENT_TYPE_MAPPING = {
+    'Radmap' => 'Roadmap'
+  }.freeze
+
+  DATE_PASSED_VALID_FORMATS = [
+    '%d-%b-%y',  # 15-May-97
+    '%d-%b-%Y',  # 15-May-1997
+    '%d %B %Y',  # 15 May 1997
+    '%d/%m/%Y',  # 04/08/2014
+    '%B %d, %Y', # May 15, 1997
+    '%b-%y',     # May-15
+    '%B %Y',     # November 1997
+    '%Y' # 1997
+  ].freeze
 
   def call
     ActiveRecord::Base.transaction do
@@ -22,8 +38,6 @@ class ImportLegislation
   def import
     import_each_with_logging(csv, FILEPATH) do |row|
       legislation = Legislation.find_or_initialize_by(law_id: row[:law_id])
-      parsed_date = legislation_attributes(row)[:date_passed]
-      printf "%-120s %-10s %s\n", row[:date_passed], row[:year_passed], parsed_date
       legislation.update!(legislation_attributes(row))
     end
   end
@@ -40,10 +54,10 @@ class ImportLegislation
     {
       title: row[:title],
       description: row[:description],
-      date_passed: find_date_passed(row),
       framework: map_framework(row),
+      date_passed: find_date_passed(row),
       document_types: find_document_types(row),
-      location: find_location(row)
+      location: find_location(row[:country_iso])
     }
   end
 
@@ -55,33 +69,10 @@ class ImportLegislation
     return if date.nil?
 
     sanitized_date = date
-      .gsub(/;.*/, '')
-      .gsub(/, last amended.*/, '')
-      .gsub(/; last amendment.*/, '')
-      .gsub(/, amended.*/, '')
-      .gsub(/; repealed/, '')
-      .gsub(/(.*amended|passed|enacted|approved)[\w\s]*\s/i, '') # [\w\s]*
+      .gsub(/([;]+(\s).*)|\s\(.*\)|(,\s.*(last|latest|amend|regulated).*)/, '')
+      .gsub(/(.*amended|passed|enacted|approved)[\w\s]*\s/i, '')
 
-    try_to_parse_date(sanitized_date) || nil
-  end
-
-  def try_to_parse_date(date)
-    expected_date_formats = [
-      '%d-%b-%y',  # 15-May-97
-      '%d %B %Y',  # 15 May 1997
-      '%Y',        # 1997
-      '%b-%y',     # May-15
-      '%b %d, %Y', # May 15, 1997
-      '%B %Y'      # November 1997
-    ]
-
-    expected_date_formats.map { |format| parse_date(date, format) }.compact.first
-  end
-
-  def parse_date(date, format)
-    Date.strptime(date, format)
-  rescue ArgumentError
-    nil
+    try_to_parse_date(sanitized_date, DATE_PASSED_VALID_FORMATS) || nil
   end
 
   def find_document_types(row)
@@ -89,14 +80,8 @@ class ImportLegislation
       &.gsub(/\s\(.*/, '')
       &.split(/[,;]/)
       &.map(&:strip)
-      &.map { |name| {'Radmap' => 'Roadmap'}[name] || name }
+      &.map { |name| DOCUMENT_TYPE_MAPPING[name] || name }
       &.map { |name| DocumentType.find_or_create_by!(name: name) }
-  end
-
-  def find_location(row)
-    Location.find_by!(iso: row[:country_iso])
-  rescue StandardError
-    puts "Couldn't find Location with ISO: #{row[:country_iso]}"
   end
 
   def map_framework(row)

@@ -14,6 +14,8 @@ class LegislationDecorator < Draper::Decorator
   end
 
   def date_passed
-    model.date_passed&.to_s(:date_short)
+    return 'n/a' if model.date_passed.nil?
+
+    model.date_passed.to_s(:date_short)
   end
 end
