@@ -1,7 +1,9 @@
 ActiveAdmin.register Legislation do
-  decorate_with LegislationDecorator
+  config.sort_order = 'date_passed_desc'
 
   menu parent: 'Laws', priority: 1
+
+  decorate_with LegislationDecorator
 
   permit_params :title, :date_passed, :description, :framework, :location_id, :law_id
 
