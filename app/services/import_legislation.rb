@@ -16,14 +16,15 @@ class ImportLegislation
   }.freeze
 
   DATE_PASSED_VALID_FORMATS = [
-    '%d-%b-%y',  # 15-May-97
     '%d-%b-%Y',  # 15-May-1997
     '%d %B %Y',  # 15 May 1997
     '%d/%m/%Y',  # 04/08/2014
     '%B %d, %Y', # May 15, 1997
+    '%d-%b-%y',  # 15-May-97
+    '%b-%Y',     # jun-2009
     '%b-%y',     # May-15
     '%B %Y',     # November 1997
-    '%Y' # 1997
+    '%Y'         # 1997
   ].freeze
 
   def call
