@@ -6,6 +6,7 @@ ActiveAdmin.register Legislation do
   permit_params :title, :date_passed, :description, :framework, :location_id, :law_id
 
   filter :title_contains, label: 'Title'
+  filter :date_passed
   filter :description_contains, label: 'Description'
   filter :location
   filter :framework,
