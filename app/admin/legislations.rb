@@ -47,6 +47,16 @@ ActiveAdmin.register Legislation do
     f.actions
   end
 
+  csv do
+    column :law_id
+    column :title
+    column :date_passed
+    column :description
+    column :framework
+    column(:location) { |legislation| legislation.location.name }
+    column(:document_types) { |legislation| legislation.document_types.map(&:name).join(' / ') }
+  end
+
   controller do
     def scoped_collection
       super.includes(:location, :document_types)
