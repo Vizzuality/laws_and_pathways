@@ -12,4 +12,10 @@ class LegislationDecorator < Draper::Decorator
   def framework
     model.framework&.humanize
   end
+
+  def date_passed
+    return 'n/a' if model.date_passed.nil?
+
+    model.date_passed.to_s(:date_short)
+  end
 end

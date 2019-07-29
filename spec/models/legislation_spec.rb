@@ -11,6 +11,7 @@
 #  location_id :bigint
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  date_passed :date
 #
 
 require 'rails_helper'
@@ -33,5 +34,10 @@ RSpec.describe Legislation, type: :model do
   it 'should be invalid if framework is nil' do
     subject.framework = nil
     expect(subject).to have(1).errors_on(:framework)
+  end
+
+  it 'should be invalid if date_passed is nil' do
+    subject.date_passed = nil
+    expect(subject).to have(1).errors_on(:date_passed)
   end
 end

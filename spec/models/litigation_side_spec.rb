@@ -4,6 +4,7 @@
 #
 #  id                    :bigint           not null, primary key
 #  litigation_id         :bigint
+#  name                  :string
 #  side_type             :string           not null
 #  party_type            :string
 #  created_at            :datetime         not null
