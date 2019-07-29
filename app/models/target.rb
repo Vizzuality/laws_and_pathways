@@ -22,6 +22,7 @@ class Target < ApplicationRecord
 
   belongs_to :location
   belongs_to :sector
+  has_and_belongs_to_many :legislations
 
   validates :ghg_target, inclusion: {in: [true, false]}
   validates_presence_of :type

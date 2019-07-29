@@ -21,6 +21,7 @@ class Legislation < ApplicationRecord
   enum framework: array_to_enum_hash(FRAMEWORKS)
 
   belongs_to :location
+  has_and_belongs_to_many :targets
 
   validates_presence_of :title, :framework, :slug
   validates_uniqueness_of :slug

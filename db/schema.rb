@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_29_100025) do
+ActiveRecord::Schema.define(version: 2019_07_29_130643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,6 +127,14 @@ ActiveRecord::Schema.define(version: 2019_07_29_100025) do
     t.index ["slug"], name: "index_legislations_on_slug", unique: true
   end
 
+  create_table "legislations_targets", force: :cascade do |t|
+    t.bigint "legislation_id"
+    t.bigint "target_id"
+    t.index ["legislation_id"], name: "index_legislations_targets_on_legislation_id"
+    t.index ["target_id", "legislation_id"], name: "index_legislations_targets_on_target_id_and_legislation_id", unique: true
+    t.index ["target_id"], name: "index_legislations_targets_on_target_id"
+  end
+
   create_table "litigation_sides", force: :cascade do |t|
     t.bigint "litigation_id"
     t.string "name"
@@ -235,6 +243,8 @@ ActiveRecord::Schema.define(version: 2019_07_29_100025) do
   add_foreign_key "cp_assessments", "companies", on_delete: :cascade
   add_foreign_key "cp_benchmarks", "sectors", on_delete: :cascade
   add_foreign_key "legislations", "locations"
+  add_foreign_key "legislations_targets", "legislations", on_delete: :cascade
+  add_foreign_key "legislations_targets", "targets", on_delete: :cascade
   add_foreign_key "litigation_sides", "litigations", on_delete: :cascade
   add_foreign_key "litigations", "locations", column: "jurisdiction_id", on_delete: :cascade
   add_foreign_key "litigations", "locations", on_delete: :cascade
