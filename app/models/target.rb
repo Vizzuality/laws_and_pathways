@@ -5,8 +5,9 @@
 #  id               :bigint           not null, primary key
 #  location_id      :bigint
 #  sector_id        :bigint
+#  target_scope_id  :bigint
 #  ghg_target       :boolean          default(FALSE), not null
-#  type             :string           not null
+#  single_year      :boolean          default(FALSE), not null
 #  description      :text
 #  year             :integer
 #  base_year_period :string
@@ -17,13 +18,11 @@
 class Target < ApplicationRecord
   self.inheritance_column = nil
 
-  TYPES = %w[single_year multi_year other].freeze
-  enum type: array_to_enum_hash(TYPES)
-
   belongs_to :location
   belongs_to :sector
+  belongs_to :target_scope
   has_and_belongs_to_many :legislations
 
   validates :ghg_target, inclusion: {in: [true, false]}
-  validates_presence_of :type
+  validates :single_year, inclusion: {in: [true, false]}
 end

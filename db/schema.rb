@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_29_130643) do
+ActiveRecord::Schema.define(version: 2019_07_29_190643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -222,11 +222,18 @@ ActiveRecord::Schema.define(version: 2019_07_29_130643) do
     t.index ["name", "type"], name: "index_tags_on_name_and_type", unique: true
   end
 
+  create_table "target_scopes", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "targets", force: :cascade do |t|
     t.bigint "location_id"
     t.bigint "sector_id"
+    t.bigint "target_scope_id"
     t.boolean "ghg_target", default: false, null: false
-    t.string "type", null: false
+    t.boolean "single_year", default: false, null: false
     t.text "description"
     t.integer "year"
     t.string "base_year_period"
@@ -234,6 +241,7 @@ ActiveRecord::Schema.define(version: 2019_07_29_130643) do
     t.datetime "updated_at", null: false
     t.index ["location_id"], name: "index_targets_on_location_id"
     t.index ["sector_id"], name: "index_targets_on_sector_id"
+    t.index ["target_scope_id"], name: "index_targets_on_target_scope_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -252,4 +260,5 @@ ActiveRecord::Schema.define(version: 2019_07_29_130643) do
   add_foreign_key "taggings", "tags", on_delete: :cascade
   add_foreign_key "targets", "locations"
   add_foreign_key "targets", "sectors"
+  add_foreign_key "targets", "target_scopes"
 end

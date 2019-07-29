@@ -5,16 +5,18 @@ RSpec.describe Admin::TargetsController, type: :controller do
   let!(:target) { create(:target) }
   let(:sector) { create(:sector) }
   let(:location) { create(:location) }
+  let(:target_scope) { create(:target_scope) }
   let(:legislations) { create_list(:legislation, 2) }
   let(:valid_attributes) {
     attributes_for(
       :target,
       legislation_ids: legislations.pluck(:id),
       location_id: location.id,
-      sector_id: sector.id
+      sector_id: sector.id,
+      target_scope_id: target_scope.id
     )
   }
-  let(:invalid_attributes) { valid_attributes.merge(type: nil) }
+  let(:invalid_attributes) { valid_attributes.merge(ghg_target: nil) }
 
   before { sign_in admin }
 
@@ -59,7 +61,7 @@ RSpec.describe Admin::TargetsController, type: :controller do
 
         target = Target.order(:created_at).last
 
-        expect(target.legislations.count).to be(2)
+        expect(target.legislations.count).to eq(2)
       end
     end
 
