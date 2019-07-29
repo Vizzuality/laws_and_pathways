@@ -25,4 +25,8 @@ class Target < ApplicationRecord
 
   validates :ghg_target, inclusion: {in: [true, false]}
   validates :single_year, inclusion: {in: [true, false]}
+
+  def to_s
+    "Target #{id}"
+  end
 end
