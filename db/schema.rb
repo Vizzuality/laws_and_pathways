@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_24_164237) do
+ActiveRecord::Schema.define(version: 2019_07_29_100025) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -214,6 +214,22 @@ ActiveRecord::Schema.define(version: 2019_07_24_164237) do
     t.index ["name", "type"], name: "index_tags_on_name_and_type", unique: true
   end
 
+  create_table "targets", force: :cascade do |t|
+    t.bigint "location_id"
+    t.bigint "sector_id"
+    t.bigint "legislation_id"
+    t.boolean "ghg_target", default: false, null: false
+    t.string "type", null: false
+    t.text "description"
+    t.integer "year"
+    t.string "base_year_period"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["legislation_id"], name: "index_targets_on_legislation_id"
+    t.index ["location_id"], name: "index_targets_on_location_id"
+    t.index ["sector_id"], name: "index_targets_on_sector_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "companies", "locations"
   add_foreign_key "companies", "locations", column: "headquarter_location_id"
@@ -226,4 +242,7 @@ ActiveRecord::Schema.define(version: 2019_07_24_164237) do
   add_foreign_key "litigations", "locations", on_delete: :cascade
   add_foreign_key "mq_assessments", "companies", on_delete: :cascade
   add_foreign_key "taggings", "tags", on_delete: :cascade
+  add_foreign_key "targets", "legislations"
+  add_foreign_key "targets", "locations"
+  add_foreign_key "targets", "sectors"
 end
