@@ -5,7 +5,6 @@
 #  id               :bigint           not null, primary key
 #  location_id      :bigint
 #  sector_id        :bigint
-#  legislation_id   :bigint
 #  ghg_target       :boolean          default(FALSE), not null
 #  type             :string           not null
 #  description      :text
@@ -19,7 +18,6 @@ FactoryBot.define do
   factory :target do
     association :location
     association :sector
-    association :legislation
 
     description { 'Target description' }
     year { 2023 }

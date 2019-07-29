@@ -1,7 +1,7 @@
 ActiveAdmin.register Target do
   menu parent: 'Laws', priority: 3
 
-  permit_params :description, :sector_id, :location_id, :legislation_id,
+  permit_params :description, :sector_id, :location_id,
                 :year, :type, :base_year_period, :ghg_target
 
   filter :type,
@@ -31,7 +31,6 @@ ActiveAdmin.register Target do
       f.input :base_year_period
       f.input :location
       f.input :sector
-      f.input :legislation
       f.input :description, as: :trix
     end
 

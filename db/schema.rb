@@ -217,7 +217,6 @@ ActiveRecord::Schema.define(version: 2019_07_29_100025) do
   create_table "targets", force: :cascade do |t|
     t.bigint "location_id"
     t.bigint "sector_id"
-    t.bigint "legislation_id"
     t.boolean "ghg_target", default: false, null: false
     t.string "type", null: false
     t.text "description"
@@ -225,7 +224,6 @@ ActiveRecord::Schema.define(version: 2019_07_29_100025) do
     t.string "base_year_period"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["legislation_id"], name: "index_targets_on_legislation_id"
     t.index ["location_id"], name: "index_targets_on_location_id"
     t.index ["sector_id"], name: "index_targets_on_sector_id"
   end
@@ -242,7 +240,6 @@ ActiveRecord::Schema.define(version: 2019_07_29_100025) do
   add_foreign_key "litigations", "locations", on_delete: :cascade
   add_foreign_key "mq_assessments", "companies", on_delete: :cascade
   add_foreign_key "taggings", "tags", on_delete: :cascade
-  add_foreign_key "targets", "legislations"
   add_foreign_key "targets", "locations"
   add_foreign_key "targets", "sectors"
 end

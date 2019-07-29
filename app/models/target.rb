@@ -5,7 +5,6 @@
 #  id               :bigint           not null, primary key
 #  location_id      :bigint
 #  sector_id        :bigint
-#  legislation_id   :bigint
 #  ghg_target       :boolean          default(FALSE), not null
 #  type             :string           not null
 #  description      :text
@@ -23,7 +22,6 @@ class Target < ApplicationRecord
 
   belongs_to :location
   belongs_to :sector
-  belongs_to :legislation
 
   validates :ghg_target, inclusion: {in: [true, false]}
   validates_presence_of :type

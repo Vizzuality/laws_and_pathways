@@ -5,11 +5,9 @@ RSpec.describe Admin::TargetsController, type: :controller do
   let!(:target) { create(:target) }
   let(:sector) { create(:sector) }
   let(:location) { create(:location) }
-  let(:legislation) { create(:legislation) }
   let(:valid_attributes) {
     attributes_for(
       :target,
-      legislation_id: legislation.id,
       location_id: location.id,
       sector_id: sector.id
     )
