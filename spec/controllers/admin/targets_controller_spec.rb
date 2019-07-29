@@ -5,9 +5,11 @@ RSpec.describe Admin::TargetsController, type: :controller do
   let!(:target) { create(:target) }
   let(:sector) { create(:sector) }
   let(:location) { create(:location) }
+  let(:legislations) { create_list(:legislation, 2) }
   let(:valid_attributes) {
     attributes_for(
       :target,
+      legislation_ids: legislations.pluck(:id),
       location_id: location.id,
       sector_id: sector.id
     )
@@ -50,6 +52,14 @@ RSpec.describe Admin::TargetsController, type: :controller do
 
       it 'redirects to the created Target' do
         expect(subject).to redirect_to(admin_target_path(Target.order(:created_at).last))
+      end
+
+      it 'new target is for 2 legislations' do
+        subject
+
+        target = Target.order(:created_at).last
+
+        expect(target.legislations.count).to be(2)
       end
     end
 
