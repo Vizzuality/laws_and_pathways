@@ -13,7 +13,7 @@ ActiveAdmin.register Target do
   config.batch_actions = false
 
   index do
-    selectable_column
+    id_column
     column :location
     column :sector
     column :target_scope
@@ -32,6 +32,7 @@ ActiveAdmin.register Target do
       row :base_year_period
       row :sector
       row :target_scope
+      row :description
       row :location
       list_row 'Legislations', :legislations_links
       row :created_at
