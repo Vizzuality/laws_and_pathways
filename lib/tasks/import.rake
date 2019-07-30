@@ -10,36 +10,36 @@ namespace :import do
 
   desc 'Imports Locations'
   task locations: :environment do
-    TimedLogger.log('import locations') do
-      ImportLocations.new.call
+    TimedLogger.log('import Locations') do
+      Import::Locations.new.call
     end
   end
 
   desc 'Imports Companies'
   task companies: :environment do
-    TimedLogger.log('import companies') do
-      ImportCompanies.new.call
+    TimedLogger.log('import Companies') do
+      Import::Companies.new.call
     end
   end
 
   desc 'Imports Legislation'
   task legislation: :environment do
-    TimedLogger.log('import legislation') do
-      ImportLegislation.new.call
+    TimedLogger.log('import Legislation') do
+      Import::Legislation.new.call
     end
   end
 
   desc 'Imports CP Benchmarks'
   task cp_benchmarks: :environment do
     TimedLogger.log('import CP benchmarks') do
-      ImportCPBenchmarks.new.call
+      Import::CPBenchmarks.new.call
     end
   end
 
   desc 'Imports Litigations'
   task litigations: :environment do
     TimedLogger.log('import Litigations') do
-      ImportLitigations.new.call
+      Import::Litigations.new.call
     end
   end
 end

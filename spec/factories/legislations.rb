@@ -11,14 +11,17 @@
 #  location_id :bigint
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  date_passed :date
 #
 
 FactoryBot.define do
   factory :legislation do
-    title { 'Test Legislation' }
+    sequence(:title) { |n| "Legislation #{n} Title" }
     description { 'Test Legislation Description' }
-    law_id { 1 }
+    date_passed { 2.years.ago }
+    sequence(:law_id)
     framework { Legislation::FRAMEWORKS.sample }
-    location
+
+    association :location
   end
 end

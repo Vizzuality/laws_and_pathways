@@ -1,3 +1,25 @@
+# To tag your model with let's say 'keywords', you need to
+#
+# 1) update target model
+#
+#  class Post < ApplicationRecord
+#    include Taggable
+#    tag_with :keywords
+#  end
+#
+# 2) add new Tag subclass
+#
+#  class Keyword < Tag
+#  end
+#
+# Now you can:
+#
+#  post = Post.create(keywords: [Keyword.create!(name: 'books')])
+#  post.keywords_list # => ['books']
+#  post.keywords_list = ["sport, holidays"]
+#  post.save
+#  post.keywords_list # => ["sport, holidays"]
+#
 module Taggable
   extend ActiveSupport::Concern
 
