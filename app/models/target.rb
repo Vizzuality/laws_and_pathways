@@ -16,8 +16,6 @@
 #
 
 class Target < ApplicationRecord
-  self.inheritance_column = nil
-
   belongs_to :location
   belongs_to :sector
   belongs_to :target_scope

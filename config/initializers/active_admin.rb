@@ -275,6 +275,7 @@ ActiveAdmin.setup do |config|
   # TODO: find other workaround, when json is not
   # in the list above then activeadmin addon selected_list
   # fails with unauthorized error
+  # issue link https://github.com/platanus/activeadmin_addons/issues/169
   config.download_links = [:csv, :json]
 
   # == Pagination
