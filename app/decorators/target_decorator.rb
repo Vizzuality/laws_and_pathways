@@ -5,7 +5,7 @@ class TargetDecorator < Draper::Decorator
     model.description.html_safe
   end
 
-  def legislations_links
+  def legislation_links
     return [] if model.legislations.empty?
 
     model.legislations.map do |legislation|

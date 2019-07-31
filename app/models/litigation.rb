@@ -28,6 +28,7 @@ class Litigation < ApplicationRecord
   belongs_to :jurisdiction, class_name: 'Location'
   has_many :litigation_sides, -> { order(:side_type) }, inverse_of: :litigation
   has_many :documents, as: :documentable, dependent: :destroy
+  has_and_belongs_to_many :legislations
 
   accepts_nested_attributes_for :documents, allow_destroy: true
   accepts_nested_attributes_for :litigation_sides, allow_destroy: true

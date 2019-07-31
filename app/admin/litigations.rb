@@ -9,7 +9,8 @@ ActiveAdmin.register Litigation do
                 ],
                 documents_attributes: [
                   :id, :_destroy, :name, :external_url, :type, :file
-                ]
+                ],
+                legislation_ids: []
 
   filter :title_contains
   filter :summary_contains
@@ -44,6 +45,7 @@ ActiveAdmin.register Litigation do
           row :created_at
           row :updated_at
           list_row 'Documents', :document_links
+          list_row 'Legislations', :legislation_links
         end
       end
 

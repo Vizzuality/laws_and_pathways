@@ -99,7 +99,7 @@ ActiveAdmin.register Company do
         panel 'Connected Litigations' do
           if resource.litigations.empty?
             div class: 'padding-20' do
-              'No Litigations connected with this company'
+              'No Litigations are connected with this company'
             end
           else
             table_for resource.litigations.decorate do

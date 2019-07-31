@@ -27,6 +27,38 @@ ActiveAdmin.register Legislation do
     actions
   end
 
+  show do
+    tabs do
+      tab :details do
+        attributes_table do
+          row :title
+          row :description
+          row :date_passed
+          row :location
+          row :law_id
+          row :framework
+          row :created_at
+          row :updated_at
+        end
+      end
+
+      tab :litigations do
+        panel 'Connected Litigations' do
+          if resource.litigations.empty?
+            div class: 'padding-20' do
+              'No Litigations are connected with this legislation'
+            end
+          else
+            table_for resource.litigations.decorate do
+              column :title, &:title_link
+              column :document_type
+            end
+          end
+        end
+      end
+    end
+  end
+
   form do |f|
     f.semantic_errors(*f.object.errors.keys)
 

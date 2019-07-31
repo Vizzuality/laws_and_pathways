@@ -18,4 +18,15 @@ class LegislationDecorator < Draper::Decorator
 
     model.date_passed.to_s(:date_short)
   end
+
+  def litigations_links
+    return [] if model.litigations.empty?
+
+    model.litigations.map do |litigation|
+      h.link_to litigation.title.truncate(120),
+                h.admin_litigation_path(litigation),
+                target: '_blank',
+                title: litigation.title
+    end
+  end
 end
