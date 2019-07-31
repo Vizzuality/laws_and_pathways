@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_29_190643) do
+ActiveRecord::Schema.define(version: 2019_07_31_091008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -126,6 +126,13 @@ ActiveRecord::Schema.define(version: 2019_07_29_190643) do
     t.date "date_passed"
     t.index ["location_id"], name: "index_legislations_on_location_id"
     t.index ["slug"], name: "index_legislations_on_slug", unique: true
+  end
+
+  create_table "legislations_litigations", id: false, force: :cascade do |t|
+    t.bigint "litigation_id", null: false
+    t.bigint "legislation_id", null: false
+    t.index ["legislation_id"], name: "index_legislations_litigations_on_legislation_id"
+    t.index ["litigation_id"], name: "index_legislations_litigations_on_litigation_id"
   end
 
   create_table "legislations_targets", force: :cascade do |t|

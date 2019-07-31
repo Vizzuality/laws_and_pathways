@@ -34,7 +34,7 @@ ActiveAdmin.register Target do
       row :target_scope
       row :description
       row :location
-      list_row 'Legislations', :legislations_links
+      list_row 'Legislations', :legislation_links
       row :created_at
       row :updated_at
     end
