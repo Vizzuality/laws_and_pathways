@@ -27,6 +27,7 @@ class Legislation < ApplicationRecord
   tag_with :document_types
 
   belongs_to :location
+  has_and_belongs_to_many :targets
 
   validates_presence_of :title, :framework, :slug, :date_passed
   validates_uniqueness_of :slug

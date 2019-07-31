@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_25_103310) do
+ActiveRecord::Schema.define(version: 2019_07_29_190643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,6 +128,14 @@ ActiveRecord::Schema.define(version: 2019_07_25_103310) do
     t.index ["slug"], name: "index_legislations_on_slug", unique: true
   end
 
+  create_table "legislations_targets", force: :cascade do |t|
+    t.bigint "legislation_id"
+    t.bigint "target_id"
+    t.index ["legislation_id"], name: "index_legislations_targets_on_legislation_id"
+    t.index ["target_id", "legislation_id"], name: "index_legislations_targets_on_target_id_and_legislation_id", unique: true
+    t.index ["target_id"], name: "index_legislations_targets_on_target_id"
+  end
+
   create_table "litigation_sides", force: :cascade do |t|
     t.bigint "litigation_id"
     t.string "name"
@@ -215,6 +223,28 @@ ActiveRecord::Schema.define(version: 2019_07_25_103310) do
     t.index ["name", "type"], name: "index_tags_on_name_and_type", unique: true
   end
 
+  create_table "target_scopes", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "targets", force: :cascade do |t|
+    t.bigint "location_id"
+    t.bigint "sector_id"
+    t.bigint "target_scope_id"
+    t.boolean "ghg_target", default: false, null: false
+    t.boolean "single_year", default: false, null: false
+    t.text "description"
+    t.integer "year"
+    t.string "base_year_period"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_targets_on_location_id"
+    t.index ["sector_id"], name: "index_targets_on_sector_id"
+    t.index ["target_scope_id"], name: "index_targets_on_target_scope_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "companies", "locations"
   add_foreign_key "companies", "locations", column: "headquarter_location_id"
@@ -222,9 +252,14 @@ ActiveRecord::Schema.define(version: 2019_07_25_103310) do
   add_foreign_key "cp_assessments", "companies", on_delete: :cascade
   add_foreign_key "cp_benchmarks", "sectors", on_delete: :cascade
   add_foreign_key "legislations", "locations"
+  add_foreign_key "legislations_targets", "legislations", on_delete: :cascade
+  add_foreign_key "legislations_targets", "targets", on_delete: :cascade
   add_foreign_key "litigation_sides", "litigations", on_delete: :cascade
   add_foreign_key "litigations", "locations", column: "jurisdiction_id", on_delete: :cascade
   add_foreign_key "litigations", "locations", on_delete: :cascade
   add_foreign_key "mq_assessments", "companies", on_delete: :cascade
   add_foreign_key "taggings", "tags", on_delete: :cascade
+  add_foreign_key "targets", "locations"
+  add_foreign_key "targets", "sectors"
+  add_foreign_key "targets", "target_scopes"
 end
