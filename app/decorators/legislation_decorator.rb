@@ -29,4 +29,10 @@ class LegislationDecorator < Draper::Decorator
                 title: litigation.title
     end
   end
+
+  def document_type_links
+    return [] if model.document_types.empty?
+
+    model.document_types.map(&:name)
+  end
 end

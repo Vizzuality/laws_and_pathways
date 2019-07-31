@@ -5,7 +5,8 @@ ActiveAdmin.register Legislation do
 
   decorate_with LegislationDecorator
 
-  permit_params :title, :date_passed, :description, :framework, :location_id, :law_id
+  permit_params :title, :date_passed, :description, :framework,
+                :location_id, :law_id, document_type_ids: []
 
   filter :title_contains, label: 'Title'
   filter :date_passed
@@ -39,6 +40,7 @@ ActiveAdmin.register Legislation do
           row :framework
           row :created_at
           row :updated_at
+          row :document_type_links
         end
       end
 
@@ -65,6 +67,11 @@ ActiveAdmin.register Legislation do
     f.inputs do
       f.input :title
       f.input :description, as: :trix
+      f.input :law_id
+      f.input :document_type_ids,
+              label: 'Document Types',
+              as: :tags,
+              collection: DocumentType.all
       columns do
         column { f.input :location }
         column { f.input :date_passed }
