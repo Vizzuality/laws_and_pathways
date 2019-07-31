@@ -25,9 +25,9 @@ gem 'aws-sdk-s3'
 gem 'friendly_id'
 
 gem 'simplecov', require: false, group: :test
+gem 'dotenv-rails'
 
 group :development, :test do
-  gem 'dotenv-rails'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara'
   gem 'factory_bot_rails'
@@ -45,6 +45,13 @@ group :development do
   gem 'rubocop-performance'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'capistrano', '~> 3.11', require: false
+  gem 'capistrano-rails', '~> 1.4', require: false
+  gem 'capistrano-bundler'
+  gem 'capistrano-rvm'
+  gem 'capistrano-passenger'
+  gem 'capistrano-yarn'
+
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

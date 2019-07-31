@@ -7,6 +7,7 @@ The backoffice for laws and pathways
 - Ruby v2.5.5
 - Rails v5.2.3
 - Node v10
+- PostgreSQL v11
 
 ## Local installation
 
