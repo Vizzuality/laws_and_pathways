@@ -16,6 +16,10 @@
 #
 
 class Target < ApplicationRecord
+  include Taggable
+
+  tag_with :target_types
+
   belongs_to :location
   belongs_to :sector
   belongs_to :target_scope

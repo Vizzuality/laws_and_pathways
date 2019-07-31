@@ -1,0 +1,2 @@
+class TargetType < Tag
+end
