@@ -1,12 +1,14 @@
 ActiveAdmin.register Legislation do
+  config.remove_batch_action :destroy
   config.sort_order = 'date_passed_desc'
 
   menu parent: 'Laws', priority: 1
 
   decorate_with LegislationDecorator
 
-  permit_params :title, :date_passed, :description, :framework,
-                :location_id, :law_id, document_type_ids: []
+  permit_params :title, :date_passed, :description,
+                :framework, :location_id, :law_id,
+                :visibility_status, document_type_ids: []
 
   filter :title_contains, label: 'Title'
   filter :date_passed
@@ -24,8 +26,15 @@ ActiveAdmin.register Legislation do
     column :framework
     column :location
     column :document_types
+    tag_column :visibility_status
 
     actions
+  end
+
+  sidebar 'Publishing Status', only: :show do
+    attributes_table do
+      tag_row :visibility_status, interactive: true
+    end
   end
 
   show do
