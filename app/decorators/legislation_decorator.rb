@@ -31,7 +31,7 @@ class LegislationDecorator < Draper::Decorator
   end
 
   def document_type_links
-    return [] if model.document_types.empty?
+    return '-' if model.document_types.empty?
 
     model.document_types.map(&:name)
   end
