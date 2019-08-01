@@ -24,5 +24,4 @@ install:
 before_script:
   - bundle exec rake db:test:prepare
 script:
-  - bundle exec rubocop --fail-fast
-  - bundle exec rspec
+  - yarn test
