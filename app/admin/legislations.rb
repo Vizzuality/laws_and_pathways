@@ -1,5 +1,4 @@
 ActiveAdmin.register Legislation do
-  config.remove_batch_action :destroy
   config.sort_order = 'date_passed_desc'
 
   menu parent: 'Laws', priority: 1
