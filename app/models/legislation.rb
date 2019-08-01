@@ -21,7 +21,7 @@ class Legislation < ApplicationRecord
   friendly_id :title, use: :slugged
 
   FRAMEWORKS = %w[mitigation adaptation mitigation_and_adaptation no].freeze
-  VISIBILITY = %w[draft pending published archived]
+  VISIBILITY = %w[draft pending published archived].freeze
 
   enum framework: array_to_enum_hash(FRAMEWORKS)
   enum visibility_status: array_to_enum_hash(VISIBILITY)
