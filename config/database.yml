@@ -79,8 +79,16 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
+
+staging:
+  <<: *default
+  host: <%= ENV['LAWS_AND_PATHWAYS_DATABASE_HOST'] || Rails.application.credentials.dig(:postgres, :staging, :host) || '/var/run/postgresql' %>
+  database: laws_and_pathways_staging
+  username: laws_and_pathways
+  password: <%= ENV['LAWS_AND_PATHWAYS_DATABASE_PASSWORD'] || Rails.application.credentials.dig(:postgres, :staging, :password) %>
+
 production:
   <<: *default
   database: laws_and_pathways_production
   username: laws_and_pathways
-  password: <%= ENV['LAWS_AND_PATHWAYS_DATABASE_PASSWORD'] %>
+  password: <%= ENV['LAWS_AND_PATHWAYS_DATABASE_PASSWORD'] || Rails.application.credentials.dig(:postgres, :production, :password) %>
