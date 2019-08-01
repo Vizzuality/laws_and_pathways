@@ -5,6 +5,10 @@ class TargetDecorator < Draper::Decorator
     model.description.html_safe
   end
 
+  def target_type
+    model.target_type&.humanize
+  end
+
   def legislation_links
     return [] if model.legislations.empty?
 

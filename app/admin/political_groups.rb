@@ -1,5 +1,5 @@
 ActiveAdmin.register PoliticalGroup do
-  menu parent: 'Tags'
+  menu parent: 'Locations', priority: 2
 
   permit_params :name
 

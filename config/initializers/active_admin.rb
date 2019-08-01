@@ -42,9 +42,9 @@ ActiveAdmin.setup do |config|
     config.namespace :admin do |admin|
       # admin.site_title = "Custom Admin Title"
       admin.build_menu do |menu|
+        menu.add label: 'Locations', priority: 1
         menu.add label: 'Laws', priority: 2
         menu.add label: 'TPI', priority: 3
-        menu.add label: 'Tags', priority: 4
         menu.add label: 'Administration', priority: 7
       end
     end
