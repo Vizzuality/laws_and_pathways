@@ -16,9 +16,17 @@
 #
 
 class Target < ApplicationRecord
-  include Taggable
+  TYPES = %w[
+    base_year_target
+    baseline_scenario_target
+    fixed_level_target
+    intensity_target
+    intensity_target_and_trajectory_target
+    no_document_submitted
+    trajectory_target
+  ].freeze
 
-  tag_with :target_types
+  enum target_type: array_to_enum_hash(TYPES)
 
   belongs_to :location
   belongs_to :sector

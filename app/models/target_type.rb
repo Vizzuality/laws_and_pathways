@@ -1,2 +1,0 @@
-class TargetType < Tag
-end

@@ -4,15 +4,15 @@ ActiveAdmin.register Target do
   decorate_with TargetDecorator
 
   permit_params :description, :sector_id, :location_id, :single_year, :target_scope_id,
-                :year, :base_year_period, :ghg_target,
-                target_type_ids: [], legislation_ids: []
+                :year, :base_year_period, :ghg_target, :target_type,
+                legislation_ids: []
 
   filter :ghg_target
   filter :sector
   filter :target_scope
-  filter :target_types,
-         as: :check_boxes,
-         collection: proc { TargetType.all }
+  filter :target_type,
+         as: :select,
+         collection: proc { array_to_select_collection(Target::TYPES) }
 
   config.batch_actions = false
 
@@ -36,7 +36,7 @@ ActiveAdmin.register Target do
       row :base_year_period
       row :sector
       row :target_scope
-      row :target_types
+      row :target_type
       row :description
       row :location
       list_row 'Legislations', :legislation_links
@@ -53,10 +53,9 @@ ActiveAdmin.register Target do
       f.input :single_year, hint: 'singe or multi year target'
       f.input :year
       f.input :base_year_period
-      f.input :target_type_ids,
-              label: 'Target Types',
-              as: :tags,
-              collection: TargetType.all
+      f.input :target_type,
+              as: :select,
+              collection: array_to_select_collection(Target::TYPES)
       f.input :location
       f.input :sector
       f.input :target_scope

@@ -25,5 +25,6 @@ FactoryBot.define do
     year { 2023 }
     ghg_target { false }
     single_year { true }
+    target_type { 'base_year_target' }
   end
 end
