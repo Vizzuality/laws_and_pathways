@@ -1,5 +1,5 @@
 ActiveAdmin.register Location do
-  menu priority: 1
+  menu parent: 'Locations', priority: 1
 
   decorate_with LocationDecorator
 
