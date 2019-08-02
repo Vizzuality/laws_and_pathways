@@ -21,8 +21,10 @@ class Litigation < ApplicationRecord
   friendly_id :title, use: :slugged
 
   DOCUMENT_TYPES = %w[case investigation inquiry].freeze
+  VISIBILITY = %w[draft pending published archived].freeze
 
   enum document_type: array_to_enum_hash(DOCUMENT_TYPES)
+  enum visibility_status: array_to_enum_hash(VISIBILITY)
 
   belongs_to :location
   belongs_to :jurisdiction, class_name: 'Location'
@@ -33,5 +35,5 @@ class Litigation < ApplicationRecord
   accepts_nested_attributes_for :documents, allow_destroy: true
   accepts_nested_attributes_for :litigation_sides, allow_destroy: true
 
-  validates_presence_of :title, :slug, :document_type
+  validates_presence_of :title, :slug, :document_type, :visibility_status
 end

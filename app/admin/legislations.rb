@@ -5,8 +5,15 @@ ActiveAdmin.register Legislation do
 
   decorate_with LegislationDecorator
 
-  permit_params :title, :date_passed, :description, :framework,
-                :location_id, :law_id, document_type_ids: []
+  scope('All', &:all)
+  scope('Draft', &:draft)
+  scope('Pending', &:pending)
+  scope('Published', &:published)
+  scope('Archived', &:archived)
+
+  permit_params :title, :date_passed, :description,
+                :framework, :location_id, :law_id,
+                :visibility_status, document_type_ids: []
 
   filter :title_contains, label: 'Title'
   filter :date_passed
@@ -24,8 +31,15 @@ ActiveAdmin.register Legislation do
     column :framework
     column :location
     column :document_types
+    tag_column :visibility_status
 
     actions
+  end
+
+  sidebar 'Publishing Status', only: :show do
+    attributes_table do
+      tag_row :visibility_status, interactive: true
+    end
   end
 
   show do
@@ -67,7 +81,6 @@ ActiveAdmin.register Legislation do
     f.inputs do
       f.input :title
       f.input :description, as: :trix
-      f.input :law_id
       f.input :document_type_ids,
               label: 'Document Types',
               as: :tags,
@@ -79,6 +92,9 @@ ActiveAdmin.register Legislation do
           f.input :framework,
                   as: :select,
                   collection: array_to_select_collection(Legislation::FRAMEWORKS)
+        end
+        column do
+          f.input :visibility_status, as: :select
         end
       end
     end
