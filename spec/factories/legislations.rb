@@ -21,6 +21,7 @@ FactoryBot.define do
     date_passed { 2.years.ago }
     sequence(:law_id)
     framework { Legislation::FRAMEWORKS.sample }
+    visibility_status { Legislation::VISIBILITY.sample }
 
     association :location
   end

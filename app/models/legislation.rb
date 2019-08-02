@@ -32,6 +32,6 @@ class Legislation < ApplicationRecord
   has_and_belongs_to_many :targets
   has_and_belongs_to_many :litigations
 
-  validates_presence_of :title, :framework, :slug, :date_passed
+  validates_presence_of :title, :framework, :slug, :date_passed, :visibility_status
   validates_uniqueness_of :slug
 end

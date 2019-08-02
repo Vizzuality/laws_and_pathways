@@ -21,6 +21,7 @@
           <%= f.input :summary, as: :trix %>
           <%= f.input :core_objective, as: :trix %>
           <%= f.input :legislation_ids, as: :selected_list, label: 'Connected Legislations', fields: [:title], display_name: :title, order: 'title_asc' %>
+          <%= f.input :visibility_status, as: :select %>
         <% end %>
       </div>
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_01_123408) do
+ActiveRecord::Schema.define(version: 2019_08_02_113528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -169,6 +169,7 @@ ActiveRecord::Schema.define(version: 2019_08_01_123408) do
     t.text "keywords"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "visibility_status", default: "draft"
     t.index ["document_type"], name: "index_litigations_on_document_type"
     t.index ["jurisdiction_id"], name: "index_litigations_on_jurisdiction_id"
     t.index ["location_id"], name: "index_litigations_on_location_id"

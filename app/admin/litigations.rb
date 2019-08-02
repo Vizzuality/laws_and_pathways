@@ -3,7 +3,14 @@ ActiveAdmin.register Litigation do
 
   decorate_with LitigationDecorator
 
-  permit_params :title, :location_id, :jurisdiction_id, :document_type, :summary, :core_objective,
+  scope('All', &:all)
+  scope('Draft', &:draft)
+  scope('Pending', &:pending)
+  scope('Published', &:published)
+  scope('Archived', &:archived)
+
+  permit_params :title, :location_id, :jurisdiction_id, :document_type,
+                :visibility_status, :summary, :core_objective,
                 litigation_sides_attributes: [
                   :id, :_destroy, :name, :side_type, :party_type, :connected_with
                 ],
@@ -26,7 +33,15 @@ ActiveAdmin.register Litigation do
     column :document_type
     column :location
     column :citation_reference_number
+    tag_column :visibility_status
+
     actions
+  end
+
+  sidebar 'Publishing Status', only: :show do
+    attributes_table do
+      tag_row :visibility_status, interactive: true
+    end
   end
 
   show do

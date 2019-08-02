@@ -27,6 +27,7 @@ FactoryBot.define do
     summary { 'Summary Lorem ipsum dolor dalej nie pamietam' }
     core_objective { 'Core objectives Lorem ipsumumum' }
     keywords { 'adaption, mitigation, great litigation' }
+    visibility_status { Litigation::VISIBILITY.sample }
 
     trait :with_sides do
       after(:create) do |l|
