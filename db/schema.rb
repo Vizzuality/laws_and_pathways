@@ -124,7 +124,7 @@ ActiveRecord::Schema.define(version: 2019_08_01_123408) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "date_passed"
-    t.string "visibility_status"
+    t.string "visibility_status", default: "draft"
     t.index ["location_id"], name: "index_legislations_on_location_id"
     t.index ["slug"], name: "index_legislations_on_slug", unique: true
   end

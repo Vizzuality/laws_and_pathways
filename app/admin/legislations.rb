@@ -5,8 +5,10 @@ ActiveAdmin.register Legislation do
 
   decorate_with LegislationDecorator
 
-  scope('All') { |legislations| legislations.all }
-  scope('Published') { |legislations| legislations.where(visibility_status: 'published') }
+  scope('All', &:all)
+  scope('Draft', &:draft)
+  scope('Published', &:published)
+  scope('Archived', &:archived)
 
   permit_params :title, :date_passed, :description,
                 :framework, :location_id, :law_id,
