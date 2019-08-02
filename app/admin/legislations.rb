@@ -7,6 +7,7 @@ ActiveAdmin.register Legislation do
 
   scope('All', &:all)
   scope('Draft', &:draft)
+  scope('Pending', &:pending)
   scope('Published', &:published)
   scope('Archived', &:archived)
 
