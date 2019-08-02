@@ -81,7 +81,6 @@ ActiveAdmin.register Legislation do
     f.inputs do
       f.input :title
       f.input :description, as: :trix
-      f.input :law_id
       f.input :document_type_ids,
               label: 'Document Types',
               as: :tags,
@@ -93,6 +92,9 @@ ActiveAdmin.register Legislation do
           f.input :framework,
                   as: :select,
                   collection: array_to_select_collection(Legislation::FRAMEWORKS)
+        end
+        column do
+          f.input :visibility_status, as: :select
         end
       end
     end
