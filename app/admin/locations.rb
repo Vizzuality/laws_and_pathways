@@ -1,5 +1,6 @@
 ActiveAdmin.register Location do
   menu parent: 'Locations', priority: 1
+  config.sort_order = 'name_asc'
 
   decorate_with LocationDecorator
 
