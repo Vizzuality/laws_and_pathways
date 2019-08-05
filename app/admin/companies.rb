@@ -9,7 +9,7 @@ ActiveAdmin.register Company do
   scope('Archived', &:archived)
 
   permit_params :name, :isin, :sector_id, :location_id, :headquarter_location_id,
-    :ca100, :size, :visibility_status
+                :ca100, :size, :visibility_status
 
   filter :isin_contains, label: 'ISIN'
   filter :name_contains, label: 'Name'
