@@ -26,5 +26,6 @@ FactoryBot.define do
     ghg_target { false }
     single_year { true }
     target_type { 'base_year_target' }
+    visibility_status { Litigation::VISIBILITY.sample }
   end
 end

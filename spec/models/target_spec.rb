@@ -31,4 +31,9 @@ RSpec.describe Target, type: :model do
     subject.single_year = nil
     expect(subject).to have(1).errors_on(:single_year)
   end
+
+  it 'should be invalid if visibility_status is nil' do
+    subject.visibility_status = nil
+    expect(subject).to have(1).errors_on(:visibility_status)
+  end
 end

@@ -25,8 +25,10 @@ class Target < ApplicationRecord
     no_document_submitted
     trajectory_target
   ].freeze
+  VISIBILITY = %w[draft pending published archived].freeze
 
   enum target_type: array_to_enum_hash(TYPES)
+  enum visibility_status: array_to_enum_hash(VISIBILITY)
 
   belongs_to :location
   belongs_to :sector
@@ -35,6 +37,7 @@ class Target < ApplicationRecord
 
   validates :ghg_target, inclusion: {in: [true, false]}
   validates :single_year, inclusion: {in: [true, false]}
+  validates_presence_of :visibility_status
 
   def to_s
     "Target #{id}"

@@ -3,9 +3,15 @@ ActiveAdmin.register Target do
 
   decorate_with TargetDecorator
 
+  scope('All', &:all)
+  scope('Draft', &:draft)
+  scope('Pending', &:pending)
+  scope('Published', &:published)
+  scope('Archived', &:archived)
+
   permit_params :description, :sector_id, :location_id, :single_year, :target_scope_id,
                 :year, :base_year_period, :ghg_target, :target_type,
-                legislation_ids: []
+                :visibility_status, legislation_ids: []
 
   filter :ghg_target
   filter :sector
@@ -16,6 +22,12 @@ ActiveAdmin.register Target do
 
   config.batch_actions = false
 
+  sidebar 'Publishing Status', only: :show do
+    attributes_table do
+      tag_row :visibility_status, interactive: true
+    end
+  end
+
   index do
     id_column
     column :location
@@ -24,6 +36,8 @@ ActiveAdmin.register Target do
     column :single_year
     column :ghg_target
     column :year
+    tag_column :visibility_status
+
     actions
   end
 
@@ -66,6 +80,7 @@ ActiveAdmin.register Target do
               display_name: :title,
               order: 'title_asc'
       f.input :description, as: :trix
+      f.input :visibility_status, as: :select
     end
 
     f.actions
