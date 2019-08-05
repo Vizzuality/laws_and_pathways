@@ -1,8 +1,15 @@
 ActiveAdmin.register Company do
   menu priority: 0, parent: 'TPI'
+  config.sort_order = 'name_asc'
 
-  permit_params :name, :isin, :sector_id, :location_id, :headquarter_location_id, :ca100,
-                :size
+  scope('All', &:all)
+  scope('Draft', &:draft)
+  scope('Pending', &:pending)
+  scope('Published', &:published)
+  scope('Archived', &:archived)
+
+  permit_params :name, :isin, :sector_id, :location_id, :headquarter_location_id,
+    :ca100, :size, :visibility_status
 
   filter :isin_contains, label: 'ISIN'
   filter :name_contains, label: 'Name'
@@ -13,6 +20,12 @@ ActiveAdmin.register Company do
          collection: proc { array_to_select_collection(Company::SIZES) }
 
   config.batch_actions = false
+
+  sidebar 'Publishing Status', only: :show do
+    attributes_table do
+      tag_row :visibility_status, interactive: true
+    end
+  end
 
   sidebar 'Details', only: :show do
     attributes_table do
@@ -122,6 +135,7 @@ ActiveAdmin.register Company do
     column :level, &:mq_status_description_short
     column :location
     column :headquarter_location
+    tag_column :visibility_status
     actions
   end
 
@@ -146,6 +160,9 @@ ActiveAdmin.register Company do
       columns do
         column { f.input :location }
         column { f.input :headquarter_location }
+        column do
+          f.input :visibility_status, as: :select
+        end
       end
 
       f.input :ca100

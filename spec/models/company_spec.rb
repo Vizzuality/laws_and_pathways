@@ -47,4 +47,9 @@ RSpec.describe Company, type: :model do
     subject.isin = 'ISIN123'
     expect(subject).to have(1).errors_on(:isin)
   end
+
+  it 'should be invalid if visibility_status is nil' do
+    subject.visibility_status = nil
+    expect(subject).to have(1).errors_on(:visibility_status)
+  end
 end

@@ -20,7 +20,10 @@ class Company < ApplicationRecord
   friendly_id :name, use: :slugged
 
   SIZES = %w[small medium large].freeze
+  VISIBILITY = %w[draft pending published archived].freeze
+
   enum size: array_to_enum_hash(SIZES)
+  enum visibility_status: array_to_enum_hash(VISIBILITY)
 
   belongs_to :sector
   belongs_to :location
@@ -35,7 +38,7 @@ class Company < ApplicationRecord
            to: :latest_assessment, prefix: :mq, allow_nil: true
 
   validates :ca100, inclusion: {in: [true, false]}
-  validates_presence_of :name, :slug, :isin, :size
+  validates_presence_of :name, :slug, :isin, :size, :visibility_status
   validates_uniqueness_of :slug, :isin
 
   def latest_assessment

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_02_113528) do
+ActiveRecord::Schema.define(version: 2019_08_05_161835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 2019_08_02_113528) do
     t.boolean "ca100", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "visibility_status", default: "draft"
     t.index ["headquarter_location_id"], name: "index_companies_on_headquarter_location_id"
     t.index ["isin"], name: "index_companies_on_isin", unique: true
     t.index ["location_id"], name: "index_companies_on_location_id"
@@ -188,6 +189,7 @@ ActiveRecord::Schema.define(version: 2019_08_02_113528) do
     t.text "legislative_process"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "visibility_status", default: "draft"
     t.index ["iso"], name: "index_locations_on_iso", unique: true
     t.index ["region"], name: "index_locations_on_region"
     t.index ["slug"], name: "index_locations_on_slug", unique: true

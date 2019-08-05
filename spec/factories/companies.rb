@@ -26,6 +26,7 @@ FactoryBot.define do
 
     ca100 { true }
     size { Company::SIZES.sample }
+    visibility_status { Litigation::VISIBILITY.sample }
 
     trait :with_mq_assessments do
       after(:create) do |c|
