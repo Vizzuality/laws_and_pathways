@@ -3,8 +3,15 @@ ActiveAdmin.register Location do
 
   decorate_with LocationDecorator
 
+  scope('All', &:all)
+  scope('Draft', &:draft)
+  scope('Pending', &:pending)
+  scope('Published', &:published)
+  scope('Archived', &:archived)
+
   permit_params :name, :iso, :region, :federal, :federal_details,
-                :legislative_process, :location_type, political_group_ids: []
+                :legislative_process, :location_type,
+                :visibility_status, political_group_ids: []
 
   filter :federal
   filter :iso_equals, label: 'ISO'
@@ -15,6 +22,12 @@ ActiveAdmin.register Location do
          collection: proc { PoliticalGroup.all }
 
   config.batch_actions = false
+
+  sidebar 'Publishing Status', only: :show do
+    attributes_table do
+      tag_row :visibility_status, interactive: true
+    end
+  end
 
   show do
     tabs do
@@ -40,6 +53,8 @@ ActiveAdmin.register Location do
     column 'Name', :name_link
     column :location_type
     column 'ISO', :iso
+    tag_column :visibility_status
+
     actions
   end
 
@@ -59,6 +74,7 @@ ActiveAdmin.register Location do
               label: 'Political Groups',
               as: :tags,
               collection: PoliticalGroup.all
+      f.input :visibility_status, as: :select
     end
 
     f.actions
