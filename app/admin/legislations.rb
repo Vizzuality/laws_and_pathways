@@ -116,9 +116,5 @@ ActiveAdmin.register Legislation do
     def scoped_collection
       super.includes(:location, :document_types)
     end
-
-    def find_resource
-      scoped_collection.friendly.find(params[:id])
-    end
   end
 end

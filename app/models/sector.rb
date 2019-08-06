@@ -11,7 +11,7 @@
 
 class Sector < ApplicationRecord
   extend FriendlyId
-  friendly_id :name, use: :slugged
+  friendly_id :name, use: :slugged, routes: :default
 
   has_many :companies
   has_many :cp_benchmarks, class_name: 'CP::Benchmark'

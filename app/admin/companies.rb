@@ -175,9 +175,5 @@ ActiveAdmin.register Company do
     def scoped_collection
       super.includes(:location, :headquarter_location, :mq_assessments)
     end
-
-    def find_resource
-      scoped_collection.friendly.find(params[:id])
-    end
   end
 end

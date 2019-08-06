@@ -20,7 +20,7 @@ class Location < ApplicationRecord
   include Taggable
   extend FriendlyId
 
-  friendly_id :name, use: :slugged
+  friendly_id :name, use: :slugged, routes: :default
 
   TYPES = %w[country].freeze
   VISIBILITY = %w[draft pending published archived].freeze

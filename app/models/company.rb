@@ -17,7 +17,7 @@
 
 class Company < ApplicationRecord
   extend FriendlyId
-  friendly_id :name, use: :slugged
+  friendly_id :name, use: :slugged, routes: :default
 
   SIZES = %w[small medium large].freeze
   VISIBILITY = %w[draft pending published archived].freeze
