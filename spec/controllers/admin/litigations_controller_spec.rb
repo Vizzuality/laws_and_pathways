@@ -1,14 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Admin::LitigationsController, type: :controller do
-
   before(:each) {
     RequestStore.store[:ut_current_user] = nil
     sign_in admin
   }
 
   let(:admin) { create(:admin_user) }
-  let!(:litigation) { create(:litigation, :with_sides ) }
+  let!(:litigation) { create(:litigation, :with_sides) }
   let(:side_location) { create(:location) }
   let(:side_company) { create(:company) }
   let(:location) { create(:location) }
