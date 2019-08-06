@@ -23,6 +23,7 @@ FactoryBot.define do
 
     location_type { 'country' }
     region { Location::REGIONS.sample }
+    visibility_status { Litigation::VISIBILITY.sample }
     federal { false }
   end
 end
