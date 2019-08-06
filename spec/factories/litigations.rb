@@ -21,6 +21,9 @@ FactoryBot.define do
     association :location
     association :jurisdiction, factory: :location
 
+    association :created_by, factory: :admin_user
+    association :updated_by, factory: :admin_user
+
     sequence(:title) { |n| 'Litigation title -' + ('AA'..'ZZ').to_a[n] }
     document_type { 'case' }
     citation_reference_number { 'SFKD777FDK77' }

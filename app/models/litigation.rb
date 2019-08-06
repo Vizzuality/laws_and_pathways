@@ -17,6 +17,7 @@
 #
 
 class Litigation < ApplicationRecord
+  include UserTrackable
   extend FriendlyId
   friendly_id :title, use: :slugged, routes: :default
 
