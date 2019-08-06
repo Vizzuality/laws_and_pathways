@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Admin::LitigationsController, type: :controller do
+
+  before(:each) {
+    RequestStore.store[:ut_current_user] = nil
+    sign_in admin
+  }
+
   let(:admin) { create(:admin_user) }
   let!(:litigation) { create(:litigation, :with_sides ) }
   let(:side_location) { create(:location) }
@@ -10,6 +16,8 @@ RSpec.describe Admin::LitigationsController, type: :controller do
     attributes_for(:litigation).merge(
       location_id: location.id,
       jurisdiction_id: location.id,
+      created_by_id: admin.id,
+      updated_by_id: admin.id,
       litigation_sides_attributes: [
         attributes_for(:litigation_side),
         attributes_for(:litigation_side, :company).merge(
@@ -26,8 +34,6 @@ RSpec.describe Admin::LitigationsController, type: :controller do
     )
   }
   let(:invalid_attributes) { valid_attributes.merge(title: nil) }
-
-  before { sign_in admin }
 
   describe 'GET index' do
     subject { get :index }

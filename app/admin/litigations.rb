@@ -11,6 +11,7 @@ ActiveAdmin.register Litigation do
 
   permit_params :title, :location_id, :jurisdiction_id, :document_type,
                 :visibility_status, :summary, :core_objective,
+                :created_by_id, :updated_by_id,
                 litigation_sides_attributes: [
                   :id, :_destroy, :name, :side_type, :party_type, :connected_with
                 ],
@@ -33,6 +34,8 @@ ActiveAdmin.register Litigation do
     column :document_type
     column :location
     column :citation_reference_number
+    column :created_by, &:created_by_email
+    column :updated_by, &:updated_by_email
     tag_column :visibility_status
 
     actions
@@ -80,7 +83,7 @@ ActiveAdmin.register Litigation do
 
   controller do
     def scoped_collection
-      super.includes(:location)
+      super.includes(:location, :created_by, :updated_by)
     end
   end
 end
