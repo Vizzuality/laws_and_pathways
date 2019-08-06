@@ -16,8 +16,8 @@ local:
 
 google:
   service: GCS
-  credentials: <%= Base64.decode64(ENV.fetch('GCS_CREDENTIALS') { LawsAndPathways.credentials.dig(:google, :credentials) }) %>
-  bucket: <%= ENV.fetch('GCS_BUCKET') { LawsAndPathways.credentials.dig(:google, :bucket) } %>
+  credentials: <%= Rails.root.join('config/secrets', ENV.fetch('GCS_CREDENTIALS_FILE') { 'google-credentials-staging.json' }) %>
+  bucket: <%= ENV.fetch('GCS_BUCKET') { 'cclow-staging' } %>
 
 # Use rails credentials:edit to set the Azure Storage secret (as azure_storage:storage_access_key)
 # microsoft:

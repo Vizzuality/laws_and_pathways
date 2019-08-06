@@ -43,13 +43,9 @@ TODO
 
 ### Google Cloud Storage
 
-Credential key JSON file is encoded using base64 algorithm and could be placed either in `GCS_CREDENTIALS` env variable or
-for staging/production in credentials.yml.enc file.
+Credential key JSON file is stored in `config/secrets` directory. You can override file by setting `GCS_CREDENTIALS_FILE` env variable, all files
+must be stored in `config/secrets` directory.
 
-
-To encode credentials file
-```
-base64 -w 0 file_name.json
-```
+Be sure to never commit credentials file!
 
 ## API
