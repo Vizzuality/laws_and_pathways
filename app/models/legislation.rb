@@ -18,7 +18,7 @@ class Legislation < ApplicationRecord
   include Taggable
   extend FriendlyId
 
-  friendly_id :title, use: :slugged
+  friendly_id :title, use: :slugged, routes: :default
 
   FRAMEWORKS = %w[mitigation adaptation mitigation_and_adaptation no].freeze
   VISIBILITY = %w[draft pending published archived].freeze

@@ -18,7 +18,7 @@
 
 class Litigation < ApplicationRecord
   extend FriendlyId
-  friendly_id :title, use: :slugged
+  friendly_id :title, use: :slugged, routes: :default
 
   DOCUMENT_TYPES = %w[case investigation inquiry].freeze
   VISIBILITY = %w[draft pending published archived].freeze

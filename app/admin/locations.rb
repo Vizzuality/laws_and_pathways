@@ -82,10 +82,6 @@ ActiveAdmin.register Location do
   end
 
   controller do
-    def find_resource
-      scoped_collection.friendly.find(params[:id])
-    end
-
     def apply_filtering(chain)
       super(chain).distinct
     end
