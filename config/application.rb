@@ -30,4 +30,8 @@ module LawsAndPathways
     # Don't generate system test files.
     config.generators.system_tests = nil
   end
+
+  def self.credentials
+    @credentials ||= Rails.application.credentials[Rails.env.to_sym] || {}
+  end
 end

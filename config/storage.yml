@@ -16,9 +16,8 @@ local:
 
 google:
   service: GCS
-  project: <%= ENV.fetch('GCS_PROJECT') { 'LSE-development' } %>
-  credentials: <%= Base64.decode64(ENV['GCS_CREDENTIALS'] || Rails.application.credentials.dig(:google, :credentials)) %>
-  bucket: <%= ENV.fetch('GCS_BUCKET') { 'laws-and-pathways' } %>
+  credentials: <%= Base64.decode64(ENV.fetch('GCS_CREDENTIALS') { LawsAndPathways.credentials.dig(:google, :credentials) }) %>
+  bucket: <%= ENV.fetch('GCS_BUCKET') { LawsAndPathways.credentials.dig(:google, :bucket) } %>
 
 # Use rails credentials:edit to set the Azure Storage secret (as azure_storage:storage_access_key)
 # microsoft:
