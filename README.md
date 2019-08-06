@@ -41,4 +41,11 @@ TODO
 
 ## Configuration
 
+### Google Cloud Storage
+
+Credential key JSON file is stored in `config/secrets` directory. You can override file by setting `GCS_CREDENTIALS_FILE` env variable, all files
+must be stored in `config/secrets` directory.
+
+Be sure to never commit credentials file!
+
 ## API

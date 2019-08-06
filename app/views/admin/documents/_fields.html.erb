@@ -6,7 +6,7 @@
     <% if form.object.external? %>
       <%= form.input :external_url, as: :string, label: 'Provide external url' %>
     <% else %>
-      <%= form.input :file, as: :file %>
+      <%= form.input :file, as: :file, hint: preview_file_tag(form.object.file) %>
     <% end %>
   </div>
   <%= form.input :name, wrapper_html: { class: 'flex-grow-1' } %>

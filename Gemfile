@@ -21,6 +21,7 @@ gem 'draper'
 
 gem 'aws-sdk-rails'
 gem 'aws-sdk-s3'
+gem 'google-cloud-storage', require: false
 
 gem 'friendly_id'
 
