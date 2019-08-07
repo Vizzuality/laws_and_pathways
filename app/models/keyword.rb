@@ -1,0 +1,2 @@
+class Keyword < Tag
+end

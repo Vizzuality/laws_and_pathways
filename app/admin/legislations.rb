@@ -13,6 +13,7 @@ ActiveAdmin.register Legislation do
 
   permit_params :title, :date_passed, :description,
                 :framework, :location_id, :law_id,
+                :natural_hazards_string, :keywords_string,
                 :visibility_status, document_type_ids: []
 
   filter :title_contains, label: 'Title'
@@ -54,7 +55,9 @@ ActiveAdmin.register Legislation do
           row :framework
           row :created_at
           row :updated_at
-          row :document_type_links
+          row 'Document Types', &:document_types_string
+          row 'Keywords', &:keywords_string
+          row 'Natural Hazards', &:natural_hazards_string
         end
       end
 
@@ -97,6 +100,16 @@ ActiveAdmin.register Legislation do
           f.input :visibility_status, as: :select
         end
       end
+      f.input :natural_hazards_string,
+              label: 'Natural Hazards',
+              hint: t('hint.tag'),
+              as: :tags,
+              collection: NaturalHazard.all.pluck(:name)
+      f.input :keywords_string,
+              label: 'Keywords',
+              hint: t('hint.tag'),
+              as: :tags,
+              collection: Keyword.all.pluck(:name)
     end
 
     f.actions

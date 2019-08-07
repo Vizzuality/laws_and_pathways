@@ -27,6 +27,8 @@ class Legislation < ApplicationRecord
   enum visibility_status: array_to_enum_hash(VISIBILITY)
 
   tag_with :document_types
+  tag_with :keywords
+  tag_with :natural_hazards
 
   belongs_to :location
   has_and_belongs_to_many :targets
