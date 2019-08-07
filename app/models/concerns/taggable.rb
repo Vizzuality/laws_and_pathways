@@ -41,7 +41,13 @@ module Taggable
         array = value.is_a?(String) ? value.split(',') : Array.wrap(value)
         tag_class = class_name.constantize
 
-        send("#{name}=", array.map { |group| tag_class.find_or_initialize_by(name: group.strip) })
+        send(
+          "#{name}=",
+          array
+            .map(&:strip)
+            .reject(&:blank?)
+            .map { |group| tag_class.find_or_initialize_by(name: group) }
+        )
       end
 
       define_method("#{name}_string") do
