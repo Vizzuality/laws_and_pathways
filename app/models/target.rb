@@ -18,6 +18,8 @@
 #
 
 class Target < ApplicationRecord
+  include UserTrackable
+
   TYPES = %w[
     base_year_target
     baseline_scenario_target

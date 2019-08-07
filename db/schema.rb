@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_05_170751) do
+ActiveRecord::Schema.define(version: 2019_08_07_162621) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -126,8 +126,12 @@ ActiveRecord::Schema.define(version: 2019_08_05_170751) do
     t.datetime "updated_at", null: false
     t.date "date_passed"
     t.string "visibility_status", default: "draft"
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
+    t.index ["created_by_id"], name: "index_legislations_on_created_by_id"
     t.index ["location_id"], name: "index_legislations_on_location_id"
     t.index ["slug"], name: "index_legislations_on_slug", unique: true
+    t.index ["updated_by_id"], name: "index_legislations_on_updated_by_id"
   end
 
   create_table "legislations_litigations", id: false, force: :cascade do |t|
@@ -194,9 +198,13 @@ ActiveRecord::Schema.define(version: 2019_08_05_170751) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "visibility_status", default: "draft"
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
+    t.index ["created_by_id"], name: "index_locations_on_created_by_id"
     t.index ["iso"], name: "index_locations_on_iso", unique: true
     t.index ["region"], name: "index_locations_on_region"
     t.index ["slug"], name: "index_locations_on_slug", unique: true
+    t.index ["updated_by_id"], name: "index_locations_on_updated_by_id"
   end
 
   create_table "mq_assessments", force: :cascade do |t|
@@ -257,9 +265,13 @@ ActiveRecord::Schema.define(version: 2019_08_05_170751) do
     t.datetime "updated_at", null: false
     t.string "target_type"
     t.string "visibility_status", default: "draft"
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
+    t.index ["created_by_id"], name: "index_targets_on_created_by_id"
     t.index ["location_id"], name: "index_targets_on_location_id"
     t.index ["sector_id"], name: "index_targets_on_sector_id"
     t.index ["target_scope_id"], name: "index_targets_on_target_scope_id"
+    t.index ["updated_by_id"], name: "index_targets_on_updated_by_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -268,6 +280,8 @@ ActiveRecord::Schema.define(version: 2019_08_05_170751) do
   add_foreign_key "companies", "sectors"
   add_foreign_key "cp_assessments", "companies", on_delete: :cascade
   add_foreign_key "cp_benchmarks", "sectors", on_delete: :cascade
+  add_foreign_key "legislations", "admin_users", column: "created_by_id"
+  add_foreign_key "legislations", "admin_users", column: "updated_by_id"
   add_foreign_key "legislations", "locations"
   add_foreign_key "legislations_targets", "legislations", on_delete: :cascade
   add_foreign_key "legislations_targets", "targets", on_delete: :cascade
@@ -276,8 +290,12 @@ ActiveRecord::Schema.define(version: 2019_08_05_170751) do
   add_foreign_key "litigations", "admin_users", column: "updated_by_id"
   add_foreign_key "litigations", "locations", column: "jurisdiction_id", on_delete: :cascade
   add_foreign_key "litigations", "locations", on_delete: :cascade
+  add_foreign_key "locations", "admin_users", column: "created_by_id"
+  add_foreign_key "locations", "admin_users", column: "updated_by_id"
   add_foreign_key "mq_assessments", "companies", on_delete: :cascade
   add_foreign_key "taggings", "tags", on_delete: :cascade
+  add_foreign_key "targets", "admin_users", column: "created_by_id"
+  add_foreign_key "targets", "admin_users", column: "updated_by_id"
   add_foreign_key "targets", "locations"
   add_foreign_key "targets", "sectors"
   add_foreign_key "targets", "target_scopes"

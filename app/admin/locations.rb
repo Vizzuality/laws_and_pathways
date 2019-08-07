@@ -12,7 +12,9 @@ ActiveAdmin.register Location do
 
   permit_params :name, :iso, :region, :federal, :federal_details,
                 :legislative_process, :location_type,
-                :visibility_status, political_group_ids: []
+                :visibility_status,
+                :created_by_id, :updated_by_id,
+                political_group_ids: []
 
   filter :federal
   filter :iso_equals, label: 'ISO'
@@ -43,8 +45,10 @@ ActiveAdmin.register Location do
           row :federal_details if resource.federal?
           row :legislative_process
           row :political_groups
-          row :created_at
           row :updated_at
+          row :updated_by
+          row :created_at
+          row :created_by
         end
       end
     end
@@ -54,6 +58,8 @@ ActiveAdmin.register Location do
     column 'Name', :name_link
     column :location_type
     column 'ISO', :iso
+    column :created_by
+    column :updated_by
     tag_column :visibility_status
 
     actions

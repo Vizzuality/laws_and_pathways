@@ -26,5 +26,8 @@ FactoryBot.define do
     region { Location::REGIONS.sample }
     visibility_status { Litigation::VISIBILITY.sample }
     federal { false }
+
+    association :created_by, factory: :admin_user
+    association :updated_by, factory: :admin_user
   end
 end

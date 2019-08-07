@@ -17,14 +17,6 @@ class LitigationDecorator < Draper::Decorator
     model.core_objective.html_safe
   end
 
-  def created_by_email
-    model.created_by.try(:email)
-  end
-
-  def updated_by_email
-    model.updated_by.try(:email)
-  end
-
   def document_links
     return [] if model.documents.empty?
 
