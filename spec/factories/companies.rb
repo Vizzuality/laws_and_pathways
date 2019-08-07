@@ -13,6 +13,7 @@
 #  ca100                   :boolean          default(FALSE), not null
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
+#  visibility_status       :string           default("draft")
 #
 
 FactoryBot.define do

@@ -14,6 +14,8 @@
 #  legislative_process        :text
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
+#  visibility_status          :string           default("draft")
+#  indc_url                   :text
 #
 
 FactoryBot.define do
@@ -25,5 +27,6 @@ FactoryBot.define do
     region { Location::REGIONS.sample }
     visibility_status { Litigation::VISIBILITY.sample }
     federal { false }
+    indc_url { 'https://example.test.pl' }
   end
 end

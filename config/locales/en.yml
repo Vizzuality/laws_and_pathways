@@ -41,5 +41,8 @@ en:
       company:
         isin: 'ISIN'
         ca100: 'CA100'
+      location:
+        indc_url: 'INDC URL'
+        indc_link: 'INDC link'
   hint:
     tag: 'Pick an existing one or create new typing name and pressing ENTER'

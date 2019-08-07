@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_05_162617) do
+ActiveRecord::Schema.define(version: 2019_08_07_141621) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,6 +190,7 @@ ActiveRecord::Schema.define(version: 2019_08_05_162617) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "visibility_status", default: "draft"
+    t.text "indc_url"
     t.index ["iso"], name: "index_locations_on_iso", unique: true
     t.index ["region"], name: "index_locations_on_region"
     t.index ["slug"], name: "index_locations_on_slug", unique: true

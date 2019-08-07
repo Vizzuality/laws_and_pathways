@@ -2,16 +2,17 @@
 #
 # Table name: legislations
 #
-#  id          :bigint           not null, primary key
-#  title       :string
-#  description :text
-#  law_id      :integer
-#  framework   :string
-#  slug        :string           not null
-#  location_id :bigint
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  date_passed :date
+#  id                :bigint           not null, primary key
+#  title             :string
+#  description       :text
+#  law_id            :integer
+#  framework         :string
+#  slug              :string           not null
+#  location_id       :bigint
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  date_passed       :date
+#  visibility_status :string           default("draft")
 #
 
 class Legislation < ApplicationRecord
