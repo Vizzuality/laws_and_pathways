@@ -22,6 +22,7 @@
           <%= f.input :core_objective, as: :trix %>
           <%= f.input :legislation_ids, as: :selected_list, label: 'Connected Legislations', fields: [:title], display_name: :title, order: 'title_asc' %>
           <%= f.input :visibility_status, as: :select %>
+          <%= f.input :keywords_string, as: :tags, label: 'Keywords', hint: t('hint.tag'), collection: Keyword.all.pluck(:name) %>
         <% end %>
       </div>
 

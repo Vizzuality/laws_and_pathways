@@ -10,7 +10,7 @@ ActiveAdmin.register Litigation do
   scope('Archived', &:archived)
 
   permit_params :title, :location_id, :jurisdiction_id, :document_type,
-                :visibility_status, :summary, :core_objective,
+                :visibility_status, :summary, :core_objective, :keywords_string,
                 litigation_sides_attributes: [
                   :id, :_destroy, :name, :side_type, :party_type, :connected_with
                 ],
@@ -59,6 +59,7 @@ ActiveAdmin.register Litigation do
           row :core_objective
           row :created_at
           row :updated_at
+          row 'Keywords', &:keywords_string
           list_row 'Documents', :document_links
           list_row 'Legislations', :legislation_links
         end
