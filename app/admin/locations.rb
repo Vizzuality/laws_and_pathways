@@ -59,7 +59,7 @@ ActiveAdmin.register Location do
     actions
   end
 
-  form do |f|
+  form html: {'data-controller' => 'check-modified'} do |f|
     f.semantic_errors(*f.object.errors.keys)
 
     f.inputs do
