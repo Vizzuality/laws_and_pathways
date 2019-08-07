@@ -32,11 +32,6 @@ RSpec.describe Legislation, type: :model do
     expect(subject).to have(1).errors_on(:title)
   end
 
-  it 'should be invalid if framework is nil' do
-    subject.framework = nil
-    expect(subject).to have(1).errors_on(:framework)
-  end
-
   it 'should be invalid if date_passed is nil' do
     subject.date_passed = nil
     expect(subject).to have(1).errors_on(:date_passed)

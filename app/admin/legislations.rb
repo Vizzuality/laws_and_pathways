@@ -12,24 +12,24 @@ ActiveAdmin.register Legislation do
   scope('Archived', &:archived)
 
   permit_params :title, :date_passed, :description,
-                :framework, :location_id, :law_id,
+                :location_id, :law_id,
                 :natural_hazards_string, :keywords_string,
-                :visibility_status, document_type_ids: []
+                :visibility_status, framework_ids: [], document_type_ids: []
 
   filter :title_contains, label: 'Title'
   filter :date_passed
   filter :description_contains, label: 'Description'
   filter :location
-  filter :framework,
-         as: :select,
-         collection: array_to_select_collection(Legislation::FRAMEWORKS)
+  filter :frameworks,
+         as: :check_boxes,
+         collection: proc { Framework.all }
 
   config.batch_actions = false
 
   index do
     column :title, &:title_summary_link
     column :date_passed
-    column :framework
+    column 'Frameworks', &:frameworks_string
     column :location
     column :document_types
     tag_column :visibility_status
@@ -52,7 +52,7 @@ ActiveAdmin.register Legislation do
           row :date_passed
           row :location
           row :law_id
-          row :framework
+          row 'Frameworks', &:frameworks_string
           row :created_at
           row :updated_at
           row 'Document Types', &:document_types_string
@@ -92,9 +92,10 @@ ActiveAdmin.register Legislation do
         column { f.input :location }
         column { f.input :date_passed }
         column do
-          f.input :framework,
-                  as: :select,
-                  collection: array_to_select_collection(Legislation::FRAMEWORKS)
+          f.input :framework_ids,
+                  label: 'Frameworks',
+                  as: :tags,
+                  collection: Framework.all
         end
         column do
           f.input :visibility_status, as: :select
@@ -120,14 +121,14 @@ ActiveAdmin.register Legislation do
     column :title
     column :date_passed
     column :description
-    column :framework
+    column(:frameworks) { |legislation| legislation.frameworks.map(&:name).join(';') }
     column(:location) { |legislation| legislation.location.name }
-    column(:document_types) { |legislation| legislation.document_types.map(&:name).join(' / ') }
+    column(:document_types) { |legislation| legislation.document_types.map(&:name).join(';') }
   end
 
   controller do
     def scoped_collection
-      super.includes(:location, :document_types)
+      super.includes(:location, :frameworks, :document_types)
     end
   end
 end

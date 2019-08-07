@@ -5,10 +5,11 @@ module Import
     FILEPATH = "#{FILES_PREFIX}legislation.csv".freeze
 
     FRAMEWORK_MAPPING = {
-      'No' => 'no',
-      'Mitigation' => 'mitigation',
-      'Adaptation' => 'adaptation',
-      'Mitigation and adaptation' => 'mitigation_and_adaptation'
+      'No' => nil,
+      'Mitigation' => 'Mitigation',
+      'Adaptation' => 'Adaptation',
+      'Adaptiona' => 'Adaptation',
+      'Mitigation and adaptation' => %w(Mitigation Adaptation)
     }.freeze
 
     DOCUMENT_TYPE_MAPPING = {
@@ -39,6 +40,7 @@ module Import
     def import
       import_each_with_logging(csv, FILEPATH) do |row|
         legislation = ::Legislation.find_or_initialize_by(law_id: row[:law_id])
+        legislation.frameworks_list = map_framework(row)
         legislation.update!(legislation_attributes(row))
       end
     end
@@ -48,6 +50,7 @@ module Import
     end
 
     def cleanup
+      ::Framework.delete_all
       ::Legislation.delete_all
     end
 
@@ -55,7 +58,6 @@ module Import
       {
         title: row[:title],
         description: row[:description],
-        framework: map_framework(row),
         date_passed: find_date_passed(row),
         document_types: find_document_types(row),
         location: Import::LocationUtils.find_by_iso(row[:country_iso])
@@ -86,7 +88,7 @@ module Import
     end
 
     def map_framework(row)
-      FRAMEWORK_MAPPING[row[:framework_legislation]] || 'no'
+      FRAMEWORK_MAPPING[row[:framework_legislation]]
     end
   end
 end

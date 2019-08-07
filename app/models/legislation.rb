@@ -21,12 +21,11 @@ class Legislation < ApplicationRecord
 
   friendly_id :title, use: :slugged, routes: :default
 
-  FRAMEWORKS = %w[mitigation adaptation mitigation_and_adaptation no].freeze
   VISIBILITY = %w[draft pending published archived].freeze
 
-  enum framework: array_to_enum_hash(FRAMEWORKS)
   enum visibility_status: array_to_enum_hash(VISIBILITY)
 
+  tag_with :frameworks
   tag_with :document_types
   tag_with :keywords
   tag_with :natural_hazards
@@ -35,6 +34,6 @@ class Legislation < ApplicationRecord
   has_and_belongs_to_many :targets
   has_and_belongs_to_many :litigations
 
-  validates_presence_of :title, :framework, :slug, :date_passed, :visibility_status
+  validates_presence_of :title, :slug, :date_passed, :visibility_status
   validates_uniqueness_of :slug
 end
