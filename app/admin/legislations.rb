@@ -33,8 +33,8 @@ ActiveAdmin.register Legislation do
     column :framework
     column :location
     column :document_types
-    column :created_by_email
-    column :updated_by_email
+    column :created_by
+    column :updated_by
     tag_column :visibility_status
 
     actions
@@ -57,9 +57,9 @@ ActiveAdmin.register Legislation do
           row :law_id
           row :framework
           row :updated_at
-          row :updated_by_email
+          row :updated_by
           row :created_at
-          row :created_by_email
+          row :created_by
           row :document_type_links
         end
       end

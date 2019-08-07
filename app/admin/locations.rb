@@ -46,9 +46,9 @@ ActiveAdmin.register Location do
           row :legislative_process
           row :political_groups
           row :updated_at
-          row :updated_by_email
+          row :updated_by
           row :created_at
-          row :created_by_email
+          row :created_by
         end
       end
     end
@@ -58,8 +58,8 @@ ActiveAdmin.register Location do
     column 'Name', :name_link
     column :location_type
     column 'ISO', :iso
-    column :created_by_email
-    column :updated_by_email
+    column :created_by
+    column :updated_by
     tag_column :visibility_status
 
     actions

@@ -34,8 +34,8 @@ ActiveAdmin.register Litigation do
     column :document_type
     column :location
     column :citation_reference_number
-    column :created_by_email
-    column :updated_by_email
+    column :created_by
+    column :updated_by
     tag_column :visibility_status
 
     actions
@@ -61,9 +61,9 @@ ActiveAdmin.register Litigation do
           row :summary
           row :core_objective
           row :updated_at
-          row :updated_by_email
+          row :updated_by
           row :created_at
-          row :created_by_email
+          row :created_by
           list_row 'Documents', :document_links
           list_row 'Legislations', :legislation_links
         end
