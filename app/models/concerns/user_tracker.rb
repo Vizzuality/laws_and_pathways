@@ -3,11 +3,11 @@ module UserTracker
 
   included do
     def self.current_admin_user=(user)
-      RequestStore.store[:ut_current_user] = user
+      Current.admin_user = user
     end
 
     def self.current_admin_user
-      RequestStore.store[:ut_current_user]
+      Current.admin_user
     end
   end
 end

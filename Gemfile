@@ -18,7 +18,6 @@ gem 'activeadmin'
 gem 'activeadmin_addons'
 gem 'devise'
 gem 'draper'
-gem 'request_store'
 
 gem 'aws-sdk-rails'
 gem 'aws-sdk-s3'

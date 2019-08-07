@@ -4,6 +4,6 @@ class ApplicationController < ActionController::Base
   private
 
   def set_current_user
-    AdminUser.current_admin_user = current_admin_user
+    Current.admin_user = current_admin_user
   end
 end

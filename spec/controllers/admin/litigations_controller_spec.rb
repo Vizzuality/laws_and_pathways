@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Admin::LitigationsController, type: :controller do
   before(:each) {
-    RequestStore.store[:ut_current_user] = nil
+    Current.admin_user = nil
     sign_in admin
   }
 

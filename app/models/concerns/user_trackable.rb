@@ -15,12 +15,12 @@ module UserTrackable
   protected
 
   def set_created_by
-    self.created_by = AdminUser.current_admin_user
+    self.created_by = Current.admin_user
     true
   end
 
   def set_updated_by
-    self.updated_by = AdminUser.current_admin_user
+    self.updated_by = Current.admin_user
     true
   end
 end
