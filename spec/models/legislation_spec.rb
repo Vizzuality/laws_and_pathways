@@ -6,7 +6,6 @@
 #  title             :string
 #  description       :text
 #  law_id            :integer
-#  framework         :string
 #  slug              :string           not null
 #  location_id       :bigint
 #  created_at        :datetime         not null

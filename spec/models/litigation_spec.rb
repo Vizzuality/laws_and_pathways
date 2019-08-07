@@ -15,6 +15,8 @@
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #  visibility_status         :string           default("draft")
+#  created_by_id             :bigint
+#  updated_by_id             :bigint
 #
 
 require 'rails_helper'
