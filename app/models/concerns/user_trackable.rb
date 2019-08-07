@@ -12,6 +12,14 @@ module UserTrackable
     scope :updated_by, ->(user) { where(updated_by_id: user.id) }
   end
 
+  def updated_by_email
+    self.updated_by.try(:email)
+  end
+
+  def created_by_email
+    self.created_by.try(:email)
+  end
+
   protected
 
   def set_created_by
