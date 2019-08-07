@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_07_144809) do
+ActiveRecord::Schema.define(version: 2019_08_07_153848) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -166,7 +166,6 @@ ActiveRecord::Schema.define(version: 2019_08_07_144809) do
     t.bigint "jurisdiction_id"
     t.text "summary"
     t.text "core_objective"
-    t.text "keywords"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "visibility_status", default: "draft"

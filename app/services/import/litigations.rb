@@ -16,6 +16,7 @@ module Import
     def import
       import_each_with_logging(csv, FILEPATH) do |row|
         litigation = Litigation.find_or_initialize_by(title: row[:title])
+        litigation.keywords_list = row[:keywords]
         litigation.update!(litigation_attributes(row))
         get_litigation_sides(row).each do |side|
           side.update!(litigation_id: litigation.id)
@@ -40,8 +41,7 @@ module Import
         jurisdiction: Location.find_by!(iso: row[:country_iso]),
         citation_reference_number: row[:citation_reference_number],
         core_objective: row[:core_objective],
-        summary: row[:description],
-        keywords: row[:keywords]
+        summary: row[:description]
       }
     end
 
