@@ -11,7 +11,9 @@ ActiveAdmin.register Target do
 
   permit_params :description, :sector_id, :location_id, :single_year, :target_scope_id,
                 :year, :base_year_period, :ghg_target, :target_type,
-                :visibility_status, legislation_ids: []
+                :visibility_status,
+                :created_by_id, :updated_by_id,
+                legislation_ids: []
 
   filter :ghg_target
   filter :sector
@@ -36,6 +38,8 @@ ActiveAdmin.register Target do
     column :single_year
     column :ghg_target
     column :year
+    column :created_by
+    column :updated_by
     tag_column :visibility_status
 
     actions
@@ -54,8 +58,10 @@ ActiveAdmin.register Target do
       row :description
       row :location
       list_row 'Legislations', :legislation_links
-      row :created_at
       row :updated_at
+      row :updated_by
+      row :created_at
+      row :created_by
     end
   end
 

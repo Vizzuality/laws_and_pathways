@@ -22,6 +22,9 @@ FactoryBot.define do
     sequence(:law_id)
     visibility_status { Legislation::VISIBILITY.sample }
 
+    association :created_by, factory: :admin_user
+    association :updated_by, factory: :admin_user
+
     association :location
   end
 end

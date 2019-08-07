@@ -28,5 +28,8 @@ FactoryBot.define do
     visibility_status { Litigation::VISIBILITY.sample }
     federal { false }
     indc_url { 'https://example.test.pl' }
+
+    association :created_by, factory: :admin_user
+    association :updated_by, factory: :admin_user
   end
 end

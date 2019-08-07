@@ -19,6 +19,7 @@
 #
 
 class Location < ApplicationRecord
+  include UserTrackable
   include Taggable
   extend FriendlyId
 

@@ -14,6 +14,7 @@ ActiveAdmin.register Legislation do
   permit_params :title, :date_passed, :description,
                 :location_id, :law_id,
                 :natural_hazards_string, :keywords_string,
+                :created_by_id, :updated_by_id,
                 :visibility_status, framework_ids: [], document_type_ids: []
 
   filter :title_contains, label: 'Title'
@@ -32,6 +33,8 @@ ActiveAdmin.register Legislation do
     column 'Frameworks', &:frameworks_string
     column :location
     column :document_types
+    column :created_by
+    column :updated_by
     tag_column :visibility_status
 
     actions
@@ -53,8 +56,10 @@ ActiveAdmin.register Legislation do
           row :location
           row :law_id
           row 'Frameworks', &:frameworks_string
-          row :created_at
           row :updated_at
+          row :updated_by
+          row :created_at
+          row :created_by
           row 'Document Types', &:document_types_string
           row 'Keywords', &:keywords_string
           row 'Natural Hazards', &:natural_hazards_string
