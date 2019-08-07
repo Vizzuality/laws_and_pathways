@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_07_161420) do
+ActiveRecord::Schema.define(version: 2019_08_07_162621) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -265,9 +265,13 @@ ActiveRecord::Schema.define(version: 2019_08_07_161420) do
     t.datetime "updated_at", null: false
     t.string "target_type"
     t.string "visibility_status", default: "draft"
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
+    t.index ["created_by_id"], name: "index_targets_on_created_by_id"
     t.index ["location_id"], name: "index_targets_on_location_id"
     t.index ["sector_id"], name: "index_targets_on_sector_id"
     t.index ["target_scope_id"], name: "index_targets_on_target_scope_id"
+    t.index ["updated_by_id"], name: "index_targets_on_updated_by_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -290,6 +294,8 @@ ActiveRecord::Schema.define(version: 2019_08_07_161420) do
   add_foreign_key "locations", "admin_users", column: "updated_by_id"
   add_foreign_key "mq_assessments", "companies", on_delete: :cascade
   add_foreign_key "taggings", "tags", on_delete: :cascade
+  add_foreign_key "targets", "admin_users", column: "created_by_id"
+  add_foreign_key "targets", "admin_users", column: "updated_by_id"
   add_foreign_key "targets", "locations"
   add_foreign_key "targets", "sectors"
   add_foreign_key "targets", "target_scopes"

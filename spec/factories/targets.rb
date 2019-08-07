@@ -22,6 +22,8 @@ FactoryBot.define do
     association :location
     association :sector
     association :target_scope
+    association :created_by, factory: :admin_user
+    association :updated_by, factory: :admin_user
 
     description { 'Target description' }
     year { 2023 }
