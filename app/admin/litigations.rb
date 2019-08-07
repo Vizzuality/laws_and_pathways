@@ -60,8 +60,10 @@ ActiveAdmin.register Litigation do
           row :citation_reference_number
           row :summary
           row :core_objective
-          row :created_at
           row :updated_at
+          row :updated_by, &:updated_by_email
+          row :created_at
+          row :created_by, &:created_by_email
           list_row 'Documents', :document_links
           list_row 'Legislations', :legislation_links
         end
