@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_05_162617) do
+ActiveRecord::Schema.define(version: 2019_08_05_170751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,10 +171,14 @@ ActiveRecord::Schema.define(version: 2019_08_05_162617) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "visibility_status", default: "draft"
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
+    t.index ["created_by_id"], name: "index_litigations_on_created_by_id"
     t.index ["document_type"], name: "index_litigations_on_document_type"
     t.index ["jurisdiction_id"], name: "index_litigations_on_jurisdiction_id"
     t.index ["location_id"], name: "index_litigations_on_location_id"
     t.index ["slug"], name: "index_litigations_on_slug", unique: true
+    t.index ["updated_by_id"], name: "index_litigations_on_updated_by_id"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -268,6 +272,8 @@ ActiveRecord::Schema.define(version: 2019_08_05_162617) do
   add_foreign_key "legislations_targets", "legislations", on_delete: :cascade
   add_foreign_key "legislations_targets", "targets", on_delete: :cascade
   add_foreign_key "litigation_sides", "litigations", on_delete: :cascade
+  add_foreign_key "litigations", "admin_users", column: "created_by_id"
+  add_foreign_key "litigations", "admin_users", column: "updated_by_id"
   add_foreign_key "litigations", "locations", column: "jurisdiction_id", on_delete: :cascade
   add_foreign_key "litigations", "locations", on_delete: :cascade
   add_foreign_key "mq_assessments", "companies", on_delete: :cascade

@@ -14,9 +14,13 @@
 #  keywords                  :text
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
+#  visibility_status         :string           default("draft")
+#  created_by_id             :bigint
+#  updated_by_id             :bigint
 #
 
 class Litigation < ApplicationRecord
+  include UserTrackable
   extend FriendlyId
   friendly_id :title, use: :slugged, routes: :default
 

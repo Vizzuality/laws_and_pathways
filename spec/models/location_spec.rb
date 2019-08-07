@@ -14,6 +14,7 @@
 #  legislative_process        :text
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
+#  visibility_status          :string           default("draft")
 #
 
 require 'rails_helper'
