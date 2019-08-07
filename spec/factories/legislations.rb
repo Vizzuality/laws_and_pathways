@@ -24,6 +24,9 @@ FactoryBot.define do
     framework { Legislation::FRAMEWORKS.sample }
     visibility_status { Legislation::VISIBILITY.sample }
 
+    association :created_by, factory: :admin_user
+    association :updated_by, factory: :admin_user
+
     association :location
   end
 end
