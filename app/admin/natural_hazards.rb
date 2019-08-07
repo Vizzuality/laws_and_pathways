@@ -1,4 +1,4 @@
-ActiveAdmin.register PoliticalGroup do
+ActiveAdmin.register NaturalHazard do
   config.sort_order = 'name_asc'
 
   menu parent: 'Tags'
