@@ -25,7 +25,7 @@
           span link_to 'Edit', resource_path(tag)
           span link_to 'Delete', resource_path(tag),
                        method: :delete,
-                       data: { confirm: 'Are you sure?' }
+                       data: {confirm: 'Are you sure?'}
         end
       end
     end
