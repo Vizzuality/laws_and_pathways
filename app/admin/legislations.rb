@@ -36,11 +36,7 @@ ActiveAdmin.register Legislation do
     actions
   end
 
-  sidebar 'Publishing Status', only: :show do
-    attributes_table do
-      tag_row :visibility_status, interactive: true
-    end
-  end
+  publishable_sidebar only: :show
 
   show do
     tabs do

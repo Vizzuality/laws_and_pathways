@@ -4,6 +4,7 @@ ActiveAdmin.register Target do
   decorate_with TargetDecorator
 
   publishable_scopes
+  publishable_sidebar only: :show
 
   permit_params :description, :sector_id, :location_id, :single_year, :target_scope_id,
                 :year, :base_year_period, :ghg_target, :target_type,
@@ -19,12 +20,6 @@ ActiveAdmin.register Target do
          collection: proc { array_to_select_collection(Target::TYPES) }
 
   config.batch_actions = false
-
-  sidebar 'Publishing Status', only: :show do
-    attributes_table do
-      tag_row :visibility_status, interactive: true
-    end
-  end
 
   index do
     id_column

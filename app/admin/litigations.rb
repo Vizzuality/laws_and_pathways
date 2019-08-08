@@ -4,6 +4,7 @@ ActiveAdmin.register Litigation do
   decorate_with LitigationDecorator
 
   publishable_scopes
+  publishable_sidebar only: :show
 
   permit_params :title, :location_id, :jurisdiction_id, :document_type,
                 :visibility_status, :summary, :core_objective,
@@ -35,12 +36,6 @@ ActiveAdmin.register Litigation do
     tag_column :visibility_status
 
     actions
-  end
-
-  sidebar 'Publishing Status', only: :show do
-    attributes_table do
-      tag_row :visibility_status, interactive: true
-    end
   end
 
   show do
