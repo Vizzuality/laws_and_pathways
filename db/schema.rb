@@ -119,7 +119,6 @@ ActiveRecord::Schema.define(version: 2019_08_07_162621) do
     t.string "title"
     t.text "description"
     t.integer "law_id"
-    t.string "framework"
     t.string "slug", null: false
     t.bigint "location_id"
     t.datetime "created_at", null: false
@@ -171,7 +170,6 @@ ActiveRecord::Schema.define(version: 2019_08_07_162621) do
     t.bigint "jurisdiction_id"
     t.text "summary"
     t.text "core_objective"
-    t.text "keywords"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "visibility_status", default: "draft"
@@ -200,6 +198,7 @@ ActiveRecord::Schema.define(version: 2019_08_07_162621) do
     t.string "visibility_status", default: "draft"
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
+    t.text "indc_url"
     t.index ["created_by_id"], name: "index_locations_on_created_by_id"
     t.index ["iso"], name: "index_locations_on_iso", unique: true
     t.index ["region"], name: "index_locations_on_region"

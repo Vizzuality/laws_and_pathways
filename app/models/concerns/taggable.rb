@@ -15,10 +15,11 @@
 # Now you can:
 #
 #  post = Post.create(keywords: [Keyword.create!(name: 'books')])
-#  post.keywords_list # => ['books']
-#  post.keywords_list = ["sport, holidays"]
+#  post.keywords_list # => ["books"]
+#  post.keywords_list = ["sport", "holidays"]
 #  post.save
-#  post.keywords_list # => ["sport, holidays"]
+#  post.keywords_list # => ["sport", "holidays"]
+#  post.keywords_string # => 'sport, holidays'
 #
 module Taggable
   extend ActiveSupport::Concern
@@ -40,8 +41,20 @@ module Taggable
         array = value.is_a?(String) ? value.split(',') : Array.wrap(value)
         tag_class = class_name.constantize
 
-        send("#{name}=", array.map { |group| tag_class.find_or_initialize_by(name: group) })
+        send(
+          "#{name}=",
+          array
+            .map(&:strip)
+            .reject(&:blank?)
+            .map { |group| tag_class.find_or_initialize_by(name: group) }
+        )
       end
+
+      define_method("#{name}_string") do
+        send("#{name}_list")&.join(', ')
+      end
+
+      alias_method "#{name}_string=", "#{name}_list="
     end
   end
 end

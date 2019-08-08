@@ -15,6 +15,7 @@
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #  visibility_status          :string           default("draft")
+#  indc_url                   :text
 #
 
 class Location < ApplicationRecord
@@ -48,4 +49,5 @@ class Location < ApplicationRecord
   validates_presence_of :name, :slug, :iso, :location_type, :visibility_status
   validates :federal, inclusion: {in: [true, false]}
   validates :region, inclusion: {in: REGIONS}
+  validates :indc_url, url: true
 end

@@ -32,7 +32,6 @@ FactoryBot.define do
     citation_reference_number { 'SFKD777FDK77' }
     summary { 'Summary Lorem ipsum dolor dalej nie pamietam' }
     core_objective { 'Core objectives Lorem ipsumumum' }
-    keywords { 'adaption, mitigation, great litigation' }
     visibility_status { Litigation::VISIBILITY.sample }
 
     trait :with_sides do

@@ -16,4 +16,10 @@ class LocationDecorator < Draper::Decorator
   def location_type
     model.location_type.humanize
   end
+
+  def indc_link
+    return unless model.indc_url.present?
+
+    h.link_to model.indc_url, model.indc_url, target: '_blank'
+  end
 end

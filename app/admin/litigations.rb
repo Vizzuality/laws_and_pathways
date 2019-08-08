@@ -11,7 +11,7 @@ ActiveAdmin.register Litigation do
 
   permit_params :title, :location_id, :jurisdiction_id, :document_type,
                 :visibility_status, :summary, :core_objective,
-                :created_by_id, :updated_by_id,
+                :created_by_id, :updated_by_id, :keywords_string,
                 litigation_sides_attributes: [
                   :id, :_destroy, :name, :side_type, :party_type, :connected_with
                 ],
@@ -60,6 +60,7 @@ ActiveAdmin.register Litigation do
           row :citation_reference_number
           row :summary
           row :core_objective
+          row 'Keywords', &:keywords_string
           row :updated_at
           row :updated_by
           row :created_at

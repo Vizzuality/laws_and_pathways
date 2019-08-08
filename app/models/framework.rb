@@ -9,6 +9,5 @@
 #  updated_at :datetime         not null
 #
 
-class Tag < ApplicationRecord
-  validates_presence_of :name, :type
+class Framework < Tag
 end

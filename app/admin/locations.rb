@@ -11,7 +11,7 @@ ActiveAdmin.register Location do
   scope('Archived', &:archived)
 
   permit_params :name, :iso, :region, :federal, :federal_details,
-                :legislative_process, :location_type,
+                :legislative_process, :location_type, :indc_url,
                 :visibility_status,
                 :created_by_id, :updated_by_id,
                 political_group_ids: []
@@ -43,6 +43,7 @@ ActiveAdmin.register Location do
           row :region
           row :federal
           row :federal_details if resource.federal?
+          row :indc_link
           row :legislative_process
           row :political_groups
           row :updated_at
@@ -76,6 +77,7 @@ ActiveAdmin.register Location do
       f.input :federal, input_html: {id: 'federal'}
       f.input :federal_details,
               wrapper_html: {data: {controller: 'dependent-input', depends_on: 'federal'}}
+      f.input :indc_url, as: :string
       f.input :legislative_process, as: :trix
       f.input :political_group_ids,
               label: 'Political Groups',

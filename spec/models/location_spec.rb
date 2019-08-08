@@ -15,6 +15,7 @@
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #  visibility_status          :string           default("draft")
+#  indc_url                   :text
 #
 
 require 'rails_helper'
@@ -48,5 +49,10 @@ RSpec.describe Location, type: :model do
   it 'should be invalid if visibility_status is nil' do
     subject.visibility_status = nil
     expect(subject).to have(1).errors_on(:visibility_status)
+  end
+
+  it 'should be invalid if indc_url is not a valid URL' do
+    subject.indc_url = 'not a valid external_url'
+    expect(subject).to have(1).errors_on(:indc_url)
   end
 end

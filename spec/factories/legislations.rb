@@ -6,7 +6,6 @@
 #  title             :string
 #  description       :text
 #  law_id            :integer
-#  framework         :string
 #  slug              :string           not null
 #  location_id       :bigint
 #  created_at        :datetime         not null
@@ -21,7 +20,6 @@ FactoryBot.define do
     description { 'Test Legislation Description' }
     date_passed { 2.years.ago }
     sequence(:law_id)
-    framework { Legislation::FRAMEWORKS.sample }
     visibility_status { Legislation::VISIBILITY.sample }
 
     association :created_by, factory: :admin_user

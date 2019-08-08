@@ -21,7 +21,10 @@
 
 class Litigation < ApplicationRecord
   include UserTrackable
+  include Taggable
+
   extend FriendlyId
+
   friendly_id :title, use: :slugged, routes: :default
 
   DOCUMENT_TYPES = %w[case investigation inquiry].freeze
@@ -29,6 +32,8 @@ class Litigation < ApplicationRecord
 
   enum document_type: array_to_enum_hash(DOCUMENT_TYPES)
   enum visibility_status: array_to_enum_hash(VISIBILITY)
+
+  tag_with :keywords
 
   belongs_to :location
   belongs_to :jurisdiction, class_name: 'Location'

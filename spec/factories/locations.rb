@@ -15,6 +15,7 @@
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #  visibility_status          :string           default("draft")
+#  indc_url                   :text
 #
 
 FactoryBot.define do
@@ -26,6 +27,7 @@ FactoryBot.define do
     region { Location::REGIONS.sample }
     visibility_status { Litigation::VISIBILITY.sample }
     federal { false }
+    indc_url { 'https://example.test.pl' }
 
     association :created_by, factory: :admin_user
     association :updated_by, factory: :admin_user
