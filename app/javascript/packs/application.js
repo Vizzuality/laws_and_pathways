@@ -1,2 +1,0 @@
-import "trix";
-import "controllers";

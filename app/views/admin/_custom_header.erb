@@ -1,1 +1,10 @@
-<%= javascript_pack_tag 'application' %>
+<%= javascript_pack_tag 'admin' %>
+
+<% if Current.admin_user.present? %>
+  <script>
+    window.LawsAndPathways.user = {
+      email: '<%= Current.admin_user.email %>',
+      gravatarUrl: '<%= Current.admin_user.gravatar_url %>'
+    };
+  </script>
+<% end %>
