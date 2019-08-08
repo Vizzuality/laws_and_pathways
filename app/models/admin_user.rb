@@ -17,4 +17,9 @@ class AdminUser < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable,
          :recoverable, :rememberable, :validatable
+
+  def gravatar_url(size = 50)
+    gravatar_id = Digest::MD5.hexdigest(email.downcase)
+    "https://secure.gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
+  end
 end
