@@ -1,4 +1,4 @@
-<%= semantic_form_for [:admin, resource], builder: ActiveAdmin::FormBuilder do |f| %>
+<%= semantic_form_for [:admin, resource], builder: ActiveAdmin::FormBuilder, html: {'data-controller' => 'check-modified'} do |f| %>
   <%= f.semantic_errors(*f.object.errors.keys) %>
 
   <div class="tabs" data-controller="tabs">
