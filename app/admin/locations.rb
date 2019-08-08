@@ -4,11 +4,7 @@ ActiveAdmin.register Location do
 
   decorate_with LocationDecorator
 
-  scope('All', &:all)
-  scope('Draft', &:draft)
-  scope('Pending', &:pending)
-  scope('Published', &:published)
-  scope('Archived', &:archived)
+  publishable_scopes
 
   permit_params :name, :iso, :region, :federal, :federal_details,
                 :legislative_process, :location_type, :indc_url,

@@ -2,11 +2,7 @@ ActiveAdmin.register Company do
   menu priority: 0, parent: 'TPI'
   config.sort_order = 'name_asc'
 
-  scope('All', &:all)
-  scope('Draft', &:draft)
-  scope('Pending', &:pending)
-  scope('Published', &:published)
-  scope('Archived', &:archived)
+  publishable_scopes
 
   permit_params :name, :isin, :sector_id, :location_id, :headquarter_location_id,
                 :ca100, :size, :visibility_status

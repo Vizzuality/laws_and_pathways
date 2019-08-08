@@ -3,11 +3,7 @@ ActiveAdmin.register Litigation do
 
   decorate_with LitigationDecorator
 
-  scope('All', &:all)
-  scope('Draft', &:draft)
-  scope('Pending', &:pending)
-  scope('Published', &:published)
-  scope('Archived', &:archived)
+  publishable_scopes
 
   permit_params :title, :location_id, :jurisdiction_id, :document_type,
                 :visibility_status, :summary, :core_objective,

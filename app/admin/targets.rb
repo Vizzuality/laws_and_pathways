@@ -3,11 +3,7 @@ ActiveAdmin.register Target do
 
   decorate_with TargetDecorator
 
-  scope('All', &:all)
-  scope('Draft', &:draft)
-  scope('Pending', &:pending)
-  scope('Published', &:published)
-  scope('Archived', &:archived)
+  publishable_scopes
 
   permit_params :description, :sector_id, :location_id, :single_year, :target_scope_id,
                 :year, :base_year_period, :ghg_target, :target_type,

@@ -1,3 +1,5 @@
+Dir[Rails.root.join('lib/extensions/active_admin/*.rb')].each { |f| require f }
+
 ActiveAdmin.setup do |config|
   # == Site Title
   #
@@ -327,15 +329,9 @@ ActiveAdmin.setup do |config|
   # config.order_clause = MyOrderClause
 end
 
-class ActiveAdmin::ResourceDSL
-  include SelectHelper
-end
+Rails.configuration.to_prepare do
+  ActiveAdmin::ResourceDSL.send :include, SelectHelper
+  ActiveAdmin::ResourceDSL.send :include, ActiveAdminPublishable::Scopes
 
-ActiveAdmin::Views::Header.class_eval do
-  alias original_build build
-
-  def build(*args)
-    original_build(*args)
-    render 'admin/custom_header'
-  end
+  ActiveAdmin::Views::Header.send :prepend, ActiveAdminCustomHeader
 end
