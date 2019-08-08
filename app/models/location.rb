@@ -21,12 +21,12 @@
 class Location < ApplicationRecord
   include UserTrackable
   include Taggable
+  include Publishable
   extend FriendlyId
 
   friendly_id :name, use: :slugged, routes: :default
 
   TYPES = %w[country].freeze
-  VISIBILITY = %w[draft pending published archived].freeze
 
   REGIONS = [
     'East Asia & Pacific',
@@ -39,14 +39,13 @@ class Location < ApplicationRecord
   ].freeze
 
   enum location_type: array_to_enum_hash(TYPES)
-  enum visibility_status: array_to_enum_hash(VISIBILITY)
 
   tag_with :political_groups
 
   has_many :litigations
 
   validates_uniqueness_of :slug, :iso
-  validates_presence_of :name, :slug, :iso, :location_type, :visibility_status
+  validates_presence_of :name, :slug, :iso, :location_type
   validates :federal, inclusion: {in: [true, false]}
   validates :region, inclusion: {in: REGIONS}
   validates :indc_url, url: true

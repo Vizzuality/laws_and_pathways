@@ -22,16 +22,15 @@
 class Litigation < ApplicationRecord
   include UserTrackable
   include Taggable
+  include Publishable
 
   extend FriendlyId
 
   friendly_id :title, use: :slugged, routes: :default
 
   DOCUMENT_TYPES = %w[case investigation inquiry].freeze
-  VISIBILITY = %w[draft pending published archived].freeze
 
   enum document_type: array_to_enum_hash(DOCUMENT_TYPES)
-  enum visibility_status: array_to_enum_hash(VISIBILITY)
 
   tag_with :keywords
 
@@ -44,5 +43,5 @@ class Litigation < ApplicationRecord
   accepts_nested_attributes_for :documents, allow_destroy: true
   accepts_nested_attributes_for :litigation_sides, allow_destroy: true
 
-  validates_presence_of :title, :slug, :document_type, :visibility_status
+  validates_presence_of :title, :slug, :document_type
 end

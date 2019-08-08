@@ -4,11 +4,8 @@ ActiveAdmin.register Location do
 
   decorate_with LocationDecorator
 
-  scope('All', &:all)
-  scope('Draft', &:draft)
-  scope('Pending', &:pending)
-  scope('Published', &:published)
-  scope('Archived', &:archived)
+  publishable_scopes
+  publishable_sidebar only: :show
 
   permit_params :name, :iso, :region, :federal, :federal_details,
                 :legislative_process, :location_type, :indc_url,
@@ -25,12 +22,6 @@ ActiveAdmin.register Location do
          collection: proc { PoliticalGroup.all }
 
   config.batch_actions = false
-
-  sidebar 'Publishing Status', only: :show do
-    attributes_table do
-      tag_row :visibility_status, interactive: true
-    end
-  end
 
   show do
     tabs do

@@ -17,13 +17,10 @@
 class Legislation < ApplicationRecord
   include UserTrackable
   include Taggable
+  include Publishable
   extend FriendlyId
 
   friendly_id :title, use: :slugged, routes: :default
-
-  VISIBILITY = %w[draft pending published archived].freeze
-
-  enum visibility_status: array_to_enum_hash(VISIBILITY)
 
   tag_with :frameworks
   tag_with :document_types
@@ -34,6 +31,6 @@ class Legislation < ApplicationRecord
   has_and_belongs_to_many :targets
   has_and_belongs_to_many :litigations
 
-  validates_presence_of :title, :slug, :date_passed, :visibility_status
+  validates_presence_of :title, :slug, :date_passed
   validates_uniqueness_of :slug
 end

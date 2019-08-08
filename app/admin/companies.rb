@@ -2,11 +2,8 @@ ActiveAdmin.register Company do
   menu priority: 0, parent: 'TPI'
   config.sort_order = 'name_asc'
 
-  scope('All', &:all)
-  scope('Draft', &:draft)
-  scope('Pending', &:pending)
-  scope('Published', &:published)
-  scope('Archived', &:archived)
+  publishable_scopes
+  publishable_sidebar only: :show
 
   permit_params :name, :isin, :sector_id, :location_id, :headquarter_location_id,
                 :ca100, :size, :visibility_status
@@ -20,12 +17,6 @@ ActiveAdmin.register Company do
          collection: proc { array_to_select_collection(Company::SIZES) }
 
   config.batch_actions = false
-
-  sidebar 'Publishing Status', only: :show do
-    attributes_table do
-      tag_row :visibility_status, interactive: true
-    end
-  end
 
   sidebar 'Details', only: :show do
     attributes_table do
