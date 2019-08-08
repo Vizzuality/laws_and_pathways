@@ -2,17 +2,6 @@
 @import 'admin/mixins';
 @import 'trix/dist/trix';
 @import 'activeadmin_addons/all';
-
-// SASS variable overrides must be declared before loading up Active Admin's styles.
-//
-// To view the variables that Active Admin provides, take a look at
-// `app/assets/stylesheets/active_admin/mixins/_variables.scss` in the
-// Active Admin source.
-//
-// For example, to change the sidebar width:
-// $sidebar-width: 242px;
-
-// Active Admin's got SASS!
 @import "active_admin/mixins";
 @import 'activeadmin_addons/material';
 
@@ -83,6 +72,13 @@ fieldset.actions .cancel a {
 #search_status_sidebar_section {
   .panel_contents {
     padding: 16px;
+  }
+}
+
+// Fix navbar
+#utility_nav {
+  #current_user, #logout {
+    width: auto;
   }
 }
 
