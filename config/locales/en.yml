@@ -41,7 +41,7 @@ en:
       company:
         isin: 'ISIN'
         ca100: 'CA100'
-      location:
+      geography:
         indc_url: 'INDC URL'
         indc_link: 'INDC link'
   hint:
