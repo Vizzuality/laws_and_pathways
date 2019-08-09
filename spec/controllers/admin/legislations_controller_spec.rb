@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Admin::LegislationsController, type: :controller do
   let(:admin) { create(:admin_user) }
-  let(:location) { create(:location) }
+  let(:geography) { create(:geography) }
 
   let!(:legislation) { create(:legislation) }
   let(:valid_attributes) {
     attributes_for(:legislation).merge(
-      location_id: location.id
+      geography_id: geography.id
     )
   }
 

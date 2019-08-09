@@ -1,5 +1,5 @@
 module Import
-  class Locations
+  class Geographies
     include ClimateWatchEngine::CSVImporter
 
     FILEPATH = "#{FILES_PREFIX}countryprofiles.csv".freeze
@@ -19,8 +19,8 @@ module Import
 
     def import
       import_each_with_logging(csv, FILEPATH) do |row|
-        location = Location.find_or_initialize_by(iso: row[:country_iso])
-        location.update!(location_attributes(row))
+        geography = Geography.find_or_initialize_by(iso: row[:country_iso])
+        geography.update!(geography_attributes(row))
       end
     end
 
@@ -28,7 +28,7 @@ module Import
       @csv ||= S3CSVReader.read(FILEPATH)
     end
 
-    def location_attributes(row)
+    def geography_attributes(row)
       {
         name: row[:country],
         region: row[:region],
@@ -36,7 +36,7 @@ module Import
         federal: parse_boolean(row[:federal]),
         federal_details: strip_html(row[:federal_details]),
         legislative_process: row[:legislative_process],
-        location_type: 'country',
+        geography_type: 'country',
         political_groups: parse_political_groups(row[:main_groups])
       }
     end

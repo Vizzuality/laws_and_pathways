@@ -3,7 +3,7 @@
 # Table name: targets
 #
 #  id                :bigint           not null, primary key
-#  location_id       :bigint
+#  geography_id      :bigint
 #  sector_id         :bigint
 #  target_scope_id   :bigint
 #  ghg_target        :boolean          default(FALSE), not null
@@ -15,6 +15,8 @@
 #  updated_at        :datetime         not null
 #  target_type       :string
 #  visibility_status :string           default("draft")
+#  created_by_id     :bigint
+#  updated_by_id     :bigint
 #
 
 class Target < ApplicationRecord
@@ -33,7 +35,7 @@ class Target < ApplicationRecord
 
   enum target_type: array_to_enum_hash(TYPES)
 
-  belongs_to :location
+  belongs_to :geography
   belongs_to :sector
   belongs_to :target_scope
   has_and_belongs_to_many :legislations

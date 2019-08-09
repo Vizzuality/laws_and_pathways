@@ -1,9 +1,9 @@
 # == Schema Information
 #
-# Table name: locations
+# Table name: geographies
 #
 #  id                         :bigint           not null, primary key
-#  location_type              :string           not null
+#  geography_type             :string           not null
 #  iso                        :string           not null
 #  name                       :string           not null
 #  slug                       :string           not null
@@ -15,16 +15,18 @@
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #  visibility_status          :string           default("draft")
+#  created_by_id              :bigint
+#  updated_by_id              :bigint
 #  indc_url                   :text
 #
 
 FactoryBot.define do
-  factory :location do
+  factory :geography do
     sequence(:name) { |n| 'name-' + ('AA'..'ZZ').to_a[n] }
     sequence(:iso) { |n| ('AAA'..'ZZZ').to_a[n] }
 
-    location_type { 'country' }
-    region { Location::REGIONS.sample }
+    geography_type { 'country' }
+    region { Geography::REGIONS.sample }
     visibility_status { Litigation::VISIBILITY.sample }
     federal { false }
     indc_url { 'https://example.test.pl' }

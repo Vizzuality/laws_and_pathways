@@ -1,9 +1,9 @@
 # == Schema Information
 #
-# Table name: locations
+# Table name: geographies
 #
 #  id                         :bigint           not null, primary key
-#  location_type              :string           not null
+#  geography_type             :string           not null
 #  iso                        :string           not null
 #  name                       :string           not null
 #  slug                       :string           not null
@@ -15,10 +15,12 @@
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #  visibility_status          :string           default("draft")
+#  created_by_id              :bigint
+#  updated_by_id              :bigint
 #  indc_url                   :text
 #
 
-class Location < ApplicationRecord
+class Geography < ApplicationRecord
   include UserTrackable
   include Taggable
   include Publishable
@@ -38,14 +40,14 @@ class Location < ApplicationRecord
     'Latin America & Caribbean'
   ].freeze
 
-  enum location_type: array_to_enum_hash(TYPES)
+  enum geography_type: array_to_enum_hash(TYPES)
 
   tag_with :political_groups
 
   has_many :litigations
 
   validates_uniqueness_of :slug, :iso
-  validates_presence_of :name, :slug, :iso, :location_type
+  validates_presence_of :name, :slug, :iso, :geography_type
   validates :federal, inclusion: {in: [true, false]}
   validates :region, inclusion: {in: REGIONS}
   validates :indc_url, url: true

@@ -8,7 +8,7 @@ ActiveAdmin.register Legislation do
   publishable_scopes
 
   permit_params :title, :date_passed, :description,
-                :location_id, :law_id,
+                :geography_id, :law_id,
                 :natural_hazards_string, :keywords_string,
                 :created_by_id, :updated_by_id,
                 :visibility_status, framework_ids: [], document_type_ids: []
@@ -16,7 +16,7 @@ ActiveAdmin.register Legislation do
   filter :title_contains, label: 'Title'
   filter :date_passed
   filter :description_contains, label: 'Description'
-  filter :location
+  filter :geography
   filter :frameworks,
          as: :check_boxes,
          collection: proc { Framework.all }
@@ -27,7 +27,7 @@ ActiveAdmin.register Legislation do
     column :title, &:title_summary_link
     column :date_passed
     column 'Frameworks', &:frameworks_string
-    column :location
+    column :geography
     column :document_types
     column :created_by
     column :updated_by
@@ -45,7 +45,7 @@ ActiveAdmin.register Legislation do
           row :title
           row :description
           row :date_passed
-          row :location
+          row :geography
           row :law_id
           row 'Frameworks', &:frameworks_string
           row :updated_at
@@ -86,7 +86,7 @@ ActiveAdmin.register Legislation do
               as: :tags,
               collection: DocumentType.all
       columns do
-        column { f.input :location }
+        column { f.input :geography }
         column { f.input :date_passed }
         column do
           f.input :framework_ids,
@@ -119,13 +119,13 @@ ActiveAdmin.register Legislation do
     column :date_passed
     column :description
     column(:frameworks) { |legislation| legislation.frameworks.map(&:name).join(';') }
-    column(:location) { |legislation| legislation.location.name }
+    column(:geography) { |legislation| legislation.geography.name }
     column(:document_types) { |legislation| legislation.document_types.map(&:name).join(';') }
   end
 
   controller do
     def scoped_collection
-      super.includes(:location, :frameworks, :document_types)
+      super.includes(:geography, :frameworks, :document_types)
     end
   end
 end

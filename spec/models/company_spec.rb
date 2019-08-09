@@ -2,18 +2,18 @@
 #
 # Table name: companies
 #
-#  id                      :bigint           not null, primary key
-#  location_id             :bigint
-#  headquarter_location_id :bigint
-#  sector_id               :bigint
-#  name                    :string           not null
-#  slug                    :string           not null
-#  isin                    :string           not null
-#  size                    :string
-#  ca100                   :boolean          default(FALSE), not null
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
-#  visibility_status       :string           default("draft")
+#  id                        :bigint           not null, primary key
+#  geography_id              :bigint
+#  headquarters_geography_id :bigint
+#  sector_id                 :bigint
+#  name                      :string           not null
+#  slug                      :string           not null
+#  isin                      :string           not null
+#  size                      :string
+#  ca100                     :boolean          default(FALSE), not null
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  visibility_status         :string           default("draft")
 #
 
 require 'rails_helper'
@@ -23,14 +23,14 @@ RSpec.describe Company, type: :model do
 
   it { is_expected.to be_valid }
 
-  it 'should be invalid without location' do
-    subject.location = nil
-    expect(subject).to have(1).errors_on(:location)
+  it 'should be invalid without geography' do
+    subject.geography = nil
+    expect(subject).to have(1).errors_on(:geography)
   end
 
-  it 'should be invalid without headquarter location' do
-    subject.headquarter_location = nil
-    expect(subject).to have(1).errors_on(:headquarter_location)
+  it 'should be invalid without headquarters geography' do
+    subject.headquarters_geography = nil
+    expect(subject).to have(1).errors_on(:headquarters_geography)
   end
 
   it 'should be invalid if name is nil' do

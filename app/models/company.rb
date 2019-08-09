@@ -2,18 +2,18 @@
 #
 # Table name: companies
 #
-#  id                      :bigint           not null, primary key
-#  location_id             :bigint
-#  headquarter_location_id :bigint
-#  sector_id               :bigint
-#  name                    :string           not null
-#  slug                    :string           not null
-#  isin                    :string           not null
-#  size                    :string
-#  ca100                   :boolean          default(FALSE), not null
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
-#  visibility_status       :string           default("draft")
+#  id                        :bigint           not null, primary key
+#  geography_id              :bigint
+#  headquarters_geography_id :bigint
+#  sector_id                 :bigint
+#  name                      :string           not null
+#  slug                      :string           not null
+#  isin                      :string           not null
+#  size                      :string
+#  ca100                     :boolean          default(FALSE), not null
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  visibility_status         :string           default("draft")
 #
 
 class Company < ApplicationRecord
@@ -26,8 +26,8 @@ class Company < ApplicationRecord
   enum size: array_to_enum_hash(SIZES)
 
   belongs_to :sector
-  belongs_to :location
-  belongs_to :headquarter_location, class_name: 'Location'
+  belongs_to :geography
+  belongs_to :headquarters_geography, class_name: 'Geography'
 
   has_many :mq_assessments, class_name: 'MQ::Assessment', inverse_of: :company
   has_many :cp_assessments, class_name: 'CP::Assessment', inverse_of: :company

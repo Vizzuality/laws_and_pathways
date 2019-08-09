@@ -2,7 +2,7 @@ import { Controller } from 'stimulus';
 
 const ENTITY_TYPE_PARTY_TYPE_MAP = {
   'Company': 'corporation',
-  'Location': 'government'
+  'Geography': 'government'
 };
 
 export default class extends Controller {

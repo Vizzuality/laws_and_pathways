@@ -7,11 +7,10 @@
 #  slug                      :string           not null
 #  citation_reference_number :string
 #  document_type             :string
-#  location_id               :bigint
+#  geography_id              :bigint
 #  jurisdiction_id           :bigint
 #  summary                   :text
 #  core_objective            :text
-#  keywords                  :text
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #  visibility_status         :string           default("draft")
@@ -34,8 +33,8 @@ class Litigation < ApplicationRecord
 
   tag_with :keywords
 
-  belongs_to :location
-  belongs_to :jurisdiction, class_name: 'Location'
+  belongs_to :geography
+  belongs_to :jurisdiction, class_name: 'Geography'
   has_many :litigation_sides, -> { order(:side_type) }, inverse_of: :litigation
   has_many :documents, as: :documentable, dependent: :destroy
   has_and_belongs_to_many :legislations

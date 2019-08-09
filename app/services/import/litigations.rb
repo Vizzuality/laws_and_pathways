@@ -36,9 +36,9 @@ module Import
       {
         title: row[:title],
         document_type: row[:document_type],
-        location: Import::LocationUtils.find_by_iso(row[:country_iso]),
+        geography: Import::GeographyUtils.find_by_iso(row[:country_iso]),
         # TODO: change below when we know more about jurisdictions
-        jurisdiction: Location.find_by!(iso: row[:country_iso]),
+        jurisdiction: Geography.find_by!(iso: row[:country_iso]),
         citation_reference_number: row[:citation_reference_number],
         core_objective: row[:core_objective],
         summary: row[:description]
@@ -75,8 +75,8 @@ module Import
     end
 
     def get_side_connected_entity(name)
-      location = Location.find_by(name: name)
-      return location if location.present?
+      geography = Geography.find_by(name: name)
+      return geography if geography.present?
 
       Company.find_by(name: name)
     end

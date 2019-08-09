@@ -7,11 +7,13 @@
 #  description       :text
 #  law_id            :integer
 #  slug              :string           not null
-#  location_id       :bigint
+#  geography_id      :bigint
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  date_passed       :date
 #  visibility_status :string           default("draft")
+#  created_by_id     :bigint
+#  updated_by_id     :bigint
 #
 
 class Legislation < ApplicationRecord
@@ -27,7 +29,7 @@ class Legislation < ApplicationRecord
   tag_with :keywords
   tag_with :natural_hazards
 
-  belongs_to :location
+  belongs_to :geography
   has_and_belongs_to_many :targets
   has_and_belongs_to_many :litigations
 

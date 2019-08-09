@@ -7,11 +7,13 @@
 #  description       :text
 #  law_id            :integer
 #  slug              :string           not null
-#  location_id       :bigint
+#  geography_id      :bigint
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  date_passed       :date
 #  visibility_status :string           default("draft")
+#  created_by_id     :bigint
+#  updated_by_id     :bigint
 #
 
 FactoryBot.define do
@@ -25,6 +27,6 @@ FactoryBot.define do
     association :created_by, factory: :admin_user
     association :updated_by, factory: :admin_user
 
-    association :location
+    association :geography
   end
 end

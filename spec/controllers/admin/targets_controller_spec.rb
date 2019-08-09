@@ -4,14 +4,14 @@ RSpec.describe Admin::TargetsController, type: :controller do
   let(:admin) { create(:admin_user) }
   let!(:target) { create(:target) }
   let(:sector) { create(:sector) }
-  let(:location) { create(:location) }
+  let(:geography) { create(:geography) }
   let(:target_scope) { create(:target_scope) }
   let(:legislations) { create_list(:legislation, 2) }
   let(:valid_attributes) {
     attributes_for(
       :target,
       legislation_ids: legislations.pluck(:id),
-      location_id: location.id,
+      geography_id: geography.id,
       sector_id: sector.id,
       target_scope_id: target_scope.id
     )

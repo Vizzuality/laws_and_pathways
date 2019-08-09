@@ -1,7 +1,7 @@
 namespace :import do
   desc 'Import All'
   task all: :environment do
-    Rake::Task['import:locations'].invoke
+    Rake::Task['import:geographies'].invoke
     Rake::Task['import:companies'].invoke
     Rake::Task['import:cp_benchmarks'].invoke
     Rake::Task['import:legislation'].invoke
@@ -9,9 +9,9 @@ namespace :import do
   end
 
   desc 'Imports Locations'
-  task locations: :environment do
+  task geographies: :environment do
     TimedLogger.log('import Locations') do
-      Import::Locations.new.call
+      Import::Geographies.new.call
     end
   end
 

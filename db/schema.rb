@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_07_162621) do
+ActiveRecord::Schema.define(version: 2019_08_09_131640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,8 +63,8 @@ ActiveRecord::Schema.define(version: 2019_08_07_162621) do
   end
 
   create_table "companies", force: :cascade do |t|
-    t.bigint "location_id"
-    t.bigint "headquarter_location_id"
+    t.bigint "geography_id"
+    t.bigint "headquarters_geography_id"
     t.bigint "sector_id"
     t.string "name", null: false
     t.string "slug", null: false
@@ -74,9 +74,9 @@ ActiveRecord::Schema.define(version: 2019_08_07_162621) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "visibility_status", default: "draft"
-    t.index ["headquarter_location_id"], name: "index_companies_on_headquarter_location_id"
+    t.index ["geography_id"], name: "index_companies_on_geography_id"
+    t.index ["headquarters_geography_id"], name: "index_companies_on_headquarters_geography_id"
     t.index ["isin"], name: "index_companies_on_isin", unique: true
-    t.index ["location_id"], name: "index_companies_on_location_id"
     t.index ["sector_id"], name: "index_companies_on_sector_id"
     t.index ["size"], name: "index_companies_on_size"
     t.index ["slug"], name: "index_companies_on_slug", unique: true
@@ -115,12 +115,35 @@ ActiveRecord::Schema.define(version: 2019_08_07_162621) do
     t.index ["documentable_type", "documentable_id"], name: "index_documents_on_documentable_type_and_documentable_id"
   end
 
+  create_table "geographies", force: :cascade do |t|
+    t.string "geography_type", null: false
+    t.string "iso", null: false
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.string "region", null: false
+    t.boolean "federal", default: false, null: false
+    t.text "federal_details"
+    t.text "approach_to_climate_change"
+    t.text "legislative_process"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "visibility_status", default: "draft"
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
+    t.text "indc_url"
+    t.index ["created_by_id"], name: "index_geographies_on_created_by_id"
+    t.index ["iso"], name: "index_geographies_on_iso", unique: true
+    t.index ["region"], name: "index_geographies_on_region"
+    t.index ["slug"], name: "index_geographies_on_slug", unique: true
+    t.index ["updated_by_id"], name: "index_geographies_on_updated_by_id"
+  end
+
   create_table "legislations", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.integer "law_id"
     t.string "slug", null: false
-    t.bigint "location_id"
+    t.bigint "geography_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "date_passed"
@@ -128,7 +151,7 @@ ActiveRecord::Schema.define(version: 2019_08_07_162621) do
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
     t.index ["created_by_id"], name: "index_legislations_on_created_by_id"
-    t.index ["location_id"], name: "index_legislations_on_location_id"
+    t.index ["geography_id"], name: "index_legislations_on_geography_id"
     t.index ["slug"], name: "index_legislations_on_slug", unique: true
     t.index ["updated_by_id"], name: "index_legislations_on_updated_by_id"
   end
@@ -166,7 +189,7 @@ ActiveRecord::Schema.define(version: 2019_08_07_162621) do
     t.string "slug", null: false
     t.string "citation_reference_number"
     t.string "document_type"
-    t.bigint "location_id"
+    t.bigint "geography_id"
     t.bigint "jurisdiction_id"
     t.text "summary"
     t.text "core_objective"
@@ -177,33 +200,10 @@ ActiveRecord::Schema.define(version: 2019_08_07_162621) do
     t.bigint "updated_by_id"
     t.index ["created_by_id"], name: "index_litigations_on_created_by_id"
     t.index ["document_type"], name: "index_litigations_on_document_type"
+    t.index ["geography_id"], name: "index_litigations_on_geography_id"
     t.index ["jurisdiction_id"], name: "index_litigations_on_jurisdiction_id"
-    t.index ["location_id"], name: "index_litigations_on_location_id"
     t.index ["slug"], name: "index_litigations_on_slug", unique: true
     t.index ["updated_by_id"], name: "index_litigations_on_updated_by_id"
-  end
-
-  create_table "locations", force: :cascade do |t|
-    t.string "location_type", null: false
-    t.string "iso", null: false
-    t.string "name", null: false
-    t.string "slug", null: false
-    t.string "region", null: false
-    t.boolean "federal", default: false, null: false
-    t.text "federal_details"
-    t.text "approach_to_climate_change"
-    t.text "legislative_process"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "visibility_status", default: "draft"
-    t.bigint "created_by_id"
-    t.bigint "updated_by_id"
-    t.text "indc_url"
-    t.index ["created_by_id"], name: "index_locations_on_created_by_id"
-    t.index ["iso"], name: "index_locations_on_iso", unique: true
-    t.index ["region"], name: "index_locations_on_region"
-    t.index ["slug"], name: "index_locations_on_slug", unique: true
-    t.index ["updated_by_id"], name: "index_locations_on_updated_by_id"
   end
 
   create_table "mq_assessments", force: :cascade do |t|
@@ -252,7 +252,7 @@ ActiveRecord::Schema.define(version: 2019_08_07_162621) do
   end
 
   create_table "targets", force: :cascade do |t|
-    t.bigint "location_id"
+    t.bigint "geography_id"
     t.bigint "sector_id"
     t.bigint "target_scope_id"
     t.boolean "ghg_target", default: false, null: false
@@ -267,35 +267,35 @@ ActiveRecord::Schema.define(version: 2019_08_07_162621) do
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
     t.index ["created_by_id"], name: "index_targets_on_created_by_id"
-    t.index ["location_id"], name: "index_targets_on_location_id"
+    t.index ["geography_id"], name: "index_targets_on_geography_id"
     t.index ["sector_id"], name: "index_targets_on_sector_id"
     t.index ["target_scope_id"], name: "index_targets_on_target_scope_id"
     t.index ["updated_by_id"], name: "index_targets_on_updated_by_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "companies", "locations"
-  add_foreign_key "companies", "locations", column: "headquarter_location_id"
+  add_foreign_key "companies", "geographies"
+  add_foreign_key "companies", "geographies", column: "headquarters_geography_id"
   add_foreign_key "companies", "sectors"
   add_foreign_key "cp_assessments", "companies", on_delete: :cascade
   add_foreign_key "cp_benchmarks", "sectors", on_delete: :cascade
+  add_foreign_key "geographies", "admin_users", column: "created_by_id"
+  add_foreign_key "geographies", "admin_users", column: "updated_by_id"
   add_foreign_key "legislations", "admin_users", column: "created_by_id"
   add_foreign_key "legislations", "admin_users", column: "updated_by_id"
-  add_foreign_key "legislations", "locations"
+  add_foreign_key "legislations", "geographies"
   add_foreign_key "legislations_targets", "legislations", on_delete: :cascade
   add_foreign_key "legislations_targets", "targets", on_delete: :cascade
   add_foreign_key "litigation_sides", "litigations", on_delete: :cascade
   add_foreign_key "litigations", "admin_users", column: "created_by_id"
   add_foreign_key "litigations", "admin_users", column: "updated_by_id"
-  add_foreign_key "litigations", "locations", column: "jurisdiction_id", on_delete: :cascade
-  add_foreign_key "litigations", "locations", on_delete: :cascade
-  add_foreign_key "locations", "admin_users", column: "created_by_id"
-  add_foreign_key "locations", "admin_users", column: "updated_by_id"
+  add_foreign_key "litigations", "geographies", column: "jurisdiction_id", on_delete: :cascade
+  add_foreign_key "litigations", "geographies", on_delete: :cascade
   add_foreign_key "mq_assessments", "companies", on_delete: :cascade
   add_foreign_key "taggings", "tags", on_delete: :cascade
   add_foreign_key "targets", "admin_users", column: "created_by_id"
   add_foreign_key "targets", "admin_users", column: "updated_by_id"
-  add_foreign_key "targets", "locations"
+  add_foreign_key "targets", "geographies"
   add_foreign_key "targets", "sectors"
   add_foreign_key "targets", "target_scopes"
 end

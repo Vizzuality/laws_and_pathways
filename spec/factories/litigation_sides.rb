@@ -26,8 +26,8 @@ FactoryBot.define do
       party_type { 'corporation' }
     end
 
-    trait :location do
-      connected_entity { |d| d.association(:location) }
+    trait :geography do
+      connected_entity { |d| d.association(:geography) }
       party_type { 'government' }
     end
   end

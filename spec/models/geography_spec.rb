@@ -1,9 +1,9 @@
 # == Schema Information
 #
-# Table name: locations
+# Table name: geographies
 #
 #  id                         :bigint           not null, primary key
-#  location_type              :string           not null
+#  geography_type             :string           not null
 #  iso                        :string           not null
 #  name                       :string           not null
 #  slug                       :string           not null
@@ -15,13 +15,15 @@
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #  visibility_status          :string           default("draft")
+#  created_by_id              :bigint
+#  updated_by_id              :bigint
 #  indc_url                   :text
 #
 
 require 'rails_helper'
 
-RSpec.describe Location, type: :model do
-  subject { build(:location) }
+RSpec.describe Geography, type: :model do
+  subject { build(:geography) }
 
   it { is_expected.to be_valid }
 
@@ -40,9 +42,9 @@ RSpec.describe Location, type: :model do
     expect(subject).to have(1).errors_on(:region)
   end
 
-  it 'should be invalid if location_type is wrong' do
+  it 'should be invalid if geography_type is wrong' do
     expect {
-      subject.location_type = 'WRONG'
+      subject.geography_type = 'WRONG'
     }.to raise_error(ArgumentError)
   end
 

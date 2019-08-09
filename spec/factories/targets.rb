@@ -3,7 +3,7 @@
 # Table name: targets
 #
 #  id                :bigint           not null, primary key
-#  location_id       :bigint
+#  geography_id      :bigint
 #  sector_id         :bigint
 #  target_scope_id   :bigint
 #  ghg_target        :boolean          default(FALSE), not null
@@ -15,11 +15,13 @@
 #  updated_at        :datetime         not null
 #  target_type       :string
 #  visibility_status :string           default("draft")
+#  created_by_id     :bigint
+#  updated_by_id     :bigint
 #
 
 FactoryBot.define do
   factory :target do
-    association :location
+    association :geography
     association :sector
     association :target_scope
     association :created_by, factory: :admin_user

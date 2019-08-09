@@ -7,11 +7,10 @@
 #  slug                      :string           not null
 #  citation_reference_number :string
 #  document_type             :string
-#  location_id               :bigint
+#  geography_id              :bigint
 #  jurisdiction_id           :bigint
 #  summary                   :text
 #  core_objective            :text
-#  keywords                  :text
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #  visibility_status         :string           default("draft")
@@ -21,8 +20,8 @@
 
 FactoryBot.define do
   factory :litigation do
-    association :location
-    association :jurisdiction, factory: :location
+    association :geography
+    association :jurisdiction, factory: :geography
 
     association :created_by, factory: :admin_user
     association :updated_by, factory: :admin_user
@@ -38,7 +37,7 @@ FactoryBot.define do
       after(:create) do |l|
         create :litigation_side, litigation: l, side_type: 'a'
         create :litigation_side, :company, litigation: l, side_type: 'a'
-        create :litigation_side, :location, litigation: l, side_type: 'b'
+        create :litigation_side, :geography, litigation: l, side_type: 'b'
       end
     end
   end
