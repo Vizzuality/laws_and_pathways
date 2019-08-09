@@ -20,8 +20,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Location, type: :model do
-  subject { build(:location) }
+RSpec.describe Geography, type: :model do
+  subject { build(:geography) }
 
   it { is_expected.to be_valid }
 
@@ -40,9 +40,9 @@ RSpec.describe Location, type: :model do
     expect(subject).to have(1).errors_on(:region)
   end
 
-  it 'should be invalid if location_type is wrong' do
+  it 'should be invalid if geography_type is wrong' do
     expect {
-      subject.location_type = 'WRONG'
+      subject.geography_type = 'WRONG'
     }.to raise_error(ArgumentError)
   end
 

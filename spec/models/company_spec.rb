@@ -23,14 +23,14 @@ RSpec.describe Company, type: :model do
 
   it { is_expected.to be_valid }
 
-  it 'should be invalid without location' do
-    subject.location = nil
-    expect(subject).to have(1).errors_on(:location)
+  it 'should be invalid without geography' do
+    subject.geography = nil
+    expect(subject).to have(1).errors_on(:geography)
   end
 
-  it 'should be invalid without headquarter location' do
-    subject.headquarter_location = nil
-    expect(subject).to have(1).errors_on(:headquarter_location)
+  it 'should be invalid without headquarters geography' do
+    subject.headquarters_geography = nil
+    expect(subject).to have(1).errors_on(:headquarters_geography)
   end
 
   it 'should be invalid if name is nil' do

@@ -6,7 +6,7 @@ ActiveAdmin.register Target do
   publishable_scopes
   publishable_sidebar only: :show
 
-  permit_params :description, :sector_id, :location_id, :single_year, :target_scope_id,
+  permit_params :description, :sector_id, :geography_id, :single_year, :target_scope_id,
                 :year, :base_year_period, :ghg_target, :target_type,
                 :visibility_status,
                 :created_by_id, :updated_by_id,
@@ -23,7 +23,7 @@ ActiveAdmin.register Target do
 
   index do
     id_column
-    column :location
+    column :geography
     column :sector
     column :target_scope
     column :single_year
@@ -47,7 +47,7 @@ ActiveAdmin.register Target do
       row :target_scope
       row :target_type
       row :description
-      row :location
+      row :geography
       list_row 'Legislations', :legislation_links
       row :updated_at
       row :updated_by
@@ -67,7 +67,7 @@ ActiveAdmin.register Target do
       f.input :target_type,
               as: :select,
               collection: array_to_select_collection(Target::TYPES)
-      f.input :location
+      f.input :geography
       f.input :sector
       f.input :target_scope
       f.input :legislation_ids,

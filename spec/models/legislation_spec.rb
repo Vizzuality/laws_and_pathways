@@ -21,9 +21,9 @@ RSpec.describe Legislation, type: :model do
 
   it { is_expected.to be_valid }
 
-  it 'should be invalid without location' do
-    subject.location = nil
-    expect(subject).to have(1).errors_on(:location)
+  it 'should be invalid without geography' do
+    subject.geography = nil
+    expect(subject).to have(1).errors_on(:geography)
   end
 
   it 'should be invalid if title is nil' do

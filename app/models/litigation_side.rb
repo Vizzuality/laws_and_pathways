@@ -48,7 +48,7 @@ class LitigationSide < ApplicationRecord
   end
 
   def self.available_connections
-    (Company.all.select(:id, :name) + Location.all.select(:id, :name))
+    (Company.all.select(:id, :name) + Geography.all.select(:id, :name))
       .map { |c| [c.name, "#{c.class}-#{c.id}"] }
   end
 end

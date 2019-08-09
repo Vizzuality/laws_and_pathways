@@ -34,8 +34,8 @@ class Litigation < ApplicationRecord
 
   tag_with :keywords
 
-  belongs_to :location
-  belongs_to :jurisdiction, class_name: 'Location'
+  belongs_to :geography
+  belongs_to :jurisdiction, class_name: 'Geography'
   has_many :litigation_sides, -> { order(:side_type) }, inverse_of: :litigation
   has_many :documents, as: :documentable, dependent: :destroy
   has_and_belongs_to_many :legislations

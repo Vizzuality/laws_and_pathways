@@ -25,6 +25,6 @@ FactoryBot.define do
     association :created_by, factory: :admin_user
     association :updated_by, factory: :admin_user
 
-    association :location
+    association :geography
   end
 end

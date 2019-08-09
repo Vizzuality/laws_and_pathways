@@ -5,13 +5,13 @@ ActiveAdmin.register Company do
   publishable_scopes
   publishable_sidebar only: :show
 
-  permit_params :name, :isin, :sector_id, :location_id, :headquarter_location_id,
+  permit_params :name, :isin, :sector_id, :geography_id, :headquarters_geography_id,
                 :ca100, :size, :visibility_status
 
   filter :isin_contains, label: 'ISIN'
   filter :name_contains, label: 'Name'
-  filter :location
-  filter :headquarter_location
+  filter :geography
+  filter :headquarters_geography
   filter :size,
          as: :check_boxes,
          collection: proc { array_to_select_collection(Company::SIZES) }
@@ -35,8 +35,8 @@ ActiveAdmin.register Company do
           row :slug
           row :sector
           row :isin
-          row :location
-          row :headquarter_location
+          row :geography
+          row :headquarters_geography
           row :ca100
           row :size
           row 'Management Quality Level', &:mq_status_description_short
@@ -124,8 +124,8 @@ ActiveAdmin.register Company do
       company.size.humanize
     end
     column :level, &:mq_status_description_short
-    column :location
-    column :headquarter_location
+    column :geography
+    column :headquarters_geography
     tag_column :visibility_status
     actions
   end
@@ -149,8 +149,8 @@ ActiveAdmin.register Company do
       end
 
       columns do
-        column { f.input :location }
-        column { f.input :headquarter_location }
+        column { f.input :geography }
+        column { f.input :headquarters_geography }
         column do
           f.input :visibility_status, as: :select
         end
@@ -164,7 +164,7 @@ ActiveAdmin.register Company do
 
   controller do
     def scoped_collection
-      super.includes(:location, :headquarter_location, :mq_assessments)
+      super.includes(:geography, :headquarters_geography, :mq_assessments)
     end
   end
 end

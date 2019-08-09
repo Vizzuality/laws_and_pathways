@@ -60,7 +60,7 @@ module Import
         description: row[:description],
         date_passed: find_date_passed(row),
         document_types: find_document_types(row),
-        location: Import::LocationUtils.find_by_iso(row[:country_iso])
+        location: Import::GeographyUtils.find_by_iso(row[:country_iso])
       }
     end
 

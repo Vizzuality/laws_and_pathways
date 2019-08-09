@@ -18,35 +18,18 @@
 #  indc_url                   :text
 #
 
-class Location < ApplicationRecord
-  include UserTrackable
-  include Taggable
-  include Publishable
-  extend FriendlyId
+FactoryBot.define do
+  factory :geography do
+    sequence(:name) { |n| 'name-' + ('AA'..'ZZ').to_a[n] }
+    sequence(:iso) { |n| ('AAA'..'ZZZ').to_a[n] }
 
-  friendly_id :name, use: :slugged, routes: :default
+    geography_type { 'country' }
+    region { Geography::REGIONS.sample }
+    visibility_status { Litigation::VISIBILITY.sample }
+    federal { false }
+    indc_url { 'https://example.test.pl' }
 
-  TYPES = %w[country].freeze
-
-  REGIONS = [
-    'East Asia & Pacific',
-    'South Asia',
-    'Europe & Central Asia',
-    'Middle East & North Africa',
-    'Sub-Saharan Africa',
-    'North America',
-    'Latin America & Caribbean'
-  ].freeze
-
-  enum location_type: array_to_enum_hash(TYPES)
-
-  tag_with :political_groups
-
-  has_many :litigations
-
-  validates_uniqueness_of :slug, :iso
-  validates_presence_of :name, :slug, :iso, :location_type
-  validates :federal, inclusion: {in: [true, false]}
-  validates :region, inclusion: {in: REGIONS}
-  validates :indc_url, url: true
+    association :created_by, factory: :admin_user
+    association :updated_by, factory: :admin_user
+  end
 end

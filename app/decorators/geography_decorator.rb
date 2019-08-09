@@ -1,8 +1,8 @@
-class LocationDecorator < Draper::Decorator
+class GeographyDecorator < Draper::Decorator
   delegate_all
 
   def name_link
-    h.link_to model.name, h.admin_location_path(model)
+    h.link_to model.name, h.admin_geography_path(model)
   end
 
   def federal_details
@@ -13,8 +13,8 @@ class LocationDecorator < Draper::Decorator
     model.legislative_process&.html_safe
   end
 
-  def location_type
-    model.location_type.humanize
+  def geography_type
+    model.geography_type.humanize
   end
 
   def indc_link

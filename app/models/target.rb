@@ -33,7 +33,7 @@ class Target < ApplicationRecord
 
   enum target_type: array_to_enum_hash(TYPES)
 
-  belongs_to :location
+  belongs_to :geography
   belongs_to :sector
   belongs_to :target_scope
   has_and_belongs_to_many :legislations

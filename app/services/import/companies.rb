@@ -64,7 +64,7 @@ module Import
     end
 
     def company_attributes(row)
-      location = Import::LocationUtils.find_by_iso(fix_iso(row[:country_code]))
+      location = Import::GeographyUtils.find_by_iso(fix_iso(row[:country_code]))
 
       {
         name: row[:company_name],

@@ -27,7 +27,7 @@ class Legislation < ApplicationRecord
   tag_with :keywords
   tag_with :natural_hazards
 
-  belongs_to :location
+  belongs_to :geography
   has_and_belongs_to_many :targets
   has_and_belongs_to_many :litigations
 

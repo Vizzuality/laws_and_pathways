@@ -4,10 +4,10 @@ RSpec.describe Admin::CompaniesController, type: :controller do
   let(:admin) { create(:admin_user) }
   let!(:company) { create(:company, :with_mq_assessments, :with_cp_assessments) }
   let(:sector) { create(:sector) }
-  let(:location) { create(:location) }
+  let(:geography) { create(:geography) }
   let(:valid_attributes) {
     attributes_for(:company).merge(
-      location_id: location.id, headquarter_location_id: location.id, sector_id: sector.id
+      geography_id: geography.id, headquarters_geography_id: geography.id, sector_id: sector.id
     )
   }
   let(:invalid_attributes) { valid_attributes.merge(isin: nil) }

@@ -18,8 +18,8 @@
 
 FactoryBot.define do
   factory :company do
-    association :location
-    association :headquarter_location, factory: :location
+    association :geography
+    association :headquarters_geography, factory: :geography
     association :sector
 
     sequence(:name) { |n| 'Company name -' + ('AA'..'ZZ').to_a[n] }

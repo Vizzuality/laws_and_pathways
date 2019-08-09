@@ -1,14 +1,14 @@
-ActiveAdmin.register Location do
-  menu parent: 'Locations', priority: 1
+ActiveAdmin.register Geography do
+  menu parent: 'Geographies', priority: 1
   config.sort_order = 'name_asc'
 
-  decorate_with LocationDecorator
+  decorate_with GeographyDecorator
 
   publishable_scopes
   publishable_sidebar only: :show
 
   permit_params :name, :iso, :region, :federal, :federal_details,
-                :legislative_process, :location_type, :indc_url,
+                :legislative_process, :geography_type, :indc_url,
                 :visibility_status,
                 :created_by_id, :updated_by_id,
                 political_group_ids: []
@@ -16,7 +16,7 @@ ActiveAdmin.register Location do
   filter :federal
   filter :iso_equals, label: 'ISO'
   filter :name_contains, label: 'Name'
-  filter :region, as: :check_boxes, collection: proc { Location::REGIONS }
+  filter :region, as: :check_boxes, collection: proc { Geography::REGIONS }
   filter :political_groups,
          as: :check_boxes,
          collection: proc { PoliticalGroup.all }
@@ -30,7 +30,7 @@ ActiveAdmin.register Location do
           row :id
           row :name
           row :iso
-          row :location_type
+          row :geography_type
           row :region
           row :federal
           row :federal_details if resource.federal?
@@ -48,7 +48,7 @@ ActiveAdmin.register Location do
 
   index do
     column 'Name', :name_link
-    column :location_type
+    column :geography_type
     column 'ISO', :iso
     column :created_by
     column :updated_by
@@ -61,10 +61,10 @@ ActiveAdmin.register Location do
     f.semantic_errors(*f.object.errors.keys)
 
     f.inputs do
-      f.input :location_type, as: :hidden, input_html: {value: 'country'}
+      f.input :geography_type, as: :hidden, input_html: {value: 'country'}
       f.input :name
       f.input :iso
-      f.input :region, as: :select, collection: Location::REGIONS
+      f.input :region, as: :select, collection: Geography::REGIONS
       f.input :federal, input_html: {id: 'federal'}
       f.input :federal_details,
               wrapper_html: {data: {controller: 'dependent-input', depends_on: 'federal'}}

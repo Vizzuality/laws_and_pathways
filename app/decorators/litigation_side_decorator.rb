@@ -19,6 +19,6 @@ class LitigationSideDecorator < Draper::Decorator
 
   def connected_entity_url
     return h.admin_company_path(connected_entity) if connected_entity.is_a?(Company)
-    return h.admin_location_path(connected_entity) if connected_entity.is_a?(Location)
+    return h.admin_geography_path(connected_entity) if connected_entity.is_a?(Geography)
   end
 end

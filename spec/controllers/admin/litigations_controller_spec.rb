@@ -5,13 +5,13 @@ RSpec.describe Admin::LitigationsController, type: :controller do
 
   let(:admin) { create(:admin_user) }
   let!(:litigation) { create(:litigation, :with_sides) }
-  let(:side_location) { create(:location) }
+  let(:side_geography) { create(:geography) }
   let(:side_company) { create(:company) }
-  let(:location) { create(:location) }
+  let(:geography) { create(:geography) }
   let(:valid_attributes) {
     attributes_for(:litigation).merge(
-      location_id: location.id,
-      jurisdiction_id: location.id,
+      geography_id: geography.id,
+      jurisdiction_id: geography.id,
       created_by_id: admin.id,
       updated_by_id: admin.id,
       litigation_sides_attributes: [
@@ -19,8 +19,8 @@ RSpec.describe Admin::LitigationsController, type: :controller do
         attributes_for(:litigation_side, :company).merge(
           connected_with: "Company-#{side_company.id}"
         ),
-        attributes_for(:litigation_side, :location).merge(
-          connected_with: "Location-#{side_location.id}"
+        attributes_for(:litigation_side, :geography).merge(
+          connected_with: "Geography-#{side_geography.id}"
         )
       ],
       documents_attributes: [

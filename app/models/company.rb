@@ -26,8 +26,8 @@ class Company < ApplicationRecord
   enum size: array_to_enum_hash(SIZES)
 
   belongs_to :sector
-  belongs_to :location
-  belongs_to :headquarter_location, class_name: 'Location'
+  belongs_to :geography
+  belongs_to :headquarters_geography, class_name: 'Geography'
 
   has_many :mq_assessments, class_name: 'MQ::Assessment', inverse_of: :company
   has_many :cp_assessments, class_name: 'CP::Assessment', inverse_of: :company

@@ -6,7 +6,7 @@ ActiveAdmin.register Litigation do
   publishable_scopes
   publishable_sidebar only: :show
 
-  permit_params :title, :location_id, :jurisdiction_id, :document_type,
+  permit_params :title, :geography_id, :jurisdiction_id, :document_type,
                 :visibility_status, :summary, :core_objective,
                 :created_by_id, :updated_by_id, :keywords_string,
                 litigation_sides_attributes: [
@@ -19,7 +19,7 @@ ActiveAdmin.register Litigation do
 
   filter :title_contains
   filter :summary_contains
-  filter :location
+  filter :geography
   filter :document_type, as: :select, collection: proc {
     array_to_select_collection(Litigation::DOCUMENT_TYPES)
   }
@@ -29,7 +29,7 @@ ActiveAdmin.register Litigation do
   index do
     column :title, class: 'max-width-300', &:title_link
     column :document_type
-    column :location
+    column :geography
     column :citation_reference_number
     column :created_by
     column :updated_by
@@ -45,7 +45,7 @@ ActiveAdmin.register Litigation do
           row :id
           row :title
           row :slug
-          row :location
+          row :geography
           row :jurisdiction
           row :document_type
           row :citation_reference_number
@@ -77,7 +77,7 @@ ActiveAdmin.register Litigation do
 
   controller do
     def scoped_collection
-      super.includes(:location, :created_by, :updated_by)
+      super.includes(:geography, :created_by, :updated_by)
     end
   end
 end
