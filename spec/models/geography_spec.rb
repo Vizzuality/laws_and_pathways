@@ -1,9 +1,9 @@
 # == Schema Information
 #
-# Table name: locations
+# Table name: geographies
 #
 #  id                         :bigint           not null, primary key
-#  location_type              :string           not null
+#  geography_type             :string           not null
 #  iso                        :string           not null
 #  name                       :string           not null
 #  slug                       :string           not null
@@ -15,6 +15,8 @@
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #  visibility_status          :string           default("draft")
+#  created_by_id              :bigint
+#  updated_by_id              :bigint
 #  indc_url                   :text
 #
 
