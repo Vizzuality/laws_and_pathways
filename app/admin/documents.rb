@@ -15,6 +15,7 @@ ActiveAdmin.register Document do
       row :id
       row :name
       row :link, &:document_url_link
+      row :language
       row :last_verified_on
       row :created_at
       row :updated_at
@@ -25,6 +26,7 @@ ActiveAdmin.register Document do
     column 'Name', &:document_page_link
     column 'Attached To', :documentable
     column :last_verified_on
+    column :language
     actions
   end
 
