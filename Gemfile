@@ -24,6 +24,7 @@ gem 'aws-sdk-s3'
 gem 'google-cloud-storage', require: false
 
 gem 'friendly_id'
+gem 'language_list'
 
 gem 'simplecov', require: false, group: :test
 gem 'dotenv-rails'
