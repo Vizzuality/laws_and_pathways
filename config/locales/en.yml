@@ -44,5 +44,8 @@ en:
       geography:
         indc_url: 'INDC URL'
         indc_link: 'INDC link'
+  formtastic:
+    actions:
+      cancel: Cancel
   hint:
     tag: 'Pick an existing one or create new typing name and pressing ENTER'
