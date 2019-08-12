@@ -17,7 +17,11 @@ module Import
 
     def import
       import_each_with_logging(csv, FILEPATH) do |row|
-        company = Company.find_or_initialize_by(isin: row[:isin])
+        company = Company.find_or_initialize_by(name: row[:company_name])
+
+        company.isin = company.isin.present? ?
+          (company.isin.split(',') + [row[:isin]]).uniq.join(",") : row[:isin]
+
         company.update!(company_attributes(row))
 
         create_mq_assessment!(row, company)
@@ -28,6 +32,7 @@ module Import
     def cleanup
       MQ::Assessment.destroy_all
       CP::Assessment.destroy_all
+      Company.destroy_all
     end
 
     def csv
@@ -67,7 +72,6 @@ module Import
       geography = Import::GeographyUtils.find_by_iso(fix_iso(row[:country_code]))
 
       {
-        name: row[:company_name],
         ca100: row[:ca100_company?] == 'Yes',
         geography: geography,
         headquarters_geography: geography,
