@@ -17,7 +17,7 @@
 FactoryBot.define do
   factory :document do
     name { 'Cool document' }
-    language { 'en' }
+    language { 'en' } # for available options, see Language.common.map(&:iso_639_1)
     type { 'external' }
     external_url { 'https://test.com' }
     last_verified_on { 10.days.ago }
