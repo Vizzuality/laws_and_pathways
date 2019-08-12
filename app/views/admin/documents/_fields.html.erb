@@ -10,7 +10,7 @@
     <% end %>
   </div>
   <%= form.input :name, wrapper_html: { class: 'flex-grow-1' } %>
-  <%= form.input :language, wrapper_html: { class: 'flex-grow-1' }, as: :select, collection: LanguageList::COMMON_LANGUAGES %>
+  <%= form.input :language, wrapper_html: { class: 'flex-grow-1' }, as: :select, collection: form.object.decorate.all_language_codes %>
   <li class="input">
     <%= button_tag "Remove", type: 'button', class: 'button button--raised button--red', data: { action: "click->nested-list#removeRecord" } %>
   </li>

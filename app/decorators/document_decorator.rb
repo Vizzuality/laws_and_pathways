@@ -14,4 +14,8 @@ class DocumentDecorator < Draper::Decorator
 
     model.last_verified_on
   end
+
+  def all_language_codes
+    LanguageList::COMMON_LANGUAGES.map { |language| [language.name, language.iso_639_1] }
+  end
 end
