@@ -5,6 +5,9 @@ ActiveAdmin.register Document do
 
   filter :name_contains
   filter :documentable_type, label: 'Attached to'
+  filter :language,
+         as: :select,
+         collection: proc { all_languages_to_select_collection }
 
   config.batch_actions = false
 
