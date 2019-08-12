@@ -19,8 +19,11 @@ module Import
       import_each_with_logging(csv, FILEPATH) do |row|
         company = Company.find_or_initialize_by(name: row[:company_name])
 
-        company.isin = company.isin.present? ?
-          (company.isin.split(',') + [row[:isin]]).uniq.join(",") : row[:isin]
+        company.isin = if company.isin.present?
+                         (company.isin.split(',') + [row[:isin]]).uniq.join(',')
+                       else
+                         row[:isin]
+                       end
 
         company.update!(company_attributes(row))
 
