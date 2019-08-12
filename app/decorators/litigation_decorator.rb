@@ -21,10 +21,10 @@ class LitigationDecorator < Draper::Decorator
     return [] if model.documents.empty?
 
     model.documents.map do |document|
-      language = LanguageList::LanguageInfo.find(document.language).name
-      link_text = "#{document.name} (language: #{language}, #{document.external? ? 'external' : 'uploaded'})"
-
-      h.link_to link_text, document.url, target: '_blank', title: document.external? ? document.url : nil
+      h.link_to document.name,
+                document.url,
+                target: '_blank',
+                title: document.external? ? document.url : nil
     end
   end
 

@@ -16,6 +16,12 @@ class DocumentDecorator < Draper::Decorator
   end
 
   def all_language_codes
-    LanguageList::COMMON_LANGUAGES.map { |language| [language.name, language.iso_639_1] }
+    LanguageList::COMMON_LANGUAGES.map do |language|
+      [language.name, language.iso_639_1]
+    end
+  end
+
+  def language
+    LanguageList::LanguageInfo.find(model.language)&.name
   end
 end
