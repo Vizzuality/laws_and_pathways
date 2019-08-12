@@ -6,6 +6,6 @@ module SelectHelper
   end
 
   def all_languages_to_select_collection
-    Language.common.map { |language| [language.name, language.iso_639_1] }
+    ::Language.common.map { |language| [language.name, language.iso_639_1] }
   end
 end
