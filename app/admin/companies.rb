@@ -1,5 +1,8 @@
 ActiveAdmin.register Company do
   menu priority: 0, parent: 'TPI'
+
+  decorate_with CompanyDecorator
+
   config.sort_order = 'name_asc'
 
   publishable_scopes
@@ -34,7 +37,7 @@ ActiveAdmin.register Company do
           row :name
           row :slug
           row :sector
-          row :isin, &:isin_string
+          row :isin, &:isin_as_tags
           row :geography
           row :headquarters_geography
           row :ca100
@@ -119,7 +122,7 @@ ActiveAdmin.register Company do
     column :name do |company|
       link_to company.name, admin_company_path(company)
     end
-    column :isin, &:isin_string
+    column :isin, &:isin_as_tags
     column :size do |company|
       company.size.humanize
     end

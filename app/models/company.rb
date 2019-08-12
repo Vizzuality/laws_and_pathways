@@ -48,8 +48,4 @@ class Company < ApplicationRecord
   def to_s
     name
   end
-
-  def isin_string
-    isin.split(',')
-  end
 end
