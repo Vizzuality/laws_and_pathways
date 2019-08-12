@@ -14,4 +14,8 @@ class DocumentDecorator < Draper::Decorator
 
     model.last_verified_on
   end
+
+  def language
+    Language.find(model.language)&.name
+  end
 end

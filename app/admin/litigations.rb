@@ -13,7 +13,7 @@ ActiveAdmin.register Litigation do
                   :id, :_destroy, :name, :side_type, :party_type, :connected_with
                 ],
                 documents_attributes: [
-                  :id, :_destroy, :name, :external_url, :type, :file
+                  :id, :_destroy, :name, :language, :external_url, :type, :file
                 ],
                 legislation_ids: []
 

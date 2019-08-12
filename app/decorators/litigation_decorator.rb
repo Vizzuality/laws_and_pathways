@@ -21,7 +21,10 @@ class LitigationDecorator < Draper::Decorator
     return [] if model.documents.empty?
 
     model.documents.map do |document|
-      h.link_to document.name, document.url, target: '_blank'
+      h.link_to document.name,
+                document.url,
+                target: '_blank',
+                title: document.external? ? document.url : nil
     end
   end
 
