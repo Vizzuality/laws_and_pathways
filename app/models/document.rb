@@ -37,6 +37,10 @@ class Document < ApplicationRecord
     external_url
   end
 
+  def external?
+    !uploaded?
+  end
+
   private
 
   def file_url
