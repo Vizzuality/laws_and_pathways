@@ -42,12 +42,12 @@ ActiveAdmin.register DataUpload do
 
     f.inputs do
       f.input :uploader, as: :select, collection: DataUpload::UPLOADERS
-      f.input :file, as: :file
+      f.input :file, as: :file, hint: preview_file_tag(f.object.file)
     end
 
     f.actions do
       f.action :submit, label: 'Upload', button_html: {'data-disable-with' => 'Uploading...'}
-      f.action :cancel
+      f.action :cancel, wrapper_html: {class: 'cancel'}
     end
   end
 end
