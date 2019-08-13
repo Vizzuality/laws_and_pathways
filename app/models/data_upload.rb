@@ -10,7 +10,7 @@ class DataUpload < ApplicationRecord
   validates :file, attached: true, content_type: {in: ['text/csv']}
   validates :uploader, inclusion: {in: UPLOADERS}
 
-  before_create :import_data
+  after_validation :import_data
   before_create :set_uploaded_by
 
   def uploaded_at

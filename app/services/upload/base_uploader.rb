@@ -7,7 +7,7 @@ module Upload
     end
 
     def call
-      ActiveRecord::Base.transaction do
+      ActiveRecord::Base.transaction(requires_new: true) do
         details[:rows] = csv.count
         import
 
@@ -65,7 +65,9 @@ module Upload
 
     def with_logging(row_index)
       yield
-    rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
+    rescue ActiveRecord::RecordInvalid,
+           ActiveRecord::RecordNotFound,
+           ArgumentError => e
       msg = "Error importing row #{row_index}: #{e}"
       add_error(:invalid_row, msg: msg, row: row_index)
     end
