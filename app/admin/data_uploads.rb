@@ -1,6 +1,8 @@
 ActiveAdmin.register DataUpload do
   menu parent: 'Administration', priority: 2
 
+  decorate_with DataUploadDecorator
+
   config.batch_actions = false
 
   actions :index, :show, :new, :create
@@ -14,8 +16,9 @@ ActiveAdmin.register DataUpload do
   index do
     id_column
     column :uploader
+    column :file
     column :uploaded_by
-    column :uploaded_at, &:created_at
+    column :uploaded_at
     column 'Actions' do |upload|
       div class: 'table_actions' do
         span link_to 'Show', resource_path(upload)
@@ -26,12 +29,11 @@ ActiveAdmin.register DataUpload do
   show do
     attributes_table do
       row :id
+      row :details
       row :uploader
+      row :file
       row :uploaded_by
-      row :file do
-        link_to 'Uploaded file', rails_blob_path(resource.file, disposition: 'attachment')
-      end
-      row 'uploaded at', &:created_at
+      row :uploaded_at
     end
   end
 
@@ -48,13 +50,4 @@ ActiveAdmin.register DataUpload do
       f.action :cancel
     end
   end
-
-  # controller do
-  #   def create
-  #     uploader = params[:data_upload][:uploader]
-  #     file = params[:data_upload][:file]
-
-
-  #   end
-  # end
 end

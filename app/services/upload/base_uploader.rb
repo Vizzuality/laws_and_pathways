@@ -8,6 +8,7 @@ module Upload
 
     def call
       ActiveRecord::Base.transaction do
+        details[:rows] = csv.count
         import
 
         raise ActiveRecord::Rollback if errors.any?
@@ -22,6 +23,14 @@ module Upload
 
     def errors
       @errors ||= []
+    end
+
+    def details
+      @details ||= {
+        inserted_records: 0,
+        updated_records: 0,
+        not_changed_records: 0
+      }
     end
 
     private
@@ -59,6 +68,16 @@ module Upload
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
       msg = "Error importing row #{row_index}: #{e}"
       add_error(:invalid_row, msg: msg, row: row_index)
+    end
+
+    def update_stats(was_new_record, any_changes)
+      if was_new_record
+        details[:inserted_records] += 1
+      elsif any_changes
+        details[:updated_records] += 1
+      else
+        details[:not_changed_records] += 1
+      end
     end
   end
 end

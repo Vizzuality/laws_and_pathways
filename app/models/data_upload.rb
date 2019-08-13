@@ -13,6 +13,14 @@ class DataUpload < ApplicationRecord
   before_create :import_data
   before_create :set_uploaded_by
 
+  def uploaded_at
+    created_at
+  end
+
+  def to_s
+    "#{uploader} upload - id: #{id}"
+  end
+
   private
 
   def import_data
@@ -20,6 +28,7 @@ class DataUpload < ApplicationRecord
     service = service_class.new(file.download.force_encoding('UTF-8'))
 
     imported = service.call
+    self.details = service.details
 
     unless imported
       service.errors.each do |error|
