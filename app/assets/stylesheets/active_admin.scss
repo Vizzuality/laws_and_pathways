@@ -188,6 +188,10 @@ form {
 
 // Resource specific styles
 
+form.litigation {
+  min-width: 600px;
+}
+
 .litigation-sides-fields {
   li[id*=side_type] {
     min-width: 150px;
