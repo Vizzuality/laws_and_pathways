@@ -7,6 +7,10 @@ ActiveAdmin.register DataUpload do
 
   permit_params :uploader, :file
 
+  filter :created_at, label: 'Uploaded at'
+  filter :uploaded_by
+  filter :uploader, as: :select, collection: DataUpload::UPLOADERS
+
   index do
     id_column
     column :uploader

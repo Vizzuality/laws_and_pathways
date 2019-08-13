@@ -22,4 +22,8 @@ class AdminUser < ApplicationRecord
     gravatar_id = Digest::MD5.hexdigest(email.downcase)
     "https://secure.gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
   end
+
+  def to_s
+    email
+  end
 end

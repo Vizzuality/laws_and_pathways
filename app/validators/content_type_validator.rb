@@ -3,7 +3,6 @@ class ContentTypeValidator < ActiveModel::EachValidator
     return if !value.attached? || content_types.select { |c| value.content_type.include?(c) }.any?
 
     record.errors.add(attribute, 'wrong content type', options)
-    value.purge
   end
 
   private
