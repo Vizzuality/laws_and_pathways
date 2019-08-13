@@ -52,6 +52,7 @@ RSpec.describe Admin::LegislationsController, type: :controller do
           ]
         )
       }
+
       subject { post :create, params: {legislation: valid_attributes} }
 
       it 'creates a new Legislation' do
@@ -76,6 +77,7 @@ RSpec.describe Admin::LegislationsController, type: :controller do
 
     context 'with invalid params' do
       let(:invalid_attributes) { attributes_for(:legislation).merge(title: nil) }
+
       subject { post :create, params: {legislation: invalid_attributes} }
 
       it { is_expected.to be_successful }

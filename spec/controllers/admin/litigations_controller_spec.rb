@@ -8,28 +8,6 @@ RSpec.describe Admin::LitigationsController, type: :controller do
   let(:side_geography) { create(:geography) }
   let(:side_company) { create(:company) }
   let(:geography) { create(:geography) }
-  let(:valid_attributes) {
-    attributes_for(:litigation).merge(
-      geography_id: geography.id,
-      jurisdiction_id: geography.id,
-      created_by_id: admin.id,
-      updated_by_id: admin.id,
-      litigation_sides_attributes: [
-        attributes_for(:litigation_side),
-        attributes_for(:litigation_side, :company).merge(
-          connected_with: "Company-#{side_company.id}"
-        ),
-        attributes_for(:litigation_side, :geography).merge(
-          connected_with: "Geography-#{side_geography.id}"
-        )
-      ],
-      documents_attributes: [
-        attributes_for(:document),
-        attributes_for(:document_uploaded)
-      ]
-    )
-  }
-  let(:invalid_attributes) { valid_attributes.merge(title: nil) }
 
   describe 'GET index' do
     subject { get :index }
@@ -57,18 +35,58 @@ RSpec.describe Admin::LitigationsController, type: :controller do
 
   describe 'POST create' do
     context 'with valid params' do
+      let(:valid_attributes) {
+        attributes_for(:litigation).merge(
+          title: 'Litigation POST title',
+          summary: 'Litigation POST summary',
+          core_objective: 'objective',
+          geography_id: geography.id,
+          jurisdiction_id: geography.id,
+          created_by_id: admin.id,
+          updated_by_id: admin.id,
+          visibility_status: 'pending',
+          litigation_sides_attributes: [
+            attributes_for(:litigation_side),
+            attributes_for(:litigation_side, :company).merge(
+              connected_with: "Company-#{side_company.id}"
+            ),
+            attributes_for(:litigation_side, :geography).merge(
+              connected_with: "Geography-#{side_geography.id}"
+            )
+          ],
+          documents_attributes: [
+            attributes_for(:document).merge(name: 'doc 1'),
+            attributes_for(:document_uploaded).merge(name: 'doc 2')
+          ]
+        )
+      }
+
       subject { post :create, params: {litigation: valid_attributes} }
 
       it 'creates a new Litigation' do
         expect { subject }.to change(Litigation, :count).by(1)
+
+        last_litigation_created.tap do |l|
+          expect(l.title).to eq('Litigation POST title')
+          expect(l.summary).to eq('Litigation POST summary')
+          expect(l.core_objective).to eq('objective')
+          expect(l.visibility_status).to eq('pending')
+          expect(l.geography_id).to eq(geography.id)
+          expect(l.jurisdiction_id).to eq(geography.id)
+          expect(l.litigation_sides.pluck(:party_type)).to eq(%w[individual corporation government])
+          expect(l.documents.pluck(:name, :language, :external_url).sort)
+            .to eq([['doc 1', 'en', 'https://test.com'], ['doc 2', 'en', '']])
+        end
       end
 
       it 'redirects to the created Litigation' do
-        expect(subject).to redirect_to(admin_litigation_path(Litigation.order(:created_at).last))
+        expect(subject).to redirect_to(admin_litigation_path(last_litigation_created))
       end
     end
 
     context 'with invalid params' do
+      let(:invalid_attributes) { attributes_for(:litigation).merge(title: nil) }
+
       subject { post :create, params: {litigation: invalid_attributes} }
 
       it { is_expected.to be_successful }
@@ -77,5 +95,9 @@ RSpec.describe Admin::LitigationsController, type: :controller do
         expect { subject }.not_to change(Litigation, :count)
       end
     end
+  end
+
+  def last_litigation_created
+    Litigation.order(:created_at).last
   end
 end
