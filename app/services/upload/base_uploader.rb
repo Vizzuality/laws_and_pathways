@@ -1,5 +1,7 @@
 module Upload
   class BaseUploader
+    include ActiveModel::Model
+
     attr_reader :file
 
     def initialize(file)
@@ -7,10 +9,10 @@ module Upload
     end
 
     def call
-      ActiveRecord::Base.transaction(requires_new: true) do
-        details[:rows] = csv.count
-        import
+      details[:rows] = csv.count
 
+      ActiveRecord::Base.transaction(requires_new: true) do
+        import
         raise ActiveRecord::Rollback if errors.any?
       end
 
@@ -21,13 +23,9 @@ module Upload
       raise NotImplementedError
     end
 
-    def errors
-      @errors ||= []
-    end
-
     def details
       @details ||= {
-        inserted_records: 0,
+        new_records: 0,
         updated_records: 0,
         not_changed_records: 0
       }
@@ -50,11 +48,6 @@ module Upload
       ).delete_if { |row| row.to_hash.values.all?(&:blank?) }
     end
 
-    def add_error(type, details = {})
-      msg = details.fetch(:msg, 'Error')
-      errors << {type: type, msg: msg}.merge(details.except(:msg))
-    end
-
     def import_each_with_logging(csv)
       csv.each.with_index(2) do |row, row_index|
         with_logging(row_index) do
@@ -69,12 +62,12 @@ module Upload
            ActiveRecord::RecordNotFound,
            ArgumentError => e
       msg = "Error importing row #{row_index}: #{e}"
-      add_error(:invalid_row, msg: msg, row: row_index)
+      errors.add(:base, :invalid_row, message: msg, row: row_index)
     end
 
     def update_stats(was_new_record, any_changes)
       if was_new_record
-        details[:inserted_records] += 1
+        details[:new_records] += 1
       elsif any_changes
         details[:updated_records] += 1
       else

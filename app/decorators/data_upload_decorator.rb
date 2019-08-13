@@ -6,6 +6,6 @@ class DataUploadDecorator < Draper::Decorator
   end
 
   def file
-    h.link_to 'Uploaded file', h.rails_blob_path(model.file, disposition: 'attachment')
+    h.link_to model.file.filename, h.rails_blob_path(model.file, disposition: 'attachment')
   end
 end

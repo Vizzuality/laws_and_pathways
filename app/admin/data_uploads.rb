@@ -50,4 +50,20 @@ ActiveAdmin.register DataUpload do
       f.action :cancel, wrapper_html: {class: 'cancel'}
     end
   end
+
+  controller do
+    def create
+      @data_upload = build_new_resource
+
+      if @data_upload.save
+        redirect_to admin_data_upload_path(@data_upload.data_upload)
+      else
+        render :new
+      end
+    end
+
+    def build_new_resource
+      DataUploadForm.new(permitted_params[:data_upload])
+    end
+  end
 end
