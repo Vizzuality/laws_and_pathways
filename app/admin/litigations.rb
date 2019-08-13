@@ -38,6 +38,21 @@ ActiveAdmin.register Litigation do
     actions
   end
 
+  csv do
+    column :id
+    column :title
+    column :document_type
+    column(:geography_iso) { |l| l.geography.iso }
+    column(:geography) { |l| l.geography.name }
+    column(:jurisdiction_iso) { |l| l.jurisdiction.iso }
+    column(:jurisdiction) { |l| l.jurisdiction.name }
+    column :citation_reference_number
+    column :summary
+    column :keywords, &:keywords_string
+    column :core_objective
+    column :visibility_status
+  end
+
   show do
     tabs do
       tab :details do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_09_131640) do
+ActiveRecord::Schema.define(version: 2019_08_12_154729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,6 +100,15 @@ ActiveRecord::Schema.define(version: 2019_08_09_131640) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["sector_id"], name: "index_cp_benchmarks_on_sector_id"
+  end
+
+  create_table "data_uploads", force: :cascade do |t|
+    t.bigint "uploaded_by_id"
+    t.string "uploader", null: false
+    t.jsonb "details", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["uploaded_by_id"], name: "index_data_uploads_on_uploaded_by_id"
   end
 
   create_table "documents", force: :cascade do |t|
@@ -279,6 +288,7 @@ ActiveRecord::Schema.define(version: 2019_08_09_131640) do
   add_foreign_key "companies", "sectors"
   add_foreign_key "cp_assessments", "companies", on_delete: :cascade
   add_foreign_key "cp_benchmarks", "sectors", on_delete: :cascade
+  add_foreign_key "data_uploads", "admin_users", column: "uploaded_by_id"
   add_foreign_key "geographies", "admin_users", column: "created_by_id"
   add_foreign_key "geographies", "admin_users", column: "updated_by_id"
   add_foreign_key "legislations", "admin_users", column: "created_by_id"
