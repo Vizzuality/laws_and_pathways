@@ -4,7 +4,7 @@
   <%= form.input :type, as: :hidden, input_html: { value: form.object.type } %>
   <div style="width: 33%;">
     <% if form.object.external? %>
-      <%= form.input :external_url, as: :string, label: 'Provide external url' %>
+      <%= form.input :external_url, as: :string, label: 'External url' %>
     <% else %>
       <%= form.input :file, as: :file, hint: preview_file_tag(form.object.file) %>
     <% end %>
