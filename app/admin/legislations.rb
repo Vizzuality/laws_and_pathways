@@ -81,43 +81,36 @@ ActiveAdmin.register Legislation do
   form html: {'data-controller' => 'check-modified'} do |f|
     f.semantic_errors(*f.object.errors.keys)
 
-    tabs do
-      tab :details do
-        f.inputs do
-          f.input :title
-          f.input :description, as: :trix
-          f.input :document_type_ids,
-                  label: 'Document Types',
+    f.inputs do
+      f.input :title
+      f.input :description, as: :trix
+      f.input :document_type_ids,
+              label: 'Document Types',
+              as: :tags,
+              collection: DocumentType.all
+      columns do
+        column { f.input :geography }
+        column { f.input :date_passed }
+        column do
+          f.input :framework_ids,
+                  label: 'Frameworks',
                   as: :tags,
-                  collection: DocumentType.all
-          columns do
-            column { f.input :geography }
-            column { f.input :date_passed }
-            column do
-              f.input :framework_ids,
-                      label: 'Frameworks',
-                      as: :tags,
-                      collection: Framework.all
-            end
-            column do
-              f.input :visibility_status, as: :select
-            end
-          end
-          f.input :natural_hazards_string,
-                  label: 'Natural Hazards',
-                  hint: t('hint.tag'),
-                  as: :tags,
-                  collection: NaturalHazard.all.pluck(:name)
-          f.input :keywords_string,
-                  label: 'Keywords',
-                  hint: t('hint.tag'),
-                  as: :tags,
-                  collection: Keyword.all.pluck(:name)
+                  collection: Framework.all
+        end
+        column do
+          f.input :visibility_status, as: :select
         end
       end
-
-      tab :documents do
-      end
+      f.input :natural_hazards_string,
+              label: 'Natural Hazards',
+              hint: t('hint.tag'),
+              as: :tags,
+              collection: NaturalHazard.all.pluck(:name)
+      f.input :keywords_string,
+              label: 'Keywords',
+              hint: t('hint.tag'),
+              as: :tags,
+              collection: Keyword.all.pluck(:name)
     end
 
     f.actions
