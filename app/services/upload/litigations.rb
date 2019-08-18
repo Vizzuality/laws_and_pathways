@@ -4,7 +4,7 @@ module Upload
 
     def import
       import_each_with_logging(csv) do |row|
-        litigation = find_litigation(row[:id]) || Litigation.new
+        litigation = find_litigation(row) || Litigation.new
         litigation.keywords = parse_tags(row[:keywords], keywords)
         litigation.assign_attributes(litigation_attributes(row))
 
@@ -19,8 +19,13 @@ module Upload
 
     private
 
-    def find_litigation(id)
-      Litigation.find(id) if id.present?
+    # to avoid doubling records when uploading the same record without id (new record)
+    # if there is nothing in id column try to find Litigation by title first before
+    # creating new record
+    def find_litigation(row)
+      return Litigation.find(id) if row[:id].present?
+
+      Litigation.find_by(title: row[:title].strip) if row[:title].present?
     end
 
     def litigation_attributes(row)

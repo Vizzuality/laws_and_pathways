@@ -40,19 +40,23 @@ module Upload
     end
 
     def parse_csv
-      hard_space_converter = ->(f) { f&.gsub(160.chr('UTF-8'), 32.chr) }
-      strip_converter = ->(field, _) { field&.strip }
-
       CSV.parse(
         file,
         headers: true,
         skip_blanks: true,
-        converters: [hard_space_converter, strip_converter],
+        converters: csv_converters,
         header_converters: [:symbol]
       ).delete_if { |row| row.to_hash.values.all?(&:blank?) }
     rescue CSV::MalformedCSVError => e
       errors.add(:base, e)
       false
+    end
+
+    def csv_converters
+      hard_space_converter = ->(f) { f&.gsub(160.chr('UTF-8'), 32.chr) }
+      strip_converter = ->(field, _) { field&.strip }
+
+      [hard_space_converter, strip_converter]
     end
 
     def import_each_with_logging(csv)

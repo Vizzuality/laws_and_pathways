@@ -40,6 +40,11 @@ ActiveAdmin.register DataUpload do
   form html: {'data-controller' => 'check-modified'} do |f|
     f.semantic_errors(*f.object.errors.keys)
 
+    div class: 'padding-20' do
+      'Only CSV files are allowed. Please make sure that imported file is UTF-8 encoded.
+       Otherwise you may see UTF-8 errors while importing the file'
+    end
+
     f.inputs do
       f.input :uploader, as: :select, hint: 'Choose data model', collection: DataUpload::UPLOADERS
       f.input :file, as: :file, hint: preview_file_tag(f.object.file)
