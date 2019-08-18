@@ -41,7 +41,7 @@ ActiveAdmin.register DataUpload do
     f.semantic_errors(*f.object.errors.keys)
 
     f.inputs do
-      f.input :uploader, as: :select, collection: DataUpload::UPLOADERS
+      f.input :uploader, as: :select, hint: 'Choose data model', collection: DataUpload::UPLOADERS
       f.input :file, as: :file, hint: preview_file_tag(f.object.file)
     end
 

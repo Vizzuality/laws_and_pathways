@@ -9,6 +9,8 @@ module Upload
     end
 
     def call
+      return false unless parse_csv
+
       details[:rows] = csv.count
 
       ActiveRecord::Base.transaction(requires_new: true) do
@@ -34,18 +36,23 @@ module Upload
     private
 
     def csv
-      return @csv if defined?(@csv)
+      @csv ||= parse_csv
+    end
 
+    def parse_csv
       hard_space_converter = ->(f) { f&.gsub(160.chr('UTF-8'), 32.chr) }
       strip_converter = ->(field, _) { field&.strip }
 
-      @csv = CSV.parse(
+      CSV.parse(
         file,
         headers: true,
         skip_blanks: true,
         converters: [hard_space_converter, strip_converter],
         header_converters: [:symbol]
       ).delete_if { |row| row.to_hash.values.all?(&:blank?) }
+    rescue CSV::MalformedCSVError => e
+      errors.add(:base, e)
+      false
     end
 
     def import_each_with_logging(csv)
