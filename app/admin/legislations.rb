@@ -58,6 +58,7 @@ ActiveAdmin.register Legislation do
           row 'Document Types', &:document_types_string
           row 'Keywords', &:keywords_string
           row 'Natural Hazards', &:natural_hazards_string
+          list_row 'Documents', :document_links
         end
       end
 
@@ -78,43 +79,7 @@ ActiveAdmin.register Legislation do
     end
   end
 
-  form html: {'data-controller' => 'check-modified'} do |f|
-    f.semantic_errors(*f.object.errors.keys)
-
-    f.inputs do
-      f.input :title
-      f.input :description, as: :trix
-      f.input :document_type_ids,
-              label: 'Document Types',
-              as: :tags,
-              collection: DocumentType.all
-      columns do
-        column { f.input :geography }
-        column { f.input :date_passed }
-        column do
-          f.input :framework_ids,
-                  label: 'Frameworks',
-                  as: :tags,
-                  collection: Framework.all
-        end
-        column do
-          f.input :visibility_status, as: :select
-        end
-      end
-      f.input :natural_hazards_string,
-              label: 'Natural Hazards',
-              hint: t('hint.tag'),
-              as: :tags,
-              collection: NaturalHazard.all.pluck(:name)
-      f.input :keywords_string,
-              label: 'Keywords',
-              hint: t('hint.tag'),
-              as: :tags,
-              collection: Keyword.all.pluck(:name)
-    end
-
-    f.actions
-  end
+  form partial: 'form'
 
   csv do
     column :law_id

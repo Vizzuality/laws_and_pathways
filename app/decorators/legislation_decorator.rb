@@ -3,6 +3,10 @@ class LegislationDecorator < Draper::Decorator
 
   TITLE_INDEX_LENGTH = 100
 
+  def description
+    model.description.html_safe
+  end
+
   def title_summary_link
     h.link_to model.title&.truncate(TITLE_INDEX_LENGTH),
               h.admin_legislation_path(model),
@@ -23,6 +27,17 @@ class LegislationDecorator < Draper::Decorator
                 h.admin_litigation_path(litigation),
                 target: '_blank',
                 title: litigation.title
+    end
+  end
+
+  def document_links
+    return [] if model.documents.empty?
+
+    model.documents.map do |document|
+      h.link_to document.name,
+                document.url,
+                target: '_blank',
+                title: document.external? ? document.url : nil
     end
   end
 end
