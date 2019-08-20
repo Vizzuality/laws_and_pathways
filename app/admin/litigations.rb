@@ -54,7 +54,8 @@ ActiveAdmin.register Litigation do
     column :summary
     column :keywords, &:keywords_string
     column :core_objective
-    column :visibility_status
+    column(:visibility_status) { |l| l.visibility_status&.humanize }
+    column(:legislation_ids) { |l| l.legislation_ids.join('; ') }
   end
 
   show do
