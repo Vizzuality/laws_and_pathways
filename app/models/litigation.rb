@@ -28,6 +28,12 @@ class Litigation < ApplicationRecord
   friendly_id :title, use: :slugged, routes: :default
 
   DOCUMENT_TYPES = %w[case investigation inquiry].freeze
+  EVENT_TYPES = %w[
+    CaseStarted
+    CaseDismissed
+    CaseOverruled
+    CaseDecided
+  ].freeze
 
   enum document_type: array_to_enum_hash(DOCUMENT_TYPES)
 
@@ -37,10 +43,12 @@ class Litigation < ApplicationRecord
   belongs_to :jurisdiction, class_name: 'Geography'
   has_many :litigation_sides, -> { order(:side_type) }, inverse_of: :litigation
   has_many :documents, as: :documentable, dependent: :destroy
+  has_many :events, as: :eventable, dependent: :destroy
   has_and_belongs_to_many :legislations
 
   accepts_nested_attributes_for :documents, allow_destroy: true
   accepts_nested_attributes_for :litigation_sides, allow_destroy: true
+  accepts_nested_attributes_for :events, allow_destroy: true
 
   validates_presence_of :title, :slug, :document_type
 end
