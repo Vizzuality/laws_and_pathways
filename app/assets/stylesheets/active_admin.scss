@@ -168,7 +168,6 @@ form {
 
 .inline-fields {
   display: flex;
-  justify-content: space-between;
   align-items: center;
 
   li {
@@ -211,5 +210,19 @@ form.litigation {
 
   @include desktop-large {
     width: 70%;
+  }
+}
+
+.event-fields {
+  li[id*=date] {
+    width: 160px;
+  }
+
+  li[id*=event_type] {
+    width: 200px;
+  }
+
+  li[id*=_title], li[id*=_description], li[id*=_url] {
+    flex-grow: 1;
   }
 }

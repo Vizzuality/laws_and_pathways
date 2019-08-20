@@ -4,6 +4,7 @@
   <div class="tabs" data-controller="tabs">
     <ul class="nav nav-tabs" role="tablist">
       <li><a href="#details">Details</a></li>
+      <li><a href="#events">Events</a></li>
       <li><a href="#documents">Documents</a></li>
       <li><a href="#sides">Sides</a></li>
     </ul>
@@ -23,6 +24,12 @@
           <%= f.input :legislation_ids, as: :selected_list, label: 'Connected Legislations', fields: [:title], display_name: :title, order: 'title_asc' %>
           <%= f.input :visibility_status, as: :select %>
           <%= f.input :keywords_string, as: :tags, label: 'Keywords', hint: t('hint.tag'), collection: Keyword.all.pluck(:name) %>
+        <% end %>
+      </div>
+
+      <div id="events">
+        <%= f.inputs "List of litigation's events" do %>
+          <%= render 'admin/events/list', form: f %>
         <% end %>
       </div>
 

@@ -20,8 +20,6 @@ class Event < ApplicationRecord
 
   validates :event_type, presence: true, inclusion: {in: :valid_types}
 
-  private
-
   def valid_types
     return Litigation::EVENT_TYPES if eventable.is_a?(Litigation)
 

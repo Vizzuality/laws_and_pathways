@@ -15,6 +15,9 @@ ActiveAdmin.register Litigation do
                 documents_attributes: [
                   :id, :_destroy, :name, :language, :external_url, :type, :file
                 ],
+                events_attributes: [
+                  :id, :_destroy, :title, :event_type, :description, :url, :date
+                ],
                 legislation_ids: []
 
   filter :title_contains
@@ -67,6 +70,18 @@ ActiveAdmin.register Litigation do
             column :side_type
             column :name
             column :party_type
+          end
+        end
+      end
+
+      tab :events do
+        panel 'Litigation Events' do
+          table_for resource.events do
+            column :date
+            column :event_type
+            column :title
+            column :description
+            column :url
           end
         end
       end
