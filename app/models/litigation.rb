@@ -29,10 +29,10 @@ class Litigation < ApplicationRecord
 
   DOCUMENT_TYPES = %w[case investigation inquiry].freeze
   EVENT_TYPES = %w[
-    CaseStarted
-    CaseDismissed
-    CaseOverruled
-    CaseDecided
+    case_started
+    case_dismissed
+    case_overruled
+    case_decided
   ].freeze
 
   enum document_type: array_to_enum_hash(DOCUMENT_TYPES)

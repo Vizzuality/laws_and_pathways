@@ -64,8 +64,20 @@ RSpec.describe Admin::LitigationsController, type: :controller do
             attributes_for(:document_uploaded, name: 'doc 2')
           ],
           events_attributes: [
-            {date: 5.days.ago, event_type: 'CaseStarted', title: 'Event 1', description: 'Description 1', url: 'https://validurl1.com'},
-            {date: 3.days.ago, event_type: 'CaseDismissed', title: 'Event 2', description: 'Description 2', url: 'https://validurl2.com'}
+            {
+              date: 5.days.ago,
+              event_type: 'case_started',
+              title: 'Event 1',
+              description: 'Description 1',
+              url: 'https://validurl1.com'
+            },
+            {
+              date: 3.days.ago,
+              event_type: 'case_dismissed',
+              title: 'Event 2',
+              description: 'Description 2',
+              url: 'https://validurl2.com'
+            }
           ]
         )
       }
@@ -85,10 +97,11 @@ RSpec.describe Admin::LitigationsController, type: :controller do
           expect(l.litigation_sides.pluck(:party_type)).to eq(%w[individual corporation government])
           expect(l.documents.pluck(:name, :language, :external_url).sort)
             .to eq([['doc 1', 'en', 'https://test.com'], ['doc 2', 'en', '']])
-          expect(l.events.order(:date).pluck(:title, :event_type, :description, :url)).to eq([
-            ['Event 1', 'CaseStarted', 'Description 1', 'https://validurl1.com'],
-            ['Event 2', 'CaseDismissed', 'Description 2', 'https://validurl2.com']
-          ])
+          expect(l.events.order(:date).pluck(:title, :event_type, :description, :url))
+            .to eq([
+                     ['Event 1', 'case_started', 'Description 1', 'https://validurl1.com'],
+                     ['Event 2', 'case_dismissed', 'Description 2', 'https://validurl2.com']
+                   ])
         end
       end
 

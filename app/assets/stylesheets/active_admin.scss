@@ -214,6 +214,10 @@ form.litigation {
 }
 
 .event-fields {
+  .select2 {
+    width: 100% !important;
+  }
+
   li[id*=date] {
     width: 160px;
   }

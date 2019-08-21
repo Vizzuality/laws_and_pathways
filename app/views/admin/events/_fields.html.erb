@@ -3,7 +3,7 @@
 <%= content_tag :div, class: "nested-fields inline-fields event-fields", data: { new_record: is_new_record } do %>
   <%= form.input :date %>
   <%= form.input :title %>
-  <%= form.input :event_type, as: :select, collection: form.object.valid_types %>
+  <%= form.input :event_type, as: :select, collection: form.object.valid_types.map(&:titleize) %>
   <%= form.input :description, as: :text %>
   <%= form.input :url, as: :string %>
   <li class="input">
