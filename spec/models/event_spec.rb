@@ -22,6 +22,11 @@ RSpec.describe Event, type: :model do
     expect(subject).to have(1).errors_on(:title)
   end
 
+  it 'should not be valid without date' do
+    subject.date = nil
+    expect(subject).to have(1).errors_on(:date)
+  end
+
   it 'should not be valid without event_type' do
     subject.event_type = nil
     # 2 errors because event type inclusion

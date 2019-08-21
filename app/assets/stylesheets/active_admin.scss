@@ -226,7 +226,15 @@ form.litigation {
     width: 200px;
   }
 
-  li[id*=_title], li[id*=_description], li[id*=_url] {
+  li[id*=_description] {
+    flex-grow: 1;
+
+    textarea {
+      resize: vertical;
+    }
+  }
+
+  li[id*=_title], li[id*=_url] {
     flex-grow: 1;
   }
 }
