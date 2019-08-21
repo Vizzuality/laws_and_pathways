@@ -1,8 +1,8 @@
 module SelectHelper
-  def array_to_select_collection(array)
+  def array_to_select_collection(array, transform_func = :humanize)
     return unless array.respond_to?(:map)
 
-    array.map { |s| [s.humanize, s] }
+    array.map { |s| [s.send(transform_func), s] }
   end
 
   def all_languages_to_select_collection

@@ -76,12 +76,12 @@ ActiveAdmin.register Litigation do
 
       tab :events do
         panel 'Litigation Events' do
-          table_for resource.events do
+          table_for resource.events.decorate do
             column :date
             column :event_type
             column :title
             column :description
-            column :url
+            column 'URL', &:url_link
           end
         end
       end
