@@ -4,6 +4,7 @@ ActiveAdmin.register Company do
   decorate_with CompanyDecorator
 
   config.sort_order = 'name_asc'
+  config.batch_actions = false
 
   publishable_scopes
   publishable_sidebar only: :show
@@ -18,8 +19,6 @@ ActiveAdmin.register Company do
   filter :size,
          as: :check_boxes,
          collection: proc { array_to_select_collection(Company::SIZES) }
-
-  config.batch_actions = false
 
   sidebar 'Details', only: :show do
     attributes_table do

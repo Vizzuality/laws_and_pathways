@@ -1,4 +1,5 @@
 ActiveAdmin.register Legislation do
+  config.batch_actions = false
   config.sort_order = 'date_passed_desc'
 
   menu parent: 'Laws', priority: 1
@@ -23,8 +24,6 @@ ActiveAdmin.register Legislation do
   filter :frameworks,
          as: :check_boxes,
          collection: proc { Framework.all }
-
-  config.batch_actions = false
 
   index do
     column :title, &:title_summary_link

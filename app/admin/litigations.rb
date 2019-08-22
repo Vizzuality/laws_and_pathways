@@ -1,4 +1,6 @@
 ActiveAdmin.register Litigation do
+  config.batch_actions = false
+
   menu parent: 'Laws', priority: 2
 
   decorate_with LitigationDecorator
@@ -26,8 +28,6 @@ ActiveAdmin.register Litigation do
   filter :document_type, as: :select, collection: proc {
     array_to_select_collection(Litigation::DOCUMENT_TYPES)
   }
-
-  config.batch_actions = false
 
   index do
     column :title, class: 'max-width-300', &:title_link

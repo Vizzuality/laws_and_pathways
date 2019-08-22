@@ -1,4 +1,6 @@
 ActiveAdmin.register Target do
+  config.batch_actions = false
+
   menu parent: 'Laws', priority: 3
 
   decorate_with TargetDecorator
@@ -18,8 +20,6 @@ ActiveAdmin.register Target do
   filter :target_type,
          as: :select,
          collection: proc { array_to_select_collection(Target::TYPES) }
-
-  config.batch_actions = false
 
   index do
     id_column

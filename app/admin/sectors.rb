@@ -1,11 +1,11 @@
 ActiveAdmin.register Sector do
+  config.batch_actions = false
+
   menu priority: 5
 
   permit_params :name
 
   filter :name_contains
-
-  config.batch_actions = false
 
   index do
     column :name do |sector|

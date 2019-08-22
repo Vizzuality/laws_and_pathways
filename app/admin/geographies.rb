@@ -1,6 +1,8 @@
 ActiveAdmin.register Geography do
-  menu parent: 'Geographies', priority: 1
+  config.batch_actions = false
   config.sort_order = 'name_asc'
+
+  menu parent: 'Geographies', priority: 1
 
   decorate_with GeographyDecorator
 
@@ -20,8 +22,6 @@ ActiveAdmin.register Geography do
   filter :political_groups,
          as: :check_boxes,
          collection: proc { PoliticalGroup.all }
-
-  config.batch_actions = false
 
   show do
     tabs do
