@@ -18,11 +18,13 @@ class Event < ApplicationRecord
   validates_presence_of :title, :date
   validates :url, url: true
 
-  validates :event_type, presence: true, inclusion: {in: :valid_types}
+  validates :event_type, presence: true, inclusion: {in: :event_types}
 
-  def valid_types
-    return Litigation::EVENT_TYPES if eventable.is_a?(Litigation)
+  def event_types
+    return [] unless eventable.present?
 
-    []
+    eventable.class.const_get(:EVENT_TYPES)
+  rescue NameError
+    raise "please define EVENT_TYPES const in #{eventable.class.name}"
   end
 end

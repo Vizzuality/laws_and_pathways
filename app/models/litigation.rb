@@ -46,9 +46,11 @@ class Litigation < ApplicationRecord
   has_many :events, as: :eventable, dependent: :destroy
   has_and_belongs_to_many :legislations
 
-  accepts_nested_attributes_for :documents, allow_destroy: true, reject_if: :all_blank
-  accepts_nested_attributes_for :litigation_sides, allow_destroy: true, reject_if: :all_blank
-  accepts_nested_attributes_for :events, allow_destroy: true, reject_if: :all_blank
+  with_options allow_destroy: true, reject_if: :all_blank do
+    accepts_nested_attributes_for :documents
+    accepts_nested_attributes_for :litigation_sides
+    accepts_nested_attributes_for :events
+  end
 
   validates_presence_of :title, :slug, :document_type
 end

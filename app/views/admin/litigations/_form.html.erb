@@ -27,6 +27,12 @@
         <% end %>
       </div>
 
+      <div id="sides">
+        <%= f.inputs 'Litigation Sides' do %>
+          <%= render 'sides_list', form: f %>
+        <% end %>
+      </div>
+
       <div id="events">
         <%= f.inputs "List of litigation's events" do %>
           <%= render 'admin/events/list', form: f %>
@@ -38,13 +44,6 @@
           <%= render 'admin/documents/list', form: f %>
         <% end %>
       </div>
-
-      <div id="sides">
-        <%= f.inputs 'Litigation Sides' do %>
-          <%= render 'sides_list', form: f %>
-        <% end %>
-      </div>
-
     </div>
   </div>
 
