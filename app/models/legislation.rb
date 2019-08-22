@@ -30,8 +30,11 @@ class Legislation < ApplicationRecord
   tag_with :natural_hazards
 
   belongs_to :geography
+  has_many :documents, as: :documentable, dependent: :destroy
   has_and_belongs_to_many :targets
   has_and_belongs_to_many :litigations
+
+  accepts_nested_attributes_for :documents, allow_destroy: true
 
   validates_presence_of :title, :slug, :date_passed
   validates_uniqueness_of :slug

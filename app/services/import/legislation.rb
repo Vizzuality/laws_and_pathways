@@ -52,6 +52,7 @@ module Import
     def cleanup
       ::Framework.delete_all
       ::Legislation.delete_all
+      ::Document.from_documentable('Litigation').delete_all
     end
 
     def legislation_attributes(row)
@@ -60,12 +61,33 @@ module Import
         description: row[:description],
         date_passed: find_date_passed(row),
         document_types: find_document_types(row),
-        geography: Import::GeographyUtils.find_by_iso(row[:country_iso])
+        geography: Import::GeographyUtils.find_by_iso(row[:country_iso]),
+        documents: create_documents(row)
       }
     end
 
     def find_date_passed(row)
       normalize_date(row[:date_passed]) || normalize_date(row[:year_passed])
+    end
+
+    def create_documents(row)
+      url_data_list = row[:source_text_links].split(',')
+
+      url_data_list.map do |url_data|
+        # expected
+        # - law_document_url  # => '//www.lse.ac.uk/GranthamInstitute/wp-content/uploads/laws/1006.pdf'
+        # - verification_date # => '(01/02/2018)'
+        law_document_url, verification_date = url_data.split
+        # - document_filename # => 1006.pdf
+        document_filename = law_document_url.split('/').last
+
+        Document.create(
+          name: "#{document_filename} (imported)",
+          external_url: law_document_url,
+          type: 'external',
+          last_verified_on: Date.parse(verification_date)
+        )
+      end
     end
 
     def normalize_date(date)

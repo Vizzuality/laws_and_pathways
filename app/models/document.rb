@@ -31,14 +31,12 @@ class Document < ApplicationRecord
 
   validates_presence_of :name, :type
 
+  scope :from_documentable, ->(documentable) { where(documentable_type: documentable) }
+
   def url
     return file_url if uploaded?
 
     external_url
-  end
-
-  def external?
-    !uploaded?
   end
 
   private
@@ -50,6 +48,6 @@ class Document < ApplicationRecord
   end
 
   def set_last_verified_on
-    self.last_verified_on = Time.zone.now.to_date
+    self.last_verified_on ||= Time.zone.now.to_date
   end
 end

@@ -4,6 +4,7 @@
   <div class="tabs" data-controller="tabs">
     <ul class="nav nav-tabs" role="tablist">
       <li><a href="#details">Details</a></li>
+      <li><a href="#events">Events</a></li>
       <li><a href="#documents">Documents</a></li>
       <li><a href="#sides">Sides</a></li>
     </ul>
@@ -26,18 +27,23 @@
         <% end %>
       </div>
 
-      <div id="documents">
-        <%= f.inputs 'List of related documents and links' do %>
-          <%= render 'admin/documents/list', form: f %>
-        <% end %>
-      </div>
-
       <div id="sides">
         <%= f.inputs 'Litigation Sides' do %>
           <%= render 'sides_list', form: f %>
         <% end %>
       </div>
 
+      <div id="events">
+        <%= f.inputs "List of litigation's events" do %>
+          <%= render 'admin/events/list', form: f %>
+        <% end %>
+      </div>
+
+      <div id="documents">
+        <%= f.inputs 'List of related documents and links' do %>
+          <%= render 'admin/documents/list', form: f %>
+        <% end %>
+      </div>
     </div>
   </div>
 
