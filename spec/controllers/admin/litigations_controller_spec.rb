@@ -36,7 +36,8 @@ RSpec.describe Admin::LitigationsController, type: :controller do
   describe 'POST create' do
     context 'with valid params' do
       let(:valid_attributes) {
-        attributes_for(:litigation).merge(
+        attributes_for(
+          :litigation,
           title: 'Litigation POST title',
           summary: 'Litigation POST summary',
           core_objective: 'objective',
@@ -47,16 +48,36 @@ RSpec.describe Admin::LitigationsController, type: :controller do
           visibility_status: 'pending',
           litigation_sides_attributes: [
             attributes_for(:litigation_side),
-            attributes_for(:litigation_side, :company).merge(
+            attributes_for(
+              :litigation_side,
+              :company,
               connected_with: "Company-#{side_company.id}"
             ),
-            attributes_for(:litigation_side, :geography).merge(
+            attributes_for(
+              :litigation_side,
+              :geography,
               connected_with: "Geography-#{side_geography.id}"
             )
           ],
           documents_attributes: [
-            attributes_for(:document).merge(name: 'doc 1'),
-            attributes_for(:document_uploaded).merge(name: 'doc 2')
+            attributes_for(:document, name: 'doc 1'),
+            attributes_for(:document_uploaded, name: 'doc 2')
+          ],
+          events_attributes: [
+            {
+              date: 5.days.ago,
+              event_type: 'case_started',
+              title: 'Event 1',
+              description: 'Description 1',
+              url: 'https://validurl1.com'
+            },
+            {
+              date: 3.days.ago,
+              event_type: 'case_dismissed',
+              title: 'Event 2',
+              description: 'Description 2',
+              url: 'https://validurl2.com'
+            }
           ]
         )
       }
@@ -76,6 +97,11 @@ RSpec.describe Admin::LitigationsController, type: :controller do
           expect(l.litigation_sides.pluck(:party_type)).to eq(%w[individual corporation government])
           expect(l.documents.pluck(:name, :language, :external_url).sort)
             .to eq([['doc 1', 'en', 'https://test.com'], ['doc 2', 'en', '']])
+          expect(l.events.order(:date).pluck(:title, :event_type, :description, :url))
+            .to eq([
+                     ['Event 1', 'case_started', 'Description 1', 'https://validurl1.com'],
+                     ['Event 2', 'case_dismissed', 'Description 2', 'https://validurl2.com']
+                   ])
         end
       end
 

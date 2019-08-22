@@ -1,0 +1,15 @@
+<div class="nested-list" data-controller="nested-list">
+  <template>
+    <%= form.semantic_fields_for :events, Event.new(eventable: form.object), child_index: 'NEW_RECORD' do |event| %>
+      <%= render "admin/events/fields", form: event %>
+    <% end %>
+  </template>
+
+  <%= form.semantic_fields_for :events do |event| %>
+    <%= render "admin/events/fields", form: event %>
+  <% end %>
+
+  <div class="nested-list__actions" data-target="nested-list.links">
+    <%= button_tag "Add Event", type: 'button', class: 'button button--raised', data: { action: "click->nested-list#addRecord" } %>
+  </div>
+</div>
