@@ -87,6 +87,14 @@ RSpec.describe Admin::LitigationsController, type: :controller do
       it 'creates a new Litigation' do
         expect { subject }.to change(Litigation, :count).by(1)
 
+        expected_documents_attrs = [
+          ['doc 1', 'en', 'https://test.com'], ['doc 2', 'en', '']
+        ]
+        expected_events_attrs = [
+          ['Event 1', 'case_started', 'Description 1', 'https://validurl1.com'],
+          ['Event 2', 'case_dismissed', 'Description 2', 'https://validurl2.com']
+        ]
+
         last_litigation_created.tap do |l|
           expect(l.title).to eq('Litigation POST title')
           expect(l.summary).to eq('Litigation POST summary')
@@ -95,13 +103,12 @@ RSpec.describe Admin::LitigationsController, type: :controller do
           expect(l.geography_id).to eq(geography.id)
           expect(l.jurisdiction_id).to eq(geography.id)
           expect(l.litigation_sides.pluck(:party_type)).to eq(%w[individual corporation government])
-          expect(l.documents.pluck(:name, :language, :external_url).sort)
-            .to eq([['doc 1', 'en', 'https://test.com'], ['doc 2', 'en', '']])
-          expect(l.events.order(:date).pluck(:title, :event_type, :description, :url))
-            .to eq([
-                     ['Event 1', 'case_started', 'Description 1', 'https://validurl1.com'],
-                     ['Event 2', 'case_dismissed', 'Description 2', 'https://validurl2.com']
-                   ])
+          expect(
+            l.documents.pluck(:name, :language, :external_url).sort
+          ).to eq(expected_documents_attrs)
+          expect(
+            l.events.order(:date).pluck(:title, :event_type, :description, :url)
+          ).to eq(expected_events_attrs)
         end
       end
 

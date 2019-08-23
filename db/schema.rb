@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_22_112921) do
+ActiveRecord::Schema.define(version: 2019_08_23_131259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,6 +142,13 @@ ActiveRecord::Schema.define(version: 2019_08_22_112921) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["geography_id"], name: "index_external_legislations_on_geography_id"
+  end
+
+  create_table "external_legislations_litigations", id: false, force: :cascade do |t|
+    t.bigint "litigation_id", null: false
+    t.bigint "external_legislation_id", null: false
+    t.index ["external_legislation_id"], name: "index_external_legislations_litigations", unique: true
+    t.index ["litigation_id"], name: "index_external_legislations_litigations_on_litigation_id"
   end
 
   create_table "geographies", force: :cascade do |t|
