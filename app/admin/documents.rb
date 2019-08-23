@@ -1,4 +1,6 @@
 ActiveAdmin.register Document do
+  config.batch_actions = false
+
   menu priority: 6
 
   decorate_with DocumentDecorator
@@ -8,8 +10,6 @@ ActiveAdmin.register Document do
   filter :language,
          as: :select,
          collection: proc { all_languages_to_select_collection }
-
-  config.batch_actions = false
 
   actions :all, except: [:new, :edit, :create, :update]
 

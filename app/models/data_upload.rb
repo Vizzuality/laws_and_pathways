@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: data_uploads
+#
+#  id             :bigint           not null, primary key
+#  uploaded_by_id :bigint
+#  uploader       :string           not null
+#  details        :jsonb
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#
+
 class DataUpload < ApplicationRecord
   has_one_attached :file
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_20_221054) do
+ActiveRecord::Schema.define(version: 2019_08_22_112921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,6 +135,15 @@ ActiveRecord::Schema.define(version: 2019_08_20_221054) do
     t.index ["eventable_type", "eventable_id"], name: "index_events_on_eventable_type_and_eventable_id"
   end
 
+  create_table "external_legislations", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "url"
+    t.bigint "geography_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["geography_id"], name: "index_external_legislations_on_geography_id"
+  end
+
   create_table "geographies", force: :cascade do |t|
     t.string "geography_type", null: false
     t.string "iso", null: false
@@ -148,9 +157,9 @@ ActiveRecord::Schema.define(version: 2019_08_20_221054) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "visibility_status", default: "draft"
+    t.text "indc_url"
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
-    t.text "indc_url"
     t.index ["created_by_id"], name: "index_geographies_on_created_by_id"
     t.index ["iso"], name: "index_geographies_on_iso", unique: true
     t.index ["region"], name: "index_geographies_on_region"
@@ -300,6 +309,7 @@ ActiveRecord::Schema.define(version: 2019_08_20_221054) do
   add_foreign_key "cp_assessments", "companies", on_delete: :cascade
   add_foreign_key "cp_benchmarks", "sectors", on_delete: :cascade
   add_foreign_key "data_uploads", "admin_users", column: "uploaded_by_id"
+  add_foreign_key "external_legislations", "geographies"
   add_foreign_key "geographies", "admin_users", column: "created_by_id"
   add_foreign_key "geographies", "admin_users", column: "updated_by_id"
   add_foreign_key "legislations", "admin_users", column: "created_by_id"
