@@ -12,8 +12,9 @@
 
 FactoryBot.define do
   factory :external_legislation do
-    name { 'MyString' }
-    url { 'MyString' }
-    geography { nil }
+    name { 'Test External Legislation' }
+    url { 'https://example.test.pl' }
+
+    association :geography
   end
 end

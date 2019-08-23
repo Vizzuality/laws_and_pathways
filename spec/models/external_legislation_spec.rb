@@ -13,5 +13,12 @@
 require 'rails_helper'
 
 RSpec.describe ExternalLegislation, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { build(:external_legislation) }
+
+  it { is_expected.to be_valid }
+
+  it 'should be invalid without name' do
+    subject.name = nil
+    expect(subject).to have(1).errors_on(:name)
+  end
 end

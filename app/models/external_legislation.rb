@@ -12,4 +12,7 @@
 
 class ExternalLegislation < ApplicationRecord
   belongs_to :geography
+
+  validates_presence_of :name
+  validates :url, url: true
 end
