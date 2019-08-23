@@ -10,11 +10,11 @@ class LitigationDecorator < Draper::Decorator
   end
 
   def summary
-    model.summary.html_safe
+    model.summary&.html_safe
   end
 
   def core_objective
-    model.core_objective.html_safe
+    model.core_objective&.html_safe
   end
 
   def document_links
