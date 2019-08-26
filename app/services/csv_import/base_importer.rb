@@ -1,17 +1,25 @@
-module Upload
-  class BaseUploader
+module CSVImport
+  class BaseImporter
     include ActiveModel::Model
 
-    attr_reader :file
+    DEFAULT_IMPORT_RESULTS = {
+      new_records: 0,
+      updated_records: 0,
+      not_changed_records: 0,
+      rows: 0
+    }.freeze
+
+    attr_reader :file, :import_results
 
     def initialize(file)
       @file = file
+      @import_results ||= DEFAULT_IMPORT_RESULTS
     end
 
     def call
       return false unless parse_csv
 
-      details[:rows] = csv.count
+      import_results[:rows] = csv.count
 
       ActiveRecord::Base.transaction(requires_new: true) do
         import
@@ -23,14 +31,6 @@ module Upload
 
     def import
       raise NotImplementedError
-    end
-
-    def details
-      @details ||= {
-        new_records: 0,
-        updated_records: 0,
-        not_changed_records: 0
-      }
     end
 
     private
@@ -59,7 +59,7 @@ module Upload
       [hard_space_converter, strip_converter]
     end
 
-    def import_each_with_logging(csv)
+    def import_each_csv_row(csv)
       csv.each.with_index(2) do |row, row_index|
         with_logging(row_index) do
           yield row
@@ -76,13 +76,13 @@ module Upload
       errors.add(:base, :invalid_row, message: msg, row: row_index)
     end
 
-    def update_stats(was_new_record, any_changes)
+    def update_import_results(was_new_record, any_changes)
       if was_new_record
-        details[:new_records] += 1
+        import_results[:new_records] += 1
       elsif any_changes
-        details[:updated_records] += 1
+        import_results[:updated_records] += 1
       else
-        details[:not_changed_records] += 1
+        import_results[:not_changed_records] += 1
       end
     end
   end

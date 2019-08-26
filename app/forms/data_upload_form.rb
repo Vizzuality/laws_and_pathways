@@ -8,6 +8,7 @@ class DataUploadForm
 
   def initialize(attributes)
     @data_upload = DataUpload.new
+
     super(attributes)
   end
 
@@ -17,6 +18,7 @@ class DataUploadForm
     ActiveRecord::Base.transaction do
       imported = import_data
       data_upload.save! if imported
+
       return imported
     end
 
@@ -26,18 +28,18 @@ class DataUploadForm
   private
 
   def import_data
-    imported = service.call
-    self.details = service.details
-    promote_errors(service.errors) unless imported
+    imported = import_service.call
+    self.details = import_service.import_results
+    promote_errors(import_service.errors) unless imported
 
     imported
   end
 
-  def service
-    return @service if defined?(@service)
+  def import_service
+    return @import_service if defined?(@import_service)
 
-    service_class = "Upload::#{uploader}".constantize
-    @service ||= service_class.new(file.download.force_encoding('UTF-8'))
+    service_class = "CSVImport::#{uploader}".constantize
+    @import_service ||= service_class.new(file.download.force_encoding('UTF-8'))
   end
 
   def validate_data_upload

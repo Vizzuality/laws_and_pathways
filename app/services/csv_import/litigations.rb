@@ -1,9 +1,9 @@
-module Upload
-  class Litigations < BaseUploader
+module CSVImport
+  class Litigations < BaseImporter
     include UploaderHelpers
 
     def import
-      import_each_with_logging(csv) do |row|
+      import_each_csv_row(csv) do |row|
         litigation = find_litigation(row) || Litigation.new
         litigation.keywords = parse_tags(row[:keywords], keywords)
         litigation.assign_attributes(litigation_attributes(row))
@@ -13,7 +13,7 @@ module Upload
 
         litigation.save!
 
-        update_stats(was_new_record, any_changes)
+        update_import_results(was_new_record, any_changes)
       end
     end
 
