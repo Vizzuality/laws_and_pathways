@@ -27,6 +27,10 @@ class DataUploadForm
 
   private
 
+  def importer_name
+    uploader
+  end
+
   def import_data
     imported = import_service.call
     self.details = import_service.import_results
@@ -36,10 +40,17 @@ class DataUploadForm
   end
 
   def import_service
-    return @import_service if defined?(@import_service)
+    @import_service ||= begin
+      CSVImport
+        .const_get(importer_name)
+        .new(uploaded_csv_file)
+    end
+  rescue NameError
+    raise "Can't find 'CSVImport::#{importer_name}' importer service class!"
+  end
 
-    service_class = "CSVImport::#{uploader}".constantize
-    @import_service ||= service_class.new(file.download.force_encoding('UTF-8'))
+  def uploaded_csv_file
+    file.download.force_encoding('UTF-8')
   end
 
   def validate_data_upload

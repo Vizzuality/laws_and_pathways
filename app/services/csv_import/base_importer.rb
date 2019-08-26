@@ -2,18 +2,16 @@ module CSVImport
   class BaseImporter
     include ActiveModel::Model
 
-    DEFAULT_IMPORT_RESULTS = {
-      new_records: 0,
-      updated_records: 0,
-      not_changed_records: 0,
-      rows: 0
-    }.freeze
-
     attr_reader :file, :import_results
 
     def initialize(file)
       @file = file
-      @import_results ||= DEFAULT_IMPORT_RESULTS
+      @import_results ||= {
+        new_records: 0,
+        updated_records: 0,
+        not_changed_records: 0,
+        rows: 0
+      }
     end
 
     def call
