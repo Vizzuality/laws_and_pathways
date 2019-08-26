@@ -23,7 +23,7 @@ module Upload
     # if there is nothing in id column try to find Litigation by title first before
     # creating new record
     def find_litigation(row)
-      return Litigation.find(id) if row[:id].present?
+      return Litigation.find(row[:id]) if row[:id].present?
 
       Litigation.find_by(title: row[:title].strip) if row[:title].present?
     end
