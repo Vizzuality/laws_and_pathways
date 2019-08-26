@@ -20,7 +20,8 @@ ActiveAdmin.register Litigation do
                 events_attributes: [
                   :id, :_destroy, :title, :event_type, :description, :url, :date
                 ],
-                legislation_ids: []
+                legislation_ids: [],
+                external_legislation_ids: []
 
   filter :title_contains
   filter :summary_contains
@@ -81,6 +82,7 @@ ActiveAdmin.register Litigation do
           row :created_by
           list_row 'Documents', :document_links
           list_row 'Legislations', :legislation_links
+          list_row 'External Legislations', :external_legislation_links
         end
       end
 

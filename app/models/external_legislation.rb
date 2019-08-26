@@ -11,6 +11,7 @@
 #
 
 class ExternalLegislation < ApplicationRecord
+  has_and_belongs_to_many :litigations
   belongs_to :geography
 
   validates_presence_of :name

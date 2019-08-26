@@ -38,4 +38,14 @@ class LitigationDecorator < Draper::Decorator
                 title: legislation.title
     end
   end
+
+  def external_legislation_links
+    return [] if model.external_legislations.empty?
+
+    model.external_legislations.map do |legislation|
+      h.link_to legislation.name,
+                h.admin_external_legislation_path(legislation),
+                target: '_blank'
+    end
+  end
 end
