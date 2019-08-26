@@ -15,7 +15,7 @@ module CSVImport
     end
 
     def call
-      return false unless parse_csv
+      return false unless csv
 
       import_results[:rows] = csv.count
 
@@ -31,11 +31,11 @@ module CSVImport
       raise NotImplementedError
     end
 
-    private
-
     def csv
       @csv ||= parse_csv
     end
+
+    private
 
     def parse_csv
       CSV.parse(
