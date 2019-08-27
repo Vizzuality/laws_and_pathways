@@ -8,6 +8,7 @@ class DataUploadForm
 
   def initialize(attributes)
     @data_upload = DataUpload.new
+
     super(attributes)
   end
 
@@ -17,6 +18,7 @@ class DataUploadForm
     ActiveRecord::Base.transaction do
       imported = import_data
       data_upload.save! if imported
+
       return imported
     end
 
@@ -25,19 +27,30 @@ class DataUploadForm
 
   private
 
+  def importer_name
+    uploader
+  end
+
   def import_data
-    imported = service.call
-    self.details = service.details
-    promote_errors(service.errors) unless imported
+    imported = import_service.call
+    self.details = import_service.import_results
+    promote_errors(import_service.errors) unless imported
 
     imported
   end
 
-  def service
-    return @service if defined?(@service)
+  def import_service
+    @import_service ||= begin
+      CSVImport
+        .const_get(importer_name)
+        .new(uploaded_csv_file)
+    end
+  rescue NameError
+    raise "Can't find 'CSVImport::#{importer_name}' importer service class!"
+  end
 
-    service_class = "Upload::#{uploader}".constantize
-    @service ||= service_class.new(file.download.force_encoding('UTF-8'))
+  def uploaded_csv_file
+    file.download.force_encoding('UTF-8')
   end
 
   def validate_data_upload
