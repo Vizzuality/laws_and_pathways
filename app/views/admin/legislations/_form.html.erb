@@ -4,6 +4,7 @@
   <div class="tabs" data-controller="tabs">
     <ul class="nav nav-tabs" role="tablist">
       <li><a href="#details">Details</a></li>
+      <li><a href="#events">Events</a></li>
       <li><a href="#documents">Documents</a></li>
     </ul>
 
@@ -31,6 +32,12 @@
           %>
           <%= f.input :natural_hazards_string, label: 'Natural Hazards', hint: t('hint.tag'), as: :tags, collection: NaturalHazard.all.pluck(:name) %>
           <%= f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags, collection: Keyword.all.pluck(:name) %>
+        <% end %>
+      </div>
+
+      <div id="events">
+        <%= f.inputs "List of legislation's events" do %>
+          <%= render 'admin/events/list', form: f %>
         <% end %>
       </div>
 

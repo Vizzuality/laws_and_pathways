@@ -49,6 +49,22 @@ RSpec.describe Admin::LegislationsController, type: :controller do
             attributes_for(:document_uploaded).merge(
               name: 'doc 2', language: 'pl'
             )
+          ],
+          events_attributes: [
+            {
+              date: 5.days.ago,
+              event_type: 'drafted',
+              title: 'Event 1',
+              description: 'Description 1',
+              url: 'https://validurl1.com'
+            },
+            {
+              date: 3.days.ago,
+              event_type: 'approved',
+              title: 'Event 2',
+              description: 'Description 2',
+              url: 'https://validurl2.com'
+            }
           ]
         )
       }
@@ -57,6 +73,11 @@ RSpec.describe Admin::LegislationsController, type: :controller do
 
       it 'creates a new Legislation' do
         expect { subject }.to change(Legislation, :count).by(1)
+
+        expected_events_attrs = [
+          ['Event 1', 'drafted', 'Description 1', 'https://validurl1.com'],
+          ['Event 2', 'approved', 'Description 2', 'https://validurl2.com']
+        ]
 
         last_legislation_created.tap do |l|
           expect(l.title).to eq('Legislation POST title')
@@ -67,6 +88,9 @@ RSpec.describe Admin::LegislationsController, type: :controller do
           expect(l.geography_id).to eq(geography.id)
           expect(l.documents.pluck(:name, :language, :external_url).sort)
             .to eq([['doc 1', 'en', 'http://test.com/file.pdf'], ['doc 2', 'pl', '']])
+          expect(
+            l.events.order(:date).pluck(:title, :event_type, :description, :url)
+          ).to eq(expected_events_attrs)
         end
       end
 

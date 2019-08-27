@@ -24,6 +24,13 @@ class Legislation < ApplicationRecord
 
   friendly_id :title, use: :slugged, routes: :default
 
+  EVENT_TYPES = %w[
+    drafted
+    approved
+    came_into_effect
+    repealed
+  ].freeze
+
   tag_with :frameworks
   tag_with :document_types
   tag_with :keywords
@@ -31,10 +38,14 @@ class Legislation < ApplicationRecord
 
   belongs_to :geography
   has_many :documents, as: :documentable, dependent: :destroy
+  has_many :events, as: :eventable, dependent: :destroy
   has_and_belongs_to_many :targets
   has_and_belongs_to_many :litigations
 
-  accepts_nested_attributes_for :documents, allow_destroy: true
+  with_options allow_destroy: true, reject_if: :all_blank do
+    accepts_nested_attributes_for :documents
+    accepts_nested_attributes_for :events
+  end
 
   validates_presence_of :title, :slug, :date_passed
   validates_uniqueness_of :slug

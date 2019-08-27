@@ -11,11 +11,14 @@ ActiveAdmin.register Legislation do
   permit_params :title, :date_passed, :description,
                 :geography_id, :law_id,
                 :natural_hazards_string, :keywords_string,
-                :created_by_id, :updated_by_id,
-                :visibility_status, framework_ids: [], document_type_ids: [],
-                                    documents_attributes: [
-                                      :id, :_destroy, :name, :language, :external_url, :type, :file
-                                    ]
+                :created_by_id, :updated_by_id, :visibility_status,
+                events_attributes: [
+                  :id, :_destroy, :title, :event_type, :description, :url, :date
+                ],
+                documents_attributes: [
+                  :id, :_destroy, :name, :language, :external_url, :type, :file
+                ],
+                framework_ids: [], document_type_ids: []
 
   filter :title_contains, label: 'Title'
   filter :date_passed
@@ -58,6 +61,18 @@ ActiveAdmin.register Legislation do
           row 'Keywords', &:keywords_string
           row 'Natural Hazards', &:natural_hazards_string
           list_row 'Documents', :document_links
+        end
+      end
+
+      tab :events do
+        panel 'Legislation Events' do
+          table_for resource.events.decorate do
+            column :date
+            column :event_type
+            column :title
+            column :description
+            column 'URL', &:url_link
+          end
         end
       end
 
