@@ -6,7 +6,7 @@ module CSVImport
 
     def initialize(file)
       @file = file
-      @import_results ||= {
+      @import_results = {
         new_records: 0,
         updated_records: 0,
         not_changed_records: 0,
