@@ -1,0 +1,27 @@
+.comments {
+  >.panel_contents {
+    padding: $padding;
+  }
+
+  div.active_admin_comment {
+    @include am-paper;
+
+    padding: $padding/2;
+    margin-bottom: 15px;
+  }
+
+  form {
+    .inputs {
+      margin-bottom: 0;
+
+      .input {
+        padding: 0;
+      }
+    }
+
+    .actions {
+      padding: 0;
+      box-shadow: none;
+    }
+  }
+}

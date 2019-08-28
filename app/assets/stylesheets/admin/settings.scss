@@ -1,13 +1,30 @@
 $padding: 20px;
 
 //Colors
-$admin-red: red;
+//use http://chir.ag/projects/name-that-color for color naming
+
+$red: red;
+$allports: #00689f;
+$malibu: #7dd2f7;
+$olivine: #9fc881;
+$yellow-orange: #ffb434;
+$apple: #4ba532;
+$silver: #c4c0c0;
+$dusty-gray: #979494;
+
+//Status label colors
+$draft-color: $olivine;
+$pending-color: $yellow-orange;
+$published-color: $apple;
+$archived-color: $silver;
+$unset-color: $dusty-gray;
 
 // Active Material Theme Colors Change
-$am-theme-primary: #00689f;
-$am-theme-accent: #7dd2f7;
-$am-theme-accent-fallback: $admin-red;
+$am-theme-primary: $allports;
+$am-theme-accent: $malibu;
+$am-theme-accent-fallback: $red;
 
+// Responsive breakpoints
 $breakpoint-tablet: 768px;
 $breakpoint-desktop: 992px;
 $breakpoint-desktop-large: 1400px;

@@ -1,0 +1,73 @@
+.button {
+  margin: 0;
+
+  &--raised {
+    @include am-btn-raised;
+  }
+
+  &--red {
+    background-color: $red;
+
+    &:hover {
+      background-color: lighten($red, 20%);
+    }
+  }
+}
+
+.panel {
+  > h3 {
+    font-size: 18px;
+    padding: 20px 16px;
+    color: black;
+    border-bottom: 1px solid rgba(204, 204, 204, 0.35);
+  }
+}
+
+.table_tools {
+  .scope {
+    margin: 0;
+    padding: 10px;
+
+    &.selected {
+      background: $am-theme-primary;
+
+      a {
+        color: white;
+      }
+    }
+  }
+}
+
+fieldset.actions .cancel a {
+  &:hover {
+    color: white;
+  }
+}
+
+.columns {
+  .column {
+    float: left;
+  }
+}
+
+// Status
+.status_tag {
+  &.draft { background: $draft-color; }
+  &.pending { background: $pending-color; }
+  &.published { background: $published-color; }
+  &.archived { background: $archived-color; }
+  &.unset { background: $unset-color; }
+}
+
+#search_status_sidebar_section {
+  .panel_contents {
+    padding: 16px;
+  }
+}
+
+// Fix navbar
+#utility_nav {
+  #current_user, #logout {
+    width: auto;
+  }
+}

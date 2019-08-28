@@ -1,0 +1,25 @@
+form.litigation {
+  min-width: 600px;
+}
+
+.litigation-sides-fields {
+  li[id*=side_type] {
+    min-width: 150px;
+  }
+
+  li[id*=party_type] {
+    min-width: 250px;
+  }
+
+  li[id*=connected_with] {
+    min-width: 300px;
+  }
+
+  li[id*=_name] {
+    flex-grow: 1;
+  }
+
+  @include desktop-large {
+    width: 70%;
+  }
+}
