@@ -20,6 +20,8 @@ ActiveAdmin.register Company do
          as: :check_boxes,
          collection: proc { array_to_select_collection(Company::SIZES) }
 
+  data_export_sidebar 'Companies'
+
   sidebar 'Details', only: :show do
     attributes_table do
       row :company, &:name

@@ -13,6 +13,8 @@ ActiveAdmin.register MQ::Assessment do
   filter :company_sector_id, as: :select, collection: proc { Sector.all }
   filter :level, as: :select, collection: MQ::Assessment::LEVELS
 
+  data_export_sidebar 'MQ Assessments'
+
   show do
     attributes_table do
       row :id

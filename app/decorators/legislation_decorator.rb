@@ -5,7 +5,7 @@ class LegislationDecorator < Draper::Decorator
   LITIGATION_TITLE_LENGTH = 120
 
   def description
-    model.description.html_safe
+    model.description&.html_safe
   end
 
   def title_summary_link

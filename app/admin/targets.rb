@@ -21,6 +21,8 @@ ActiveAdmin.register Target do
          as: :select,
          collection: proc { array_to_select_collection(Target::TYPES) }
 
+  data_export_sidebar 'Targets'
+
   index do
     id_column
     column :geography

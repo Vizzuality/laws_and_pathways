@@ -12,6 +12,8 @@ ActiveAdmin.register CP::Assessment do
   filter :company
   filter :company_sector_id, as: :select, collection: proc { Sector.all }
 
+  data_export_sidebar 'CP Assessments'
+
   show do
     attributes_table do
       row :id
