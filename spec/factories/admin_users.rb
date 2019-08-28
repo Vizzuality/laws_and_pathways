@@ -10,11 +10,15 @@
 #  remember_created_at    :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  first_name             :string
+#  last_name              :string
 #
 
 FactoryBot.define do
   factory :admin_user do
     sequence(:email) { |n| "admin#{n}@example.com" }
+    first_name { 'Bobby' }
+    last_name { 'Example' }
     password { 'secret' }
   end
 end
