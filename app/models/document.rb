@@ -22,6 +22,21 @@ class Document < ApplicationRecord
 
   belongs_to :documentable, polymorphic: true
 
+  belongs_to :legislation, -> { where(documents: {documentable_type: 'Legislation'}) }, foreign_key: 'documentable_id'
+  belongs_to :litigation, -> { where(documents: {documentable_type: 'Litigation'}) }, foreign_key: 'documentable_id'
+
+  def legislation
+    return unless documentable_type == 'Legislation'
+
+    super
+  end
+
+  def litigation
+    return unless documentable_type == 'Litigation'
+
+    super
+  end
+
   has_one_attached :file
 
   before_create :set_last_verified_on

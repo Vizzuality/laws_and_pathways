@@ -47,6 +47,22 @@ ActiveAdmin.register Legislation do
   publishable_sidebar only: :show
 
   data_export_sidebar 'Legislations'
+  sidebar 'Export data', only: :index do
+    ul do
+      li do
+        # /documents.csv
+        a 'Download related Documents CSV',
+          href: admin_documents_path(
+            format: 'csv',
+            q: {
+              documentable_type_eq: 'Legislation',
+              documentable: request.query_parameters[:q]
+            }
+          )
+      end
+    end
+    hr
+  end
 
   show do
     tabs do
