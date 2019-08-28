@@ -1,4 +1,6 @@
 ActiveAdmin.register AdminUser do
+  config.comments = false
+
   menu priority: 2, parent: 'Administration'
 
   permit_params :email, :first_name, :last_name, :password, :password_confirmation
@@ -47,5 +49,13 @@ ActiveAdmin.register AdminUser do
     end
 
     f.actions
+  end
+
+  controller do
+    # update without password if not provided
+    def update_resource(object, attributes)
+      update_method = attributes.first[:password].present? ? :update_attributes : :update_without_password
+      object.send(update_method, *attributes)
+    end
   end
 end
