@@ -30,6 +30,8 @@ ActiveAdmin.register Litigation do
     array_to_select_collection(Litigation::DOCUMENT_TYPES)
   }
 
+  data_export_sidebar 'Litigations'
+
   index do
     column :title, class: 'max-width-300', &:title_link
     column :document_type

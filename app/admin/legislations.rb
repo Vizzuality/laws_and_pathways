@@ -27,6 +27,9 @@ ActiveAdmin.register Legislation do
   filter :frameworks,
          as: :check_boxes,
          collection: proc { Framework.all }
+  filter :visibility_status,
+         as: :select,
+         collection: proc { array_to_select_collection(Publishable::VISIBILITY) }
 
   index do
     column :title, &:title_summary_link
@@ -42,6 +45,8 @@ ActiveAdmin.register Legislation do
   end
 
   publishable_sidebar only: :show
+
+  data_export_sidebar 'Legislations'
 
   show do
     tabs do
@@ -96,6 +101,7 @@ ActiveAdmin.register Legislation do
   form partial: 'form'
 
   csv do
+    column :id
     column :law_id
     column :title
     column :date_passed

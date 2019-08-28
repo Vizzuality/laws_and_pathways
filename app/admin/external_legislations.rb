@@ -11,6 +11,8 @@ ActiveAdmin.register ExternalLegislation do
   filter :url_contains, label: 'URL'
   filter :geography
 
+  data_export_sidebar 'External Legislations'
+
   show do
     attributes_table do
       row :name

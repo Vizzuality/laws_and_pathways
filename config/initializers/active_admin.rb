@@ -332,6 +332,7 @@ end
 Rails.configuration.to_prepare do
   ActiveAdmin::ResourceDSL.send :include, SelectHelper
   ActiveAdmin::ResourceDSL.send :include, ActiveAdminPublishable::Scopes
+  ActiveAdmin::ResourceDSL.send :include, ActiveAdminCsvDownload
 
   ActiveAdmin::Views::Header.send :prepend, ActiveAdminCustomHeader
 end

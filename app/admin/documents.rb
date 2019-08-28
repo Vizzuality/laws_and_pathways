@@ -11,6 +11,8 @@ ActiveAdmin.register Document do
          as: :select,
          collection: proc { all_languages_to_select_collection }
 
+  data_export_sidebar 'Documents'
+
   actions :all, except: [:new, :edit, :create, :update]
 
   show do
