@@ -37,19 +37,18 @@ ActiveAdmin.register Document do
 
   controller do
     def scoped_collection
-      return super.includes(:documentable) unless params[:q].present?
+      results = super.includes(:documentable)
 
-      documentable_type = params[:q][:documentable_type_eq]
-      documentable_query_params = params[:q][:documentable]
-      return unless documentable_type.present? && documentable_query_params.present?
+      documentable_type = params.dig(:q, :documentable_type_eq)
+      documentable_query_params = params.dig(:q, :documentable)
+      if documentable_query_params.present? && documentable_query_params.present?
+        documentable_klass = documentable_type.constantize
+        results = results.where(
+          documentable: documentable_klass.ransack(documentable_query_params).result
+        )
+      end
 
-      # drop '.._eq' sufixes
-      query_params_hash = documentable_query_params.to_enum.to_h.deep_transform_keys { |key| key.gsub(/_eq$/, '') }
-
-      puts "- will filter related Legislations using: where(legislations: #{query_params_hash})"
-      super
-        .includes(documentable_type.underscore.to_sym)                      # :legislation
-        .where(documentable_type.underscore.pluralize => query_params_hash) # legislations: {}
+      results
     end
   end
 end
