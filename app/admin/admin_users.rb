@@ -3,23 +3,34 @@ ActiveAdmin.register AdminUser do
 
   menu priority: 2, parent: 'Administration'
 
+  decorate_with AdminUserDecorator
+
   permit_params :email, :first_name, :last_name, :password, :password_confirmation
 
   index do
     selectable_column
     id_column
+    column :gravatar
     column :email
     column :full_name
-    column :current_sign_in_at
-    column :sign_in_count
     column :created_at
     actions
   end
 
+  show do
+    attributes_table do
+      row :id
+      row :email
+      row :first_name
+      row :last_name
+      row :full_name
+      row :gravatar
+      row :updated_at
+      row :created_at
+    end
+  end
+
   filter :email
-  filter :current_sign_in_at
-  filter :sign_in_count
-  filter :created_at
 
   form html: {'data-controller' => 'check-modified'} do |f|
     f.semantic_errors(*f.object.errors.keys)
@@ -34,6 +45,11 @@ ActiveAdmin.register AdminUser do
           if f.object.new_record?
             f.input :password
             f.input :password_confirmation
+          else
+            li class: 'input' do
+              label :gravatar
+              img src: f.object.gravatar_url
+            end
           end
         end
       end
