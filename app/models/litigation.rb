@@ -22,7 +22,6 @@ class Litigation < ApplicationRecord
   include UserTrackable
   include Taggable
   include Publishable
-
   extend FriendlyId
 
   friendly_id :title, use: :slugged, routes: :default
