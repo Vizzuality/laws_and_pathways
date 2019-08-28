@@ -1,0 +1,23 @@
+.hidden {
+  display: none;
+}
+
+.padding-20 {
+  padding: $padding;
+}
+
+.max-width-300 {
+  max-width: 300px;
+}
+
+table.cell-padding-sm {
+  td, th {
+    padding: 5px;
+  }
+}
+
+table.cell-centered {
+  td, th {
+    text-align: center;
+  }
+}

@@ -1,0 +1,41 @@
+form {
+  ul.errors {
+    padding: $padding;
+    margin: 0;
+    margin-left: 20px;
+    list-style: disc;
+    color: $am-theme-error;
+  }
+
+  fieldset.inputs {
+    > legend {
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
+}
+
+.nested-list {
+  &__actions {
+    padding: 16px;
+  }
+}
+
+.inline-fields {
+  display: flex;
+  align-items: center;
+
+  li {
+    margin: 0;
+
+    &.input:not(.error) {
+      input, .select2, select {
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  .flex-grow-1 {
+    flex-grow: 1;
+  }
+}
