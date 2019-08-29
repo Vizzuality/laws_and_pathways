@@ -39,16 +39,30 @@ ActiveAdmin.register Document do
     def scoped_collection
       results = super.includes(:documentable)
 
-      documentable_type = params.dig(:q, :documentable_type_eq)
-      documentable_query_params = params.dig(:q, :documentable)
-      if documentable_query_params.present? && documentable_query_params.present?
-        documentable_klass = documentable_type.constantize
+      documentable_klass = find_documentable_klass
+
+      if documentable_klass.present? && documentable_params.present?
         results = results.where(
-          documentable: documentable_klass.ransack(documentable_query_params).result
+          documentable: documentable_klass.ransack(documentable_params).result
         )
       end
 
       results
+    end
+
+    private
+
+    def find_documentable_klass
+      documentable_type = params.dig(:q, :documentable_type_eq)
+      return nil unless documentable_type
+
+      documentable_type.constantize
+    rescue NameError => e
+      raise "Can't find documentable class based on given 'documentable_type_eq' param: #{e.message}"
+    end
+
+    def documentable_params
+      @documentable_params ||= params.dig(:q, :documentable)
     end
   end
 end
