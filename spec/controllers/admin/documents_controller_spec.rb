@@ -30,14 +30,14 @@ RSpec.describe Admin::DocumentsController, type: :controller do
       expect(response.header['Content-Type']).to include('text/csv')
     end
 
-    it('returns all documents list') do
+    it('returns all documents') do
       csv = response_as_csv
 
       expect(csv.by_col[1].sort).to eq(%w[Doc1 Doc2 Doc3 Doc4])
     end
   end
 
-  describe 'GET index with .csv format (with query)' do
+  describe 'GET index with .csv format (query, results present)' do
     before :each do
       get :index,
           params: {
@@ -66,6 +66,35 @@ RSpec.describe Admin::DocumentsController, type: :controller do
 
       # only single data row
       expect(csv[1]).to be_nil
+    end
+  end
+
+  describe 'GET index with .csv format (query, no results)' do
+    before :each do
+      get :index,
+          params: {
+            q: {
+              # should return no results for that query!
+              documentable: {visibility_status_eq: 'pending'},
+              documentable_type_eq: 'Litigation'
+            }
+          },
+          format: 'csv'
+    end
+
+    it('returns CSV file') do
+      expect(response.header['Content-Type']).to include('text/csv')
+    end
+
+    it('returns empty CSV file (only header)') do
+      csv = response_as_csv
+
+      # only header expected
+      expect(csv.to_a)
+        .to eq([
+                 ['Id', 'Name', 'External url', 'Language', 'Last verified on',
+                  'Law id', 'Documentable id', 'Documentable type']
+               ])
     end
   end
 
