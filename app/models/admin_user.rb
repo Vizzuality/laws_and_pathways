@@ -10,6 +10,8 @@
 #  remember_created_at    :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  first_name             :string
+#  last_name              :string
 #
 
 class AdminUser < ApplicationRecord
@@ -23,7 +25,13 @@ class AdminUser < ApplicationRecord
     "https://secure.gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
   end
 
+  def full_name
+    "#{first_name} #{last_name}".strip
+  end
+
   def to_s
-    email
+    return email if full_name.blank?
+
+    full_name
   end
 end
