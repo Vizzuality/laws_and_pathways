@@ -46,7 +46,7 @@ ActiveAdmin.register Legislation do
 
   publishable_sidebar only: :show
 
-  data_export_sidebar 'Legislations'
+  data_export_sidebar 'Legislations', documents: true
 
   show do
     tabs do

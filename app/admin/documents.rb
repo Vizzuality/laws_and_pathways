@@ -35,9 +35,44 @@ ActiveAdmin.register Document do
     actions
   end
 
+  csv do
+    column :id
+    column :name
+    column :external_url
+    column :language
+    column :last_verified_on
+    column 'Documentable ID', &:documentable_id
+    column :documentable_type
+  end
+
   controller do
     def scoped_collection
-      super.includes(:documentable)
+      results = super.includes(:documentable)
+
+      documentable_klass = find_documentable_klass
+
+      if documentable_klass.present? && documentable_params.present?
+        results = results.where(
+          documentable: documentable_klass.ransack(documentable_params).result
+        )
+      end
+
+      results
+    end
+
+    private
+
+    def find_documentable_klass
+      documentable_type = params.dig(:q, :documentable_type_eq)
+      return nil unless documentable_type
+
+      documentable_type.constantize
+    rescue NameError => e
+      raise "Can't find documentable class based on given 'documentable_type_eq' param: #{e.message}"
+    end
+
+    def documentable_params
+      @documentable_params ||= params.dig(:q, :documentable)
     end
   end
 end
