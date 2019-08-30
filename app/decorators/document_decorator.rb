@@ -15,11 +15,6 @@ class DocumentDecorator < Draper::Decorator
     model.last_verified_on
   end
 
-  # Law ID extracted from documentable object
-  def document_legacy_law_id
-    model.documentable&.law_id if model.documentable.respond_to?(:law_id)
-  end
-
   def language
     Language.find(model.language)&.name
   end

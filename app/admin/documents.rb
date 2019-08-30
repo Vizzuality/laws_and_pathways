@@ -41,7 +41,6 @@ ActiveAdmin.register Document do
     column :external_url
     column :language
     column :last_verified_on
-    column 'Law ID', &:document_legacy_law_id
     column 'Documentable ID', &:documentable_id
     column :documentable_type
   end

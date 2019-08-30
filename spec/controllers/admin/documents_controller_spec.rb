@@ -90,11 +90,12 @@ RSpec.describe Admin::DocumentsController, type: :controller do
       csv = response_as_csv
 
       # only header expected
-      expect(csv.to_a)
-        .to eq([
-                 ['Id', 'Name', 'External url', 'Language', 'Last verified on',
-                  'Law id', 'Documentable id', 'Documentable type']
-               ])
+      expected_columns = [
+        'Id', 'Name', 'External url',
+        'Language', 'Last verified on',
+        'Documentable id', 'Documentable type'
+      ]
+      expect(csv.to_a).to eq([expected_columns])
     end
   end
 
