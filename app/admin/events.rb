@@ -22,24 +22,19 @@ ActiveAdmin.register Event do
     def scoped_collection
       results = super.includes(:eventable)
 
-      eventable_klass = find_eventable_klass
+      return results unless eventable_params
 
-      if eventable_klass.present? && eventable_params.present?
-        results = results.where(
-          eventable: eventable_klass.ransack(eventable_params).result
-        )
-      end
-
-      results
+      results.where(eventable: eventable_scope)
     end
 
     private
 
-    def find_eventable_klass
-      eventable_type = params.dig(:q, :eventable_type_eq)
-      return nil unless eventable_type
+    def eventable_scope
+      find_eventable_klass&.ransack(eventable_params)&.result
+    end
 
-      eventable_type.constantize
+    def find_eventable_klass
+      @eventable_klass ||= params.dig(:q, :eventable_type_eq)&.constantize
     rescue NameError => e
       raise "Can't find eventable class based on given 'eventable_type_eq' param: #{e.message}"
     end
