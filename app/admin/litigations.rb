@@ -44,10 +44,6 @@ ActiveAdmin.register Litigation do
     actions
   end
 
-  action_item :bulk_upload, only: :index do
-    link_to 'Bulk Upload', new_admin_data_upload_path(data_upload: {uploader: 'Litigations'})
-  end
-
   csv do
     column :id
     column :title

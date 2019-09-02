@@ -12,7 +12,7 @@ module ActiveAdminCsvDownload
     export_link_for_documents = options.fetch(:documents) { false }
     export_link_for_events = options.fetch(:events) { false }
 
-    sidebar 'Export data', if: -> { collection.any? }, only: :index do
+    sidebar 'Export / Import', if: -> { collection.any? }, only: :index do
       ul do
         li do
           a "Download #{resource_name} CSV",
@@ -44,6 +44,13 @@ module ActiveAdminCsvDownload
               }
             )
           end
+        end
+
+        li do
+          link_to "<strong>Upload</strong> #{resource_name}".html_safe,
+                  new_admin_data_upload_path(
+                    data_upload: {uploader: resource_name}
+                  )
         end
       end
       hr
