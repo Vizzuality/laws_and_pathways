@@ -1,7 +1,7 @@
 ActiveAdmin.register Event do
   menu label: 'All Events', priority: 3, parent: 'Administration'
 
-  actions :all, except: [:update, :show, :destroy]
+  actions :all, except: [:new, :edit, :update, :show, :destroy]
 
   INDEX_COLUMNS_DEFINITION = proc do
     column :id
