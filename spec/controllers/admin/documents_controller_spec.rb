@@ -42,7 +42,7 @@ RSpec.describe Admin::DocumentsController, type: :controller do
       get :index,
           params: {
             q: {
-              # should narrow down results to 'Doc1'
+              # should narrow down results to document1
               documentable: {visibility_status_eq: 'published'},
               documentable_type_eq: 'Legislation'
             }
@@ -61,8 +61,8 @@ RSpec.describe Admin::DocumentsController, type: :controller do
       expect(csv.to_a.size).to eq(2)
 
       # check filtered data
-      expect(csv[0]['Name']).to eq('Doc1')
-      expect(csv[0]['Documentable type']).to eq('Legislation')
+      expect(csv[0]['Name']).to eq(document1.name)
+      expect(csv[0]['Documentable type']).to eq(document1.documentable_type)
 
       # only single data row
       expect(csv[1]).to be_nil
