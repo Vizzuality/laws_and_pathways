@@ -18,7 +18,7 @@ RSpec.describe Admin::EventsController, type: :controller do
   describe 'GET index' do
     subject { get :index }
 
-    it { is_expected.to be_successful }
+    it { is_expected.to redirect_to(admin_dashboard_path) }
   end
 
   describe 'GET index with .csv format' do
