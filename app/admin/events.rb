@@ -15,6 +15,12 @@ ActiveAdmin.register Event do
   end
 
   controller do
+    def index
+      super do |format|
+        format.html { redirect_to admin_dashboard_path }
+      end
+    end
+
     def scoped_collection
       results = super.includes(:eventable)
 
