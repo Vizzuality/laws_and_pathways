@@ -1,11 +1,11 @@
 module ActiveAdminPublishable
   module Scopes
     def publishable_scopes
-      scope('All', &:all)
-      scope('Draft', &:draft)
-      scope('Pending', &:pending)
-      scope('Published', &:published)
-      scope('Archived', &:archived)
+      scope 'All', :not_archived, default: true
+      scope 'Draft', :draft
+      scope 'Pending', :pending
+      scope 'Published', :published
+      scope 'Archived', :archived
     end
 
     def publishable_sidebar(*args)

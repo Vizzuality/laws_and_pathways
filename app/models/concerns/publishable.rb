@@ -4,6 +4,8 @@ module Publishable
   VISIBILITY = %w[draft pending published archived].freeze
 
   included do
+    scope :not_archived, -> { where.not(visibility_status: 'archived') }
+
     enum visibility_status: array_to_enum_hash(VISIBILITY)
 
     validates_presence_of :visibility_status
