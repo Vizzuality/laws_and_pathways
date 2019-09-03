@@ -1,9 +1,9 @@
 ActiveAdmin.register Event do
-  menu label: 'All Events', priority: 3, parent: 'Administration'
+  menu false
 
-  actions :all, except: [:new, :edit, :update, :show, :destroy]
+  actions :index
 
-  INDEX_COLUMNS_DEFINITION = proc do
+  csv do
     column :id
     column :eventable_type
     column :eventable_id
@@ -13,10 +13,6 @@ ActiveAdmin.register Event do
     column :date
     column :url
   end
-
-  index { instance_exec(&INDEX_COLUMNS_DEFINITION) }
-
-  csv { instance_exec(&INDEX_COLUMNS_DEFINITION) }
 
   controller do
     def scoped_collection
