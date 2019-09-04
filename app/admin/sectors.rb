@@ -7,12 +7,27 @@ ActiveAdmin.register Sector do
 
   filter :name_contains
 
+  sidebar 'Export / Import', if: -> { collection.any? }, only: :index do
+    ul do
+      li do
+        a 'Download All CP Benchmarks CSV', href: cp_benchmarks_admin_sectors_path
+      end
+    end
+    hr
+  end
+
   index do
     column :name do |sector|
       link_to sector.name, admin_sector_path(sector)
     end
     column :slug
     actions
+  end
+
+  collection_action :cp_benchmarks, method: :get do
+    exporter = CSVExport::CPBenchmarks.new(CP::Benchmark.all)
+
+    send_data exporter.call, filename: 'cp_benchmarks.csv'
   end
 
   show do

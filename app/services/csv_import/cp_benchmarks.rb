@@ -28,7 +28,7 @@ module CSVImport
 
     def benchmark_attributes(row)
       {
-        name: row[:type],
+        name: row[:name],
         values: values(row)
       }
     end
