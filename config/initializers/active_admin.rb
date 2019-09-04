@@ -1,6 +1,9 @@
 Dir[Rails.root.join('lib/extensions/active_admin/*.rb')].each { |f| require f }
 
 ActiveAdmin.setup do |config|
+  # Custom Load paths
+  config.load_paths += [File.join(Rails.root, 'app', 'commands')]
+
   # == Site Title
   #
   # Set the title that is displayed on the main layout

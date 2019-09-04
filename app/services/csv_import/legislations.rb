@@ -4,11 +4,11 @@ module CSVImport
 
     def import
       import_each_csv_row(csv) do |row|
-        legislation = find_legislation(row) || Legislation.new
+        legislation = prepare_legislation(row)
         legislation.frameworks = parse_tags(row[:frameworks], frameworks)
         legislation.document_types = parse_tags(row[:document_types], document_types)
 
-        legislation.assign_attributes(litigation_attributes(row))
+        legislation.assign_attributes(legislation_attributes(row))
 
         was_new_record = legislation.new_record?
         any_changes = legislation.changed?
@@ -21,13 +21,18 @@ module CSVImport
 
     private
 
-    def find_legislation(row)
-      find_by = ->(name) { Legislation.find_by(name.to_sym => row[name]&.strip) }
-
-      find_by[:id] || find_by[:law_id] || find_by[:title]
+    def resource_klass
+      Legislation
     end
 
-    def litigation_attributes(row)
+    def prepare_legislation(row)
+      find_record_by(:id, row) ||
+        find_record_by(:law_id, row) ||
+        find_record_by(:title, row) ||
+        resource_klass.new
+    end
+
+    def legislation_attributes(row)
       {
         law_id: row[:law],
         title: row[:title],

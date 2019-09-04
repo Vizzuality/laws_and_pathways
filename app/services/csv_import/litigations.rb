@@ -4,7 +4,7 @@ module CSVImport
 
     def import
       import_each_csv_row(csv) do |row|
-        litigation = find_litigation(row) || Litigation.new
+        litigation = prepare_litigation(row)
         litigation.keywords = parse_tags(row[:keywords], keywords)
         litigation.assign_attributes(litigation_attributes(row))
 
@@ -19,13 +19,15 @@ module CSVImport
 
     private
 
+    def resource_klass
+      Litigation
+    end
+
     # to avoid doubling records when uploading the same record without id (new record)
     # if there is nothing in id column try to find Litigation by title first before
     # creating new record
-    def find_litigation(row)
-      return Litigation.find(row[:id]) if row[:id].present?
-
-      Litigation.find_by(title: row[:title].strip) if row[:title].present?
+    def prepare_litigation(row)
+      find_record_by(:id, row) || find_record_by(:title, row) || resource_klass.new
     end
 
     def litigation_attributes(row)
