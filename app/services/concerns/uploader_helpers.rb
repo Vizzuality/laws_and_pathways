@@ -11,6 +11,24 @@ module UploaderHelpers
     end
   end
 
+  def frameworks
+    @frameworks ||= Hash.new do |hash, keyword|
+      hash[keyword] = Framework.find_or_initialize_by(name: keyword)
+    end
+  end
+
+  def document_types
+    @document_types ||= Hash.new do |hash, keyword|
+      hash[keyword] = DocumentType.find_or_initialize_by(name: keyword)
+    end
+  end
+
+  def natural_hazards
+    @natural_hazards ||= Hash.new do |hash, keyword|
+      hash[keyword] = NaturalHazard.find_or_initialize_by(name: keyword)
+    end
+  end
+
   def parse_tags(row_tags, tag_collection)
     return [] if row_tags.nil?
 
