@@ -68,7 +68,6 @@ ActiveAdmin.register DataUpload do
 
   controller do
     def create
-      puts permitted_params[:data_upload].inspect
       @data_upload = Command::CsvDataUpload.new(permitted_params[:data_upload])
 
       if @data_upload.call
