@@ -10,7 +10,17 @@ ActiveAdmin.register Sector do
   sidebar 'Export / Import', if: -> { collection.any? }, only: :index do
     ul do
       li do
-        a 'Download All CP Benchmarks CSV', href: cp_benchmarks_admin_sectors_path
+        a 'Download related CP Benchmarks CSV', href: cp_benchmarks_admin_sectors_path(
+          q: {
+            sector: request.query_parameters[:q]
+          }
+        )
+      end
+      li do
+        link_to '<strong>Upload</strong> CP Benchmarks'.html_safe,
+                new_admin_data_upload_path(
+                  data_upload: {uploader: 'CPBenchmarks'}
+                )
       end
     end
     hr
@@ -25,7 +35,12 @@ ActiveAdmin.register Sector do
   end
 
   collection_action :cp_benchmarks, method: :get do
-    exporter = CSVExport::CPBenchmarks.new(CP::Benchmark.all)
+    sector_search_params = params.dig(:q, :sector)
+
+    filtered_sectors = Sector.ransack(sector_search_params).result
+    benchmarks = CP::Benchmark.includes(:sector).where(sector: filtered_sectors)
+
+    exporter = CSVExport::CPBenchmarks.new(benchmarks)
 
     send_data exporter.call, filename: 'cp_benchmarks.csv'
   end
