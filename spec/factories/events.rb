@@ -23,5 +23,12 @@ FactoryBot.define do
       event_type { 'case_started' }
       eventable { |e| e.association(:litigation) }
     end
+
+    factory :legislation_event do
+      title { 'Some law was approved' }
+      description { 'Description of approved law' }
+      event_type { 'approved' }
+      eventable { |e| e.association(:legislation) }
+    end
   end
 end

@@ -30,7 +30,7 @@ ActiveAdmin.register Litigation do
     array_to_select_collection(Litigation::DOCUMENT_TYPES)
   }
 
-  data_export_sidebar 'Litigations', documents: true
+  data_export_sidebar 'Litigations', documents: true, events: true
 
   index do
     column :title, class: 'max-width-300', &:title_link
@@ -42,10 +42,6 @@ ActiveAdmin.register Litigation do
     tag_column :visibility_status
 
     actions
-  end
-
-  action_item :bulk_upload, only: :index do
-    link_to 'Bulk Upload', new_admin_data_upload_path(data_upload: {uploader: 'Litigations'})
   end
 
   csv do
