@@ -46,29 +46,35 @@ ActiveAdmin.register DataUpload do
     end
 
     f.inputs do
-      f.input :uploader, as: :select, hint: 'Choose data model', collection: DataUpload::UPLOADERS
-      f.input :file, as: :file, hint: preview_file_tag(f.object.file)
+      f.input :uploader,
+              as: :select,
+              hint: 'Choose data model',
+              collection: DataUpload::UPLOADERS
+      f.input :file,
+              as: :file,
+              hint: preview_file_tag(f.object.file)
     end
 
     f.actions do
-      f.action :submit, label: 'Upload', button_html: {'data-disable-with' => 'Uploading...'}
-      f.action :cancel, wrapper_html: {class: 'cancel'}
+      f.action :submit,
+               label: 'Upload',
+               button_html: {
+                 'data-disable-with' => 'Uploading. Please wait ...'
+               }
+      f.action :cancel,
+               wrapper_html: {class: 'cancel'}
     end
   end
 
   controller do
     def create
-      @data_upload = build_new_resource
+      @data_upload = ::Command::CsvDataUpload.new(permitted_params[:data_upload])
 
-      if @data_upload.save
+      if @data_upload.call
         redirect_to admin_data_upload_path(@data_upload.data_upload)
       else
         render :new
       end
-    end
-
-    def build_new_resource
-      DataUploadForm.new(permitted_params[:data_upload])
     end
   end
 end

@@ -6,17 +6,12 @@ module CSVImport
 
     def initialize(file)
       @file = file
-      @import_results = {
-        new_records: 0,
-        updated_records: 0,
-        not_changed_records: 0,
-        rows: 0
-      }
     end
 
     def call
       return false unless csv
 
+      reset_import_results
       import_results[:rows] = csv.count
 
       ActiveRecord::Base.transaction(requires_new: true) do
@@ -31,11 +26,28 @@ module CSVImport
       raise NotImplementedError
     end
 
+    def resource_klass
+      raise NotImplementedError
+    end
+
     def csv
       @csv ||= parse_csv
     end
 
+    def find_record_by(attr_name, row)
+      resource_klass.find_by(attr_name.to_sym => row[attr_name]&.strip)
+    end
+
     private
+
+    def reset_import_results
+      @import_results = {
+        new_records: 0,
+        updated_records: 0,
+        not_changed_records: 0,
+        rows: 0
+      }
+    end
 
     def parse_csv
       CSV.parse(

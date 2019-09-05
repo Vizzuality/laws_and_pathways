@@ -106,14 +106,16 @@ ActiveAdmin.register Legislation do
     column :title
     column :date_passed
     column :description
-    column(:frameworks) { |legislation| legislation.frameworks.map(&:name).join(';') }
-    column(:geography) { |legislation| legislation.geography.name }
-    column(:document_types) { |legislation| legislation.document_types.map(&:name).join(';') }
+    column(:geography) { |l| l.geography.name }
+    column(:geography_iso) { |l| l.geography.iso }
+    column :frameworks, &:frameworks_string
+    column :document_types, &:document_types_string
+    column :visibility_status
   end
 
   controller do
     def scoped_collection
-      super.includes(:geography, :frameworks, :document_types)
+      super.includes(:geography, :frameworks, :document_types, :created_by, :updated_by)
     end
   end
 end
