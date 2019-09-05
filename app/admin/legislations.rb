@@ -12,12 +12,8 @@ ActiveAdmin.register Legislation do
                 :geography_id, :law_id,
                 :natural_hazards_string, :keywords_string,
                 :created_by_id, :updated_by_id, :visibility_status,
-                events_attributes: [
-                  :id, :_destroy, :title, :event_type, :description, :url, :date
-                ],
-                documents_attributes: [
-                  :id, :_destroy, :name, :language, :external_url, :type, :file
-                ],
+                events_attributes: permit_params_for(:events),
+                documents_attributes: permit_params_for(:documents),
                 framework_ids: [], document_type_ids: []
 
   filter :title_contains, label: 'Title'

@@ -13,7 +13,8 @@ ActiveAdmin.register Geography do
                 :legislative_process, :geography_type, :indc_url,
                 :visibility_status,
                 :created_by_id, :updated_by_id,
-                political_group_ids: []
+                political_group_ids: [],
+                events_attributes: permit_params_for(:events)
 
   filter :federal
   filter :iso_equals, label: 'ISO'
@@ -45,6 +46,18 @@ ActiveAdmin.register Geography do
           row :created_by
         end
       end
+
+      tab :events do
+        panel 'Geography Events' do
+          table_for resource.events.decorate do
+            column :date
+            column :event_type
+            column :title
+            column :description
+            column 'URL', &:url_link
+          end
+        end
+      end
     end
   end
 
@@ -59,28 +72,7 @@ ActiveAdmin.register Geography do
     actions
   end
 
-  form html: {'data-controller' => 'check-modified'} do |f|
-    f.semantic_errors(*f.object.errors.keys)
-
-    f.inputs do
-      f.input :geography_type, as: :hidden, input_html: {value: 'country'}
-      f.input :name
-      f.input :iso
-      f.input :region, as: :select, collection: Geography::REGIONS
-      f.input :federal, input_html: {id: 'federal'}
-      f.input :federal_details,
-              wrapper_html: {data: {controller: 'dependent-input', depends_on: 'federal'}}
-      f.input :indc_url, as: :string
-      f.input :legislative_process, as: :trix
-      f.input :political_group_ids,
-              label: 'Political Groups',
-              as: :tags,
-              collection: PoliticalGroup.all
-      f.input :visibility_status, as: :select
-    end
-
-    f.actions
-  end
+  form partial: 'form'
 
   controller do
     def apply_filtering(chain)

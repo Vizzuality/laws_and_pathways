@@ -29,19 +29,19 @@
       </div>
 
       <div id="sides">
-        <%= f.inputs 'Litigation Sides' do %>
+        <%- f.inputs 'Litigation Sides' do %>
           <%= render 'sides_list', form: f %>
         <% end %>
       </div>
 
       <div id="events">
-        <%= f.inputs "List of litigation's events" do %>
+        <%- f.inputs "List of litigation's events" do %>
           <%= render 'admin/events/list', form: f %>
         <% end %>
       </div>
 
       <div id="documents">
-        <%= f.inputs 'List of related documents and links' do %>
+        <%- f.inputs 'List of related documents and links' do %>
           <%= render 'admin/documents/list', form: f %>
         <% end %>
       </div>
