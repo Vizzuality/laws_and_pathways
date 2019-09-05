@@ -6,7 +6,7 @@ describe 'CsvDataUpload (integration)' do
 
   let!(:countries) do
     [
-      create(:geography, iso: 'PL'),
+      create(:geography, iso: 'POL'),
       create(:geography, iso: 'GBR')
     ]
   end
