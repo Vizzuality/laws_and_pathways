@@ -28,7 +28,13 @@ class Geography < ApplicationRecord
 
   friendly_id :name, use: :slugged, routes: :default
 
-  TYPES = %w[country].freeze
+  EVENT_TYPES = %w[
+    election
+    government_change
+    international_agreement
+  ].freeze
+
+  GEOGRAPHY_TYPES = %w[country].freeze
 
   REGIONS = [
     'East Asia & Pacific',
@@ -40,11 +46,14 @@ class Geography < ApplicationRecord
     'Latin America & Caribbean'
   ].freeze
 
-  enum geography_type: array_to_enum_hash(TYPES)
+  enum geography_type: array_to_enum_hash(GEOGRAPHY_TYPES)
 
   tag_with :political_groups
 
   has_many :litigations
+  has_many :events, as: :eventable, dependent: :destroy
+
+  accepts_nested_attributes_for :events, allow_destroy: true, reject_if: :all_blank
 
   validates_uniqueness_of :slug, :iso
   validates_presence_of :name, :slug, :iso, :geography_type

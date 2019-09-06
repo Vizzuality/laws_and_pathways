@@ -1,0 +1,40 @@
+<%= semantic_form_for [:admin, resource], builder: ActiveAdmin::FormBuilder, html: {'data-controller' => 'check-modified'} do |f| %>
+  <%= f.semantic_errors(*f.object.errors.keys) %>
+
+  <div class="tabs" data-controller="tabs">
+    <ul class="nav nav-tabs" role="tablist">
+      <li><a href="#details">Details</a></li>
+      <li><a href="#events">Events</a></li>
+    </ul>
+
+    <%= hidden_field_tag :active_tab, params[:active_tab], 'data-target' => 'tabs.activeTab' %>
+
+    <div class="tab-content">
+      <div id="details">
+        <%= f.inputs do %>
+          <%= f.input :geography_type, as: :hidden, input_html: {value: 'country'} %>
+          <%= f.input :name %>
+          <%= f.input :iso %>
+          <%= f.input :region, as: :select, collection: Geography::REGIONS %>
+          <%= f.input :federal, input_html: {id: 'federal'} %>
+          <%= f.input :federal_details, wrapper_html: {data: {controller: 'dependent-input', depends_on: 'federal'}} %>
+          <%= f.input :indc_url, as: :string %>
+          <%= f.input :legislative_process, as: :trix %>
+          <%= f.input :political_group_ids, label: 'Political Groups', as: :tags, collection: PoliticalGroup.all %>
+          <%= f.input :visibility_status, as: :select %>
+        <% end %>
+      </div>
+
+      <div id="events">
+        <%= f.inputs 'List of Geography\'s events' do %>
+          <%= render 'admin/events/list', form: f %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <%= f.actions do %>
+    <%= f.action :submit %>
+    <%= f.action :cancel, :wrapper_html => { :class => 'cancel' } %>
+  <% end %>
+<% end %>

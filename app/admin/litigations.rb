@@ -11,15 +11,9 @@ ActiveAdmin.register Litigation do
   permit_params :title, :geography_id, :jurisdiction_id, :document_type,
                 :visibility_status, :summary, :core_objective,
                 :created_by_id, :updated_by_id, :keywords_string,
-                litigation_sides_attributes: [
-                  :id, :_destroy, :name, :side_type, :party_type, :connected_with
-                ],
-                documents_attributes: [
-                  :id, :_destroy, :name, :language, :external_url, :type, :file
-                ],
-                events_attributes: [
-                  :id, :_destroy, :title, :event_type, :description, :url, :date
-                ],
+                litigation_sides_attributes: permit_params_for(:litigation_sides),
+                documents_attributes: permit_params_for(:documents),
+                events_attributes: permit_params_for(:events),
                 legislation_ids: [],
                 external_legislation_ids: []
 
