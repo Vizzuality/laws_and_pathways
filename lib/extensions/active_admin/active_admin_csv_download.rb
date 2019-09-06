@@ -15,16 +15,14 @@ module ActiveAdminCsvDownload
     sidebar 'Export / Import', if: -> { collection.any? }, only: :index do
       ul do
         li do
-          a "Download #{resource_name} CSV",
-            href: url_for(
-              params: request.query_parameters.except(:commit, :format),
-              format: 'csv'
-            )
+          link_to "Download #{resource_name} CSV",
+                  params: request.query_parameters.except(:commit, :format),
+                  format: 'csv'
         end
 
         if export_link_for_documents
           li do
-            a 'Download related Documents CSV', href: admin_documents_path(
+            link_to 'Download related Documents CSV', admin_documents_path(
               format: 'csv',
               q: {
                 documentable_type_eq: resource_name.singularize,
@@ -36,7 +34,7 @@ module ActiveAdminCsvDownload
 
         if export_link_for_events
           li do
-            a 'Download related Events CSV', href: admin_events_path(
+            link_to 'Download related Events CSV', admin_events_path(
               format: 'csv',
               q: {
                 eventable_type_eq: resource_name.singularize,
@@ -47,10 +45,10 @@ module ActiveAdminCsvDownload
         end
 
         li do
-          link_to "<strong>Upload</strong> #{resource_name}".html_safe,
-                  new_admin_data_upload_path(
-                    data_upload: {uploader: resource_name}
-                  )
+          upload_label = "<strong>Upload</strong> #{resource_name}".html_safe
+          upload_path = new_admin_data_upload_path(data_upload: {uploader: resource_name})
+
+          link_to upload_label, upload_path
         end
       end
       hr
