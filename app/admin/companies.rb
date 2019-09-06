@@ -65,15 +65,9 @@ ActiveAdmin.register Company do
                 end
 
                 table_for a.questions do
-                  column :level do |q|
-                    q['level']
-                  end
-                  column :answer do |q|
-                    q['answer']
-                  end
-                  column :question do |q|
-                    q['question']
-                  end
+                  column(:level) { |q| q['level'] }
+                  column(:answer) { |q| q['answer'] }
+                  column(:question) { |q| q['question'] }
                 end
               end
             end
@@ -120,17 +114,14 @@ ActiveAdmin.register Company do
   end
 
   index do
-    column :name do |company|
-      link_to company.name, admin_company_path(company)
-    end
+    column(:name) { |company| link_to company.name, admin_company_path(company) }
     column :isin, &:isin_as_tags
-    column :size do |company|
-      company.size.humanize
-    end
+    column(:size) { |company| company.size.humanize }
     column :level, &:mq_status_description_short
     column :geography
     column :headquarters_geography
     tag_column :visibility_status
+
     actions
   end
 
