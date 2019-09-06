@@ -1,0 +1,8 @@
+"Id","Name","ISIN","Sector id","Sector","Size","Geography iso","Geography","Headquarters geography iso","Headquarters geography","CA100","Visibility status"
+"69","Consol Energy","US20854P1093","2","Coal Mining","small","USA","United States of America","USA","United States of America","true","published"
+"74","Daio Paper","JP3440400004,23783837783","14","Paper","small","JPN","Japan","JPN","Japan","false","draft"
+"81","Domtar","US2575592033","14","Paper","small","USA","United States of America","USA","United States of America","false","draft"
+"85","Eagle Materials","US26969P1084","3","Cement","small","USA","United States of America","USA","United States of America","false","draft"
+"126","Hokuetsu","JP3841800000","14","Paper","small","JPN","Japan","JPN","Japan","false","draft"
+"140","Jetblue","US4771431016","5","Airlines","small","USA","United States of America","USA","United States of America","false","published"
+"166","Nippon Light Metal","JP3700200003","8","Aluminium","small","JPN","Japan","JPN","Japan","true","draft"

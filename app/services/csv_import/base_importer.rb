@@ -82,7 +82,8 @@ module CSVImport
     rescue ActiveRecord::RecordInvalid,
            ActiveRecord::RecordNotFound,
            ArgumentError => e
-      msg = "Error importing row #{row_index}: #{e}"
+      msg = "[BaseImporter] Error on row #{row_index}: '#{e.message}' for data: #{e.record.attributes}"
+      warn msg
       errors.add(:base, :invalid_row, message: msg, row: row_index)
     end
 

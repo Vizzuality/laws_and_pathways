@@ -134,6 +134,21 @@ ActiveAdmin.register Company do
     actions
   end
 
+  csv do
+    column :id
+    column :name
+    column :isin
+    column('Sector ID') { |c| c.sector.id }
+    column(:sector) { |c| c.sector.name }
+    column :size
+    column(:geography_iso) { |c| c.geography.iso }
+    column(:geography) { |c| c.geography.name }
+    column(:headquarters_geography_iso) { |c| c.headquarters_geography.iso }
+    column(:headquarters_geography) { |c| c.headquarters_geography.name }
+    column :ca100
+    column :visibility_status
+  end
+
   form html: {'data-controller' => 'check-modified'} do |f|
     f.semantic_errors(*f.object.errors.keys)
 
