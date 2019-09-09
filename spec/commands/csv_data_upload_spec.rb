@@ -5,6 +5,7 @@ describe 'CsvDataUpload (integration)' do
   let(:litigations_csv) { fixture_file('litigations.csv') }
   let(:companies_csv) { fixture_file('companies.csv') }
   let(:targets_csv) { fixture_file('targets.csv') }
+  let(:cp_benchmarks_simple_csv) { fixture_file('cp_benchmarks_simple.csv') }
 
   let!(:countries) do
     [
@@ -78,6 +79,20 @@ describe 'CsvDataUpload (integration)' do
       expect(command.call).to eq(true)
       expect(command.details.symbolize_keys).to eq(expected_details)
     end.to change(uploaded_resource_klass, :count).by(expected_details[:new_records])
+  end
+
+  it 'imports CSV files with CP Benchmarks data' do
+    command = Command::CsvDataUpload.new(uploader: 'CPBenchmarks', file: cp_benchmarks_simple_csv)
+
+    # first import - 2 new records should be created
+    expect(command.call).to eq(true)
+    expect(command.details.symbolize_keys)
+      .to eq(new_records: 6, not_changed_records: 0, rows: 6, updated_records: 0)
+
+    # 2nd subsequent import - nothing should change
+    expect(command.call).to eq(true)
+    expect(command.details.symbolize_keys)
+      .to eq(new_records: 0, not_changed_records: 6, rows: 6, updated_records: 0)
   end
 
   def fixture_file(filename)
