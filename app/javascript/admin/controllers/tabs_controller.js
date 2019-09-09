@@ -22,7 +22,8 @@ export default class extends Controller {
   }
 
   _selectTab(tabName) {
-    window.location.hash = tabName;
+    history.replaceState({}, '', tabName);
+
     if (this.hasActiveTabTarget) {
       this.activeTabTarget.value = tabName;
     }
