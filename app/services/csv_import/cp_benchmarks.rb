@@ -4,11 +4,7 @@ module CSVImport
 
     def import
       import_each_csv_row(csv) do |row|
-        sector = find_or_create_sector(row)
-        benchmark = CP::Benchmark.find_or_initialize_by(
-          sector: sector,
-          date: parse_date(row[:date])
-        )
+        benchmark = find_benchmark(row)
         benchmarks = benchmark.benchmarks || []
         benchmarks << benchmark_attributes(row)
         benchmark.update!(
@@ -18,6 +14,17 @@ module CSVImport
     end
 
     private
+
+    def find_benchmark(row)
+      return CP::Benchmark.find(row[:id]) if row[:id].present?
+
+      sector = find_or_create_sector(row)
+
+      CP::Benchmark.find_or_initialize_by(
+        sector: sector,
+        date: parse_date(row[:date])
+      )
+    end
 
     def find_or_create_sector(row)
       return unless row[:sector].present?

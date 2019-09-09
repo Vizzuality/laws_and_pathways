@@ -11,7 +11,7 @@ module CSVExport
     def call
       year_columns = benchmarks.flat_map(&:benchmarks_all_years).uniq.sort
 
-      headers = %w(Sector Date Name).concat(year_columns)
+      headers = %w(Id Sector Date Name).concat(year_columns)
 
       CSV.generate do |csv|
         csv << headers
@@ -19,6 +19,7 @@ module CSVExport
         benchmarks.each do |cp_benchmark|
           cp_benchmark.benchmarks.each do |benchmark|
             csv << [
+              cp_benchmark.id,
               cp_benchmark.sector.name,
               cp_benchmark.date.strftime('%m-%Y'),
               benchmark['name'],
