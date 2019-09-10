@@ -335,5 +335,8 @@ Rails.configuration.to_prepare do
   ActiveAdmin::ResourceDSL.send :include, ActiveAdminPublishable::Scopes
   ActiveAdmin::ResourceDSL.send :include, ActiveAdminCsvDownload
 
+  # extensions for 'show' context
+  ActiveAdmin::Views::Pages::Show.send :include, ActiveAdminAddressableTabs
+
   ActiveAdmin::Views::Header.send :prepend, ActiveAdminCustomHeader
 end

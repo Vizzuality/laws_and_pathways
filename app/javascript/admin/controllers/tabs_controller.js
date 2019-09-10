@@ -8,17 +8,24 @@ export default class extends Controller {
 
     $(this.element.querySelectorAll('.nav-tabs a')).on('click', (event) => {
       event.preventDefault();
-      this._changeActiveTabTo(event.target.hash);
+      this._selectTab(event.target.hash);
     });
 
-    const activeTab = this.activeTabTarget.value;
-    if (activeTab) {
-      $(this.element).find(`.nav-tabs a[href="${activeTab}"]`).click();
+    if (this.hasActiveTabTarget) {
+      const activeTab = this.activeTabTarget.value;
+      this._clickTab(activeTab)
     }
   }
 
-  _changeActiveTabTo(hash) {
-    window.location.hash = hash;
-    this.activeTabTarget.value = hash;
+  _clickTab(tabName) {
+    $(this.element).find(`.nav-tabs a[href="${tabName}"]`).click();
+  }
+
+  _selectTab(tabName) {
+    history.replaceState({}, '', tabName);
+
+    if (this.hasActiveTabTarget) {
+      this.activeTabTarget.value = tabName;
+    }
   }
 }

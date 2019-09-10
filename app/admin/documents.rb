@@ -29,7 +29,8 @@ ActiveAdmin.register Document do
 
   index do
     column 'Name', &:document_page_link
-    column 'Attached To', :documentable
+    column 'Attached To', :documentable_type
+    column 'Details', :documentable
     column :last_verified_on
     column :language
     actions
