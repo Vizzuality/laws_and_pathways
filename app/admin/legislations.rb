@@ -1,5 +1,5 @@
 ActiveAdmin.register Legislation do
-  config.batch_actions = false
+  config.batch_actions = true
   config.sort_order = 'date_passed_desc'
 
   menu parent: 'Laws', priority: 1
@@ -28,6 +28,7 @@ ActiveAdmin.register Legislation do
          collection: proc { array_to_select_collection(VisibilityStatus::VISIBILITY) }
 
   index do
+    selectable_column
     column :title, &:title_summary_link
     column :date_passed
     column 'Frameworks', &:frameworks_string
@@ -109,6 +110,13 @@ ActiveAdmin.register Legislation do
     column :visibility_status
   end
 
+  batch_action :destroy, confirm: 'Are you sure you want to delete selected items?'
+  batch_action :archive do |ids|
+    batch_action_collection.where(id: [ids]).update_all(visibility_status: 'archived')
+
+    redirect_to collection_path, alert: 'Selected Legislations have been archived.'
+  end
+
   controller do
     def scoped_collection
       super.includes(:geography, :frameworks, :document_types, :created_by, :updated_by)
@@ -117,7 +125,7 @@ ActiveAdmin.register Legislation do
     def destroy
       resource.object.discard
 
-      flash[:notice] = 'Legislation was deleted'
+      flash[:notice] = 'Legislation was successfully destroyed'
       redirect_to admin_legislations_path
     end
   end

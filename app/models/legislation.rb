@@ -42,8 +42,8 @@ class Legislation < ApplicationRecord
   belongs_to :geography
   has_many :documents, as: :documentable, dependent: :destroy
   has_many :events, as: :eventable, dependent: :destroy
-  has_and_belongs_to_many :targets
   has_and_belongs_to_many :litigations
+  has_and_belongs_to_many :targets
 
   with_options allow_destroy: true, reject_if: :all_blank do
     accepts_nested_attributes_for :documents
@@ -54,8 +54,8 @@ class Legislation < ApplicationRecord
   validates_uniqueness_of :slug
 
   after_discard do
-    events.delete_all
     documents.delete_all
+    events.delete_all
 
     self.litigations = []
     self.targets = []
