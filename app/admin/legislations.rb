@@ -6,7 +6,7 @@ ActiveAdmin.register Legislation do
 
   decorate_with LegislationDecorator
 
-  visibility_status_scopes
+  publishable_scopes
 
   permit_params :title, :date_passed, :description,
                 :geography_id, :law_id,
@@ -40,7 +40,7 @@ ActiveAdmin.register Legislation do
     actions
   end
 
-  visibility_status_sidebar only: :show
+  publishable_sidebar only: :show
 
   data_export_sidebar 'Legislations', documents: true, events: true
 

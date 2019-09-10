@@ -5,8 +5,8 @@ ActiveAdmin.register Target do
 
   decorate_with TargetDecorator
 
-  visibility_status_scopes
-  visibility_status_sidebar only: :show
+  publishable_scopes
+  publishable_sidebar only: :show
 
   permit_params :description, :sector_id, :geography_id, :single_year, :target_scope_id,
                 :year, :base_year_period, :ghg_target, :target_type,

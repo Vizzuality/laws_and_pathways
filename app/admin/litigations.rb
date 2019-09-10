@@ -5,8 +5,8 @@ ActiveAdmin.register Litigation do
 
   decorate_with LitigationDecorator
 
-  visibility_status_scopes
-  visibility_status_sidebar only: :show
+  publishable_scopes
+  publishable_sidebar only: :show
 
   permit_params :title, :geography_id, :jurisdiction_id, :document_type,
                 :visibility_status, :summary, :core_objective,
