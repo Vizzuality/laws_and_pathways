@@ -54,11 +54,13 @@ class Legislation < ApplicationRecord
   validates_uniqueness_of :slug
 
   after_discard do
-    documents.delete_all
-    events.delete_all
+    ActiveRecord::Base.transaction do
+      documents.delete_all
+      events.delete_all
 
-    self.litigations = []
-    self.targets = []
-    save!
+      self.litigations = []
+      self.targets = []
+      save!
+    end
   end
 end

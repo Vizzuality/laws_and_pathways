@@ -1,5 +1,4 @@
 ActiveAdmin.register Legislation do
-  config.batch_actions = true
   config.sort_order = 'date_passed_desc'
 
   menu parent: 'Laws', priority: 1
@@ -110,11 +109,18 @@ ActiveAdmin.register Legislation do
     column :visibility_status
   end
 
-  batch_action :destroy, confirm: 'Are you sure you want to delete selected items?'
-  batch_action :archive do |ids|
-    batch_action_collection.where(id: [ids]).update_all(visibility_status: 'archived')
+  batch_action :archive,
+               priority: 1,
+               if: proc { current_scope&.name != 'Archived' } do |ids|
+    archive_command = ::Command::Batch::Archive.new(batch_action_collection, ids)
 
-    redirect_to collection_path, alert: 'Selected Legislations have been archived.'
+    results = if archive_command.call
+                {notice: "Successfully archived #{ids.count} Legislations"}
+              else
+                {alert: 'Could not archive selected Legislations'}
+              end
+
+    redirect_to collection_path(scope: 'archived'), results
   end
 
   controller do
@@ -123,10 +129,15 @@ ActiveAdmin.register Legislation do
     end
 
     def destroy
-      resource.object.discard
+      destroy_command = ::Command::Destroy::Legislation.new(resource.object)
 
-      flash[:notice] = 'Legislation was successfully destroyed'
-      redirect_to admin_legislations_path
+      results = if destroy_command.call
+                  {notice: 'Successfully deleted selected Legislation'}
+                else
+                  {alert: 'Could not delete selected Legislations'}
+                end
+
+      redirect_to admin_legislations_path(scope: current_scope.name), results
     end
   end
 end

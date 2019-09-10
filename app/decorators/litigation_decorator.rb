@@ -32,7 +32,7 @@ class LitigationDecorator < Draper::Decorator
     return [] if model.legislations.empty?
 
     model.legislations.map do |legislation|
-      h.link_to legislation.title.truncate(120),
+      h.link_to legislation_link_label(legislation),
                 h.admin_legislation_path(legislation),
                 target: '_blank',
                 title: legislation.title
@@ -47,5 +47,12 @@ class LitigationDecorator < Draper::Decorator
                 h.admin_external_legislation_path(legislation),
                 target: '_blank'
     end
+  end
+
+  def legislation_link_label(legislation)
+    [
+      legislation.archived? ? '[ARCHIVED] ' : nil,
+      legislation.title.truncate(120)
+    ].join.strip
   end
 end
