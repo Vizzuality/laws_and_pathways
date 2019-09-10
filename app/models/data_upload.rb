@@ -16,6 +16,7 @@ class DataUpload < ApplicationRecord
   UPLOADERS = %w[
     Legislations
     Litigations
+    Companies
   ].freeze
 
   belongs_to :uploaded_by, class_name: 'AdminUser', optional: true
