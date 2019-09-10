@@ -6,8 +6,8 @@ ActiveAdmin.register Company do
   config.sort_order = 'name_asc'
   config.batch_actions = false
 
-  publishable_scopes
-  publishable_sidebar only: :show
+  visibility_status_scopes
+  visibility_status_sidebar only: :show
 
   permit_params :name, :isin, :sector_id, :geography_id, :headquarters_geography_id,
                 :ca100, :size, :visibility_status

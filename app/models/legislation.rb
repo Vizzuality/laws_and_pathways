@@ -19,8 +19,11 @@
 class Legislation < ApplicationRecord
   include UserTrackable
   include Taggable
-  include Publishable
+  include VisibilityStatus
+  include Discard::Model
   extend FriendlyId
+
+  default_scope -> { kept } # hide deleted records
 
   friendly_id :title, use: :slugged, routes: :default
 
@@ -49,4 +52,13 @@ class Legislation < ApplicationRecord
 
   validates_presence_of :title, :slug, :date_passed
   validates_uniqueness_of :slug
+
+  after_discard do
+    events.delete_all
+    documents.delete_all
+
+    self.litigations = []
+    self.targets = []
+    save!
+  end
 end

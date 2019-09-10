@@ -6,7 +6,7 @@ ActiveAdmin.register Legislation do
 
   decorate_with LegislationDecorator
 
-  publishable_scopes
+  visibility_status_scopes
 
   permit_params :title, :date_passed, :description,
                 :geography_id, :law_id,
@@ -25,7 +25,7 @@ ActiveAdmin.register Legislation do
          collection: proc { Framework.all }
   filter :visibility_status,
          as: :select,
-         collection: proc { array_to_select_collection(Publishable::VISIBILITY) }
+         collection: proc { array_to_select_collection(VisibilityStatus::VISIBILITY) }
 
   index do
     column :title, &:title_summary_link
@@ -40,7 +40,7 @@ ActiveAdmin.register Legislation do
     actions
   end
 
-  publishable_sidebar only: :show
+  visibility_status_sidebar only: :show
 
   data_export_sidebar 'Legislations', documents: true, events: true
 
@@ -112,6 +112,13 @@ ActiveAdmin.register Legislation do
   controller do
     def scoped_collection
       super.includes(:geography, :frameworks, :document_types, :created_by, :updated_by)
+    end
+
+    def destroy
+      resource.object.discard
+
+      flash[:notice] = 'Legislation was deleted'
+      redirect_to admin_legislations_path
     end
   end
 end

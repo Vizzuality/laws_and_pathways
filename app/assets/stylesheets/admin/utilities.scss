@@ -21,3 +21,18 @@ table.cell-centered {
     text-align: center;
   }
 }
+
+.table_tools {
+  .scopes {
+    display: flex;
+    justify-content: flex-end;
+
+    ul {
+      padding: 0;
+    }
+  }
+
+  .scope.selected {
+    border-radius: 5px;
+  }
+}

@@ -23,7 +23,7 @@
 class Geography < ApplicationRecord
   include UserTrackable
   include Taggable
-  include Publishable
+  include VisibilityStatus
   extend FriendlyId
 
   friendly_id :name, use: :slugged, routes: :default
