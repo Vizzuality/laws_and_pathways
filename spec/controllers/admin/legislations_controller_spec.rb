@@ -113,14 +113,14 @@ RSpec.describe Admin::LegislationsController, type: :controller do
   end
 
   describe 'DELETE destroy' do
-    context 'deleting single Legislation' do
+    context 'with valid params' do
       let!(:legislations_to_delete) { create(:legislation) }
 
       let(:id_to_delete) { legislations_to_delete.id }
 
       subject { delete :destroy, params: {id: legislations_to_delete.id} }
 
-      it 'soft deletes given Legislation' do
+      it 'soft deletes Legislation' do
         expect(legislations_to_delete.discarded_at).to be_nil
 
         # should disappear from default scope
@@ -135,8 +135,19 @@ RSpec.describe Admin::LegislationsController, type: :controller do
       end
     end
 
-    context 'deleting multiple Legislations' do
-      let!(:legislations_to_delete_1) { create(:legislation) }
+    context 'with invalid params' do
+      subject { post :batch_action, params: {batch_action: 'destroy', collection_selection: [9876]} }
+
+      it 'redirects to index & renders alert message' do
+        expect(subject).to redirect_to(admin_legislations_path)
+        expect(flash[:alert]).to match('Could not delete selected Legislations')
+      end
+    end
+  end
+
+  describe 'Batch Actions' do
+    context 'delete' do
+      let!(:legislations_to_delete_1) { create(:legislation) } # TODO: rename
       let!(:legislations_to_delete_2) { create(:legislation) }
       let!(:legislations_to_delete_3) { create(:legislation) }
       let!(:legislations_to_keep_1) { create(:legislation) }
@@ -156,7 +167,7 @@ RSpec.describe Admin::LegislationsController, type: :controller do
              }
       end
 
-      it 'soft deletes given Legislations collection' do
+      it 'soft deletes Legislations collection' do
         expect { subject }.to change { Legislation.count }.by(-3)
         expect(Legislation.find_by_id(ids_to_delete)).to be_nil
 
@@ -167,12 +178,37 @@ RSpec.describe Admin::LegislationsController, type: :controller do
       end
     end
 
-    context 'non existing records' do
-      subject { post :batch_action, params: {batch_action: 'destroy', collection_selection: [9876]} }
+    context 'archive' do
+      let!(:legislation_to_archive_1) { create(:legislation, visibility_status: 'draft') }
+      let!(:legislation_to_archive_2) { create(:legislation, visibility_status: 'draft') }
+      let!(:legislation_to_archive_3) { create(:legislation, visibility_status: 'draft') }
+      let!(:legislation_to_keep_1) { create(:legislation, visibility_status: 'draft') }
+      let!(:legislation_to_keep_2) { create(:legislation, visibility_status: 'draft') }
 
-      it 'redirects to index & renders alert message' do
-        expect(subject).to redirect_to(admin_legislations_path)
-        expect(flash[:alert]).to match('Could not delete selected Legislations')
+      let(:ids_to_archive) do
+        [legislation_to_archive_1.id,
+         legislation_to_archive_2.id,
+         legislation_to_archive_3.id]
+      end
+
+      subject do
+        post :batch_action,
+             params: {
+               batch_action: 'archive',
+               collection_selection: ids_to_archive
+             }
+      end
+
+      it 'archives Legislations collection' do
+        subject
+
+        expect(legislation_to_archive_1.reload.visibility_status).to eq('archived')
+        expect(legislation_to_archive_2.reload.visibility_status).to eq('archived')
+        expect(legislation_to_archive_3.reload.visibility_status).to eq('archived')
+        expect(legislation_to_keep_1.reload.visibility_status).to eq('draft')
+        expect(legislation_to_keep_2.reload.visibility_status).to eq('draft')
+
+        expect(flash[:notice]).to match('Successfully archived 3 Legislations')
       end
     end
   end
