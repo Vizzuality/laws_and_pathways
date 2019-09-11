@@ -23,7 +23,7 @@ FactoryBot.define do
     description { 'Test Legislation Description' }
     date_passed { 2.years.ago }
     sequence(:law_id)
-    visibility_status { Legislation::VISIBILITY.sample }
+    visibility_status { Legislation::VISIBILITY.first }
     discarded_at { nil }
 
     association :created_by, factory: :admin_user

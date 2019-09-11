@@ -147,16 +147,16 @@ RSpec.describe Admin::LegislationsController, type: :controller do
 
   describe 'Batch Actions' do
     context 'delete' do
-      let!(:legislations_to_delete_1) { create(:legislation) } # TODO: rename
-      let!(:legislations_to_delete_2) { create(:legislation) }
-      let!(:legislations_to_delete_3) { create(:legislation) }
-      let!(:legislations_to_keep_1) { create(:legislation) }
-      let!(:legislations_to_keep_2) { create(:legislation) }
+      let!(:legislation_to_delete_1) { create(:legislation) }
+      let!(:legislation_to_delete_2) { create(:legislation) }
+      let!(:legislation_to_delete_3) { create(:legislation) }
+      let!(:legislation_to_keep_1) { create(:legislation) }
+      let!(:legislation_to_keep_2) { create(:legislation) }
 
       let(:ids_to_delete) do
-        [legislations_to_delete_1.id,
-         legislations_to_delete_2.id,
-         legislations_to_delete_3.id]
+        [legislation_to_delete_1.id,
+         legislation_to_delete_2.id,
+         legislation_to_delete_3.id]
       end
 
       subject do
@@ -171,7 +171,7 @@ RSpec.describe Admin::LegislationsController, type: :controller do
         expect { subject }.to change { Legislation.count }.by(-3)
         expect(Legislation.find_by_id(ids_to_delete)).to be_nil
 
-        expect(legislations_to_delete_1.reload.discarded_at).to_not be_nil
+        expect(legislation_to_delete_1.reload.discarded_at).to_not be_nil
         expect(Legislation.with_discarded.discarded.find_by_id(ids_to_delete)).to_not be_nil
 
         expect(flash[:notice]).to match('Successfully deleted 3 Legislations')
