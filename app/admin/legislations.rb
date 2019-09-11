@@ -123,6 +123,18 @@ ActiveAdmin.register Legislation do
     redirect_to collection_path(scope: 'archived'), results
   end
 
+  batch_action :destroy do |ids|
+    delete_command = Command::Batch::Delete.new(batch_action_collection, ids)
+
+    results = if delete_command.call
+                {notice: "Successfully deleted #{ids.count} Legislations"}
+              else
+                {alert: 'Could not delete selected Legislations'}
+              end
+
+    redirect_to collection_path, results
+  end
+
   controller do
     def scoped_collection
       super.includes(:geography, :frameworks, :document_types, :created_by, :updated_by)

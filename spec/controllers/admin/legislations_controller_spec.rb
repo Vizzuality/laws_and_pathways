@@ -112,6 +112,71 @@ RSpec.describe Admin::LegislationsController, type: :controller do
     end
   end
 
+  describe 'DELETE destroy' do
+    context 'deleting single Legislation' do
+      let!(:legislations_to_delete) { create(:legislation) }
+
+      let(:id_to_delete) { legislations_to_delete.id }
+
+      subject { delete :destroy, params: {id: legislations_to_delete.id} }
+
+      it 'soft deletes given Legislation' do
+        expect(legislations_to_delete.discarded_at).to be_nil
+
+        # should disappear from default scope
+        expect { subject }.to change { Legislation.count }.by(-1)
+        expect(Legislation.find_by_id(id_to_delete)).to be_nil
+
+        # .. but still be in database
+        expect(legislations_to_delete.reload.discarded_at).to_not be_nil
+        expect(Legislation.with_discarded.discarded.find(id_to_delete)).to_not be_nil
+
+        expect(flash[:notice]).to match('Successfully deleted selected Legislation')
+      end
+    end
+
+    context 'deleting multiple Legislations' do
+      let!(:legislations_to_delete_1) { create(:legislation) }
+      let!(:legislations_to_delete_2) { create(:legislation) }
+      let!(:legislations_to_delete_3) { create(:legislation) }
+      let!(:legislations_to_keep_1) { create(:legislation) }
+      let!(:legislations_to_keep_2) { create(:legislation) }
+
+      let(:ids_to_delete) do
+        [legislations_to_delete_1.id,
+         legislations_to_delete_2.id,
+         legislations_to_delete_3.id]
+      end
+
+      subject do
+        post :batch_action,
+             params: {
+               batch_action: 'destroy',
+               collection_selection: ids_to_delete
+             }
+      end
+
+      it 'soft deletes given Legislations collection' do
+        expect { subject }.to change { Legislation.count }.by(-3)
+        expect(Legislation.find_by_id(ids_to_delete)).to be_nil
+
+        expect(legislations_to_delete_1.reload.discarded_at).to_not be_nil
+        expect(Legislation.with_discarded.discarded.find_by_id(ids_to_delete)).to_not be_nil
+
+        expect(flash[:notice]).to match('Successfully deleted 3 Legislations')
+      end
+    end
+
+    context 'non existing records' do
+      subject { post :batch_action, params: {batch_action: 'destroy', collection_selection: [9876]} }
+
+      it 'redirects to index & renders alert message' do
+        expect(subject).to redirect_to(admin_legislations_path)
+        expect(flash[:alert]).to match('Could not delete selected Legislations')
+      end
+    end
+  end
+
   def last_legislation_created
     Legislation.order(:created_at).last
   end

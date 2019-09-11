@@ -16,7 +16,7 @@
 
 FactoryBot.define do
   factory :admin_user do
-    sequence(:email) { |n| "admin#{n}@example.com" }
+    sequence(:email) { |n| "admin#{n}#{rand(99_999)}@example.com" }
     first_name { 'Bobby' }
     last_name { 'Example' }
     password { 'secret' }
