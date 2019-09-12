@@ -4,7 +4,9 @@ RSpec.describe Admin::LegislationsController, type: :controller do
   let(:admin) { create(:admin_user) }
   let(:geography) { create(:geography) }
 
-  let!(:legislation) { create(:legislation) }
+  let!(:legislation) { create(:legislation, visibility_status: 'published') }
+  let!(:legislation_archived) { create(:legislation, visibility_status: 'archived') }
+  let!(:legislation_discarded) { create(:legislation, discarded_at: 10.days.ago) }
 
   before { sign_in admin }
 
@@ -12,6 +14,16 @@ RSpec.describe Admin::LegislationsController, type: :controller do
     subject { get :index }
 
     it { is_expected.to be_successful }
+  end
+
+  describe 'GET index (with .json format)' do
+    it 'returns only none discarded and none archived records' do
+      get :index, format: 'json'
+
+      expect(
+        JSON.parse(response.body).map { |l| [l['id'], l['visibility_status']] }
+      ).to eq([[legislation.id, 'published']])
+    end
   end
 
   describe 'GET show' do

@@ -1,7 +1,7 @@
 module ActiveAdminVisibilityStatus
   def publishable_scopes
     with_options group: :publishable_status do
-      scope 'All', :all, default: true
+      scope 'All', :not_archived, default: true
       scope 'Draft', :draft
       scope 'Pending', :pending
       scope 'Published', :published
