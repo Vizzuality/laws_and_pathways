@@ -10,6 +10,7 @@
 #  date           :date             not null
 #  url            :text
 #  description    :text
+#  discarded_at   :datetime
 #
 
 FactoryBot.define do

@@ -16,13 +16,14 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'activeadmin'
 gem 'activeadmin_addons'
-gem "devise", ">= 4.7.1"
+gem 'devise', '>= 4.7.1'
 gem 'draper'
 
 gem 'aws-sdk-rails'
 gem 'aws-sdk-s3'
 gem 'google-cloud-storage', require: false
 
+gem 'discard'
 gem 'friendly_id'
 gem 'language_list'
 

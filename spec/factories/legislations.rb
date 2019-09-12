@@ -14,6 +14,7 @@
 #  visibility_status :string           default("draft")
 #  created_by_id     :bigint
 #  updated_by_id     :bigint
+#  discarded_at      :datetime
 #
 
 FactoryBot.define do
@@ -22,7 +23,8 @@ FactoryBot.define do
     description { 'Test Legislation Description' }
     date_passed { 2.years.ago }
     sequence(:law_id)
-    visibility_status { Legislation::VISIBILITY.sample }
+    visibility_status { Legislation::VISIBILITY.first }
+    discarded_at { nil }
 
     association :created_by, factory: :admin_user
     association :updated_by, factory: :admin_user

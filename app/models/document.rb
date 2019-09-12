@@ -12,17 +12,23 @@
 #  documentable_id   :bigint
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  discarded_at      :datetime
 #
 
 class Document < ApplicationRecord
+  include Discardable
+
   self.inheritance_column = nil
 
   TYPES = %w[uploaded external].freeze
+
   enum type: array_to_enum_hash(TYPES)
 
   belongs_to :documentable, polymorphic: true
 
   has_one_attached :file
+
+  scope :from_documentable, ->(documentable) { where(documentable_type: documentable) }
 
   before_create :set_last_verified_on
 
@@ -30,8 +36,6 @@ class Document < ApplicationRecord
   validates :file, attached: true, if: :uploaded?
 
   validates_presence_of :name, :type
-
-  scope :from_documentable, ->(documentable) { where(documentable_type: documentable) }
 
   def url
     return file_url if uploaded?

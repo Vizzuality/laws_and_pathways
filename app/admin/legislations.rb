@@ -1,5 +1,4 @@
 ActiveAdmin.register Legislation do
-  config.batch_actions = false
   config.sort_order = 'date_passed_desc'
 
   menu parent: 'Laws', priority: 1
@@ -25,9 +24,10 @@ ActiveAdmin.register Legislation do
          collection: proc { Framework.all }
   filter :visibility_status,
          as: :select,
-         collection: proc { array_to_select_collection(Publishable::VISIBILITY) }
+         collection: proc { array_to_select_collection(VisibilityStatus::VISIBILITY) }
 
   index do
+    selectable_column
     column :title, &:title_summary_link
     column :date_passed
     column 'Frameworks', &:frameworks_string
@@ -109,9 +109,47 @@ ActiveAdmin.register Legislation do
     column :visibility_status
   end
 
+  batch_action :archive,
+               priority: 1,
+               if: proc { current_scope&.name != 'Archived' } do |ids|
+    archive_command = ::Command::Batch::Archive.new(batch_action_collection, ids)
+
+    results = if archive_command.call
+                {notice: "Successfully archived #{ids.count} Legislations"}
+              else
+                {alert: 'Could not archive selected Legislations'}
+              end
+
+    redirect_to collection_path(scope: 'archived'), results
+  end
+
+  batch_action :destroy do |ids|
+    delete_command = Command::Batch::Delete.new(batch_action_collection, ids)
+
+    results = if delete_command.call
+                {notice: "Successfully deleted #{ids.count} Legislations"}
+              else
+                {alert: 'Could not delete selected Legislations'}
+              end
+
+    redirect_to collection_path, results
+  end
+
   controller do
     def scoped_collection
       super.includes(:geography, :frameworks, :document_types, :created_by, :updated_by)
+    end
+
+    def destroy
+      destroy_command = ::Command::Destroy::Legislation.new(resource.object)
+
+      results = if destroy_command.call
+                  {notice: 'Successfully deleted selected Legislation'}
+                else
+                  {alert: 'Could not delete selected Legislations'}
+                end
+
+      redirect_to admin_legislations_path(scope: current_scope.name), results
     end
   end
 end

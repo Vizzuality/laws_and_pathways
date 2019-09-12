@@ -14,6 +14,7 @@
 #  visibility_status :string           default("draft")
 #  created_by_id     :bigint
 #  updated_by_id     :bigint
+#  discarded_at      :datetime
 #
 
 require 'rails_helper'
@@ -40,6 +41,6 @@ RSpec.describe Legislation, type: :model do
 
   it 'should be invalid if visibility_status is nil' do
     subject.visibility_status = nil
-    expect(subject).to have(1).errors_on(:visibility_status)
+    expect(subject).to have(2).errors_on(:visibility_status)
   end
 end

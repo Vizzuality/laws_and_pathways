@@ -332,7 +332,7 @@ end
 Rails.configuration.to_prepare do
   ActiveAdmin::ResourceDSL.send :include, SelectHelper
   ActiveAdmin::ResourceDSL.send :include, ResourceAttributes
-  ActiveAdmin::ResourceDSL.send :include, ActiveAdminPublishable::Scopes
+  ActiveAdmin::ResourceDSL.send :include, ActiveAdminVisibilityStatus
   ActiveAdmin::ResourceDSL.send :include, ActiveAdminCsvDownload
 
   # extensions for 'show' context

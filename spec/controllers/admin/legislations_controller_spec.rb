@@ -4,7 +4,9 @@ RSpec.describe Admin::LegislationsController, type: :controller do
   let(:admin) { create(:admin_user) }
   let(:geography) { create(:geography) }
 
-  let!(:legislation) { create(:legislation) }
+  let!(:legislation) { create(:legislation, visibility_status: 'published') }
+  let!(:legislation_archived) { create(:legislation, visibility_status: 'archived') }
+  let!(:legislation_discarded) { create(:legislation, discarded_at: 10.days.ago) }
 
   before { sign_in admin }
 
@@ -12,6 +14,16 @@ RSpec.describe Admin::LegislationsController, type: :controller do
     subject { get :index }
 
     it { is_expected.to be_successful }
+  end
+
+  describe 'GET index (with .json format)' do
+    it 'returns only none discarded and none archived records' do
+      get :index, format: 'json'
+
+      expect(
+        JSON.parse(response.body).map { |l| [l['id'], l['visibility_status']] }
+      ).to eq([[legislation.id, 'published']])
+    end
   end
 
   describe 'GET show' do
@@ -108,6 +120,105 @@ RSpec.describe Admin::LegislationsController, type: :controller do
 
       it 'invalid_attributes do not create a Litigation' do
         expect { subject }.not_to change(Legislation, :count)
+      end
+    end
+  end
+
+  describe 'DELETE destroy' do
+    context 'with valid params' do
+      let!(:legislation_to_delete) { create(:legislation, discarded_at: nil) }
+      let!(:document) { create(:document, documentable: legislation_to_delete) }
+      let!(:event) { create(:legislation_event, eventable: legislation_to_delete) }
+
+      let(:id_to_delete) { legislation_to_delete.id }
+
+      subject { delete :destroy, params: {id: legislation_to_delete.id} }
+
+      it 'discards (soft-deletes) Legislation' do
+        # should disappear from default scope
+        expect { subject }.to change { Legislation.count }.by(-1)
+        expect(Legislation.find_by_id(id_to_delete)).to be_nil
+        expect(Event.find_by_id(event.id)).to be_nil
+        expect(Document.find_by_id(document.id)).to be_nil
+
+        # .. but still be in database
+        expect(legislation_to_delete.reload.discarded_at).to_not be_nil
+        expect(Legislation.all_discarded.find(id_to_delete)).to_not be_nil
+        expect(Event.all_discarded.find(event.id)).to_not be_nil
+        expect(Document.all_discarded.find(document.id)).to_not be_nil
+
+        expect(flash[:notice]).to match('Successfully deleted selected Legislation')
+      end
+    end
+
+    context 'with invalid params' do
+      subject { post :batch_action, params: {batch_action: 'destroy', collection_selection: [9876]} }
+
+      it 'redirects to index & renders alert message' do
+        expect(subject).to redirect_to(admin_legislations_path)
+        expect(flash[:alert]).to match('Could not delete selected Legislations')
+      end
+    end
+  end
+
+  describe 'Batch Actions' do
+    context 'delete' do
+      let!(:legislation_to_delete_1) { create(:legislation) }
+      let!(:legislation_to_delete_2) { create(:legislation) }
+      let!(:legislation_to_delete_3) { create(:legislation) }
+      let!(:legislation_to_keep_1) { create(:legislation) }
+      let!(:legislation_to_keep_2) { create(:legislation) }
+
+      let(:ids_to_delete) do
+        [legislation_to_delete_1.id,
+         legislation_to_delete_2.id,
+         legislation_to_delete_3.id]
+      end
+
+      subject do
+        post :batch_action,
+             params: {
+               batch_action: 'destroy',
+               collection_selection: ids_to_delete
+             }
+      end
+
+      it 'soft deletes Legislations collection' do
+        expect { subject }.to change { Legislation.count }.by(-3)
+        expect(Legislation.find_by_id(ids_to_delete)).to be_nil
+
+        expect(legislation_to_delete_1.reload.discarded_at).to_not be_nil
+        expect(Legislation.all_discarded.find_by_id(ids_to_delete)).to_not be_nil
+
+        expect(flash[:notice]).to match('Successfully deleted 3 Legislations')
+      end
+    end
+
+    context 'archive' do
+      let!(:legislation_to_archive_1) { create(:legislation, visibility_status: 'draft') }
+      let!(:legislation_to_archive_2) { create(:legislation, visibility_status: 'draft') }
+      let!(:legislation_to_keep_1) { create(:legislation, visibility_status: 'draft') }
+      let!(:legislation_to_keep_2) { create(:legislation, visibility_status: 'draft') }
+
+      let(:ids_to_archive) { [legislation_to_archive_1.id, legislation_to_archive_2.id] }
+
+      subject do
+        post :batch_action,
+             params: {
+               batch_action: 'archive',
+               collection_selection: ids_to_archive
+             }
+      end
+
+      it 'archives Legislations collection' do
+        subject
+
+        expect(legislation_to_archive_1.reload.visibility_status).to eq('archived')
+        expect(legislation_to_archive_2.reload.visibility_status).to eq('archived')
+        expect(legislation_to_keep_1.reload.visibility_status).to eq('draft')
+        expect(legislation_to_keep_2.reload.visibility_status).to eq('draft')
+
+        expect(flash[:notice]).to match('Successfully archived 2 Legislations')
       end
     end
   end

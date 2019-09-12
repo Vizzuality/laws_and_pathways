@@ -10,9 +10,12 @@
 #  date           :date             not null
 #  url            :text
 #  description    :text
+#  discarded_at   :datetime
 #
 
 class Event < ApplicationRecord
+  include Discardable
+
   belongs_to :eventable, polymorphic: true
 
   validates_presence_of :title, :date
