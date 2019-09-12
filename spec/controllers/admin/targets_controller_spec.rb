@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Admin::TargetsController, type: :controller do
   let(:admin) { create(:admin_user) }
-  let!(:target) { create(:target) }
+  let!(:target) { create(:target, year: 2030) }
+  let!(:target2) { create(:target, year: 2040) }
+  let!(:target3) { create(:target, year: 2050) }
   let(:sector) { create(:sector) }
   let(:geography) { create(:geography) }
   let(:target_scope) { create(:target_scope) }
@@ -24,6 +26,23 @@ RSpec.describe Admin::TargetsController, type: :controller do
     subject { get :index }
 
     it { is_expected.to be_successful }
+  end
+
+  describe 'GET index with .csv format' do
+    before :each do
+      get :index, format: 'csv'
+    end
+
+    it('returns CSV file') do
+      expect(response.header['Content-Type']).to include('text/csv')
+    end
+
+    it('returns all targets') do
+      csv = response_as_csv
+
+      expect(csv.by_col[0].sort).to eq([target.id, target2.id, target3.id].map(&:to_s))
+      expect(csv.by_col[4].sort).to eq(%w[2030 2040 2050])
+    end
   end
 
   describe 'GET show' do
@@ -74,5 +93,9 @@ RSpec.describe Admin::TargetsController, type: :controller do
         expect { subject }.not_to change(Target, :count)
       end
     end
+  end
+
+  def response_as_csv
+    CSV.parse(response.body, headers: true)
   end
 end
