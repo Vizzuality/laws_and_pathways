@@ -1,6 +1,4 @@
 ActiveAdmin.register Target do
-  config.batch_actions = false
-
   menu parent: 'Laws', priority: 3
 
   decorate_with TargetDecorator
@@ -24,7 +22,9 @@ ActiveAdmin.register Target do
   data_export_sidebar 'Targets'
 
   index do
+    selectable_column
     id_column
+    column :description
     column :geography
     column :sector
     column :target_scope

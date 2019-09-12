@@ -52,6 +52,8 @@ fieldset.actions .cancel a {
 
 // Status
 .status_tag {
+  &.no { background: lightgrey; }
+  &.yes { background: #80ac84; }
   &.draft { background: $draft-color; }
   &.pending { background: $pending-color; }
   &.published { background: $published-color; }
