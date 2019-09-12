@@ -6,7 +6,6 @@ module CSVImport
       import_each_csv_row(csv) do |row|
         target = prepare_target(row)
 
-        # puts target_attributes(row)
         target.assign_attributes(target_attributes(row))
 
         was_new_record = target.new_record?
