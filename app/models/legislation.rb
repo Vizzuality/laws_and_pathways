@@ -21,10 +21,8 @@ class Legislation < ApplicationRecord
   include UserTrackable
   include Taggable
   include VisibilityStatus
-  include Discard::Model
+  include Discardable
   extend FriendlyId
-
-  default_scope -> { kept } # hide deleted records
 
   friendly_id :title, use: :slugged, routes: :default
 

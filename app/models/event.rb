@@ -13,11 +13,9 @@
 #
 
 class Event < ApplicationRecord
-  include Discard::Model
+  include Discardable
 
   belongs_to :eventable, polymorphic: true
-
-  default_scope -> { kept } # hide deleted records
 
   validates_presence_of :title, :date
   validates :url, url: true

@@ -143,9 +143,9 @@ RSpec.describe Admin::LegislationsController, type: :controller do
 
         # .. but still be in database
         expect(legislation_to_delete.reload.discarded_at).to_not be_nil
-        expect(Legislation.with_discarded.discarded.find(id_to_delete)).to_not be_nil
-        expect(Event.with_discarded.discarded.find(event.id)).to_not be_nil
-        expect(Document.with_discarded.discarded.find(document.id)).to_not be_nil
+        expect(Legislation.all_discarded.find(id_to_delete)).to_not be_nil
+        expect(Event.all_discarded.find(event.id)).to_not be_nil
+        expect(Document.all_discarded.find(document.id)).to_not be_nil
 
         expect(flash[:notice]).to match('Successfully deleted selected Legislation')
       end
@@ -188,7 +188,7 @@ RSpec.describe Admin::LegislationsController, type: :controller do
         expect(Legislation.find_by_id(ids_to_delete)).to be_nil
 
         expect(legislation_to_delete_1.reload.discarded_at).to_not be_nil
-        expect(Legislation.with_discarded.discarded.find_by_id(ids_to_delete)).to_not be_nil
+        expect(Legislation.all_discarded.find_by_id(ids_to_delete)).to_not be_nil
 
         expect(flash[:notice]).to match('Successfully deleted 3 Legislations')
       end

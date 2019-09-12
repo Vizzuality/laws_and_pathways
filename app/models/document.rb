@@ -15,7 +15,7 @@
 #
 
 class Document < ApplicationRecord
-  include Discard::Model
+  include Discardable
 
   self.inheritance_column = nil
 
@@ -27,7 +27,6 @@ class Document < ApplicationRecord
 
   has_one_attached :file
 
-  default_scope -> { kept } # hide deleted records
   scope :from_documentable, ->(documentable) { where(documentable_type: documentable) }
 
   before_create :set_last_verified_on
