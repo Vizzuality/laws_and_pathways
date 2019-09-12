@@ -114,22 +114,26 @@ RSpec.describe Admin::LegislationsController, type: :controller do
 
   describe 'DELETE destroy' do
     context 'with valid params' do
-      let!(:legislations_to_delete) { create(:legislation) }
+      let!(:legislation_to_delete) { create(:legislation, discarded_at: nil) }
+      let!(:document) { create(:document, documentable: legislation_to_delete) }
+      let!(:event) { create(:legislation_event, eventable: legislation_to_delete) }
 
-      let(:id_to_delete) { legislations_to_delete.id }
+      let(:id_to_delete) { legislation_to_delete.id }
 
-      subject { delete :destroy, params: {id: legislations_to_delete.id} }
+      subject { delete :destroy, params: {id: legislation_to_delete.id} }
 
-      it 'soft deletes Legislation' do
-        expect(legislations_to_delete.discarded_at).to be_nil
-
+      it 'discards (soft-deletes) Legislation' do
         # should disappear from default scope
         expect { subject }.to change { Legislation.count }.by(-1)
         expect(Legislation.find_by_id(id_to_delete)).to be_nil
+        expect(Event.find_by_id(event.id)).to be_nil
+        expect(Document.find_by_id(document.id)).to be_nil
 
         # .. but still be in database
-        expect(legislations_to_delete.reload.discarded_at).to_not be_nil
+        expect(legislation_to_delete.reload.discarded_at).to_not be_nil
         expect(Legislation.with_discarded.discarded.find(id_to_delete)).to_not be_nil
+        expect(Event.with_discarded.discarded.find(event.id)).to_not be_nil
+        expect(Document.with_discarded.discarded.find(document.id)).to_not be_nil
 
         expect(flash[:notice]).to match('Successfully deleted selected Legislation')
       end
