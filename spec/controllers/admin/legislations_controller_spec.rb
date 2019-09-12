@@ -197,15 +197,10 @@ RSpec.describe Admin::LegislationsController, type: :controller do
     context 'archive' do
       let!(:legislation_to_archive_1) { create(:legislation, visibility_status: 'draft') }
       let!(:legislation_to_archive_2) { create(:legislation, visibility_status: 'draft') }
-      let!(:legislation_to_archive_3) { create(:legislation, visibility_status: 'draft') }
       let!(:legislation_to_keep_1) { create(:legislation, visibility_status: 'draft') }
       let!(:legislation_to_keep_2) { create(:legislation, visibility_status: 'draft') }
 
-      let(:ids_to_archive) do
-        [legislation_to_archive_1.id,
-         legislation_to_archive_2.id,
-         legislation_to_archive_3.id]
-      end
+      let(:ids_to_archive) { [legislation_to_archive_1.id, legislation_to_archive_2.id] }
 
       subject do
         post :batch_action,
@@ -220,11 +215,10 @@ RSpec.describe Admin::LegislationsController, type: :controller do
 
         expect(legislation_to_archive_1.reload.visibility_status).to eq('archived')
         expect(legislation_to_archive_2.reload.visibility_status).to eq('archived')
-        expect(legislation_to_archive_3.reload.visibility_status).to eq('archived')
         expect(legislation_to_keep_1.reload.visibility_status).to eq('draft')
         expect(legislation_to_keep_2.reload.visibility_status).to eq('draft')
 
-        expect(flash[:notice]).to match('Successfully archived 3 Legislations')
+        expect(flash[:notice]).to match('Successfully archived 2 Legislations')
       end
     end
   end
