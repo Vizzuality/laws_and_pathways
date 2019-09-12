@@ -37,6 +37,7 @@ module CSVImport
     #
     def company_attributes(row)
       {
+        id: row[:id],
         name: row[:name],
         isin: row[:isin],
         sector: find_or_create_sector(row),

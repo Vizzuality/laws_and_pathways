@@ -79,10 +79,12 @@ module CSVImport
 
     def with_logging(row_index)
       yield
-    rescue ActiveRecord::RecordInvalid,
-           ActiveRecord::RecordNotFound,
-           ArgumentError => e
-      msg = "[BaseImporter] Error on row #{row_index}: '#{e.message}' for data: #{e.record.attributes}"
+    rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
+      msg = "[BaseImporter] AR Error on row #{row_index}: '#{e.message}' for data: #{e&.record&.attributes}"
+      warn msg
+      errors.add(:base, :invalid_row, message: msg, row: row_index)
+    rescue ArgumentError => e
+      msg = "[BaseImporter] Argument Error on row #{row_index}: '#{e.message}'"
       warn msg
       errors.add(:base, :invalid_row, message: msg, row: row_index)
     end

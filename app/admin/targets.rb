@@ -23,8 +23,7 @@ ActiveAdmin.register Target do
 
   index do
     selectable_column
-    id_column
-    column :description
+    column(:description) { |target| link_to target.description, admin_target_path(target) }
     column :geography
     column :sector
     column :target_scope
@@ -83,5 +82,20 @@ ActiveAdmin.register Target do
     end
 
     f.actions
+  end
+
+  csv do
+    column :id
+    column(:target_type) { |t| t.model.target_type }
+    column :description
+    column :ghg_target
+    column :year
+    column :base_year_period
+    column :single_year
+    column(:geography) { |t| t.geography.name }
+    column(:geography_iso) { |t| t.geography.iso }
+    column(:sector) { |t| t.sector.name }
+    column(:target_scope) { |t| t.target_scope.name }
+    column :visibility_status
   end
 end
