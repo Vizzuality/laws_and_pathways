@@ -13,6 +13,8 @@
 #
 
 class Event < ApplicationRecord
+  include Discard::Model
+
   belongs_to :eventable, polymorphic: true
 
   validates_presence_of :title, :date

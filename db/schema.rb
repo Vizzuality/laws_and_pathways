@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_09_131545) do
+ActiveRecord::Schema.define(version: 2019_09_12_050415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,8 @@ ActiveRecord::Schema.define(version: 2019_09_09_131545) do
     t.bigint "documentable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_documents_on_discarded_at"
     t.index ["documentable_type", "documentable_id"], name: "index_documents_on_documentable_type_and_documentable_id"
   end
 
@@ -134,6 +136,8 @@ ActiveRecord::Schema.define(version: 2019_09_09_131545) do
     t.date "date", null: false
     t.text "url"
     t.text "description"
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_events_on_discarded_at"
     t.index ["eventable_type", "eventable_id"], name: "index_events_on_eventable_type_and_eventable_id"
   end
 

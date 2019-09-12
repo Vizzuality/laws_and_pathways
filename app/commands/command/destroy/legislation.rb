@@ -10,8 +10,8 @@ module Command
           @resource.tap do |r|
             r.discard
 
-            r.documents.delete_all
-            r.events.delete_all
+            r.documents.discard_all
+            r.events.discard_all
 
             r.litigations = []
             r.targets = []

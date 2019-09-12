@@ -15,6 +15,8 @@
 #
 
 class Document < ApplicationRecord
+  include Discard::Model
+
   self.inheritance_column = nil
 
   TYPES = %w[uploaded external].freeze
