@@ -12,12 +12,16 @@ $apple: #4ba532;
 $silver: #c4c0c0;
 $dusty-gray: #979494;
 
-//Status label colors
+// Status label colors
 $draft-color: #adc9d0;
 $pending-color: $yellow-orange;
-$published-color: $apple;
+$published-color: #6d9f71;;
 $archived-color: #d0a088;
 $unset-color: $dusty-gray;
+
+// Yes / No
+$flag-true-color: #8fbb93;
+$flag-false-color: #b7b6b6;
 
 // Active Material Theme Colors Change
 $am-theme-primary: $allports;
