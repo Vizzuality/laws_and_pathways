@@ -34,7 +34,6 @@ module CSVImport
     #
     def target_attributes(row)
       {
-        id: row[:id],
         target_type: row[:target_type],
         description: row[:description],
         ghg_target: row[:ghg_target],
