@@ -56,6 +56,8 @@ module CSVImport
     end
 
     def find_target_scope(target_scope_name)
+      return unless target_scope_name.present?
+
       TargetScope.where('lower(name) = ?', target_scope_name.downcase).first
     end
   end
