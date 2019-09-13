@@ -1,0 +1,5 @@
+<h1>Sectors dashboard</h1>
+
+<p>Management Quality: All sectors</p>
+
+<%= pie_chart @companies_data, donut: true, library: { tooltip: { enabled: false }, title: { text: '123 Companies' }, plotOptions: { pie: { dataLabels: { format: "{point.name} <br> {point.y} companies <br> {point.percentage:.1f}%" }} } } %>
