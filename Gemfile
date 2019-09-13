@@ -30,6 +30,9 @@ gem 'language_list'
 gem 'simplecov', require: false, group: :test
 gem 'dotenv-rails'
 
+# TPI
+gem 'chartkick'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara'
