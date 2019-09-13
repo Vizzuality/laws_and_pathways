@@ -145,6 +145,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
+    chartkick (3.2.1)
     concurrent-ruby (1.1.5)
     countries (3.0.0)
       i18n_data (~> 0.8.0)
@@ -475,6 +476,7 @@ DEPENDENCIES
   capistrano-rvm
   capistrano-yarn
   capybara
+  chartkick
   climate_watch_engine (~> 1.4.3)!
   countries
   devise (>= 4.7.1)
