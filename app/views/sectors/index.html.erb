@@ -1,5 +1,12 @@
 <h1>Sectors dashboard</h1>
 
+Sectors:
+<%= Sector.pluck(:id, :name).map {|s| link_to s.last, sectors_show_path(s.first)}.join(', ').html_safe %>
+<br>
+<br>
+Companies:
+<%= Company.pluck(:id, :name).take(20).map {|c| link_to c.last, companies_show_path(c.first)}.join(', ').html_safe %>
+
 <h3>Management Quality: All sectors</h3>
 <p>Distribution of companies in All sectors according to the management of their greenhouse gas emissions and of risks and opportunities to the low-carbon transition.</p>
 
