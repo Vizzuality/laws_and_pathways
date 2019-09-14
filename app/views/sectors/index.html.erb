@@ -1,5 +1,38 @@
 <h1>Sectors dashboard</h1>
 
-<p>Management Quality: All sectors</p>
+<h3>Management Quality: All sectors</h3>
+<p>Distribution of companies in All sectors according to the management of their greenhouse gas emissions and of risks and opportunities to the low-carbon transition.</p>
 
-<%= pie_chart @companies_data, donut: true, library: { tooltip: { enabled: false }, title: { text: '123 Companies' }, plotOptions: { pie: { dataLabels: { format: "{point.name} <br> {point.y} companies <br> {point.percentage:.1f}%" }} } } %>
+<%= pie_chart(
+      @companies_data,
+      donut: true,
+      library: {
+        tooltip: { enabled: false },
+        plotOptions: {
+          pie: {
+            dataLabels: {
+              format: '{point.name} <br> {point.y} companies <br> {point.percentage:.1f}%'
+            }
+          }
+        }
+      }
+    ) %>
+
+<h4>Market Cap</h4>
+<p>TODO: bubble chart for sectors / levels</p>
+
+<h3>Carbon Performance: All sectors</h3>
+<p>CP alignment with the Paris agreement benchmarks by sector and cluster (number and % of companies). Please note that this information is not available for all sectors.</p>
+
+<%= column_chart(
+      @sectors_cp_data,
+      stacked: true,
+      width: '1200px',
+      library: {
+        plotOptions: {
+          column: {
+            stacking: 'percent'
+          }
+        },
+      }
+    ) %>
