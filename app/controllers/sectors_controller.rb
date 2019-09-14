@@ -13,7 +13,14 @@ class SectorsController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @sector = Sector.find(params[:id])
+
+    @companies_data = @sector.companies
+      .includes(:mq_assessments)
+      .group_by { |company| company.mq_assessments.order(:assessment_date).first.level }
+      .map { |k, v| ["Level #{k}", v.size] }
+  end
 
   def get_alignment_label(cp_alignment)
     {

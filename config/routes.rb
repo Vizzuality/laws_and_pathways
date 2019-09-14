@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  get 'companies/show'
-  get 'sectors/index'
-  get 'sectors/show'
+  # TPI
+  resources :sectors, only: [:show, :index]
+  resources :companies, only: [:show]
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 

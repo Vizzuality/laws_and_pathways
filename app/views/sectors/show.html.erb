@@ -1,2 +1,19 @@
-<h1>Sectors#show</h1>
-<%= pie_chart Company.group(:sector).count %>
+<h1>Sectors</h1>
+
+<h3>Management Quality: <%= @sector.name %></h3>
+<p>Distribution of companies in the <strong><%= @sector.name %></strong> sector according to the management of their greenhouse gas emissions and of risks and opportunities to the low-carbon transition.</p>
+
+<%= pie_chart(
+      @companies_data,
+      donut: true,
+      library: {
+        tooltip: { enabled: false },
+        plotOptions: {
+          pie: {
+            dataLabels: {
+              format: '{point.name} <br> {point.y} companies <br> {point.percentage:.1f}%'
+            }
+          }
+        }
+      }
+    ) %>
