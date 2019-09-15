@@ -11,7 +11,7 @@ Companies:
 <p>Distribution of companies in All sectors according to the management of their greenhouse gas emissions and of risks and opportunities to the low-carbon transition.</p>
 
 <%= pie_chart(
-      @companies_data,
+      @companies_data.map { |level_label, companies| [level_label, companies.size] },
       donut: true,
       library: {
         tooltip: { enabled: false },

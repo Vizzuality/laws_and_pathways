@@ -20,7 +20,7 @@ class SectorsController < ApplicationController
     company_scope
       .includes(:mq_assessments)
       .group_by { |company| company.mq_assessments.order(:assessment_date).first.level }
-      .map { |k, v| ["Level #{k}", v.size] }
+      .map { |sector_level, companies| ["Level #{sector_level}", companies] }
   end
 
   def get_companies_count_for_cp_alignment(_cp_alignment)
