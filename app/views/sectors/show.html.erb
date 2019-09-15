@@ -38,4 +38,13 @@
 <%- end %>
 </div>
 
-<h3>Carbon Performance: <%= @sector.name %></h3>
+<h3>Carbon Performance: <%= @sector.name %> (random data)</h3>
+<%= line_chart(
+      @companies_data.map {|_level, companies| companies }.flatten.take(10).map do |company|
+        {
+          name: company.name,
+          data: [[2014, rand(200)], [2015, rand(160)], [2016, rand(120)], [2017, rand(90)]]
+        }
+      end,
+      width: '1000'
+    )%>
