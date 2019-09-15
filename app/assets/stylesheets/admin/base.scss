@@ -52,6 +52,11 @@ fieldset.actions .cancel a {
 
 // Status
 .status_tag {
+  // Yes / No
+  &.no { background: $flag-false-color; }
+  &.yes { background: $flag-true-color; }
+
+  // visibility status / publishing flow
   &.draft { background: $draft-color; }
   &.pending { background: $pending-color; }
   &.published { background: $published-color; }

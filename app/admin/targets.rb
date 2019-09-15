@@ -1,6 +1,4 @@
 ActiveAdmin.register Target do
-  config.batch_actions = false
-
   menu parent: 'Laws', priority: 3
 
   decorate_with TargetDecorator
@@ -24,7 +22,8 @@ ActiveAdmin.register Target do
   data_export_sidebar 'Targets'
 
   index do
-    id_column
+    selectable_column
+    column(:description) { |target| link_to target.description, admin_target_path(target) }
     column :geography
     column :sector
     column :target_scope
@@ -83,5 +82,20 @@ ActiveAdmin.register Target do
     end
 
     f.actions
+  end
+
+  csv do
+    column :id
+    column(:target_type) { |t| t.model.target_type }
+    column :description
+    column :ghg_target
+    column :year
+    column :base_year_period
+    column :single_year
+    column(:geography) { |t| t.geography.name }
+    column(:geography_iso) { |t| t.geography.iso }
+    column(:sector) { |t| t.sector.name }
+    column(:target_scope) { |t| t.target_scope.name }
+    column :visibility_status
   end
 end

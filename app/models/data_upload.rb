@@ -17,6 +17,7 @@ class DataUpload < ApplicationRecord
     Legislations
     Litigations
     Companies
+    Targets
   ].freeze
 
   belongs_to :uploaded_by, class_name: 'AdminUser', optional: true

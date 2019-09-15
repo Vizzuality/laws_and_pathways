@@ -79,12 +79,10 @@ module CSVImport
 
     def with_logging(row_index)
       yield
-    rescue ActiveRecord::RecordInvalid,
-           ActiveRecord::RecordNotFound,
-           ArgumentError => e
-      msg = "[BaseImporter] Error on row #{row_index}: '#{e.message}' for data: #{e.record.attributes}"
-      warn msg
-      errors.add(:base, :invalid_row, message: msg, row: row_index)
+    rescue ActiveRecord::RecordInvalid => e
+      handle_row_error(row_index, e, "for data: #{e.record.attributes}")
+    rescue ActiveRecord::RecordNotFound, ArgumentError => e
+      handle_row_error(row_index, e)
     end
 
     def update_import_results(was_new_record, any_changes)
@@ -95,6 +93,16 @@ module CSVImport
       else
         import_results[:not_changed_records] += 1
       end
+    end
+
+    def handle_row_error(row_index, exception, context_message = nil)
+      readable_error_message = "Error on row #{row_index}: #{exception.message}."
+
+      # log error with more details
+      warn "[#{self.class.name}] #{readable_error_message} #{context_message}"
+
+      # add import error
+      errors.add(:base, :invalid_row, message: readable_error_message, row: row_index)
     end
   end
 end
