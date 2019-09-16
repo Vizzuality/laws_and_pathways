@@ -2,34 +2,26 @@
 #
 # Table name: cp_benchmarks
 #
-#  id         :bigint           not null, primary key
-#  sector_id  :bigint
-#  date       :date             not null
-#  benchmarks :jsonb
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id           :bigint           not null, primary key
+#  sector_id    :bigint
+#  release_date :date             not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  emissions    :jsonb
+#  scenario     :string
 #
 
 FactoryBot.define do
   factory :cp_benchmark, class: CP::Benchmark do
     association :sector
 
-    date { 5.days.ago.to_date }
-    benchmarks do
-      fake_values = lambda do |from, to, starting_at|
-        value = starting_at
+    release_date { 5.days.ago.to_date }
+    scenario { ['Paris pledges', '2 Degrees', 'Below 2 Degrees'].sample }
 
-        (from..to).map do |year|
-          value -= rand(1..5)
-          {year => value}
-        end.reduce(&:merge)
-      end
-
-      [
-        {name: 'Paris pledges', values: fake_values.call(2013, 2030, 200)},
-        {name: '2 Degrees', values: fake_values.call(2013, 2030, 200)},
-        {name: 'Below 2 Degrees', values: fake_values.call(2013, 2030, 200)}
-      ]
+    emissions do
+      (2013..2030).map do |year|
+        {year => rand(120..140)}
+      end.reduce(&:merge)
     end
   end
 end

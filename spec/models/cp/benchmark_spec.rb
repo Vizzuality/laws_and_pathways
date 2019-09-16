@@ -2,12 +2,13 @@
 #
 # Table name: cp_benchmarks
 #
-#  id         :bigint           not null, primary key
-#  sector_id  :bigint
-#  date       :date             not null
-#  benchmarks :jsonb
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id           :bigint           not null, primary key
+#  sector_id    :bigint
+#  release_date :date             not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  emissions    :jsonb
+#  scenario     :string
 #
 
 require 'rails_helper'
@@ -23,7 +24,7 @@ RSpec.describe CP::Benchmark, type: :model do
   end
 
   it 'should be invalid if date is nil' do
-    subject.date = nil
-    expect(subject).to have(1).errors_on(:date)
+    subject.release_date = nil
+    expect(subject).to have(1).errors_on(:release_date)
   end
 end

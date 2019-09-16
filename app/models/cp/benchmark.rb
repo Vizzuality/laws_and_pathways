@@ -2,25 +2,26 @@
 #
 # Table name: cp_benchmarks
 #
-#  id         :bigint           not null, primary key
-#  sector_id  :bigint
-#  date       :date             not null
-#  benchmarks :jsonb
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id           :bigint           not null, primary key
+#  sector_id    :bigint
+#  release_date :date             not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  emissions    :jsonb
+#  scenario     :string
 #
 
 module CP
   class Benchmark < ApplicationRecord
     belongs_to :sector
 
-    scope :latest_first, -> { order(date: :desc) }
-    scope :by_date, -> { order(:date) }
+    scope :latest_first, -> { order(release_date: :desc) }
+    scope :by_release_date, -> { order(:release_date) }
 
-    validates_presence_of :date
+    validates_presence_of :release_date, :scenario
 
-    def benchmarks_all_years
-      benchmarks.map { |b| b['values'].keys }.flatten.uniq
+    def emissions_all_years
+      emissions.keys
     end
   end
 end

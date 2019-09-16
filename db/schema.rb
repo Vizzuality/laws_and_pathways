@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_12_050415) do
+ActiveRecord::Schema.define(version: 2019_09_16_134155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,10 +97,11 @@ ActiveRecord::Schema.define(version: 2019_09_12_050415) do
 
   create_table "cp_benchmarks", force: :cascade do |t|
     t.bigint "sector_id"
-    t.date "date", null: false
-    t.jsonb "benchmarks"
+    t.date "release_date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "emissions"
+    t.string "scenario"
     t.index ["sector_id"], name: "index_cp_benchmarks_on_sector_id"
   end
 
@@ -170,9 +171,9 @@ ActiveRecord::Schema.define(version: 2019_09_12_050415) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "visibility_status", default: "draft"
-    t.text "indc_url"
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
+    t.text "indc_url"
     t.index ["created_by_id"], name: "index_geographies_on_created_by_id"
     t.index ["iso"], name: "index_geographies_on_iso", unique: true
     t.index ["region"], name: "index_geographies_on_region"

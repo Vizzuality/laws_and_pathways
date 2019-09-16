@@ -4,26 +4,31 @@ module CSVImport
 
     def import
       import_each_csv_row(csv) do |row|
-        benchmark = find_benchmark(row)
-        benchmarks = benchmark.benchmarks || []
-        benchmarks << benchmark_attributes(row)
-        benchmark.update!(
-          benchmarks: benchmarks
-        )
+        benchmark = prepare_benchmark(row)
+        benchmark.assign_attributes(benchmark_attributes(row))
+
+        was_new_record = benchmark.new_record?
+        any_changes = benchmark.changed?
+
+        benchmark.save!
+
+        update_import_results(was_new_record, any_changes)
       end
     end
 
     private
 
-    def find_benchmark(row)
-      return CP::Benchmark.find(row[:id]) if row[:id].present?
+    def resource_klass
+      CP::Benchmark
+    end
 
-      sector = find_or_create_sector(row)
-
-      CP::Benchmark.find_or_initialize_by(
-        sector: sector,
-        date: parse_date(row[:date])
-      )
+    def prepare_benchmark(row)
+      find_record_by(:id, row) ||
+        CP::Benchmark.find_or_initialize_by(
+          sector: find_or_create_sector(row),
+          release_date: parse_date(row[:release_date]),
+          scenario: row[:scenario]
+        )
     end
 
     def find_or_create_sector(row)
@@ -35,8 +40,9 @@ module CSVImport
 
     def benchmark_attributes(row)
       {
-        name: row[:name],
-        values: values(row)
+        scenario: row[:scenario],
+        release_date: parse_date(row[:release_date]),
+        emissions: emissions(row)
       }
     end
 
@@ -44,7 +50,7 @@ module CSVImport
       Import::DateUtils.safe_parse(date, ['%m-%Y'])
     end
 
-    def values(row)
+    def emissions(row)
       row.headers.grep(/\d{4}/).map do |year|
         {year.to_s.to_i => row[year]&.to_f}
       end.reduce(&:merge)

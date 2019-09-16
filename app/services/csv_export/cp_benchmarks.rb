@@ -9,23 +9,21 @@ module CSVExport
     end
 
     def call
-      year_columns = benchmarks.flat_map(&:benchmarks_all_years).uniq.sort
+      year_columns = benchmarks.flat_map(&:emissions_all_years).uniq.sort
 
-      headers = %w(Id Sector Date Name).concat(year_columns)
+      headers = ['Id', 'Sector', 'Release Date', 'Scenario'].concat(year_columns)
 
       CSV.generate do |csv|
         csv << headers
 
-        benchmarks.each do |cp_benchmark|
-          cp_benchmark.benchmarks.each do |benchmark|
-            csv << [
-              cp_benchmark.id,
-              cp_benchmark.sector.name,
-              cp_benchmark.date.strftime('%m-%Y'),
-              benchmark['name'],
-              year_columns.map { |yc| benchmark['values'][yc] }
-            ].flatten
-          end
+        benchmarks.latest_first.each do |benchmark|
+          csv << [
+            benchmark.id,
+            benchmark.sector.name,
+            benchmark.release_date.strftime('%m-%Y'),
+            benchmark.scenario,
+            year_columns.map { |yc| benchmark.emissions[yc] }
+          ].flatten
         end
       end
     end

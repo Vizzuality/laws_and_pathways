@@ -63,15 +63,15 @@ ActiveAdmin.register Sector do
               'No Carbon Performance Benchmarks for this sector yet'
             end
           else
-            resource.cp_benchmarks.latest_first.map do |benchmark|
-              panel "Released in #{benchmark.date.strftime('%B %Y')}", class: 'benchmark' do
-                table_for benchmark.benchmarks, class: 'cell-padding-sm cell-centered' do
-                  column :name do |b|
-                    b['name']
-                  end
-                  benchmark.benchmarks_all_years.map do |year|
+            resource.cp_benchmarks.latest_first.group_by(&:release_date).map do |release_date, benchmarks|
+              panel "Released in #{release_date.strftime('%B %Y')}", class: 'benchmark' do
+                all_years = benchmarks.map(&:emissions_all_years).flatten.uniq
+
+                table_for benchmarks, class: 'cell-padding-sm cell-centered' do
+                  column :scenario
+                  all_years.map do |year|
                     column year do |b|
-                      b['values'][year]
+                      b.emissions[year]
                     end
                   end
                 end
