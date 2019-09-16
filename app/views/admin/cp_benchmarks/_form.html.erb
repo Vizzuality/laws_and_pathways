@@ -1,0 +1,17 @@
+<%= semantic_form_for [:admin, resource], builder: ActiveAdmin::FormBuilder, html: {'data-controller' => 'check-modified cp-benchmark-form'} do |f| %>
+  <%= f.semantic_errors(*f.object.errors.keys) %>
+
+  <%= f.inputs do %>
+    <%= f.input :sector %>
+    <%= f.input :release_date %>
+    <%= f.input :scenario %>
+    <%= f.input :emissions, as: :text, input_html: { id: 'input_emissions' } %>
+  <% end %>
+
+  <%= render "emissions_table", f: f %>
+
+  <%= f.actions do %>
+    <%= f.action :submit %>
+    <%= f.action :cancel, :wrapper_html => { :class => 'cancel' } %>
+  <% end %>
+<% end %>

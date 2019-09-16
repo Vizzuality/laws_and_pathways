@@ -1,6 +1,6 @@
 if emissions.empty?
   div class: 'padding-20' do
-    'No emission or target values for this assessment'
+    'No emission values'
   end
 else
   emissions_all_years = emissions.keys

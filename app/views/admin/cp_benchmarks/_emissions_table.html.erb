@@ -1,0 +1,21 @@
+<template data-target="cp-benchmark-form.emissionRowTemplate">
+  <%= render "emissions_table_row", year: '', value: '' %>
+</template>
+
+<table data-target="cp-benchmark-form.emissionTable">
+  <thead>
+    <th>Year</th>
+    <th>Value</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <% f.object.emissions.each do |year, value| %>
+      <%= render "emissions_table_row", year: year, value: value %>
+    <% end %>
+    <tr data-target="cp-benchmark-form.emissionRowAdd">
+      <td colspan="3">
+        <%= button_tag "Add new value", type: 'button', class: 'button button--raised', data: { action: "click->cp-benchmark-form#addEmission" } %>
+      </td>
+    </tr>
+  </tbody>
+</table>

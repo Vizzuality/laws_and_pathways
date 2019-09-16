@@ -36,3 +36,14 @@ table.cell-centered {
     border-radius: 5px;
   }
 }
+
+.sortable-handle {
+  cursor: grab;
+
+  &::before {
+    content: '\28f6';
+    color: black;
+    position: relative;
+    top: -3px;
+  }
+}
