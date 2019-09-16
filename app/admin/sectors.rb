@@ -11,6 +11,7 @@ ActiveAdmin.register Sector do
     column :name do |sector|
       link_to sector.name, admin_sector_path(sector)
     end
+    column 'CP Benchmark unit', &:cp_unit
     column :slug
     actions
   end
@@ -21,6 +22,7 @@ ActiveAdmin.register Sector do
         attributes_table do
           row :id
           row :name
+          row 'CP Benchmark unit', &:cp_unit
           row :slug
           row :created_at
           row :updated_at
@@ -58,6 +60,7 @@ ActiveAdmin.register Sector do
 
     f.inputs do
       f.input :name
+      f.input :cp_unit, label: 'Carbon Performance benchmark unit'
     end
 
     f.actions
