@@ -19,7 +19,7 @@ module Import
         benchmark = CP::Benchmark.find_or_initialize_by(
           sector: sector,
           release_date: parse_date(row[:date]),
-          name: row[:type]
+          scenario: row[:type]
         )
         benchmark.update!(benchmark_attributes(row))
       end
