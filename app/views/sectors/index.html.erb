@@ -1,7 +1,7 @@
 <h1>Sectors dashboard</h1>
 
 Sectors:
-<%= Sector.pluck(:id, :name).map {|s| link_to s.last, sector_path(s.first)}.join(', ').html_safe %>
+<%= @sectors_names.map {|s| link_to s.last, sector_path(s.first)}.join(', ').html_safe %>
 <br>
 <br>
 Companies:
