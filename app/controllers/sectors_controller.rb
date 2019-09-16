@@ -4,6 +4,7 @@ class SectorsController < ApplicationController
   def index
     @companies_by_levels = get_companies_grouped_by_sector_levels(Company)
 
+    @sectors_names = Sector.pluck(:id, :name).sort_by { |_id, name| name }
     @sectors_cp_data = CP_ALIGNMENTS.map do |cp_alignment| # CP alignments are series
       {
         name: get_alignment_label(cp_alignment),
