@@ -25,6 +25,21 @@ ActiveAdmin.register CP::Benchmark do
     end
   end
 
+  csv do
+    year_columns = collection.flat_map(&:emissions_all_years).uniq.sort
+
+    column :id
+    column(:sector) { |b| b.sector.name }
+    column :release_date
+    column :scenario
+
+    year_columns.map do |year|
+      column year do |benchmark|
+        benchmark.emissions[year]
+      end
+    end
+  end
+
   index do
     id_column
     column :scenario
