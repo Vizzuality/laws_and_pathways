@@ -10,20 +10,22 @@ Companies:
 <h3>Management Quality: All sectors</h3>
 <p>Distribution of companies in All sectors according to the management of their greenhouse gas emissions and of risks and opportunities to the low-carbon transition.</p>
 
+<div class="chart">
 <%= pie_chart(
-      @companies_data.map { |level_label, companies| [level_label, companies.size] },
+      @companies_by_levels.map { |level, companies| ["Level #{level}", companies.size] },
       donut: true,
       library: {
-        tooltip: { enabled: false },
-        plotOptions: {
-          pie: {
-            dataLabels: {
-              format: '{point.name} <br> {point.y} companies <br> {point.percentage:.1f}%'
-            }
+      tooltip: { enabled: false },
+      plotOptions: {
+        pie: {
+          dataLabels: {
+            format: '{point.name} <br> {point.y} companies <br> {point.percentage:.1f}%'
           }
         }
       }
-    ) %>
+    }
+  ) %>
+</div>
 
 <h4>Market Cap</h4>
 <p>TODO: bubble chart for sectors / levels</p>
@@ -31,6 +33,7 @@ Companies:
 <h3>Carbon Performance: All sectors (random data)</h3>
 <p>CP alignment with the Paris agreement benchmarks by sector and cluster (number and % of companies). Please note that this information is not available for all sectors.</p>
 
+<div class="chart">
 <%= column_chart(
       @sectors_cp_data,
       stacked: true,
@@ -43,3 +46,4 @@ Companies:
         },
       }
     ) %>
+</div>
