@@ -8,7 +8,12 @@
     <%= f.input :emissions, as: :text, input_html: { id: 'input_emissions' } %>
   <% end %>
 
-  <%= render "emissions_table", f: f %>
+  <div class="panel">
+    <h3>Benchmark emission values</h3>
+    <div class="panel-contents padding-20">
+      <%= render "emissions_table", f: f %>
+    </div>
+  </div>
 
   <%= f.actions do %>
     <%= f.action :submit %>

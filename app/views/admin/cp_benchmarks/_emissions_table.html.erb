@@ -4,6 +4,7 @@
 
 <table data-target="cp-benchmark-form.emissionTable">
   <thead>
+    <th></th>
     <th>Year</th>
     <th>Value</th>
     <th></th>
@@ -13,7 +14,7 @@
       <%= render "emissions_table_row", year: year, value: value %>
     <% end %>
     <tr data-target="cp-benchmark-form.emissionRowAdd">
-      <td colspan="3">
+      <td colspan="4">
         <%= button_tag "Add new value", type: 'button', class: 'button button--raised', data: { action: "click->cp-benchmark-form#addEmission" } %>
       </td>
     </tr>
