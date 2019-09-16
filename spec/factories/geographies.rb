@@ -15,9 +15,10 @@
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #  visibility_status          :string           default("draft")
+#  indc_url                   :text
 #  created_by_id              :bigint
 #  updated_by_id              :bigint
-#  indc_url                   :text
+#  discarded_at               :datetime
 #
 
 FactoryBot.define do
