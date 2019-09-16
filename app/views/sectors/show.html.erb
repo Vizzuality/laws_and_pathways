@@ -4,25 +4,27 @@
 <h3>Management Quality: <%= @sector.name %></h3>
 <p>Distribution of companies in the <strong><%= @sector.name %></strong> sector according to the management of their greenhouse gas emissions and of risks and opportunities to the low-carbon transition.</p>
 
+<div class="chart">
 <%= pie_chart(
-      @companies_data.map { |level_label, companies| [level_label, companies.size] },
+      @companies_by_levels.map { |level, companies| ["Level #{level}", companies.size] },
       donut: true,
       library: {
-        tooltip: { enabled: false },
-        plotOptions: {
-          pie: {
-            dataLabels: {
-              format: '{point.name} <br> {point.y} companies <br> {point.percentage:.1f}%'
-            }
+      tooltip: { enabled: false },
+      plotOptions: {
+        pie: {
+          dataLabels: {
+            format: '{point.name} <br> {point.y} companies <br> {point.percentage:.1f}%'
           }
         }
       }
-    ) %>
+    }
+  ) %>
+</div>
 
 <br><br><br>
 
 <div class="container" style="display: flex; flex-direction: row; justify-content: center;">
-<%- @companies_data.sort_by { |level, _companies| level }.each do |level, companies| -%>
+<%- @companies_by_levels.sort_by { |level, _companies| level }.each do |level, companies| -%>
   <div class="sector-level">
     <div class="sector-level-desc">
       <%= level %>
@@ -38,13 +40,16 @@
 <%- end %>
 </div>
 
-<h3>Carbon Performance: <%= @sector.name %> (random data)</h3>
+<h3>Carbon Performance: <%= @sector.name %></h3>
+<div class="chart">
 <%= line_chart(
-      @companies_data.map {|_level, companies| companies }.flatten.take(10).map do |company|
-        {
-          name: company.name,
-          data: [[2014, rand(200)], [2015, rand(160)], [2016, rand(120)], [2017, rand(90)]]
-        }
-      end,
-      width: '1000'
-    )%>
+      @companies_by_levels.map {|_level, companies| companies }.flatten.map do |company|
+      {
+        name: company.name,
+        data: company.cp_assessments.last&.emissions
+      }
+    end,
+      width: '1200px',
+      height: '800px'
+  )%>
+</div>
