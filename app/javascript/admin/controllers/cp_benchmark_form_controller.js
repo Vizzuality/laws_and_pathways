@@ -6,7 +6,7 @@ export default class extends Controller {
   connect() {
     $(this.element).on('submit', () => {
       // serialize emissions
-      this.element.querySelector('#input_emissions').value = this.serializeTableData();
+      this.element.querySelector('#input_emissions').value = JSON.stringify(this.serializeTableData());
     });
 
     $(this.emissionTableTarget).find('tbody').sortable({
@@ -18,11 +18,13 @@ export default class extends Controller {
   serializeTableData() {
     const result = {};
 
-    $(this.element).find('table tr.emission').each((el) => {
+    $(this.emissionTableTarget).find('tr.emission').each((idx, el) => {
       const year = $(el).find('input[name=emission_year]').val();
       const value = $(el).find('input[name=emission_value]').val();
 
-      result[year] = value;
+      if (!value) return;
+
+      result[year] = value;  
     });
 
     return result;

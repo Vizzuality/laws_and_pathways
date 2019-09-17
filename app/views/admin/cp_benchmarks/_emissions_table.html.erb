@@ -10,7 +10,7 @@
     <th></th>
   </thead>
   <tbody>
-    <% f.object.emissions.each do |year, value| %>
+    <% f.object&.emissions&.each do |year, value| %>
       <%= render "emissions_table_row", year: year, value: value %>
     <% end %>
     <tr data-target="cp-benchmark-form.emissionRowAdd">

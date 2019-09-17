@@ -23,5 +23,13 @@ module CP
     def emissions_all_years
       emissions.keys
     end
+
+    def emissions=(value)
+      if value.is_a?(String)
+        write_attribute(:emissions, JSON.parse(value))
+      else
+        super
+      end
+    end
   end
 end
