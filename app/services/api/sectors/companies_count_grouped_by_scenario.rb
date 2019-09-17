@@ -3,6 +3,18 @@ module Api
     class CompaniesCountGroupedByScenario
       CP_SCENARIOS = %w[below_2 exact_2 paris not_aligned no_disclosure].freeze
 
+      # Returns info of how many Companies from each Sector are in given CP scenario group
+      #
+      # [
+      #  {
+      #   name: 'Below 2',
+      #   data: [ ['Coal Mining', 52], ['Steel', 73] ]
+      #  },
+      #  {
+      #    name: 'Paris',
+      #    data: [ ['Coal Mining', 65], ['Steel', 26] ]
+      #  }
+      # ]
       def get
         CP_SCENARIOS.map do |cp_alignment|
           {
