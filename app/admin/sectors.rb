@@ -3,7 +3,7 @@ ActiveAdmin.register Sector do
 
   menu priority: 5
 
-  permit_params :name
+  permit_params :name, :cp_unit
 
   filter :name_contains
 
