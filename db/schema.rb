@@ -268,6 +268,7 @@ ActiveRecord::Schema.define(version: 2019_09_16_134155) do
     t.string "slug", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "cp_unit"
     t.index ["name"], name: "index_sectors_on_name", unique: true
     t.index ["slug"], name: "index_sectors_on_slug", unique: true
   end

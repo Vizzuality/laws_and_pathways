@@ -3,7 +3,7 @@ ActiveAdmin.register Sector do
 
   menu priority: 5
 
-  permit_params :name
+  permit_params :name, :cp_unit
 
   filter :name_contains
 
@@ -11,6 +11,7 @@ ActiveAdmin.register Sector do
     column :name do |sector|
       link_to sector.name, admin_sector_path(sector)
     end
+    column 'Carbon Performance Unit', &:cp_unit
     column :slug
     actions
   end
@@ -21,6 +22,7 @@ ActiveAdmin.register Sector do
         attributes_table do
           row :id
           row :name
+          row 'Carbon Performance Unit', &:cp_unit
           row :slug
           row :created_at
           row :updated_at
@@ -60,6 +62,7 @@ ActiveAdmin.register Sector do
 
     f.inputs do
       f.input :name
+      f.input :cp_unit, label: 'Carbon Performance Unit'
     end
 
     f.actions
