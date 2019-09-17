@@ -22,9 +22,9 @@ export default class extends Controller {
       const year = $(el).find('input[name=emission_year]').val();
       const value = $(el).find('input[name=emission_value]').val();
 
-      if (!value) return;
+      if (!year) return;
 
-      result[year] = value;  
+      result[year] = value;
     });
 
     return result;
