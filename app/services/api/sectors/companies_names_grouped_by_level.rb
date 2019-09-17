@@ -5,6 +5,23 @@ module Api
         @company_scope = company_scope
       end
 
+      # Returns Companies grouped by their latest MQ assessments Sector's levels
+      #
+      # [
+      #  ['1',
+      #    [
+      #      { name: 'Air China', emissions: { 2013: 153, 2014: 142 } },
+      #      { name: 'China Southern', emissions: { 2015: 32, 2016: 43 } }
+      #    ]
+      #  ],
+      #  ['3',
+      #    [
+      #      { name: 'Alaska Air', emissions: { } },
+      #      { name: 'IAG', emissions: { } }
+      #      { name: 'Japan Airlines', emissions: { } }
+      #    ]
+      #   ]
+      # ]
       def get
         @company_scope
           .includes(:mq_assessments)
