@@ -14,18 +14,18 @@ Companies:
 
 <div class="chart">
 <%= pie_chart(
-      @companies_by_levels.map { |level, companies| [level, companies.size] },
+      companies_levels_sectors_path,
       donut: true,
       library: {
-      tooltip: { enabled: false },
-      plotOptions: {
-        pie: {
-          dataLabels: {
-            format: 'Level {point.name} <br> {point.y} companies <br> {point.percentage:.1f}%'
+        tooltip: { enabled: false },
+        plotOptions: {
+          pie: {
+            dataLabels: {
+              format: 'Level {point.name} <br> {point.y} companies <br> {point.percentage:.1f}%'
+            }
           }
         }
       }
-    }
   ) %>
 </div>
 
@@ -37,7 +37,7 @@ Companies:
 
 <div class="chart">
 <%= column_chart(
-      @sectors_cp_data,
+      scenarios_sectors_path,
       stacked: true,
       width: '1200px',
       library: {

@@ -19,7 +19,7 @@ module Api
         companies.map do |company|
           {
             name: company.name,
-            emissions: company.cp_assessments.last&.emissions
+            emissions: company.cp_assessments.last&.emissions || {}
           }
         end
       end
