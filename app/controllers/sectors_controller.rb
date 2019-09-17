@@ -12,6 +12,15 @@ class SectorsController < ApplicationController
 
   # chart data endpoints
 
+  # Returns data:
+  #   [
+  #     ['0', 13],
+  #     ['1', 63],
+  #     ['2', 61],
+  #     ['3', 71],
+  #     ['4', 63],
+  #     ['4STAR', 6]
+  #   ]
   def companies_levels
     data = companies_grouped_by_sector_levels(companies_scope(params))
       .map { |level, companies| [level, companies.size] }
@@ -19,6 +28,11 @@ class SectorsController < ApplicationController
     render json: data.chart_json
   end
 
+  # [
+  #   { name: 'WizzAir', data: {} },
+  #   { name: 'Air China', data: {'2014' => 111.0, '2015' => 112.0 } },
+  #   { name: 'China Southern', data: {'2014' => 114.0, '2015' => 112.0 } }
+  # ]
   def companies_emissions
     data = companies_grouped_by_sector_levels(companies_scope(params))
       .map { |_level, companies| companies }
