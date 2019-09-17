@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_16_123835) do
+ActiveRecord::Schema.define(version: 2019_09_16_190258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -173,7 +173,9 @@ ActiveRecord::Schema.define(version: 2019_09_16_123835) do
     t.text "indc_url"
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
+    t.datetime "discarded_at"
     t.index ["created_by_id"], name: "index_geographies_on_created_by_id"
+    t.index ["discarded_at"], name: "index_geographies_on_discarded_at"
     t.index ["iso"], name: "index_geographies_on_iso", unique: true
     t.index ["region"], name: "index_geographies_on_region"
     t.index ["slug"], name: "index_geographies_on_slug", unique: true
