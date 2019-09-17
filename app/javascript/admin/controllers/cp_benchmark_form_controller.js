@@ -20,7 +20,7 @@ export default class extends Controller {
 
     $(this.emissionTableTarget).find('tr.emission').each((idx, el) => {
       const year = $(el).find('input[name=emission_year]').val();
-      const value = $(el).find('input[name=emission_value]').val();
+      const value = parseFloat($(el).find('input[name=emission_value]').val());
 
       if (!year) return;
 
