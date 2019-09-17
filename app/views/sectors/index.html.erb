@@ -5,21 +5,23 @@ Sectors:
 <br>
 <br>
 Companies:
-<%= Company.pluck(:id, :name).take(20).map {|c| link_to c.last, company_path(c.first)}.join(', ').html_safe %>
+<%= @companies_names.map {|c| link_to c.last, company_path(c.first)}.join(', ').html_safe %>
+<br>
+<br>
 
 <h3>Management Quality: All sectors</h3>
 <p>Distribution of companies in All sectors according to the management of their greenhouse gas emissions and of risks and opportunities to the low-carbon transition.</p>
 
 <div class="chart">
 <%= pie_chart(
-      @companies_by_levels.map { |level, companies| ["Level #{level}", companies.size] },
+      @companies_by_levels.map { |level, companies| [level, companies.size] },
       donut: true,
       library: {
       tooltip: { enabled: false },
       plotOptions: {
         pie: {
           dataLabels: {
-            format: '{point.name} <br> {point.y} companies <br> {point.percentage:.1f}%'
+            format: 'Level {point.name} <br> {point.y} companies <br> {point.percentage:.1f}%'
           }
         }
       }
