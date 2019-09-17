@@ -6,24 +6,24 @@
 
 <div class="chart">
 <%= pie_chart(
-      @companies_by_levels.map { |level, companies| [level, companies.size] },
+      companies_levels_sector_path(@sector.id),
       donut: true,
       library: {
-      tooltip: { enabled: false },
-      plotOptions: {
-        pie: {
-          dataLabels: {
-            format: 'Level {point.name} <br> {point.y} companies <br> {point.percentage:.1f}%'
+        tooltip: { enabled: false },
+        plotOptions: {
+          pie: {
+            dataLabels: {
+              format: 'Level {point.name} <br> {point.y} companies <br> {point.percentage:.1f}%'
+            }
           }
         }
       }
-    }
   ) %>
 </div>
 
 <br><br><br>
 
-<div class="container" style="display: flex; flex-direction: row; justify-content: center;">
+<div class="container">
 <%- @companies_by_levels.each do |level, companies| -%>
   <div class="sector-level">
     <div class="sector-level-desc">
@@ -43,12 +43,7 @@
 <h3>Carbon Performance: <%= @sector.name %></h3>
 <div class="chart">
 <%= line_chart(
-      @companies_by_levels.map {|_level, companies| companies }.flatten.map do |company|
-      {
-        name: company[:name],
-        data: company[:emissions]
-      }
-    end,
+      companies_emissions_sector_path(@sector.id),
       width: '1200px',
       height: '800px'
   )%>

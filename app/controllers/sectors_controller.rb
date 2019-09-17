@@ -1,9 +1,5 @@
 class SectorsController < ApplicationController
   def index
-    @companies_by_levels = companies_grouped_by_sector_levels(Company)
-
-    @sectors_cp_data = sectors_scenarios_alignments
-
     @sectors_names = Sector.order(:name).pluck(:id, :name)
     @companies_names = Company.limit(20).pluck(:id, :name)
   end
@@ -11,7 +7,28 @@ class SectorsController < ApplicationController
   def show
     @sector = Sector.find(params[:id])
 
-    @companies_by_levels = companies_grouped_by_sector_levels(@sector.companies)
+    @companies_by_levels = companies_grouped_by_sector_levels(companies_scope(params))
+  end
+
+  # chart data endpoints
+
+  def companies_levels
+    data = companies_grouped_by_sector_levels(companies_scope(params))
+      .map { |level, companies| [level, companies.size] }
+
+    render json: data.chart_json
+  end
+
+  def companies_emissions
+    data = companies_grouped_by_sector_levels(companies_scope(params))
+      .map { |_level, companies| companies }
+      .flatten.map { |company| {name: company[:name], data: company[:emissions]} }
+
+    render json: data.chart_json
+  end
+
+  def scenarios
+    render json: sectors_scenarios_alignments.chart_json
   end
 
   # Returns info of how many companies from each sector are in given CP scenario group
@@ -33,10 +50,29 @@ class SectorsController < ApplicationController
   # Returns companies grouped by their latest MQ assessments sector's levels
   #
   # [
-  #  ['1', ['Air China', 'China Southern', 'Singapore Airlines']],
-  #  ['3', ['Alaska Air', 'IAG', 'Japan Airlines']]
+  #  ['1',
+  #    [
+  #      { name: 'Air China', emissions: { 2013: 153, 2014: 142 } },
+  #      { name: 'China Southern', emissions: { 2015: 32, 2016: 43 } }
+  #    ]
+  #  ],
+  #  ['3',
+  #    [
+  #      { name: 'Alaska Air', emissions: { } },
+  #      { name: 'IAG', emissions: { } }
+  #      { name: 'Japan Airlines', emissions: { } }
+  #    ]
+  #   ]
   # ]
   def companies_grouped_by_sector_levels(company_scope)
     ::Api::Sectors::CompaniesNamesGroupedByLevel.new(company_scope).get
+  end
+
+  def companies_scope(params)
+    if params[:id]
+      Sector.find(params[:id]).companies
+    else
+      Company
+    end
   end
 end
