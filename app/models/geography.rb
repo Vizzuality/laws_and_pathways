@@ -53,6 +53,7 @@ class Geography < ApplicationRecord
   tag_with :political_groups
 
   has_many :litigations
+  has_many :legislations
   has_many :events, as: :eventable, dependent: :destroy
 
   accepts_nested_attributes_for :events, allow_destroy: true, reject_if: :all_blank

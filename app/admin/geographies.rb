@@ -78,5 +78,17 @@ ActiveAdmin.register Geography do
     def apply_filtering(chain)
       super(chain).distinct
     end
+
+    def destroy
+      destroy_command = ::Command::Destroy::Geography.new(resource.object)
+
+      results = if destroy_command.call
+                  {notice: 'Successfully deleted selected Geography'}
+                else
+                  {alert: 'Could not delete selected Geography'}
+                end
+
+      redirect_to admin_geographies_path(scope: current_scope.name), results
+    end
   end
 end
