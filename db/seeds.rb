@@ -1,8 +1,7 @@
 # admin users
 # envs: DEV
-if Rails.env.development?
-  admin = AdminUser.find_or_create_by!(email: 'admin@example.com')
-  admin.update!(password: 'password', password_confirmation: 'password') if admin.new_record?
+if Rails.env.development? && !AdminUser.find_by(email: 'admin@example.com')
+  AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
 end
 
 # sectors: names & CP benchmarks units (optional)
