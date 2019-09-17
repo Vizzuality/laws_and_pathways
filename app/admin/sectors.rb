@@ -34,11 +34,13 @@ ActiveAdmin.register Sector do
             end
           else
             resource.cp_benchmarks.latest_first.group_by(&:release_date).map do |release_date, benchmarks|
-              panel "Released in #{release_date.strftime('%B %Y')}", class: 'benchmark' do
+              panel "Released in #{release_date.to_s(:month_and_year)}", class: 'benchmark' do
                 all_years = benchmarks.map(&:emissions_all_years).flatten.uniq
 
-                table_for benchmarks, class: 'cell-padding-sm cell-centered' do
-                  column :scenario
+                table_for benchmarks.sort_by(&:average_emission).reverse, class: 'cell-padding-sm cell-centered' do
+                  column :scenario do |benchmark|
+                    link_to benchmark.scenario, edit_admin_cp_benchmark_path(benchmark)
+                  end
                   all_years.map do |year|
                     column year do |b|
                       b.emissions[year]

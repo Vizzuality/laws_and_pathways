@@ -8,7 +8,7 @@ ActiveAdmin.register CP::Benchmark do
   filter :release_date
   filter :sector
 
-  data_export_sidebar 'CP Benchmarks'
+  data_export_sidebar 'CPBenchmarks'
 
   show do
     attributes_table do
@@ -30,7 +30,7 @@ ActiveAdmin.register CP::Benchmark do
 
     column :id
     column(:sector) { |b| b.sector.name }
-    column :release_date
+    column(:release_date) { |b| b.release_date.strftime('%Y-%m') }
     column :scenario
 
     year_columns.map do |year|

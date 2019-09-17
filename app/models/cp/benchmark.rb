@@ -24,6 +24,13 @@ module CP
       emissions.keys
     end
 
+    def average_emission
+      not_empty_values = emissions.values.compact
+      return 0 if not_empty_values.empty?
+
+      not_empty_values.map(&:to_f).reduce(:+) / not_empty_values.length
+    end
+
     def emissions=(value)
       if value.is_a?(String)
         write_attribute(:emissions, JSON.parse(value))

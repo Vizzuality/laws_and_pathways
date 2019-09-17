@@ -47,13 +47,19 @@ module CSVImport
     end
 
     def parse_date(date)
-      Import::DateUtils.safe_parse(date, ['%m-%Y'])
+      Import::DateUtils.safe_parse(date, ['%Y-%m', '%Y-%m-%d'])
     end
 
     def emissions(row)
       row.headers.grep(/\d{4}/).map do |year|
-        {year.to_s.to_i => row[year]&.to_f}
+        {year.to_s.to_i => parse_float(row[year])}
       end.reduce(&:merge)
+    end
+
+    def parse_float(value)
+      return unless value.present?
+
+      value.to_f
     end
   end
 end
