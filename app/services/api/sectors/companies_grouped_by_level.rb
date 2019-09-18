@@ -1,6 +1,5 @@
 module Api
   module Sectors
-    # rename to CompaniesGroupedByLevel
     class CompaniesGroupedByLevel
       def initialize(company_scope)
         @company_scope = company_scope
@@ -11,15 +10,14 @@ module Api
       # [
       #  ['1',
       #    [
-      #      { name: 'Air China', emissions: { 2013: 153, 2014: 142 } },
-      #      { name: 'China Southern', emissions: { 2015: 32, 2016: 43 } }
+      #      { name: 'Air China', emissions: { 2013: 153, 2014: 142 }, status: '' },
+      #      { name: 'China Southern', emissions: { 2015: 32, 2016: 43 }, status: '' }
       #    ]
       #  ],
       #  ['3',
       #    [
-      #      { name: 'Alaska Air', emissions: { } },
-      #      { name: 'IAG', emissions: { } }
-      #      { name: 'Japan Airlines', emissions: { } }
+      #      { name: 'Alaska Air', emissions: { }, status: '' },
+      #      { name: 'IAG', emissions: { }, status: '' }
       #    ]
       #   ]
       # ]
@@ -62,6 +60,7 @@ module Api
         companies.map do |company|
           {
             name: company.name,
+            status: company.mq_status,
             emissions: company.cp_assessments.last&.emissions || {}
           }
         end
