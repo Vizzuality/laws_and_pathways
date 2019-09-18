@@ -25,10 +25,10 @@ module CP
     end
 
     def average_emission
-      not_empty_values = emissions.values.compact
+      none_empty_values = emissions.values.compact
       return 0 if not_empty_values.empty?
 
-      not_empty_values.map(&:to_f).reduce(:+) / not_empty_values.length
+      none_empty_values.map(&:to_f).reduce(:+) / none_empty_values.length
     end
 
     def emissions=(value)

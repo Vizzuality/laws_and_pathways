@@ -2,6 +2,8 @@ module CSVImport
   class CPBenchmarks < BaseImporter
     include UploaderHelpers
 
+    EMISSION_YEAR_PATTERN = /\d{4}/.freeze
+
     def import
       import_each_csv_row(csv) do |row|
         benchmark = prepare_benchmark(row)
@@ -51,15 +53,11 @@ module CSVImport
     end
 
     def emissions(row)
-      row.headers.grep(/\d{4}/).map do |year|
-        {year.to_s.to_i => parse_float(row[year])}
-      end.reduce(&:merge)
-    end
+      row.headers.grep(EMISSION_YEAR_PATTERN).reduce({}) do |acc, year|
+        next acc unless row[year].present?
 
-    def parse_float(value)
-      return unless value.present?
-
-      value.to_f
+        acc.merge(year.to_s.to_i => row[year].to_f)
+      end
     end
   end
 end

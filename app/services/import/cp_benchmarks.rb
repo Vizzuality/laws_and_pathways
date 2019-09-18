@@ -2,6 +2,7 @@ module Import
   class CPBenchmarks
     include ClimateWatchEngine::CSVImporter
 
+    EMISSION_YEAR_PATTERN = /\d{4}/.freeze
     FILEPATH = "#{FILES_PREFIX}cpbenchmarks.csv".freeze
 
     def call
@@ -44,9 +45,11 @@ module Import
     end
 
     def emissions(row)
-      row.headers.grep(/\d{4}/).map do |year|
-        {year.to_s.to_i => row[year]&.to_f}
-      end.reduce(&:merge)
+      row.headers.grep(EMISSION_YEAR_PATTERN).reduce({}) do |acc, year|
+        next acc unless row[year].present?
+
+        acc.merge(year.to_s.to_i => row[year].to_f)
+      end
     end
   end
 end
