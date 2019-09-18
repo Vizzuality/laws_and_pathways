@@ -1,6 +1,7 @@
 module Api
   module Sectors
-    class CompaniesNamesGroupedByLevel
+    # rename to CompaniesGroupedByLevel
+    class CompaniesGroupedByLevel
       def initialize(company_scope)
         @company_scope = company_scope
       end
@@ -28,6 +29,31 @@ module Api
           .group_by { |company| company.mq_assessments.order(:assessment_date).first.level }
           .sort_by { |level, _companies| level }
           .map { |level, companies| [level, companies_emissions(companies)] }
+      end
+
+      #   [
+      #     ['0', 13],
+      #     ['1', 63],
+      #     ['2', 61],
+      #     ['3', 71],
+      #     ['4', 63],
+      #     ['4STAR', 6]
+      #   ]
+      #
+      def count
+        get.map { |level, companies| [level, companies.size] }
+      end
+
+      #   [
+      #     { name: 'WizzAir', data: {} },
+      #     { name: 'Air China', data: {'2014' => 111.0, '2015' => 112.0 } },
+      #     { name: 'China Southern', data: {'2014' => 114.0, '2015' => 112.0 } }
+      #   ]
+      #
+      def emissions
+        get
+          .map { |_level, companies| companies }
+          .flatten.map { |company| {name: company[:name], data: company[:emissions]} }
       end
 
       private
