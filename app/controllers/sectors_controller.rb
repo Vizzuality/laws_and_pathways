@@ -7,7 +7,7 @@ class SectorsController < ApplicationController
   def show
     @sector = Sector.find(params[:id])
 
-    @companies_by_levels = companies_grouped_by_sector_levels(companies_scope(params))
+    @companies_by_levels = ::Api::Sectors::CompaniesGroupedByLevel.new(companies_scope(params)).get
   end
 
   # Chart data endpoints
@@ -28,8 +28,7 @@ class SectorsController < ApplicationController
   #   ]
   #
   def companies_levels
-    data = companies_grouped_by_sector_levels(companies_scope(params))
-      .map { |level, companies| [level, companies.size] }
+    data = ::Api::Sectors::CompaniesGroupedByLevel.new(companies_scope(params)).count
 
     render json: data.chart_json
   end
@@ -48,9 +47,7 @@ class SectorsController < ApplicationController
   #   ]
   #
   def companies_emissions
-    data = companies_grouped_by_sector_levels(companies_scope(params))
-      .map { |_level, companies| companies }
-      .flatten.map { |company| {name: company[:name], data: company[:emissions]} }
+    data = ::Api::Sectors::CompaniesGroupedByLevel.new(companies_scope(params)).emissions
 
     render json: data.chart_json
   end
@@ -61,10 +58,6 @@ class SectorsController < ApplicationController
 
   def sectors_scenarios_alignments
     ::Api::Sectors::CompaniesCountGroupedByScenario.new.get
-  end
-
-  def companies_grouped_by_sector_levels(company_scope)
-    ::Api::Sectors::CompaniesNamesGroupedByLevel.new(company_scope).get
   end
 
   def companies_scope(params)
