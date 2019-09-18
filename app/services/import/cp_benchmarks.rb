@@ -2,6 +2,7 @@ module Import
   class CPBenchmarks
     include ClimateWatchEngine::CSVImporter
 
+    EMISSION_YEAR_PATTERN = /\d{4}/.freeze
     FILEPATH = "#{FILES_PREFIX}cpbenchmarks.csv".freeze
 
     def call
@@ -18,13 +19,10 @@ module Import
         sector = Sector.find_by!(name: row[:sector])
         benchmark = CP::Benchmark.find_or_initialize_by(
           sector: sector,
-          date: parse_date(row[:date])
+          release_date: parse_date(row[:date]),
+          scenario: row[:type]
         )
-        benchmarks = benchmark.benchmarks || []
-        benchmarks << benchmark_attributes(row)
-        benchmark.update!(
-          benchmarks: benchmarks
-        )
+        benchmark.update!(benchmark_attributes(row))
       end
     end
 
@@ -38,8 +36,7 @@ module Import
 
     def benchmark_attributes(row)
       {
-        name: row[:type],
-        values: values(row)
+        emissions: emissions(row)
       }
     end
 
@@ -47,10 +44,12 @@ module Import
       Import::DateUtils.safe_parse(date, ['%m-%Y'])
     end
 
-    def values(row)
-      row.headers.grep(/\d{4}/).map do |year|
-        {year.to_s.to_i => row[year]&.to_f}
-      end.reduce(&:merge)
+    def emissions(row)
+      row.headers.grep(EMISSION_YEAR_PATTERN).reduce({}) do |acc, year|
+        next acc unless row[year].present?
+
+        acc.merge(year.to_s.to_i => row[year].to_f)
+      end
     end
   end
 end

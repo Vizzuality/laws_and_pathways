@@ -5,6 +5,7 @@ describe 'CsvDataUpload (integration)' do
   let(:litigations_csv) { fixture_file('litigations.csv') }
   let(:companies_csv) { fixture_file('companies.csv') }
   let(:targets_csv) { fixture_file('targets.csv') }
+  let(:cp_benchmarks_csv) { fixture_file('cp_benchmarks.csv') }
 
   let!(:countries) do
     [
@@ -70,8 +71,16 @@ describe 'CsvDataUpload (integration)' do
     )
   end
 
+  it 'imports CSV files with CP Benchmarks data' do
+    expect_data_upload_results(
+      CP::Benchmark,
+      cp_benchmarks_csv,
+      new_records: 6, not_changed_records: 0, rows: 6, updated_records: 0
+    )
+  end
+
   def expect_data_upload_results(uploaded_resource_klass, csv, expected_details)
-    uploader_name = uploaded_resource_klass.name.pluralize
+    uploader_name = uploaded_resource_klass.name.tr('::', '').pluralize
     command = Command::CsvDataUpload.new(uploader: uploader_name, file: csv)
 
     expect do

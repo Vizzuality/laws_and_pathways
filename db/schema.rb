@@ -97,10 +97,11 @@ ActiveRecord::Schema.define(version: 2019_09_16_190258) do
 
   create_table "cp_benchmarks", force: :cascade do |t|
     t.bigint "sector_id"
-    t.date "date", null: false
-    t.jsonb "benchmarks"
+    t.date "release_date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "emissions"
+    t.string "scenario"
     t.index ["sector_id"], name: "index_cp_benchmarks_on_sector_id"
   end
 

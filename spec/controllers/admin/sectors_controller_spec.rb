@@ -25,14 +25,18 @@ RSpec.describe Admin::SectorsController, type: :controller do
     end
 
     it 'should show sector benchmarks' do
-      benchmark = sector.cp_benchmarks.by_date.last
+      benchmarks = sector
+        .cp_benchmarks
+        .by_release_date
+        .group_by(&:release_date)
+        .values
+        .last
 
       expect(page).to have_selector '#cp-benchmarks .panel.benchmark',
                                     count: sector.cp_benchmarks.count
-      latest_benchmark = page.find('#cp-benchmarks .panel.benchmark:nth-child(1) table tbody')
-      expect(latest_benchmark).to have_selector 'tr', count: benchmark.benchmarks.length
-      expect(latest_benchmark).to have_selector 'tr:nth-child(1) td:nth-child(1)',
-                                                text: benchmark.benchmarks[0]['name']
+      latest_benchmarks = page.find('#cp-benchmarks .panel.benchmark:nth-child(1) table tbody')
+      expect(latest_benchmarks).to have_selector 'tr', count: benchmarks.length
+      expect(latest_benchmarks).to have_selector 'tr:nth-child(1) td:nth-child(1)', text: benchmarks[0].scenario
     end
   end
 
