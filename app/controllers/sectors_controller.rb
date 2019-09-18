@@ -1,7 +1,7 @@
 class SectorsController < ApplicationController
   def index
     @sectors_names = Sector.order(:name).pluck(:id, :name)
-    @companies_names = Company.limit(20).pluck(:id, :name)
+    @companies_names = Company.limit(50).pluck(:id, :name)
   end
 
   def show

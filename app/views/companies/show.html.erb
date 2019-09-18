@@ -1,2 +1,65 @@
-<h1>Companies#show</h1>
-<p>Find me in app/views/companies/show.html.erb</p>
+<h1>Company Details</h1>
+<%= link_to 'back to all Sectors', sectors_path %>
+
+<div class="company-performance-summary container">
+  <div class="mq">
+    <h3>Management Quality</h3>
+    <h5>Number of assessments: <%= @company.mq_assessments.size %></h5>
+    <div class="mq-status-summary">
+      <%= @company.mq_level %>
+      <%= @company.mq_status %>
+    </div>
+  </div>
+
+  <div class="cp">
+    <h3>Carbon Performance</h3>
+    <h5>Number of assessments: <%= @company.cp_assessments.size %></h5>
+    <div class="cp-status-summary">
+      Below 2 degrees
+    </div>
+  </div>
+</div>
+
+<br><br>
+
+<div class="company-info container">
+  <%= @company_info.inspect %>
+</div>
+
+<hr>
+
+<h3>Management Quality: <%= @company.name %></h3>
+<p>Assessment of <strong><%= @company.name %></strong> according to the management of their greenhouse gas emissions and of risks and opportunities related to the low-carbon transition.</p>
+
+<div class="company-performance-details container">
+  <div class="mq-status">
+    <%= @company.mq_level %>
+    <%= @company.mq_status %>
+    <div>TODO: chart ..</div>
+  </div>
+  <div class="cp-status">
+    <div>TODO: chart with assessments ..</div>
+  </div>
+</div>
+
+<br><br>
+
+<div class="company-assessments container-columns">
+<%- @company_assessments.each do |level, assessments| %>
+  <div class="assessment-level">
+    <h3>Level <%= level %>: <%= @levels_descriptions[level.to_s] || 'no description yet' %></h3>
+    <div class="assessment-details">
+      <%- assessments.each do |a| %>
+      <div class="container">
+        <div class="assessment-answer">(<%= a['answer'] %>)</div>
+        <div class="assessment-question"><%= a['question'] %></div>
+      </div>
+      <%- end %>
+    </div>
+  </div>
+<%- end %>
+</div>
+
+
+<h3>Carbon Performance <%= @company.name %></h3>
+<p>Carbon Performance alignment of <%= @company.name %> with the Paris agreement benchmarks.</p>

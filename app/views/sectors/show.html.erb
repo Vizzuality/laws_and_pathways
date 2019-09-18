@@ -2,7 +2,7 @@
 <%= link_to 'back to all Sectors', sectors_path %>
 
 <h3>Management Quality: <%= @sector.name %></h3>
-<p>Distribution of companies in the <strong><%= @sector.name %></strong> sector according to the management of their greenhouse gas emissions and of risks and opportunities to the low-carbon transition.</p>
+<p>Distribution of companies in the <strong><%= @sector.name %></strong> sector according to the management of their greenhouse gas emissions and of risks and opportunities related to the low-carbon transition.</p>
 
 <div class="chart">
 <%= pie_chart(
@@ -32,7 +32,7 @@
     <div class="sector-companies">
       <ul>
       <%- companies.each do |company| %>
-        <li><%= company[:name] %></li>
+        <li><%= company[:name] %> [<%= company[:status] %>]</li>
       <%- end %>
       </ul>
     </div>
