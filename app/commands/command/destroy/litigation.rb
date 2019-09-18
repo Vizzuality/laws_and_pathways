@@ -17,7 +17,9 @@ module Command
             r.legislations = []
             r.external_legislations = []
 
-            r.save!
+            # Validation is false because it's possible that some precedent
+            # record (like geography) was removed earlier
+            r.save(validate: false)
           end
         end
       end

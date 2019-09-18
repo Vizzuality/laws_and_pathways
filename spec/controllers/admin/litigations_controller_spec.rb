@@ -132,6 +132,7 @@ RSpec.describe Admin::LitigationsController, type: :controller do
 
   describe 'DELETE destroy' do
     let!(:litigation) { create(:litigation, discarded_at: nil) }
+    subject { delete :destroy, params: {id: litigation.id} }
 
     context 'with valid params' do
       let!(:litigation_side) { create(:litigation_side, litigation: litigation) }
@@ -142,8 +143,6 @@ RSpec.describe Admin::LitigationsController, type: :controller do
       let!(:external_legislation) do
         create(:external_legislation, litigations: [litigation])
       end
-
-      subject { delete :destroy, params: {id: litigation.id} }
 
       before do
         expect { subject }.to change { Litigation.count }.by(-1)
@@ -189,8 +188,6 @@ RSpec.describe Admin::LitigationsController, type: :controller do
     context 'with invalid params' do
       let(:command) { double }
 
-      subject { delete :destroy, params: {id: litigation.id} }
-
       before do
         expect(::Command::Destroy::Litigation).to receive(:new).and_return(command)
         expect(command).to receive(:call).and_return(nil)
@@ -199,6 +196,16 @@ RSpec.describe Admin::LitigationsController, type: :controller do
       it 'redirects to index & renders alert message' do
         expect(subject).to redirect_to(admin_litigations_path(scope: 'All'))
         expect(flash[:alert]).to match('Could not delete selected Litigation')
+      end
+    end
+
+    context 'when geography does not exist' do
+      before do
+        litigation.geography.litigations = []
+      end
+
+      it 'soft-delete even if geography is nil' do
+        expect { subject }.to change { Litigation.count }.by(-1)
       end
     end
   end

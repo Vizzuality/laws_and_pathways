@@ -125,8 +125,9 @@ RSpec.describe Admin::LegislationsController, type: :controller do
   end
 
   describe 'DELETE destroy' do
+    let!(:legislation_to_delete) { create(:legislation, discarded_at: nil) }
+
     context 'with valid params' do
-      let!(:legislation_to_delete) { create(:legislation, discarded_at: nil) }
       let!(:document) { create(:document, documentable: legislation_to_delete) }
       let!(:event) { create(:legislation_event, eventable: legislation_to_delete) }
 
@@ -157,6 +158,18 @@ RSpec.describe Admin::LegislationsController, type: :controller do
       it 'redirects to index & renders alert message' do
         expect(subject).to redirect_to(admin_legislations_path)
         expect(flash[:alert]).to match('Could not delete selected Legislations')
+      end
+    end
+
+    context 'when geography does not exist' do
+      subject { delete :destroy, params: {id: legislation_to_delete.id} }
+
+      before do
+        legislation_to_delete.geography.legislations = []
+      end
+
+      it 'soft-delete even if geography is nil' do
+        expect { subject }.to change { Legislation.count }.by(-1)
       end
     end
   end
