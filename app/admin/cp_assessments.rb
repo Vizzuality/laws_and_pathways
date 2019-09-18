@@ -32,6 +32,7 @@ ActiveAdmin.register CP::Assessment do
 
   index do
     column :title, &:title_link
+    column :company
     column :assessment_date
     column :publication_date
     actions
