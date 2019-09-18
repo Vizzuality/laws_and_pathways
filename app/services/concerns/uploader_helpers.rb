@@ -1,4 +1,6 @@
 module UploaderHelpers
+  EMISSION_YEAR_PATTERN = /\d{4}/.freeze
+
   def geographies
     @geographies ||= Hash.new do |hash, iso|
       hash[iso] = Geography.find_by(iso: iso)
@@ -36,5 +38,13 @@ module UploaderHelpers
       .split(',')
       .map(&:strip)
       .map { |tag| tag_collection[tag] }
+  end
+
+  def parse_emissions(row)
+    row.headers.grep(EMISSION_YEAR_PATTERN).reduce({}) do |acc, year|
+      next acc unless row[year].present?
+
+      acc.merge(year.to_s.to_i => row[year].to_f)
+    end
   end
 end

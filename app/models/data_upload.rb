@@ -14,6 +14,7 @@ class DataUpload < ApplicationRecord
   has_one_attached :file
 
   UPLOADERS = %w[
+    CPAssessments
     CPBenchmarks
     Legislations
     Litigations
