@@ -15,10 +15,6 @@ module Command
 
             r.litigations = []
             r.targets = []
-
-            # Validation is false because it's possible that some precedent
-            # record (like geography) was removed earlier
-            r.save(validate: false)
           end
         end
       end

@@ -13,8 +13,6 @@ module Command
 
             r.litigations = []
             r.legislations = []
-
-            r.save!
           end
         end
       end
