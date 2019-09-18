@@ -37,6 +37,21 @@ ActiveAdmin.register CP::Assessment do
     actions
   end
 
+  csv do
+    year_columns = collection.flat_map(&:emissions_all_years).uniq.sort
+
+    column :id
+    column(:company) { |a| a.company.name }
+    column :assessment_date
+    column :publication_date
+    year_columns.map do |year|
+      column year do |a|
+        a.emissions[year]
+      end
+    end
+    column :assumptions
+  end
+
   controller do
     def scoped_collection
       super.includes(:company)
