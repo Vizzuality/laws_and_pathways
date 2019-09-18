@@ -15,15 +15,17 @@
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #  visibility_status          :string           default("draft")
+#  indc_url                   :text
 #  created_by_id              :bigint
 #  updated_by_id              :bigint
-#  indc_url                   :text
+#  discarded_at               :datetime
 #
 
 class Geography < ApplicationRecord
   include UserTrackable
   include Taggable
   include VisibilityStatus
+  include Discardable
   extend FriendlyId
 
   friendly_id :name, use: :slugged, routes: :default
@@ -51,6 +53,7 @@ class Geography < ApplicationRecord
   tag_with :political_groups
 
   has_many :litigations
+  has_many :legislations
   has_many :events, as: :eventable, dependent: :destroy
 
   accepts_nested_attributes_for :events, allow_destroy: true, reject_if: :all_blank

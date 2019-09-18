@@ -31,5 +31,12 @@ FactoryBot.define do
       event_type { 'approved' }
       eventable { |e| e.association(:legislation) }
     end
+
+    factory :geography_event do
+      title { 'Barcelona event' }
+      description { 'Description of event' }
+      event_type { 'election' }
+      eventable { |e| e.association(:geography) }
+    end
   end
 end

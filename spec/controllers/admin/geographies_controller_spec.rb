@@ -91,6 +91,66 @@ RSpec.describe Admin::GeographiesController, type: :controller do
     end
   end
 
+  describe 'DELETE destroy' do
+    let!(:geography) { create(:geography, discarded_at: nil) }
+
+    context 'with valid params' do
+      let!(:legislation) { create(:legislation, geography: geography) }
+      let!(:litigation) { create(:litigation, geography: geography) }
+      let!(:event) { create(:geography_event, eventable: geography) }
+
+      subject { delete :destroy, params: {id: geography.id} }
+
+      before do
+        expect { subject }.to change { Geography.count }.by(-1)
+      end
+
+      it 'discards geography object' do
+        expect(Geography.find_by_id(geography.id)).to be_nil
+      end
+
+      it 'set discarded_at date to geography object' do
+        expect(geography.reload.discarded_at).to_not be_nil
+      end
+
+      it 'discard all events' do
+        expect(Event.find_by_id(event.id)).to be_nil
+      end
+
+      it 'shows discarded geography in all_discarded scope' do
+        expect(Geography.all_discarded.find(geography.id)).to_not be_nil
+      end
+
+      it 'removes discarded geography from legislation' do
+        expect(legislation.reload.geography).to be_nil
+      end
+
+      it 'removes discarded geography from litigation' do
+        expect(litigation.reload.geography).to be_nil
+      end
+
+      it 'shows proper notice' do
+        expect(flash[:notice]).to match('Successfully deleted selected Geography')
+      end
+    end
+
+    context 'with invalid params' do
+      let(:command) { double }
+
+      subject { delete :destroy, params: {id: geography.id} }
+
+      before do
+        expect(::Command::Destroy::Geography).to receive(:new).and_return(command)
+        expect(command).to receive(:call).and_return(nil)
+      end
+
+      it 'redirects to index & renders alert message' do
+        expect(subject).to redirect_to(admin_geographies_path(scope: 'All'))
+        expect(flash[:alert]).to match('Could not delete selected Geography')
+      end
+    end
+  end
+
   def last_geography_created
     Geography.order(:created_at).last
   end
