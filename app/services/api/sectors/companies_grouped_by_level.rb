@@ -39,7 +39,12 @@ module Api
       #   ]
       #
       def count
-        get.map { |level, companies| [level, companies.size] }
+        @company_scope
+          .includes(:mq_assessments)
+          .group_by { |company| company.mq_assessments.order(:assessment_date).first.level }
+          .sort_by { |level, _companies| level }
+          .map { |level, companies| [level, companies_emissions(companies)] }
+          .map { |level, companies| [level, companies.size] }
       end
 
       #   [
@@ -49,9 +54,22 @@ module Api
       #   ]
       #
       def emissions
-        get
+        @company_scope
+          .includes(:mq_assessments)
+          .group_by { |company| company.mq_assessments.order(:assessment_date).first.level }
+          .sort_by { |level, _companies| level }
+          .map { |level, companies| [level, companies_emissions(companies)] }
           .map { |_level, companies| companies }
-          .flatten.map { |company| {name: company[:name], data: company[:emissions]} }
+          .flatten
+          .map { |company| series_options(company[:emissions], company[:name]) }
+      end
+
+      def series_options(data, series_name)
+        {
+          name: series_name,
+          data: data,
+          lineWidth: 4
+        }
       end
 
       private

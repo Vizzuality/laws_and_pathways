@@ -2,7 +2,7 @@ class CompaniesController < ApplicationController
   def show
     @company = Company.find(params[:id])
 
-    @company_details = ::Api::Companies::Details.new(@company).get
+    @company_details = ::Api::Charts::Company.new.details_data(@company)
   end
 
   # Returns array of 2 elements:
@@ -18,7 +18,7 @@ class CompaniesController < ApplicationController
   def emissions
     @company = Company.find(params[:id])
 
-    data = ::Api::Companies::Emissions.new(@company).get
+    data = ::Api::Charts::Company.new.emissions_data(@company)
 
     # TODO: move to JS
     @min_y_axis_value = data.pluck(:data).first.values.min - 20
