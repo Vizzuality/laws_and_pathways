@@ -194,7 +194,7 @@ RSpec.describe Admin::LitigationsController, type: :controller do
       end
 
       it 'redirects to index & renders alert message' do
-        expect(subject).to redirect_to(admin_litigations_path(scope: 'All'))
+        expect(subject).to redirect_to(admin_litigations_path)
         expect(flash[:alert]).to match('Could not delete selected Litigation')
       end
     end

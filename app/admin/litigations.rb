@@ -118,7 +118,7 @@ ActiveAdmin.register Litigation do
                   {alert: 'Could not delete selected Litigation'}
                 end
 
-      redirect_to admin_litigations_path(scope: current_scope.name), results
+      redirect_to admin_litigations_path, results
     end
   end
 end

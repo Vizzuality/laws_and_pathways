@@ -145,7 +145,7 @@ RSpec.describe Admin::GeographiesController, type: :controller do
       end
 
       it 'redirects to index & renders alert message' do
-        expect(subject).to redirect_to(admin_geographies_path(scope: 'All'))
+        expect(subject).to redirect_to(admin_geographies_path)
         expect(flash[:alert]).to match('Could not delete selected Geography')
       end
     end
