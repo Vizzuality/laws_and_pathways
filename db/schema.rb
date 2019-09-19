@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_17_181907) do
+ActiveRecord::Schema.define(version: 2019_09_19_175646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,8 @@ ActiveRecord::Schema.define(version: 2019_09_17_181907) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "visibility_status", default: "draft"
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_companies_on_discarded_at"
     t.index ["geography_id"], name: "index_companies_on_geography_id"
     t.index ["headquarters_geography_id"], name: "index_companies_on_headquarters_geography_id"
     t.index ["isin"], name: "index_companies_on_isin", unique: true
@@ -92,7 +94,9 @@ ActiveRecord::Schema.define(version: 2019_09_17_181907) do
     t.text "assumptions"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
     t.index ["company_id"], name: "index_cp_assessments_on_company_id"
+    t.index ["discarded_at"], name: "index_cp_assessments_on_discarded_at"
   end
 
   create_table "cp_benchmarks", force: :cascade do |t|
@@ -266,7 +270,9 @@ ActiveRecord::Schema.define(version: 2019_09_17_181907) do
     t.jsonb "questions"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
     t.index ["company_id"], name: "index_mq_assessments_on_company_id"
+    t.index ["discarded_at"], name: "index_mq_assessments_on_discarded_at"
   end
 
   create_table "sectors", force: :cascade do |t|

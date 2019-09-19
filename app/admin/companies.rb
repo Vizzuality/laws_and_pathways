@@ -176,5 +176,17 @@ ActiveAdmin.register Company do
     def scoped_collection
       super.includes(:geography, :headquarters_geography, :mq_assessments)
     end
+
+    def destroy
+      destroy_command = ::Command::Destroy::Company.new(resource.object)
+
+      results = if destroy_command.call
+                  {notice: 'Successfully deleted selected Company'}
+                else
+                  {alert: 'Could not delete selected Company'}
+                end
+
+      redirect_to admin_companies_path, results
+    end
   end
 end
