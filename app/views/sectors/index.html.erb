@@ -6,8 +6,8 @@ Sectors:
 <br>
 Companies:
 <%= @companies_names.map {|c| link_to c.last, company_path(c.first)}.join(', ').html_safe %>
-<br>
-<br>
+
+<br><br><hr>
 
 <h3>Management Quality: All sectors</h3>
 <p>Distribution of companies in All sectors according to the management of their greenhouse gas emissions and of risks and opportunities to the low-carbon transition.</p>
@@ -29,8 +29,12 @@ Companies:
   ) %>
 </div>
 
+<hr>
+
 <h4>Market Cap</h4>
 <p>TODO: bubble chart for sectors / levels</p>
+
+<hr>
 
 <h3>Carbon Performance: All sectors (random data)</h3>
 <p>CP alignment with the Paris agreement benchmarks by sector and cluster (number and % of companies). Please note that this information is not available for all sectors.</p>

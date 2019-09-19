@@ -1,6 +1,8 @@
 <h1>Company Details</h1>
 <%= link_to 'back to all Sectors', sectors_path %>
 
+<hr>
+
 <div class="company-performance-summary container">
   <div class="mq">
     <h3>Management Quality</h3>
@@ -47,7 +49,7 @@
 <div class="company-assessments container-columns">
 <%- @company_assessments.each do |level, assessments| %>
   <div class="assessment-level">
-    <h3>Level <%= level %>: <%= @levels_descriptions[level.to_s] || 'no description yet' %></h3>
+    <h3>Level <%= level %>: <%= @levels_descriptions[level.to_s] || 'Answers' %></h3>
     <div class="assessment-details">
       <%- assessments.each do |a| %>
       <div class="container">
@@ -60,6 +62,7 @@
 <%- end %>
 </div>
 
+<hr>
 
 <h3>Carbon Performance <%= @company.name %></h3>
 <p>Carbon Performance alignment of <%= @company.name %> with the Paris agreement benchmarks.</p>
