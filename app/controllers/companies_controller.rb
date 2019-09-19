@@ -2,23 +2,27 @@ class CompaniesController < ApplicationController
   def show
     @company = Company.find(params[:id])
 
-    @company_info = {
-      country: @company.geography.name,
-      sector: @company.sector.name,
-      market_cap: 'Large',
-      isin: @company.isin,
-      sedol: 60,
-      ca100: @company.ca100 ? 'Yes' : 'No'
-    }
+    @company_details = ::Api::Companies::Details.new(@company).get
+  end
 
-    @company_assessments = @company.latest_assessment.questions.group_by { |q| q['level'] }
+  # Returns array of 2 elements:
+  # - company emissions
+  # - company's sector emissions
+  #
+  # @example
+  #   [
+  #     { name: 'Air China', data: {'2014' => 111.0, '2015' => 112.0 } },
+  #     { name: 'Airlines sector mean', data: {'2014' => 114.0, '2015' => 112.0 } }
+  #   ]
+  #
+  def emissions
+    @company = Company.find(params[:id])
 
-    @levels_descriptions = {
-      '0' => 'Unaware of Climate Change as a Business Issue',
-      '1' => 'Acknowledging Climate Change as a Business Issue',
-      '2' => 'Building Capacity',
-      '3' => 'Integrating into Operational Decision Making',
-      '4' => 'Strategic Assessment'
-    }
+    data = ::Api::Companies::Emissions.new(@company).get
+
+    # TODO: move to JS
+    @min_y_axis_value = data.pluck(:data).first.values.min - 20
+
+    render json: data.chart_json
   end
 end
