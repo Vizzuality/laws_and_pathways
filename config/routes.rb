@@ -10,7 +10,11 @@ Rails.application.routes.draw do
       get :companies_emissions
     end
   end
-  resources :companies, only: [:show]
+  resources :companies, only: [:show] do
+    member do
+      get :emissions
+    end
+  end
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
