@@ -29,6 +29,10 @@ class AdminUser < ApplicationRecord
     "#{first_name} #{last_name}".strip
   end
 
+  def display_name
+    to_s
+  end
+
   def to_s
     return email if full_name.blank?
 

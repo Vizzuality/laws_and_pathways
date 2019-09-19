@@ -12,7 +12,7 @@ ActiveAdmin.register CP::Assessment do
   filter :company
   filter :company_sector_id, as: :select, collection: proc { Sector.all }
 
-  data_export_sidebar 'CP Assessments'
+  data_export_sidebar 'CPAssessments'
 
   show do
     attributes_table do
@@ -35,6 +35,21 @@ ActiveAdmin.register CP::Assessment do
     column :assessment_date
     column :publication_date
     actions
+  end
+
+  csv do
+    year_columns = collection.flat_map(&:emissions_all_years).uniq.sort
+
+    column :id
+    column(:company) { |a| a.company.name }
+    column :assessment_date
+    column :publication_date
+    year_columns.map do |year|
+      column year do |a|
+        a.emissions[year]
+      end
+    end
+    column :assumptions
   end
 
   controller do

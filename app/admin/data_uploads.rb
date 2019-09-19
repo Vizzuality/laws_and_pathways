@@ -67,6 +67,10 @@ ActiveAdmin.register DataUpload do
   end
 
   controller do
+    def scoped_collection
+      super.includes(:uploaded_by)
+    end
+
     def create
       @data_upload = ::Command::CsvDataUpload.new(permitted_params[:data_upload])
 

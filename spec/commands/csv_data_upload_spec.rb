@@ -6,6 +6,7 @@ describe 'CsvDataUpload (integration)' do
   let(:companies_csv) { fixture_file('companies.csv') }
   let(:targets_csv) { fixture_file('targets.csv') }
   let(:cp_benchmarks_csv) { fixture_file('cp_benchmarks.csv') }
+  let(:cp_assessments_csv) { fixture_file('cp_assessments.csv') }
 
   let!(:countries) do
     [
@@ -76,6 +77,29 @@ describe 'CsvDataUpload (integration)' do
       CP::Benchmark,
       cp_benchmarks_csv,
       new_records: 6, not_changed_records: 0, rows: 6, updated_records: 0
+    )
+    # subsequent import should not create or update any record
+    expect_data_upload_results(
+      CP::Benchmark,
+      cp_benchmarks_csv,
+      new_records: 0, not_changed_records: 6, rows: 6, updated_records: 0
+    )
+  end
+
+  it 'imports CSV files with CP Assessments data' do
+    create(:company, name: 'ACME')
+    create(:company, name: 'ACME Materials')
+
+    expect_data_upload_results(
+      CP::Assessment,
+      cp_assessments_csv,
+      new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0
+    )
+    # subsequent import should not create or update any record
+    expect_data_upload_results(
+      CP::Assessment,
+      cp_assessments_csv,
+      new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0
     )
   end
 

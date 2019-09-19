@@ -4,6 +4,7 @@ module Import
 
     FILEPATH = "#{FILES_PREFIX}companydata.csv".freeze
 
+    EMISSION_YEAR_PATTERN = /\d{4}/.freeze
     DATES_VALID_FORMATS = %w[%m/%d/%Y %a-%y].freeze
 
     def call
@@ -108,10 +109,11 @@ module Import
     end
 
     def get_emissions(row)
-      row.headers
-        .grep(/^\d{4}$/)
-        .map { |year| {year.to_s.to_i => row[year]&.to_f} }
-        .reduce(&:merge).reject { |_k, v| v.blank? }
+      row.headers.grep(EMISSION_YEAR_PATTERN).reduce({}) do |acc, year|
+        next acc unless row[year].present?
+
+        acc.merge(year.to_s.to_i => row[year].to_f)
+      end
     end
 
     def normalize_date(date)
