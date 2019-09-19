@@ -31,7 +31,7 @@ module CSVImport
     end
 
     def find_company!(row)
-      return unless row[:sector].present?
+      return unless row[:company].present?
 
       Company.where('lower(name) = ?', row[:company].downcase).first!
     end
@@ -39,6 +39,7 @@ module CSVImport
     def assessment_attributes(row)
       {
         assessment_date: parse_date(row[:assessment_date]),
+        publication_date: parse_date(row[:publication_date]),
         assumptions: row[:assumptions],
         emissions: parse_emissions(row)
       }
