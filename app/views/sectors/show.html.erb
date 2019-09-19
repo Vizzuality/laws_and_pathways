@@ -49,6 +49,14 @@
 <%= line_chart(
       companies_emissions_sector_path(@sector.id),
       width: '1200px',
-      height: '800px'
+      height: '800px',
+      library: {
+        legend: {
+          verticalAlign: 'top',
+        },
+        yAxis: {
+          min: @min_y_axis_value
+        }
+      }
   )%>
 </div>
