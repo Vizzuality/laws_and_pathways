@@ -3,7 +3,8 @@ module Api
     class CompaniesCountGroupedByScenario
       CP_SCENARIOS = %w[below_2 exact_2 paris not_aligned no_disclosure].freeze
 
-      # Returns info of how many Companies from each Sector are in given CP scenario group
+      # Returns info of how many Companies from each Sector
+      # are in given CP scenario group.
       #
       # [
       #  {
