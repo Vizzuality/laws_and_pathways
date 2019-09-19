@@ -130,6 +130,86 @@ RSpec.describe Admin::LitigationsController, type: :controller do
     end
   end
 
+  describe 'DELETE destroy' do
+    let!(:litigation) { create(:litigation, discarded_at: nil) }
+    subject { delete :destroy, params: {id: litigation.id} }
+
+    context 'with valid params' do
+      let!(:litigation_side) { create(:litigation_side, litigation: litigation) }
+      let!(:event) { create(:litigation_event, eventable: litigation) }
+      let!(:document) { create(:document, documentable: litigation) }
+
+      let!(:legislation) { create(:legislation, litigations: [litigation]) }
+      let!(:external_legislation) do
+        create(:external_legislation, litigations: [litigation])
+      end
+
+      before do
+        expect { subject }.to change { Litigation.count }.by(-1)
+      end
+
+      it 'discards litigation object' do
+        expect(Litigation.find_by_id(litigation.id)).to be_nil
+      end
+
+      it 'set discarded_at date to litigation object' do
+        expect(litigation.reload.discarded_at).to_not be_nil
+      end
+
+      it 'shows discarded litigations in all_discarded scope' do
+        expect(Litigation.all_discarded.find(litigation.id)).to_not be_nil
+      end
+
+      it 'discard all litigation sides' do
+        expect(LitigationSide.find_by_id(litigation_side.id)).to be_nil
+      end
+
+      it 'discard all events' do
+        expect(Event.find_by_id(event.id)).to be_nil
+      end
+
+      it 'discard all documents' do
+        expect(Document.find_by_id(document.id)).to be_nil
+      end
+
+      it 'removes discarded litigation from legislation' do
+        expect(legislation.reload.litigations).to be_empty
+      end
+
+      it 'removes discarded litigation from external_legislations' do
+        expect(external_legislation.reload.litigations).to be_empty
+      end
+
+      it 'shows proper notice' do
+        expect(flash[:notice]).to match('Successfully deleted selected Litigation')
+      end
+    end
+
+    context 'with invalid params' do
+      let(:command) { double }
+
+      before do
+        expect(::Command::Destroy::Litigation).to receive(:new).and_return(command)
+        expect(command).to receive(:call).and_return(nil)
+      end
+
+      it 'redirects to index & renders alert message' do
+        expect(subject).to redirect_to(admin_litigations_path)
+        expect(flash[:alert]).to match('Could not delete selected Litigation')
+      end
+    end
+
+    context 'when geography does not exist' do
+      before do
+        litigation.geography.litigations = []
+      end
+
+      it 'soft-delete even if geography is nil' do
+        expect { subject }.to change { Litigation.count }.by(-1)
+      end
+    end
+  end
+
   def last_litigation_created
     Litigation.order(:created_at).last
   end

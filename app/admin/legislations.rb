@@ -149,7 +149,7 @@ ActiveAdmin.register Legislation do
                   {alert: 'Could not delete selected Legislations'}
                 end
 
-      redirect_to admin_legislations_path(scope: current_scope.name), results
+      redirect_to admin_legislations_path, results
     end
   end
 end

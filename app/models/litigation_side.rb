@@ -14,6 +14,8 @@
 #
 
 class LitigationSide < ApplicationRecord
+  include Discardable
+
   SIDE_TYPES = %w[a b c].freeze
   PARTY_TYPES = %w[
     government

@@ -16,6 +16,7 @@
 #  visibility_status         :string           default("draft")
 #  created_by_id             :bigint
 #  updated_by_id             :bigint
+#  discarded_at              :datetime
 #
 
 FactoryBot.define do

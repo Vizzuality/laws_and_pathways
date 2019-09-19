@@ -16,12 +16,14 @@
 #  visibility_status         :string           default("draft")
 #  created_by_id             :bigint
 #  updated_by_id             :bigint
+#  discarded_at              :datetime
 #
 
 class Litigation < ApplicationRecord
   include UserTrackable
   include Taggable
   include VisibilityStatus
+  include Discardable
   extend FriendlyId
 
   friendly_id :title, use: :slugged, routes: :default

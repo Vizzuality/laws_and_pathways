@@ -15,7 +15,6 @@ module Command
 
             r.litigations = []
             r.targets = []
-            r.save!
           end
         end
       end

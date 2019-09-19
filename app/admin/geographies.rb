@@ -88,7 +88,7 @@ ActiveAdmin.register Geography do
                   {alert: 'Could not delete selected Geography'}
                 end
 
-      redirect_to admin_geographies_path(scope: current_scope.name), results
+      redirect_to admin_geographies_path, results
     end
   end
 end

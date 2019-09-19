@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_16_190258) do
+ActiveRecord::Schema.define(version: 2019_09_17_181907) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -227,7 +227,9 @@ ActiveRecord::Schema.define(version: 2019_09_16_190258) do
     t.datetime "updated_at", null: false
     t.string "connected_entity_type"
     t.bigint "connected_entity_id"
+    t.datetime "discarded_at"
     t.index ["connected_entity_type", "connected_entity_id"], name: "index_litigation_sides_connected_entity"
+    t.index ["discarded_at"], name: "index_litigation_sides_on_discarded_at"
     t.index ["litigation_id"], name: "index_litigation_sides_on_litigation_id"
   end
 
@@ -245,7 +247,9 @@ ActiveRecord::Schema.define(version: 2019_09_16_190258) do
     t.string "visibility_status", default: "draft"
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
+    t.datetime "discarded_at"
     t.index ["created_by_id"], name: "index_litigations_on_created_by_id"
+    t.index ["discarded_at"], name: "index_litigations_on_discarded_at"
     t.index ["document_type"], name: "index_litigations_on_document_type"
     t.index ["geography_id"], name: "index_litigations_on_geography_id"
     t.index ["jurisdiction_id"], name: "index_litigations_on_jurisdiction_id"
