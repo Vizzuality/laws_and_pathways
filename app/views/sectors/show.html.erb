@@ -1,6 +1,8 @@
 <h1>Sector Details</h1>
 <%= link_to 'back to all Sectors', sectors_path %>
 
+<hr>
+
 <h3>Management Quality: <%= @sector.name %></h3>
 <p>Distribution of companies in the <strong><%= @sector.name %></strong> sector according to the management of their greenhouse gas emissions and of risks and opportunities related to the low-carbon transition.</p>
 
@@ -39,6 +41,8 @@
   </div>
 <%- end %>
 </div>
+
+<hr>
 
 <h3>Carbon Performance: <%= @sector.name %></h3>
 <div class="chart">
