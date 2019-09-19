@@ -39,7 +39,7 @@ class Company < ApplicationRecord
 
   validates :ca100, inclusion: {in: [true, false]}
   validates_presence_of :name, :slug, :isin, :size
-  validates_uniqueness_of :slug, :isin
+  validates_uniqueness_of :slug, :isin, :name
 
   def latest_assessment
     mq_assessments.first
