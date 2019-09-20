@@ -12,11 +12,11 @@ class SectorsController < ApplicationController
 
   # Chart data endpoints
 
-  # Data:     Sectors Levels mapped to number of Companies
+  # Data:     Sectors Companies number, grouped by Levels
   # Section:  MQ
   # Type:     pie chart
   # On pages: :index, :show
-  def companies_levels
+  def levels_chart_data
     data = ::Api::Charts::Sector.new(companies_scope(params)).companies_count
 
     render json: data.chart_json
@@ -26,17 +26,17 @@ class SectorsController < ApplicationController
   # Section:  CP
   # Type:     line chart
   # On pages: :show
-  def companies_emissions
+  def emissions_chart_data
     data = ::Api::Charts::Sector.new(companies_scope(params)).companies_emissions
 
     render json: data.chart_json
   end
 
-  # Data:     Sectors Companies numbers, grouped by CP Benchmarks from given Sector
+  # Data:     Sector Companies numbers, grouped by CP Benchmarks from given Sector
   # Section:  CP
   # Type:     column chart
   # On pages: :index
-  def scenarios
+  def benchmarks_chart_data
     data = ::Api::Charts::Sector.new(companies_scope(params)).group_by_cp_benchmark
 
     render json: data.chart_json

@@ -64,11 +64,12 @@
 
 <hr>
 
+<!-- COMPANIES -->
 <h3>Carbon Performance <%= @company.name %></h3>
 <p>Carbon Performance alignment of <%= @company.name %> with the Paris agreement benchmarks.</p>
 <div class="chart">
 <%= line_chart(
-      emissions_company_path(@company.id),
+      emissions_chart_data_company_path(@company.id),
       width: '800px',
       height: '600px',
       library: {

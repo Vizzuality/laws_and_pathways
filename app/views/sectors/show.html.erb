@@ -8,7 +8,7 @@
 
 <div class="chart">
 <%= pie_chart(
-      companies_levels_sector_path(@sector.id),
+      levels_chart_data_sector_path(@sector.id),
       donut: true,
       library: {
         tooltip: { enabled: false },
@@ -44,15 +44,24 @@
 
 <hr>
 
+<!-- SECTORS -->
 <h3>Carbon Performance: <%= @sector.name %></h3>
 <div class="chart">
 <%= line_chart(
-      companies_emissions_sector_path(@sector.id),
+      emissions_chart_data_sector_path(@sector.id),
       width: '1200px',
       height: '800px',
       library: {
         legend: {
           verticalAlign: 'top',
+        },
+        plotOptions: {
+          area: {
+            fillOpacity: 0.3,
+            marker: {
+              enabled: false
+            }
+          }
         }
       }
   )%>

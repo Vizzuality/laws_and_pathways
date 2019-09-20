@@ -9,7 +9,7 @@ class CompaniesController < ApplicationController
   # Section:  CP
   # Type:     line chart
   # On pages: :show
-  def emissions
+  def emissions_chart_data
     @company = Company.find(params[:id])
 
     data = ::Api::Charts::Company.new.emissions_data(@company)
