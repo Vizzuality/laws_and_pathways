@@ -14,7 +14,7 @@ Companies:
 
 <div class="chart">
 <%= pie_chart(
-      companies_levels_sectors_path,
+      levels_chart_data_sectors_path,
       donut: true,
       library: {
         tooltip: { enabled: false },
@@ -41,7 +41,7 @@ Companies:
 
 <div class="chart">
 <%= column_chart(
-      scenarios_sectors_path,
+      benchmarks_chart_data_sectors_path,
       stacked: true,
       width: '1200px',
       library: {

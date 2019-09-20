@@ -10,8 +10,6 @@ module Api
       }.freeze
 
       def details_data(company)
-        company_latest_assessment = company.latest_assessment.questions.group_by { |q| q['level'] }
-
         {
           name: company.name,
           country: company.geography.name,
@@ -20,9 +18,13 @@ module Api
           isin: company.isin,
           sedol: 60,
           ca100: company.ca100 ? 'Yes' : 'No',
-          latest_assessment: company_latest_assessment,
+          latest_assessment: questions_by_level(company),
           levels_descriptions: SECTORS_LEVELS_DESC
         }
+      end
+
+      def questions_by_level(company)
+        company.latest_assessment.questions.group_by { |q| q['level'] }
       end
 
       # Returns array of following series:
@@ -42,24 +44,24 @@ module Api
       #
       def emissions_data(company)
         [
-          emissions_data_series_from_company(company),
-          emissions_data_series_from_sector(company.sector),
+          data_series_from_company(company),
+          data_series_from_sector(company.sector),
           company.sector_benchmarks.map do |benchmark|
-            emissions_data_series_from_sector_benchmark(benchmark)
+            data_series_from_sector_benchmark(benchmark)
           end
         ].flatten
       end
 
       private
 
-      def emissions_data_series_from_company(company)
+      def data_series_from_company(company)
         {
           name: company.name,
           data: company.cp_assessments.last.emissions
         }
       end
 
-      def emissions_data_series_from_sector_benchmark(cp_benchmark)
+      def data_series_from_sector_benchmark(cp_benchmark)
         {
           type: 'area',
           name: cp_benchmark.scenario,
@@ -68,7 +70,7 @@ module Api
       end
 
       # returns average from sector companies
-      def emissions_data_series_from_sector(sector)
+      def data_series_from_sector(sector)
         {
           name: "#{sector.name} sector mean",
           data: sector_average_emissions(sector)
