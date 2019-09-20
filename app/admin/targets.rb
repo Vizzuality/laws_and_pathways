@@ -98,4 +98,18 @@ ActiveAdmin.register Target do
     column(:target_scope) { |t| t.target_scope.name }
     column :visibility_status
   end
+
+  controller do
+    def destroy
+      destroy_command = ::Command::Destroy::Target.new(resource.object)
+
+      message = if destroy_command.call
+                  {notice: 'Successfully deleted selected Target'}
+                else
+                  {alert: 'Could not delete selected Target'}
+                end
+
+      redirect_to admin_targets_path, message
+    end
+  end
 end

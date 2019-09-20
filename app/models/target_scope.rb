@@ -9,6 +9,8 @@
 #
 
 class TargetScope < ApplicationRecord
+  include Discardable
+
   has_many :targets
 
   validates_presence_of :name
