@@ -99,17 +99,21 @@ RSpec.describe Admin::TargetsController, type: :controller do
     let!(:target) { create(:target, discarded_at: nil) }
 
     context 'with valid params' do
-      let!(:legislation) { create(:legislation, target: target) }
+      let!(:legislation) { create(:legislation) }
 
       subject { delete :destroy, params: {id: target.id} }
 
       before do
-        target.legislations = legislation
+        target.legislations = [legislation]
         expect { subject }.to change { Target.count }.by(-1)
       end
 
+      it 'set discarded_at date to target object' do
+        expect(target.reload.discarded_at).to_not be_nil
+      end
+
       it 'removes discarded target from legislation' do
-        expect(target.legislations).to be_empty
+        expect(target.reload.legislations).to be_empty
       end
 
       it 'shows proper notice' do
