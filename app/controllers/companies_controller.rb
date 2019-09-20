@@ -14,9 +14,6 @@ class CompaniesController < ApplicationController
 
     data = ::Api::Charts::Company.new.emissions_data(@company)
 
-    # TODO: move to JS
-    @min_y_axis_value = data.pluck(:data).first.values.min - 20
-
     render json: data.chart_json
   end
 end

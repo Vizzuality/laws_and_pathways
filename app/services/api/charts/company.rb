@@ -23,33 +23,28 @@ module Api
         }
       end
 
-      # Returns array of 2 elements:
+      # Returns array of following series:
       # - company emissions
-      # - company's sector emissions
+      # - company's sector average emissions
+      # - company's sector CP benchmarks (scenarios)
       #
       # @example
       #   [
-      #     { name: 'Air China', data: {'2014' => 111.0, '2015' => 112.0 } },
-      #     { name: 'Airlines sector mean', data: {'2014' => 114.0, '2015' => 112.0 } }
+      #     { name: 'Air China',                   data: {'2014' => 111.0, '2015' => 112.0 } },
+      #
+      #     { name: 'Airlines sector mean',        data: { ... } },
+      #
+      #     { name: '2 Degrees (Shift-Improve)',   data: { ... } },
+      #     { name: '2 Degrees (High Efficiency)', data: { ... } },
       #   ]
       #
       def emissions_data(company)
-        company_emissions_data = {
-          name: company.name,
-          data: company.cp_assessments.last.emissions
-        }
+        company_emissions_data = emissions_data_series_from_company(company)
 
-        # TODO: calculate real average from all sectors
-        sectors_average_data = {
-          name: "#{company.sector.name} sector mean",
-          data: all_sector_assessments_emissions(company).reduce(&:merge)
-        }
+        sectors_average_data = emissions_data_series_from_sector(company.sector)
 
-        sectors_cp_benchmarks = all_sector_benchmarks_emissions(company).map do |_release_date, benchmarks|
-          {
-            name: benchmarks.last.scenario,
-            data: benchmarks.last.emissions
-          }
+        sectors_cp_benchmarks = sector_benchmarks_emissions(company).map do |benchmark|
+          emissions_data_series_from_sector_benchmark(benchmark)
         end
 
         [
@@ -59,19 +54,38 @@ module Api
         ].flatten
       end
 
-      def all_sector_assessments_emissions(company)
+      def sector_benchmarks_emissions(company)
+        company.sector.cp_benchmarks
+      end
+
+      def emissions_data_series_from_company(company)
+        {
+          name: company.name,
+          data: company.cp_assessments.last.emissions
+        }
+      end
+
+      def emissions_data_series_from_sector_benchmark(cp_benchmark)
+        {
+          name: cp_benchmark.scenario,
+          data: cp_benchmark.emissions
+        }
+      end
+
+      # returns average from sector companies
+      def emissions_data_series_from_sector(sector)
+        {
+          name: "#{sector.name} sector mean",
+          data: all_sector_assessments_emissions(sector).reduce(&:merge) # TODO: calculate real average from all sectors
+        }
+      end
+
+      def all_sector_assessments_emissions(sector)
         ::Company.includes(:cp_assessments)
-          .where(sector: company.sector)
+          .where(sector: sector)
           .map(&:cp_assessments)
           .flatten
           .map(&:emissions)
-      end
-
-      def all_sector_benchmarks_emissions(company)
-        company
-          .sector
-          .cp_benchmarks
-          .group_by { |b| b.release_date.to_s }
       end
     end
   end
