@@ -44,15 +44,13 @@ module Api
         [
           emissions_data_series_from_company(company),
           emissions_data_series_from_sector(company.sector),
-          sector_benchmarks(company).map do |benchmark|
+          company.sector_benchmarks.map do |benchmark|
             emissions_data_series_from_sector_benchmark(benchmark)
           end
         ].flatten
       end
 
-      def sector_benchmarks(company)
-        company.sector.cp_benchmarks
-      end
+      private
 
       def emissions_data_series_from_company(company)
         {
@@ -63,6 +61,7 @@ module Api
 
       def emissions_data_series_from_sector_benchmark(cp_benchmark)
         {
+          type: 'area',
           name: cp_benchmark.scenario,
           data: cp_benchmark.emissions
         }
@@ -72,16 +71,37 @@ module Api
       def emissions_data_series_from_sector(sector)
         {
           name: "#{sector.name} sector mean",
-          data: all_sector_assessments_emissions(sector).reduce(&:merge) # TODO: calculate real average from all sectors
+          data: sector_average_emissions(sector)
         }
       end
 
-      def all_sector_assessments_emissions(sector)
-        ::Company.includes(:cp_assessments)
-          .where(sector: sector)
+      # Returns average emissions history for given Sector.
+      # For each year, average value is calculated from all available companies emissions,
+      # up to last reported year.
+      #
+      # @example {'2014' => 111.0, '2015' => 112.0 }
+      #
+      def sector_average_emissions(sector)
+        all_sector_emissions = sector_all_emissions(sector)
+        all_years = all_sector_emissions.map(&:keys).flatten.map(&:to_i).uniq
+
+        last_reported_year = Time.new.year
+        years = (all_years.min..last_reported_year).map.to_a
+
+        sector_average_for_year = lambda do |year|
+          company_emissions = all_sector_emissions.map { |emissions| emissions[year.to_s] }.compact
+          (company_emissions.sum / company_emissions.count).round(2)
+        end
+
+        years.map { |year| [year, sector_average_for_year.call(year)] }.to_h
+      end
+
+      def sector_all_emissions(sector)
+        sector
+          .companies
+          .includes(:cp_assessments)
           .map(&:cp_assessments)
-          .flatten
-          .map(&:emissions)
+          .flatten.map(&:emissions)
       end
     end
   end
