@@ -49,4 +49,8 @@ class Company < ApplicationRecord
   def to_s
     name
   end
+
+  def sector_benchmarks
+    sector.cp_benchmarks
+  end
 end

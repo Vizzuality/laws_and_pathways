@@ -119,6 +119,7 @@ module Api
       def companies_summary(companies)
         companies.map do |company|
           {
+            id: company.id,
             name: company.name,
             status: company.mq_status
           }
