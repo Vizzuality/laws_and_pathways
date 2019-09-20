@@ -34,7 +34,7 @@
     <div class="sector-companies">
       <ul>
       <%- companies.each do |company| %>
-        <li><%= company[:name] %> [<%= company[:status] %>]</li>
+        <li><%= link_to company[:name], company_path(company[:id]) %> [<%= company[:status] %>]</li>
       <%- end %>
       </ul>
     </div>
@@ -53,9 +53,6 @@
       library: {
         legend: {
           verticalAlign: 'top',
-        },
-        yAxis: {
-          min: @min_y_axis_value
         }
       }
   )%>
