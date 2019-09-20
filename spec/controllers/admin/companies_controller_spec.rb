@@ -61,4 +61,62 @@ RSpec.describe Admin::CompaniesController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE destroy' do
+    let!(:company) { create(:company, discarded_at: nil) }
+
+    context 'with valid params' do
+      let!(:litigation_side) do
+        create(:litigation_side, connected_entity_type: 'Company', connected_entity_id: company.id)
+      end
+      let!(:mq_assessment) { create(:mq_assessment, company: company) }
+      let!(:cp_assessment) { create(:cp_assessment, company: company) }
+
+      subject { delete :destroy, params: {id: company.id} }
+
+      before do
+        expect { subject }.to change { Company.count }.by(-1)
+      end
+
+      it 'discards company object' do
+        expect(Company.find_by_id(company.id)).to be_nil
+      end
+
+      it 'set discarded_at date to company object' do
+        expect(company.reload.discarded_at).to_not be_nil
+      end
+
+      it 'discard all litigation_sides' do
+        expect(LitigationSide.find_by_id(litigation_side.id)).to be_nil
+      end
+
+      it 'discard all mq_assessment' do
+        expect(MQ::Assessment.find_by_id(mq_assessment.id)).to be_nil
+      end
+
+      it 'discard all cp_assessment' do
+        expect(CP::Assessment.find_by_id(cp_assessment.id)).to be_nil
+      end
+
+      it 'shows proper notice' do
+        expect(flash[:notice]).to match('Successfully deleted selected Company')
+      end
+    end
+
+    context 'with invalid params' do
+      let(:command) { double }
+
+      subject { delete :destroy, params: {id: company.id} }
+
+      before do
+        expect(::Command::Destroy::Company).to receive(:new).and_return(command)
+        expect(command).to receive(:call).and_return(nil)
+      end
+
+      it 'redirects to index & renders alert message' do
+        expect(subject).to redirect_to(admin_companies_path)
+        expect(flash[:alert]).to match('Could not delete selected Company')
+      end
+    end
+  end
 end

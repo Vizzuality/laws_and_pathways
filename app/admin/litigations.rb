@@ -112,13 +112,13 @@ ActiveAdmin.register Litigation do
     def destroy
       destroy_command = ::Command::Destroy::Litigation.new(resource.object)
 
-      results = if destroy_command.call
+      message = if destroy_command.call
                   {notice: 'Successfully deleted selected Litigation'}
                 else
                   {alert: 'Could not delete selected Litigation'}
                 end
 
-      redirect_to admin_litigations_path, results
+      redirect_to admin_litigations_path, message
     end
   end
 end

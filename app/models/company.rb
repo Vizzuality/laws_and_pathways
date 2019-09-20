@@ -17,8 +17,9 @@
 #
 
 class Company < ApplicationRecord
-  extend FriendlyId
+  include Discardable
   include VisibilityStatus
+  extend FriendlyId
   friendly_id :name, use: :slugged, routes: :default
 
   SIZES = %w[small medium large].freeze

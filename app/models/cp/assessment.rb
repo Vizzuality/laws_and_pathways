@@ -15,6 +15,7 @@
 module CP
   class Assessment < ApplicationRecord
     include HasEmissions
+    include Discardable
 
     belongs_to :company
 
