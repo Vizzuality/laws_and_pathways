@@ -7,57 +7,39 @@ class SectorsController < ApplicationController
   def show
     @sector = Sector.find(params[:id])
 
-    @companies_by_levels = ::Api::Sectors::CompaniesGroupedByLevel.new(companies_scope(params)).get
+    @companies_by_levels = ::Api::Charts::Sector.new(companies_scope(params)).companies_summaries
   end
 
   # Chart data endpoints
 
-  # Returns array of pairs:
-  #   [latest MQ assessment Sector's level, number of Companies on given level]
-  #
-  # If params[:id] is given results are scoped to given Sector.
-  #
-  # @example:
-  #   [
-  #     ['0', 13],
-  #     ['1', 63],
-  #     ['2', 61],
-  #     ['3', 71],
-  #     ['4', 63],
-  #     ['4STAR', 6]
-  #   ]
-  #
+  # Data:     Sectors Levels mapped to number of Companies
+  # Section:  MQ
+  # Type:     pie chart
+  # On pages: :index, :show
   def companies_levels
-    data = ::Api::Sectors::CompaniesGroupedByLevel.new(companies_scope(params)).count
+    data = ::Api::Charts::Sector.new(companies_scope(params)).companies_count
 
     render json: data.chart_json
   end
 
-  # Returns array of objects with props:
-  # - name - Company name
-  # - data - object representing emissions history ({ year: emission-value })
-  #
-  # If params[:id] is given results are scoped to given Sector.
-  #
-  # @example
-  #   [
-  #     { name: 'WizzAir', data: {} },
-  #     { name: 'Air China', data: {'2014' => 111.0, '2015' => 112.0 } },
-  #     { name: 'China Southern', data: {'2014' => 114.0, '2015' => 112.0 } }
-  #   ]
-  #
+  # Data:     Companies emissions
+  # Section:  CP
+  # Type:     line chart
+  # On pages: :show
   def companies_emissions
-    data = ::Api::Sectors::CompaniesGroupedByLevel.new(companies_scope(params)).emissions
+    data = ::Api::Charts::Sector.new(companies_scope(params)).companies_emissions
 
     render json: data.chart_json
   end
 
+  # Data:     Sectors Companies numbers, grouped by CP Benchmarks from given Sector
+  # Section:  CP
+  # Type:     column chart
+  # On pages: :index
   def scenarios
-    render json: sectors_scenarios_alignments.chart_json
-  end
+    data = ::Api::Charts::Sector.new(companies_scope(params)).group_by_cp_benchmark
 
-  def sectors_scenarios_alignments
-    ::Api::Sectors::CompaniesCountGroupedByScenario.new.get
+    render json: data.chart_json
   end
 
   def companies_scope(params)
