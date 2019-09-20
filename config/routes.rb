@@ -2,17 +2,17 @@ Rails.application.routes.draw do
   # TPI
   resources :sectors, only: [:show, :index] do
     collection do
-      get :companies_levels
-      get :scenarios
+      get :levels_chart_data
+      get :benchmarks_chart_data
     end
     member do
-      get :companies_levels
-      get :companies_emissions
+      get :levels_chart_data
+      get :emissions_chart_data
     end
   end
   resources :companies, only: [:show] do
     member do
-      get :emissions
+      get :emissions_chart_data
     end
   end
 
