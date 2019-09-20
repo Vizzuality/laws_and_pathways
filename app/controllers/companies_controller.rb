@@ -5,16 +5,10 @@ class CompaniesController < ApplicationController
     @company_details = ::Api::Charts::Company.new.details_data(@company)
   end
 
-  # Returns array of 2 elements:
-  # - company emissions
-  # - company's sector emissions
-  #
-  # @example
-  #   [
-  #     { name: 'Air China', data: {'2014' => 111.0, '2015' => 112.0 } },
-  #     { name: 'Airlines sector mean', data: {'2014' => 114.0, '2015' => 112.0 } }
-  #   ]
-  #
+  # Data:     Company emissions
+  # Section:  CP
+  # Type:     line chart
+  # On pages: :show
   def emissions
     @company = Company.find(params[:id])
 

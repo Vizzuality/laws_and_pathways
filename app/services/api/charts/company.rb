@@ -23,6 +23,16 @@ module Api
         }
       end
 
+      # Returns array of 2 elements:
+      # - company emissions
+      # - company's sector emissions
+      #
+      # @example
+      #   [
+      #     { name: 'Air China', data: {'2014' => 111.0, '2015' => 112.0 } },
+      #     { name: 'Airlines sector mean', data: {'2014' => 114.0, '2015' => 112.0 } }
+      #   ]
+      #
       def emissions_data(company)
         company_emissions_data = {
           name: company.name,
@@ -50,11 +60,18 @@ module Api
       end
 
       def all_sector_assessments_emissions(company)
-        ::Company.includes(:cp_assessments).where(sector: company.sector).map(&:cp_assessments).flatten.map(&:emissions)
+        ::Company.includes(:cp_assessments)
+          .where(sector: company.sector)
+          .map(&:cp_assessments)
+          .flatten
+          .map(&:emissions)
       end
 
       def all_sector_benchmarks_emissions(company)
-        company.sector.cp_benchmarks.group_by { |b| b.release_date.to_s }
+        company
+          .sector
+          .cp_benchmarks
+          .group_by { |b| b.release_date.to_s }
       end
     end
   end
