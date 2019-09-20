@@ -45,5 +45,23 @@ module MQ
     def status_description_short
       "#{level} (#{status})"
     end
+
+    def questions_by_key_hash
+      questions.each_with_index.reduce({}) do |acc, (question, index)|
+        question_text = question['question']
+        level = question['level']
+        key = "Q#{index}L#{level}|#{question_text}"
+
+        acc.merge(key => question)
+      end
+    end
+
+    def all_questions_keys
+      questions_by_key_hash.keys
+    end
+
+    def self.all_publication_dates
+      distinct.order(publication_date: :desc).pluck(:publication_date)
+    end
   end
 end

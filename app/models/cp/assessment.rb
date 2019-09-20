@@ -22,5 +22,9 @@ module CP
     scope :latest_first, -> { order(assessment_date: :desc) }
 
     validates_presence_of :publication_date
+
+    def self.all_publication_dates
+      distinct.order(publication_date: :desc).pluck(:publication_date)
+    end
   end
 end
