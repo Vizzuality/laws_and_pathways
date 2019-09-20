@@ -10,16 +10,7 @@
 <%= pie_chart(
       levels_chart_data_sector_path(@sector.id),
       donut: true,
-      library: {
-        tooltip: { enabled: false },
-        plotOptions: {
-          pie: {
-            dataLabels: {
-              format: 'Level {point.name} <br> {point.y} companies <br> {point.percentage:.1f}%'
-            }
-          }
-        }
-      }
+      library: mq_sector_pie_chart_options
   ) %>
 </div>
 
@@ -51,18 +42,6 @@
       emissions_chart_data_sector_path(@sector.id),
       width: '1200px',
       height: '800px',
-      library: {
-        legend: {
-          verticalAlign: 'top',
-        },
-        plotOptions: {
-          area: {
-            fillOpacity: 0.3,
-            marker: {
-              enabled: false
-            }
-          }
-        }
-      }
+      library: default_chart_options
   )%>
 </div>

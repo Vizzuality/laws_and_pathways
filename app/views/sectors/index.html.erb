@@ -16,16 +16,7 @@ Companies:
 <%= pie_chart(
       levels_chart_data_sectors_path,
       donut: true,
-      library: {
-        tooltip: { enabled: false },
-        plotOptions: {
-          pie: {
-            dataLabels: {
-              format: 'Level {point.name} <br> {point.y} companies <br> {point.percentage:.1f}%'
-            }
-          }
-        }
-      }
+      library: mq_sector_pie_chart_options
   ) %>
 </div>
 
@@ -44,15 +35,6 @@ Companies:
       benchmarks_chart_data_sectors_path,
       stacked: true,
       width: '1200px',
-      library: {
-        legend: {
-          verticalAlign: 'top',
-        },
-        plotOptions: {
-          column: {
-            stacking: 'percent'
-          }
-        },
-      }
+      library: default_chart_options
     ) %>
 </div>
