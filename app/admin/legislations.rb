@@ -114,25 +114,25 @@ ActiveAdmin.register Legislation do
                if: proc { current_scope&.name != 'Archived' } do |ids|
     archive_command = ::Command::Batch::Archive.new(batch_action_collection, ids)
 
-    results = if archive_command.call
+    message = if archive_command.call
                 {notice: "Successfully archived #{ids.count} Legislations"}
               else
                 {alert: 'Could not archive selected Legislations'}
               end
 
-    redirect_to collection_path(scope: 'archived'), results
+    redirect_to collection_path(scope: 'archived'), message
   end
 
   batch_action :destroy do |ids|
     delete_command = Command::Batch::Delete.new(batch_action_collection, ids)
 
-    results = if delete_command.call
+    message = if delete_command.call
                 {notice: "Successfully deleted #{ids.count} Legislations"}
               else
                 {alert: 'Could not delete selected Legislations'}
               end
 
-    redirect_to collection_path, results
+    redirect_to collection_path, message
   end
 
   controller do
@@ -143,13 +143,13 @@ ActiveAdmin.register Legislation do
     def destroy
       destroy_command = ::Command::Destroy::Legislation.new(resource.object)
 
-      results = if destroy_command.call
+      message = if destroy_command.call
                   {notice: 'Successfully deleted selected Legislation'}
                 else
                   {alert: 'Could not delete selected Legislations'}
                 end
 
-      redirect_to admin_legislations_path, results
+      redirect_to admin_legislations_path, message
     end
   end
 end

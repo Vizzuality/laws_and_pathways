@@ -180,13 +180,13 @@ ActiveAdmin.register Company do
     def destroy
       destroy_command = ::Command::Destroy::Company.new(resource.object)
 
-      results = if destroy_command.call
+      message = if destroy_command.call
                   {notice: 'Successfully deleted selected Company'}
                 else
                   {alert: 'Could not delete selected Company'}
                 end
 
-      redirect_to admin_companies_path, results
+      redirect_to admin_companies_path, message
     end
   end
 end
