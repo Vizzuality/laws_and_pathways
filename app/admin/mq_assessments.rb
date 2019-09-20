@@ -13,7 +13,29 @@ ActiveAdmin.register MQ::Assessment do
   filter :company_sector_id, as: :select, collection: proc { Sector.all }
   filter :level, as: :select, collection: MQ::Assessment::LEVELS
 
-  data_export_sidebar 'MQ Assessments'
+  sidebar 'Export / Import', if: -> { collection.any? }, only: :index do
+    ul do
+      publication_date_selected = request.query_parameters.dig(:q, :publication_date_eq)
+
+      li do
+        if publication_date_selected
+          link_to "Download MQ Assessments (#{publication_date_selected})",
+                  params: request.query_parameters.except(:commit, :format),
+                  format: 'csv'
+        else
+          para 'Please filter by publication date to be able to download CSV file'
+        end
+      end
+
+      li do
+        upload_label = "<strong>Upload</strong> MQ Assessments".html_safe
+        upload_path = new_admin_data_upload_path(data_upload: {uploader: 'MQAssessment'})
+
+        link_to upload_label, upload_path
+      end
+    end
+    hr
+  end
 
   show do
     attributes_table do
@@ -53,6 +75,7 @@ ActiveAdmin.register MQ::Assessment do
   csv do
     question_column_names = collection.flat_map(&:all_questions_keys).uniq
 
+    column :id
     column(:company) { |a| a.company.name }
     column :assessment_date
     column :publication_date
@@ -60,12 +83,7 @@ ActiveAdmin.register MQ::Assessment do
 
     question_column_names.map do |question_column|
       column question_column, humanize_name: false do |a|
-        answer = a.questions_by_key_hash[question_column]
-        if answer.present?
-          answer['answer']
-        else
-          'not applicable for this methodology'
-        end
+        a.questions_by_key_hash[question_column]['answer']
       end
     end
   end
