@@ -21,7 +21,7 @@ class Legislation < ApplicationRecord
   include UserTrackable
   include Taggable
   include VisibilityStatus
-  include Discardable
+  include DiscardableModel
   extend FriendlyId
 
   friendly_id :title, use: :slugged, routes: :default

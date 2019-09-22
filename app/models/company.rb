@@ -17,7 +17,7 @@
 #
 
 class Company < ApplicationRecord
-  include Discardable
+  include DiscardableModel
   include VisibilityStatus
   extend FriendlyId
   friendly_id :name, use: :slugged, routes: :default

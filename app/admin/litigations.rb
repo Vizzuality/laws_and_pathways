@@ -105,20 +105,10 @@ ActiveAdmin.register Litigation do
   form partial: 'form'
 
   controller do
+    include DiscardableController
+
     def scoped_collection
       super.includes(:geography, :created_by, :updated_by)
-    end
-
-    def destroy
-      destroy_command = ::Command::Destroy::Litigation.new(resource.object)
-
-      message = if destroy_command.call
-                  {notice: 'Successfully deleted selected Litigation'}
-                else
-                  {alert: 'Could not delete selected Litigation'}
-                end
-
-      redirect_to admin_litigations_path, message
     end
   end
 end

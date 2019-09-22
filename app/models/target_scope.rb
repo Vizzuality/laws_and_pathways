@@ -9,7 +9,7 @@
 #
 
 class TargetScope < ApplicationRecord
-  include Discardable
+  include DiscardableModel
 
   has_many :targets
 

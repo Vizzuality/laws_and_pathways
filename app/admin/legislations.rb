@@ -136,20 +136,10 @@ ActiveAdmin.register Legislation do
   end
 
   controller do
+    include DiscardableController
+
     def scoped_collection
       super.includes(:geography, :frameworks, :document_types, :created_by, :updated_by)
-    end
-
-    def destroy
-      destroy_command = ::Command::Destroy::Legislation.new(resource.object)
-
-      message = if destroy_command.call
-                  {notice: 'Successfully deleted selected Legislation'}
-                else
-                  {alert: 'Could not delete selected Legislations'}
-                end
-
-      redirect_to admin_legislations_path, message
     end
   end
 end

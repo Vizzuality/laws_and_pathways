@@ -16,7 +16,7 @@
 #
 
 class Document < ApplicationRecord
-  include Discardable
+  include DiscardableModel
 
   self.inheritance_column = nil
 

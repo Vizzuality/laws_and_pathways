@@ -15,7 +15,7 @@
 #
 # More details: https://github.com/jhawthorn/discard#default-scope
 #
-module Discardable
+module DiscardableModel
   extend ActiveSupport::Concern
 
   included do

@@ -100,16 +100,6 @@ ActiveAdmin.register Target do
   end
 
   controller do
-    def destroy
-      destroy_command = ::Command::Destroy::Target.new(resource.object)
-
-      message = if destroy_command.call
-                  {notice: 'Successfully deleted selected Target'}
-                else
-                  {alert: 'Could not delete selected Target'}
-                end
-
-      redirect_to admin_targets_path, message
-    end
+    include DiscardableController
   end
 end
