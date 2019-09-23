@@ -27,7 +27,7 @@ class SectorsController < ApplicationController
   # Type:     line chart
   # On pages: :show
   def emissions_chart_data
-    data = ::Api::Charts::Sector.new(companies_scope(params)).companies_emissions
+    data = ::Api::Charts::Sector.new(companies_scope(params)).companies_emissions_data
 
     render json: data.chart_json
   end
