@@ -1,11 +1,11 @@
 <h1>Sectors dashboard</h1>
 
 Sectors:
-<%= @sectors_names.map {|s| link_to s.last, sector_path(s.first)}.join(', ').html_safe %>
+<%= @sectors_names.map {|s| link_to s.last, tpi_sector_path(s.first)}.join(', ').html_safe %>
 <br>
 <br>
 Companies:
-<%= @companies_names.map {|c| link_to c.last, company_path(c.first)}.join(', ').html_safe %>
+<%= @companies_names.map {|c| link_to c.last, tpi_company_path(c.first)}.join(', ').html_safe %>
 
 <br><br><hr>
 
@@ -14,7 +14,7 @@ Companies:
 
 <div class="chart">
 <%= pie_chart(
-      levels_chart_data_sectors_path,
+      levels_chart_data_tpi_sectors_path,
       donut: true,
       library: mq_sector_pie_chart_options
   ) %>
@@ -32,7 +32,7 @@ Companies:
 
 <div class="chart">
 <%= column_chart(
-      benchmarks_chart_data_sectors_path,
+      benchmarks_chart_data_tpi_sectors_path,
       stacked: true,
       width: '1200px',
       library: default_chart_options

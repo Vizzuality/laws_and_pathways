@@ -1,5 +1,5 @@
 <h1>Sector Details</h1>
-<%= link_to 'back to all Sectors', sectors_path %>
+<%= link_to 'back to all Sectors', tpi_sectors_path %>
 
 <hr>
 
@@ -8,7 +8,7 @@
 
 <div class="chart">
 <%= pie_chart(
-      levels_chart_data_sector_path(@sector.id),
+      levels_chart_data_tpi_sector_path(@sector.id),
       donut: true,
       library: mq_sector_pie_chart_options
   ) %>
@@ -25,7 +25,7 @@
     <div class="sector-companies">
       <ul>
       <%- companies.each do |company| %>
-        <li><%= link_to company[:name], company_path(company[:id]) %> [<%= company[:status] %>]</li>
+        <li><%= link_to company[:name], tpi_company_path(company[:id]) %> [<%= company[:status] %>]</li>
       <%- end %>
       </ul>
     </div>
@@ -35,11 +35,10 @@
 
 <hr>
 
-<!-- SECTORS -->
 <h3>Carbon Performance: <%= @sector.name %></h3>
 <div class="chart">
 <%= line_chart(
-      emissions_chart_data_sector_path(@sector.id),
+      emissions_chart_data_tpi_sector_path(@sector.id),
       width: '1200px',
       height: '800px',
       library: default_chart_options
