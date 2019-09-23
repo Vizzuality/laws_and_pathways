@@ -2,7 +2,7 @@ class CompaniesController < ApplicationController
   def show
     @company = Company.find(params[:id])
 
-    @company_details = ::Api::Charts::Company.new.details_data(@company)
+    @company_details = ::Api::Charts::Company.new(@company).details_data
   end
 
   # Data:     Company emissions
@@ -12,7 +12,7 @@ class CompaniesController < ApplicationController
   def emissions_chart_data
     @company = Company.find(params[:id])
 
-    data = ::Api::Charts::Company.new.emissions_data(@company)
+    data = ::Api::Charts::Company.new(@company).emissions_data
 
     render json: data.chart_json
   end
