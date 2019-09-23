@@ -42,6 +42,8 @@ class SectorsController < ApplicationController
     render json: data.chart_json
   end
 
+  private
+
   def companies_scope(params)
     if params[:id]
       Sector.find(params[:id]).companies
