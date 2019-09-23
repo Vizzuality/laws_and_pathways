@@ -45,5 +45,9 @@ module MQ
     def status_description_short
       "#{level} (#{status})"
     end
+
+    def questions_by_level
+      questions.group_by { |q| q['level'] }
+    end
   end
 end
