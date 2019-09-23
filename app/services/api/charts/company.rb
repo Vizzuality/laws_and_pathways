@@ -24,7 +24,7 @@ module Api
           isin: company.isin,
           sedol: 60,
           ca100: company.ca100 ? 'Yes' : 'No',
-          latest_assessment: questions_by_level,
+          latest_assessment: company.latest_assessment.questions_by_level,
           levels_descriptions: SECTORS_LEVELS_DESC
         }
       end
@@ -53,10 +53,6 @@ module Api
       end
 
       private
-
-      def questions_by_level
-        company.latest_assessment.questions.group_by { |q| q['level'] }
-      end
 
       def emissions_data_from_company
         {
