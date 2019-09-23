@@ -75,20 +75,10 @@ ActiveAdmin.register Geography do
   form partial: 'form'
 
   controller do
+    include DiscardableController
+
     def apply_filtering(chain)
       super(chain).distinct
-    end
-
-    def destroy
-      destroy_command = ::Command::Destroy::Geography.new(resource.object)
-
-      message = if destroy_command.call
-                  {notice: 'Successfully deleted selected Geography'}
-                else
-                  {alert: 'Could not delete selected Geography'}
-                end
-
-      redirect_to admin_geographies_path, message
     end
   end
 end

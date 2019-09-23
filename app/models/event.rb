@@ -14,7 +14,7 @@
 #
 
 class Event < ApplicationRecord
-  include Discardable
+  include DiscardableModel
 
   belongs_to :eventable, polymorphic: true
 

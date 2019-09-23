@@ -98,4 +98,8 @@ ActiveAdmin.register Target do
     column(:target_scope) { |t| t.target_scope.name }
     column :visibility_status
   end
+
+  controller do
+    include DiscardableController
+  end
 end

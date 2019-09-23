@@ -15,7 +15,7 @@
 
 module MQ
   class Assessment < ApplicationRecord
-    include Discardable
+    include DiscardableModel
     LEVELS = %w[0 1 2 3 4 4STAR].freeze
 
     belongs_to :company, inverse_of: :mq_assessments

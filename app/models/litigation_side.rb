@@ -14,7 +14,7 @@
 #
 
 class LitigationSide < ApplicationRecord
-  include Discardable
+  include DiscardableModel
 
   SIDE_TYPES = %w[a b c].freeze
   PARTY_TYPES = %w[

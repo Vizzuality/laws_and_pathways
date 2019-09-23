@@ -25,7 +25,7 @@ class Geography < ApplicationRecord
   include UserTrackable
   include Taggable
   include VisibilityStatus
-  include Discardable
+  include DiscardableModel
   extend FriendlyId
 
   friendly_id :name, use: :slugged, routes: :default
