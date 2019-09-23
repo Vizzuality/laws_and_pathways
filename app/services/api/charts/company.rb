@@ -76,6 +76,7 @@ module Api
         company.sector_benchmarks.map do |benchmark|
           {
             type: 'area',
+            fillOpacity: 0.1,
             name: benchmark.scenario,
             data: benchmark.emissions
           }

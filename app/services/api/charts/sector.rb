@@ -60,10 +60,11 @@ module Api
       #     { name: 'China Southern', data: {'2014' => 114.0, '2015' => 112.0 } }
       #   ]
       #
-      def companies_emissions
-        @company_scope
-          .includes(:mq_assessments, :cp_assessments)
-          .map { |company| company_emissions_series_options(company) }
+      def companies_emissions_data
+        [
+          emissions_data_from_companies,
+          emissions_data_from_sector_benchmarks
+        ].flatten
       end
 
       # Returns Companies stats grouped by CP benchmark.
@@ -91,6 +92,23 @@ module Api
       end
 
       private
+
+      def emissions_data_from_companies
+        @company_scope
+          .includes(:mq_assessments, :cp_assessments)
+          .map { |company| company_emissions_series_options(company) }
+      end
+
+      def emissions_data_from_sector_benchmarks
+        @company_scope.first.sector_benchmarks.map do |benchmark|
+          {
+            type: 'area',
+            fillOpacity: 0.1,
+            name: benchmark.scenario,
+            data: benchmark.emissions
+          }
+        end
+      end
 
       def get_alignment_label(cp_alignment)
         {
