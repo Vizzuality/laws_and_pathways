@@ -28,7 +28,7 @@ ActiveAdmin.register MQ::Assessment do
       end
 
       li do
-        upload_label = "<strong>Upload</strong> MQ Assessments".html_safe
+        upload_label = '<strong>Upload</strong> MQ Assessments'.html_safe
         upload_path = new_admin_data_upload_path(data_upload: {uploader: 'MQAssessments'})
 
         link_to upload_label, upload_path

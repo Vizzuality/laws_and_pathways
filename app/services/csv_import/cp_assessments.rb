@@ -26,7 +26,7 @@ module CSVImport
       find_record_by(:id, row) ||
         CP::Assessment.find_or_initialize_by(
           company: find_company!(row),
-          assessment_date: parse_date(row[:assessment_date])
+          assessment_date: assessment_date(row)
         )
     end
 
@@ -38,15 +38,15 @@ module CSVImport
 
     def assessment_attributes(row)
       {
-        assessment_date: parse_date(row[:assessment_date]),
-        publication_date: parse_date(row[:publication_date]),
+        assessment_date: assessment_date(row),
+        publication_date: Import::DateUtils.safe_parse(row[:publication_date], ['%Y-%m']),
         assumptions: row[:assumptions],
         emissions: parse_emissions(row)
       }
     end
 
-    def parse_date(date)
-      Import::DateUtils.safe_parse(date, ['%Y-%m', '%Y-%m-%d'])
+    def assessment_date(row)
+      Import::DateUtils.safe_parse(row[:assessment_date], ['%Y-%m-%d'])
     end
   end
 end

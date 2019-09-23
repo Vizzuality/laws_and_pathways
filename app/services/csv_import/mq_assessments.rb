@@ -2,6 +2,8 @@ module CSVImport
   class MQAssessments < BaseImporter
     include UploaderHelpers
 
+    QUESTION_PATTERN = /Q\d+L(\d+)\|(.+)/.freeze
+
     def import
       import_each_csv_row(csv) do |row|
         assessment = prepare_assessment(row)
@@ -34,7 +36,7 @@ module CSVImport
       find_record_by(:id, row) ||
         MQ::Assessment.find_or_initialize_by(
           company: find_company!(row),
-          assessment_date: parse_date(row[:assessment_date])
+          assessment_date: assessment_date(row)
         )
     end
 
@@ -46,12 +48,16 @@ module CSVImport
 
     def assessment_attributes(row)
       {
-        assessment_date: parse_date(row[:assessment_date]),
-        publication_date: parse_date(row[:publication_date]),
+        assessment_date: assessment_date(row),
+        publication_date: Import::DateUtils.safe_parse(row[:publication_date], ['%Y-%m']),
         level: row[:level],
         notes: row[:notes],
         questions: get_questions(row)
       }
+    end
+
+    def assessment_date(row)
+      Import::DateUtils.safe_parse(row[:assessment_date], ['%Y-%m-%d'])
     end
 
     def get_questions(row)
@@ -70,7 +76,7 @@ module CSVImport
     def parse_question(question)
       return unless question.present?
 
-      matches = question.match(/Q\d+L(\d+)\|(.+)/)
+      matches = question.match(QUESTION_PATTERN)
       level = matches[1]
       text = matches[2]
 
@@ -78,10 +84,6 @@ module CSVImport
         question: text,
         level: level
       }
-    end
-
-    def parse_date(date)
-      Import::DateUtils.safe_parse(date, ['%Y-%m', '%Y-%m-%d'])
     end
   end
 end
