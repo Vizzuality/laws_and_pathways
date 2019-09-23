@@ -1,32 +1,8 @@
 module Api
   module Charts
     class Company
-      attr_reader :company
-
-      SECTORS_LEVELS_DESC = {
-        '0' => 'Unaware of Climate Change as a Business Issue',
-        '1' => 'Acknowledging Climate Change as a Business Issue',
-        '2' => 'Building Capacity',
-        '3' => 'Integrating into Operational Decision Making',
-        '4' => 'Strategic Assessment'
-      }.freeze
-
       def initialize(company)
         @company = company
-      end
-
-      def details_data
-        {
-          name: company.name,
-          country: company.geography.name,
-          sector: company.sector.name,
-          market_cap: 'Large',
-          isin: company.isin,
-          sedol: 60,
-          ca100: company.ca100 ? 'Yes' : 'No',
-          latest_assessment: company.latest_assessment.questions_by_level,
-          levels_descriptions: SECTORS_LEVELS_DESC
-        }
       end
 
       # Returns array of following series:
@@ -56,20 +32,20 @@ module Api
 
       def emissions_data_from_company
         {
-          name: company.name,
-          data: company.cp_assessments.last.emissions
+          name: @company.name,
+          data: @company.cp_assessments.last.emissions
         }
       end
 
       def emissions_data_from_sector
         {
-          name: "#{company.sector.name} sector mean",
+          name: "#{@company.sector.name} sector mean",
           data: sector_average_emissions
         }
       end
 
       def emissions_data_from_sector_benchmarks
-        company.sector_benchmarks.map do |benchmark|
+        @company.sector_benchmarks.map do |benchmark|
           {
             type: 'area',
             fillOpacity: 0.1,
@@ -107,7 +83,7 @@ module Api
 
       # Returns array of emissions ({ year => value }) from all Companies from current Sector
       def sector_all_emissions
-        @sector_all_emissions ||= company.sector
+        @sector_all_emissions ||= @company.sector
           .companies
           .includes(:cp_assessments)
           .map(&:cp_assessments)
