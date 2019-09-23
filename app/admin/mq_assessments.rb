@@ -51,15 +51,10 @@ ActiveAdmin.register MQ::Assessment do
 
     panel 'Questions' do
       table_for resource.questions do
-        column :level do |q|
-          q['level']
-        end
-        column :answer do |q|
-          q['answer']
-        end
-        column :question do |q|
-          q['question']
-        end
+        column :number
+        column :level
+        column :answer
+        column :question
       end
     end
   end
@@ -73,7 +68,9 @@ ActiveAdmin.register MQ::Assessment do
   end
 
   csv do
-    question_column_names = collection.flat_map(&:all_questions_keys).uniq
+    question_column_names = collection.flat_map do |a|
+      a.questions.map(&:csv_column_name)
+    end.uniq
 
     column :id
     column(:company) { |a| a.company.name }
@@ -82,8 +79,10 @@ ActiveAdmin.register MQ::Assessment do
     column :level
 
     question_column_names.map do |question_column|
+      key = question_column.split('|').first
+
       column question_column, humanize_name: false do |a|
-        a.questions_by_key_hash[question_column]['answer']
+        a.questions_by_key_hash[key].answer
       end
     end
   end

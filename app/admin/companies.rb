@@ -65,9 +65,9 @@ ActiveAdmin.register Company do
                 end
 
                 table_for a.questions do
-                  column(:level) { |q| q['level'] }
-                  column(:answer) { |q| q['answer'] }
-                  column(:question) { |q| q['question'] }
+                  column :level
+                  column :answer
+                  column :question
                 end
               end
             end

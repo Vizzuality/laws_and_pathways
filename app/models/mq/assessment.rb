@@ -46,22 +46,26 @@ module MQ
       "#{level} (#{status})"
     end
 
-    def questions_by_key_hash
-      questions.each_with_index.reduce({}) do |acc, (question, index)|
-        question_text = question['question']
-        level = question['level']
-        key = "Q#{index}L#{level}|#{question_text}"
+    def questions
+      self[:questions].each_with_index.map do |q_hash, index|
+        MQ::Question.new(q_hash.merge(number: index + 1))
+      end
+    end
 
-        acc.merge(key => question)
+    def questions_by_key_hash
+      questions.reduce({}) do |acc, question|
+        acc.merge(question.key => question)
       end
     end
 
     def all_questions_keys
-      questions_by_key_hash.keys
+      questions.map(&:key)
     end
 
-    def self.all_publication_dates
-      distinct.order(publication_date: :desc).pluck(:publication_date)
+    class << self
+      def all_publication_dates
+        distinct.order(publication_date: :desc).pluck(:publication_date)
+      end
     end
   end
 end
