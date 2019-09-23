@@ -43,7 +43,8 @@ ActiveAdmin.register CP::Assessment do
     column :id
     column(:company) { |a| a.company.name }
     column :assessment_date
-    column :publication_date
+    column :publication_date, &:publication_date_csv
+
     year_columns.map do |year|
       column year do |a|
         a.emissions[year]

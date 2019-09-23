@@ -12,4 +12,12 @@ class CP::AssessmentDecorator < Draper::Decorator
   def assessment_date
     model.assessment_date || 'No date'
   end
+
+  def publication_date
+    model.publication_date.to_s(:month_name_and_year)
+  end
+
+  def publication_date_csv
+    model.publication_date.to_s(:year_month)
+  end
 end

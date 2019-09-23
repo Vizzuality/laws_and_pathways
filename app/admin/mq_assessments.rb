@@ -29,7 +29,7 @@ ActiveAdmin.register MQ::Assessment do
 
       li do
         upload_label = "<strong>Upload</strong> MQ Assessments".html_safe
-        upload_path = new_admin_data_upload_path(data_upload: {uploader: 'MQAssessment'})
+        upload_path = new_admin_data_upload_path(data_upload: {uploader: 'MQAssessments'})
 
         link_to upload_label, upload_path
       end
@@ -75,8 +75,9 @@ ActiveAdmin.register MQ::Assessment do
     column :id
     column(:company) { |a| a.company.name }
     column :assessment_date
-    column :publication_date
+    column :publication_date, &:publication_date_csv
     column :level
+    column :notes
 
     question_column_names.map do |question_column|
       key = question_column.split('|').first

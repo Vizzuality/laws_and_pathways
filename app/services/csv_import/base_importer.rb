@@ -38,6 +38,19 @@ module CSVImport
       resource_klass.find_by(attr_name.to_sym => row[attr_name]&.strip)
     end
 
+    protected
+
+    def header_converters
+      [:symbol]
+    end
+
+    def csv_converters
+      hard_space_converter = ->(f) { f&.gsub(160.chr('UTF-8'), 32.chr) }
+      strip_converter = ->(field, _) { field&.strip }
+
+      [hard_space_converter, strip_converter]
+    end
+
     private
 
     def reset_import_results
@@ -55,18 +68,11 @@ module CSVImport
         headers: true,
         skip_blanks: true,
         converters: csv_converters,
-        header_converters: [:symbol]
+        header_converters: header_converters
       ).delete_if { |row| row.to_hash.values.all?(&:blank?) }
     rescue CSV::MalformedCSVError => e
       errors.add(:base, e)
       false
-    end
-
-    def csv_converters
-      hard_space_converter = ->(f) { f&.gsub(160.chr('UTF-8'), 32.chr) }
-      strip_converter = ->(field, _) { field&.strip }
-
-      [hard_space_converter, strip_converter]
     end
 
     def import_each_csv_row(csv)
