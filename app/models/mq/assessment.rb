@@ -47,19 +47,18 @@ module MQ
     end
 
     def questions
-      self[:questions].each_with_index.map do |q_hash, index|
+      @questions ||= self[:questions].each_with_index.map do |q_hash, index|
         MQ::Question.new(q_hash.merge(number: index + 1))
       end
     end
 
-    def questions_by_key_hash
-      questions.reduce({}) do |acc, question|
-        acc.merge(question.key => question)
-      end
+    def questions=(value)
+      @questions = nil
+      super
     end
 
-    def all_questions_keys
-      questions.map(&:key)
+    def find_answer_by_key(key)
+      questions.find { |q| q.key == key }.answer
     end
 
     class << self

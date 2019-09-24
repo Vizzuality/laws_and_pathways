@@ -39,7 +39,7 @@ module CSVImport
     def assessment_attributes(row)
       {
         assessment_date: assessment_date(row),
-        publication_date: Import::DateUtils.safe_parse(row[:publication_date], ['%Y-%m']),
+        publication_date: publication_date(row),
         assumptions: row[:assumptions],
         emissions: parse_emissions(row)
       }
@@ -47,6 +47,10 @@ module CSVImport
 
     def assessment_date(row)
       Import::DateUtils.safe_parse(row[:assessment_date], ['%Y-%m-%d'])
+    end
+
+    def publication_date(row)
+      Import::DateUtils.safe_parse(row[:publication_date], ['%Y-%m'])
     end
   end
 end

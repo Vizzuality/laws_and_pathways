@@ -68,10 +68,6 @@ ActiveAdmin.register MQ::Assessment do
   end
 
   csv do
-    question_column_names = collection.flat_map do |a|
-      a.questions.map(&:csv_column_name)
-    end.uniq
-
     column :id
     column(:company) { |a| a.company.name }
     column :assessment_date
@@ -79,11 +75,11 @@ ActiveAdmin.register MQ::Assessment do
     column :level
     column :notes
 
-    question_column_names.map do |question_column|
-      key = question_column.split('|').first
-
-      column question_column, humanize_name: false do |a|
-        a.questions_by_key_hash[key].answer
+    # we can take first assessment questions "schema"
+    # since it is already filtered by publication date
+    collection.first.questions.map do |mq_question|
+      column mq_question.csv_column_name, humanize_name: false do |assessment|
+        assessment.find_answer_by_key(mq_question.key)
       end
     end
   end
