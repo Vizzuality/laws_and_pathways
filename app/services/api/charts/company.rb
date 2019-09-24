@@ -33,7 +33,7 @@ module Api
       def emissions_data_from_company
         {
           name: @company.name,
-          data: @company.cp_assessments.last.emissions
+          data: @company.latest_cp_assessment.emissions
         }
       end
 
@@ -44,8 +44,16 @@ module Api
         }
       end
 
+      # if we have benchmarks available for
+      # - 04.2017
+      # .. assessment date is 06.2017 => we take 04.2017 benchmarks
+      # - 05.2018
+      # .. assessment date is 06.2018 => we take 05.2018 benchmarks
+      #
+      # for the chart sector benchmarks should be only
+      # for the last date before the CP::Assessment date
       def emissions_data_from_sector_benchmarks
-        @company.sector_benchmarks.map do |benchmark|
+        @company.sector.cp_benchmarks.map do |benchmark|
           {
             type: 'area',
             fillOpacity: 0.1,

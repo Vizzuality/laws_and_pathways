@@ -56,7 +56,7 @@ ActiveAdmin.register Company do
               'No Management Quality Assessments for this company yet'
             end
           else
-            resource.mq_assessments.latest_first.decorate.map do |a|
+            resource.mq_assessments.decorate.map do |a|
               panel a.title, class: 'mq_assessment' do
                 attributes_table_for a do
                   row :level, &:level_tag
@@ -82,7 +82,7 @@ ActiveAdmin.register Company do
               'No Carbon Performance Assessments for this company yet'
             end
           else
-            resource.cp_assessments.latest_first.decorate.map do |a|
+            resource.cp_assessments.decorate.map do |a|
               div class: 'panel benchmark' do
                 attributes_table_for a do
                   row :publication_date

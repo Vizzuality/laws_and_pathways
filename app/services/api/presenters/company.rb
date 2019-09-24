@@ -22,7 +22,7 @@ module Api
           isin: @company.isin,
           sedol: 60,
           ca100: @company.ca100 ? 'Yes' : 'No',
-          latest_assessment: @company.latest_assessment.questions_by_level,
+          latest_assessment: @company.latest_mq_assessment.questions_by_level,
           levels_descriptions: SECTORS_LEVELS_DESC
         }
       end

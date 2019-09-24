@@ -47,6 +47,10 @@ class Company < ApplicationRecord
     mq_assessments.order(:assessment_date).last
   end
 
+  def latest_cp_assessment
+    cp_assessments.first
+  end
+
   def to_s
     name
   end
