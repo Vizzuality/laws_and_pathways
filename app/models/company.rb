@@ -30,24 +30,34 @@ class Company < ApplicationRecord
   belongs_to :geography
   belongs_to :headquarters_geography, class_name: 'Geography'
 
-  has_many :mq_assessments, class_name: 'MQ::Assessment', inverse_of: :company
-  has_many :cp_assessments, class_name: 'CP::Assessment', inverse_of: :company
+  has_many :mq_assessments,
+           -> { order(assessment_date: :desc) },
+           class_name: 'MQ::Assessment',
+           inverse_of: :company
+  has_many :cp_assessments,
+           -> { order(assessment_date: :desc) },
+           class_name: 'CP::Assessment',
+           inverse_of: :company
   has_many :litigation_sides, as: :connected_entity
   has_many :litigations, through: :litigation_sides
 
   delegate :level, :status, :status_description_short,
-           to: :latest_assessment, prefix: :mq, allow_nil: true
+           to: :latest_mq_assessment, prefix: :mq, allow_nil: true
 
   validates :ca100, inclusion: {in: [true, false]}
   validates_presence_of :name, :slug, :isin, :size
   validates_uniqueness_of :slug, :isin, :name
 
-  def latest_assessment
+  def to_s
+    name
+  end
+
+  def latest_mq_assessment
     mq_assessments.first
   end
 
-  def to_s
-    name
+  def latest_cp_assessment
+    cp_assessments.first
   end
 
   def sector_benchmarks

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_19_175646) do
+ActiveRecord::Schema.define(version: 2019_09_19_193834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -307,6 +307,8 @@ ActiveRecord::Schema.define(version: 2019_09_19_175646) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_target_scopes_on_discarded_at"
   end
 
   create_table "targets", force: :cascade do |t|
@@ -324,7 +326,9 @@ ActiveRecord::Schema.define(version: 2019_09_19_175646) do
     t.string "visibility_status", default: "draft"
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
+    t.datetime "discarded_at"
     t.index ["created_by_id"], name: "index_targets_on_created_by_id"
+    t.index ["discarded_at"], name: "index_targets_on_discarded_at"
     t.index ["geography_id"], name: "index_targets_on_geography_id"
     t.index ["sector_id"], name: "index_targets_on_sector_id"
     t.index ["target_scope_id"], name: "index_targets_on_target_scope_id"
