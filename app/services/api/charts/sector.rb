@@ -1,8 +1,6 @@
 module Api
   module Charts
     class Sector
-      CP_SCENARIOS = %w[below_2 exact_2 paris not_aligned no_disclosure].freeze
-
       def initialize(company_scope)
         @company_scope = company_scope
       end
@@ -83,12 +81,7 @@ module Api
       #     }
       #   ]
       def group_by_cp_benchmark
-        CP_SCENARIOS.map do |cp_alignment|
-          {
-            name: get_alignment_label(cp_alignment),
-            data: companies_count_per_sector_cp_scenarios(cp_alignment)
-          }
-        end
+        prepare_chart_data(sectors_scenarios)
       end
 
       private
@@ -110,22 +103,6 @@ module Api
         end
       end
 
-      def get_alignment_label(cp_alignment)
-        {
-          below_2: 'Below 2',
-          exact_2: '2 degrees',
-          paris: 'Paris',
-          not_aligned: 'Not aligned',
-          no_disclosure: 'No disclosure'
-        }[cp_alignment.to_sym]
-      end
-
-      def companies_count_per_sector_cp_scenarios(_cp_alignment)
-        ::Sector.pluck(:id, :name).map do |_sector_id, sector_name|
-          [sector_name, rand(100)]
-        end
-      end
-
       def company_emissions_series_options(company)
         {
           name: company.name,
@@ -143,6 +120,89 @@ module Api
           }
         end
       end
+
+      # Returns scenarios with sectors and companies count:
+      # @example
+      #   {
+      #     "2 Degrees (High Efficiency)" => {
+      #       "Aluminium" => 10,
+      #       "Cement" => 27
+      #     },
+      #       "International Pledges" => {
+      #       "Steel" => 80
+      #     }
+      #   }
+      def sectors_scenarios
+        results = {}
+
+        sectors_scenario_emissions.each do |sector, scenarios|
+          sector.companies.each do |company|
+            next if scenarios.empty?
+
+            company_scenario = company_scenario(company, scenarios)
+
+            results[company_scenario] ||= Hash.new(0)
+            results[company_scenario][sector.name] += 1
+          end
+        end
+
+        results
+      end
+
+      # Returns emissions for all scenarios for all sectors
+      # @example
+      #   {"Airlines": {"Below 2 Degrees": 110, "2 Degrees": 101}}
+      def sectors_scenario_emissions
+        sectors = {}
+
+        ::Sector.all.each do |sector|
+          sectors[sector] = {}
+          sector.cp_benchmarks.each do |benchmark|
+            sectors[sector][benchmark.scenario] = benchmark.emissions[current_year]
+          end
+        end
+
+        sectors
+      end
+
+      # Determine in which scenario is current company emission
+      def company_scenario(company, scenarios)
+        company_emission = company_emission(company)
+
+        scenarios_with_greater_emission = scenarios.select do |_s, value|
+          value >= company_emission
+        end
+
+        return scenarios.max.first if scenarios_with_greater_emission.empty?
+
+        scenarios_with_greater_emission.min_by { |_s, value| value - company_emission }.first
+      end
+
+      # Returns company emission for current year or for the latest assessment
+      def company_emission(company)
+        emissions = company.cp_assessments.order(:assessment_date).last&.emissions
+
+        return 0 if emissions.nil? or emissions&.empty?
+
+        # Take emission for current year or for the last emission
+        emissions[current_year] or emissions.max_by { |year| year }[1]
+      end
+
+      def current_year
+        @current_year ||= Time.new.year.to_s
+      end
+
+      # Prepare data for chart based on data
+      def prepare_chart_data(results)
+        results.map do |scenario, companies|
+          data = companies.map do |company, value|
+            [company, value]
+          end
+
+          {name: scenario, data: data}
+        end
+      end
+
     end
   end
 end
