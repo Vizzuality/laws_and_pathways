@@ -22,6 +22,7 @@ module MQ
 
     scope :latest_first, -> { order(assessment_date: :desc) }
     scope :by_assessment_date, -> { order(:assessment_date) }
+    scope :all_publication_dates, -> { distinct.order(publication_date: :desc).pluck(:publication_date) }
 
     validates :level, inclusion: {in: LEVELS}
     validates_presence_of :assessment_date, :publication_date, :level
@@ -59,12 +60,6 @@ module MQ
 
     def find_answer_by_key(key)
       questions.find { |q| q.key == key }.answer
-    end
-
-    class << self
-      def all_publication_dates
-        distinct.order(publication_date: :desc).pluck(:publication_date)
-      end
     end
   end
 end
