@@ -27,11 +27,9 @@ module Api
       #     ]
       #   ]
       def companies_summaries
-        @company_scope
-          .includes(:mq_assessments)
-          .group_by { |company| company.mq_assessments.order(:assessment_date).first.level }
-          .sort.to_h
+        companies_grouped_by_latest_assessment_level
           .map { |level, companies| [level, companies_summary(companies)] }
+          .sort.to_h
       end
 
       # Returns latest "MQ assessment Sector's levels" mapped to number of Companies in given level
@@ -42,9 +40,7 @@ module Api
       #   { '0' => 13, '1' => 63, '2' => 61, '3' => 71, '4' => 63, '4STAR' => 6}
       #
       def companies_count
-        @company_scope
-          .includes(:mq_assessments)
-          .group_by { |company| company.mq_assessments.order(:assessment_date).first.level }
+        companies_grouped_by_latest_assessment_level
           .map { |level, companies| [level, companies.size] }
           .sort.to_h
       end
@@ -93,6 +89,12 @@ module Api
 
       private
 
+      def companies_grouped_by_latest_assessment_level
+        @company_scope
+          .includes(:mq_assessments)
+          .group_by { |company| company.latest_mq_assessment.level }
+      end
+
       def emissions_data_from_companies
         @company_scope
           .includes(:mq_assessments, :cp_assessments)
@@ -129,7 +131,7 @@ module Api
       def company_emissions_series_options(company)
         {
           name: company.name,
-          data: company.cp_assessments.last&.emissions,
+          data: company.latest_cp_assessment.emissions,
           lineWidth: 4
         }
       end
