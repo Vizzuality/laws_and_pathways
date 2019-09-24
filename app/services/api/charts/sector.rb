@@ -204,7 +204,6 @@ module Api
           {name: scenario, data: data}
         end
       end
-
     end
   end
 end
