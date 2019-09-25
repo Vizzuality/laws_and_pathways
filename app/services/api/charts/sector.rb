@@ -141,7 +141,11 @@ module Api
           sector.companies.each do |company|
             next if scenarios.empty?
 
-            company_scenario = company_scenario(company, scenarios)
+            company_emission = company_emission(company)
+
+            next if company_emission.zero?
+
+            company_scenario = company_scenario(company_emission, scenarios)
 
             results[company_scenario] ||= Hash.new(0)
             results[company_scenario][sector.name] += 1
@@ -168,9 +172,7 @@ module Api
       end
 
       # Determine in which scenario is current company emission
-      def company_scenario(company, scenarios)
-        company_emission = company_emission(company)
-
+      def company_scenario(company_emission, scenarios)
         scenarios_with_greater_emission = scenarios.select do |_s, value|
           value >= company_emission
         end
