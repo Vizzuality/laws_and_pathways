@@ -38,7 +38,7 @@ module Tpi
     # Type:     column chart
     # On pages: :index
     def benchmarks_chart_data
-      data = ::Api::Charts::CPBenchmark.new.group_by_cp_benchmark
+      data = ::Api::Charts::CPBenchmark.new.cp_performance
 
       render json: data.chart_json
     end
