@@ -16,7 +16,7 @@ module Api
       #       data: [ ['Coal Mining', 65], ['Steel', 26] ]
       #     }
       #   ]
-      def group_by_cp_benchmark
+      def cp_performance
         prepare_chart_data(sectors_scenarios)
       end
 
