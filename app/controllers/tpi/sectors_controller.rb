@@ -38,7 +38,7 @@ module Tpi
     # Type:     column chart
     # On pages: :index
     def benchmarks_chart_data
-      data = ::Api::Charts::Sector.new(companies_scope(params)).group_by_cp_benchmark
+      data = ::Api::Charts::CPBenchmark.new.group_by_cp_benchmark
 
       render json: data.chart_json
     end
