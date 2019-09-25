@@ -33,7 +33,7 @@ module Api
         end
       end
 
-      # Scenarios with sectors and companies count:
+      # Scenarios with sectors and companies count
       # @return [Hash]
       # @example
       #   {
@@ -54,7 +54,7 @@ module Api
 
             company_emission = company_emission(company)
 
-            next if company_emission.zero?
+            next unless company_emission
 
             company_scenario = company_scenario(company_emission, scenarios)
 
@@ -66,7 +66,7 @@ module Api
         results
       end
 
-      # Calculate emissions for all scenarios for all sectors
+      # Get emissions for all scenarios for all sectors
       # @return [Hash]
       # @example
       #   {"Airlines": {"Below 2 Degrees": 110, "2 Degrees": 101}}
@@ -89,10 +89,10 @@ module Api
       def company_emission(company)
         emissions = company.cp_assessments.order(:assessment_date).last&.emissions
 
-        return 0 if emissions.nil? or emissions&.empty?
+        return if emissions.blank?
 
         # Take emission for current year or for the last emission
-        emissions[current_year] or emissions.max_by { |year| year }[1]
+        emissions[current_year] or emissions[emissions.keys.max]
       end
 
       # Determine in which scenario is current company emission
