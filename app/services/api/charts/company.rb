@@ -68,7 +68,7 @@ module Api
         years = (all_years.min..last_reported_year).map.to_a
 
         years
-          .map { |year| [year, sector_average_emission_for_year(year)] }
+          .map { |year| [year.to_s, sector_average_emission_for_year(year)] }
           .to_h
       end
 
