@@ -1,10 +1,8 @@
 module Api
   module Charts
     class CPBenchmark
-      # Returns Companies stats grouped by CP benchmark.
-      #
-      # Returns data in multiple series.
-      #
+      # Calculate companies stats grouped by CP benchmark in multiple series.
+      # @return [Array<Hash> chart data
       # @example
       #   [
       #     {
@@ -17,12 +15,26 @@ module Api
       #     }
       #   ]
       def cp_performance
-        prepare_chart_data(sectors_scenarios)
+        prepare_chart_data(sectors_cp_performance)
       end
 
       private
 
-      # Returns scenarios with sectors and companies count:
+      # Prepare data for chart based on sectors cp performance data
+      # @param results[Array<Hash>] list with all scenarios with emissions
+      # @return [Array<Hash>] list with data for chart
+      def prepare_chart_data(results)
+        results.map do |scenario, companies|
+          data = companies.map do |company, value|
+            [company, value]
+          end
+
+          {name: scenario, data: data}
+        end
+      end
+
+      # Scenarios with sectors and companies count:
+      # @return [Hash]
       # @example
       #   {
       #     "2 Degrees (High Efficiency)" => {
@@ -33,7 +45,7 @@ module Api
       #       "Steel" => 80
       #     }
       #   }
-      def sectors_scenarios
+      def sectors_cp_performance
         results = {}
 
         sectors_scenario_emissions.each do |sector, scenarios|
@@ -54,7 +66,8 @@ module Api
         results
       end
 
-      # Returns emissions for all scenarios for all sectors
+      # Calculate emissions for all scenarios for all sectors
+      # @return [Hash]
       # @example
       #   {"Airlines": {"Below 2 Degrees": 110, "2 Degrees": 101}}
       def sectors_scenario_emissions
@@ -70,7 +83,21 @@ module Api
         sectors
       end
 
+      # Get company emission for current year or for the latest assessment
+      # @param company [Company]
+      # @return [Float]
+      def company_emission(company)
+        emissions = company.cp_assessments.order(:assessment_date).last&.emissions
+
+        return 0 if emissions.nil? or emissions&.empty?
+
+        # Take emission for current year or for the last emission
+        emissions[current_year] or emissions.max_by { |year| year }[1]
+      end
+
       # Determine in which scenario is current company emission
+      # @param company_emission [Float]
+      # @param scenarios [Hash]
       def company_scenario(company_emission, scenarios)
         scenarios_with_greater_emission = scenarios.select do |_s, value|
           value >= company_emission
@@ -81,29 +108,9 @@ module Api
         scenarios_with_greater_emission.min_by { |_s, value| value - company_emission }.first
       end
 
-      # Returns company emission for current year or for the latest assessment
-      def company_emission(company)
-        emissions = company.cp_assessments.order(:assessment_date).last&.emissions
-
-        return 0 if emissions.nil? or emissions&.empty?
-
-        # Take emission for current year or for the last emission
-        emissions[current_year] or emissions.max_by { |year| year }[1]
-      end
-
+      # @return [String] string with current year
       def current_year
         @current_year ||= Time.new.year.to_s
-      end
-
-      # Prepare data for chart based on data
-      def prepare_chart_data(results)
-        results.map do |scenario, companies|
-          data = companies.map do |company, value|
-            [company, value]
-          end
-
-          {name: scenario, data: data}
-        end
       end
     end
   end
