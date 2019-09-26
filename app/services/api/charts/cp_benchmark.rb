@@ -103,7 +103,9 @@ module Api
           value >= company_emission
         end
 
-        return scenarios.max.first if scenarios_with_greater_emission.empty?
+        if scenarios_with_greater_emission.empty?
+          return scenarios.max_by { |_s, value| value }.first
+        end
 
         scenarios_with_greater_emission.min_by { |_s, value| value - company_emission }.first
       end
