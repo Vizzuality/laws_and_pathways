@@ -1,4 +1,10 @@
 class GeographyDecorator < Draper::Decorator
+  FLAG_SIZES = {
+    small: 32,
+    medium: 64,
+    large: 100
+  }.freeze
+
   delegate_all
 
   def name_link
@@ -15,6 +21,12 @@ class GeographyDecorator < Draper::Decorator
 
   def geography_type
     model.geography_type.humanize
+  end
+
+  def flag_image(size = :small)
+    h.image_tag "flags/#{model.iso}", height: FLAG_SIZES[size]
+  rescue Sprockets::Rails::Helper::AssetNotFound
+    'No flag available'
   end
 
   def indc_link
