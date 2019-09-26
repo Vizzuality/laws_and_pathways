@@ -11,6 +11,7 @@
 #  updated_at            :datetime         not null
 #  connected_entity_type :string
 #  connected_entity_id   :bigint
+#  discarded_at          :datetime
 #
 
 FactoryBot.define do
