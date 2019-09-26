@@ -65,17 +65,7 @@ ActiveAdmin.register Legislation do
         end
       end
 
-      tab :events do
-        panel 'Legislation Events' do
-          table_for resource.events.decorate do
-            column :date
-            column :event_type
-            column :title
-            column :description
-            column 'URL', &:url_link
-          end
-        end
-      end
+      eventable_tab 'Legislation Events'
 
       tab :litigations do
         panel 'Connected Litigations' do
