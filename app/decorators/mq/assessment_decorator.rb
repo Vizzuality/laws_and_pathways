@@ -24,4 +24,11 @@ class MQ::AssessmentDecorator < Draper::Decorator
   def publication_date_csv
     model.publication_date.to_s(:year_month)
   end
+
+  def level_tag
+    h.content_tag :div, class: 'mq-status' do
+      h.content_tag(:strong, model.level) <<
+        h.content_tag(:span, model.status, class: "status_tag mq-#{model.status}")
+    end
+  end
 end

@@ -21,7 +21,6 @@ module MQ
     belongs_to :company, inverse_of: :mq_assessments
 
     scope :latest_first, -> { order(assessment_date: :desc) }
-    scope :by_assessment_date, -> { order(:assessment_date) }
     scope :all_publication_dates, -> { distinct.order(publication_date: :desc).pluck(:publication_date) }
 
     validates :level, inclusion: {in: LEVELS}
@@ -44,7 +43,7 @@ module MQ
     end
 
     def status_description_short
-      "#{level} (#{status})"
+      "#{level} (#{status.upcase})"
     end
 
     def questions
