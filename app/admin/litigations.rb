@@ -88,17 +88,7 @@ ActiveAdmin.register Litigation do
         end
       end
 
-      tab :events do
-        panel 'Litigation Events' do
-          table_for resource.events.decorate do
-            column :date
-            column :event_type
-            column :title
-            column :description
-            column 'URL', &:url_link
-          end
-        end
-      end
+      eventable_tab 'Litigation Events'
     end
   end
 

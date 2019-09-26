@@ -337,6 +337,7 @@ Rails.configuration.to_prepare do
 
   # extensions for 'show' context
   ActiveAdmin::Views::Pages::Show.send :include, ActiveAdminAddressableTabs
+  ActiveAdmin::Views::Pages::Show.send :include, ActiveAdminEventableTab
 
   ActiveAdmin::Views::Header.send :prepend, ActiveAdminCustomHeader
 end
