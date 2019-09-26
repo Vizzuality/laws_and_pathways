@@ -30,12 +30,12 @@ module Api
 
       def companies_count_by_sector(companies)
         companies
-          .group_by {|c| c.sector.name }
-          .map {|sector_name, companies| [sector_name, companies.size] }
+          .group_by { |c| c.sector.name }
+          .map { |sector_name, companies| [sector_name, companies.size] }
       end
 
       def company_current_scenario(company)
-        company_last_emission = company_last_reported_emission(company)
+        company_last_emission = company_emission(company)
 
         return nil unless company_last_emission
 
@@ -52,13 +52,11 @@ module Api
       # Get company emission for current year or for the latest assessment
       # @param company [Company]
       # @return [Float]
-      def company_last_reported_emission(company)
-        company_all_emissions = company.cp_assessments.order(:assessment_date).last&.emissions
-        return if company_all_emissions.blank?
+      def company_emission(company)
+        emissions = company.cp_assessments.order(:assessment_date).last&.emissions
+        return if emissions.blank?
 
-        company_last_reported_year = current_year
-
-        company_all_emissions[company_last_reported_year] || company_all_emissions[company_all_emissions.keys.max]
+        emissions[current_year] || emissions[emissions.keys.max]
       end
 
       # @return [String] string with current year
