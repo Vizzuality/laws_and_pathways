@@ -49,6 +49,8 @@ ActiveAdmin.register Geography do
 
       eventable_tab 'Geography Events'
     end
+
+    active_admin_comments
   end
 
   index do

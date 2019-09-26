@@ -28,6 +28,8 @@ ActiveAdmin.register CP::Assessment do
     panel 'Emissions/Targets' do
       render 'admin/cp/emissions_table', emissions: resource.emissions
     end
+
+    active_admin_comments
   end
 
   index do

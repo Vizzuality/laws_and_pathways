@@ -57,6 +57,8 @@ ActiveAdmin.register MQ::Assessment do
         column :question
       end
     end
+
+    active_admin_comments
   end
 
   index do

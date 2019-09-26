@@ -28,6 +28,8 @@ ActiveAdmin.register AdminUser do
       row :updated_at
       row :created_at
     end
+
+    active_admin_comments
   end
 
   filter :email

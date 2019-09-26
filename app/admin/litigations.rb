@@ -90,6 +90,8 @@ ActiveAdmin.register Litigation do
 
       eventable_tab 'Litigation Events'
     end
+
+    active_admin_comments
   end
 
   form partial: 'form'

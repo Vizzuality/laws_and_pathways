@@ -55,6 +55,8 @@ ActiveAdmin.register Sector do
         end
       end
     end
+
+    active_admin_comments
   end
 
   form html: {'data-controller' => 'check-modified'} do |f|
