@@ -18,6 +18,8 @@ ActiveAdmin.register TargetScope do
     attributes_table do
       row :name
     end
+
+    active_admin_comments
   end
 
   form html: {'data-controller' => 'check-modified'} do |f|

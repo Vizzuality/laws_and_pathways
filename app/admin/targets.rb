@@ -62,6 +62,8 @@ ActiveAdmin.register Target do
 
       eventable_tab 'Target Events'
     end
+
+    active_admin_comments
   end
 
   form partial: 'form'

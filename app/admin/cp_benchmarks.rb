@@ -23,6 +23,8 @@ ActiveAdmin.register CP::Benchmark do
     panel 'Benchmark emission values' do
       render 'admin/cp/emissions_table', emissions: resource.emissions
     end
+
+    active_admin_comments
   end
 
   csv do

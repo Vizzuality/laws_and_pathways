@@ -35,6 +35,8 @@ ActiveAdmin.register DataUpload do
       row :uploaded_by
       row :uploaded_at
     end
+
+    active_admin_comments
   end
 
   form html: {'data-controller' => 'check-modified'} do |f|
