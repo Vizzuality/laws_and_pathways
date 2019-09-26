@@ -42,23 +42,40 @@ RSpec.describe Api::Charts::CPBenchmark do
             sector: sector,
             emissions: {"2018": 110.0, "2017": 90.0}
           )
+          # Company in scenario_2 (2018: 90 < 110)
           create(
             :cp_assessment,
             company: company,
             assessment_date: '2019-02-01',
             emissions: {"2017": 90.0, "2018": 90.0, "2019": 110.0}
           )
+          # Old assessment -> not included in chart
           create(
             :cp_assessment,
             company: company,
             assessment_date: '2019-01-01',
             emissions: {"2017": 90.0, "2018": 120.0, "2019": 110.0}
           )
+          # Company in scenario_1 (2017: 120 > 110)
           create(
             :cp_assessment,
             company: create(:company, sector: sector),
             assessment_date: '2019-01-01',
             emissions: {"2016": 90.0, "2017": 120.0}
+          )
+          # Company in scenario_2 (2017: 110 == 110 for scenario)
+          create(
+            :cp_assessment,
+            company: create(:company, sector: sector),
+            assessment_date: '2019-01-01',
+            emissions: {"2016": 90.0, "2017": 110}
+          )
+          # Company in scenario_1 (2017: 125 > 124)
+          create(
+            :cp_assessment,
+            company: create(:company, sector: sector),
+            assessment_date: '2019-01-01',
+            emissions: {"2016": 90.0, "2017": 125.0}
           )
         end
 
@@ -67,11 +84,11 @@ RSpec.describe Api::Charts::CPBenchmark do
             [
               {
                 name: scenario_2,
-                data: [[sector.name, 1]]
+                data: [[sector.name, 2]]
               },
               {
                 name: scenario_1,
-                data: [[sector.name, 1]]
+                data: [[sector.name, 2]]
               }
             ]
           )
