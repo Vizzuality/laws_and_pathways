@@ -8,7 +8,7 @@ ActiveAdmin.register CP::Assessment do
   actions :all, except: [:new, :edit, :create, :update]
 
   filter :assessment_date
-  filter :publication_date
+  filter :publication_date, as: :select, collection: proc { CP::Assessment.all_publication_dates }
   filter :company
   filter :company_sector_id, as: :select, collection: proc { Sector.all }
 
@@ -43,7 +43,8 @@ ActiveAdmin.register CP::Assessment do
     column :id
     column(:company) { |a| a.company.name }
     column :assessment_date
-    column :publication_date
+    column :publication_date, &:publication_date_csv
+
     year_columns.map do |year|
       column year do |a|
         a.emissions[year]

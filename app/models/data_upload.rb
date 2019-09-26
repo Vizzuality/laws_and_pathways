@@ -16,9 +16,10 @@ class DataUpload < ApplicationRecord
   UPLOADERS = %w[
     CPAssessments
     CPBenchmarks
+    Companies
     Legislations
     Litigations
-    Companies
+    MQAssessments
     Targets
   ].freeze
 

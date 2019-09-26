@@ -20,6 +20,7 @@ module CP
     belongs_to :company
 
     scope :latest_first, -> { order(assessment_date: :desc) }
+    scope :all_publication_dates, -> { distinct.order(publication_date: :desc).pluck(:publication_date) }
 
     validates_presence_of :publication_date
   end

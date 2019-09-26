@@ -7,6 +7,7 @@ describe 'CsvDataUpload (integration)' do
   let(:targets_csv) { fixture_file('targets.csv') }
   let(:cp_benchmarks_csv) { fixture_file('cp_benchmarks.csv') }
   let(:cp_assessments_csv) { fixture_file('cp_assessments.csv') }
+  let(:mq_assessments_csv) { fixture_file('mq_assessments.csv') }
 
   let!(:countries) do
     [
@@ -101,6 +102,35 @@ describe 'CsvDataUpload (integration)' do
       cp_assessments_csv,
       new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0
     )
+  end
+
+  it 'imports CSV files with MQ Assessments data' do
+    acme_company = create(:company, name: 'ACME')
+    create(:company, name: 'ACME Materials')
+
+    expect_data_upload_results(
+      MQ::Assessment,
+      mq_assessments_csv,
+      new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0
+    )
+    # subsequent import should not create or update any record
+    expect_data_upload_results(
+      MQ::Assessment,
+      mq_assessments_csv,
+      new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0
+    )
+
+    assessment = acme_company.mq_assessments.last
+
+    expect(assessment.notes).to eq('notes')
+    expect(assessment.level).to eq('2')
+    expect(assessment.assessment_date).to eq(Date.parse('2018-01-25'))
+    expect(assessment.questions[0].question).to eq('Question one, level 0?')
+    expect(assessment.questions[0].level).to eq('0')
+    expect(assessment.questions[0].answer).to eq('Yes')
+    expect(assessment.questions[1].question).to eq('Question two, level 1?')
+    expect(assessment.questions[1].level).to eq('1')
+    expect(assessment.questions[1].answer).to eq('Yes')
   end
 
   def expect_data_upload_results(uploaded_resource_klass, csv, expected_details)

@@ -1,6 +1,8 @@
 module CSVImport
-  class CPAssessments < BaseImporter
+  class MQAssessments < BaseImporter
     include UploaderHelpers
+
+    QUESTION_PATTERN = /Q\d+L(\d+)\|(.+)/.freeze
 
     def import
       import_each_csv_row(csv) do |row|
@@ -18,13 +20,21 @@ module CSVImport
 
     private
 
+    def header_converters
+      lambda do |h|
+        return h if h.strip.end_with?('?')
+
+        CSV::HeaderConverters[:symbol].call(h)
+      end
+    end
+
     def resource_klass
-      CP::Assessment
+      MQ::Assessment
     end
 
     def prepare_assessment(row)
       find_record_by(:id, row) ||
-        CP::Assessment.find_or_initialize_by(
+        MQ::Assessment.find_or_initialize_by(
           company: find_company!(row),
           assessment_date: assessment_date(row)
         )
@@ -40,8 +50,9 @@ module CSVImport
       {
         assessment_date: assessment_date(row),
         publication_date: publication_date(row),
-        assumptions: row[:assumptions],
-        emissions: parse_emissions(row)
+        level: row[:level],
+        notes: row[:notes],
+        questions: get_questions(row)
       }
     end
 
@@ -51,6 +62,32 @@ module CSVImport
 
     def publication_date(row)
       Import::DateUtils.safe_parse(row[:publication_date], ['%Y-%m'])
+    end
+
+    def get_questions(row)
+      question_headers = row.headers.map(&:to_s)
+        .select { |h| h.strip.start_with?('Q') }
+
+      question_headers.map do |q_header|
+        answer = row[q_header]
+
+        next if answer.nil?
+
+        parse_question(q_header).merge(answer: answer)
+      end.compact
+    end
+
+    def parse_question(question)
+      return unless question.present?
+
+      matches = question.match(QUESTION_PATTERN)
+      level = matches[1]
+      text = matches[2]
+
+      {
+        question: text,
+        level: level
+      }
     end
   end
 end

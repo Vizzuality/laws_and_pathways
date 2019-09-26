@@ -30,7 +30,7 @@ ActiveAdmin.register CP::Benchmark do
 
     column :id
     column(:sector) { |b| b.sector.name }
-    column(:release_date) { |b| b.release_date.strftime('%Y-%m') }
+    column(:release_date) { |b| b.release_date.to_s(:year_month) }
     column :scenario
 
     year_columns.map do |year|

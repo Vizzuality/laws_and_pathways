@@ -22,6 +22,7 @@ module MQ
 
     scope :latest_first, -> { order(assessment_date: :desc) }
     scope :by_assessment_date, -> { order(:assessment_date) }
+    scope :all_publication_dates, -> { distinct.order(publication_date: :desc).pluck(:publication_date) }
 
     validates :level, inclusion: {in: LEVELS}
     validates_presence_of :assessment_date, :publication_date, :level
@@ -44,6 +45,21 @@ module MQ
 
     def status_description_short
       "#{level} (#{status})"
+    end
+
+    def questions
+      @questions ||= self[:questions].each_with_index.map do |q_hash, index|
+        MQ::Question.new(q_hash.merge(number: index + 1))
+      end
+    end
+
+    def questions=(value)
+      @questions = nil
+      super
+    end
+
+    def find_answer_by_key(key)
+      questions.find { |q| q.key == key }.answer
     end
   end
 end

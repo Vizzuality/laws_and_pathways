@@ -8,12 +8,34 @@ ActiveAdmin.register MQ::Assessment do
   actions :all, except: [:new, :edit, :create, :update]
 
   filter :assessment_date
-  filter :publication_date
+  filter :publication_date, as: :select, collection: proc { MQ::Assessment.all_publication_dates }
   filter :company
   filter :company_sector_id, as: :select, collection: proc { Sector.all }
   filter :level, as: :select, collection: MQ::Assessment::LEVELS
 
-  data_export_sidebar 'MQ Assessments'
+  sidebar 'Export / Import', if: -> { collection.any? }, only: :index do
+    ul do
+      publication_date_selected = request.query_parameters.dig(:q, :publication_date_eq)
+
+      li do
+        if publication_date_selected
+          link_to "Download MQ Assessments (#{publication_date_selected})",
+                  params: request.query_parameters.except(:commit, :format),
+                  format: 'csv'
+        else
+          para 'Please filter by publication date to be able to download CSV file'
+        end
+      end
+
+      li do
+        upload_label = '<strong>Upload</strong> MQ Assessments'.html_safe
+        upload_path = new_admin_data_upload_path(data_upload: {uploader: 'MQAssessments'})
+
+        link_to upload_label, upload_path
+      end
+    end
+    hr
+  end
 
   show do
     attributes_table do
@@ -29,15 +51,10 @@ ActiveAdmin.register MQ::Assessment do
 
     panel 'Questions' do
       table_for resource.questions do
-        column :level do |q|
-          q['level']
-        end
-        column :answer do |q|
-          q['answer']
-        end
-        column :question do |q|
-          q['question']
-        end
+        column :number
+        column :level
+        column :answer
+        column :question
       end
     end
   end
@@ -48,6 +65,23 @@ ActiveAdmin.register MQ::Assessment do
     column :publication_date
     column :level, &:status_description_short
     actions
+  end
+
+  csv do
+    column :id
+    column(:company) { |a| a.company.name }
+    column :assessment_date
+    column :publication_date, &:publication_date_csv
+    column :level
+    column :notes
+
+    # we can take first assessment questions "schema"
+    # since it is already filtered by publication date
+    collection.first.questions.map do |mq_question|
+      column mq_question.csv_column_name, humanize_name: false do |assessment|
+        assessment.find_answer_by_key(mq_question.key)
+      end
+    end
   end
 
   controller do
