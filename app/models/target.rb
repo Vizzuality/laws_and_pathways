@@ -34,12 +34,21 @@ class Target < ApplicationRecord
     trajectory_target
   ].freeze
 
+  EVENT_TYPES = %w[
+    set
+    updated
+    met
+  ].freeze
+
   enum target_type: array_to_enum_hash(TYPES)
 
   belongs_to :geography
   belongs_to :sector
   belongs_to :target_scope
+  has_many :events, as: :eventable, dependent: :destroy
   has_and_belongs_to_many :legislations
+
+  accepts_nested_attributes_for :events, allow_destroy: true, reject_if: :all_blank
 
   validates :ghg_target, inclusion: {in: [true, false]}
   validates :single_year, inclusion: {in: [true, false]}
