@@ -9,16 +9,6 @@ RSpec.describe Admin::TargetsController, type: :controller do
   let(:geography) { create(:geography) }
   let(:target_scope) { create(:target_scope) }
   let(:legislations) { create_list(:legislation, 2) }
-  let(:valid_attributes) {
-    attributes_for(
-      :target,
-      legislation_ids: legislations.pluck(:id),
-      geography_id: geography.id,
-      sector_id: sector.id,
-      target_scope_id: target_scope.id
-    )
-  }
-  let(:invalid_attributes) { valid_attributes.merge(ghg_target: nil) }
 
   before { sign_in admin }
 
@@ -64,11 +54,63 @@ RSpec.describe Admin::TargetsController, type: :controller do
   end
 
   describe 'POST create' do
+    let(:valid_attributes) {
+      attributes_for(
+        :target,
+        description: 'Target description',
+        year: '2034',
+        single_year: true,
+        ghg_target: true,
+        target_type: 'base_year_target',
+        legislation_ids: legislations.pluck(:id),
+        geography_id: geography.id,
+        sector_id: sector.id,
+        target_scope_id: target_scope.id,
+        events_attributes: [
+          {
+            date: 5.days.ago,
+            event_type: 'set',
+            title: 'Target set',
+            description: 'Description 1',
+            url: 'https://validurl1.com'
+          },
+          {
+            date: 3.days.ago,
+            event_type: 'updated',
+            title: 'Target updated',
+            description: 'Description 2',
+            url: 'https://validurl2.com'
+          }
+        ]
+      )
+    }
+    let(:invalid_attributes) { valid_attributes.merge(ghg_target: nil) }
+
     context 'with valid params' do
       subject { post :create, params: {target: valid_attributes} }
 
       it 'creates a new Target' do
         expect { subject }.to change(Target, :count).by(1)
+
+        expected_events_attrs = [
+          ['Target set', 'set', 'Description 1', 'https://validurl1.com'],
+          ['Target updated', 'updated', 'Description 2', 'https://validurl2.com']
+        ]
+
+        Target.order(:created_at).last.tap do |t|
+          expect(t.description).to eq('Target description')
+          expect(t.year).to eq(2034)
+          expect(t.ghg_target).to eq(true)
+          expect(t.single_year).to eq(true)
+          expect(t.target_type).to eq('base_year_target')
+          expect(t.geography_id).to eq(geography.id)
+          expect(t.sector_id).to eq(sector.id)
+          expect(t.target_scope_id).to eq(target_scope.id)
+          expect(t.legislation_ids).to eq(legislations.pluck(:id))
+          expect(
+            t.events.order(:date).pluck(:title, :event_type, :description, :url)
+          ).to eq(expected_events_attrs)
+        end
       end
 
       it 'redirects to the created Target' do
