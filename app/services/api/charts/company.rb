@@ -94,8 +94,7 @@ module Api
         @sector_all_emissions ||= @company.sector
           .companies
           .includes(:cp_assessments)
-          .map(&:cp_assessments)
-          .flatten.map(&:emissions)
+          .flat_map { |c| c.latest_cp_assessment.emissions }
       end
     end
   end
