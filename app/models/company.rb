@@ -14,6 +14,7 @@
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #  visibility_status         :string           default("draft")
+#  discarded_at              :datetime
 #
 
 class Company < ApplicationRecord

@@ -11,6 +11,7 @@
 #  questions        :jsonb
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  discarded_at     :datetime
 #
 
 FactoryBot.define do
