@@ -62,6 +62,17 @@ fieldset.actions .cancel a {
   &.published { background: $published-color; }
   &.archived { background: $archived-color; }
   &.unset { background: $unset-color; }
+
+  &.mq-new { background: $mq-new-color; }
+  &.mq-unchanged { background: $mq-unchanged-color; }
+  &.mq-up { background: $mq-up-color; }
+  &.mq-down { background: $mq-down-color; }
+}
+
+.mq-status {
+  span {
+    margin-left: 5px;
+  }
 }
 
 #search_status_sidebar_section {

@@ -25,7 +25,7 @@ ActiveAdmin.register Company do
   sidebar 'Details', only: :show do
     attributes_table do
       row :company, &:name
-      row :level, &:mq_status_description_short
+      row :level, &:mq_level_tag
       row :updated_at
     end
   end
@@ -43,7 +43,7 @@ ActiveAdmin.register Company do
           row :headquarters_geography
           row :ca100
           row :size
-          row 'Management Quality Level', &:mq_status_description_short
+          row 'Management Quality Level', &:mq_level_tag
           row :created_at
           row :updated_at
         end
@@ -59,7 +59,7 @@ ActiveAdmin.register Company do
             resource.mq_assessments.latest_first.decorate.map do |a|
               panel a.title, class: 'mq_assessment' do
                 attributes_table_for a do
-                  row :level, &:status_description_short
+                  row :level, &:level_tag
                   row :publication_date
                   row :assessment_date
                 end
@@ -119,7 +119,7 @@ ActiveAdmin.register Company do
     column(:name) { |company| link_to company.name, admin_company_path(company) }
     column :isin, &:isin_as_tags
     column(:size) { |company| company.size.humanize }
-    column :level, &:mq_status_description_short
+    column :level, &:mq_level_tag
     column :geography
     column :headquarters_geography
     tag_column :visibility_status

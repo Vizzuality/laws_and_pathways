@@ -37,14 +37,14 @@ class Company < ApplicationRecord
   has_many :litigations, through: :litigation_sides
 
   delegate :level, :status, :status_description_short,
-           to: :latest_assessment, prefix: :mq, allow_nil: true
+           to: :latest_mq_assessment, prefix: :mq, allow_nil: true
 
   validates :ca100, inclusion: {in: [true, false]}
   validates_presence_of :name, :slug, :isin, :size
   validates_uniqueness_of :slug, :isin, :name
 
-  def latest_assessment
-    mq_assessments.first
+  def latest_mq_assessment
+    mq_assessments.order(:assessment_date).last
   end
 
   def to_s

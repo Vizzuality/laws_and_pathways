@@ -41,7 +41,7 @@ ActiveAdmin.register MQ::Assessment do
     attributes_table do
       row :id
       row :company
-      row :level, &:status_description_short
+      row :level, &:level_tag
       row :assessment_date
       row :publication_date
       row :notes
@@ -65,7 +65,7 @@ ActiveAdmin.register MQ::Assessment do
     column :title, &:title_link
     column :assessment_date
     column :publication_date
-    column :level, &:status_description_short
+    column :level, &:level_tag
     actions
   end
 
