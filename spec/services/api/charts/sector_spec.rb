@@ -27,8 +27,8 @@ RSpec.describe Api::Charts::Sector do
   end
 
   describe '.companies_summaries' do
-    it 'returns Companies summaries grouped by their latest' do
-      expect(subject.companies_summaries).to eq(
+    it 'returns Companies summaries grouped by their level' do
+      expect(subject.companies_summaries_by_level).to eq(
         '1' => [
           {id: company.id, name: company.name, status: 'down'},
           {id: company2.id, name: company2.name, status: 'new'}
@@ -38,8 +38,8 @@ RSpec.describe Api::Charts::Sector do
   end
 
   describe '.companies_count' do
-    it 'returns companies summaries' do
-      expect(subject.companies_count).to eq('1' => 2)
+    it 'returns companies count grouped by their level' do
+      expect(subject.companies_count_by_level).to eq('1' => 2)
     end
   end
 

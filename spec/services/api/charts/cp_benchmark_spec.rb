@@ -15,14 +15,14 @@ RSpec.describe Api::Charts::CPBenchmark do
   describe '.cp_performance' do
     context 'sector has no scenarios' do
       it 'returns empty list' do
-        expect(subject.cp_performance).to eq([])
+        expect(subject.cp_performance_data).to eq([])
       end
 
       context 'sector has scenarios but company has no emissions' do
         let!(:cp_benchmark) { create(:cp_benchmark, sector: sector) }
 
         it 'returns empty list' do
-          expect(subject.cp_performance).to eq([])
+          expect(subject.cp_performance_data).to eq([])
         end
       end
 
@@ -91,7 +91,7 @@ RSpec.describe Api::Charts::CPBenchmark do
         end
 
         it 'returns chart data' do
-          expect(subject.cp_performance).to eq(
+          expect(subject.cp_performance_data).to eq(
             [
               {
                 name: scenario_2,

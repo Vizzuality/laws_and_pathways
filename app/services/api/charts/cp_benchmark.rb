@@ -2,6 +2,7 @@ module Api
   module Charts
     class CPBenchmark
       # Calculate companies stats grouped by CP benchmark in multiple series.
+      #
       # @return [Array<Hash> chart data
       # @example
       #   [
@@ -14,13 +15,14 @@ module Api
       #       data: [ ['Coal Mining', 65], ['Steel', 26] ]
       #     }
       #   ]
-      def cp_performance
+      def cp_performance_data
         prepare_chart_data(sectors_cp_performance)
       end
 
       private
 
       # Prepare data for chart based on sectors cp performance data
+      #
       # @param results[Array<Hash>] list with all scenarios with emissions
       # @return [Array<Hash>] list with data for chart
       def prepare_chart_data(results)
@@ -34,6 +36,7 @@ module Api
       end
 
       # Scenarios with sectors and companies count
+      #
       # @return [Hash]
       # @example
       #   {
@@ -41,7 +44,7 @@ module Api
       #       "Aluminium" => 10,
       #       "Cement" => 27
       #     },
-      #       "International Pledges" => {
+      #     "International Pledges" => {
       #       "Steel" => 80
       #     }
       #   }
@@ -65,6 +68,7 @@ module Api
       end
 
       # Get emissions for all scenarios for all sectors
+      #
       # @return [Hash]
       # @example
       #   {"Airlines": {"Below 2 Degrees": 110, "2 Degrees": 101}}
@@ -82,6 +86,7 @@ module Api
       end
 
       # Get company emission for current year or for the latest assessment
+      #
       # @param company [Company]
       # @return [Float]
       def company_emission(company)
@@ -94,6 +99,7 @@ module Api
       end
 
       # Determine in which scenario is current company emission
+      #
       # @param company_emission [Float]
       # @param scenarios [Hash]
       def company_scenario(company_emission, scenarios)
@@ -107,6 +113,7 @@ module Api
       end
 
       # Get list of last CPBenchmarks for sector
+      #
       # @param sector [Sector]
       # @return [Array<CPBenchmark>]
       def get_last_cp_benchmarks(sector)
