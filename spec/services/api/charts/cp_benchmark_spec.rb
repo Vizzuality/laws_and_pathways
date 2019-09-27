@@ -29,18 +29,29 @@ RSpec.describe Api::Charts::CPBenchmark do
       context 'company has emissions' do
         let!(:scenario_1) { 'scenario_1' }
         let!(:scenario_2) { 'scenario_2' }
+        let!(:scenario_3) { 'scenario_3' }
         before do
           create(
             :cp_benchmark,
             scenario: scenario_1,
             sector: sector,
+            release_date: '2019-01-01',
             emissions: {"2018": 124.0, "2017": 122.0}
           )
           create(
             :cp_benchmark,
             scenario: scenario_2,
             sector: sector,
+            release_date: '2019-01-01',
             emissions: {"2018": 110.0, "2017": 90.0}
+          )
+          # CP benchmark in old release
+          create(
+            :cp_benchmark,
+            scenario: scenario_3,
+            sector: sector,
+            release_date: '2018-01-01',
+            emissions: {"2018": 100.0, "2017": 90.0}
           )
           # Company in scenario_2 (2018: 90 < 110)
           create(

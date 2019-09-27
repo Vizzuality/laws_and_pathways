@@ -75,7 +75,7 @@ module Api
 
         ::Sector.all.each do |sector|
           sectors[sector] = {}
-          sector.cp_benchmarks.each do |benchmark|
+          get_last_cp_benchmarks(sector).each do |benchmark|
             sectors[sector][benchmark.scenario] = benchmark.emissions[current_year]
           end
         end
@@ -106,6 +106,17 @@ module Api
         return scenarios.max_by { |_s, value| value }.first if scenarios_with_greater_emission.empty?
 
         scenarios_with_greater_emission.min_by { |_s, value| value - company_emission }.first
+      end
+
+      # Get list of last CPBenchmarks for sector
+      # @param sector [Sector]
+      # @return [Array<CPBenchmark>]
+      def get_last_cp_benchmarks(sector)
+        cp_benchmarks = sector.cp_benchmarks
+
+        return [] if cp_benchmarks.empty?
+
+        cp_benchmarks.group_by(&:release_date).max[1]
       end
 
       # @return [String] string with current year
