@@ -50,8 +50,6 @@ module Api
 
         sectors_scenario_emissions.each do |sector, scenarios|
           sector.companies.each do |company|
-            next if scenarios.empty?
-
             company_emission = company_emission(company)
 
             next unless company_emission
@@ -73,7 +71,7 @@ module Api
       def sectors_scenario_emissions
         sectors = {}
 
-        ::Sector.all.each do |sector|
+        ::Sector.all.includes(:cp_benchmarks, companies: [:cp_assessments]).each do |sector|
           sectors[sector] = {}
           get_last_cp_benchmarks(sector).each do |benchmark|
             sectors[sector][benchmark.scenario] = benchmark.emissions[current_year]
@@ -87,7 +85,7 @@ module Api
       # @param company [Company]
       # @return [Float]
       def company_emission(company)
-        emissions = company.cp_assessments.order(:assessment_date).last&.emissions
+        emissions = company.latest_cp_assessment&.emissions
 
         return if emissions.blank?
 
