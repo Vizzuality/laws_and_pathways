@@ -10,6 +10,7 @@ module Api
       # - company's sector average emissions
       # - company's sector CP benchmarks (scenarios)
       #
+      # @return [Array]
       # @example
       #   [
       #     { name: 'Air China',                   data: {'2014' => 111.0, '2015' => 112.0 } },
@@ -44,14 +45,6 @@ module Api
         }
       end
 
-      # if we have benchmarks available for
-      # - 04.2017
-      # .. assessment date is 06.2017 => we take 04.2017 benchmarks
-      # - 05.2018
-      # .. assessment date is 06.2018 => we take 05.2018 benchmarks
-      #
-      # for the chart sector benchmarks should be only
-      # for the last date before the CP::Assessment date
       def emissions_data_from_sector_benchmarks
         @company.sector.cp_benchmarks.map do |benchmark|
           {

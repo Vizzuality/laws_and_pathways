@@ -8,7 +8,7 @@ module Tpi
     def show
       @sector = Sector.find(params[:id])
 
-      @companies_by_levels = ::Api::Charts::Sector.new(companies_scope(params)).companies_summaries
+      @companies_by_levels = ::Api::Charts::Sector.new(companies_scope(params)).companies_summaries_by_level
     end
 
     # Chart data endpoints
@@ -18,7 +18,7 @@ module Tpi
     # Type:     pie chart
     # On pages: :index, :show
     def levels_chart_data
-      data = ::Api::Charts::Sector.new(companies_scope(params)).companies_count
+      data = ::Api::Charts::Sector.new(companies_scope(params)).companies_count_by_level
 
       render json: data.chart_json
     end
@@ -38,7 +38,7 @@ module Tpi
     # Type:     column chart
     # On pages: :index
     def benchmarks_chart_data
-      data = ::Api::Charts::CPBenchmark.new.cp_performance
+      data = ::Api::Charts::CPBenchmark.new.cp_performance_data
 
       render json: data.chart_json
     end

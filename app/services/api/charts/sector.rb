@@ -5,53 +5,54 @@ module Api
         @company_scope = company_scope
       end
 
-      # Returns Companies summaries grouped by their latest MQ assessments Sector's levels.
+      # Returns Companies summaries (name, status) grouped by their latest MQ assessments levels.
       #
       # Returns data in multiple series.
       #
+      # @return [Hash]
       # @example
-      #   [
-      #    ['1',
-      #      [
-      #        { name: 'Air China', status: 'new' },
-      #        { name: 'China Southern', status: 'new' }
-      #      ]
-      #    ],
-      #    ['3',
-      #      [
-      #        { name: 'Alaska Air', status: 'up' },
-      #        { name: 'IAG', status: 'down' }
-      #      ]
-      #     ]
-      #   ]
-      def companies_summaries
+      #   {
+      #    '1' => [
+      #      { name: 'Air China', status: 'new' },
+      #      { name: 'China Southern', status: 'new' }
+      #    ]
+      #    '3' => [
+      #      { name: 'Alaska Air', status: 'up' },
+      #      { name: 'IAG', status: 'down' }
+      #    ]
+      #   }
+      def companies_summaries_by_level
         companies_grouped_by_latest_assessment_level
           .map { |level, companies| [level, companies_summary(companies)] }
           .sort.to_h
       end
 
-      # Returns latest "MQ assessment Sector's levels" mapped to number of Companies in given level
+      # Returns Companies count grouped by their latest MQ assessment levels.
       #
       # Returns single series of data.
       #
+      # @return [Hash]
       # @example
       #   { '0' => 13, '1' => 63, '2' => 61, '3' => 71, '4' => 63, '4STAR' => 6}
       #
-      def companies_count
+      def companies_count_by_level
         companies_grouped_by_latest_assessment_level
           .map { |level, companies| [level, companies.size] }
           .sort.to_h
       end
 
-      # Returns companies emissions
+      # Returns companies emissions, which includes:
+      # - companies emissions
+      # - current Sector "scenario" emissions
       #
       # Returns data in multiple series.
       #
+      # @return [Array]
       # @example
       #   [
-      #     { name: 'WizzAir', data: {} },
-      #     { name: 'Air China', data: {'2014' => 111.0, '2015' => 112.0 } },
-      #     { name: 'China Southern', data: {'2014' => 114.0, '2015' => 112.0 } }
+      #     { name: 'WizzAir', data: { '2014' => 111.0, '2015' => 112.0 } },
+      #     { name: 'Air China', data: { .. } },
+      #     { name: '2 Degrees (High Efficiency)', data: { .. } }
       #   ]
       #
       def companies_emissions_data
@@ -76,6 +77,8 @@ module Api
       end
 
       def emissions_data_from_sector_benchmarks
+        # TODO: take last released benchmarks only
+        # (similar as in Api::Charts::CPBenchmark#get_last_cp_benchmarks)
         @company_scope.first.sector_benchmarks.map do |benchmark|
           {
             type: 'area',
@@ -89,7 +92,7 @@ module Api
       def company_emissions_series_options(company)
         {
           name: company.name,
-          data: company.latest_cp_assessment.emissions,
+          data: company.latest_cp_assessment&.emissions,
           lineWidth: 4
         }
       end
