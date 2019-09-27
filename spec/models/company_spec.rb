@@ -60,4 +60,30 @@ RSpec.describe Company, type: :model do
     subject.visibility_status = nil
     expect(subject).to have(2).errors_on(:visibility_status)
   end
+
+  describe '#latest_cp_assessment' do
+    it 'returns last CP assessments with most recent assessment date' do
+      company = create(:company, cp_assessments: [
+                         create(:cp_assessment, assessment_date: '2012-05-01'),
+                         create(:cp_assessment, assessment_date: '2019-05-01'),
+                         create(:cp_assessment, assessment_date: '2013-05-01'),
+                         create(:cp_assessment, assessment_date: '2018-05-01')
+                       ])
+
+      expect(company.latest_cp_assessment.assessment_date.to_s).to eq('2019-05-01')
+    end
+  end
+
+  describe '#latest_mq_assessment' do
+    it 'returns last MQ assessments with most recent assessment date' do
+      company = create(:company, mq_assessments: [
+                         create(:mq_assessment, assessment_date: '2012-05-01'),
+                         create(:mq_assessment, assessment_date: '2019-05-01'),
+                         create(:mq_assessment, assessment_date: '2013-05-01'),
+                         create(:mq_assessment, assessment_date: '2018-05-01')
+                       ])
+
+      expect(company.latest_mq_assessment.assessment_date.to_s).to eq('2019-05-01')
+    end
+  end
 end
