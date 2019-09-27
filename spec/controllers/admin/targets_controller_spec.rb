@@ -106,7 +106,7 @@ RSpec.describe Admin::TargetsController, type: :controller do
           expect(t.geography_id).to eq(geography.id)
           expect(t.sector_id).to eq(sector.id)
           expect(t.target_scope_id).to eq(target_scope.id)
-          expect(t.legislation_ids).to eq(legislations.pluck(:id))
+          expect(t.legislation_ids.sort).to eq(legislations.pluck(:id).sort)
           expect(
             t.events.order(:date).pluck(:title, :event_type, :description, :url)
           ).to eq(expected_events_attrs)
