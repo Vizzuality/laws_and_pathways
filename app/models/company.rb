@@ -31,11 +31,9 @@ class Company < ApplicationRecord
   belongs_to :headquarters_geography, class_name: 'Geography'
 
   has_many :mq_assessments,
-           -> { order(assessment_date: :desc) },
            class_name: 'MQ::Assessment',
            inverse_of: :company
   has_many :cp_assessments,
-           -> { order(assessment_date: :desc) },
            class_name: 'CP::Assessment',
            inverse_of: :company
   has_many :litigation_sides, as: :connected_entity
@@ -53,11 +51,11 @@ class Company < ApplicationRecord
   end
 
   def latest_mq_assessment
-    mq_assessments.first
+    mq_assessments.order(:assessment_date).last
   end
 
   def latest_cp_assessment
-    cp_assessments.first
+    cp_assessments.order(:assessment_date).last
   end
 
   def sector_benchmarks
