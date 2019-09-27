@@ -63,7 +63,7 @@ module MQ
     end
 
     def questions_by_level
-      questions.group_by { |q| q['level'] }
+      questions.group_by(&:level)
     end
   end
 end

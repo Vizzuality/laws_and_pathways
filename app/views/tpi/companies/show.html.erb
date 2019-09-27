@@ -47,14 +47,14 @@
 <br><br>
 
 <div class="company-assessments container-columns">
-<%- @company_details[:latest_assessment].each do |level, assessments| %>
+<%- @company_details[:latest_assessment_questions].each do |level, questions| %>
   <div class="assessment-level">
     <h3>Level <%= level %>: <%= @company_details[:levels_descriptions][level.to_s] || 'Answers' %></h3>
     <div class="assessment-details">
-      <%- assessments.each do |a| %>
+      <%- questions.each do |question| %>
       <div class="container">
-        <div class="assessment-answer">(<%= a['answer'] %>)</div>
-        <div class="assessment-question"><%= a['question'] %></div>
+        <div class="assessment-answer">(<%= question.answer %>)</div>
+        <div class="assessment-question"><%= question.question %></div>
       </div>
       <%- end %>
     </div>
