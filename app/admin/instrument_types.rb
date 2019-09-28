@@ -31,4 +31,8 @@ ActiveAdmin.register InstrumentType do
 
     f.actions
   end
+
+  controller do
+    include DiscardableController
+  end
 end

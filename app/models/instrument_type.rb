@@ -9,5 +9,7 @@
 #
 
 class InstrumentType < ApplicationRecord
+  include DiscardableModel
+
   validates_presence_of :name
 end
