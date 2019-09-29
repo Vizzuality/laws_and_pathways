@@ -59,21 +59,29 @@ class Company < ApplicationRecord
     sector.latest_released_benchmarks
   end
 
-  # Returns sector benchmarks:
-  # - if company has assessment - from the last date before latest CP::Assessment date
-  # - if company has no assessments - from latest benchmarks
+  # Returns sector CP benchmarks:
+  # - if company has assessment      - from the last date before latest CP::Assessment date
+  # - if company has no assessments  - from latest benchmarks
+  # - if company has old assessments - from latest benchmarks
+  #
+  # @return [AssociationRelation [#<CP::Benchmark]
   #
   # @example Company has assessment:
   # - benchmarks available for 04.2017 and 05.2018
-  # - if assessment date is 06.2018 we take 05.2018 benchmarks
-  # - if assessment date is 06.2017 we take benchmarks for 04.2017
+  # - if assessment date is 06.2018 - we take benchmarks from 05.2018
+  # - if assessment date is 06.2017 - we take benchmarks from 04.2017
   def latest_sector_benchmarks_before_last_assessment
     last_assessment_date = latest_cp_assessment&.assessment_date
     sector_benchmarks_dates = sector.cp_benchmarks.pluck(:release_date).uniq.sort
 
     if last_assessment_date
-      last_release_date_before_assessment = sector_benchmarks_dates.select { |d| d < last_assessment_date }.last
-      release_date = last_release_date_before_assessment || sector_benchmarks_dates.last
+      last_release_date_before_assessment =
+        sector_benchmarks_dates
+          .select { |d| d < last_assessment_date }
+          .last
+
+      release_date =
+        last_release_date_before_assessment || sector_benchmarks_dates.last
 
       sector.cp_benchmarks.where(release_date: release_date)
     else

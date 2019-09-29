@@ -3,7 +3,7 @@ module Api
     class CPBenchmark
       # Calculate companies stats grouped by CP benchmark in multiple series.
       #
-      # @return [Array<Hash> chart data
+      # @return [Array<Hash>] chart data
       # @example
       #   [
       #     {

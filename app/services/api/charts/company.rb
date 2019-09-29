@@ -68,7 +68,7 @@ module Api
           .to_h
       end
 
-      # Returns average emission from all Companies from single year
+      # @return [Float] average emission from all Companies from single year
       def sector_average_emission_for_year(year)
         company_emissions = sector_all_emissions
           .map { |emissions| emissions[year.to_s] }
@@ -77,20 +77,22 @@ module Api
         (company_emissions.sum / company_emissions.count).round(2)
       end
 
+      # @return [Array] of years for which emissions was reported
       def years_with_reported_emissions
         last_reported_year = Time.new.year
 
         (sector_all_emission_years.min..last_reported_year).map.to_a
       end
 
+      # @return [Array] unique array of years as numbers
       def sector_all_emission_years
         sector_all_emissions
-          .flat_map(&:keys) # just .keys?
+          .flat_map(&:keys)
           .map(&:to_i)
           .uniq
       end
 
-      # Returns array of emissions ({ year => value }) from all Companies from current Sector
+      # @return [Array<Hash>] list of { year => value } pairs from all Companies from current Sector
       def sector_all_emissions
         @sector_all_emissions ||= @company.sector
           .companies
