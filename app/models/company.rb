@@ -72,20 +72,19 @@ class Company < ApplicationRecord
   # - if assessment date is 06.2017 - we take benchmarks from 04.2017
   def latest_sector_benchmarks_before_last_assessment
     last_assessment_date = latest_cp_assessment&.assessment_date
+
+    return sector.latest_released_benchmarks unless last_assessment_date
+
     sector_benchmarks_dates = sector.cp_benchmarks.pluck(:release_date).uniq.sort
 
-    if last_assessment_date
-      last_release_date_before_assessment =
-        sector_benchmarks_dates
-          .select { |d| d < last_assessment_date }
-          .last
+    last_release_date_before_assessment =
+      sector_benchmarks_dates
+        .select { |d| d < last_assessment_date }
+        .last
 
-      release_date =
-        last_release_date_before_assessment || sector_benchmarks_dates.last
+    release_date =
+      last_release_date_before_assessment || sector_benchmarks_dates.last
 
-      sector.cp_benchmarks.where(release_date: release_date)
-    else
-      sector.latest_released_benchmarks
-    end
+    sector.cp_benchmarks.where(release_date: release_date)
   end
 end
