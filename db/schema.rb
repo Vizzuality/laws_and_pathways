@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_28_182928) do
+ActiveRecord::Schema.define(version: 2019_09_29_110158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -195,6 +195,16 @@ ActiveRecord::Schema.define(version: 2019_09_28_182928) do
     t.index ["discarded_at"], name: "index_instrument_types_on_discarded_at"
   end
 
+  create_table "instruments", force: :cascade do |t|
+    t.string "name"
+    t.bigint "instrument_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_instruments_on_discarded_at"
+    t.index ["instrument_type_id"], name: "index_instruments_on_instrument_type_id"
+  end
+
   create_table "legislations", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -353,6 +363,7 @@ ActiveRecord::Schema.define(version: 2019_09_28_182928) do
   add_foreign_key "external_legislations", "geographies"
   add_foreign_key "geographies", "admin_users", column: "created_by_id"
   add_foreign_key "geographies", "admin_users", column: "updated_by_id"
+  add_foreign_key "instruments", "instrument_types"
   add_foreign_key "legislations", "admin_users", column: "created_by_id"
   add_foreign_key "legislations", "admin_users", column: "updated_by_id"
   add_foreign_key "legislations", "geographies"
