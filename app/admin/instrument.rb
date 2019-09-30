@@ -1,5 +1,5 @@
 ActiveAdmin.register Instrument do
-  menu parent: 'Laws', priority: 7
+  menu parent: 'Laws', priority: 6
 
   permit_params :name, :instrument_type_id
 

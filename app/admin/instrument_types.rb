@@ -1,5 +1,5 @@
 ActiveAdmin.register InstrumentType do
-  menu parent: 'Laws', priority: 6
+  menu parent: 'Laws', priority: 7
   config.batch_actions = false
 
   permit_params :name
