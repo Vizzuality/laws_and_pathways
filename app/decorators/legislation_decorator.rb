@@ -50,4 +50,13 @@ class LegislationDecorator < Draper::Decorator
                 title: instrument.name
     end
   end
+
+  def governance_links
+    model.governances.map do |governance|
+      h.link_to governance.name,
+                h.admin_governance_path(governance),
+                target: '_blank',
+                title: governance.name
+    end
+  end
 end
