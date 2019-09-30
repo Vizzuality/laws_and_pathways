@@ -13,7 +13,8 @@ ActiveAdmin.register Legislation do
                 :created_by_id, :updated_by_id, :visibility_status,
                 events_attributes: permit_params_for(:events),
                 documents_attributes: permit_params_for(:documents),
-                framework_ids: [], document_type_ids: [], instrument_ids: []
+                framework_ids: [], document_type_ids: [], instrument_ids: [],
+                governance_ids: []
 
   filter :title_contains, label: 'Title'
   filter :date_passed
@@ -63,6 +64,7 @@ ActiveAdmin.register Legislation do
           row 'Natural Hazards', &:natural_hazards_string
           list_row 'Documents', :document_links
           list_row 'Instruments', :instrument_links
+          list_row 'Governances', :governance_links
         end
       end
 

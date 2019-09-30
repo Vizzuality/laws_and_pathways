@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_29_193356) do
+ActiveRecord::Schema.define(version: 2019_09_30_143410) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -185,6 +185,29 @@ ActiveRecord::Schema.define(version: 2019_09_29_193356) do
     t.index ["region"], name: "index_geographies_on_region"
     t.index ["slug"], name: "index_geographies_on_slug", unique: true
     t.index ["updated_by_id"], name: "index_geographies_on_updated_by_id"
+  end
+
+  create_table "governance_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_governance_types_on_discarded_at"
+  end
+
+  create_table "governances", force: :cascade do |t|
+    t.string "name"
+    t.bigint "governance_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_governances_on_discarded_at"
+    t.index ["governance_type_id"], name: "index_governances_on_governance_type_id"
+  end
+
+  create_table "governances_legislations", id: false, force: :cascade do |t|
+    t.bigint "legislation_id", null: false
+    t.bigint "governance_id", null: false
   end
 
   create_table "instrument_types", force: :cascade do |t|
@@ -370,6 +393,7 @@ ActiveRecord::Schema.define(version: 2019_09_29_193356) do
   add_foreign_key "external_legislations", "geographies"
   add_foreign_key "geographies", "admin_users", column: "created_by_id"
   add_foreign_key "geographies", "admin_users", column: "updated_by_id"
+  add_foreign_key "governances", "governance_types"
   add_foreign_key "instruments", "instrument_types"
   add_foreign_key "legislations", "admin_users", column: "created_by_id"
   add_foreign_key "legislations", "admin_users", column: "updated_by_id"
