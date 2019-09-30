@@ -12,7 +12,7 @@ ActiveAdmin.register Instrument do
 
   index do
     column :name, :name_link
-    column(:instrument_type) { |t| t.model.instrument_type }
+    column :instrument_type
 
     actions
   end
@@ -20,7 +20,7 @@ ActiveAdmin.register Instrument do
   show do
     attributes_table do
       row :name
-      row(:instrument_type) { |t| t.model.instrument_type }
+      row :instrument_type
     end
 
     active_admin_comments
@@ -31,7 +31,7 @@ ActiveAdmin.register Instrument do
 
     f.inputs do
       f.input :name
-      f.input(:instrument_type) { |t| t.model.instrument_type }
+      f.input :instrument_type
     end
 
     f.actions
