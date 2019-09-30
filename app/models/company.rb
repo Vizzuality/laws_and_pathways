@@ -60,9 +60,9 @@ class Company < ApplicationRecord
   end
 
   # Returns sector CP benchmarks:
-  # - if company has assessment      - from the last date before latest CP::Assessment date
-  # - if company has no assessments  - from latest benchmarks
-  # - if company has old assessments - from latest benchmarks
+  # - from the last date before latest CP::Assessment date
+  #   (if company latest CP::Assessment was after at least one benchmark)
+  # - from latest benchmarks otherwise
   #
   # @return [AssociationRelation [#<CP::Benchmark]
   #
