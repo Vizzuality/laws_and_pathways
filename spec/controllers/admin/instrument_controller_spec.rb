@@ -7,7 +7,7 @@ RSpec.describe Admin::InstrumentsController, type: :controller do
   describe 'DELETE destroy' do
     let!(:instrument) { create(:instrument, discarded_at: nil) }
 
-    context 'with valid pspec/factories/instrument_types.rb:16arams' do
+    context 'with valid params' do
       subject { delete :destroy, params: {id: instrument.id} }
 
       before do
