@@ -3,7 +3,7 @@ module Api
     class CPBenchmark
       # Calculate companies stats grouped by CP benchmark in multiple series.
       #
-      # @return [Array<Hash> chart data
+      # @return [Array<Hash>] chart data
       # @example
       #   [
       #     {
@@ -73,16 +73,12 @@ module Api
       # @example
       #   {"Airlines": {"Below 2 Degrees": 110, "2 Degrees": 101}}
       def sectors_scenario_emissions
-        sectors = {}
-
-        ::Sector.all.includes(:cp_benchmarks, companies: [:cp_assessments]).each do |sector|
-          sectors[sector] = {}
-          get_last_cp_benchmarks(sector).each do |benchmark|
-            sectors[sector][benchmark.scenario] = benchmark.emissions[current_year]
+        all_sectors.each_with_object({}) do |sector, sectors_hash|
+          sectors_hash[sector] = {}
+          sector.latest_released_benchmarks.each do |benchmark|
+            sectors_hash[sector][benchmark.scenario] = benchmark.emissions[current_year]
           end
         end
-
-        sectors
       end
 
       # Get company emission for current year or for the latest assessment
@@ -112,16 +108,11 @@ module Api
         scenarios_with_greater_emission.min_by { |_s, value| value - company_emission }.first
       end
 
-      # Get list of last CPBenchmarks for sector
+      # Get all Sectors
       #
-      # @param sector [Sector]
-      # @return [Array<CPBenchmark>]
-      def get_last_cp_benchmarks(sector)
-        cp_benchmarks = sector.cp_benchmarks
-
-        return [] if cp_benchmarks.empty?
-
-        cp_benchmarks.group_by(&:release_date).max[1]
+      # @return [Sector::ActiveRecord_Relation]
+      def all_sectors
+        ::Sector.includes(:cp_benchmarks, companies: [:cp_assessments])
       end
 
       # @return [String] string with current year
