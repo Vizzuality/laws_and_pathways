@@ -43,8 +43,6 @@ class LegislationDecorator < Draper::Decorator
   end
 
   def instrument_links
-    return [] if model.instruments.empty?
-
     model.instruments.map do |instrument|
       h.link_to instrument.name,
                 h.admin_instrument_path(instrument),
