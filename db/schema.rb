@@ -208,6 +208,8 @@ ActiveRecord::Schema.define(version: 2019_09_30_143410) do
   create_table "governances_legislations", id: false, force: :cascade do |t|
     t.bigint "legislation_id", null: false
     t.bigint "governance_id", null: false
+    t.index ["governance_id"], name: "index_governances_legislations_on_governance_id"
+    t.index ["legislation_id"], name: "index_governances_legislations_on_legislation_id"
   end
 
   create_table "instrument_types", force: :cascade do |t|
