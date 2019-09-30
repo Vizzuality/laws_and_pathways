@@ -43,6 +43,7 @@ class Legislation < ApplicationRecord
   has_many :events, as: :eventable, dependent: :destroy
   has_and_belongs_to_many :targets
   has_and_belongs_to_many :litigations
+  has_and_belongs_to_many :instruments
 
   with_options allow_destroy: true, reject_if: :all_blank do
     accepts_nested_attributes_for :documents

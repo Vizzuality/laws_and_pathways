@@ -41,4 +41,13 @@ class LegislationDecorator < Draper::Decorator
                 title: document.external? ? document.url : nil
     end
   end
+
+  def instrument_links
+    model.instruments.map do |instrument|
+      h.link_to instrument.name,
+                h.admin_instrument_path(instrument),
+                target: '_blank',
+                title: instrument.name
+    end
+  end
 end

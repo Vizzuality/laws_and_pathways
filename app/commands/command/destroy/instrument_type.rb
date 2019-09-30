@@ -1,6 +1,6 @@
 module Command
   module Destroy
-    class Legislation
+    class InstrumentType
       def initialize(resource)
         @resource = resource
       end
@@ -10,11 +10,6 @@ module Command
           @resource.tap do |r|
             r.discard
 
-            r.documents.discard_all
-            r.events.discard_all
-
-            r.litigations = []
-            r.targets = []
             r.instruments = []
           end
         end
