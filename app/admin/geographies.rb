@@ -33,6 +33,7 @@ ActiveAdmin.register Geography do
           row :id
           row :name
           row :iso
+          row(:flag) { |g| g.flag_image(:medium) }
           row :geography_type
           row :region
           row :federal
@@ -57,6 +58,7 @@ ActiveAdmin.register Geography do
     column 'Name', :name_link
     column :geography_type
     column 'ISO', :iso
+    column 'Flag', :flag_image
     column :created_by
     column :updated_by
     tag_column :visibility_status

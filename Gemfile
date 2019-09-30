@@ -40,6 +40,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'countries' # just to generate country flags using rake task flags:generate
   gem 'annotate'
   gem 'bullet'
   gem 'web-console', '>= 3.3.0'

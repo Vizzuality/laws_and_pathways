@@ -146,6 +146,10 @@ GEM
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
     concurrent-ruby (1.1.5)
+    countries (3.0.0)
+      i18n_data (~> 0.8.0)
+      sixarm_ruby_unaccent (~> 1.1)
+      unicode_utils (~> 1.4)
     crass (1.0.4)
     declarative (0.0.10)
     declarative-option (0.1.0)
@@ -219,6 +223,7 @@ GEM
     httpclient (2.8.3)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
+    i18n_data (0.8.0)
     inherited_resources (1.11.0)
       actionpack (>= 5.0, < 6.1)
       has_scope (~> 0.6)
@@ -398,6 +403,7 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
+    sixarm_ruby_unaccent (1.2.0)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -428,6 +434,7 @@ GEM
     uglifier (4.1.20)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.6.0)
+    unicode_utils (1.4.0)
     uniform_notifier (1.12.1)
     warden (1.2.8)
       rack (>= 2.0.6)
@@ -469,6 +476,7 @@ DEPENDENCIES
   capistrano-yarn
   capybara
   climate_watch_engine (~> 1.4.3)!
+  countries
   devise (>= 4.7.1)
   discard
   dotenv-rails
