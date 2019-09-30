@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_29_110158) do
+ActiveRecord::Schema.define(version: 2019_09_29_193356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -203,6 +203,13 @@ ActiveRecord::Schema.define(version: 2019_09_29_110158) do
     t.datetime "discarded_at"
     t.index ["discarded_at"], name: "index_instruments_on_discarded_at"
     t.index ["instrument_type_id"], name: "index_instruments_on_instrument_type_id"
+  end
+
+  create_table "instruments_legislations", id: false, force: :cascade do |t|
+    t.bigint "legislation_id", null: false
+    t.bigint "instrument_id", null: false
+    t.index ["instrument_id"], name: "index_instruments_legislations_on_instrument_id"
+    t.index ["legislation_id"], name: "index_instruments_legislations_on_legislation_id"
   end
 
   create_table "legislations", force: :cascade do |t|

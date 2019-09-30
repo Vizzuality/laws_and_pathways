@@ -15,6 +15,7 @@ module Command
 
             r.litigations = []
             r.targets = []
+            r.instruments = []
           end
         end
       end

@@ -7,7 +7,11 @@ module Command
 
       def call
         ActiveRecord::Base.transaction do
-          @resource.tap(&:discard)
+          @resource.tap do |r|
+            r.discard
+
+            r.legislations = []
+          end
         end
       end
     end
