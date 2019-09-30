@@ -19,4 +19,8 @@ class Sector < ApplicationRecord
 
   validates_presence_of :name, :slug
   validates_uniqueness_of :name, :slug
+
+  def latest_released_benchmarks
+    cp_benchmarks.group_by(&:release_date).max&.last || []
+  end
 end
