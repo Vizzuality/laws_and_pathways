@@ -24,6 +24,7 @@ FactoryBot.define do
     date_passed { 2.years.ago }
     sequence(:law_id)
     visibility_status { Legislation::VISIBILITY.first }
+    legislation_type { 'executive' }
     discarded_at { nil }
 
     association :created_by, factory: :admin_user

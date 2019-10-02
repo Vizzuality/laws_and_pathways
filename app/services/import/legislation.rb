@@ -62,6 +62,7 @@ module Import
         date_passed: find_date_passed(row),
         document_types: find_document_types(row),
         geography: Import::GeographyUtils.find_by_iso(row[:country_iso]),
+        legislation_type: row[:executive_legislative].downcase,
         documents: create_documents(row)
       }
     end

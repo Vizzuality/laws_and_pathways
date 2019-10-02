@@ -26,6 +26,7 @@ class Legislation < ApplicationRecord
 
   friendly_id :title, use: :slugged, routes: :default
 
+  LEGISLATION_TYPES = %w[executive legislative].freeze
   EVENT_TYPES = %w[
     drafted
     approved
@@ -37,6 +38,8 @@ class Legislation < ApplicationRecord
   tag_with :document_types
   tag_with :keywords
   tag_with :natural_hazards
+
+  enum legislation_type: array_to_enum_hash(LEGISLATION_TYPES)
 
   belongs_to :geography
   has_many :documents, as: :documentable, dependent: :destroy

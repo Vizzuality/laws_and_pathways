@@ -43,4 +43,10 @@ RSpec.describe Legislation, type: :model do
     subject.visibility_status = nil
     expect(subject).to have(2).errors_on(:visibility_status)
   end
+
+  it 'should be invalid if legislation_type is wrong' do
+    expect {
+      subject.legislation_type = 'WRONG'
+    }.to raise_error(ArgumentError)
+  end
 end
