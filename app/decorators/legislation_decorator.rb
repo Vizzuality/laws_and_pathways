@@ -20,6 +20,10 @@ class LegislationDecorator < Draper::Decorator
     model.date_passed.to_s(:date_short)
   end
 
+  def legislation_type
+    model.legislation_type.humanize
+  end
+
   def litigations_links
     return [] if model.litigations.empty?
 

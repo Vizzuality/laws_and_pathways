@@ -8,7 +8,7 @@ ActiveAdmin.register Legislation do
   publishable_scopes
 
   permit_params :title, :date_passed, :description,
-                :geography_id, :law_id,
+                :geography_id, :law_id, :legislation_type,
                 :natural_hazards_string, :keywords_string,
                 :created_by_id, :updated_by_id, :visibility_status,
                 events_attributes: permit_params_for(:events),
@@ -19,6 +19,9 @@ ActiveAdmin.register Legislation do
   filter :title_contains, label: 'Title'
   filter :date_passed
   filter :description_contains, label: 'Description'
+  filter :legislation_type,
+         as: :select,
+         collection: proc { array_to_select_collection(Legislation::LEGISLATION_TYPES) }
   filter :geography
   filter :frameworks,
          as: :check_boxes,
@@ -30,6 +33,7 @@ ActiveAdmin.register Legislation do
   index do
     selectable_column
     column :title, &:title_summary_link
+    column :legislation_type
     column :date_passed
     column 'Frameworks', &:frameworks_string
     column :geography
@@ -54,6 +58,7 @@ ActiveAdmin.register Legislation do
           row :date_passed
           row :geography
           row :law_id
+          row :legislation_type
           row 'Frameworks', &:frameworks_string
           row :updated_at
           row :updated_by
@@ -95,6 +100,7 @@ ActiveAdmin.register Legislation do
     column :id
     column :law_id
     column :title
+    column(:legislation_type) { |l| l.legislation_type.downcase }
     column :date_passed
     column :description
     column(:geography) { |l| l.geography.name }

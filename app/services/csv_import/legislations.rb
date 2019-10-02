@@ -39,6 +39,7 @@ module CSVImport
         date_passed: row[:date_passed],
         description: row[:description],
         geography: geographies[row[:geography_iso]],
+        legislation_type: row[:legislation_type].downcase,
         visibility_status: row[:visibility_status]
       }
     end
