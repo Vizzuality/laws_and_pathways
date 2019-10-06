@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+# TODO: Extract all importers tests from here to separate files
+
 describe 'CsvDataUpload (integration)' do
   let(:legislations_csv) { fixture_file('legislations.csv') }
   let(:litigations_csv) { fixture_file('litigations.csv') }
@@ -88,7 +90,7 @@ describe 'CsvDataUpload (integration)' do
   end
 
   it 'imports CSV files with CP Assessments data' do
-    create(:company, name: 'ACME')
+    acme_company = create(:company, name: 'ACME')
     create(:company, name: 'ACME Materials')
 
     expect_data_upload_results(
@@ -101,6 +103,21 @@ describe 'CsvDataUpload (integration)' do
       CP::Assessment,
       cp_assessments_csv,
       new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0
+    )
+
+    assessment = acme_company.cp_assessments.last
+
+    expect(assessment.assessment_date).to eq(Date.parse('2019-01-04'))
+    expect(assessment.publication_date).to eq(Date.parse('2019-02-01'))
+    expect(assessment.last_reported_year).to eq(2018)
+    expect(assessment.emissions).to eq(
+      '2014' => 101,
+      '2015' => 101,
+      '2016' => 100,
+      '2017' => 101,
+      '2018' => 100,
+      '2019' => 99,
+      '2020' => 98
     )
   end
 

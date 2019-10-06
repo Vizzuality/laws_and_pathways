@@ -41,7 +41,8 @@ module CSVImport
         assessment_date: assessment_date(row),
         publication_date: publication_date(row),
         assumptions: row[:assumptions],
-        emissions: parse_emissions(row)
+        emissions: parse_emissions(row),
+        last_reported_year: row[:last_reported_year]
       }
     end
 
