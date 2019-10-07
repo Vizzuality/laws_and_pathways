@@ -20,6 +20,7 @@ ActiveAdmin.register CP::Assessment do
       row :company
       row :assessment_date
       row :publication_date
+      row :last_reported_year
       row :assumptions
       row :created_at
       row :updated_at
@@ -47,6 +48,7 @@ ActiveAdmin.register CP::Assessment do
     column(:company) { |a| a.company.name }
     column :assessment_date
     column :publication_date, &:publication_date_csv
+    column :last_reported_year
 
     year_columns.map do |year|
       column year do |a|

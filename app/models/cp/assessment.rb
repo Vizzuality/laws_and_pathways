@@ -2,15 +2,16 @@
 #
 # Table name: cp_assessments
 #
-#  id               :bigint           not null, primary key
-#  company_id       :bigint
-#  publication_date :date             not null
-#  assessment_date  :date
-#  emissions        :jsonb
-#  assumptions      :text
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  discarded_at     :datetime
+#  id                 :bigint           not null, primary key
+#  company_id         :bigint
+#  publication_date   :date             not null
+#  assessment_date    :date
+#  emissions          :jsonb
+#  assumptions        :text
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  discarded_at       :datetime
+#  last_reported_year :integer
 #
 
 module CP

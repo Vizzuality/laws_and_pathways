@@ -15,6 +15,7 @@
 #  created_by_id     :bigint
 #  updated_by_id     :bigint
 #  discarded_at      :datetime
+#  legislation_type  :string           not null
 #
 
 class Legislation < ApplicationRecord

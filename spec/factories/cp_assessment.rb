@@ -4,6 +4,7 @@ FactoryBot.define do
 
     assessment_date { 1.year.ago }
     publication_date { 11.months.ago }
+    last_reported_year { 2020 }
 
     assumptions { 'Assumptions about the assessment' }
 
