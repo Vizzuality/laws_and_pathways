@@ -24,7 +24,23 @@ ActiveAdmin.register Litigation do
     array_to_select_collection(Litigation::DOCUMENT_TYPES)
   }
 
-  data_export_sidebar 'Litigations', documents: true, events: true
+  data_export_sidebar 'Litigations', documents: true, events: true do
+    li do
+      link_to 'Download related Litigation Sides CSV', admin_litigation_sides_path(
+        format: 'csv',
+        q: {
+          litigation: request.query_parameters[:q]
+        }
+      )
+    end
+
+    li do
+      upload_label = '<strong>Upload</strong> Litigation Sides'.html_safe
+      upload_path = new_admin_data_upload_path(data_upload: {uploader: 'LitigationSides'})
+
+      link_to upload_label, upload_path
+    end
+  end
 
   index do
     column :title, class: 'max-width-300', &:title_link
