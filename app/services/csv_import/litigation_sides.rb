@@ -23,7 +23,13 @@ module CSVImport
     end
 
     def prepare_litigation_side(row)
-      find_record_by(:id, row) || resource_klass.new
+      find_record_by(:id, row) ||
+        LitigationSide.find_or_initialize_by(
+          litigation_id: row[:litigation_id],
+          connected_entity_id: row[:connected_entity_id],
+          connected_entity_type: row[:connected_entity_type],
+          party_type: row[:party_type]&.downcase
+        )
     end
 
     def litigation_side_attributes(row)
