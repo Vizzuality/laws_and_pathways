@@ -59,6 +59,50 @@ describe 'CsvDataUpload (integration)' do
     )
   end
 
+  it 'imports CSV files with Litigation Sides data' do
+    litigation1 = create(:litigation)
+    litigation2 = create(:litigation, :with_sides)
+    updated_side = litigation2.litigation_sides.first
+    company = create(:company)
+    geography = create(:geography)
+    csv_content = <<-CSV
+      Id,Litigation id,Connected entity type,Connected entity id,Name,Side type,Party type
+      ,#{litigation1.id},Company,#{company.id},#{company.name},a,corporation
+      #{updated_side.id},#{litigation2.id},Geography,#{geography.id},Overridden name,b,government
+    CSV
+    File.write('tmp/litigation_sides.csv', csv_content)
+    litigation_sides_csv = Rack::Test::UploadedFile.new(
+      'tmp/litigation_sides.csv',
+      'text/csv'
+    )
+
+    expect_data_upload_results(
+      LitigationSide,
+      litigation_sides_csv,
+      new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1
+    )
+    # subsequent import should not create or update any record
+    expect_data_upload_results(
+      LitigationSide,
+      litigation_sides_csv,
+      new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0
+    )
+
+    updated_side.reload
+    created_side = litigation1.litigation_sides.first
+
+    expect(litigation1.litigation_sides.size).to eq(1)
+    expect(updated_side.connected_entity).to eq(geography)
+    expect(updated_side.name).to eq('Overridden name')
+    expect(updated_side.party_type).to eq('government')
+    expect(updated_side.side_type).to eq('b')
+
+    expect(created_side.connected_entity).to eq(company)
+    expect(created_side.name).to eq(company.name)
+    expect(created_side.party_type).to eq('corporation')
+    expect(created_side.side_type).to eq('a')
+  end
+
   it 'imports CSV files with Company data' do
     expect_data_upload_results(
       Company,

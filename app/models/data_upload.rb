@@ -19,6 +19,7 @@ class DataUpload < ApplicationRecord
     Companies
     Legislations
     Litigations
+    LitigationSides
     MQAssessments
     Targets
   ].freeze

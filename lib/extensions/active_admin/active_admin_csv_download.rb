@@ -8,7 +8,7 @@ module ActiveAdminCsvDownload
   # - related Document list (optional, if :documents option is passed)
   # - related Event list (optional, if :events options is passed)
   #
-  def data_export_sidebar(resource_name, options = {})
+  def data_export_sidebar(resource_name, options = {}, &block)
     export_link_for_documents = options.fetch(:documents) { false }
     export_link_for_events = options.fetch(:events) { false }
 
@@ -43,6 +43,8 @@ module ActiveAdminCsvDownload
             )
           end
         end
+
+        instance_eval(&block) if block_given?
 
         li do
           upload_label = "<strong>Upload</strong> #{resource_name}".html_safe
