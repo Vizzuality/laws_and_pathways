@@ -23,6 +23,7 @@ module MQ
 
     scope :latest_first, -> { order(assessment_date: :desc) }
     scope :all_publication_dates, -> { distinct.order(publication_date: :desc).pluck(:publication_date) }
+    scope :by_assessment_year, ->(year) { where('extract(year from assessment_date) <= ?', year) }
 
     validates :level, inclusion: {in: LEVELS}
     validates_presence_of :assessment_date, :publication_date, :level

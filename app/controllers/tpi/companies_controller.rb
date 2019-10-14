@@ -14,7 +14,7 @@ module Tpi
     def nr_of_assessments_chart_data
       @company = Company.find(params[:id])
 
-      data = ::Api::Charts::Company.new(@company).nr_of_assessments_data
+      data = ::Api::Charts::Company.new(@company).assessments_levels_data
 
       render json: data.chart_json
     end

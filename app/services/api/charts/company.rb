@@ -29,29 +29,28 @@ module Api
         ].flatten
       end
 
-      # Returns assessments Levels for each year for given Company.
+      # Returns MQ assessments Levels for each year for given Company.
+      # If for given year Company has no assessment, previous level is returned.
       #
-      # @return [Array]
+      # @return [Array<Array>]
       # @example
       #   [ [2016, 3], [2017, 3], [2018, 4]]
       # #
-      def nr_of_assessments_data
-        years = @company.mq_assessments.map { |a| a.assessment_date.year }
-        years_to_levels_map = @company.mq_assessments.each_with_object({}) do |assessment, result|
-          result[assessment.assessment_date.year] = assessment.level.to_i
-        end
-
-        last_level = years_to_levels_map[years.min] # initial level
-
-        (years.min..years.max).map do |year|
-          level = years_to_levels_map[year] || last_level
-          last_level = level
-
-          [year, level]
+      def assessments_levels_data
+        (oldest_mq_assessment_year..current_year).map do |year|
+          [year, mq_assessment_level_for_year(year)]
         end
       end
 
       private
+
+      def oldest_mq_assessment_year
+        @company.oldest_mq_assessment.assessment_date.year
+      end
+
+      def mq_assessment_level_for_year(year)
+        @company.mq_assessments.by_assessment_year(year).first&.level
+      end
 
       def emissions_data_from_company
         {
@@ -101,9 +100,7 @@ module Api
 
       # @return [Array] of years for which emissions was reported
       def years_with_reported_emissions
-        last_reported_year = Time.new.year
-
-        (sector_all_emission_years.min..last_reported_year).map.to_a
+        (sector_all_emission_years.min..sector_last_reported_year).map.to_a
       end
 
       # @return [Array] unique array of years as numbers
@@ -120,6 +117,17 @@ module Api
           .companies
           .includes(:cp_assessments)
           .flat_map { |c| c.latest_cp_assessment.emissions }
+      end
+
+      # @return [Integer]
+      def sector_last_reported_year
+        # TODO: change to last reported year (to be done in https://www.pivotaltracker.com/story/show/168850542)
+        current_year
+      end
+
+      # @return [Integer]
+      def current_year
+        Time.new.year
       end
     end
   end
