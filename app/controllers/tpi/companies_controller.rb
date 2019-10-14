@@ -3,7 +3,8 @@ module Tpi
     def show
       @company = Company.find(params[:id])
 
-      @company_details = ::Api::Presenters::Company.new(@company).company_details
+      @company_summary = company_presenter.summary
+      @company_mq_assessments = company_presenter.mq_assessments
     end
 
     # Data:     Company emissions
@@ -16,6 +17,10 @@ module Tpi
       data = ::Api::Charts::Company.new(@company).emissions_data
 
       render json: data.chart_json
+    end
+
+    def company_presenter
+      @company_presenter ||= ::Api::Presenters::Company.new(@company)
     end
   end
 end

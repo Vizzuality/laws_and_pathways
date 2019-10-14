@@ -13,7 +13,7 @@ module Api
         @company = company
       end
 
-      def company_details
+      def summary
         {
           name: @company.name,
           country: @company.geography.name,
@@ -21,7 +21,12 @@ module Api
           market_cap: 'Large',
           isin: @company.isin,
           sedol: 60,
-          ca100: @company.ca100 ? 'Yes' : 'No',
+          ca100: @company.ca100 ? 'Yes' : 'No'
+        }
+      end
+
+      def mq_assessments
+        {
           latest_assessment_questions: @company.latest_mq_assessment.questions_by_level,
           levels_descriptions: SECTORS_LEVELS_DESC
         }
