@@ -14,9 +14,8 @@ module Tpi
     def nr_of_assessments_chart_data
       @company = Company.find(params[:id])
 
-      # TODO: move to ::Api::Charts::Company
       # TODO: fill in missing years with previous year levels
-      data = @company.mq_assessments.map { |a| [a.assessment_date.year, a.level.to_i] }
+      data = ::Api::Charts::Company.new(@company).nr_of_assessments_data
 
       render json: data.chart_json
     end

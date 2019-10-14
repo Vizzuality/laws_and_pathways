@@ -29,6 +29,10 @@ module Api
         ].flatten
       end
 
+      def nr_of_assessments_data
+        @company.mq_assessments.map { |a| [a.assessment_date.year, a.level.to_i] }
+      end
+
       private
 
       def emissions_data_from_company
