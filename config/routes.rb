@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     resources :companies, only: [:show] do
       member do
         get :emissions_chart_data
-        get :nr_of_assessments_chart_data
+        get :assessments_levels_chart_data
       end
     end
   end

@@ -11,7 +11,7 @@ module Tpi
     # Section:  MQ
     # Type:     line chart
     # On pages: :show
-    def nr_of_assessments_chart_data
+    def assessments_levels_chart_data
       @company = Company.find(params[:id])
 
       data = ::Api::Charts::Company.new(@company).assessments_levels_data

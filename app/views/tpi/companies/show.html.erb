@@ -41,10 +41,10 @@
     <div>[TODO] summary of answers</div>
   </div>
   <div class="cp-status summary-box">
-    <div>Nr of assessments</div>
+    <div>Nr of assessments: <%= @company.mq_assessments.size %></div>
     <div>
       <%= line_chart(
-        nr_of_assessments_chart_data_tpi_company_path(@company.id),
+        assessments_levels_chart_data_tpi_company_path(@company.id),
         library: mq_company_no_of_assessments_chart_options
       ) %>
     </div>
