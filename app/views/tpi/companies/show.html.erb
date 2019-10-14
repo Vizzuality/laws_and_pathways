@@ -44,7 +44,7 @@
     <div>Nr of assessments</div>
     <div>
       <%= line_chart(
-        [ { data: @company.mq_assessments.map { |a| [a.assessment_date.year, a.level.to_i] } } ],
+        nr_of_assessments_chart_data_tpi_company_path(@company.id),
         library: mq_company_no_of_assessments_chart_options
       ) %>
     </div>

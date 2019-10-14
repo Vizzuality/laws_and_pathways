@@ -7,6 +7,20 @@ module Tpi
       @company_mq_assessments = company_presenter.mq_assessments
     end
 
+    # Data:     Nr of Company MQ Assessments
+    # Section:  MQ
+    # Type:     line chart
+    # On pages: :show
+    def nr_of_assessments_chart_data
+      @company = Company.find(params[:id])
+
+      # TODO: move to ::Api::Charts::Company
+      # TODO: fill in missing years with previous year levels
+      data = @company.mq_assessments.map { |a| [a.assessment_date.year, a.level.to_i] }
+
+      render json: data.chart_json
+    end
+
     # Data:     Company emissions
     # Section:  CP
     # Type:     line chart
