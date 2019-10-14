@@ -29,8 +29,26 @@ module Api
         ].flatten
       end
 
+      # Returns assessments Levels for each year for given Company.
+      #
+      # @return [Array]
+      # @example
+      #   [ [2016, 3], [2017, 3], [2018, 4]]
+      # #
       def nr_of_assessments_data
-        @company.mq_assessments.map { |a| [a.assessment_date.year, a.level.to_i] }
+        years = @company.mq_assessments.map { |a| a.assessment_date.year }
+        years_to_levels_map = @company.mq_assessments.each_with_object({}) do |assessment, result|
+          result[assessment.assessment_date.year] = assessment.level.to_i
+        end
+
+        last_level = years_to_levels_map[years.min] # initial level
+
+        (years.min..years.max).map do |year|
+          level = years_to_levels_map[year] || last_level
+          last_level = level
+
+          [year, level]
+        end
       end
 
       private
