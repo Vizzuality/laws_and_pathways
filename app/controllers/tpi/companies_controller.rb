@@ -7,7 +7,7 @@ module Tpi
       @company_mq_assessments = company_presenter.mq_assessments
     end
 
-    # Data:     Nr of Company MQ Assessments
+    # Data:     Company MQ Assessments Levels over the years
     # Section:  MQ
     # Type:     line chart
     # On pages: :show
