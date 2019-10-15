@@ -50,6 +50,20 @@ describe 'CsvDataUpload (integration)' do
       legislations_csv,
       new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0
     )
+
+    legislation = Legislation.find_by(title: 'Climate Law')
+
+    expect(legislation.legislation_type).to eq('legislative')
+    expect(legislation.description).to eq('Description')
+    expect(legislation.document_types_list).to include('Law')
+    expect(legislation.visibility_status).to eq('pending')
+    expect(legislation.geography.iso).to eq('POL')
+    expect(legislation.frameworks.size).to eq(2)
+    expect(legislation.frameworks_list).to include('Mitigation', 'Adaptation')
+    expect(legislation.keywords.size).to eq(2)
+    expect(legislation.keywords_list).to include('keyword1', 'keyword3')
+    expect(legislation.natural_hazards.size).to eq(2)
+    expect(legislation.natural_hazards_list).to include('sharkinados', 'flooding')
   end
 
   it 'imports CSV files with Litigation data' do

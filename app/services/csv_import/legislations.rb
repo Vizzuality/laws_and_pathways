@@ -7,6 +7,8 @@ module CSVImport
         legislation = prepare_legislation(row)
         legislation.frameworks = parse_tags(row[:frameworks], frameworks)
         legislation.document_types = parse_tags(row[:document_types], document_types)
+        legislation.keywords = parse_tags(row[:keywords], keywords)
+        legislation.natural_hazards = parse_tags(row[:natural_hazards], natural_hazards)
 
         legislation.assign_attributes(legislation_attributes(row))
 
