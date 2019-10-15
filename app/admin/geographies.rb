@@ -24,7 +24,7 @@ ActiveAdmin.register Geography do
          as: :check_boxes,
          collection: proc { PoliticalGroup.all }
 
-  data_export_sidebar 'Geographies'
+  data_export_sidebar 'Geographies', events: true
 
   show do
     tabs do

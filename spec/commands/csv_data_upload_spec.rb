@@ -66,16 +66,13 @@ describe 'CsvDataUpload (integration)' do
     updated_side = litigation2.litigation_sides.first
     company = create(:company)
     geography = create(:geography)
+
     csv_content = <<-CSV
       Id,Litigation id,Connected entity type,Connected entity id,Name,Side type,Party type
       ,#{litigation1.id},Company,#{company.id},#{company.name},a,corporation
       #{updated_side.id},#{litigation2.id},Geography,#{geography.id},Overridden name,b,government
     CSV
-    File.write('tmp/litigation_sides.csv', csv_content)
-    litigation_sides_csv = Rack::Test::UploadedFile.new(
-      'tmp/litigation_sides.csv',
-      'text/csv'
-    )
+    litigation_sides_csv = fixture_file('litigation_sides.csv', content: csv_content)
 
     expect_data_upload_results(
       LitigationSide,
@@ -102,6 +99,44 @@ describe 'CsvDataUpload (integration)' do
     expect(created_side.name).to eq(company.name)
     expect(created_side.party_type).to eq('corporation')
     expect(created_side.side_type).to eq('a')
+  end
+
+  it 'imports CSV file with Event data' do
+    litigation_event = create(:litigation_event)
+    legislation = create(:legislation)
+
+    csv_content = <<-CSV
+      Id,Eventable type,Eventable,Event type,Title,Description,Date,Url
+      #{litigation_event.id},Litigation,#{litigation_event.eventable_id},case_decided,Changed title,Changed description,2020-12-30,https://example.com
+      ,Legislation,#{legislation.id},approved,title,description,2019-02-20,
+    CSV
+    events_csv = fixture_file('events.csv', content: csv_content)
+
+    expect_data_upload_results(
+      Event,
+      events_csv,
+      new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1
+    )
+    expect_data_upload_results(
+      Event,
+      events_csv,
+      new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0
+    )
+
+    litigation_event.reload
+    created_event = legislation.events.first
+
+    expect(litigation_event.event_type).to eq('case_decided')
+    expect(litigation_event.title).to eq('Changed title')
+    expect(litigation_event.description).to eq('Changed description')
+    expect(litigation_event.date).to eq(Date.parse('2020-12-30'))
+    expect(litigation_event.url).to eq('https://example.com')
+
+    expect(created_event.event_type).to eq('approved')
+    expect(created_event.title).to eq('title')
+    expect(created_event.description).to eq('description')
+    expect(created_event.date).to eq(Date.parse('2019-02-20'))
+    expect(created_event.url).to be_nil
   end
 
   it 'imports CSV files with Company data' do
@@ -227,14 +262,22 @@ describe 'CsvDataUpload (integration)' do
     command = Command::CsvDataUpload.new(uploader: uploader_name, file: csv)
 
     expect do
+      expect(command).to be_valid
       expect(command.call).to eq(true)
       expect(command.details.symbolize_keys).to eq(expected_details)
     end.to change(uploaded_resource_klass, :count).by(expected_details[:new_records])
   end
 
-  def fixture_file(filename)
+  def fixture_file(filename, content: nil)
+    file_path = "#{Rails.root}/spec/support/fixtures/files/#{filename}"
+
+    if content.present?
+      file_path = "#{Rails.root}/tmp/litigation_sides.csv"
+      File.write('tmp/litigation_sides.csv', content)
+    end
+
     Rack::Test::UploadedFile.new(
-      "#{Rails.root}/spec/support/fixtures/files/#{filename}",
+      file_path,
       'text/csv'
     )
   end

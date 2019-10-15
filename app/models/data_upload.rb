@@ -17,6 +17,7 @@ class DataUpload < ApplicationRecord
     CPAssessments
     CPBenchmarks
     Companies
+    Events
     Geographies
     Legislations
     LitigationSides
