@@ -10,8 +10,13 @@ namespace :import do
 
   desc 'Imports Locations'
   task geographies: :environment do
-    TimedLogger.log('import Locations') do
-      Import::Geographies.new.call
+    TimedLogger.log('Import geographies') do
+      file = File.open(Rails.root.join('db', 'seeds', 'geographies.csv'), 'r')
+
+      ActiveRecord::Base.transaction do
+        PoliticalGroup.delete_all
+        CSVImport::Geographies.new(file).call
+      end
     end
   end
 
