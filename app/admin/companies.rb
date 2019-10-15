@@ -131,7 +131,6 @@ ActiveAdmin.register Company do
     column :id
     column :name
     column :isin
-    column('Sector ID') { |c| c.sector.id }
     column(:sector) { |c| c.sector.name }
     column :size
     column(:geography_iso) { |c| c.geography.iso }
@@ -176,7 +175,13 @@ ActiveAdmin.register Company do
 
   controller do
     def scoped_collection
-      super.includes(:geography, :headquarters_geography, :mq_assessments)
+      super.includes(:geography, :headquarters_geography, *csv_includes)
+    end
+
+    def csv_includes
+      return [] unless csv_format?
+
+      [:sector]
     end
 
     def destroy
@@ -189,6 +194,10 @@ ActiveAdmin.register Company do
                 end
 
       redirect_to admin_companies_path, message
+    end
+
+    def csv_format?
+      request[:format] == 'csv'
     end
   end
 end

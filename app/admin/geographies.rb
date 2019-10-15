@@ -84,8 +84,18 @@ ActiveAdmin.register Geography do
   controller do
     include DiscardableController
 
+    def scoped_collection
+      return super.includes(:political_groups) if csv_format?
+
+      super
+    end
+
     def apply_filtering(chain)
       super(chain).distinct
+    end
+
+    def csv_format?
+      request[:format] == 'csv'
     end
   end
 end
