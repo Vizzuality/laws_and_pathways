@@ -35,7 +35,7 @@ module CSVImport
       {
         eventable_id: row[:eventable],
         eventable_type: row[:eventable_type],
-        event_type: row[:event_type],
+        event_type: row[:event_type].downcase,
         title: row[:title],
         description: row[:description],
         date: row[:date],
