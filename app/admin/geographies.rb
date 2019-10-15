@@ -66,6 +66,19 @@ ActiveAdmin.register Geography do
     actions
   end
 
+  csv do
+    column :id
+    column :name
+    column :iso
+    column :geography_type
+    column :region
+    column :legislative_process
+    column :federal
+    column :federal_details
+    column :political_groups, &:political_groups_string
+    column :visibility_status
+  end
+
   form partial: 'form'
 
   controller do

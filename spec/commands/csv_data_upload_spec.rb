@@ -10,6 +10,7 @@ describe 'CsvDataUpload (integration)' do
   let(:cp_benchmarks_csv) { fixture_file('cp_benchmarks.csv') }
   let(:cp_assessments_csv) { fixture_file('cp_assessments.csv') }
   let(:mq_assessments_csv) { fixture_file('mq_assessments.csv') }
+  let(:geographies_csv) { fixture_file('geographies.csv') }
 
   let!(:countries) do
     [
@@ -192,6 +193,33 @@ describe 'CsvDataUpload (integration)' do
     expect(assessment.questions[1].question).to eq('Question two, level 1?')
     expect(assessment.questions[1].level).to eq('1')
     expect(assessment.questions[1].answer).to eq('Yes')
+  end
+
+  it 'import CSV file with Geographies data' do
+    # USA is already created
+    expect_data_upload_results(
+      Geography,
+      geographies_csv,
+      new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1
+    )
+    # subsequent import should not create or update any record
+    expect_data_upload_results(
+      Geography,
+      geographies_csv,
+      new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0
+    )
+
+    geography = Geography.find_by(iso: 'USA')
+
+    expect(geography.legislative_process).to eq('Legislative process USA')
+    expect(geography.name).to eq('United States of America')
+    expect(geography.region).to eq('North America')
+    expect(geography.geography_type).to eq('country')
+    expect(geography.visibility_status).to eq('draft')
+    expect(geography.political_groups.size).to eq(2)
+    expect(geography.political_groups_list).to include('OECD', 'G20')
+    expect(geography.federal).to be_truthy
+    expect(geography.federal_details).to be
   end
 
   def expect_data_upload_results(uploaded_resource_klass, csv, expected_details)
