@@ -4,7 +4,6 @@ require 'rails_helper'
 
 describe 'CsvDataUpload (integration)' do
   let(:legislations_csv) { fixture_file('legislations.csv') }
-  let(:litigations_csv) { fixture_file('litigations.csv') }
   let(:companies_csv) { fixture_file('companies.csv') }
   let(:targets_csv) { fixture_file('targets.csv') }
   let(:cp_benchmarks_csv) { fixture_file('cp_benchmarks.csv') }
@@ -67,11 +66,36 @@ describe 'CsvDataUpload (integration)' do
   end
 
   it 'imports CSV files with Litigation data' do
+    legislation1 = create(:legislation)
+    legislation2 = create(:legislation)
+    updated_litigation = create(:litigation)
+
+    csv_content = <<-CSV
+      Id,Title,Document type,Geography iso,Jurisdiction iso,Citation reference number,Summary,Keywords,Core objective,Visibility status,Legislation ids
+      ,Litigation number 1,Case,GBR,GBR,EWHC 2752,Lyle requested judicial review,"keyword1,keyword2",Objectives,pending,"#{legislation1.id}, #{legislation2.id}"
+      #{updated_litigation.id},Litigation number 2,Case,GBR,GBR,[2013] NIQB 24,The applicants were brothers ...,,,Draft,
+    CSV
+
+    litigations_csv = fixture_file('litigations.csv', content: csv_content)
+
     expect_data_upload_results(
       Litigation,
       litigations_csv,
-      new_records: 4, not_changed_records: 0, rows: 4, updated_records: 0
+      new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1
     )
+
+    litigation = Litigation.find_by(title: 'Litigation number 1')
+
+    expect(litigation.jurisdiction.iso).to eq('GBR')
+    expect(litigation.geography.iso).to eq('GBR')
+    expect(litigation.citation_reference_number).to eq('EWHC 2752')
+    expect(litigation.summary).to eq('Lyle requested judicial review')
+    expect(litigation.keywords.size).to eq(2)
+    expect(litigation.keywords_list).to include('keyword1', 'keyword2')
+    expect(litigation.core_objective).to eq('Objectives')
+    expect(litigation.visibility_status).to eq('pending')
+    expect(litigation.document_type).to eq('case')
+    expect(litigation.legislation_ids).to include(legislation1.id, legislation2.id)
   end
 
   it 'imports CSV files with Litigation Sides data' do
