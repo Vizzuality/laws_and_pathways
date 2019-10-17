@@ -1,7 +1,50 @@
 ActiveAdmin.register Event do
-  menu false
+  menu priority: 7
 
-  actions :index
+  decorate_with EventDecorator
+
+  filter :title_contains
+  filter :eventable_type, label: 'Eventable type'
+  filter :date
+
+  actions :all, except: [:new, :create]
+
+  show do
+    attributes_table do
+      row :id
+      row :title
+      row :url, &:url_link
+      row :description
+      row :date
+      row :created_at
+      row :updated_at
+    end
+
+    active_admin_comments
+  end
+
+  form html: {'data-controller' => 'check-modified'} do |f|
+    f.semantic_errors(*f.object.errors.keys)
+
+    f.inputs do
+      f.input :title
+      f.input :description
+      f.input :event_type, as: :select, collection: array_to_select_collection(f.object.event_types, :titleize)
+      f.input :date
+      f.input :url, as: :string
+    end
+
+    f.actions
+  end
+
+  index do
+    selectable_column
+    column :title, &:title_link
+    column :eventable
+    column :event_type
+    column :date
+    actions
+  end
 
   csv do
     column :id
@@ -15,12 +58,6 @@ ActiveAdmin.register Event do
   end
 
   controller do
-    def index
-      super do |format|
-        format.html { redirect_to admin_dashboard_path }
-      end
-    end
-
     def scoped_collection
       results = super.includes(:eventable)
 

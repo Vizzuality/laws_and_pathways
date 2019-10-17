@@ -107,6 +107,8 @@ ActiveAdmin.register Legislation do
     column(:geography_iso) { |l| l.geography.iso }
     column :frameworks, &:frameworks_string
     column :document_types, &:document_types_string
+    column :keywords, &:keywords_string
+    column :natural_hazards, &:natural_hazards_string
     column :visibility_status
   end
 
@@ -140,7 +142,15 @@ ActiveAdmin.register Legislation do
     include DiscardableController
 
     def scoped_collection
-      super.includes(:geography, :frameworks, :document_types, :created_by, :updated_by)
+      super.includes(
+        :geography,
+        :frameworks,
+        :keywords,
+        :natural_hazards,
+        :document_types,
+        :created_by,
+        :updated_by
+      )
     end
   end
 end

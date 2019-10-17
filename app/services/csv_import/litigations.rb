@@ -38,8 +38,16 @@ module CSVImport
         jurisdiction: geographies[row[:jurisdiction_iso]],
         citation_reference_number: row[:citation_reference_number],
         core_objective: row[:core_objective],
-        summary: row[:summary]
+        summary: row[:summary],
+        visibility_status: row[:visibility_status]&.downcase,
+        legislation_ids: legislation_ids(row)
       }
+    end
+
+    def legislation_ids(row)
+      return [] unless row[:legislation_ids].present?
+
+      row[:legislation_ids].split(',').map(&:to_i)
     end
   end
 end

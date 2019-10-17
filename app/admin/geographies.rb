@@ -24,7 +24,7 @@ ActiveAdmin.register Geography do
          as: :check_boxes,
          collection: proc { PoliticalGroup.all }
 
-  data_export_sidebar 'Geographies'
+  data_export_sidebar 'Geographies', events: true
 
   show do
     tabs do
@@ -66,13 +66,36 @@ ActiveAdmin.register Geography do
     actions
   end
 
+  csv do
+    column :id
+    column :name
+    column :iso
+    column :geography_type
+    column :region
+    column :legislative_process
+    column :federal
+    column :federal_details
+    column :political_groups, &:political_groups_string
+    column :visibility_status
+  end
+
   form partial: 'form'
 
   controller do
     include DiscardableController
 
+    def scoped_collection
+      return super.includes(:political_groups) if csv_format?
+
+      super
+    end
+
     def apply_filtering(chain)
       super(chain).distinct
+    end
+
+    def csv_format?
+      request[:format] == 'csv'
     end
   end
 end

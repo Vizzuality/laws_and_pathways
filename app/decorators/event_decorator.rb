@@ -1,6 +1,10 @@
 class EventDecorator < Draper::Decorator
   delegate_all
 
+  def title_link
+    h.link_to model.title, h.admin_event_path(model)
+  end
+
   def url_link
     return unless model.url.present?
 

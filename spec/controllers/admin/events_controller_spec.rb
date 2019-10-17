@@ -18,7 +18,19 @@ RSpec.describe Admin::EventsController, type: :controller do
   describe 'GET index' do
     subject { get :index }
 
-    it { is_expected.to redirect_to(admin_dashboard_path) }
+    it { is_expected.to be_successful }
+  end
+
+  describe 'GET show' do
+    subject { get :show, params: {id: event1.id} }
+
+    it { is_expected.to be_successful }
+  end
+
+  describe 'GET edit' do
+    subject { get :edit, params: {id: event1.id} }
+
+    it { is_expected.to be_successful }
   end
 
   describe 'GET index with .csv format' do
@@ -63,7 +75,7 @@ RSpec.describe Admin::EventsController, type: :controller do
       # check filtered data
       expect(csv[0]['Title']).to eq(event1.title)
       expect(csv[0]['Description']).to eq(event1.description)
-      expect(csv[0]['Event type']).to eq(event1.event_type)
+      expect(csv[0]['Event type']).to eq(event1.event_type.titleize)
 
       # only single data row
       expect(csv[1]).to be_nil

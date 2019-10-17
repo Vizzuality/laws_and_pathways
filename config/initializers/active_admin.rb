@@ -47,8 +47,8 @@ ActiveAdmin.setup do |config|
       menu.add label: 'Geographies', priority: 1
       menu.add label: 'Laws', priority: 2
       menu.add label: 'TPI', priority: 3
-      menu.add label: 'Tags', priority: 7
-      menu.add label: 'Administration', priority: 8
+      menu.add label: 'Tags', priority: 8
+      menu.add label: 'Administration', priority: 9
     end
   end
   #

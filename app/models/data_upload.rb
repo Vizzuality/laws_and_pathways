@@ -17,9 +17,11 @@ class DataUpload < ApplicationRecord
     CPAssessments
     CPBenchmarks
     Companies
+    Events
+    Geographies
     Legislations
-    Litigations
     LitigationSides
+    Litigations
     MQAssessments
     Targets
   ].freeze
