@@ -1,5 +1,23 @@
-@import "app/colors";
-@import "app/typography";
+@import "app/variables/setup";
+@import "app/variables/typography";
+
+a {
+  font-family: $family-sans-serif-bold;
+
+  &.is-hovered,
+  &:hover,
+  &.is-focused,
+  &:focus {
+    color: $blue-darker;
+    text-decoration: underline;
+  }
+
+  &.is-focused,
+  &:focus {
+    background: $yellow;
+    padding: 0 3px 3px 3px;
+  }
+}
 
 .button {
   min-width: 160px;
@@ -8,6 +26,7 @@
   font-family: $family-sans-serif-bold;
   
   &.is-small {
+    border-radius: 0;
     height: 30px;
     min-width: 100px;
   }

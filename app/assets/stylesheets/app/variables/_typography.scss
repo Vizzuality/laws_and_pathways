@@ -8,10 +8,9 @@
   src: url("/assets/BrownTT-Bold.ttf") format("truetype");
 }
 
-$body-size: 16px;
-$text: $dark;
-$family-sans-serif: "BrownTT Regular";
-$family-sans-serif-bold: "BrownTT Bold";
+::selection {
+  background-color: $yellow;
+}
 
 h1 {
   @extend .is-size-1;

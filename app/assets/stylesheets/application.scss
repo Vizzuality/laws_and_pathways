@@ -1,13 +1,12 @@
 @charset "utf-8";
 
 // application overrides (some must be *before* bulma is loaded)
-@import "app/variables";
+@import "app/variables/setup";
 
-// or the whole game
 @import "bulma/bulma";
 
-@import "app/layout";
-@import "app/buttons";
+@import "app/components/layout";
+@import "app/components/buttons";
 
 // .container {
 //   display: flex;
