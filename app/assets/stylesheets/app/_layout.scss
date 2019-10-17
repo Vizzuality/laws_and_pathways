@@ -1,0 +1,13 @@
+@import "bulma/sass/utilities/all";
+@import "app/colors";
+
+.header {
+  display: flex;
+
+  @if desktop {
+    height: 60px;
+    max-height: 60px;
+  }
+
+  background-color: $dark;
+}

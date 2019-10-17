@@ -1,3 +1,14 @@
+@charset "utf-8";
+
+// application overrides (some must be *before* bulma is loaded)
+@import "app/variables";
+
+// or the whole game
+@import "bulma/bulma";
+
+@import "app/layout";
+@import "app/buttons";
+
 // .container {
 //   display: flex;
 //   flex-direction: row;
@@ -16,11 +27,4 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-}
-
-.summary-box {
-  border-width: 1px;
-  border-style: dotted;
-  padding: 10px;
-  width: 400px;
 }

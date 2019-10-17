@@ -1,0 +1,52 @@
+@import "app/colors";
+@import "app/typography";
+
+.button {
+  min-width: 160px;
+  height: 40px;
+  justify-content: center;
+  font-family: $family-sans-serif-bold;
+  
+  &.is-small {
+    height: 30px;
+    min-width: 100px;
+  }
+
+  &.is-primary {
+    &.is-hovered,
+    &.is-focused,
+    &:hover,
+    &:focus {
+      background-color: $blue-dark;
+    }
+
+    &.is-focused,
+    &:focus {
+      border: 4px solid $yellow;
+      background-color: $blue-darker;
+    }
+  }
+
+  &.is-secondary {
+    border: 2px solid $blue;
+    color: $blue;
+
+    &.is-hovered,
+    &:hover,
+    &.is-focused,
+    &:focus {
+      background-color: $grey;
+      color: $blue-dark;
+    }
+
+    &.is-hovered,
+    &:hover {
+      border-color: $blue-dark;
+    }
+
+    &.is-focused,
+    &:focus {
+      border-color: $yellow;
+    }
+  }
+}
