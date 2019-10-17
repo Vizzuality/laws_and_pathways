@@ -52,10 +52,12 @@ describe 'CsvDataUpload (integration)' do
 
     legislation = Legislation.find_by(title: 'Climate Law')
 
-    expect(legislation.legislation_type).to eq('legislative')
-    expect(legislation.description).to eq('Description')
+    expect(legislation).to have_attributes(
+      legislation_type: 'legislative',
+      description: 'Description',
+      visibility_status: 'pending'
+    )
     expect(legislation.document_types_list).to include('Law')
-    expect(legislation.visibility_status).to eq('pending')
     expect(legislation.geography.iso).to eq('POL')
     expect(legislation.frameworks.size).to eq(2)
     expect(legislation.frameworks_list).to include('Mitigation', 'Adaptation')
@@ -86,15 +88,17 @@ describe 'CsvDataUpload (integration)' do
 
     litigation = Litigation.find_by(title: 'Litigation number 1')
 
+    expect(litigation).to have_attributes(
+      citation_reference_number: 'EWHC 2752',
+      summary: 'Lyle requested judicial review',
+      core_objective: 'Objectives',
+      visibility_status: 'pending',
+      document_type: 'case'
+    )
     expect(litigation.jurisdiction.iso).to eq('GBR')
     expect(litigation.geography.iso).to eq('GBR')
-    expect(litigation.citation_reference_number).to eq('EWHC 2752')
-    expect(litigation.summary).to eq('Lyle requested judicial review')
     expect(litigation.keywords.size).to eq(2)
     expect(litigation.keywords_list).to include('keyword1', 'keyword2')
-    expect(litigation.core_objective).to eq('Objectives')
-    expect(litigation.visibility_status).to eq('pending')
-    expect(litigation.document_type).to eq('case')
     expect(litigation.legislation_ids).to include(legislation1.id, legislation2.id)
   end
 
@@ -164,17 +168,20 @@ describe 'CsvDataUpload (integration)' do
     litigation_event.reload
     created_event = legislation.events.first
 
-    expect(litigation_event.event_type).to eq('case_decided')
-    expect(litigation_event.title).to eq('Changed title')
-    expect(litigation_event.description).to eq('Changed description')
-    expect(litigation_event.date).to eq(Date.parse('2020-12-30'))
-    expect(litigation_event.url).to eq('https://example.com')
-
-    expect(created_event.event_type).to eq('approved')
-    expect(created_event.title).to eq('title')
-    expect(created_event.description).to eq('description')
-    expect(created_event.date).to eq(Date.parse('2019-02-20'))
-    expect(created_event.url).to be_nil
+    expect(litigation_event).to have_attributes(
+      event_type: 'case_decided',
+      title: 'Changed title',
+      description: 'Changed description',
+      date: Date.parse('2020-12-30'),
+      url: 'https://example.com'
+    )
+    expect(created_event).to have_attributes(
+      event_type: 'approved',
+      title: 'title',
+      description: 'description',
+      date: Date.parse('2019-02-20'),
+      url: nil
+    )
   end
 
   it 'imports CSV files with Company data' do
@@ -310,8 +317,8 @@ describe 'CsvDataUpload (integration)' do
     file_path = "#{Rails.root}/spec/support/fixtures/files/#{filename}"
 
     if content.present?
-      file_path = "#{Rails.root}/tmp/litigation_sides.csv"
-      File.write('tmp/litigation_sides.csv', content)
+      file_path = "#{Rails.root}/tmp/#{filename}"
+      File.write(file_path, content)
     end
 
     Rack::Test::UploadedFile.new(
