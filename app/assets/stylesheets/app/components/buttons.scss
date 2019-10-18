@@ -1,7 +1,7 @@
 @import "app/variables/setup";
 @import "app/variables/typography";
 
-a {
+.link {
   font-family: $family-sans-serif-bold;
 
   &.is-hovered,

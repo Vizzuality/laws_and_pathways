@@ -31,9 +31,12 @@ Rails.application.routes.draw do
     resources :legislation_and_policies, only: :index
     resources :litigation_cases, only: :index
   end
+  namespace :admin do
+    devise_for :admin_users, ActiveAdmin::Devise.config
+    ActiveAdmin.routes(self)
 
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
+    root to: 'admin/dashboard#index'
+  end
 
-  root to: 'admin/dashboard#index'
+  root to: 'home#index'
 end

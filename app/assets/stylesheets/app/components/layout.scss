@@ -1,17 +1,45 @@
 @import "bulma/sass/utilities/all";
 @import "app/variables/colors";
 
-// .header {
-//   @extend .container;
-//   @extend .navbar;
-//   @extend .is-black;
+.banner {
+  height: 140px;
+}
 
-//   &.navbar {
-//     background-color: $dark;
-    
-//     @if desktop {
-//       height: 60px;
-//       max-height: 60px;
-//     }
-//   }
-// }
+.header-nav {
+  width: 100%;
+  background-color: $dark;
+}
+
+.navbar-item,
+.navbar-link {
+  padding: 0.5rem 1.75rem;
+}
+
+.navbar-dropdown {
+  @if $desktop {
+    width: 300px;
+  }
+
+  > .navbar-item {
+    font-size: $size-6;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+.hero {
+  height: 500px;
+
+  &.is-primary {
+    background-color: $blue-dark;
+
+    .description {
+      margin-top: $is-size-2;
+      line-height: $is-size-4;
+      
+      .column {
+        padding: $is-size-6;
+      }
+    }
+  }
+}
