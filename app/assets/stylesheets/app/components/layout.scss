@@ -12,7 +12,7 @@
 
 .navbar-item,
 .navbar-link {
-  padding: 0.5rem 1.75rem;
+  padding: 0.5rem 1.25rem;
 }
 
 .navbar-dropdown {
@@ -27,19 +27,52 @@
   }
 }
 
-.hero {
-  height: 500px;
+.container--hero {
+  position: relative;
+  display: flex;
+}
 
+.hero {
   &.is-primary {
     background-color: $blue-dark;
-
+    
     .description {
-      margin-top: $is-size-2;
-      line-height: $is-size-4;
+      line-height: $size-4;
       
       .column {
-        padding: $is-size-6;
+        padding: $size-6;
       }
+    }
+
+    .hero-body {
+      padding: 7rem;
+    }
+
+    .button--hero {
+      @extend .is-medium;
+
+      height: 5rem;
+      padding-left: 4.125rem;
+      padding-right: 4.125rem;
+      background-color: $blue-darker;
+    }
+  }
+
+  .hero--picture {
+    position: absolute;
+    top: -7rem;
+    right: 0;
+    width: 70%;
+    height: 100%;
+  }
+  
+  &.is-secondary {
+    .hero-body {
+      padding: 10rem;
+    }
+
+    .hero-button {
+      background-color: $blue-darker;
     }
   }
 }

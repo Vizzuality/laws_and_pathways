@@ -31,12 +31,17 @@ Rails.application.routes.draw do
     resources :legislation_and_policies, only: :index
     resources :litigation_cases, only: :index
   end
+  
   namespace :admin do
     devise_for :admin_users, ActiveAdmin::Devise.config
     ActiveAdmin.routes(self)
 
     root to: 'admin/dashboard#index'
   end
+
+  get '/about', to: 'home#about'
+
+  get '/sandbox', to: 'home#sandbox' if Rails.env.development?
 
   root to: 'home#index'
 end

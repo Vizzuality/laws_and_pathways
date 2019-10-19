@@ -26,7 +26,7 @@ $family-sans-serif-bold: "BrownTT Bold";
 $widescreen-enabled: false;
 $fullhd-enabled: false;
 
-$gap: 20px;
+$gap: 32px;
 // 960, 1152, and 1344 have been chosen because they are divisible by both 12 and 16
 $tablet: 769px;
 // 960px container + 4rem
@@ -58,7 +58,7 @@ $navbar-background-color: $dark;
 $navbar-box-shadow-size: 0;
 $navbar-bottom-box-shadow-size: 0;
 $navbar-height: 3.75rem;
-$navbar-breakpoint: $tablet;
+$navbar-breakpoint: $desktop;
 // $navbar-padding-vertical: ;
 // $navbar-padding-horizontal: ;
 $navbar-item-color: white;
