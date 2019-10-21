@@ -13,7 +13,7 @@ $radius: 0;
 $size-6: 1rem;
 $size-7: 0.875rem;
 
-$control-border-width: 0;
+// $control-border-width: 2px;
 $input-border-color: $blue;
 // $input-shadow: none;
 
@@ -45,7 +45,8 @@ $link-active: $blue-darker;
 
 // BUTTONS
 $button-color: $blue;
-$button-border-width: 0;
+$button-border-width: 4px;
+$button-border-color: $blue;
 $button-hover-color: $blue-dark;
 $button-hover-border-color: $blue-dark;
 $button-focus-color: $blue-darker;
@@ -76,6 +77,5 @@ $navbar-dropdown-item-hover-color: white;
 $navbar-dropdown-item-hover-background-color: $blue;
 $navbar-dropdown-item-active-color: white;
 $navbar-dropdown-item-active-background-color: $blue;
-
 
 // DROPDOWN

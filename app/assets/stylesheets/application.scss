@@ -3,15 +3,15 @@
 // application overrides (some must be *before* bulma is loaded)
 @import "app/variables/setup";
 
-// @import "bulma/sass/utilities/all"
-// @import "bulma/sass/base/all"
-// @import "bulma/sass/elements/all"
-// @import "bulma/sass/form/all"
-// @import "bulma/sass/components/all"
-// @import "bulma/sass/grid/all"
-// @import "bulma/sass/layout/all"
+@import "bulma/sass/utilities/all";
+@import "bulma/sass/base/all";
+@import "bulma/sass/elements/all";
+// @import "bulma/sass/form/all";
+@import "bulma/sass/components/all";
+@import "bulma/sass/grid/all";
+@import "bulma/sass/layout/all";
 
-@import "bulma/bulma";
+// @import "bulma/bulma";
 
 @import "app/components/buttons";
 @import "app/components/layout";
