@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::Charts::Company do
-  let(:sector) { create(:sector) }
+  let(:sector) { create(:tpi_sector) }
   let(:company) { create(:company, sector: sector) }
   let(:another_company_from_sector) { create(:company, sector: sector) }
 

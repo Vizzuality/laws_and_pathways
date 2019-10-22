@@ -51,8 +51,8 @@ module CSVImport
     def find_or_create_sector(row)
       return unless row[:sector].present?
 
-      Sector.where('lower(name) = ?', row[:sector].downcase).first ||
-        Sector.new(name: row[:sector])
+      TPISector.where('lower(name) = ?', row[:sector].downcase).first ||
+        TPISector.new(name: row[:sector])
     end
   end
 end

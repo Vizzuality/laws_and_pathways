@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe Admin::SectorsController, type: :controller do
+RSpec.describe Admin::TPISectorsController, type: :controller do
   let(:admin) { create(:admin_user) }
-  let!(:sector) { create(:sector, :with_benchmarks) }
-  let(:valid_attributes) { attributes_for(:sector) }
+  let!(:sector) { create(:tpi_sector, :with_benchmarks) }
+  let(:valid_attributes) { attributes_for(:tpi_sector) }
   let(:invalid_attributes) { valid_attributes.merge(name: nil) }
   let(:page) { Capybara::Node::Simple.new(response.body) }
 
@@ -54,24 +54,24 @@ RSpec.describe Admin::SectorsController, type: :controller do
 
   describe 'POST create' do
     context 'with valid params' do
-      subject { post :create, params: {sector: valid_attributes} }
+      subject { post :create, params: {tpi_sector: valid_attributes} }
 
       it 'creates a new Sector' do
-        expect { subject }.to change(Sector, :count).by(1)
+        expect { subject }.to change(TPISector, :count).by(1)
       end
 
       it 'redirects to the created Sector' do
-        expect(subject).to redirect_to(admin_sector_path(Sector.order(:created_at).last))
+        expect(subject).to redirect_to(admin_tpi_sector_path(TPISector.order(:created_at).last))
       end
     end
 
     context 'with invalid params' do
-      subject { post :create, params: {sector: invalid_attributes} }
+      subject { post :create, params: {tpi_sector: invalid_attributes} }
 
       it { is_expected.to be_successful }
 
       it 'invalid_attributes do not create a Sector' do
-        expect { subject }.not_to change(Sector, :count)
+        expect { subject }.not_to change(TPISector, :count)
       end
     end
   end

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: sectors
+# Table name: tpi_sectors
 #
 #  id         :bigint           not null, primary key
 #  name       :string           not null
@@ -10,12 +10,12 @@
 #  cp_unit    :text
 #
 
-class Sector < ApplicationRecord
+class TPISector < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged, routes: :default
 
-  has_many :companies
-  has_many :cp_benchmarks, class_name: 'CP::Benchmark'
+  has_many :companies, foreign_key: 'sector_id'
+  has_many :cp_benchmarks, class_name: 'CP::Benchmark', foreign_key: 'sector_id'
 
   validates_presence_of :name, :slug
   validates_uniqueness_of :name, :slug

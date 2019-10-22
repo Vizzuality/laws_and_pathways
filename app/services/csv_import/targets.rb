@@ -50,8 +50,8 @@ module CSVImport
     def find_or_create_sector(sector_name)
       return unless sector_name.present?
 
-      Sector.where('lower(name) = ?', sector_name.downcase).first ||
-        Sector.new(name: sector_name)
+      LawsSector.where('lower(name) = ?', sector_name.downcase).first ||
+        LawsSector.new(name: sector_name)
     end
 
     def find_target_scope(target_scope_name)

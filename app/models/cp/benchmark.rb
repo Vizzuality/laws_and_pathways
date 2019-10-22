@@ -15,7 +15,7 @@ module CP
   class Benchmark < ApplicationRecord
     include HasEmissions
 
-    belongs_to :sector
+    belongs_to :sector, class_name: 'TPISector', foreign_key: 'sector_id'
 
     scope :latest_first, -> { order(release_date: :desc) }
     scope :by_release_date, -> { order(:release_date) }

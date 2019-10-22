@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::Charts::CPBenchmark do
   subject { described_class.new }
-  let!(:sector) { create(:sector) }
+  let!(:sector) { create(:tpi_sector) }
   let!(:company) { create(:company, sector: sector) }
   let(:current_year) { '2018' }
 

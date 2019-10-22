@@ -13,7 +13,7 @@
 
 FactoryBot.define do
   factory :cp_benchmark, class: CP::Benchmark do
-    association :sector
+    association :sector, factory: :tpi_sector
 
     release_date { 5.days.ago.to_date }
     scenario { ['Paris pledges', '2 Degrees', 'Below 2 Degrees'].sample }

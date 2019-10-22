@@ -119,7 +119,7 @@ RSpec.describe Company, type: :model do
 
     it 'returns latest CP benchmarks with release date smaller than latest CP Assessment assessment date' do
       company = create(:company,
-                       sector: create(:sector, cp_benchmarks: sector_cp_benchmarks),
+                       sector: create(:tpi_sector, cp_benchmarks: sector_cp_benchmarks),
                        cp_assessments: company_assessments)
 
       # last assessment year is 2018, so we should take benchmarks from 2016
@@ -133,7 +133,7 @@ RSpec.describe Company, type: :model do
 
     it 'returns latest CP benchmarks with last release date if all CP Assessments are older' do
       company = create(:company,
-                       sector: create(:sector, cp_benchmarks: sector_cp_benchmarks),
+                       sector: create(:tpi_sector, cp_benchmarks: sector_cp_benchmarks),
                        cp_assessments: older_company_assessments)
 
       # last assessment year is 2012 - before oldest bechmark, so we just take most recent benchmark

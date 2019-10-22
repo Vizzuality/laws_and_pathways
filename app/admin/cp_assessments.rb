@@ -10,7 +10,7 @@ ActiveAdmin.register CP::Assessment do
   filter :assessment_date
   filter :publication_date, as: :select, collection: proc { CP::Assessment.all_publication_dates }
   filter :company
-  filter :company_sector_id, as: :select, collection: proc { Sector.all }
+  filter :company_sector_id, as: :select, collection: proc { TPISector.all }
 
   data_export_sidebar 'CPAssessments'
 
