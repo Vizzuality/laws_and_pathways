@@ -19,8 +19,6 @@ gem 'activeadmin_addons'
 gem 'devise', '>= 4.7.1'
 gem 'draper'
 
-gem 'aws-sdk-rails'
-gem 'aws-sdk-s3'
 gem 'google-cloud-storage', require: false
 
 gem 'discard'
@@ -62,7 +60,3 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-git 'https://github.com/ClimateWatch-Vizzuality/climate-watch-gems.git' do
-  gem 'climate_watch_engine', '~> 1.4.3'
-end

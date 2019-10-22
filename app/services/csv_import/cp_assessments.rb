@@ -47,11 +47,11 @@ module CSVImport
     end
 
     def assessment_date(row)
-      Import::DateUtils.safe_parse(row[:assessment_date], ['%Y-%m-%d'])
+      CSVImport::DateUtils.safe_parse(row[:assessment_date], ['%Y-%m-%d'])
     end
 
     def publication_date(row)
-      Import::DateUtils.safe_parse(row[:publication_date], ['%Y-%m'])
+      CSVImport::DateUtils.safe_parse(row[:publication_date], ['%Y-%m'])
     end
   end
 end
