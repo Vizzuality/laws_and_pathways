@@ -24,8 +24,8 @@ $button-border-width: 4px;
   min-width: 160px;
   height: 40px;
   justify-content: center;
+  align-items: center;
   font-family: $family-sans-serif-bold;
-  justify-content: center;
   
   &.is-small {
     border-radius: 0;
@@ -34,18 +34,14 @@ $button-border-width: 4px;
   }
 
   &.is-primary {
-    justify-content: center;
-    align-items: center;
-
     &.is-hovered,
-    &.is-focused,
-    &:hover,
-    &:focus {
+    &:hover {
       background-color: $blue-dark;
     }
 
     &.is-focused,
     &:focus {
+      background-color: $blue-darker;
       border-color: $yellow;
       border-width: 4px;
     }
