@@ -5,6 +5,9 @@ ActiveAdmin.register CP::Assessment do
 
   decorate_with CP::AssessmentDecorator
 
+  permit_params :assessment_date, :publication_date, :company_id, :last_reported_year,
+                :assumptions, :emissions
+
   filter :assessment_date
   filter :publication_date, as: :select, collection: proc { CP::Assessment.all_publication_dates }
   filter :company
