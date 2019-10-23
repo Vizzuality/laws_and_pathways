@@ -47,7 +47,7 @@ module CSVImport
     end
 
     def parse_date(date)
-      Import::DateUtils.safe_parse(date, ['%Y-%m', '%Y-%m-%d'])
+      CSVImport::DateUtils.safe_parse(date, ['%Y-%m', '%Y-%m-%d'])
     end
   end
 end

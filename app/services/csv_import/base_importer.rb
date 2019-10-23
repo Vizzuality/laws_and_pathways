@@ -3,6 +3,7 @@ module CSVImport
     include ActiveModel::Model
 
     attr_reader :file, :import_results
+    attr_accessor :override_id
 
     def initialize(file)
       @file = file
@@ -36,6 +37,12 @@ module CSVImport
 
     def find_record_by(attr_name, row)
       resource_klass.find_by(attr_name.to_sym => row[attr_name]&.strip)
+    end
+
+    def prepare_overridden_resource(row)
+      resource_klass.new do |r|
+        r.id = row[:id]
+      end
     end
 
     protected

@@ -1,4 +1,4 @@
-module Import
+module CSVImport
   class DateUtils
     class << self
       def safe_parse(date, expected_date_formats)
