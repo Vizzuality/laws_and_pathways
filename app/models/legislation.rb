@@ -16,6 +16,7 @@
 #  updated_by_id     :bigint
 #  discarded_at      :datetime
 #  legislation_type  :string           not null
+#  sector_id         :bigint
 #
 
 class Legislation < ApplicationRecord

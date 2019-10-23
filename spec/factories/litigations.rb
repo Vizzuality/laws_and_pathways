@@ -17,6 +17,7 @@
 #  created_by_id             :bigint
 #  updated_by_id             :bigint
 #  discarded_at              :datetime
+#  sector_id                 :bigint
 #
 
 FactoryBot.define do
