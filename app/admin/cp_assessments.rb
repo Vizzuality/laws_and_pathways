@@ -5,8 +5,6 @@ ActiveAdmin.register CP::Assessment do
 
   decorate_with CP::AssessmentDecorator
 
-  actions :all, except: [:new, :edit, :create, :update]
-
   filter :assessment_date
   filter :publication_date, as: :select, collection: proc { CP::Assessment.all_publication_dates }
   filter :company
@@ -32,6 +30,8 @@ ActiveAdmin.register CP::Assessment do
 
     active_admin_comments
   end
+
+  form partial: 'form'
 
   index do
     column :title, &:title_link

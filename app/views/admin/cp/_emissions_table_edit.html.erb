@@ -1,0 +1,22 @@
+<template data-target="with-emission-table-form.emissionRowTemplate">
+  <%= render "admin/cp/emissions_table_edit_row", year: '', value: '' %>
+</template>
+
+<table data-target="with-emission-table-form.emissionTable">
+  <thead>
+    <th></th>
+    <th>Year</th>
+    <th>Value</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <% f.object&.emissions&.each do |year, value| %>
+      <%= render "admin/cp/emissions_table_edit_row", year: year, value: value %>
+    <% end %>
+    <tr data-target="with-emission-table-form.emissionRowAdd">
+      <td colspan="4">
+        <%= button_tag "Add new value", type: 'button', class: 'button button--raised', data: { action: "click->with-emission-table-form#addEmission" } %>
+      </td>
+    </tr>
+  </tbody>
+</table>
