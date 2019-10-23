@@ -240,9 +240,11 @@ ActiveRecord::Schema.define(version: 2019_10_22_201928) do
 
   create_table "laws_sectors", force: :cascade do |t|
     t.string "name", null: false
+    t.bigint "parent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_laws_sectors_on_name", unique: true
+    t.index ["parent_id"], name: "index_laws_sectors_on_parent_id"
   end
 
   create_table "legislations", force: :cascade do |t|
@@ -259,9 +261,11 @@ ActiveRecord::Schema.define(version: 2019_10_22_201928) do
     t.bigint "updated_by_id"
     t.datetime "discarded_at"
     t.string "legislation_type", null: false
+    t.bigint "sector_id"
     t.index ["created_by_id"], name: "index_legislations_on_created_by_id"
     t.index ["discarded_at"], name: "index_legislations_on_discarded_at"
     t.index ["geography_id"], name: "index_legislations_on_geography_id"
+    t.index ["sector_id"], name: "index_legislations_on_sector_id"
     t.index ["slug"], name: "index_legislations_on_slug", unique: true
     t.index ["updated_by_id"], name: "index_legislations_on_updated_by_id"
   end
@@ -311,11 +315,13 @@ ActiveRecord::Schema.define(version: 2019_10_22_201928) do
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
     t.datetime "discarded_at"
+    t.bigint "sector_id"
     t.index ["created_by_id"], name: "index_litigations_on_created_by_id"
     t.index ["discarded_at"], name: "index_litigations_on_discarded_at"
     t.index ["document_type"], name: "index_litigations_on_document_type"
     t.index ["geography_id"], name: "index_litigations_on_geography_id"
     t.index ["jurisdiction_id"], name: "index_litigations_on_jurisdiction_id"
+    t.index ["sector_id"], name: "index_litigations_on_sector_id"
     t.index ["slug"], name: "index_litigations_on_slug", unique: true
     t.index ["updated_by_id"], name: "index_litigations_on_updated_by_id"
   end
@@ -406,9 +412,11 @@ ActiveRecord::Schema.define(version: 2019_10_22_201928) do
   add_foreign_key "geographies", "admin_users", column: "updated_by_id"
   add_foreign_key "governances", "governance_types"
   add_foreign_key "instruments", "instrument_types"
+  add_foreign_key "laws_sectors", "laws_sectors", column: "parent_id"
   add_foreign_key "legislations", "admin_users", column: "created_by_id"
   add_foreign_key "legislations", "admin_users", column: "updated_by_id"
   add_foreign_key "legislations", "geographies"
+  add_foreign_key "legislations", "laws_sectors", column: "sector_id"
   add_foreign_key "legislations_targets", "legislations", on_delete: :cascade
   add_foreign_key "legislations_targets", "targets", on_delete: :cascade
   add_foreign_key "litigation_sides", "litigations", on_delete: :cascade
@@ -416,6 +424,7 @@ ActiveRecord::Schema.define(version: 2019_10_22_201928) do
   add_foreign_key "litigations", "admin_users", column: "updated_by_id"
   add_foreign_key "litigations", "geographies", column: "jurisdiction_id", on_delete: :cascade
   add_foreign_key "litigations", "geographies", on_delete: :cascade
+  add_foreign_key "litigations", "laws_sectors", column: "sector_id"
   add_foreign_key "mq_assessments", "companies", on_delete: :cascade
   add_foreign_key "taggings", "tags", on_delete: :cascade
   add_foreign_key "targets", "admin_users", column: "created_by_id"

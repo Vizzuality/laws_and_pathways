@@ -16,6 +16,7 @@
           <%= f.input :title %>
           <%= f.input :description, as: :trix %>
           <%= f.input :legislation_type, as: :select %>
+          <%= f.input :sector %>
           <%= f.input :document_type_ids, label: 'Document', as: :tags, collection: DocumentType.all %>
           <%= f.input :instrument_ids, label: 'Instrument', as: :tags, collection: Instrument.all %>
           <%= f.input :governance_ids, label: 'Governance', as: :tags, collection: Governance.all %>

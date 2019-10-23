@@ -42,6 +42,7 @@ class Litigation < ApplicationRecord
 
   belongs_to :geography
   belongs_to :jurisdiction, class_name: 'Geography'
+  belongs_to :sector, class_name: 'LawsSector', foreign_key: 'sector_id', optional: true
   has_many :litigation_sides, -> { order(:side_type) }, inverse_of: :litigation
   has_many :documents, as: :documentable, dependent: :destroy
   has_many :events, as: :eventable, dependent: :destroy

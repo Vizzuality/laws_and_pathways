@@ -8,7 +8,7 @@ ActiveAdmin.register Legislation do
   publishable_scopes
 
   permit_params :title, :date_passed, :description,
-                :geography_id, :law_id, :legislation_type,
+                :geography_id, :sector_id, :law_id, :legislation_type,
                 :natural_hazards_string, :keywords_string,
                 :created_by_id, :updated_by_id, :visibility_status,
                 events_attributes: permit_params_for(:events),
@@ -37,6 +37,7 @@ ActiveAdmin.register Legislation do
     column :date_passed
     column 'Frameworks', &:frameworks_string
     column :geography
+    column :sector
     column :document_types
     column :created_by
     column :updated_by
@@ -57,6 +58,7 @@ ActiveAdmin.register Legislation do
           row :description
           row :date_passed
           row :geography
+          row :sector
           row :law_id
           row :legislation_type
           row 'Frameworks', &:frameworks_string
@@ -105,6 +107,7 @@ ActiveAdmin.register Legislation do
     column :description
     column(:geography) { |l| l.geography.name }
     column(:geography_iso) { |l| l.geography.iso }
+    column(:sector) { |l| l.sector&.name }
     column :frameworks, &:frameworks_string
     column :document_types, &:document_types_string
     column :keywords, &:keywords_string
@@ -144,6 +147,7 @@ ActiveAdmin.register Legislation do
     def scoped_collection
       super.includes(
         :geography,
+        :sector,
         :frameworks,
         :keywords,
         :natural_hazards,

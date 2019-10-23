@@ -32,5 +32,6 @@ FactoryBot.define do
     association :updated_by, factory: :admin_user
 
     association :geography
+    association :sector, factory: :laws_sector
   end
 end

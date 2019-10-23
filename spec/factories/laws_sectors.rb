@@ -11,5 +11,7 @@
 FactoryBot.define do
   factory :laws_sector do
     sequence(:name) { |n| 'name-' + ('AA'..'ZZ').to_a[n] }
+
+    # association :parent, factory: :laws_sector
   end
 end

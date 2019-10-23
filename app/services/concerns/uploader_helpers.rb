@@ -53,4 +53,18 @@ module UploaderHelpers
       acc.merge(year.to_s.to_i => row[year].to_f)
     end
   end
+
+  def find_or_create_tpi_sector(sector_name)
+    return unless sector_name.present?
+
+    TPISector.where('lower(name) = ?', sector_name.downcase).first ||
+      TPISector.new(name: sector_name)
+  end
+
+  def find_or_create_laws_sector(sector_name)
+    return unless sector_name.present?
+
+    LawsSector.where('lower(name) = ?', sector_name.downcase).first ||
+      LawsSector.new(name: sector_name)
+  end
 end

@@ -18,6 +18,7 @@
           <%= f.input :title %>
           <%= f.input :geography %>
           <%= f.input :jurisdiction %>
+          <%= f.input :sector %>
           <%= f.input :document_type, as: :select, collection: array_to_select_collection(Litigation::DOCUMENT_TYPES) %>
           <%= f.input :summary, as: :trix %>
           <%= f.input :core_objective, as: :trix %>
