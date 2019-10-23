@@ -1,4 +1,32 @@
 <div class="banner is-hidden-mobile">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-half">
+        pic
+        <img src="" class="banner--logo">
+      </div>
+      <div class="column">
+        <div class="columns">
+          <div class="column">
+            pic
+            <img src="" alt="" class="banner--partner">
+          </div>
+          <div class="column">
+            pic
+            <img src="" alt="" class="banner--partner">
+          </div>
+          <div class="column">
+            pic
+            <img src="" alt="" class="banner--partner">
+          </div>
+          <div class="column">
+            pic
+            <img src="" alt="" class="banner--partner">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="header-nav">
@@ -24,13 +52,69 @@
       </div>
     </div>
   </div>
-  <img class="hero--picture" src="<%= asset_path 'daniel-sessler-g3O3xWspoN4-unsplash.jpg' %>">
+  <!-- <img class="hero--picture" src="<%= asset_path 'daniel-sessler-g3O3xWspoN4-unsplash.jpg' %>"> -->
 </section>
 
 <section class="hero is-secondary is-medium">
-  <div class="hero-body">
-    <div class="container">
-      
+
+  <div class="container">
+    <div class="columns">
+      <div class="column is-half">
+        <h4>How investors can use the TPI</h4>
+
+        <p>
+          The TPI is designed to support investors. Find out how they can use its findings.
+        </p>
+
+        <button class="button is-primary button--icon">+</button>
+        <a class="link is-secondary">Learn more</a>
+      </div>
+
+      <div class="column is-half">
+        <h4>Supporters</h4>
+
+        <p>
+          The TPI is supported globally by over 45 investors with over $14 trillion combined Assets Under Management and Advice.
+        </p>
+
+        <button class="button is-primary button--icon">+</button>
+        <a class="link is-secondary">Learn more</a>
+      </div>
     </div>
   </div>
 </section>
+
+<section class="section publications">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-half">
+        <h4>Publications and news</h4>
+      </div>
+
+      <div class="column">
+        <button class="button is-secondary">View all</button>
+      </div>
+    </div>
+  </div>
+  <%= render "publications/promoted" %>
+</section>
+
+<hr />
+
+<section class="section partners">
+  <%= render "home/partners" %>
+</section>
+
+<section class="section testemonials">
+  <%= render "home/testimonials" %>
+</section>
+
+<footer class="footer">
+  <section class="section subscribe">
+    <%= render "layouts/subscribe" %>
+  </section>
+  
+  <section class="section">  
+    <%= render "layouts/footer" %>
+  </section>
+</footer>

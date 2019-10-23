@@ -12,6 +12,7 @@ $radius: 0;
 // $size-5: 1.5rem;
 $size-6: 1rem;
 $size-7: 0.875rem;
+$size-8: 0.75rem;
 
 // $control-border-width: 2px;
 $input-border-color: $blue;
@@ -23,7 +24,7 @@ $body-line-height: 1.5;
 $text: $dark;
 $family-sans-serif: "BrownTT Regular";
 $family-sans-serif-bold: "BrownTT Bold";
-$widescreen-enabled: false;
+$widescreen-enabled: true;
 $fullhd-enabled: false;
 
 $gap: 32px;
@@ -79,4 +80,7 @@ $navbar-dropdown-item-active-color: white;
 $navbar-dropdown-item-active-background-color: $blue;
 $navbar-bottom-box-shadow-size: 0;
 
-// DROPDOWN
+// TAGS
+$tag-background-color: $white;
+$tag-color: $grey-dark;
+$tag-radius: 0;

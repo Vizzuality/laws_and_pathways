@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :publications
   namespace :tpi do
     resources :sectors, only: [:show, :index] do
       collection do
