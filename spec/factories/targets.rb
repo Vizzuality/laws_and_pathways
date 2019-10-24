@@ -23,7 +23,7 @@
 FactoryBot.define do
   factory :target do
     association :geography
-    association :sector
+    association :sector, factory: :laws_sector
     association :target_scope
     association :created_by, factory: :admin_user
     association :updated_by, factory: :admin_user

@@ -16,6 +16,7 @@
 #  updated_by_id     :bigint
 #  discarded_at      :datetime
 #  legislation_type  :string           not null
+#  sector_id         :bigint
 #
 
 FactoryBot.define do
@@ -32,5 +33,6 @@ FactoryBot.define do
     association :updated_by, factory: :admin_user
 
     association :geography
+    association :sector, factory: :laws_sector
   end
 end

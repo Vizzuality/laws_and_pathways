@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Admin::CpAssessmentsController, type: :controller do
+RSpec.describe Admin::CPAssessmentsController, type: :controller do
   let(:admin) { create(:admin_user) }
   let!(:cp_assessment) { create(:cp_assessment) }
 

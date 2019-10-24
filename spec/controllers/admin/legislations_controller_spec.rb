@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Admin::LegislationsController, type: :controller do
   let(:admin) { create(:admin_user) }
   let(:geography) { create(:geography) }
+  let(:sector) { create(:laws_sector) }
 
   let!(:legislation) { create(:legislation, visibility_status: 'published') }
   let!(:legislation_archived) { create(:legislation, visibility_status: 'archived') }
@@ -54,6 +55,7 @@ RSpec.describe Admin::LegislationsController, type: :controller do
           law_id: 1001,
           visibility_status: 'pending',
           legislation_type: 'legislative',
+          sector_id: sector.id,
           geography_id: geography.id,
           documents_attributes: [
             attributes_for(:document).merge(
@@ -99,6 +101,7 @@ RSpec.describe Admin::LegislationsController, type: :controller do
           expect(l.law_id).to eq(1001)
           expect(l.date_passed).to eq(Date.parse('2/4/2004'))
           expect(l.geography_id).to eq(geography.id)
+          expect(l.sector_id).to eq(sector.id)
           expect(l.legislative?).to be(true)
           expect(l.documents.pluck(:name, :language, :external_url).sort)
             .to eq([['doc 1', 'en', 'http://test.com/file.pdf'], ['doc 2', 'pl', '']])

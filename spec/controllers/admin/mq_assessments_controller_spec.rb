@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Admin::MqAssessmentsController, type: :controller do
+RSpec.describe Admin::MQAssessmentsController, type: :controller do
   let(:admin) { create(:admin_user) }
   let!(:mq_assessment) { create(:mq_assessment) }
 

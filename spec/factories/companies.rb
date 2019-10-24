@@ -21,7 +21,7 @@ FactoryBot.define do
   factory :company do
     association :geography
     association :headquarters_geography, factory: :geography
-    association :sector
+    association :sector, factory: :tpi_sector
 
     sequence(:name) { |n| 'Company name -' + ('AA'..'ZZ').to_a[n] }
     isin { SecureRandom.uuid }

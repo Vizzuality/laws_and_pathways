@@ -56,7 +56,7 @@ module Api
         end
       end
 
-      # Returns average emissions history for given Sector.
+      # Returns average emissions history for given TPISector.
       # For each year, average value is calculated from all available
       # companies emissions, up to last reported year.
       #
@@ -92,7 +92,7 @@ module Api
           .uniq
       end
 
-      # @return [Array<Hash>] list of { year => value } pairs from all Companies from current Sector
+      # @return [Array<Hash>] list of { year => value } pairs from all Companies from current TPISector
       def sector_all_emissions
         @sector_all_emissions ||= @company.sector
           .companies

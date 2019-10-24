@@ -8,6 +8,7 @@ RSpec.describe Admin::LitigationsController, type: :controller do
   let(:side_geography) { create(:geography) }
   let(:side_company) { create(:company) }
   let(:geography) { create(:geography) }
+  let(:sector) { create(:laws_sector) }
 
   describe 'GET index' do
     subject { get :index }
@@ -43,6 +44,7 @@ RSpec.describe Admin::LitigationsController, type: :controller do
           core_objective: 'objective',
           geography_id: geography.id,
           jurisdiction_id: geography.id,
+          sector_id: sector.id,
           created_by_id: admin.id,
           updated_by_id: admin.id,
           visibility_status: 'pending',
@@ -101,6 +103,7 @@ RSpec.describe Admin::LitigationsController, type: :controller do
           expect(l.core_objective).to eq('objective')
           expect(l.visibility_status).to eq('pending')
           expect(l.geography_id).to eq(geography.id)
+          expect(l.sector_id).to eq(sector.id)
           expect(l.jurisdiction_id).to eq(geography.id)
           expect(l.litigation_sides.pluck(:party_type)).to eq(%w[individual corporation government])
           expect(
