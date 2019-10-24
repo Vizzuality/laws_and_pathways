@@ -1,3 +1,5 @@
+require "#{Rails.root}/lib/timed_logger"
+
 # admin users
 # envs: DEV
 if Rails.env.development? && !AdminUser.find_by(email: 'admin@example.com')
