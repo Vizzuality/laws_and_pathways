@@ -1,7 +1,19 @@
-@import "app/variables/colors";
+@import "app/colors";
 
 .banner {
   height: 140px;
+
+  .container {
+    justify-content: center;
+  }
+
+  .column {
+    
+  }
+
+  .banner--logo {
+
+  }
 }
 
 .header-nav {
