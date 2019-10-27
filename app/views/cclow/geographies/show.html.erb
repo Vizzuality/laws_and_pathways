@@ -1,0 +1,36 @@
+<%= render layout: 'layout' do %>
+  <div class="geographies">
+    <section class="overview">
+      <h1>Overview</h1>
+
+      Number of climate laws: <%= @geography_overview.number_of_laws %> <br/>
+      Number of climate policies: <%= @geography_overview.number_of_policies %> <br/>
+      Number of climate litigation cases: <%= @geography_overview.number_of_litigation_cases %> <br/>
+    </section>
+
+    <section class="ndc">
+      <h2>NDC</h2>
+    </section>
+
+    <section class="events">
+      <h2>Timeline of events</h2>
+    </section>
+
+    <section class="map">
+      <h2>Explore data on map</h2>
+    </section>
+
+    <section class="legislative-process">
+      <h2>Legislative process</h2>
+
+      <p>
+        <%= @geography_overview.legislative_process.html_safe %>
+      </p>
+    </section>
+
+    <section class="publications">
+      <h2>Related publications</h2>
+
+    </section>
+  </div>
+<% end %>

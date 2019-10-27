@@ -17,6 +17,17 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :cclow do
+    resources :geographies, only: [:show] do
+      member do
+        get :laws
+        get :policies
+        get :litigation_cases
+        get :climate_targets
+      end
+    end
+  end
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
