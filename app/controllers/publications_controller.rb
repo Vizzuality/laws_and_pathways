@@ -1,9 +1,7 @@
 class PublicationsController < InheritedResources::Base
-
   private
 
-    def publication_params
-      params.require(:publication).permit()
-    end
-
+  def publication_params
+    params.require(:publication).permit
+  end
 end
