@@ -1,5 +1,5 @@
 module CCLOW
-  class GeographyLegislationDecorator < Draper::Decorator
+  class LegislationDecorator < Draper::Decorator
     delegate_all
 
     def link

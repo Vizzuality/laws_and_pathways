@@ -11,11 +11,11 @@ module CCLOW
                         else
                           @geography.legislations.policies
                         end
-        @legislations = GeographyLegislationDecorator.decorate_collection(@legislations)
+        @legislations = CCLOW::LegislationDecorator.decorate_collection(@legislations)
       end
 
       def show
-        @legislation = GeographyLegislationDecorator.new(::Legislation.find(params[:id]))
+        @legislation = CCLOW::LegislationDecorator.new(::Legislation.find(params[:id]))
         add_breadcrumb(@legislation.title, request.path)
       end
 

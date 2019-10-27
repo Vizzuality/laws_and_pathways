@@ -26,6 +26,9 @@ Rails.application.routes.draw do
       resources :litigation_cases, controller: 'geography/litigation_cases', only: [:show, :index]
       resources :climate_targets, controller: 'geography/climate_targets', only: [:show, :index]
     end
+
+    resources :legislation_and_policies, only: :index
+    resources :litigation_cases, only: :index
   end
 
   devise_for :admin_users, ActiveAdmin::Devise.config
