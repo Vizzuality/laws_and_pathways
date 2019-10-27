@@ -56,7 +56,7 @@ class Geography < ApplicationRecord
 
   tag_with :political_groups
 
-  has_many :litigations
+  has_many :litigations, foreign_key: 'jurisdiction_id'
   has_many :legislations
   has_many :events, as: :eventable, dependent: :destroy
 

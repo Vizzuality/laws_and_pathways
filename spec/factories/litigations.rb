@@ -7,7 +7,6 @@
 #  slug                      :string           not null
 #  citation_reference_number :string
 #  document_type             :string
-#  geography_id              :bigint
 #  jurisdiction_id           :bigint
 #  summary                   :text
 #  core_objective            :text
@@ -22,7 +21,6 @@
 
 FactoryBot.define do
   factory :litigation do
-    association :geography
     association :jurisdiction, factory: :geography
     association :sector, factory: :laws_sector
 

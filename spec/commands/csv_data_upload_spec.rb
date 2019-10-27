@@ -97,7 +97,6 @@ describe 'CsvDataUpload (integration)' do
       document_type: 'case'
     )
     expect(litigation.jurisdiction.iso).to eq('GBR')
-    expect(litigation.geography.iso).to eq('GBR')
     expect(litigation.sector.name).to eq('Transport')
     expect(litigation.keywords.size).to eq(2)
     expect(litigation.keywords_list).to include('keyword1', 'keyword2')

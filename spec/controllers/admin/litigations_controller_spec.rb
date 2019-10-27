@@ -42,7 +42,6 @@ RSpec.describe Admin::LitigationsController, type: :controller do
           title: 'Litigation POST title',
           summary: 'Litigation POST summary',
           core_objective: 'objective',
-          geography_id: geography.id,
           jurisdiction_id: geography.id,
           sector_id: sector.id,
           created_by_id: admin.id,
@@ -102,7 +101,6 @@ RSpec.describe Admin::LitigationsController, type: :controller do
           expect(l.summary).to eq('Litigation POST summary')
           expect(l.core_objective).to eq('objective')
           expect(l.visibility_status).to eq('pending')
-          expect(l.geography_id).to eq(geography.id)
           expect(l.sector_id).to eq(sector.id)
           expect(l.jurisdiction_id).to eq(geography.id)
           expect(l.litigation_sides.pluck(:party_type)).to eq(%w[individual corporation government])
@@ -202,12 +200,12 @@ RSpec.describe Admin::LitigationsController, type: :controller do
       end
     end
 
-    context 'when geography does not exist' do
+    context 'when jurisdiction does not exist' do
       before do
-        litigation.geography.litigations = []
+        litigation.jurisdiction.litigations = []
       end
 
-      it 'soft-delete even if geography is nil' do
+      it 'soft-delete even if jurisdiction is nil' do
         expect { subject }.to change { Litigation.count }.by(-1)
       end
     end
