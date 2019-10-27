@@ -10,6 +10,16 @@
   </head>
 
   <body>
-    <%= content_for?(:content) ? yield(:content) : yield %>
+    <header>
+      Header
+
+      <%= render_breadcrumb %>
+    </header>
+    <main>
+      <%= content_for?(:content) ? yield(:content) : yield %>
+    </main>
+    <footer>
+      Footer
+    </footer>
   </body>
 </html>
