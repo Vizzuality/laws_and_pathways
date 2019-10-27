@@ -43,6 +43,7 @@ en:
         ca100: 'CA100'
       geography:
         indc_link: 'INDC link'
+        region: 'World Bank Region'
   formtastic:
     actions:
       cancel: Cancel
