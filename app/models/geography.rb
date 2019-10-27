@@ -67,4 +67,10 @@ class Geography < ApplicationRecord
   validates :iso, presence: true, if: :national?
   validates :federal, inclusion: {in: [true, false]}
   validates :region, inclusion: {in: REGIONS}
+
+  def indc_url
+    return unless national?
+
+    "https://www4.unfccc.int/sites/NDCStaging/pages/Party.aspx?party=#{iso}"
+  end
 end
