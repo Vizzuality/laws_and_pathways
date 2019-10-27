@@ -39,7 +39,6 @@ RSpec.describe Admin::GeographiesController, type: :controller do
           name: 'Test Country',
           region: Geography::REGIONS.last,
           visibility_status: 'pending',
-          indc_url: 'https://example.indc.pl',
           federal: true,
           federal_details: 'federal details text',
           legislative_process: 'legislative process text',
@@ -65,7 +64,6 @@ RSpec.describe Admin::GeographiesController, type: :controller do
           expect(g.name).to eq(valid_params[:name])
           expect(g.region).to eq(valid_params[:region])
           expect(g.visibility_status).to eq(valid_params[:visibility_status])
-          expect(g.indc_url).to eq(valid_params[:indc_url])
           expect(g.federal).to eq(valid_params[:federal])
           expect(g.federal_details).to eq(valid_params[:federal_details])
           expect(g.legislative_process).to eq(valid_params[:legislative_process])

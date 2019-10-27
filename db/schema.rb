@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_27_192816) do
+ActiveRecord::Schema.define(version: 2019_10_27_200245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -176,7 +176,6 @@ ActiveRecord::Schema.define(version: 2019_10_27_192816) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "visibility_status", default: "draft"
-    t.text "indc_url"
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
     t.datetime "discarded_at"

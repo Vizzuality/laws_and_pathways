@@ -15,7 +15,6 @@
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #  visibility_status          :string           default("draft")
-#  indc_url                   :text
 #  created_by_id              :bigint
 #  updated_by_id              :bigint
 #  discarded_at               :datetime
@@ -68,5 +67,4 @@ class Geography < ApplicationRecord
   validates :iso, presence: true, if: :national?
   validates :federal, inclusion: {in: [true, false]}
   validates :region, inclusion: {in: REGIONS}
-  validates :indc_url, url: true
 end

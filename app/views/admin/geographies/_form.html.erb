@@ -18,7 +18,6 @@
           <%= f.input :region, as: :select, collection: Geography::REGIONS %>
           <%= f.input :federal, input_html: {id: 'federal'} %>
           <%= f.input :federal_details, wrapper_html: {data: {controller: 'dependent-input', depends_on: 'federal'}} %>
-          <%= f.input :indc_url, as: :string %>
           <%= f.input :legislative_process, as: :trix %>
           <%= f.input :political_group_ids, label: 'Political Groups', as: :tags, collection: PoliticalGroup.all %>
           <%= f.input :visibility_status, as: :select %>
