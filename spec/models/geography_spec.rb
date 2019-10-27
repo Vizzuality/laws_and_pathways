@@ -28,7 +28,7 @@ RSpec.describe Geography, type: :model do
 
   it { is_expected.to be_valid }
 
-  it 'should be invalid if iso is nil' do
+  it 'should be invalid if iso is nil and type is national' do
     subject.iso = nil
     expect(subject).to have(1).errors_on(:iso)
   end

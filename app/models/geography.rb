@@ -36,7 +36,12 @@ class Geography < ApplicationRecord
     international_agreement
   ].freeze
 
-  GEOGRAPHY_TYPES = %w[country].freeze
+  GEOGRAPHY_TYPES = %w[
+    supranational
+    national
+    subnational
+    local
+  ].freeze
 
   REGIONS = [
     'East Asia & Pacific',
@@ -59,7 +64,8 @@ class Geography < ApplicationRecord
   accepts_nested_attributes_for :events, allow_destroy: true, reject_if: :all_blank
 
   validates_uniqueness_of :slug, :iso
-  validates_presence_of :name, :slug, :iso, :geography_type
+  validates_presence_of :name, :slug, :geography_type
+  validates :iso, presence: true, if: :national?
   validates :federal, inclusion: {in: [true, false]}
   validates :region, inclusion: {in: REGIONS}
   validates :indc_url, url: true

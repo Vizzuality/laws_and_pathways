@@ -26,7 +26,7 @@ FactoryBot.define do
     sequence(:name) { |n| 'name-' + ('AA'..'ZZ').to_a[n] }
     sequence(:iso) { |n| ('AAA'..'ZZZ').to_a[n] }
 
-    geography_type { 'country' }
+    geography_type { 'national' }
     region { Geography::REGIONS.sample }
     visibility_status { Litigation::VISIBILITY.sample }
     federal { false }

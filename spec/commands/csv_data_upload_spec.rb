@@ -296,7 +296,7 @@ describe 'CsvDataUpload (integration)' do
     expect(geography.legislative_process).to eq('Legislative process USA')
     expect(geography.name).to eq('United States of America')
     expect(geography.region).to eq('North America')
-    expect(geography.geography_type).to eq('country')
+    expect(geography.geography_type).to eq('national')
     expect(geography.visibility_status).to eq('draft')
     expect(geography.political_groups.size).to eq(2)
     expect(geography.political_groups_list).to include('OECD', 'G20')

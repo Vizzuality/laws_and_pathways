@@ -43,6 +43,7 @@ RSpec.describe Admin::GeographiesController, type: :controller do
           federal: true,
           federal_details: 'federal details text',
           legislative_process: 'legislative process text',
+          geography_type: 'supranational',
           events_attributes: [
             {
               date: 5.months.ago,
@@ -68,6 +69,7 @@ RSpec.describe Admin::GeographiesController, type: :controller do
           expect(g.federal).to eq(valid_params[:federal])
           expect(g.federal_details).to eq(valid_params[:federal_details])
           expect(g.legislative_process).to eq(valid_params[:legislative_process])
+          expect(g.geography_type).to eq(valid_params[:geography_type])
           expect(g.events.pluck(:title, :event_type, :description))
             .to eq(valid_params[:events_attributes].pluck(:title, :event_type, :description))
         end
