@@ -5,4 +5,8 @@ a {
     text-decoration: none;
     color: black;
   }
+
+  &.active {
+    font-weight: bold;
+  }
 }

@@ -28,6 +28,8 @@ gem 'language_list'
 gem 'simplecov', require: false, group: :test
 gem 'dotenv-rails'
 
+gem 'active_link_to' # simple helper for making links with active class
+
 # TPI
 gem 'chartkick'
 
