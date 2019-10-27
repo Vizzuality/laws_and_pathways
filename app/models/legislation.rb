@@ -52,6 +52,9 @@ class Legislation < ApplicationRecord
   has_and_belongs_to_many :instruments
   has_and_belongs_to_many :governances
 
+  scope :laws, -> { legislative }
+  scope :policies, -> { executive }
+
   with_options allow_destroy: true, reject_if: :all_blank do
     accepts_nested_attributes_for :documents
     accepts_nested_attributes_for :events
@@ -59,4 +62,12 @@ class Legislation < ApplicationRecord
 
   validates_presence_of :title, :slug, :date_passed
   validates_uniqueness_of :slug
+
+  def law?
+    legislative?
+  end
+
+  def policy?
+    executive?
+  end
 end

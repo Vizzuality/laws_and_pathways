@@ -21,12 +21,10 @@ Rails.application.routes.draw do
     root to: 'home#index'
 
     resources :geographies, only: [:show] do
-      member do
-        get :laws
-        get :policies
-        get :litigation_cases
-        get :climate_targets
-      end
+      resources :laws, controller: :legislations, only: [:show, :index], defaults: { scope: :laws }
+      resources :policies, controller: :legislations, only: [:show, :index], defaults: { scope: :policies }
+      resources :litigation_cases, only: [:show, :index]
+      resources :climate_targets, only: [:show, :index]
     end
   end
 

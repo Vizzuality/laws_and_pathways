@@ -1,0 +1,10 @@
+<div class="geography-laws">
+  <h1>Laws</h1>
+
+  <div class="list">
+    <% @legislations.each do |l| %>
+      <%= render 'list_item', title: l.link, description: l.description
+      %>
+    <% end %>
+  </div>
+</div>
