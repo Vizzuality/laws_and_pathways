@@ -18,11 +18,11 @@ module CCLOW
     end
 
     def set_geography
-      @geography = Geography.find(params[:geography_id] || params[:id])
+      @geography = ::Geography.find(params[:geography_id] || params[:id])
     end
 
     def set_geography_overview
-      @geography_overview = GeographyOverviewDecorator.new(@geography)
+      @geography_overview = CCLOW::GeographyOverviewDecorator.new(@geography)
     end
   end
 end
