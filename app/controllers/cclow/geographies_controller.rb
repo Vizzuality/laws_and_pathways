@@ -1,5 +1,5 @@
 module CCLOW
-  class GeographiesController < ApplicationController
+  class GeographiesController < CCLOWController
     before_action :set_geography, :set_geography_overview
 
     def show

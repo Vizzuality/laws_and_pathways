@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   end
 
   namespace :cclow do
+    root to: 'home#index'
+
     resources :geographies, only: [:show] do
       member do
         get :laws
