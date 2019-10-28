@@ -27,7 +27,7 @@ class Company < ApplicationRecord
 
   enum size: array_to_enum_hash(SIZES)
 
-  belongs_to :sector
+  belongs_to :sector, class_name: 'TPISector', foreign_key: 'sector_id'
   belongs_to :geography
   belongs_to :headquarters_geography, class_name: 'Geography'
 

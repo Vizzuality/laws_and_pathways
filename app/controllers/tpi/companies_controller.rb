@@ -1,4 +1,4 @@
-module Tpi
+module TPI
   class CompaniesController < ApplicationController
     before_action :fetch_company
 

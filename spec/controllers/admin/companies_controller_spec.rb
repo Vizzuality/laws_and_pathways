@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Admin::CompaniesController, type: :controller do
   let(:admin) { create(:admin_user) }
   let!(:company) { create(:company, :with_mq_assessments, :with_cp_assessments) }
-  let(:sector) { create(:sector) }
+  let(:sector) { create(:tpi_sector) }
   let(:geography) { create(:geography) }
   let(:valid_attributes) {
     attributes_for(:company).merge(

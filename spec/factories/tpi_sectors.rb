@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: sectors
+# Table name: tpi_sectors
 #
 #  id         :bigint           not null, primary key
 #  name       :string           not null
@@ -11,7 +11,7 @@
 #
 
 FactoryBot.define do
-  factory :sector do
+  factory :tpi_sector do
     sequence(:name) { |n| 'name-' + ('AA'..'ZZ').to_a[n] }
 
     trait :with_benchmarks do

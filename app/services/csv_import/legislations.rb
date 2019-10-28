@@ -28,6 +28,8 @@ module CSVImport
     end
 
     def prepare_legislation(row)
+      return prepare_overridden_resource(row) if override_id
+
       find_record_by(:id, row) ||
         find_record_by(:law_id, row) ||
         find_record_by(:title, row) ||
@@ -41,6 +43,7 @@ module CSVImport
         date_passed: row[:date_passed],
         description: row[:description],
         geography: geographies[row[:geography_iso]],
+        sector: find_or_create_laws_sector(row[:sector]),
         legislation_type: row[:legislation_type].downcase,
         visibility_status: row[:visibility_status]
       }

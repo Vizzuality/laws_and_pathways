@@ -27,6 +27,8 @@ module CSVImport
     # if there is nothing in id column try to find Litigation by title first before
     # creating new record
     def prepare_litigation(row)
+      return prepare_overridden_resource(row) if override_id
+
       find_record_by(:id, row) || find_record_by(:title, row) || resource_klass.new
     end
 
@@ -36,6 +38,7 @@ module CSVImport
         document_type: row[:document_type]&.downcase,
         geography: geographies[row[:geography_iso]],
         jurisdiction: geographies[row[:jurisdiction_iso]],
+        sector: find_or_create_laws_sector(row[:sector]),
         citation_reference_number: row[:citation_reference_number],
         core_objective: row[:core_objective],
         summary: row[:summary],

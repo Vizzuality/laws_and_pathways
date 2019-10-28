@@ -39,20 +39,13 @@ module CSVImport
       {
         name: row[:name],
         isin: row[:isin],
-        sector: find_or_create_sector(row),
+        sector: find_or_create_tpi_sector(row[:sector]),
         size: row[:size],
         geography: geographies[row[:geography_iso]],
         headquarters_geography: geographies[row[:headquarters_geography_iso]],
         ca100: row[:ca100],
         visibility_status: row[:visibility_status]
       }
-    end
-
-    def find_or_create_sector(row)
-      return unless row[:sector].present?
-
-      Sector.where('lower(name) = ?', row[:sector].downcase).first ||
-        Sector.new(name: row[:sector])
     end
   end
 end

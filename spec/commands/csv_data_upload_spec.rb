@@ -59,6 +59,7 @@ describe 'CsvDataUpload (integration)' do
     )
     expect(legislation.document_types_list).to include('Law')
     expect(legislation.geography.iso).to eq('POL')
+    expect(legislation.sector.name).to eq('Waste')
     expect(legislation.frameworks.size).to eq(2)
     expect(legislation.frameworks_list).to include('Mitigation', 'Adaptation')
     expect(legislation.keywords.size).to eq(2)
@@ -73,9 +74,9 @@ describe 'CsvDataUpload (integration)' do
     updated_litigation = create(:litigation)
 
     csv_content = <<-CSV
-      Id,Title,Document type,Geography iso,Jurisdiction iso,Citation reference number,Summary,Keywords,Core objective,Visibility status,Legislation ids
-      ,Litigation number 1,Case,GBR,GBR,EWHC 2752,Lyle requested judicial review,"keyword1,keyword2",Objectives,pending,"#{legislation1.id}, #{legislation2.id}"
-      #{updated_litigation.id},Litigation number 2,Case,GBR,GBR,[2013] NIQB 24,The applicants were brothers ...,,,Draft,
+      Id,Title,Document type,Geography iso,Jurisdiction iso,Sector,Citation reference number,Summary,Keywords,Core objective,Visibility status,Legislation ids
+      ,Litigation number 1,Case,GBR,GBR,Transport,EWHC 2752,Lyle requested judicial review,"keyword1,keyword2",Objectives,pending,"#{legislation1.id}, #{legislation2.id}"
+      #{updated_litigation.id},Litigation number 2,Case,GBR,GBR,,[2013] NIQB 24,The applicants were brothers ...,,,Draft,
     CSV
 
     litigations_csv = fixture_file('litigations.csv', content: csv_content)
@@ -97,6 +98,7 @@ describe 'CsvDataUpload (integration)' do
     )
     expect(litigation.jurisdiction.iso).to eq('GBR')
     expect(litigation.geography.iso).to eq('GBR')
+    expect(litigation.sector.name).to eq('Transport')
     expect(litigation.keywords.size).to eq(2)
     expect(litigation.keywords_list).to include('keyword1', 'keyword2')
     expect(litigation.legislation_ids).to include(legislation1.id, legislation2.id)

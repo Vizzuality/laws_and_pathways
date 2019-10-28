@@ -25,17 +25,10 @@ module CSVImport
     def prepare_benchmark(row)
       find_record_by(:id, row) ||
         CP::Benchmark.find_or_initialize_by(
-          sector: find_or_create_sector(row),
+          sector: find_or_create_tpi_sector(row[:sector]),
           release_date: parse_date(row[:release_date]),
           scenario: row[:scenario]
         )
-    end
-
-    def find_or_create_sector(row)
-      return unless row[:sector].present?
-
-      Sector.where('lower(name) = ?', row[:sector].downcase).first ||
-        Sector.new(name: row[:sector])
     end
 
     def benchmark_attributes(row)
@@ -47,7 +40,7 @@ module CSVImport
     end
 
     def parse_date(date)
-      Import::DateUtils.safe_parse(date, ['%Y-%m', '%Y-%m-%d'])
+      CSVImport::DateUtils.safe_parse(date, ['%Y-%m', '%Y-%m-%d'])
     end
   end
 end

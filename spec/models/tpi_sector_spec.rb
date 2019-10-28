@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: sectors
+# Table name: tpi_sectors
 #
 #  id         :bigint           not null, primary key
 #  name       :string           not null
@@ -12,8 +12,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Sector, type: :model do
-  subject { build(:sector) }
+RSpec.describe TPISector, type: :model do
+  subject { build(:tpi_sector) }
 
   it { is_expected.to be_valid }
 
@@ -23,7 +23,7 @@ RSpec.describe Sector, type: :model do
   end
 
   it 'should not be valid if name taken' do
-    create(:sector, name: 'Airlines')
-    expect(build(:sector, name: 'Airlines')).to have(1).errors_on(:name)
+    create(:tpi_sector, name: 'Airlines')
+    expect(build(:tpi_sector, name: 'Airlines')).to have(1).errors_on(:name)
   end
 end

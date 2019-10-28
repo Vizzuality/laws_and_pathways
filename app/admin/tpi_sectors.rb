@@ -1,7 +1,7 @@
-ActiveAdmin.register Sector do
+ActiveAdmin.register TPISector do
   config.batch_actions = false
 
-  menu priority: 5
+  menu priority: 5, parent: 'TPI'
 
   permit_params :name, :cp_unit
 
@@ -9,7 +9,7 @@ ActiveAdmin.register Sector do
 
   index do
     column :name do |sector|
-      link_to sector.name, admin_sector_path(sector)
+      link_to sector.name, admin_tpi_sector_path(sector)
     end
     column 'Carbon Performance Unit', &:cp_unit
     column :slug

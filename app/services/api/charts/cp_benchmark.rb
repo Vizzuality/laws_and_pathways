@@ -108,11 +108,11 @@ module Api
         scenarios_with_greater_emission.min_by { |_s, value| value - company_emission }.first
       end
 
-      # Get all Sectors
+      # Get all TPISectors
       #
-      # @return [Sector::ActiveRecord_Relation]
+      # @return [TPISector::ActiveRecord_Relation]
       def all_sectors
-        ::Sector.includes(:cp_benchmarks, companies: [:cp_assessments])
+        ::TPISector.includes(:cp_benchmarks, companies: [:cp_assessments])
       end
 
       # @return [String] string with current year

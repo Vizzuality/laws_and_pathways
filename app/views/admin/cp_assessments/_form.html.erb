@@ -1,0 +1,24 @@
+<%= semantic_form_for [:admin, resource], builder: ActiveAdmin::FormBuilder, html: {'data-controller' => 'check-modified with-emission-table-form'} do |f| %>
+  <%= f.semantic_errors(*f.object.errors.keys) %>
+
+  <%= f.inputs do %>
+    <%= f.input :company %>
+    <%= f.input :assessment_date %>
+    <%= f.input :publication_date %>
+    <%= f.input :last_reported_year %>
+    <%= f.input :assumptions %>
+    <%= f.input :emissions, as: :hidden, input_html: { value: f.object.emissions.to_json, id: 'input_emissions' } %>
+  <% end %>
+
+  <div class="panel">
+    <h3>Emissions/Targets values</h3>
+    <div class="panel-contents padding-20">
+      <%= render "admin/cp/emissions_table_edit", f: f %>
+    </div>
+  </div>
+
+  <%= f.actions do %>
+    <%= f.action :submit %>
+    <%= f.action :cancel, :wrapper_html => { :class => 'cancel' } %>
+  <% end %>
+<% end %>

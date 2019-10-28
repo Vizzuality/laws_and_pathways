@@ -1,4 +1,4 @@
-<%= semantic_form_for [:admin, resource], builder: ActiveAdmin::FormBuilder, html: {'data-controller' => 'check-modified cp-benchmark-form'} do |f| %>
+<%= semantic_form_for [:admin, resource], builder: ActiveAdmin::FormBuilder, html: {'data-controller' => 'check-modified with-emission-table-form'} do |f| %>
   <%= f.semantic_errors(*f.object.errors.keys) %>
 
   <%= f.inputs do %>
@@ -11,7 +11,7 @@
   <div class="panel">
     <h3>Benchmark emission values</h3>
     <div class="panel-contents padding-20">
-      <%= render "emissions_table", f: f %>
+      <%= render "admin/cp/emissions_table_edit", f: f %>
     </div>
   </div>
 

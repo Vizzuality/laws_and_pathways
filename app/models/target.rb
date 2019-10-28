@@ -44,7 +44,7 @@ class Target < ApplicationRecord
   enum target_type: array_to_enum_hash(TYPES)
 
   belongs_to :geography
-  belongs_to :sector
+  belongs_to :sector, class_name: 'LawsSector', foreign_key: 'sector_id'
   belongs_to :target_scope
   has_many :events, as: :eventable, dependent: :destroy
   has_and_belongs_to_many :legislations

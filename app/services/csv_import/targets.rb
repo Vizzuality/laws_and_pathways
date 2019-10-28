@@ -41,17 +41,10 @@ module CSVImport
         base_year_period: row[:base_year_period],
         single_year: row[:single_year],
         geography: geographies[row[:geography_iso]],
-        sector: find_or_create_sector(row[:sector]),
+        sector: find_or_create_laws_sector(row[:sector]),
         target_scope: find_target_scope(row[:target_scope]),
         visibility_status: row[:visibility_status]
       }
-    end
-
-    def find_or_create_sector(sector_name)
-      return unless sector_name.present?
-
-      Sector.where('lower(name) = ?', sector_name.downcase).first ||
-        Sector.new(name: sector_name)
     end
 
     def find_target_scope(target_scope_name)

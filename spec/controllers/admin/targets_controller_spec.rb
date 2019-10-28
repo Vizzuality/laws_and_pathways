@@ -5,7 +5,7 @@ RSpec.describe Admin::TargetsController, type: :controller do
   let!(:target) { create(:target, year: 2030) }
   let!(:target2) { create(:target, year: 2040) }
   let!(:target3) { create(:target, year: 2050) }
-  let(:sector) { create(:sector) }
+  let(:sector) { create(:laws_sector) }
   let(:geography) { create(:geography) }
   let(:target_scope) { create(:target_scope) }
   let(:legislations) { create_list(:legislation, 2) }
