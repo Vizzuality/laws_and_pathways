@@ -1,11 +1,11 @@
 <h1>Sectors dashboard</h1>
 
 Sectors:
-<%= @sectors_names.map {|s| link_to s.last, tpi_sector_path(s.first)}.join(', ').html_safe %>
+<%= @sectors.map {|s| link_to s.name, tpi_sector_path(s.slug)}.join(', ').html_safe %>
 <br>
 <br>
 Companies:
-<%= @companies_names.map {|c| link_to c.last, tpi_company_path(c.first)}.join(', ').html_safe %>
+<%= @companies.map {|c| link_to c.name, tpi_company_path(c.slug)}.join(', ').html_safe %>
 
 <br><br><hr>
 

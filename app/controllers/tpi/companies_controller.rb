@@ -34,7 +34,7 @@ module TPI
     end
 
     def fetch_company
-      @company = Company.find(params[:id])
+      @company = Company.friendly.find(params[:id])
     end
   end
 end

@@ -1,12 +1,12 @@
 module TPI
   class SectorsController < ApplicationController
     def index
-      @sectors_names = TPISector.order(:name).pluck(:id, :name)
-      @companies_names = Company.limit(50).pluck(:id, :name)
+      @sectors = TPISector.select(:id, :name, :slug).order(:name)
+      @companies = Company.select(:id, :name, :slug).limit(50)
     end
 
     def show
-      @sector = TPISector.find(params[:id])
+      @sector = TPISector.friendly.find(params[:id])
 
       @companies_by_levels = ::Api::Charts::Sector.new(companies_scope(params)).companies_summaries_by_level
     end
@@ -47,7 +47,7 @@ module TPI
 
     def companies_scope(params)
       if params[:id]
-        TPISector.find(params[:id]).companies
+        TPISector.friendly.find(params[:id]).companies
       else
         Company
       end
