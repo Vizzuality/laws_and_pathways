@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_27_203114) do
+ActiveRecord::Schema.define(version: 2019_10_28_102103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,7 +171,6 @@ ActiveRecord::Schema.define(version: 2019_10_27_203114) do
     t.string "region", null: false
     t.boolean "federal", default: false, null: false
     t.text "federal_details"
-    t.text "approach_to_climate_change"
     t.text "legislative_process"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

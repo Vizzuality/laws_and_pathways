@@ -2,22 +2,21 @@
 #
 # Table name: geographies
 #
-#  id                         :bigint           not null, primary key
-#  geography_type             :string           not null
-#  iso                        :string           not null
-#  name                       :string           not null
-#  slug                       :string           not null
-#  region                     :string           not null
-#  federal                    :boolean          default(FALSE), not null
-#  federal_details            :text
-#  approach_to_climate_change :text
-#  legislative_process        :text
-#  created_at                 :datetime         not null
-#  updated_at                 :datetime         not null
-#  visibility_status          :string           default("draft")
-#  created_by_id              :bigint
-#  updated_by_id              :bigint
-#  discarded_at               :datetime
+#  id                  :bigint           not null, primary key
+#  geography_type      :string           not null
+#  iso                 :string           not null
+#  name                :string           not null
+#  slug                :string           not null
+#  region              :string           not null
+#  federal             :boolean          default(FALSE), not null
+#  federal_details     :text
+#  legislative_process :text
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  visibility_status   :string           default("draft")
+#  created_by_id       :bigint
+#  updated_by_id       :bigint
+#  discarded_at        :datetime
 #
 
 require 'rails_helper'
