@@ -17,3 +17,10 @@ container-columns {
   flex-flow: row wrap;
   justify-content: center;
 }
+
+.summary-box {
+  border-width: 1px;
+  border-style: dotted;
+  padding: 10px;
+  width: 400px;
+}
