@@ -36,8 +36,21 @@ module ChartHelper
 
   def mq_company_no_of_assessments_chart_options
     {
+      tooltip: {
+        dateTimeLabelFormats: {
+          day: '%B %Y',
+          hour: '%B %Y',
+          minute: '%B %Y',
+          month: '%B %Y',
+          second: '%B %Y',
+          year: '%Y'
+        }
+      },
       xAxis: {
-        tickInterval: 1
+        type: 'datetime',
+        dateTimeLabelFormats: {
+          year: '%Y'
+        }
       },
       yAxis: {
         tickInterval: 1,

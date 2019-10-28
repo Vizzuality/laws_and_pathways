@@ -30,26 +30,30 @@ module Api
       end
 
       # Returns MQ assessments Levels for each year for given Company.
-      # If for given year Company has no assessment, previous level is returned.
       #
       # @return [Array<Array>]
       # @example
-      #   [ [2016, 3], [2017, 3], [2018, 4]]
+      #   [ ['2016-03-01', 3], ['2017-01-01', 3], ['2018-08-20', 4]]
       # #
       def assessments_levels_data
-        (oldest_mq_assessment_year..current_year).map do |year|
-          [year, mq_assessment_level_for_year(year)]
+        return [] unless company_assessments.any?
+
+        # we are adding first and last point with nil value to have those ticks on the chart
+        # to fool Highcharts
+        first_point = [company_assessments.first.assessment_date.beginning_of_year.to_s, nil]
+        last_point = [Time.now.to_s, nil]
+
+        results = [first_point]
+        company_assessments.each do |a|
+          results << [a.assessment_date.to_s, a.level]
         end
+        results << last_point
       end
 
       private
 
-      def oldest_mq_assessment_year
-        @company.oldest_mq_assessment.assessment_date.year
-      end
-
-      def mq_assessment_level_for_year(year)
-        @company.mq_assessments.by_assessment_year(year).first&.level
+      def company_assessments
+        @company.mq_assessments.order(:assessment_date)
       end
 
       def emissions_data_from_company
