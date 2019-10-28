@@ -39,10 +39,10 @@ RSpec.describe Admin::GeographiesController, type: :controller do
           name: 'Test Country',
           region: Geography::REGIONS.last,
           visibility_status: 'pending',
-          indc_url: 'https://example.indc.pl',
           federal: true,
           federal_details: 'federal details text',
           legislative_process: 'legislative process text',
+          geography_type: 'supranational',
           events_attributes: [
             {
               date: 5.months.ago,
@@ -64,10 +64,10 @@ RSpec.describe Admin::GeographiesController, type: :controller do
           expect(g.name).to eq(valid_params[:name])
           expect(g.region).to eq(valid_params[:region])
           expect(g.visibility_status).to eq(valid_params[:visibility_status])
-          expect(g.indc_url).to eq(valid_params[:indc_url])
           expect(g.federal).to eq(valid_params[:federal])
           expect(g.federal_details).to eq(valid_params[:federal_details])
           expect(g.legislative_process).to eq(valid_params[:legislative_process])
+          expect(g.geography_type).to eq(valid_params[:geography_type])
           expect(g.events.pluck(:title, :event_type, :description))
             .to eq(valid_params[:events_attributes].pluck(:title, :event_type, :description))
         end
@@ -96,7 +96,7 @@ RSpec.describe Admin::GeographiesController, type: :controller do
 
     context 'with valid params' do
       let!(:legislation) { create(:legislation, geography: geography) }
-      let!(:litigation) { create(:litigation, geography: geography) }
+      let!(:litigation) { create(:litigation, jurisdiction: geography) }
       let!(:event) { create(:geography_event, eventable: geography) }
 
       subject { delete :destroy, params: {id: geography.id} }
@@ -117,7 +117,7 @@ RSpec.describe Admin::GeographiesController, type: :controller do
         expect(Event.find_by_id(event.id)).to be_nil
       end
 
-      it 'shows discarded geography in all_discarded scope' do
+      it 'shows discarded jurisdiction in all_discarded scope' do
         expect(Geography.all_discarded.find(geography.id)).to_not be_nil
       end
 
@@ -125,8 +125,8 @@ RSpec.describe Admin::GeographiesController, type: :controller do
         expect(legislation.reload.geography).to be_nil
       end
 
-      it 'removes discarded geography from litigation' do
-        expect(litigation.reload.geography).to be_nil
+      it 'removes discarded jurisdiction from litigation' do
+        expect(litigation.reload.jurisdiction).to be_nil
       end
 
       it 'shows proper notice' do

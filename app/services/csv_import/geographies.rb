@@ -33,7 +33,7 @@ module CSVImport
     def geography_attributes(row)
       {
         name: row[:name],
-        region: row[:region],
+        region: row[:world_bank_region],
         iso: row[:iso],
         federal: row[:federal],
         federal_details: row[:federal_details],
