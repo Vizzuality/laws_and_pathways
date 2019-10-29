@@ -29,7 +29,32 @@ module Api
         ].flatten
       end
 
+      # Returns MQ assessments Levels for each year for given Company.
+      #
+      # @return [Array<Array>]
+      # @example
+      #   [ ['2016-03-01', 3], ['2017-01-01', 3], ['2018-08-20', 4]]
+      # #
+      def assessments_levels_data
+        return [] unless company_assessments.any?
+
+        # we are adding first and last point with nil value to have those ticks on the chart
+        # to fool Highcharts
+        first_point = [company_assessments.first.assessment_date.beginning_of_year.to_s, nil]
+        last_point = [Time.now.to_s, nil]
+
+        results = [first_point]
+        company_assessments.each do |a|
+          results << [a.assessment_date.to_s, a.level]
+        end
+        results << last_point
+      end
+
       private
+
+      def company_assessments
+        @company.mq_assessments.order(:assessment_date)
+      end
 
       def emissions_data_from_company
         {
@@ -79,9 +104,7 @@ module Api
 
       # @return [Array] of years for which emissions was reported
       def years_with_reported_emissions
-        last_reported_year = Time.new.year
-
-        (sector_all_emission_years.min..last_reported_year).map.to_a
+        (sector_all_emission_years.min..sector_last_reported_year).map.to_a
       end
 
       # @return [Array] unique array of years as numbers
@@ -98,6 +121,17 @@ module Api
           .companies
           .includes(:cp_assessments)
           .flat_map { |c| c.latest_cp_assessment.emissions }
+      end
+
+      # @return [Integer]
+      def sector_last_reported_year
+        # TODO: change to last reported year (to be done in https://www.pivotaltracker.com/story/show/168850542)
+        current_year
+      end
+
+      # @return [Integer]
+      def current_year
+        Time.new.year
       end
     end
   end

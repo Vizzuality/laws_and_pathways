@@ -36,7 +36,6 @@ module CSVImport
       {
         title: row[:title],
         document_type: row[:document_type]&.downcase,
-        geography: geographies[row[:geography_iso]],
         jurisdiction: geographies[row[:jurisdiction_iso]],
         sector: find_or_create_laws_sector(row[:sector]),
         citation_reference_number: row[:citation_reference_number],

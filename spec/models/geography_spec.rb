@@ -2,23 +2,21 @@
 #
 # Table name: geographies
 #
-#  id                         :bigint           not null, primary key
-#  geography_type             :string           not null
-#  iso                        :string           not null
-#  name                       :string           not null
-#  slug                       :string           not null
-#  region                     :string           not null
-#  federal                    :boolean          default(FALSE), not null
-#  federal_details            :text
-#  approach_to_climate_change :text
-#  legislative_process        :text
-#  created_at                 :datetime         not null
-#  updated_at                 :datetime         not null
-#  visibility_status          :string           default("draft")
-#  indc_url                   :text
-#  created_by_id              :bigint
-#  updated_by_id              :bigint
-#  discarded_at               :datetime
+#  id                  :bigint           not null, primary key
+#  geography_type      :string           not null
+#  iso                 :string           not null
+#  name                :string           not null
+#  slug                :string           not null
+#  region              :string           not null
+#  federal             :boolean          default(FALSE), not null
+#  federal_details     :text
+#  legislative_process :text
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  visibility_status   :string           default("draft")
+#  created_by_id       :bigint
+#  updated_by_id       :bigint
+#  discarded_at        :datetime
 #
 
 require 'rails_helper'
@@ -28,7 +26,7 @@ RSpec.describe Geography, type: :model do
 
   it { is_expected.to be_valid }
 
-  it 'should be invalid if iso is nil' do
+  it 'should be invalid if iso is nil and type is national' do
     subject.iso = nil
     expect(subject).to have(1).errors_on(:iso)
   end
@@ -52,10 +50,5 @@ RSpec.describe Geography, type: :model do
   it 'should be invalid if visibility_status is nil' do
     subject.visibility_status = nil
     expect(subject).to have(2).errors_on(:visibility_status)
-  end
-
-  it 'should be invalid if indc_url is not a valid URL' do
-    subject.indc_url = 'not a valid external_url'
-    expect(subject).to have(1).errors_on(:indc_url)
   end
 end

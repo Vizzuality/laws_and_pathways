@@ -4,7 +4,7 @@
 <hr>
 
 <div class="company-performance-summary container">
-  <div class="mq">
+  <div class="mq summary-box">
     <h3>Management Quality</h3>
     <h5>Number of assessments: <%= @company.mq_assessments.size %></h5>
     <div class="mq-status-summary">
@@ -13,7 +13,7 @@
     </div>
   </div>
 
-  <div class="cp">
+  <div class="cp summary-box">
     <h3>Carbon Performance</h3>
     <h5>Number of assessments: <%= @company.cp_assessments.size %></h5>
     <div class="cp-status-summary">
@@ -25,7 +25,7 @@
 <br><br>
 
 <div class="company-info container">
-  <%= @company_details.slice(:name, :country, :sector, :market_cap, :isin, :sedol) %>
+  <%= @company_summary.slice(:name, :country, :sector, :market_cap, :isin, :sedol) %>
 </div>
 
 <hr>
@@ -34,22 +34,29 @@
 <p>Assessment of <strong><%= @company.name %></strong> according to the management of their greenhouse gas emissions and of risks and opportunities related to the low-carbon transition.</p>
 
 <div class="company-performance-details container">
-  <div class="mq-status">
+  <div class="mq-status summary-box">
+    <div>Current level</div>
     <%= @company.mq_level %>
     <%= @company.mq_status %>
-    <div>TODO: chart ..</div>
+    <div>[TODO] summary of answers</div>
   </div>
-  <div class="cp-status">
-    <div>TODO: chart with assessments ..</div>
+  <div class="cp-status summary-box">
+    <div>Nr of assessments: <%= @company.mq_assessments.size %></div>
+    <div>
+      <%= line_chart(
+        assessments_levels_chart_data_tpi_company_path(@company.id),
+        library: mq_company_no_of_assessments_chart_options
+      ) %>
+    </div>
   </div>
 </div>
 
 <br><br>
 
 <div class="company-assessments container-columns">
-<%- @company_details[:latest_assessment_questions].each do |level, questions| %>
+<%- @company_mq_assessments[:latest_assessment_questions].each do |level, questions| %>
   <div class="assessment-level">
-    <h3>Level <%= level %>: <%= @company_details[:levels_descriptions][level.to_s] || 'Answers' %></h3>
+    <h3>Level <%= level %>: <%= @company_mq_assessments[:levels_descriptions][level.to_s] || 'Answers' %></h3>
     <div class="assessment-details">
       <%- questions.each do |question| %>
       <div class="container">

@@ -10,7 +10,7 @@ ActiveAdmin.register Geography do
   publishable_sidebar only: :show
 
   permit_params :name, :iso, :region, :federal, :federal_details,
-                :legislative_process, :geography_type, :indc_url,
+                :legislative_process, :geography_type,
                 :visibility_status,
                 :created_by_id, :updated_by_id,
                 political_group_ids: [],

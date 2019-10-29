@@ -7,7 +7,6 @@
 #  slug                      :string           not null
 #  citation_reference_number :string
 #  document_type             :string
-#  geography_id              :bigint
 #  jurisdiction_id           :bigint
 #  summary                   :text
 #  core_objective            :text
@@ -41,7 +40,6 @@ class Litigation < ApplicationRecord
 
   tag_with :keywords
 
-  belongs_to :geography
   belongs_to :jurisdiction, class_name: 'Geography'
   belongs_to :sector, class_name: 'LawsSector', foreign_key: 'sector_id', optional: true
   has_many :litigation_sides, -> { order(:side_type) }, inverse_of: :litigation

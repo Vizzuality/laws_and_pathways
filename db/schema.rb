@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_22_201928) do
+ActiveRecord::Schema.define(version: 2019_10_28_102103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,12 +171,10 @@ ActiveRecord::Schema.define(version: 2019_10_22_201928) do
     t.string "region", null: false
     t.boolean "federal", default: false, null: false
     t.text "federal_details"
-    t.text "approach_to_climate_change"
     t.text "legislative_process"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "visibility_status", default: "draft"
-    t.text "indc_url"
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
     t.datetime "discarded_at"
@@ -305,7 +303,6 @@ ActiveRecord::Schema.define(version: 2019_10_22_201928) do
     t.string "slug", null: false
     t.string "citation_reference_number"
     t.string "document_type"
-    t.bigint "geography_id"
     t.bigint "jurisdiction_id"
     t.text "summary"
     t.text "core_objective"
@@ -319,7 +316,6 @@ ActiveRecord::Schema.define(version: 2019_10_22_201928) do
     t.index ["created_by_id"], name: "index_litigations_on_created_by_id"
     t.index ["discarded_at"], name: "index_litigations_on_discarded_at"
     t.index ["document_type"], name: "index_litigations_on_document_type"
-    t.index ["geography_id"], name: "index_litigations_on_geography_id"
     t.index ["jurisdiction_id"], name: "index_litigations_on_jurisdiction_id"
     t.index ["sector_id"], name: "index_litigations_on_sector_id"
     t.index ["slug"], name: "index_litigations_on_slug", unique: true
@@ -423,7 +419,6 @@ ActiveRecord::Schema.define(version: 2019_10_22_201928) do
   add_foreign_key "litigations", "admin_users", column: "created_by_id"
   add_foreign_key "litigations", "admin_users", column: "updated_by_id"
   add_foreign_key "litigations", "geographies", column: "jurisdiction_id", on_delete: :cascade
-  add_foreign_key "litigations", "geographies", on_delete: :cascade
   add_foreign_key "litigations", "laws_sectors", column: "sector_id"
   add_foreign_key "mq_assessments", "companies", on_delete: :cascade
   add_foreign_key "taggings", "tags", on_delete: :cascade

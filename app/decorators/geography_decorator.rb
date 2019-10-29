@@ -30,8 +30,8 @@ class GeographyDecorator < Draper::Decorator
   end
 
   def indc_link
-    return unless model.indc_url.present?
+    return unless indc_url.present?
 
-    h.link_to model.indc_url, model.indc_url, target: '_blank'
+    h.link_to 'INDC Link', indc_url, target: '_blank'
   end
 end
