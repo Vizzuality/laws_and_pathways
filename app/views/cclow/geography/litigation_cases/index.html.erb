@@ -3,7 +3,7 @@
 <div class="list">
   <% @litigations.each do |l| %>
     <%= render 'list_item',
-                 title: link_to(l.title, cclow_geography_litigation_case_path(l.geography, l)),
+                 title: link_to(l.title, cclow_geography_litigation_case_path(l.jurisdiction, l)),
                  description: l.summary
     %>
   <% end %>
