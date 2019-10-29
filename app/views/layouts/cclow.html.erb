@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CCLOW</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'cclow' %>
+  </head>
+
+  <body>
+    <header>
+      Header
+
+      <%= render_breadcrumb %>
+    </header>
+    <main>
+      <%= content_for?(:content) ? yield(:content) : yield %>
+    </main>
+    <footer>
+      Footer
+    </footer>
+  </body>
+</html>

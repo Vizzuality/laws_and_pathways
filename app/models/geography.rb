@@ -57,6 +57,7 @@ class Geography < ApplicationRecord
 
   has_many :litigations, foreign_key: 'jurisdiction_id'
   has_many :legislations
+  has_many :targets
   has_many :events, as: :eventable, dependent: :destroy
 
   accepts_nested_attributes_for :events, allow_destroy: true, reject_if: :all_blank
