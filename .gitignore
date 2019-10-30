@@ -39,3 +39,6 @@ yarn-debug.log*
 
 # RubyMine
 /.idea
+
+# System Files
+.DS_Store

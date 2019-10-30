@@ -1,0 +1,84 @@
+@import "colors";
+@import "typography";
+
+$gap: 32px;
+$fullhd: 1344px;
+
+// TEXT SIZE
+// $size-1: 3.5rem;
+// $size-2: 3rem;
+// $size-3: 2.5rem;
+// $size-4: 2rem;
+$size-5: 1.75rem;
+$size-6: 1rem;
+$size-7: 0.875rem;
+$size-8: 0.75rem;
+
+// Fonts
+$family-sans-serif: "BrownTT Regular";
+$family-sans-serif-bold: "BrownTT Bold";
+
+// Navbar
+$navbar-height: 11.25rem;
+$navbar-background-color: $blue-dark;
+$navbar-padding-vertical: 1rem;
+$navbar-padding-horizontal: 2rem;
+$navbar-item-color: $grey;
+
+// Breadcrumb
+$breadcrumb-item-color: $red;
+$breadcrumb-item-active-color: $grey;
+
+.header {
+  .navbar {
+    padding: 0 5.35rem;
+  }
+
+  .navbar-end {
+    .navbar-item {
+      align-items: start;
+      padding: 2.3rem 0 0 ;
+    }
+
+    div {
+      text-align: end;
+    }
+
+    .title {
+      color: $red;
+      font-size: $size-5;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+
+    .field {
+      flex-direction: column;
+    }
+  }
+
+  .menu {
+    a {
+      color: $navbar-item-color;
+      font-size: $size-7;
+      text-decoration: underline;
+
+      &:not(:last-child) {
+        margin-right: 0.875rem;
+      }
+    }
+  }
+}
+
+.content {
+  margin: 0 5.35rem;
+}
+
+.breadcrumb {
+  ui {
+    li {
+      display: inline-flex;
+    }
+  }
+}
+
+
