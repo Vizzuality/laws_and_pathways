@@ -3,9 +3,9 @@
 @import "cclow/typography";
 
 a {
-  color: black;
+  color: inherit;
 
-  &:visited {
+  &:hover {
     text-decoration: none;
     color: inherit;
   }

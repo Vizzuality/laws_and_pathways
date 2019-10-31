@@ -10,13 +10,11 @@
   </head>
 
   <body>
-    <div class="container">
       <%= render "layouts/cclow/header" %>
-      <%= render_breadcrumb %>
-    </div>
     <main>
       <div class="container">
-        <div class="content">
+        <%= render_breadcrumb %>
+        <div class="">
           <%= content_for?(:content) ? yield(:content) : yield %>
         </div>
       </div>

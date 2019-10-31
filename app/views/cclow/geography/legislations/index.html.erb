@@ -1,14 +1,10 @@
 <div class="geography-laws">
-  <h1>Laws</h1>
-
-  <div class="section">
-    <div class="container">
-      <div class="list">
+  <div class="container">
+    <h3>Laws</h3>
+      <ul class="content-list">
         <% @legislations.each do |l| %>
-          <%= render 'list_item', title: l.link, description: l.description
-          %>
+          <%= render 'list_item', title: l.link, description: l.description %>
         <% end %>
-      </div>
+      </ul>
     </div>
-  </section>
 </div>
