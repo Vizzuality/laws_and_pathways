@@ -8,7 +8,7 @@ module ApplicationHelper
           content_tag :li, class: i.eql?(@breadcrumb.count - 1) ? 'is-active' : '' do
             link_to item.title, item.path
           end
-        end.join().html_safe
+        end.join.html_safe
       end
     end
   end

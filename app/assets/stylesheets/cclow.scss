@@ -1,19 +1,7 @@
 @import "cclow/colors.scss";
 @import "cclow/layout.scss";
 @import "cclow/typography";
-
-a {
-  color: inherit;
-
-  &:hover {
-    text-decoration: none;
-    color: inherit;
-  }
-
-  &.active {
-    font-weight: bold;
-  }
-}
+@import "cclow/geography-page";
 
 @import "bulma/sass/utilities/all";
 @import "bulma/sass/base/all";
@@ -23,3 +11,4 @@ a {
 @import "bulma/sass/layout/all";
 @import "bulma/sass/form/all";
 
+@import "font-awesome";

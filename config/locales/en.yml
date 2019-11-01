@@ -49,3 +49,7 @@ en:
       cancel: Cancel
   hint:
     tag: 'Pick an existing one or create new typing name and pressing ENTER'
+  cclow:
+    legislation_types:
+      executive: 'Executive'
+      legislative: 'Legislative'

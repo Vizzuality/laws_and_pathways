@@ -1,0 +1,25 @@
+.cclow-geography-page {
+  margin-top: 2.8rem;
+
+  h3, h5 {
+    font-weight: bold;
+  }
+
+  .content-list {
+    .meta {
+      margin-bottom: 0.875rem;
+
+      span {
+        color: $grey-text;
+
+        &:not(:last-child) {
+          margin-right: 1.5rem;
+        }
+      }
+    }
+
+    li {
+      margin-top: 2.65rem;
+    }
+  }
+}

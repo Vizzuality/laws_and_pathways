@@ -1,0 +1,38 @@
+@import "colors";
+@import "typography";
+
+$gap: 32px;
+$fullhd: 1344px;
+
+// TEXT SIZE
+// $size-1: 3.5rem;
+// $size-2: 3rem;
+$size-3: 1.75rem;
+$size-4: 1.5rem;
+$size-5: 1.25rem;
+$size-6: 1rem;
+$size-7: 0.875rem;
+$size-8: 0.75rem;
+
+// FONTS
+$family-sans-serif: "BrownTT Regular";
+$family-sans-serif-bold: "BrownTT Bold";
+
+// NAVBAR
+$navbar-height: 11.25rem;
+$navbar-background-color: $blue-dark;
+$navbar-padding-vertical: 1rem;
+$navbar-padding-horizontal: 2rem;
+$navbar-item-color: $grey;
+
+// BREADCRUMB
+$breadcrumb-item-color: $red;
+$breadcrumb-item-active-color: $grey-text;
+
+// DIVIDER
+$hr-background-color: $blue-dark;
+$hr-height: 1px;
+$hr-margin: 1rem 0 2rem;
+
+// LINKS
+$link-hover: $red;

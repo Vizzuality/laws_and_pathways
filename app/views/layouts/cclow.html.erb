@@ -8,13 +8,12 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag 'cclow' %>
   </head>
-
   <body>
       <%= render "layouts/cclow/header" %>
     <main>
       <div class="container">
         <%= render_breadcrumb %>
-        <div class="">
+        <div>
           <%= content_for?(:content) ? yield(:content) : yield %>
         </div>
       </div>
