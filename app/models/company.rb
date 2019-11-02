@@ -51,10 +51,6 @@ class Company < ApplicationRecord
     mq_assessments.order(:assessment_date).last
   end
 
-  def oldest_mq_assessment
-    mq_assessments.order(:assessment_date).first
-  end
-
   def latest_cp_assessment
     cp_assessments.order(:assessment_date).last
   end
