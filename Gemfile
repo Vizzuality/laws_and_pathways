@@ -40,6 +40,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'rspec-collection_matchers'
   gem 'rspec-rails', '~> 3.8'
+  gem 'timecop'
 end
 
 group :development do
