@@ -22,6 +22,8 @@ module Api
       #   ]
       #
       def emissions_data
+        return [] unless company_cp_assessments.any?
+
         [
           emissions_data_from_company,
           emissions_data_from_sector,
@@ -36,15 +38,15 @@ module Api
       #   [ ['2016-03-01', 3], ['2017-01-01', 3], ['2018-08-20', 4]]
       # #
       def assessments_levels_data
-        return [] unless company_assessments.any?
+        return [] unless company_mq_assessments.any?
 
         # we are adding first and last point with nil value to have those ticks on the chart
         # to fool Highcharts
-        first_point = [company_assessments.first.assessment_date.beginning_of_year.to_s, nil]
-        last_point = [Time.now.to_s, nil]
+        first_point = [company_mq_assessments.first.assessment_date.beginning_of_year.to_s, nil]
+        last_point = [Time.now.to_date.to_s, nil]
 
         results = [first_point]
-        company_assessments.each do |a|
+        company_mq_assessments.each do |a|
           results << [a.assessment_date.to_s, a.level]
         end
         results << last_point
@@ -52,14 +54,10 @@ module Api
 
       private
 
-      def company_assessments
-        @company.mq_assessments.order(:assessment_date)
-      end
-
       def emissions_data_from_company
         {
           name: @company.name,
-          data: @company.latest_cp_assessment&.emissions
+          data: company_cp_assessments.last&.emissions
         }
       end
 
@@ -113,6 +111,14 @@ module Api
           .flat_map(&:keys)
           .map(&:to_i)
           .uniq
+      end
+
+      def company_mq_assessments
+        @company_mq_assessments ||= @company.mq_assessments.order(:assessment_date)
+      end
+
+      def company_cp_assessments
+        @company_cp_assessments ||= @company.cp_assessments.order(:assessment_date)
       end
 
       # @return [Array<Hash>] list of { year => value } pairs from all Companies from current TPISector
