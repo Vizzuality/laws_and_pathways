@@ -1,10 +1,23 @@
 module TPI
-  class CompaniesController < ApplicationController
+  class CompaniesController < TPIController
     before_action :fetch_company
 
     def show
       @company_summary = company_presenter.summary
+      @mq_assessment = if params[:mq_assessment].present?
+                         @company.mq_assessment.find(params[:mq_assessment])
+                       else
+                         @company.latest_mq_assessment
+                       end
       @company_mq_assessments = company_presenter.mq_assessments
+    end
+
+    def mq_assessment
+      mq_assessment = @company.mq_assessment.find(params[:mq_assessment])
+
+      render partial: 'mq_assessment', locals: {
+               mq_assessment: mq_assessment
+             }
     end
 
     # Data:     Company MQ Assessments Levels over the years

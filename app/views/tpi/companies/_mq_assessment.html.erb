@@ -1,0 +1,13 @@
+<% mq_assessment.questions_by_level.each do |level, questions| %>
+  <div class="assessment-level">
+    <h3>Level <%= level %>: <%= levels_descriptions[level.to_s] || 'Answers' %></h3>
+    <div class="assessment-details">
+      <% questions.each do |question| %>
+        <div class="container">
+          <div class="assessment-answer">(<%= question.answer %>)</div>
+          <div class="assessment-question"><%= question.question %></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

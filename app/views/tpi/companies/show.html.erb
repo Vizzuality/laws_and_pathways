@@ -1,83 +1,82 @@
-<h1>Company Details</h1>
-<%= link_to 'back to all Sectors', tpi_sectors_path %>
+<div data-controller="companies">
+  <h1>Company Details</h1>
+  <%= link_to 'back to all Sectors', tpi_sectors_path %>
 
-<hr>
+  <hr>
 
-<div class="company-performance-summary container">
-  <div class="mq summary-box">
-    <h3>Management Quality</h3>
-    <h5>Number of assessments: <%= @company.mq_assessments.size %></h5>
-    <div class="mq-status-summary">
+  <div class="company-performance-summary container">
+    <div class="mq summary-box">
+      <h3>Management Quality</h3>
+      <h5>Number of assessments: <%= @company.mq_assessments.size %></h5>
+      <div class="mq-status-summary">
+        <%= @company.mq_level %>
+        <%= @company.mq_status %>
+      </div>
+    </div>
+
+    <div class="cp summary-box">
+      <h3>Carbon Performance</h3>
+      <h5>Number of assessments: <%= @company.cp_assessments.size %></h5>
+      <div class="cp-status-summary">
+        Below 2 degrees
+      </div>
+    </div>
+  </div>
+
+  <br><br>
+
+  <div class="company-info container">
+    <%= @company_summary.slice(:name, :country, :sector, :market_cap, :isin, :sedol) %>
+  </div>
+
+  <hr>
+
+  <h3>Management Quality: <%= @company.name %></h3>
+  <p>Assessment of <strong><%= @company.name %></strong> according to the management of their greenhouse gas emissions and of risks and opportunities related to the low-carbon transition.</p>
+
+  <div class="company-performance-details container">
+    <div class="mq-status summary-box">
+      <div>Current level</div>
       <%= @company.mq_level %>
       <%= @company.mq_status %>
+      <div>[TODO] summary of answers</div>
     </div>
-  </div>
-
-  <div class="cp summary-box">
-    <h3>Carbon Performance</h3>
-    <h5>Number of assessments: <%= @company.cp_assessments.size %></h5>
-    <div class="cp-status-summary">
-      Below 2 degrees
-    </div>
-  </div>
-</div>
-
-<br><br>
-
-<div class="company-info container">
-  <%= @company_summary.slice(:name, :country, :sector, :market_cap, :isin, :sedol) %>
-</div>
-
-<hr>
-
-<h3>Management Quality: <%= @company.name %></h3>
-<p>Assessment of <strong><%= @company.name %></strong> according to the management of their greenhouse gas emissions and of risks and opportunities related to the low-carbon transition.</p>
-
-<div class="company-performance-details container">
-  <div class="mq-status summary-box">
-    <div>Current level</div>
-    <%= @company.mq_level %>
-    <%= @company.mq_status %>
-    <div>[TODO] summary of answers</div>
-  </div>
-  <div class="cp-status summary-box">
-    <div>Nr of assessments: <%= @company.mq_assessments.size %></div>
-    <div>
-      <%= line_chart(
-        assessments_levels_chart_data_tpi_company_path(@company.id),
-        library: mq_company_no_of_assessments_chart_options
-      ) %>
-    </div>
-  </div>
-</div>
-
-<br><br>
-
-<div class="company-assessments container-columns">
-<%- @company_mq_assessments[:latest_assessment_questions].each do |level, questions| %>
-  <div class="assessment-level">
-    <h3>Level <%= level %>: <%= @company_mq_assessments[:levels_descriptions][level.to_s] || 'Answers' %></h3>
-    <div class="assessment-details">
-      <%- questions.each do |question| %>
-      <div class="container">
-        <div class="assessment-answer">(<%= question.answer %>)</div>
-        <div class="assessment-question"><%= question.question %></div>
+    <div class="cp-status summary-box">
+      <div>Nr of assessments: <%= @company.mq_assessments.size %></div>
+      <div>
+        <%= line_chart(
+          assessments_levels_chart_data_tpi_company_path(@company.id),
+          library: mq_company_no_of_assessments_chart_options
+          ) %>
       </div>
-      <%- end %>
     </div>
   </div>
-<%- end %>
-</div>
 
-<hr>
+  <br>
 
-<h3>Carbon Performance <%= @company.name %></h3>
-<p>Carbon Performance alignment of <%= @company.name %> with the Paris agreement benchmarks.</p>
-<div class="chart">
-<%= line_chart(
+  <div class="company-assessments container-columns">
+    <div>
+      Assessment Date <%= select_tag :level,
+                        options_from_collection_for_select(@company.mq_assessments, "id", "assessment_date"),
+                         data: { action: 'change->companies#assessmentDateChange' }
+                      %>
+    </div>
+
+    <div class="company-assessments questions">
+      <%= render partial: 'mq_assessment', locals: { mq_assessment: @mq_assessment, levels_descriptions: @company_mq_assessments[:levels_descriptions] } %>
+    </div>
+  </div>
+
+  <hr>
+
+  <h3>Carbon Performance <%= @company.name %></h3>
+  <p>Carbon Performance alignment of <%= @company.name %> with the Paris agreement benchmarks.</p>
+  <div class="chart">
+    <%= line_chart(
       emissions_chart_data_tpi_company_path(@company.id),
       width: '800px',
       height: '600px',
       library: default_chart_options
-  )%>
+      )%>
+  </div>
 </div>
