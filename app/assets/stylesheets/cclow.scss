@@ -1,12 +1,14 @@
-a {
-  color: black;
+@import "cclow/colors.scss";
+@import "cclow/layout.scss";
+@import "cclow/typography";
+@import "cclow/geography-page";
 
-  &:visited {
-    text-decoration: none;
-    color: black;
-  }
+@import "bulma/sass/utilities/all";
+@import "bulma/sass/base/all";
+@import "bulma/sass/elements/all";
+@import "bulma/sass/components/all";
+@import "bulma/sass/grid/all";
+@import "bulma/sass/layout/all";
+@import "bulma/sass/form/all";
 
-  &.active {
-    font-weight: bold;
-  }
-}
+@import "font-awesome";

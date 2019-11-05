@@ -12,6 +12,7 @@
   "dependencies": {
     "@rails/webpacker": "^4.0.7",
     "highcharts": "^7.2.0",
+    "bulma": "^0.7.5",
     "stimulus": "^1.1.1",
     "trix": "^1.1.1"
   },

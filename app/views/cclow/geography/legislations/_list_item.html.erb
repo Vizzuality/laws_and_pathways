@@ -1,0 +1,10 @@
+<li>
+  <h5 class="title"><%= title %></h5>
+  <p class="meta">
+    <span>Passed in <%= date_passed.year %></span>
+    <span><%= I18n.t("cclow.legislation_types.#{legislation_type}") %></span>
+  </p>
+  <p>
+    <%= description&.html_safe %>
+  </p>
+</li>

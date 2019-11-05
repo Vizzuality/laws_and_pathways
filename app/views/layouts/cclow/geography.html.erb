@@ -1,17 +1,21 @@
 <% content_for :content do %>
   <div class="cclow-geography-page">
-    <aside>
-      <ul>
-        <li><%= active_link_to 'Overview and context', cclow_geography_path(@geography), active: :exclusive %></li>
-        <li><%= active_link_to "Laws (#{@geography_overview.number_of_laws})", cclow_geography_laws_path(@geography) %></li>
-        <li><%= active_link_to "Policies (#{@geography_overview.number_of_policies})", cclow_geography_policies_path(@geography) %></li>
-        <li><%= active_link_to "Litigation cases (#{@geography_overview.number_of_litigation_cases})", cclow_geography_litigation_cases_path(@geography) %></li>
-        <li><%= active_link_to 'Climate targets', cclow_geography_climate_targets_path(@geography) %></li>
-      </ul>
-    </aside>
-    <main>
-      <%= yield %>
-    </main>
+    <h5><%= @geography.name %></h5>
+    <hr>
+    <div class="columns">
+      <aside class="column is-one-quarter">
+        <ul>
+          <li><%= active_link_to 'Overview and context', cclow_geography_path(@geography), active: :exclusive %></li>
+          <li><%= active_link_to "Laws (#{@geography_overview.number_of_laws})", cclow_geography_laws_path(@geography) %></li>
+          <li><%= active_link_to "Policies (#{@geography_overview.number_of_policies})", cclow_geography_policies_path(@geography) %></li>
+          <li><%= active_link_to "Litigation cases (#{@geography_overview.number_of_litigation_cases})", cclow_geography_litigation_cases_path(@geography) %></li>
+          <li><%= active_link_to 'Climate targets', cclow_geography_climate_targets_path(@geography) %></li>
+        </ul>
+      </aside>
+      <main class="column is-three-quarters">
+        <%= yield %>
+      </main>
+    </div>
   </div>
 <% end %>
 
