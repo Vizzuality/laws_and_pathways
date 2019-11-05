@@ -62,7 +62,7 @@
                       %>
     </div>
 
-    <div class="company-assessments questions">
+    <div class="company-assessments questions" data-target="companies.assessmentContent">
       <%= render partial: 'mq_assessment', locals: { mq_assessment: @mq_assessment, levels_descriptions: @company_mq_assessments[:levels_descriptions] } %>
     </div>
   </div>

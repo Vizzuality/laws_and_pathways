@@ -13,10 +13,11 @@ module TPI
     end
 
     def mq_assessment
-      mq_assessment = @company.mq_assessment.find(params[:mq_assessment])
+      mq_assessment = @company.mq_assessments.find(params[:mq_assessment])
 
       render partial: 'mq_assessment', locals: {
-               mq_assessment: mq_assessment
+               mq_assessment: mq_assessment,
+               levels_descriptions: Api::Presenters::Company::SECTORS_LEVELS_DESC
              }
     end
 
