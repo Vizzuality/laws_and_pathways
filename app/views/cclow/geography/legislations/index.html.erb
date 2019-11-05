@@ -3,7 +3,7 @@
     <h3>Laws</h3>
     <ul class="content-list">
       <% @legislations.each do |l| %>
-        <%= render 'list_item', title: l.link,
+        <%= render 'cclow/geography/legislations/list_item', title: l.link,
                    description: l.description,
                    legislation_type: l.legislation_type,
                    date_passed: l.date_passed %>
