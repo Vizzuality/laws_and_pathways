@@ -16,5 +16,11 @@ class Instrument < ApplicationRecord
   belongs_to :instrument_type
   has_and_belongs_to_many :legislations
 
+  scope :ordered_with_parent, -> { joins(:instrument_type).order('instrument_types.name ASC, instruments.name ASC') }
+
   validates_presence_of :name
+
+  def self.to_select
+    self.pluck(Arel.sql("CONCAT('[', instrument_types.name, '] ', instruments.name)"), :id)
+  end
 end
