@@ -1,7 +1,7 @@
 module CCLOW
   class LitigationCasesController < CCLOWController
     def index
-      @litigations = Litigation.all
+      @litigations = Litigation.first(5)
     end
   end
 end

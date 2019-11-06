@@ -53,3 +53,10 @@ en:
     legislation_types:
       executive: 'Executive'
       legislative: 'Legislative'
+    litigation:
+      event_types:
+        case_started: Started
+        case_dismissed: Dismissed
+        case_overruled: Overruled
+        case_decided: Decided
+

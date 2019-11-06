@@ -55,4 +55,8 @@ class Litigation < ApplicationRecord
   end
 
   validates_presence_of :title, :slug, :document_type
+
+  def started_event
+    events.where(event_type: 'case_started').first
+  end
 end
