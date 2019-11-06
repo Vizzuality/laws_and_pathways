@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2019_10_28_102103) do
-=======
-ActiveRecord::Schema.define(version: 2019_10_23_141055) do
->>>>>>> Remove scaffold debris
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -326,23 +322,6 @@ ActiveRecord::Schema.define(version: 2019_10_23_141055) do
     t.index ["updated_by_id"], name: "index_litigations_on_updated_by_id"
   end
 
-  create_table "locations", force: :cascade do |t|
-    t.string "location_type", null: false
-    t.string "iso", null: false
-    t.string "name", null: false
-    t.string "slug", null: false
-    t.string "region", null: false
-    t.boolean "federal", default: false, null: false
-    t.text "federal_details"
-    t.text "approach_to_climate_change"
-    t.text "legislative_process"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["iso"], name: "index_locations_on_iso", unique: true
-    t.index ["region"], name: "index_locations_on_region"
-    t.index ["slug"], name: "index_locations_on_slug", unique: true
-  end
-
   create_table "mq_assessments", force: :cascade do |t|
     t.bigint "company_id"
     t.string "level", null: false
@@ -360,15 +339,6 @@ ActiveRecord::Schema.define(version: 2019_10_23_141055) do
   create_table "publications", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "sectors", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "slug", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_sectors_on_name", unique: true
-    t.index ["slug"], name: "index_sectors_on_slug", unique: true
   end
 
   create_table "taggings", force: :cascade do |t|

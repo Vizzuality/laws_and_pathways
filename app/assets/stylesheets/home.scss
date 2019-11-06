@@ -1,3 +1,54 @@
-// Place all the styles related to the home controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.splash {
+  @extend .hero;
+  
+  background-color: $blue-dark;
+
+  .description {
+    line-height: $size-4;
+  }
+}
+
+.hero {
+  &.is-primary {
+    background-color: $blue-dark;
+    
+    .description {
+      line-height: $size-4;
+      
+      .column {
+        padding: $size-6;
+      }
+    }
+
+    .hero-body {
+      padding: 7rem;
+    }
+
+    .button--hero {
+      @extend .is-medium;
+
+      height: 5rem;
+      padding-left: 4.125rem;
+      padding-right: 4.125rem;
+      background-color: $blue-darker;
+    }
+  }
+
+  .hero--picture {
+    position: absolute;
+    top: -7rem;
+    right: 0;
+    width: 70%;
+    height: 100%;
+  }
+  
+  &.is-secondary {
+    .hero-body {
+      padding: 10rem;
+    }
+
+    .hero-button {
+      background-color: $blue-darker;
+    }
+  }
+}

@@ -2,17 +2,28 @@
 
 .banner {
   height: 140px;
-
-  .container {
-    justify-content: center;
-  }
+  display: flex;
+  align-items: center;
 
   .column {
-    
+    align-items: flex-end;
   }
 
-  .banner--logo {
+  .partners--container {
+    .content {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
 
+  .partners {
+    align-items: center;
+
+    .column {
+      flex-grow: 0;
+      flex-basis: initial;
+      flex-shrink: 1;
+    }
   }
 }
 
@@ -35,65 +46,5 @@
     font-size: $size-6;
     padding-top: 10px;
     padding-bottom: 10px;
-  }
-}
-
-.container--hero {
-  position: relative;
-  display: flex;
-}
-
-.splash {
-  @extend .hero;
-  
-  background-color: $blue-dark;
-
-  .description {
-    line-height: $size-4;
-  }
-}
-
-.hero {
-  &.is-primary {
-    background-color: $blue-dark;
-    
-    .description {
-      line-height: $size-4;
-      
-      .column {
-        padding: $size-6;
-      }
-    }
-
-    .hero-body {
-      padding: 7rem;
-    }
-
-    .button--hero {
-      @extend .is-medium;
-
-      height: 5rem;
-      padding-left: 4.125rem;
-      padding-right: 4.125rem;
-      background-color: $blue-darker;
-    }
-  }
-
-  .hero--picture {
-    position: absolute;
-    top: -7rem;
-    right: 0;
-    width: 70%;
-    height: 100%;
-  }
-  
-  &.is-secondary {
-    .hero-body {
-      padding: 10rem;
-    }
-
-    .hero-button {
-      background-color: $blue-darker;
-    }
   }
 }
