@@ -1,5 +1,5 @@
 module TPI
-  class HomeController < ApplicationController
+  class HomeController < TPIController
     def index; end
 
     def about; end

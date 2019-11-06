@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :publications
+
   namespace :tpi do
     root to: 'home#index'
 
