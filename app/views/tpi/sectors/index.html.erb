@@ -18,13 +18,17 @@ Companies:
       donut: true,
       library: mq_sector_pie_chart_options
   ) %>
+  <div class="chart-title">
+    <p class="companies-size"><%= @companies.size %></p>
+    companies
+  </div>
 </div>
 
 <hr>
 
 <h4>Market Cap</h4>
 <p>TODO: bubble chart for sectors / levels</p>
-
+  <%= react_component("HelloWorld", { greeting: "Hello from react-rails." }) %>
 <hr>
 
 <h3>Carbon Performance: All sectors</h3>

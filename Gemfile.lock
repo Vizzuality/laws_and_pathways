@@ -120,6 +120,7 @@ GEM
       xpath (~> 3.2)
     chartkick (3.2.2)
     concurrent-ruby (1.1.5)
+    connection_pool (2.2.2)
     countries (3.0.0)
       i18n_data (~> 0.8.0)
       sixarm_ruby_unaccent (~> 1.1)
@@ -305,6 +306,12 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
+    react-rails (2.6.0)
+      babel-transpiler (>= 0.7.0)
+      connection_pool
+      execjs
+      railties (>= 3.2)
+      tilt
     regexp_parser (1.6.0)
     representable (3.0.4)
       declarative (< 0.1.0)
@@ -466,6 +473,7 @@ DEPENDENCIES
   puma (~> 3.11)
   rails (~> 5.2.3)
   rails-controller-testing
+  react-rails
   rspec-collection_matchers
   rspec-rails (~> 3.8)
   rubocop

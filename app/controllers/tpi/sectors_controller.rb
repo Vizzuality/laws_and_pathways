@@ -2,7 +2,7 @@ module TPI
   class SectorsController < ApplicationController
     def index
       @sectors = TPISector.select(:id, :name, :slug).order(:name)
-      @companies = Company.select(:id, :name, :slug).limit(50)
+      @companies = Company.select(:id, :name, :slug)
     end
 
     def show
