@@ -11,4 +11,4 @@ window.Rails = Rails;
 window.$ = $;
 
 Rails.start();
-Turbolinks.start();
+/* Turbolinks.start(); */
