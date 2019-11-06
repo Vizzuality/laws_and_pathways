@@ -7,10 +7,10 @@
 <p>Distribution of companies in the <strong><%= @sector.name %></strong> sector according to the management of their greenhouse gas emissions and of risks and opportunities related to the low-carbon transition.</p>
 
 <div class="chart">
-<%= pie_chart(
-      levels_chart_data_tpi_sector_path(@sector.id),
-      donut: true,
-      library: mq_sector_pie_chart_options
+  <%= pie_chart(
+    levels_chart_data_tpi_sector_path(@sector.id),
+    donut: true,
+    library: mq_sector_pie_chart_options
   ) %>
 </div>
 
