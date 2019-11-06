@@ -33,6 +33,8 @@ module Api
       private
 
       def previous_and_current_assessments
+        return [] unless assessment.present?
+
         [assessment.previous_assessments, assessment].flatten
       end
     end
