@@ -19,7 +19,7 @@ RSpec.describe Admin::MQAssessmentsController, type: :controller do
     it { is_expected.to be_successful }
   end
 
-  describe 'GET new' do
+  xdescribe 'GET new' do
     subject { get :new }
 
     it { is_expected.to be_successful }
@@ -31,7 +31,7 @@ RSpec.describe Admin::MQAssessmentsController, type: :controller do
     it { is_expected.to be_successful }
   end
 
-  describe 'POST create' do
+  xdescribe 'POST create' do
     context 'with valid params' do
       let(:valid_attributes) { attributes_for(:mq_assessment, company_id: company.id) }
 

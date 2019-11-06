@@ -5,6 +5,8 @@ ActiveAdmin.register MQ::Assessment do
 
   decorate_with MQ::AssessmentDecorator
 
+  actions :all, except: [:new, :create]
+
   permit_params :assessment_date, :publication_date, :company_id, :notes, :level
 
   filter :assessment_date
