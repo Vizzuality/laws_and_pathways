@@ -1,0 +1,6 @@
+(function () {
+  $('#mq-assessment').html("<%= j render('mq_assessment', assessment: @mq_assessment) %>");
+  const newUrl = new URL(window.location.href);
+  newUrl.searchParams.set('mq_assessment_id', <%= @mq_assessment.id %>);
+  window.history.replaceState({}, '', newUrl.href);
+})();

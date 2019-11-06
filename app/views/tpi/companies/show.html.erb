@@ -36,35 +36,15 @@
     Assessment Date
     <%= select_tag :mq_assessment_id,
        options_from_collection_for_select(@company.mq_assessments, "id", "assessment_date"),
-       data: { action: 'change->companies#mqAssessmentDateChange' }
+       data: {
+         remote: true,
+         url: mq_assessment_tpi_company_path(@company)
+       }
     %>
   </div>
-  <p>Assessment of <strong><%= @company.name %></strong> according to the management of their greenhouse gas emissions and of risks and opportunities related to the low-carbon transition.</p>
 
-  <div class="company-performance-details container">
-    <div class="mq-status summary-box">
-      <div>Current level</div>
-      <%= @company.mq_level %>
-      <%= @company.mq_status %>
-      <div>[TODO] summary of answers</div>
-    </div>
-    <div class="cp-status summary-box">
-      <div>Nr of assessments: <%= @company.mq_assessments.size %></div>
-      <div>
-        <%= line_chart(
-          assessments_levels_chart_data_tpi_company_path(@company.id),
-          library: mq_company_no_of_assessments_chart_options
-          ) %>
-      </div>
-    </div>
-  </div>
-
-  <br>
-
-  <div class="company-assessments container-columns">
-    <div class="company-assessments questions" data-target="companies.mqAssessmentContent">
-      <%= render partial: 'mq_assessment', locals: { assessment: @mq_assessment } %>
-    </div>
+  <div id="mq-assessment">
+    <%= render partial: 'mq_assessment', locals: { assessment: @mq_assessment } %>
   </div>
 
   <hr>
@@ -75,7 +55,7 @@
       <div>
         Assessment Date
         <%= select_tag :cp_assessment_id,
-                     options_from_collection_for_select(@company.cp_assessments, "id", "assessment_date"),
+           options_from_collection_for_select(@company.cp_assessments, "id", "assessment_date"),
            data: {
              remote: true,
              url: cp_assessment_tpi_company_path(@company)
@@ -83,7 +63,7 @@
         %>
       </div>
 
-      <div id="test" data-target="companies.cpAssessmentContent">
+      <div id="cp-assessment">
         <%= render partial: 'cp_assessment', locals: { assessment: @cp_assessment } %>
       </div>
     </div>

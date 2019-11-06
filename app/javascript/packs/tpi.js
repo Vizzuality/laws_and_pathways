@@ -8,6 +8,7 @@ import "tpi";
 Chartkick.use(HighCharts);
 
 window.Rails = Rails;
+window.$ = $;
 
 Rails.start();
 Turbolinks.start();
