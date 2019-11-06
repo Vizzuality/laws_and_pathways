@@ -80,6 +80,8 @@ module Api
           .map { |emissions| emissions[year.to_s] }
           .compact
 
+        return nil if company_emissions.empty?
+
         (company_emissions.sum / company_emissions.count).round(2)
       end
 
@@ -101,7 +103,7 @@ module Api
         @sector_all_emissions ||= company.sector
           .companies
           .includes(:cp_assessments)
-          .flat_map { |c| c.latest_cp_assessment.emissions }
+          .flat_map { |c| c.cp_assessments_up_to_publication_date(assessment.publication_date).first.emissions }
       end
 
       # @return [Integer]
