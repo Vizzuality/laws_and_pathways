@@ -1,0 +1,6 @@
+(function () {
+  Chartkick.charts['cp_assessment_chart'].updateData('<%= emissions_chart_data_tpi_company_path(@company, cp_assessment_id: @cp_assessment.id) %>');
+  const newUrl = new URL(window.location.href);
+  newUrl.searchParams.set('cp_assessment_id', <%= @cp_assessment.id %>);
+  window.history.replaceState({}, '', newUrl.href);
+})();

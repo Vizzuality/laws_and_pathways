@@ -4,21 +4,28 @@ module TPI
 
     def show
       @company_summary = company_presenter.summary
-      @mq_assessment = if params[:mq_assessment].present?
-                         @company.mq_assessment.find(params[:mq_assessment])
+      @mq_assessment = if params[:mq_assessment_id].present?
+                         @company.mq_assessments.find(params[:mq_assessment_id])
                        else
                          @company.latest_mq_assessment
                        end
-      @company_mq_assessments = company_presenter.mq_assessments
+      @cp_assessment = if params[:cp_assessment_id].present?
+                         @company.cp_assessments.find(params[:cp_assessment_id])
+                       else
+                         @company.latest_cp_assessment
+                       end
     end
 
     def mq_assessment
-      mq_assessment = @company.mq_assessments.find(params[:mq_assessment])
+      mq_assessment = @company.mq_assessments.find(params[:mq_assessment_id])
 
-      render partial: 'mq_assessment', locals: {
-               mq_assessment: mq_assessment,
-               levels_descriptions: Api::Presenters::Company::SECTORS_LEVELS_DESC
-             }
+      render partial: 'mq_assessment', locals: {assessment: mq_assessment}
+    end
+
+    def cp_assessment
+      @cp_assessment = @company.cp_assessments.find(params[:cp_assessment_id])
+
+      # render partial: 'cp_assessment', locals: {assessment: cp_assessment}
     end
 
     # Data:     Company MQ Assessments Levels over the years
@@ -36,7 +43,8 @@ module TPI
     # Type:     line chart
     # On pages: :show
     def emissions_chart_data
-      data = ::Api::Charts::Company.new(@company).emissions_data
+      @assessment = CP::Assessment.find(params[:cp_assessment_id])
+      data = ::Api::Charts::CPAssessment.new(@assessment).emissions_data
 
       render json: data.chart_json
     end

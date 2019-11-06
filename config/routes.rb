@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         get :emissions_chart_data
         get :assessments_levels_chart_data
         get :mq_assessment
+        get :cp_assessment
       end
     end
   end
