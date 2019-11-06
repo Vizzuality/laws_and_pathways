@@ -1,7 +1,5 @@
 module TPI
   class MQAssessmentsController < TPIController
-    def show
-      
-    end
+    def show; end
   end
 end

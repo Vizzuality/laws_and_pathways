@@ -23,6 +23,9 @@ module CP
 
     scope :latest_first, -> { order(assessment_date: :desc) }
     scope :all_publication_dates, -> { distinct.order(publication_date: :desc).pluck(:publication_date) }
+    scope :published_on_or_before, lambda { |publication_date|
+      order(:publication_date).where('publication_date <= ?', publication_date)
+    }
 
     validates_presence_of :publication_date
   end

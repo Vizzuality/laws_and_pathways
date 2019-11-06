@@ -62,8 +62,4 @@ class Company < ApplicationRecord
   def latest_sector_benchmarks_before_last_assessment
     sector.latest_benchmarks_for_date(latest_cp_assessment&.assessment_date)
   end
-
-  def cp_assessments_up_to_publication_date(publication_date)
-    cp_assessments.order(:publication_date).where('publication_date <= ?', publication_date)
-  end
 end

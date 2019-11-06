@@ -103,7 +103,8 @@ module Api
         @sector_all_emissions ||= company.sector
           .companies
           .includes(:cp_assessments)
-          .flat_map { |c| c.cp_assessments_up_to_publication_date(assessment.publication_date).first.emissions }
+          .flat_map { |c| c.cp_assessments.published_on_or_before(assessment.publication_date).last&.emissions }
+          .compact
       end
 
       # @return [Integer]
