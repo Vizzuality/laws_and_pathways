@@ -89,8 +89,8 @@ ActiveAdmin.register Litigation do
           row :created_at
           row :created_by
           list_row 'Documents', :document_links
-          list_row 'Legislations', :legislation_links
-          list_row 'External Legislations', :external_legislation_links
+          list_row 'Laws', :legislation_links
+          list_row 'External Laws', :external_legislation_links
         end
       end
 
