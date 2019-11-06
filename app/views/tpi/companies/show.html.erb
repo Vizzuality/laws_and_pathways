@@ -35,7 +35,7 @@
   <div>
     Assessment Date
     <%= select_tag :mq_assessment_id,
-       options_from_collection_for_select(@company.mq_assessments, "id", "assessment_date"),
+       options_from_collection_for_select(@company.mq_assessments, "id", "assessment_date", @mq_assessment.id),
        data: {
          remote: true,
          url: mq_assessment_tpi_company_path(@company)
@@ -55,7 +55,7 @@
       <div>
         Assessment Date
         <%= select_tag :cp_assessment_id,
-           options_from_collection_for_select(@company.cp_assessments, "id", "assessment_date"),
+           options_from_collection_for_select(@company.cp_assessments, "id", "assessment_date", @cp_assessment.id),
            data: {
              remote: true,
              url: cp_assessment_tpi_company_path(@company)
