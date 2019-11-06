@@ -1,16 +1,16 @@
 import React from "react"
 import PropTypes from "prop-types"
-class HelloWorld extends React.Component {
+class BubbleChart extends React.Component {
   render () {
     return (
       <React.Fragment>
-        Greeting: {this.props.greeting}
+        Bubble Chart to come
       </React.Fragment>
     );
   }
 }
 
-HelloWorld.propTypes = {
+BubbleChart.propTypes = {
   greeting: PropTypes.string
 };
-export default HelloWorld
+export default BubbleChart;
