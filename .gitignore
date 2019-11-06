@@ -44,3 +44,11 @@ yarn-debug.log*
 
 # System Files
 .DS_Store
+
+# Personal TODO list and IDE
+TODO.md
+*.code-workspace
+
+# Apple
+.DS_Store
+

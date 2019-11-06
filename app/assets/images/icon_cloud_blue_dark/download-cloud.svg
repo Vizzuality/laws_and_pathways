@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="21px" viewBox="0 0 24 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 57.1 (101010) - https://sketch.com -->
+    <title>F401D93B-71A8-4A00-8C41-69A518F78662</title>
+    <desc>Created with sketchtool.</desc>
+    <g id="TPI-visuals" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="TPI---hover-states" transform="translate(-662.000000, -395.000000)" stroke="#0A4BDC" stroke-width="2">
+            <g id="button/secondary/icon/default-copy-2-buttons/secondary/icon/Focus" transform="translate(650.000000, 384.000000)">
+                <g id="button-icon" transform="translate(0.000000, 0.000000)">
+                    <g id="download-cloud" transform="translate(12.000000, 10.975000)">
+                        <polyline id="Path" points="8 15 12 19 16 15"></polyline>
+                        <path d="M12,10 L12,19" id="Path"></path>
+                        <path d="M20.88,16.09 C22.6641359,14.8353957 23.4291619,12.5690557 22.7703958,10.4898251 C22.1116296,8.41059447 20.1810938,6.99829391 18,7 L16.74,7 C15.9163145,3.78994369 13.198686,1.42008673 9.90640275,1.04088975 C6.61411951,0.661692769 3.42888903,2.35167313 1.89699969,5.2904202 C0.365110346,8.22916726 0.803758542,11.8081775 3,14.29" id="Path"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

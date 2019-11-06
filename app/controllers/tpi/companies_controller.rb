@@ -1,5 +1,5 @@
 module TPI
-  class CompaniesController < ApplicationController
+  class CompaniesController < TPIController
     before_action :fetch_company
 
     def show

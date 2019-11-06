@@ -336,6 +336,11 @@ ActiveRecord::Schema.define(version: 2019_10_28_102103) do
     t.index ["discarded_at"], name: "index_mq_assessments_on_discarded_at"
   end
 
+  create_table "publications", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "taggings", force: :cascade do |t|
     t.bigint "tag_id"
     t.string "taggable_type"
