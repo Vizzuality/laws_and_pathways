@@ -162,7 +162,7 @@ RSpec.describe Admin::LegislationsController, type: :controller do
 
       it 'redirects to index & renders alert message' do
         expect(subject).to redirect_to(admin_legislations_path)
-        expect(flash[:alert]).to match('Could not delete selected Legislations')
+        expect(flash[:alert]).to match('Could not delete selected Laws')
       end
     end
 
@@ -208,7 +208,7 @@ RSpec.describe Admin::LegislationsController, type: :controller do
         expect(legislation_to_delete_1.reload.discarded_at).to_not be_nil
         expect(Legislation.all_discarded.find_by_id(ids_to_delete)).to_not be_nil
 
-        expect(flash[:notice]).to match('Successfully deleted 3 Legislations')
+        expect(flash[:notice]).to match('Successfully deleted 3 Laws')
       end
     end
 
@@ -236,7 +236,7 @@ RSpec.describe Admin::LegislationsController, type: :controller do
         expect(legislation_to_keep_1.reload.visibility_status).to eq('draft')
         expect(legislation_to_keep_2.reload.visibility_status).to eq('draft')
 
-        expect(flash[:notice]).to match('Successfully archived 2 Legislations')
+        expect(flash[:notice]).to match('Successfully archived 2 Laws')
       end
     end
   end
