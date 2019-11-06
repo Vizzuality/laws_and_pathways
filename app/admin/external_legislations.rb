@@ -1,7 +1,7 @@
 ActiveAdmin.register ExternalLegislation do
   config.batch_actions = false
 
-  menu parent: 'Laws', priority: 5
+  menu parent: 'Laws', priority: 5, label: 'External Laws'
 
   decorate_with ExternalLegislationDecorator
 
@@ -11,7 +11,7 @@ ActiveAdmin.register ExternalLegislation do
   filter :url_contains, label: 'URL'
   filter :geography
 
-  data_export_sidebar 'External Legislations'
+  data_export_sidebar 'External Laws'
 
   show do
     attributes_table do
@@ -25,7 +25,7 @@ ActiveAdmin.register ExternalLegislation do
     active_admin_comments
   end
 
-  index do
+  index title: "External Laws" do
     column :name, &:name_summary_link
     column 'URL', :url
     column :geography

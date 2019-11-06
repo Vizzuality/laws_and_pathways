@@ -1,7 +1,7 @@
 ActiveAdmin.register Legislation do
   config.sort_order = 'date_passed_desc'
 
-  menu parent: 'Laws', priority: 1
+  menu parent: 'Laws', priority: 1, label: 'Laws and Policies'
 
   decorate_with LegislationDecorator
 
@@ -30,7 +30,7 @@ ActiveAdmin.register Legislation do
          as: :select,
          collection: proc { array_to_select_collection(VisibilityStatus::VISIBILITY) }
 
-  index do
+  index title: "Laws and Policies" do
     selectable_column
     column :title, &:title_summary_link
     column :legislation_type
@@ -48,7 +48,7 @@ ActiveAdmin.register Legislation do
 
   publishable_sidebar only: :show
 
-  data_export_sidebar 'Legislations', documents: true, events: true
+  data_export_sidebar 'Laws', documents: true, events: true
 
   show do
     tabs do
@@ -121,9 +121,9 @@ ActiveAdmin.register Legislation do
     archive_command = ::Command::Batch::Archive.new(batch_action_collection, ids)
 
     message = if archive_command.call
-                {notice: "Successfully archived #{ids.count} Legislations"}
+                {notice: "Successfully archived #{ids.count} Laws"}
               else
-                {alert: 'Could not archive selected Legislations'}
+                {alert: 'Could not archive selected Laws'}
               end
 
     redirect_to collection_path(scope: 'archived'), message
@@ -133,9 +133,9 @@ ActiveAdmin.register Legislation do
     delete_command = Command::Batch::Delete.new(batch_action_collection, ids)
 
     message = if delete_command.call
-                {notice: "Successfully deleted #{ids.count} Legislations"}
+                {notice: "Successfully deleted #{ids.count} Laws"}
               else
-                {alert: 'Could not delete selected Legislations'}
+                {alert: 'Could not delete selected Laws'}
               end
 
     redirect_to collection_path, message
