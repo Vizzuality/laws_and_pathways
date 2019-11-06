@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   resources :publications
   namespace :tpi do
+    root to: 'home#index'
+
+    get '/about', to: 'home#about'
+    get '/sandbox', to: 'home#sandbox' if Rails.env.development?
+
     resources :sectors, only: [:show, :index] do
       collection do
         get :levels_chart_data
@@ -33,12 +38,8 @@ Rails.application.routes.draw do
     resources :litigation_cases, only: :index
   end
 
-  get '/about', to: 'home#about'
-
-  get '/sandbox', to: 'home#sandbox' if Rails.env.development?
-
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
-  root to: 'home#index'
+  root to: 'admin/dashboard#index'
 end
