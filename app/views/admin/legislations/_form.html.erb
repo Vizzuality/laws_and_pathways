@@ -26,7 +26,7 @@
           <%=
             Arbre::Context.new do
               columns do
-                column { f.input :geography }
+                column { f.input :geography, collection: Geography.order(:name) }
                 column { f.input :date_passed }
                 column do
                   f.input :framework_ids, label: 'Frameworks', as: :tags, collection: Framework.all
@@ -37,8 +37,10 @@
               end
             end
           %>
-          <%= f.input :natural_hazards_string, label: 'Natural Hazards', hint: t('hint.tag'), as: :tags, collection: NaturalHazard.all.pluck(:name) %>
-          <%= f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags, collection: Keyword.all.pluck(:name) %>
+        <%= f.input :natural_hazards_string, label: 'Natural Hazards', hint: t('hint.tag'), as: :tags,
+          collection: NaturalHazard.order('LOWER(name)').pluck(:name) %>
+        <%= f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags,
+          collection: Keyword.order('LOWER(name) ASC').pluck(:name) %>
         <% end %>
       </div>
 
