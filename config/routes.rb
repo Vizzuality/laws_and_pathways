@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
   namespace :tpi do
+    root to: 'home#index'
+
+    get '/about', to: 'home#about'
+    get '/sandbox', to: 'home#sandbox' if Rails.env.development?
+
     resources :sectors, only: [:show, :index] do
       collection do
         get :levels_chart_data

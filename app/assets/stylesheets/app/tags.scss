@@ -1,0 +1,6 @@
+@import "app/colors";
+
+.tag:not(body) {
+  border: 1px solid rgba($grey-dark, 0.5);
+  font-size: $size-8;
+}
