@@ -10,6 +10,7 @@ ActiveAdmin.register Litigation do
 
   permit_params :title, :jurisdiction_id, :sector_id, :document_type,
                 :visibility_status, :summary, :core_objective,
+                :citation_reference_number,
                 :created_by_id, :updated_by_id, :keywords_string,
                 litigation_sides_attributes: permit_params_for(:litigation_sides),
                 documents_attributes: permit_params_for(:documents),
