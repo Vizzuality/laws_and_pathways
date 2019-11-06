@@ -30,7 +30,7 @@ ActiveAdmin.register Legislation do
          as: :select,
          collection: proc { array_to_select_collection(VisibilityStatus::VISIBILITY) }
 
-  index title: "Laws and Policies" do
+  index title: 'Laws and Policies' do
     selectable_column
     column :title, &:title_summary_link
     column :legislation_type

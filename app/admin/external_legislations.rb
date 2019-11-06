@@ -25,7 +25,7 @@ ActiveAdmin.register ExternalLegislation do
     active_admin_comments
   end
 
-  index title: "External Laws" do
+  index title: 'External Laws' do
     column :name, &:name_summary_link
     column 'URL', :url
     column :geography
