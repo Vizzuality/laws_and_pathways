@@ -3,7 +3,7 @@ module Api
     class MQAssessment
       attr_reader :assessment
 
-      delegate :company, to: :assessment
+      delegate :company, to: :assessment, allow_nil: true
 
       def initialize(assessment)
         @assessment = assessment
@@ -16,26 +16,38 @@ module Api
       #   [ ['2016-03-01', 3], ['2017-01-01', 3], ['2018-08-20', 4]]
       # #
       def assessments_levels_data
-        return [] unless previous_and_current_assessments.any?
+        return [] unless company_mq_assessments.any?
 
         # we are adding first and last point with nil value to have those ticks on the chart
         # to fool Highcharts
-        first_point = [previous_and_current_assessments.first.assessment_date.beginning_of_year.to_s, nil]
+        first_point = [company_mq_assessments.first.assessment_date.beginning_of_year.to_s, nil]
         last_point = [Time.now.to_date.to_s, nil]
 
         results = [first_point]
-        previous_and_current_assessments.each do |a|
+        company_mq_assessments.each do |a|
           results << [a.assessment_date.to_s, a.level]
         end
         results << last_point
+
+        [
+          {
+            name: 'Level',
+            data: results
+          },
+          {
+            name: 'Current Level',
+            data: [[assessment.assessment_date.to_s, assessment.level]],
+            color: 'red'
+          }
+        ]
       end
 
       private
 
-      def previous_and_current_assessments
-        return [] unless assessment.present?
+      def company_mq_assessments
+        return [] unless company.present?
 
-        [assessment.previous_assessments, assessment].flatten
+        @company_mq_assessments ||= company.mq_assessments.order(:assessment_date)
       end
     end
   end
