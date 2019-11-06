@@ -5,6 +5,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag 'cclow' %>
     <%= stylesheet_link_tag 'tpi' %>
     <%= stylesheet_link_tag 'application' %>
@@ -12,6 +13,5 @@
 
   <body>
     <%= yield %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </body>
 </html>

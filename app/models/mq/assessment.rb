@@ -48,6 +48,8 @@ module MQ
     end
 
     def questions
+      return unless self[:questions].present?
+
       @questions ||= self[:questions].each_with_index.map do |q_hash, index|
         MQ::Question.new(q_hash.merge(number: index + 1))
       end
