@@ -1,0 +1,16 @@
+<%= semantic_form_for [:admin, resource], builder: ActiveAdmin::FormBuilder, html: {'data-controller' => 'check-modified'} do |f| %>
+  <%= f.semantic_errors(*f.object.errors.keys) %>
+
+  <%= f.inputs do %>
+    <%= f.input :company %>
+    <%= f.input :assessment_date %>
+    <%= f.input :publication_date %>
+    <%= f.input :level, as: :select, collection: MQ::Assessment::LEVELS %>
+    <%= f.input :notes %>
+  <% end %>
+
+  <%= f.actions do %>
+    <%= f.action :submit %>
+    <%= f.action :cancel, :wrapper_html => { :class => 'cancel' } %>
+  <% end %>
+<% end %>
