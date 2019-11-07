@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/MethodLength
 module ChartHelper
   # defaults chart options (Highcharts)
   def default_chart_options
@@ -36,6 +37,9 @@ module ChartHelper
 
   def mq_company_no_of_assessments_chart_options
     {
+      legend: {
+        enabled: false
+      },
       tooltip: {
         dateTimeLabelFormats: {
           day: '%B %Y',
@@ -61,3 +65,4 @@ module ChartHelper
     }
   end
 end
+# rubocop:enable Metrics/MethodLength

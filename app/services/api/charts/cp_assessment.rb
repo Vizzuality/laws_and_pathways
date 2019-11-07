@@ -1,8 +1,12 @@
 module Api
   module Charts
-    class Company
-      def initialize(company)
-        @company = company
+    class CPAssessment
+      attr_reader :assessment
+
+      delegate :company, to: :assessment
+
+      def initialize(assessment)
+        @assessment = assessment
       end
 
       # Returns array of following series:
@@ -22,7 +26,7 @@ module Api
       #   ]
       #
       def emissions_data
-        return [] unless company_cp_assessments.any?
+        return [] unless assessment.present?
 
         [
           emissions_data_from_company,
@@ -31,45 +35,24 @@ module Api
         ].flatten
       end
 
-      # Returns MQ assessments Levels for each year for given Company.
-      #
-      # @return [Array<Array>]
-      # @example
-      #   [ ['2016-03-01', 3], ['2017-01-01', 3], ['2018-08-20', 4]]
-      # #
-      def assessments_levels_data
-        return [] unless company_mq_assessments.any?
-
-        # we are adding first and last point with nil value to have those ticks on the chart
-        # to fool Highcharts
-        first_point = [company_mq_assessments.first.assessment_date.beginning_of_year.to_s, nil]
-        last_point = [Time.now.to_date.to_s, nil]
-
-        results = [first_point]
-        company_mq_assessments.each do |a|
-          results << [a.assessment_date.to_s, a.level]
-        end
-        results << last_point
-      end
-
       private
 
       def emissions_data_from_company
         {
-          name: @company.name,
-          data: company_cp_assessments.last&.emissions
+          name: company.name,
+          data: assessment&.emissions
         }
       end
 
       def emissions_data_from_sector
         {
-          name: "#{@company.sector.name} sector mean",
+          name: "#{company.sector.name} sector mean",
           data: sector_average_emissions
         }
       end
 
       def emissions_data_from_sector_benchmarks
-        @company.latest_sector_benchmarks_before_last_assessment.map do |benchmark|
+        company.sector.latest_benchmarks_for_date(assessment.assessment_date).map do |benchmark|
           {
             type: 'area',
             fillOpacity: 0.1,
@@ -97,6 +80,8 @@ module Api
           .map { |emissions| emissions[year.to_s] }
           .compact
 
+        return nil if company_emissions.empty?
+
         (company_emissions.sum / company_emissions.count).round(2)
       end
 
@@ -113,20 +98,13 @@ module Api
           .uniq
       end
 
-      def company_mq_assessments
-        @company_mq_assessments ||= @company.mq_assessments.order(:assessment_date)
-      end
-
-      def company_cp_assessments
-        @company_cp_assessments ||= @company.cp_assessments.order(:assessment_date)
-      end
-
       # @return [Array<Hash>] list of { year => value } pairs from all Companies from current TPISector
       def sector_all_emissions
-        @sector_all_emissions ||= @company.sector
+        @sector_all_emissions ||= company.sector
           .companies
           .includes(:cp_assessments)
-          .flat_map { |c| c.latest_cp_assessment.emissions }
+          .flat_map { |c| c.cp_assessments.published_on_or_before(assessment.publication_date).last&.emissions }
+          .compact
       end
 
       # @return [Integer]

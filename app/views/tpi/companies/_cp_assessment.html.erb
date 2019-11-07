@@ -1,0 +1,9 @@
+<div class="chart">
+  <%= line_chart(
+    emissions_chart_data_tpi_company_path(assessment.company, cp_assessment_id: assessment.id),
+    id: 'cp_assessment_chart',
+    width: '800px',
+    height: '600px',
+    library: default_chart_options
+  )%>
+</div>

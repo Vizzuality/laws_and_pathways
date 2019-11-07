@@ -28,11 +28,14 @@ module MQ
     validates_presence_of :assessment_date, :publication_date, :level
 
     def previous
+      previous_assessments.last
+    end
+
+    def previous_assessments
       company
         .mq_assessments
         .where('assessment_date < ?', assessment_date)
-        .latest_first
-        .first
+        .order(:assessment_date)
     end
 
     def status
