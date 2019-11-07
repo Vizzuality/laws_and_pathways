@@ -9,8 +9,8 @@ ActiveAdmin.register Legislation do
 
   permit_params :title, :date_passed, :description,
                 :geography_id, :sector_id, :law_id, :legislation_type,
-                :natural_hazards_string, :keywords_string,
                 :created_by_id, :updated_by_id, :visibility_status,
+                :natural_hazards_string, :keywords_string,
                 events_attributes: permit_params_for(:events),
                 documents_attributes: permit_params_for(:documents),
                 framework_ids: [], document_type_ids: [], instrument_ids: [],

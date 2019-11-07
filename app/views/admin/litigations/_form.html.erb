@@ -25,8 +25,7 @@
           <%= f.input :legislation_ids, as: :selected_list, label: 'Connected Laws', fields: [:title], display_name: :title, order: 'title_asc' %>
           <%= f.input :external_legislation_ids, as: :selected_list, label: 'Connected External Laws', fields: [:name], display_name: :name, order: 'name_asc' %>
           <%= f.input :visibility_status, as: :select %>
-          <%= f.input :keywords_string, as: :tags, label: 'Keywords', hint: t('hint.tag'),
-            collection: Keyword.order(Arel.sql('LOWER(name) ASC')).pluck(:name) %>
+          <%= f.input :keywords_string, as: :tags, label: 'Keywords', hint: t('hint.tag'), collection: Keyword.pluck(:name) %>
         <% end %>
       </div>
 
