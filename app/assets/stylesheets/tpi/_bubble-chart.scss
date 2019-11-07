@@ -1,7 +1,7 @@
 $tape-height: 8px;
 $tape-color: rgba(25,25,25,0.1);
 
-.bubble-chart__container {
+.bubble-chart--container {
   width: 100%;
   padding: 50px;
   /* CSS GRID */
@@ -12,7 +12,7 @@ $tape-color: rgba(25,25,25,0.1);
   align-items: center;
 }
 
-.bubble-chart__cell {
+.bubble-chart--cell {
   position: relative;
   height: 100%;
   display: flex;

@@ -9,7 +9,7 @@ const createRow = (dataRow, bubbleColor) => {
         title
       </div>
       {dataRow.map(el => ( // = dataRow
-        <div className="bubble-chart__cell" key={el}>
+        <div className="bubble-chart--cell" key={el}>
           <VictoryGroup style={{ height: 'auto' }}>
             <VictoryScatter
               style={{
@@ -37,7 +37,7 @@ const createRow = (dataRow, bubbleColor) => {
 const BubbleChart = () => {
   return (
     <React.Fragment>
-      <div className="bubble-chart__container">
+      <div className="bubble-chart--container">
         <div></div>
         {[1, 2, 3, 4, 5].map(el => (
           <div key={el}>
