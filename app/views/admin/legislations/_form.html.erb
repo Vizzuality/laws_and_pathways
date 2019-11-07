@@ -37,10 +37,8 @@
               end
             end
           %>
-        <%= f.input :natural_hazards_string, label: 'Natural Hazards', hint: t('hint.tag'), as: :tags,
-          collection: NaturalHazard.order(Arel.sql('LOWER(name)')).pluck(:name) %>
-        <%= f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags,
-          collection: Keyword.order(Arel.sql('LOWER(name) ASC')).pluck(:name) %>
+        <%= f.input :natural_hazards_string, label: 'Natural Hazards', hint: t('hint.tag'), as: :tags, collection: NaturalHazard.pluck(:name) %>
+        <%= f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags, collection: Keyword.pluck(:name) %>
         <% end %>
       </div>
 
