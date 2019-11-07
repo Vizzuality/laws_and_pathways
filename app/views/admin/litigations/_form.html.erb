@@ -16,7 +16,7 @@
       <div id="details">
         <%= f.inputs do %>
           <%= f.input :title %>
-          <%= f.input :jurisdiction %>
+          <%= f.input :jurisdiction, collection: Geography.order(:name) %>
           <%= f.input :citation_reference_number %>
           <%= f.input :sector %>
           <%= f.input :document_type, as: :select, collection: array_to_select_collection(Litigation::DOCUMENT_TYPES) %>
@@ -25,7 +25,8 @@
           <%= f.input :legislation_ids, as: :selected_list, label: 'Connected Laws', fields: [:title], display_name: :title, order: 'title_asc' %>
           <%= f.input :external_legislation_ids, as: :selected_list, label: 'Connected External Laws', fields: [:name], display_name: :name, order: 'name_asc' %>
           <%= f.input :visibility_status, as: :select %>
-          <%= f.input :keywords_string, as: :tags, label: 'Keywords', hint: t('hint.tag'), collection: Keyword.all.pluck(:name) %>
+          <%= f.input :keywords_string, as: :tags, label: 'Keywords', hint: t('hint.tag'),
+            collection: Keyword.order(Arel.sql('LOWER(name) ASC')).pluck(:name) %>
         <% end %>
       </div>
 

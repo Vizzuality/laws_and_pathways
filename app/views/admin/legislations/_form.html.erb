@@ -17,13 +17,16 @@
           <%= f.input :description, as: :trix %>
           <%= f.input :legislation_type, as: :select %>
           <%= f.input :sector %>
-          <%= f.input :document_type_ids, label: 'Document', as: :tags, collection: DocumentType.all %>
-          <%= f.input :instrument_ids, label: 'Instrument', as: :tags, collection: Instrument.all %>
-          <%= f.input :governance_ids, label: 'Governance', as: :tags, collection: Governance.all %>
+          <%= f.input :document_type_ids, label: 'Document', as: :tags,
+            collection: DocumentType.order(Arel.sql('LOWER(name) ASC')) %>
+          <%= f.input :instrument_ids, label: 'Instrument', as: :select,
+            collection: Instrument.ordered_with_parent.to_select, input_html: { multiple: true } %>
+          <%= f.input :governance_ids, label: 'Governance', as: :select,
+            collection: Governance.ordered_with_parent.to_select, input_html: { multiple: true } %>
           <%=
             Arbre::Context.new do
               columns do
-                column { f.input :geography }
+                column { f.input :geography, collection: Geography.order(:name) }
                 column { f.input :date_passed }
                 column do
                   f.input :framework_ids, label: 'Frameworks', as: :tags, collection: Framework.all
@@ -34,8 +37,10 @@
               end
             end
           %>
-          <%= f.input :natural_hazards_string, label: 'Natural Hazards', hint: t('hint.tag'), as: :tags, collection: NaturalHazard.all.pluck(:name) %>
-          <%= f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags, collection: Keyword.all.pluck(:name) %>
+        <%= f.input :natural_hazards_string, label: 'Natural Hazards', hint: t('hint.tag'), as: :tags,
+          collection: NaturalHazard.order(Arel.sql('LOWER(name)')).pluck(:name) %>
+        <%= f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags,
+          collection: Keyword.order(Arel.sql('LOWER(name) ASC')).pluck(:name) %>
         <% end %>
       </div>
 
