@@ -18,7 +18,7 @@
           <%= f.input :legislation_type, as: :select %>
           <%= f.input :sector %>
           <%= f.input :document_type_ids, label: 'Document', as: :tags,
-            collection: DocumentType.order('LOWER(name) ASC') %>
+            collection: DocumentType.order(Arel.sql('LOWER(name) ASC')) %>
           <%= f.input :instrument_ids, label: 'Instrument', as: :select,
             collection: Instrument.ordered_with_parent.to_select, input_html: { multiple: true } %>
           <%= f.input :governance_ids, label: 'Governance', as: :select,
@@ -38,9 +38,9 @@
             end
           %>
         <%= f.input :natural_hazards_string, label: 'Natural Hazards', hint: t('hint.tag'), as: :tags,
-          collection: NaturalHazard.order('LOWER(name)').pluck(:name) %>
+          collection: NaturalHazard.order(Arel.sql('LOWER(name)')).pluck(:name) %>
         <%= f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags,
-          collection: Keyword.order('LOWER(name) ASC').pluck(:name) %>
+          collection: Keyword.order(Arel.sql('LOWER(name) ASC')).pluck(:name) %>
         <% end %>
       </div>
 
