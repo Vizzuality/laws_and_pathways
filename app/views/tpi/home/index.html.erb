@@ -1,40 +1,42 @@
-<section class="navbar-banner">
+<section class="tpi--banner">
   <%= render "layouts/banner" %>
 </section>
 
-<div class="header-nav">
-  <div class="container">
-    <%= render "layouts/header" %>
-  </div>
-</div>
+<section class="tpi--navbar">
+  <%= render "layouts/header" %>
+</section>
 
-<section class="hero is-primary">
-  <div class="hero-body">
-    <div class="container">
-      <h1 class="title">
-        The TPI tool
-      </h1>
-      <div class="description columns">
-        <div class="column is-4">
-          The Transition Pathway Initiative (TPI) is a global, asset-owner led initiative which assesses companies' preparedness for the transition to a low carbon economy. Rapidly becoming the go-to corporate climate action benchmark, the TPI tool is available here.
-
-          <div class="container--hero">
-            <button class="button is-primary button--hero">Access the tool</button>
-          </div>
+<section class="tpi-home--hero is-primary">
+  <div class="container hero--body">
+    <div class="columns">
+      <div class="column is-4 hero--content">
+        <div class="title">
+          <h1>The TPI tool</h1>
+        </div>
+        <div class="description">
+          <p class="content">
+            The Transition Pathway Initiative (TPI) is a global, asset-owner led initiative which assesses companies' preparedness for the transition to a low carbon economy. Rapidly becoming the go-to corporate climate action benchmark, the TPI tool is available here.
+          </p>
+    
+        </div>
+        <div class="button--container">
+          <button class="button is-primary button--hero">Access the tool</button>
         </div>
       </div>
     </div>
   </div>
+  <div class="hero--splash">
+    <img src="<%= asset_path 'mocks/tpi_splash_01.jpeg' %>" alt="" class="">
+  </div>
 </section>
 
-<section class="hero is-secondary is-medium">
-
-  <div class="container">
+<section class="section tpi-home--hero is-secondary">
+  <div class="container tpi-hero--body">
     <div class="columns">
       <div class="column is-half">
         <h4>How investors can use the TPI</h4>
 
-        <p>
+        <p class="content">
           The TPI is designed to support investors. Find out how they can use its findings.
         </p>
 
@@ -56,7 +58,7 @@
   </div>
 </section>
 
-<section class="section publications">
+<section class="section tpi-home--publications">
   <div class="container">
     <div class="columns">
       <div class="column is-half">

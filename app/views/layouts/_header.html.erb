@@ -1,79 +1,81 @@
 <header class="header">
   <navbar class="navbar" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand is-hidden-desktop">
-      <a class="navbar-item" href="#">MENU</a>
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="HeaderMenu">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
-    <div id="HeaderMenu" class="navbar-menu">
-      <div class="navbar-start">
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link is-arrowless">
-            TPI tool
-          </a>
-  
-          <div class="navbar-dropdown">
-            <a class="navbar-item">
+    <div class="container">
+      <div class="navbar-brand is-hidden-desktop">
+        <a class="navbar-item" href="#">MENU</a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="HeaderMenu">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div id="HeaderMenu" class="navbar-menu">
+        <div class="navbar-start">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link is-arrowless">
               TPI tool
             </a>
-            <a class="navbar-item">
-              Methodology
-            </a>
-            <a class="navbar-item">
-              Data background
-            </a>
+    
+            <div class="navbar-dropdown">
+              <a class="navbar-item">
+                TPI tool
+              </a>
+              <a class="navbar-item">
+                Methodology
+              </a>
+              <a class="navbar-item">
+                Data background
+              </a>
+            </div>
           </div>
-        </div>
 
-        <a class="navbar-item">
-          Publications and news
-        </a>
-
-        <div class="navbar-item has-dropdown">
-          <a class="navbar-link is-arrowless is-active">
-            About
+          <a class="navbar-item">
+            Publications and news
           </a>
-  
-          <div class="navbar-dropdown">
-            <a class="navbar-item">
-              Overview of the TPI
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link is-arrowless">
+              About
             </a>
-            <a class="navbar-item">
-              Partners
-            </a>
-            <a class="navbar-item">
-              Technical advisory
-            </a>
-            <a class="navbar-item">
-              Supporters
-            </a>
-            <a class="navbar-item">
-              Investors
-            </a>
-            <a class="navbar-item">
-              Endorsements
-            </a>
-            <a class="navbar-item">
-              FAQ
-            </a>
-            <!-- <hr class="navbar-divider"> -->
+    
+            <div class="navbar-dropdown">
+              <a class="navbar-item">
+                Overview of the TPI
+              </a>
+              <a class="navbar-item">
+                Partners
+              </a>
+              <a class="navbar-item">
+                Technical advisory
+              </a>
+              <a class="navbar-item">
+                Supporters
+              </a>
+              <a class="navbar-item">
+                Investors
+              </a>
+              <a class="navbar-item">
+                Endorsements
+              </a>
+              <a class="navbar-item">
+                FAQ
+              </a>
+              <!-- <hr class="navbar-divider"> -->
+            </div>
           </div>
         </div>
-      </div>
-  
-      <div class="navbar-end">
-        <a class="navbar-item">
-          Newsletter
-        </a>
-        <a class="navbar-item">
-          Login / Register
-        </a>
-        <a class="navbar-item">
-          <%= render 'shared/search-icon' %>
-        </a>
+    
+        <div class="navbar-end">
+          <a class="navbar-item">
+            Newsletter
+          </a>
+          <a class="navbar-item">
+            Login / Register
+          </a>
+          <a class="navbar-item">
+            <%= render 'shared/search-icon' %>
+          </a>
+        </div>
       </div>
     </div>
   </navbar>

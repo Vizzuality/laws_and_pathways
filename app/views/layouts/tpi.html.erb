@@ -5,15 +5,14 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= javascript_pack_tag 'tpi' %>
-    <%= stylesheet_pack_tag 'tpi' %>
     <%= stylesheet_link_tag 'application' %>
+    <%= stylesheet_link_tag 'tpi' %>
+
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application' %>
+    <%= javascript_pack_tag 'tpi' %>
   </head>
   <body>
-    <main>
-      <div class="container">
-        <%= yield %>
-      </div>
-    </main>
+    <%= yield %>
   </body>
 </html>
