@@ -21,6 +21,6 @@ class Governance < ApplicationRecord
   validates_presence_of :name
 
   def self.to_select
-    self.pluck(Arel.sql("CONCAT('[', governance_types.name, '] ', governances.name)"), :id)
+    pluck(Arel.sql("CONCAT('[', governance_types.name, '] ', governances.name)"), :id)
   end
 end

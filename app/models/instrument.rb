@@ -21,6 +21,6 @@ class Instrument < ApplicationRecord
   validates_presence_of :name
 
   def self.to_select
-    self.pluck(Arel.sql("CONCAT('[', instrument_types.name, '] ', instruments.name)"), :id)
+    pluck(Arel.sql("CONCAT('[', instrument_types.name, '] ', instruments.name)"), :id)
   end
 end
