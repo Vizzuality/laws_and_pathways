@@ -46,6 +46,7 @@ module Taggable
           array
             .map(&:strip)
             .reject(&:blank?)
+            .uniq
             .map { |group| tag_class.find_or_initialize_by(name: group) }
         )
       end
