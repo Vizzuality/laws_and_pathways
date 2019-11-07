@@ -1,0 +1,27 @@
+@import "bulma/sass/utilities/all";
+@import "app/sizes";
+@import "app/colors";
+
+.tpi--navbar {
+  .header-nav {
+    width: 100%;
+    background-color: $dark;
+  }
+
+  .navbar-item,
+  .navbar-link {
+    padding: 0.5rem 1.25rem;
+  }
+
+  .navbar-dropdown {
+    @if $desktop {
+      width: 300px;
+    }
+
+    > .navbar-item {
+      font-size: $size-6;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  }
+}
