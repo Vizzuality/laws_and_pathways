@@ -36,17 +36,15 @@ const createRow = (dataRow, bubbleColor) => {
 
 const BubbleChart = () => {
   return (
-    <React.Fragment>
-      <div className="bubble-chart--container">
-        <div></div>
-        {[1, 2, 3, 4, 5].map(el => (
-          <div key={el}>
-            header
-          </div>
-        ))}
-        {[1, 2, 3, 4, 5, 6, 7, 8].map(el => createRow([1, 2, 3, 4, 5], '#2465F5'))}
-      </div>  
-    </React.Fragment>
+    <div className="bubble-chart--container">
+      <div></div>
+      {[1, 2, 3, 4, 5].map(el => (
+        <div key={el}>
+          header
+        </div>
+      ))}
+      {[1, 2, 3, 4, 5, 6, 7, 8].map(el => createRow([1, 2, 3, 4, 5], '#2465F5'))}
+    </div>  
   );
 }
 
