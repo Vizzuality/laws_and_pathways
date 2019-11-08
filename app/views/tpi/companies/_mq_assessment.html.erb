@@ -6,6 +6,8 @@
       </p>
       <div class="mq-level">
         <%= assessment.level %>
+        <div class="mq-level-trend mq-level-trend--<%= assessment.status %>">
+        </div>
       </div>
       <p>
         <%= t("tpi.company.level_description.#{assessment.level.to_i}") %></h3>

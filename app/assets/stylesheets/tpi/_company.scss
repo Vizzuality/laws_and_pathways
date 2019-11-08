@@ -13,26 +13,23 @@
   font-size: $font-size;
 
   .mq-level-trend {
-    width: 20px;
-    height: 20px;
+    width: $size / 4;
+    height: $size / 4;
 
-    border-radius: 50%;
-
+    display: inline-block;
     background-repeat: no-repeat;
-    background-position: center;
-    background-size: 6px;
-
+    background-size: 100%;
 
     &--unchanged {
-
+      display: none;
     }
 
     &--up {
-
+      background-image: image-url('icons/trending-up');
     }
 
     &--down {
-
+      background-image: image-url('icons/trending-down');
     }
   }
 }
@@ -93,20 +90,7 @@
       text-align: center;
 
       .mq-level {
-        @include mq-level(160px, $size-4);
-
-        // height: 160px;
-        // width: 160px;
-        // line-height: 160px;
-        // border-radius: 50%;
-
-        // margin: 10px 0;
-
-        // background: $blue-dark;
-        // color: white;
-
-        // font-weight: bold;
-        // font-size: $size-4;
+        @include mq-level(160px, $size-2);
       }
     }
 
