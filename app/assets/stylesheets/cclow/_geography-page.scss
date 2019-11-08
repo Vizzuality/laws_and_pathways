@@ -1,3 +1,6 @@
+@import 'variables';
+@import 'events_timeline';
+
 .cclow-geography-page {
   margin-top: 2.8rem;
 
@@ -5,23 +8,78 @@
     font-weight: bold;
   }
 
-  .content-list {
-    .meta {
-      margin-bottom: 0.875rem;
+  .meta {
+    margin-bottom: 0.875rem;
 
-      span {
-        color: $grey-text;
-
-        &:not(:last-child) {
-          margin-right: 1.5rem;
-        }
-      }
+    .icon {
+      background-color: $red;
+      border-radius: 50%;
+      color: $white;
+      height: 1rem;
+      width: 1rem;
     }
 
+    &> * {
+      display: inline-block;
+      color: $grey-text;
+
+      &:not(:last-child) {
+        margin-right: 1.5rem;
+      }
+    }
+  }
+
+  .content-list {
     li {
       margin-top: 2.85rem;
     }
 
     margin-bottom: 5rem;
   }
+
+  .content-show {
+    section {
+      padding-top: 32px;
+      padding-bottom: 25px;
+    }
+
+    hr {
+      background-color: $grey-text;
+    }
+
+    h5 {
+      margin-bottom: 0.875rem;
+    }
+
+    .documents-list {
+      margin: 2.75rem 0.75rem;
+
+      li {
+        &:not(:last-child) {
+          margin-bottom: 1.75rem;
+        }
+      }
+
+      a {
+        color: $red;
+        font-size: $size-7;
+      }
+    }
+
+    .document-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $grey-light;
+      border-radius: 50%;
+      height: 3rem;
+      width: 3rem;
+    }
+  }
+
+  .details {
+    border: solid 1px $grey;
+    padding: 3.12rem;
+  }
 }
+
