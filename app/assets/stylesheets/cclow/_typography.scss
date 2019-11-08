@@ -1,11 +1,11 @@
 @font-face {
   font-family: "BrownTT Regular";
-  src: url("/assets/BrownTT-Regular.ttf") format("truetype");
+  src: font-url("BrownTT-Regular.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "BrownTT Bold";
-  src: url("/assets/BrownTT-Bold.ttf") format("truetype");
+  src: font-url("BrownTT-Bold.ttf") format("truetype");
 }
 
 h1 {
