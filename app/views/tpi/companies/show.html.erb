@@ -9,7 +9,8 @@
           </p>
           <div class="mq-level">
             <%= @company.mq_level %>
-            <%= @company.mq_status %>
+            <div class="mq-level-trend mq-level-trend--<%= @company.mq_status %>">
+            </div>
           </div>
           <p>
             <%= t("tpi.company.level_description.#{@company.mq_level.to_i}") %></h3>
@@ -98,23 +99,26 @@
 
   <% unless @company.cp_assessments.empty? %>
     <section class="carbon-performance container">
-      <h3>Carbon Performance <%= @company.name %></h3>
-      <div>
+      <div class="management-quality__header">
+        <h4>Carbon Performance <%= @company.name %></h4>
         <div>
-          Assessment Date
-          <%= select_tag :cp_assessment_id,
+          <div>
+            Assessment Date
+            <%= select_tag :cp_assessment_id,
                     options_from_collection_for_select(@company.cp_assessments, "id", "assessment_date", @cp_assessment.id),
-             data: {
-               remote: true,
-               url: cp_assessment_tpi_company_path(@company)
-             }
-          %>
-        </div>
-
-        <div id="cp-assessment">
-          <%= render partial: 'cp_assessment', locals: { assessment: @cp_assessment } %>
+               data: {
+                 remote: true,
+                 url: cp_assessment_tpi_company_path(@company)
+               }
+            %>
+          </div>
         </div>
       </div>
+
+      <div id="cp-assessment">
+        <%= render partial: 'cp_assessment', locals: { assessment: @cp_assessment } %>
+      </div>
+
       <p>
         Carbon Performance alignment of <%= @company.name %> with the Paris agreement benchmarks.
       </p>

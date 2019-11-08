@@ -1,3 +1,42 @@
+@mixin mq-level($size, $font-size: $size-5) {
+  height: $size;
+  width: $size;
+  line-height: $size;
+  border-radius: 50%;
+
+  margin: 20px 0;
+
+  background: $blue-dark;
+  color: white;
+
+  font-weight: bold;
+  font-size: $font-size;
+
+  .mq-level-trend {
+    width: 20px;
+    height: 20px;
+
+    border-radius: 50%;
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 6px;
+
+
+    &--unchanged {
+
+    }
+
+    &--up {
+
+    }
+
+    &--down {
+
+    }
+  }
+}
+
 .company-page {
   .summary-box {
     background: $grey;
@@ -11,22 +50,8 @@
       text-align: center;
     }
 
-    // & > * {
-    //   margin-top: 10px;
-    // }
-
     .mq-level {
-      height: 80px;
-      width: 80px;
-      line-height: 80px;
-      border-radius: 50%;
-
-      margin: 20px 0;
-
-      background: $blue-dark;
-      color: white;
-
-      font-weight: bold;
+      @include mq-level(80px);
     }
   }
 
@@ -64,18 +89,20 @@
       text-align: center;
 
       .mq-level {
-        height: 160px;
-        width: 160px;
-        line-height: 160px;
-        border-radius: 50%;
+        @include mq-level(160px, $size-4);
 
-        margin: 10px 0;
+        // height: 160px;
+        // width: 160px;
+        // line-height: 160px;
+        // border-radius: 50%;
 
-        background: $blue-dark;
-        color: white;
+        // margin: 10px 0;
 
-        font-weight: bold;
-        font-size: $size-4;
+        // background: $blue-dark;
+        // color: white;
+
+        // font-weight: bold;
+        // font-size: $size-4;
       }
     }
 
@@ -129,6 +156,7 @@
             &--not-applicable {
               background-image: image-url('icons/oval.svg');
               background-color: #C0C2C3;
+              background-size: 8px;
             }
           }
         }
@@ -136,8 +164,16 @@
     }
   }
 
-  section.carbon-performance {
+  .carbon-performance {
     margin-top: 50px;
     margin-bottom: 50px;
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      margin-bottom: 20px;
+    }
   }
 }

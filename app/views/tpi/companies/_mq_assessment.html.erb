@@ -6,7 +6,6 @@
       </p>
       <div class="mq-level">
         <%= assessment.level %>
-        <%= assessment.status %>
       </div>
       <p>
         <%= t("tpi.company.level_description.#{assessment.level.to_i}") %></h3>
@@ -38,7 +37,7 @@
         <% questions.each do |question| %>
 
           <p class="mq-assessment-question">
-            <span class="mq-assessment-answer mq-assessment-answer--<%= question.answer.downcase %>">
+            <span class="mq-assessment-answer mq-assessment-answer--<%= question.answer.parameterize %>">
             </span>
             <%= question.number %>. <%= question.question %>
           </p>
