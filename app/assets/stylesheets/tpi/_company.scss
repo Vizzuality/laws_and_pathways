@@ -73,7 +73,11 @@
       justify-content: space-between;
       align-items: center;
 
-      margin-bottom: 20px;
+      margin-bottom: 40px;
+    }
+
+    &__content {
+      margin-top: 20px;
     }
 
     .column {
@@ -186,6 +190,7 @@
   &__level {
     display: flex;
     position: relative;
+    padding: 10px 0;
 
     &:not(:last-child) {
       border-right: 1px solid black;
