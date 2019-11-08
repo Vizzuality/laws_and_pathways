@@ -13,6 +13,24 @@
     <%= javascript_pack_tag 'tpi' %>
   </head>
   <body>
+    <section class="tpi--banner">
+      <%= render "layouts/banner" %>
+    </section>
+
+    <section class="tpi--navbar">
+      <%= render "layouts/header" %>
+    </section>
+
     <%= yield %>
+
+    <footer class="footer">
+      <section class="section subscribe">
+        <%= render "layouts/subscribe" %>
+      </section>
+
+      <section class="section">
+        <%= render "layouts/footer" %>
+      </section>
+    </footer>
   </body>
 </html>

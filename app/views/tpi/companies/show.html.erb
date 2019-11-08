@@ -1,74 +1,127 @@
-<div data-controller="companies">
-  <h1>Company Details</h1>
-  <%= link_to 'back to all Sectors', tpi_sectors_path %>
-
-  <hr>
-
-  <div class="company-performance-summary container">
-    <div class="mq summary-box">
-      <h3>Management Quality</h3>
-      <h5>Number of assessments: <%= @company.mq_assessments.size %></h5>
-      <div class="mq-status-summary">
-        <%= @company.mq_level %>
-        <%= @company.mq_status %>
+<div class="company-page" data-controller="companies">
+  <section class="container">
+    <div class="columns">
+      <div class="column">
+        <div class="summary-box summary-box--assessment">
+          <h3>Management Quality</h3>
+          <p>
+            Number of assessments: <%= @company.mq_assessments.size %>
+          </p>
+          <div class="mq-level">
+            <%= @company.mq_level %>
+            <div class="mq-level-trend mq-level-trend--<%= @company.mq_status %>">
+            </div>
+          </div>
+          <p>
+            <%= t("tpi.company.level_description.#{@company.mq_level.to_i}") %></h3>
+          </p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="summary-box summary-box--assessment">
+          <h3>Carbon Performance</h3>
+          <p>
+            Number of assessments: <%= @company.cp_assessments.size %>
+          </p>
+          <p>
+            Below 2 degrees
+          </p>
+          <p>
+            The company’s emissions intensity and target are aligned with the Paris agreement benchmark of 2 degrees (high efficiency)
+          </p>
+        </div>
       </div>
     </div>
-
-    <div class="cp summary-box">
-      <h3>Carbon Performance</h3>
-      <h5>Number of assessments: <%= @company.cp_assessments.size %></h5>
-      <div class="cp-status-summary">
-        Below 2 degrees
+    <div class="columns">
+      <div class="column">
+        <div class="summary-box">
+          <div class="columns">
+            <div class="column">
+              <%= render 'company_property', name: 'Country' do %>
+                <%= link_to @company.geography.name, cclow_geography_path(@company.geography) %>
+              <% end %>
+            </div>
+            <div class="column">
+              <%= render 'company_property', name: 'Sector' do %>
+                <%= link_to @company.sector.name, tpi_sector_path(@company.sector.slug) %>
+              <% end %>
+            </div>
+            <div class="column">
+              <%= render 'company_property', name: 'Market cap (Group)' do %>
+                <%= @company.size %>
+              <% end %>
+            </div>
+            <div class="column">
+              <%= render 'company_property', name: 'ISIN' do %>
+                <%= @company.isin_array.join('<br/>').html_safe %>
+              <% end %>
+            </div>
+            <div class="column">
+              <%= render 'company_property', name: 'SEDOL' do %>
+                Don't have that
+              <% end %>
+            </div>
+            <div class="column">
+              <%= render 'company_property', name: 'CA100+ engagement' do %>
+                <%= @company.ca100? ? 'Yes' : 'No' %>
+              <% end %>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <br><br>
+  <section class="management-quality container">
+    <div class="management-quality__header">
+      <h4>Management Quality: <%= @company.name %></h4>
 
-  <div class="company-info container">
-    <%= @company_summary.slice(:name, :country, :sector, :market_cap, :isin, :sedol) %>
-  </div>
-
-  <hr>
-
-  <h3>Management Quality: <%= @company.name %></h3>
-  <div>
-    Assessment Date
-    <%= select_tag :mq_assessment_id,
-       options_from_collection_for_select(@company.mq_assessments, "id", "assessment_date", @mq_assessment.id),
-       data: {
-         remote: true,
-         url: mq_assessment_tpi_company_path(@company)
-       }
-    %>
-  </div>
-
-  <div id="mq-assessment">
-    <%= render partial: 'mq_assessment', locals: { assessment: @mq_assessment } %>
-  </div>
-
-  <hr>
-
-  <% unless @company.cp_assessments.empty? %>
-    <h3>Carbon Performance <%= @company.name %></h3>
-    <div>
       <div>
         Assessment Date
-        <%= select_tag :cp_assessment_id,
-           options_from_collection_for_select(@company.cp_assessments, "id", "assessment_date", @cp_assessment.id),
+        <%= select_tag :mq_assessment_id,
+              options_from_collection_for_select(@company.mq_assessments, "id", "assessment_date", @mq_assessment.id),
            data: {
              remote: true,
-             url: cp_assessment_tpi_company_path(@company)
+             url: mq_assessment_tpi_company_path(@company)
            }
         %>
+      </div>
+    </div>
+
+    <p>
+      Assessment of <%= @company.name %> according to the management of its greenhouse gas emissions and of risks and opportunities related to the low-carbon transition.
+    </p>
+
+    <div id="mq-assessment" class="management-quality__content">
+      <%= render partial: 'mq_assessment', locals: { assessment: @mq_assessment } %>
+    </div>
+  </section>
+
+  <% unless @company.cp_assessments.empty? %>
+    <section class="carbon-performance container">
+      <div class="management-quality__header">
+        <h4>Carbon Performance <%= @company.name %></h4>
+        <div>
+          <div>
+            Assessment Date
+            <%= select_tag :cp_assessment_id,
+                    options_from_collection_for_select(@company.cp_assessments, "id", "assessment_date", @cp_assessment.id),
+               data: {
+                 remote: true,
+                 url: cp_assessment_tpi_company_path(@company)
+               }
+            %>
+          </div>
+        </div>
       </div>
 
       <div id="cp-assessment">
         <%= render partial: 'cp_assessment', locals: { assessment: @cp_assessment } %>
       </div>
-    </div>
-    <p>
-      Carbon Performance alignment of <%= @company.name %> with the Paris agreement benchmarks.
-    </p>
+
+      <p>
+        Carbon Performance alignment of <%= @company.name %> with the Paris agreement benchmarks.
+      </p>
+    </section>
   <% end %>
 </div>
