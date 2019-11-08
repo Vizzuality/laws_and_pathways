@@ -11,7 +11,7 @@
         <%= t("tpi.company.level_description.#{assessment.level.to_i}") %></h3>
       </p>
 
-      <div>[TODO] summary of answers</div>
+      <%= render 'mq_assessment_answers_summary', assessment: assessment %>
     </div>
   </div>
 

@@ -1,0 +1,12 @@
+<div class="mq-assessment-answers-summary">
+  <% assessment.questions_by_level.each do |level, questions| %>
+    <div class="mq-assessment-answers-summary__level">
+      <div class="level-title"><%= level %></div>
+      
+      <% questions.each do |question| %>
+        <div class="mq-answer mq-answer--<%= question.answer.parameterize %> mq-answer--level-<%= level %>">
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
