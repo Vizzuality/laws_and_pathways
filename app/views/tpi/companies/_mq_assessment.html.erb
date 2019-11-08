@@ -1,24 +1,35 @@
-<div class="company-performance-details container">
-  <div class="mq-status summary-box">
-    <div>Current level</div>
-    <%= assessment.level %>
-    <%= assessment.status %>
-    <div>[TODO] summary of answers</div>
+<div class="columns">
+  <div class="column">
+    <div class="mq-assessment-box">
+      <p>
+        Current level
+      </p>
+      <div class="mq-level">
+        <%= assessment.level %>
+        <%= assessment.status %>
+      </div>
+      <p>
+        <%= t("tpi.company.level_description.#{assessment.level.to_i}") %></h3>
+      </p>
+
+      <div>[TODO] summary of answers</div>
+    </div>
   </div>
-  <div class="cp-status summary-box">
-    <div>Nr of assessments: <%= assessment.previous_assessments.size + 1 %></div>
-    <div>
-      <%= line_chart(
-        assessments_levels_chart_data_tpi_company_path(@company.id, mq_assessment_id: assessment.id),
-        library: mq_company_no_of_assessments_chart_options
-      ) %>
+
+  <div class="column">
+    <div class="mq-assessment-box">
+      <div>Nr of assessments: <%= assessment.previous_assessments.size + 1 %></div>
+      <div>
+        <%= line_chart(
+          assessments_levels_chart_data_tpi_company_path(@company.id, mq_assessment_id: assessment.id),
+          library: mq_company_no_of_assessments_chart_options
+          ) %>
+      </div>
     </div>
   </div>
 </div>
 
-<br>
-
-<div class="company-assessments container-columns">
+<div class="company-assessments">
   <div class="company-assessments questions">
     <% assessment.questions_by_level.each do |level, questions| %>
       <div class="assessment-level">

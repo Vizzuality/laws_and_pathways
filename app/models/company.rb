@@ -62,4 +62,10 @@ class Company < ApplicationRecord
   def latest_sector_benchmarks_before_last_assessment
     sector.latest_benchmarks_for_date(latest_cp_assessment&.assessment_date)
   end
+
+  def isin_array
+    return [] if isin.blank?
+
+    isin.split(',')
+  end
 end

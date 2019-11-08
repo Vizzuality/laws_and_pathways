@@ -1,0 +1,87 @@
+.company-page {
+  .summary-box {
+    background: $grey;
+    padding: 40px;
+
+    &--assessment {
+      height: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    // & > * {
+    //   margin-top: 10px;
+    // }
+
+    .mq-level {
+      height: 80px;
+      width: 80px;
+      line-height: 80px;
+      border-radius: 50%;
+
+      margin: 20px 0;
+
+      background: $blue-dark;
+      color: white;
+
+      font-weight: bold;
+    }
+  }
+
+  .company-property {
+    &__name {
+
+    }
+
+    &__value {
+    }
+  }
+
+  .management-quality {
+    margin-top: 50px;
+    margin-bottom: 50px;
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      margin-bottom: 20px;
+    }
+
+    .column {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mq-assessment-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+
+      .mq-level {
+        height: 160px;
+        width: 160px;
+        line-height: 160px;
+        border-radius: 50%;
+
+        margin: 10px 0;
+
+        background: $blue-dark;
+        color: white;
+
+        font-weight: bold;
+        font-size: $size-4;
+      }
+    }
+  }
+
+  section.carbon-performance {
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+}
