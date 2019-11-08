@@ -33,6 +33,7 @@ gem 'font-awesome-rails'
 
 # TPI
 gem 'chartkick'
+gem 'react-rails'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -41,6 +42,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'rspec-collection_matchers'
   gem 'rspec-rails', '~> 3.8'
+  gem 'timecop'
 end
 
 group :development do

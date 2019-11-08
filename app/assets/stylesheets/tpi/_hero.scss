@@ -1,0 +1,58 @@
+@import "app/colors";
+
+.tpi-home--hero {
+  color: $white;
+  position: relative;
+  overflow: hidden;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+
+  &.is-primary {
+    background: $blue-dark;
+  }
+
+  .hero--body {
+    .hero--content {
+      align-items: center;
+
+      .title {
+        color: $white;
+      }
+
+      .description {
+        line-height: $size-4;
+      }
+    }
+  }
+
+
+  .button--container {
+    display: flex;
+    margin-top: 50px;
+
+    .button--hero {
+      @extend .is-medium;
+
+      height: 5rem;
+      padding-left: 4.125rem;
+      padding-right: 4.125rem;
+      background-color: $blue-darker;
+    }
+  }
+
+  .hero--splash {
+    position: absolute;
+    top: 0;
+    left: 45%;
+  }
+
+
+  &.is-secondary {
+    background: $blue;
+
+    .button--icon {
+      background: $blue-darker;
+    }
+  }
+}

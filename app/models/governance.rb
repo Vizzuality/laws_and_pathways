@@ -16,5 +16,11 @@ class Governance < ApplicationRecord
   belongs_to :governance_type
   has_and_belongs_to_many :legislations
 
+  scope :ordered_with_parent, -> { joins(:governance_type).order('governance_types.name ASC, governances.name ASC') }
+
   validates_presence_of :name
+
+  def self.to_select
+    pluck(Arel.sql("CONCAT('[', governance_types.name, '] ', governances.name)"), :id)
+  end
 end

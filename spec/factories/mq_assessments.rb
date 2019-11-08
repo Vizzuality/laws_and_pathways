@@ -18,8 +18,8 @@ FactoryBot.define do
   factory :mq_assessment, class: MQ::Assessment do
     association :company
 
-    assessment_date { 1.year.ago }
-    publication_date { 11.months.ago }
+    assessment_date { 1.year.ago.to_date }
+    publication_date { 11.months.ago.to_date }
 
     level { '1' }
     notes { 'Some notes' }

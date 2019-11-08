@@ -1,3 +1,5 @@
+Dir[Rails.root.join('lib/extensions/active_admin_addons/*.rb')].each { |f| require f }
+
 ActiveadminAddons.setup do |config|
   # Change to "default" if you want to use ActiveAdmin's default select control.
   # config.default_select = "select2"
@@ -9,4 +11,8 @@ ActiveadminAddons.setup do |config|
 
   # Set DateTimePickerInput input format. This if for backend (Ruby)
   # config.datetime_picker_input_format = "%Y-%m-%d %H:%M"
+end
+
+Rails.configuration.to_prepare do
+  ActiveAdminAddons::SelectHelpers.send :prepend, ActiveAdminAddonsSelectHelpers
 end

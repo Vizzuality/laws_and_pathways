@@ -17,10 +17,10 @@
           <%= f.input :year %>
           <%= f.input :base_year_period %>
           <%= f.input :target_type, as: :select, collection: array_to_select_collection(Target::TYPES) %>
-          <%= f.input :geography %>
+          <%= f.input :geography, collection: Geography.order(:name) %>
           <%= f.input :sector %>
           <%= f.input :target_scope %>
-          <%= f.input :legislation_ids, as: :selected_list, label: 'Connected Legislations', fields: [:title], display_name: :title, order: 'title_asc' %>
+          <%= f.input :legislation_ids, as: :selected_list, label: 'Connected Laws', fields: [:title], display_name: :title, order: 'title_asc' %>
           <%= f.input :description, as: :trix %>
           <%= f.input :visibility_status, as: :select %>
         <% end %>

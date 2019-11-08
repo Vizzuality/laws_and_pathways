@@ -52,7 +52,7 @@ ActiveAdmin.register Target do
           row :target_type
           row :description
           row :geography
-          list_row 'Legislations', :legislation_links
+          list_row 'Laws', :legislation_links
           row :updated_at
           row :updated_by
           row :created_at

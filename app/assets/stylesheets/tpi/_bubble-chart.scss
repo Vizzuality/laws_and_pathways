@@ -1,0 +1,40 @@
+$tape-height: 8px;
+$tape-color: rgba(25,25,25,0.1);
+
+.bubble-chart--container {
+  width: 100%;
+  padding: 50px;
+  /* CSS GRID */
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 150px auto;
+  grid-row-gap: 4px;
+  align-items: center;
+}
+
+.bubble-chart--cell {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-right: calc(#{$tape-height / 2}) dotted $tape-color;
+
+  &:nth-child(5) {
+    border-right: none;
+  }
+
+  & > *:first-child {
+    height: unset !important;
+    width: 80% !important;
+    margin: auto;
+  }
+
+  &::before {
+    background-color: $tape-color;
+    content: "";
+    position: absolute;
+    top: calc(50% - #{$tape-height / 2});
+    height: $tape-height;
+    width: calc(100% + #{$tape-height / 2});
+  }
+}

@@ -23,17 +23,19 @@ module MQ
 
     scope :latest_first, -> { order(assessment_date: :desc) }
     scope :all_publication_dates, -> { distinct.order(publication_date: :desc).pluck(:publication_date) }
-    scope :by_assessment_year, ->(year) { where('extract(year from assessment_date) <= ?', year) }
 
     validates :level, inclusion: {in: LEVELS}
     validates_presence_of :assessment_date, :publication_date, :level
 
     def previous
+      previous_assessments.last
+    end
+
+    def previous_assessments
       company
         .mq_assessments
         .where('assessment_date < ?', assessment_date)
-        .latest_first
-        .first
+        .order(:assessment_date)
     end
 
     def status
@@ -49,6 +51,8 @@ module MQ
     end
 
     def questions
+      return unless self[:questions].present?
+
       @questions ||= self[:questions].each_with_index.map do |q_hash, index|
         MQ::Question.new(q_hash.merge(number: index + 1))
       end

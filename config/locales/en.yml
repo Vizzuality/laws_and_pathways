@@ -49,6 +49,14 @@ en:
       cancel: Cancel
   hint:
     tag: 'Pick an existing one or create new typing name and pressing ENTER'
+  tpi:
+    company:
+      level_description:
+        '0': Unaware of Climate Change as a Business Issue
+        '1': Acknowledging Climate Change as a Business Issue
+        '2': Building Capacity
+        '3': Integrating into Operational Decision Making
+        '4': Strategic Assessment
   cclow:
     legislation_types:
       executive: 'Executive'
