@@ -29,20 +29,21 @@
   </div>
 </div>
 
-<div class="company-assessments">
-  <div class="company-assessments questions">
-    <% assessment.questions_by_level.each do |level, questions| %>
-      <div class="assessment-level">
-        <h3>Level <%= level %>: <%= t("tpi.company.level_description.#{level}", default: 'Answers') %></h3>
-        <div class="assessment-details">
-          <% questions.each do |question| %>
-            <div class="container">
-              <div class="assessment-answer">(<%= question.answer %>)</div>
-              <div class="assessment-question"><%= question.question %></div>
-            </div>
-          <% end %>
-        </div>
+<div class="mq-assessment-questions">
+  <% assessment.questions_by_level.each do |level, questions| %>
+    <div class="mq-assessment-level">
+      <p class="mq-assessment-level__header">Level <%= level %>: <%= t("tpi.company.level_description.#{level}") %></p>
+
+      <div class="mq-assessment-answers">
+        <% questions.each do |question| %>
+
+          <p class="mq-assessment-question">
+            <span class="mq-assessment-answer mq-assessment-answer--<%= question.answer.downcase %>">
+            </span>
+            <%= question.number %>. <%= question.question %>
+          </p>
+        <% end %>
       </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </div>

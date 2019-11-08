@@ -78,6 +78,62 @@
         font-size: $size-4;
       }
     }
+
+    .mq-assessment-questions {
+      margin-top: 50px;
+
+      .mq-assessment-level {
+        padding: 40px;
+
+        border-left: 2px solid $hawkes-blue;
+
+        &__header {
+          font-size: 16px;
+          font-weight: bold;
+        }
+
+        &:not(:last-child) {
+          border-bottom: 2px solid $hawkes-blue;
+        }
+
+        .mq-assessment-question {
+          margin: 30px 0;
+
+          position: relative;
+
+          .mq-assessment-answer {
+            width: 36px;
+            height: 36px;
+
+            border-radius: 50%;
+
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 16px;
+
+            display: block;
+            position: absolute;
+            left: -60px;
+            top: -10px;
+
+            &--no {
+              background-image: image-url('icons/x.svg');
+              background-color: #ED3D4A;
+            }
+
+            &--yes {
+              background-image: image-url('icons/check.svg');
+              background-color: #083AAB;
+            }
+
+            &--not-applicable {
+              background-image: image-url('icons/oval.svg');
+              background-color: #C0C2C3;
+            }
+          }
+        }
+      }
+    }
   }
 
   section.carbon-performance {
