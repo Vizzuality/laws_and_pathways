@@ -2,7 +2,7 @@
   <h5 class="title"><%= title %></h5>
   <p class="meta">
     <% if date_passed.present? %>
-      <span>Passed in <%= date_passed&.year %></span>
+      <span>Opened in <%= date_passed&.year %></span>
     <% end %>
     <% if event_type.present? %>
       <span><%= I18n.t("cclow.litigation.event_types.#{event_type}") %></span>

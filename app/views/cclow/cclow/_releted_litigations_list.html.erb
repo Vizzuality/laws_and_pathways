@@ -1,0 +1,17 @@
+<ul class="content-list">
+  <% litigations.each do |litigation| %>
+    <li>
+      <h5 class="title"><%= litigation.title %></h5>
+      <p class="meta">
+        <% if litigation.started_event.present? %>
+          <span>Opened in <%= litigation.started_event.date&.year %></span>
+        <% end %>
+        <% if litigation.events.present? %>
+          <span><%= I18n.t("cclow.litigation.event_types.#{litigation.events.last.event_type}") %></span>
+        <% end %>
+      <p>
+        <%= litigation.summary.html_safe %>
+      </p>
+    </li>
+  <% end %>
+</ul>

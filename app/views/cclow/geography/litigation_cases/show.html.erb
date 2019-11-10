@@ -7,42 +7,30 @@
     </div>
     <div><span>Mitigation</span></div>
   </div>
-  <section>
+  <section class="section is-medium">
     <%= render 'cclow/geography/litigation_cases/details_card', litigation: @litigation %>
   </section>
-  <section>
-    <h5>Timeline of events</h5>
-    <% if @litigation.events.present? %>
-      <%= render 'cclow/geography/litigation_cases/events', events: @litigation.events %>
-    <% end %>
-  </section>
+  <% if @litigation.events.present? %>
+    <section class="section is-medium">
+      <h5>Timeline of events</h5>
+      <%= render 'events_timeline', events: @litigation.events %>
+    </section>
+  <% end %>
   <hr>
-  <section>
+  <section class="section is-medium">
     <%= @litigation.summary&.html_safe %>
   </section>
-  <section>
-    <h5>Case documents</h5>
-    <ul class="documents-list">
-      <% @litigation.documents.each do |document| %>
-        <li class="columns">
-          <span class="document-icon column is-1">
-            <i class="fa fa-lg fa-file-pdf-o"></i>
-          </span>
-          <a href="#" class="column is-11"><%= document.name %></a>
-        </li>
-      <% end %>
-    </ul>
-  </section>
+  <% if @litigation.documents.present? %>
+    <section class="section is-medium">
+      <h5>Case documents</h5>
+      <%= render 'documents_list', documents: @litigation.documents %>
+    </section>
+  <% end %>
   <hr>
-  <section class="container">
-    <h5>Related laws and policies</h5>
-    <ul class="content-list">
-      <% @legislations.each do |l| %>
-        <%= render 'cclow/geography/legislations/list_item', title: l.link,
-                   description: l.description,
-                   legislation_type: l.legislation_type,
-                   date_passed: l.date_passed %>
-      <% end %>
-    </ul>
-  </section>
+  <% if @legislations.present? %>
+    <section class="section is-medium">
+      <h5>Related laws and policies</h5>
+      <%= render 'related_laws_list', legislations: @legislations %>
+    </section>
+  <% end %>
 </div>

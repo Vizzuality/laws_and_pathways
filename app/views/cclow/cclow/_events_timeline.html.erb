@@ -8,7 +8,7 @@
         <div class="time-point">
           <div class="event-title"><%= event.title %></div>
           <div class="point"></div>
-          <div class="date"><%= event.date %></div>
+          <div class="date"><%= event.date&.strftime('%B %Y') %></div>
         </div>
       <% end %>
     </div>

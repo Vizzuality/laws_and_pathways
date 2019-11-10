@@ -4,12 +4,29 @@
 .cclow-geography-page {
   margin-top: 2.8rem;
 
+  .title-page {
+    align-items: center;
+    display: flex;
+
+    img {
+      height: 30px;
+      margin-right: 20px;
+    }
+  }
+
   h3, h5 {
     font-weight: bold;
   }
 
   .meta {
+    display: flex;
     margin-bottom: 0.875rem;
+    font-size: 0.875rem;
+
+    .flag {
+      height: 20px;
+      margin-right: 10px;
+    }
 
     .icon {
       background-color: $red;
@@ -20,8 +37,8 @@
     }
 
     &> * {
-      display: inline-block;
       color: $grey-text;
+      display: inline-block;
 
       &:not(:last-child) {
         margin-right: 1.5rem;
@@ -30,6 +47,10 @@
   }
 
   .content-list {
+    .title {
+      color: $red;
+    }
+
     li {
       margin-top: 2.85rem;
     }
@@ -38,10 +59,6 @@
   }
 
   .content-show {
-    section {
-      padding-top: 32px;
-      padding-bottom: 25px;
-    }
 
     hr {
       background-color: $grey-text;
@@ -80,6 +97,33 @@
   .details {
     border: solid 1px $grey;
     padding: 3.12rem;
+  }
+
+  .climate-targets-section {
+    margin-bottom: 3rem;
+
+    .nav {
+      display: flex;
+      background-color: $grey-light;
+      border: 1px solid $border-cl;
+      justify-content: space-between;
+      padding: 1rem 2.5rem 0;
+
+      .counter {
+        @extend h5;
+      }
+    }
+
+    li {
+      padding: 2.5rem;
+      border-bottom: solid 1px $grey;
+    }
+
+    .tags {
+      font-weight: bold;
+      font-size: $size-7;
+      margin: 1.4rem 0;
+    }
   }
 }
 

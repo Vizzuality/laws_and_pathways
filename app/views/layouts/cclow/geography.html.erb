@@ -1,6 +1,9 @@
 <% content_for :content do %>
   <div class="cclow-geography-page">
-    <h5><%= @geography.name %></h5>
+    <div class="title-page">
+      <%= @geography.flag_image %>
+      <h5><%= @geography.name %></h5>
+    </div>
     <hr>
     <div class="columns">
       <aside class="column is-one-quarter">
