@@ -4,6 +4,8 @@ import { select } from 'd3-selection';
 import tip from 'd3-tip';
 import * as d3 from 'd3-force';
 
+const CELL_HEIGHT = 55; // same as cell height in bubble_chart.scss
+
 class SingleBubbleChart extends PureComponent {
   render() {
     const {
@@ -68,7 +70,7 @@ class SingleBubbleChart extends PureComponent {
 
     return (
       <Fragment>
-        <svg id={key} width={width} height={height} viewBox="0 -100 400 400">
+        <svg id={key} width={width} height={height} viewBox={`0 -${CELL_HEIGHT} 400 400`}>
           <g className='bubble-chart_circle' transform="translate(200, 100)"></g>
         </svg>
       </Fragment>
