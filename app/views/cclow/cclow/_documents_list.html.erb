@@ -1,0 +1,14 @@
+<ul class="documents-list">
+  <% documents.each do |document| %>
+    <li class="columns">
+      <span class="document-icon column is-1">
+        <% if document.uploaded? %>
+          <i class="fa fa-lg fa-file-pdf-o"></i>
+        <% else %>
+          <i class="fa fa-lg fa-link"></i>
+        <% end %>
+      </span>
+      <a href="<%= document.url %>" class="column is-11"><%= document.name %></a>
+    </li>
+  <% end %>
+</ul>

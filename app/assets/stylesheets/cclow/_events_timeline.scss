@@ -1,0 +1,110 @@
+@import 'variables';
+
+.events-container {
+  display: flex;
+  position: relative;
+  overflow-y: hidden;
+  width: 100%;
+
+  .timeline {
+    display: flex;
+    position: relative;
+  }
+
+  .time-point {
+    position: relative;
+    text-align: center;
+    width: 275px;
+
+    &:last-child {
+      .point {
+        &:after {
+          border: none;
+        }
+      }
+    }
+
+    &:first-child {
+      .point {
+        &:before {
+          border: none;
+        }
+      }
+    }
+  }
+
+  .point {
+    background-color: $red;
+    border-radius: 50%;
+    height: 12px;
+    margin: auto;
+    width: 12px;
+    position: relative;
+
+    &:before {
+      content: "";
+      display: block;
+      width: 130px;
+      position: absolute;
+      left: -130px;
+      border:none;
+      border-top: 2px dashed $blue-dark;
+      color: #fff;
+      background-color: transparent;
+      height: 2px;
+      top: 5px;
+    }
+    &:after {
+      content: "";
+      display: block;
+      width: 130px;
+      position: absolute;
+      left: 12px;
+      border:none;
+      border-top: 2px dashed $blue-dark;
+      color: #fff;
+      background-color: transparent;
+      height: 2px;
+      top: 5px;
+    }
+  }
+
+  .event-title {
+    align-items: flex-end;
+    display: flex;
+    height: 2.5rem;
+    justify-content: center;
+    font-size: $size-7;
+    margin: 0.875rem 0;
+    overflow: hidden;
+  }
+
+  .date {
+    color: $grey-text;
+    font-size: $size-7;
+    margin: 0.875rem 0;
+  }
+}
+
+.timeline-events {
+  position: relative;
+
+  .arrow-left, .arrow-right {
+    height: 48px;
+    width: 48px;
+    background-color: $grey-light;
+    position: absolute;
+    z-index: 1;
+    border-radius: 50%;
+    top: 44px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .arrow-right {
+    cursor: pointer;
+    right: 0;
+  }
+}

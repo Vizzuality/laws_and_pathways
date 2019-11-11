@@ -59,5 +59,20 @@ en:
         '4': Strategic Assessment
   cclow:
     legislation_types:
-      executive: 'Executive'
-      legislative: 'Legislative'
+      executive: Executive
+      legislative: Legislative
+    litigation:
+      event_types:
+        case_started: Started
+        case_dismissed: Dismissed
+        case_overruled: Overruled
+        case_decided: Decided
+    target_types:
+      base_year_target: Base Year Target
+      baseline_scenario_target: Baseline Scenario Target
+      fixed_level_target: Fixed Level Target
+      intensity_target: Intensity Target
+      intensity_target_and_trajectory_target: Intensity Target And Trajectory Target
+      no_document_submitted: No Document Submitted
+      trajectory_target: Trajectory Target
+

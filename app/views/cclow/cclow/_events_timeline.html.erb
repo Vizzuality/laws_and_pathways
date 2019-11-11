@@ -1,0 +1,19 @@
+<div class="timeline-events">
+  <div class="arrow-left">
+    <i class="fa fa-arrow-left"></i>
+  </div>
+  <div class="events-container">
+    <div class="timeline">
+      <% events.each do |event| %>
+        <div class="time-point">
+          <div class="event-title"><%= event.title %></div>
+          <div class="point"></div>
+          <div class="date"><%= event.date&.strftime('%B %Y') %></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="arrow-right">
+    <i class="fa fa-arrow-right"></i>
+  </div>
+</div>

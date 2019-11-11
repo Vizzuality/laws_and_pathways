@@ -1,10 +1,30 @@
-<h1>Litigation cases</h1>
-
-<div class="list">
-  <% @litigations.each do |l| %>
-    <%= render 'list_item',
-                 title: link_to(l.title, cclow_geography_litigation_case_path(l.jurisdiction, l)),
-                 description: l.summary
-    %>
-  <% end %>
+<div class="cclow-geography-page">
+  <div class="container">
+    <h3>All Litigation cases</h3>
+    <hr>
+    <div class="columns">
+      <div class="column is-one-quarter">
+        FILTERS
+      </div>
+      <main class="column is-three-quarters">
+        <div class="columns pre-content">
+          <span class="column is-half">Showing 296 results</span>
+          <a class="column is-half download-link" href="#">Download results (CSV in .zip)</a>
+        </div>
+        <ul class="content-list">
+          <% @litigations.each do   |l| %>
+            <%= render 'cclow/litigation_cases/list_item',
+                         title: link_to(l.title, cclow_geography_litigation_case_path(l.jurisdiction, l)),
+                         description: l.summary,
+                         date_passed: l.started_event&.date,
+                         event_type: l.events.last&.event_type
+            %>
+          <% end %>
+        </ul>
+        <div class="column is-offset-5">
+          <button class="button is-primary">Load 10 more entries</button>
+        </div>
+      </main>
+    </div>
+  </div>
 </div>
