@@ -125,7 +125,6 @@ module Api
           {
             id: company.id,
             name: company.name,
-            sector: company.sector.name,
             status: company.mq_status
           }
         end
