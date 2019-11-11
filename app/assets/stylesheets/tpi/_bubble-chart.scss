@@ -39,20 +39,6 @@ $tape-color: rgba(25,25,25,0.1);
   }
 }
 
-// override 3rd party React Tooltip
-.bubble-chart__tooltip {
-  box-shadow: none;
-  background-color: white !important;
-  border: 1px solid black;
-  border-radius: 0;
-  color: black !important;
-
-  &::after {
-    display: none !important;
-  }
-}
-
-
 .bubble-chart_circle {
   circle:hover {
     stroke-width: 10;
