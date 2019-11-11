@@ -1,0 +1,19 @@
+<div class="details">
+  <p>
+    <b>Jurisdiction: </b> <%= litigation.jurisdiction.slug %>
+  </p>
+  <br>
+  <p>
+    <b>Principle law(s): </b> <%= litigation.legislations.map(&:title).join(',') %>
+  </p>
+  <br>
+  <% litigation.litigation_sides.each do |side| %>
+    <p>
+      <b>Side <%=side.side_type.upcase %>: </b> <%= side.name %>
+    </p>
+    <br>
+  <% end %>
+  <p>
+    <b>Core objectives:</b><%= litigation.core_objective.html_safe %>
+  </p>
+</div>

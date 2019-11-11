@@ -1,0 +1,19 @@
+<ul class="content-list">
+  <% legislations.each do |legislation| %>
+    <li>
+      <div class="meta"><img class="flag" src=<%= asset_path "flags/#{legislation.geography.iso}.svg"%> alt="">
+        This law implements <%= legislation.geography.name %> legislation
+      </div>
+      <h5 class="title">
+        <a href="#">An example of a EU directive (Directive 2008/98/EC)</a>
+      </h5>
+      <p class="meta">
+        <span>Passed in <%= legislation.date_passed.year %></span>
+        <span><%= I18n.t("cclow.legislation_types.#{legislation.legislation_type}") %></span>
+      </p>
+      <p>
+        <%= legislation.description.html_safe %>
+      </p>
+    </li>
+  <% end %>
+</ul>

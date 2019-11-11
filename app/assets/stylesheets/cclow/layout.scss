@@ -100,4 +100,18 @@ main {
   }
 }
 
+.pre-content {
+  color: $blue-dark;
+  font-size: $size-7;
+
+  .download-link {
+    color: $red;
+    text-align: end;
+  }
+}
+
+button {
+  font-weight: bold;
+}
+
 

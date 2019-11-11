@@ -1,7 +1,47 @@
-<div>
-  <h1><%= @legislation.title %></h1>
-
-  <div>
-    <%= @legislation.description&.html_safe %>
+<div class="content-show">
+  <h3 class="title"><%= @legislation.title %></h3>
+  <div class="meta">
+    <div><%= I18n.t("cclow.legislation_types.#{@legislation.legislation_type}") %></div>
+    <div>
+      <span>Action plan</span>
+      <span class="icon"><i class="fa fa-question"></i></span>
+    </div>
+    <div>
+      <span>Mitigation Framework</span>
+      <span class="icon"><i class="fa fa-question"></i></span>
+    </div>
+    <div>Passed in <%= @legislation.date_passed.year %></div>
   </div>
+  <section class="section is-medium">
+    <%= @legislation.description&.html_safe %>
+  </section>
+  <% if @legislation.events.present? %>
+    <section class="section is-medium">
+      <h5>Timeline of events</h5>
+      <%= render 'events_timeline', events: @legislation.events %>
+    </section>
+  <% end %>
+  <hr>
+  <% if @legislation.events.present? %>
+    <section class="section is-medium">
+      <h5>Documents</h5>
+      <%= render 'documents_list', documents: @legislation.documents %>
+    </section>
+  <% end %>
+  <% if @legislation.targets.present? %>
+    <section class="section is-medium">
+      <%= render 'cclow/geography/legislations/climate_targets', targets: @legislation.targets %>
+    </section>
+  <% end %>
+  <section>
+    <h5>Related laws and policies</h5>
+    <%= render 'related_laws_list', legislations: Legislation.first(2) %>
+  </section>
+  <hr>
+  <% if @legislation.litigations.present? %>
+    <section>
+      <h5>Related litigation cases</h5>
+      <%= render 'releted_litigations_list', litigations: @legislation.litigations %>
+    </section>
+  <% end %>
 </div>

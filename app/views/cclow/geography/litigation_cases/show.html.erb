@@ -1,7 +1,36 @@
-<div>
-  <h1><%= @litigation.title %></h1>
-
-  <div>
-    <%= @litigation.summary&.html_safe %>
+<div class="content-show">
+  <h3 class="title"><%= @litigation.title %></h3>
+  <div class="meta">
+    <div>
+      <span>Passed in <%= @litigation.started_event&.date&.year %></span>
+      <span class="icon"><i class="fa fa-question"></i></span>
+    </div>
+    <div><span>Mitigation</span></div>
   </div>
+  <section class="section is-medium">
+    <%= render 'cclow/geography/litigation_cases/details_card', litigation: @litigation %>
+  </section>
+  <% if @litigation.events.present? %>
+    <section class="section is-medium">
+      <h5>Timeline of events</h5>
+      <%= render 'events_timeline', events: @litigation.events %>
+    </section>
+  <% end %>
+  <hr>
+  <section class="section is-medium">
+    <%= @litigation.summary&.html_safe %>
+  </section>
+  <% if @litigation.documents.present? %>
+    <section class="section is-medium">
+      <h5>Case documents</h5>
+      <%= render 'documents_list', documents: @litigation.documents %>
+    </section>
+  <% end %>
+  <hr>
+  <% if @legislations.present? %>
+    <section class="section is-medium">
+      <h5>Related laws and policies</h5>
+      <%= render 'related_laws_list', legislations: @legislations %>
+    </section>
+  <% end %>
 </div>
