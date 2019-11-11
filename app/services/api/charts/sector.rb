@@ -33,10 +33,10 @@ module Api
           .map { |sector, companies| [sector, companies_market_cap(companies)] }
           .sort.to_h
         grouped_by_sectors_and_levels = grouped
-          .map { |sector, companies| [sector, companies.group_by { |company| company[:level] } ] }
+          .map { |sector, companies| [sector, companies.group_by { |company| company[:level] }] }
           .sort.to_h
-        sorted_levels = grouped_by_sectors_and_levels
-          .map do |sector, levels| 
+        grouped_by_sectors_and_levels
+          .map do |sector, levels|
             lvls.each { |l| levels[l].nil? ? levels[l] = [] : '' }
             levels.sort.to_h
             [sector, levels]
