@@ -2,6 +2,7 @@
 
 $tape-height: 8px;
 $tape-color: rgba(25,25,25,0.1);
+$cell-height: 55px;
 
 .bubble-chart__container {
   width: 100%;
@@ -15,7 +16,7 @@ $tape-color: rgba(25,25,25,0.1);
 
 .bubble-chart__cell {
   position: relative;
-  height: 132px;
+  height: $cell-height;
   display: flex;
   align-items: center;
   border-right: calc(#{$tape-height / 2}) dotted $tape-color;
