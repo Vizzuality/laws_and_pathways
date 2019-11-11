@@ -1,20 +1,19 @@
 $tape-height: 8px;
 $tape-color: rgba(25,25,25,0.1);
 
-.bubble-chart--container {
+.bubble-chart__container {
   width: 100%;
   padding: 50px;
   /* CSS GRID */
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
   grid-template-rows: 150px auto;
   grid-row-gap: 4px;
   align-items: center;
 }
 
-.bubble-chart--cell {
+.bubble-chart__cell {
   position: relative;
-  height: 100%;
+  height: 132px;
   display: flex;
   align-items: center;
   border-right: calc(#{$tape-height / 2}) dotted $tape-color;
@@ -27,6 +26,7 @@ $tape-color: rgba(25,25,25,0.1);
     height: unset !important;
     width: 80% !important;
     margin: auto;
+    z-index: 1;
   }
 
   &::before {
@@ -37,4 +37,33 @@ $tape-color: rgba(25,25,25,0.1);
     height: $tape-height;
     width: calc(100% + #{$tape-height / 2});
   }
+}
+
+// override 3rd party React Tooltip
+.bubble-chart__tooltip {
+  box-shadow: none;
+  background-color: white !important;
+  border: 1px solid black;
+  border-radius: 0;
+  color: black !important;
+
+  &::after {
+    display: none !important;
+  }
+}
+
+
+.bubble-chart_circle {
+  circle:hover {
+    stroke-width: 10;
+    stroke: black;
+  }
+}
+
+.d3-tip {
+  background-color: white;
+  border: 1px solid black;
+  font-size: 14px;
+  padding: 10px;
+  z-index: 5;
 }

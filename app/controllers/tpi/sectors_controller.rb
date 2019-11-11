@@ -3,6 +3,8 @@ module TPI
     def index
       @sectors = TPISector.select(:id, :name, :slug).order(:name)
       @companies = Company.select(:id, :name, :slug)
+      @companies_by_levels  = ::Api::Charts::Sector.new(companies_scope(params)).companies_summaries_by_level
+      @companies_by_sectors = ::Api::Charts::Sector.new(companies_scope(params)).companies_market_cap_by_sector
     end
 
     def show

@@ -27,6 +27,23 @@ module Api
           .sort.to_h
       end
 
+      def companies_market_cap_by_sector
+        lvls = companies_summaries_by_level.keys
+        grouped = companies_grouped_by_sector
+          .map { |sector, companies| [sector, companies_market_cap(companies)] }
+          .sort.to_h
+        grouped_by_sectors_and_levels = grouped
+          .map { |sector, companies| [sector, companies.group_by { |company| company[:level] } ] }
+          .sort.to_h
+        sorted_levels = grouped_by_sectors_and_levels
+          .map do |sector, levels| 
+            lvls.each { |l| levels[l].nil? ? levels[l] = [] : '' }
+            levels.sort.to_h
+            [sector, levels]
+          end
+          .to_h
+      end
+
       # Returns Companies count grouped by their latest MQ assessment levels.
       #
       # Returns single series of data.
@@ -72,6 +89,12 @@ module Api
           .group_by { |company| company.latest_mq_assessment.level }
       end
 
+      def companies_grouped_by_sector
+        @company_scope
+          .includes(:sector)
+          .group_by { |company| company.sector.name }
+      end
+
       def emissions_data_from_companies
         @company_scope
           .includes(:mq_assessments, :cp_assessments)
@@ -85,7 +108,7 @@ module Api
             fillOpacity: 0.1,
             name: benchmark.scenario,
             data: benchmark.emissions
-          }
+          }\
         end
       end
 
@@ -102,7 +125,19 @@ module Api
           {
             id: company.id,
             name: company.name,
+            sector: company.sector.name,
             status: company.mq_status
+          }
+        end
+      end
+
+      def companies_market_cap(companies)
+        companies.map do |company|
+          {
+            name: company.name,
+            sector: company.sector.name,
+            size: company.size,
+            level: company.latest_mq_assessment.level
           }
         end
       end
