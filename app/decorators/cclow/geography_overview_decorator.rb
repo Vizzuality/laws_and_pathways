@@ -13,5 +13,9 @@ module CCLOW
     def number_of_litigation_cases
       model.litigations.count
     end
+
+    def number_of_targets
+      model.targets.count
+    end
   end
 end

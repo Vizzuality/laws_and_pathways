@@ -44,6 +44,12 @@
         margin-right: 1.5rem;
       }
     }
+
+    .highlight {
+      color: $red;
+      font-family: "BrownTT Bold";
+      margin: 0 4px;
+    }
   }
 
   .content-list {
@@ -53,6 +59,14 @@
 
     li {
       margin-top: 2.85rem;
+    }
+
+    .with-meta {
+      margin-top: 1rem;
+
+      .meta {
+        margin-bottom: 2.25rem;
+      }
     }
 
     margin-bottom: 5rem;
@@ -102,6 +116,10 @@
   .climate-targets-section {
     margin-bottom: 3rem;
 
+    h5 {
+      margin-bottom: 0.875rem;
+    }
+
     .nav {
       display: flex;
       background-color: $grey-light;
@@ -115,14 +133,56 @@
     }
 
     li {
-      padding: 2.5rem;
       border-bottom: solid 1px $grey;
+      margin: 0;
+      padding: 2.5rem;
     }
 
     .tags {
-      font-weight: bold;
+      font-family: "BrownTT Bold";
       font-size: $size-7;
       margin: 1.4rem 0;
+    }
+
+    .source {
+      font-size: $size-7;
+
+      .name {
+        color: $red;
+        font-size: $size-6;
+        font-family: "BrownTT Bold";
+        margin: 0.3rem 0;
+      }
+    }
+
+    &.ndc-content {
+      .nav {
+        background-color: $border-cl;
+      }
+
+      li {
+        background-color: $grey-light;
+        border: none;
+      }
+    }
+  }
+
+  .content-list {
+    .climate-targets-section {
+      .tags {
+        margin-bottom: 3rem;
+      }
+    }
+  }
+
+  .ndc-hint {
+    align-items: flex-end;
+    display: flex;
+
+    span {
+      color: $blue-dark;
+      margin: 0 5px 2px;
+      font-size: $size-7;
     }
   }
 }
