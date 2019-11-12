@@ -47,7 +47,7 @@
 
     .highlight {
       color: $red;
-      font-weight: bold;
+      font-family: "BrownTT Bold";
       margin: 0 4px;
     }
   }
@@ -139,7 +139,7 @@
     }
 
     .tags {
-      font-weight: bold;
+      font-family: "BrownTT Bold";
       font-size: $size-7;
       margin: 1.4rem 0;
     }
@@ -150,7 +150,7 @@
       .name {
         color: $red;
         font-size: $size-6;
-        font-weight: bold;
+        font-family: "BrownTT Bold";
         margin: 0.3rem 0;
       }
     }
