@@ -1,8 +1,5 @@
-@charset "utf-8";
-
-@import "app/colors";
-@import "app/sizes";
-@import "app/typography";
+@import "colors";
+@import "typography";
 
 $primary: $blue;
 $radius: 0;
@@ -77,15 +74,3 @@ $navbar-bottom-box-shadow-size: 0;
 $tag-background-color: $white;
 $tag-color: $grey-dark;
 $tag-radius: 0;
-
-@import "bulma/sass/utilities/all";
-@import "bulma/sass/base/all";
-@import "bulma/sass/elements/all";
-// @import "bulma/sass/form/all";
-@import "bulma/sass/components/all";
-@import "bulma/sass/grid/all";
-@import "bulma/sass/layout/all";
-
-@import "app/buttons";
-@import "app/forms";
-@import "app/tags";
