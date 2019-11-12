@@ -138,8 +138,8 @@ module Api
             sector: company.sector.name,
             size: company.size,
             slug: company.slug,
-            level4STAR: company.is4STAR?,
-            level: company.is4STAR? ? '4' : company.latest_mq_assessment.level
+            level4STAR: company.is_4_star?,
+            level: company.is_4_star? ? '4' : company.latest_mq_assessment.level
           }
         end
       end

@@ -69,7 +69,7 @@ class Company < ApplicationRecord
     isin.split(',')
   end
 
-  def is4STAR?
+  def is_4_star?
     latest_mq_assessment.level.eql?('4STAR')
   end
 end
