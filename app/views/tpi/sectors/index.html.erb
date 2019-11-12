@@ -27,8 +27,7 @@ Companies:
 <hr>
 
 <h4>Market Cap</h4>
-<p>TODO: bubble chart for sectors / levels</p>
-  <%= react_component("BubbleChart", { }) %>
+  <%= react_component("BubbleChart", { companies: @companies_by_levels, levels: @companies_by_sectors }) %>
 <hr>
 
 <h3>Carbon Performance: All sectors</h3>
