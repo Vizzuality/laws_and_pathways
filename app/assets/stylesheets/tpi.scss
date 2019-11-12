@@ -22,5 +22,10 @@
 @import "tpi/hero";
 @import "tpi/bubble-chart";
 @import "tpi/charts";
-@import "tpi/company";
 @import "tpi/footer";
+
+@import "tpi/pages/*";
+
+html {
+  scroll-behavior: smooth;
+}
