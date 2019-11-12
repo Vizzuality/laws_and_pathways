@@ -22,9 +22,13 @@ module Api
       #    ]
       #   }
       def companies_summaries_by_level
-        companies_grouped_by_latest_assessment_level
+        grouped_by_level = companies_grouped_by_latest_assessment_level
           .map { |level, companies| [level, companies_summary(companies)] }
           .sort.to_h
+
+        (0..4).map do |level|
+          [level.to_s, grouped_by_level.fetch(level.to_s, [])]
+        end.to_h
       end
 
       def companies_market_cap_by_sector

@@ -2,7 +2,9 @@
   <div class="container">
     <div class="columns">
       <div class="column is-3 logo">
-        <img src="<%= asset_path 'logo/TPI_logo@2x.png' %>" class="banner__logo">
+        <%= link_to tpi_root_path do %>
+          <img src="<%= asset_path 'logo/TPI_logo@2x.png' %>" class="banner__logo">
+        <% end %>
       </div>
       <div class="column is-offset-2 partners__container">
         <p class="content is-size-7">In partnership with:</p>

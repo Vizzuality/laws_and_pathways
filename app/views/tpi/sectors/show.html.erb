@@ -29,18 +29,22 @@
         ) %>
     </div>
 
-    <div class="sector-level-overview">
+    <div class="sector-level-overview columns">
       <% @companies_by_levels.each do |level, companies| -%>
-        <div class="sector-level">
+        <div class="sector-level column">
           <div class="sector-level__title">
-            <h4>Level <%= level %></h4>
+            <h5>Level <%= level %></h5>
             <p><%= t("tpi.company.level_description_short.#{level.to_i}") %></p>
           </div>
           <div class="sector-level__companies level<%= level.to_i %>">
             <ul>
-              <%- companies.each do |company| %>
+              <% companies.each do |company| %>
                 <li><%= link_to company[:name], tpi_company_path(company[:id]) %> [<%= company[:status] %>]</li>
-              <%- end %>
+              <% end %>
+
+              <% unless companies.any? %>
+                <li>No companies</li>
+              <% end %>
             </ul>
           </div>
         </div>

@@ -1,3 +1,5 @@
+$tape-color: rgba(25,25,25,0.1);
+
 .sector-page {
   .sectors-header {
     background: $blue;
@@ -24,11 +26,15 @@
   }
 
   .sector-level-overview {
-    display: flex;
+    margin-top: 50px;
 
     .sector-level {
       display: flex;
       flex-direction: column;
+
+      &:not(:last-child) {
+        border-right: 5px dotted $tape-color;
+      }
 
       &__title {
         height: 40px;
@@ -39,8 +45,8 @@
         flex: 1;
 
         padding: 12px 24px;
-
         color: white;
+
         a {
           color: white;
         }
