@@ -39,7 +39,11 @@
           <div class="sector-level__companies level<%= level.to_i %>">
             <ul>
               <% companies.each do |company| %>
-                <li><%= link_to company[:name], tpi_company_path(company[:id]) %> [<%= company[:status] %>]</li>
+                <li>
+                  <%= link_to company[:name], tpi_company_path(company[:id]) %>
+                  <span class="mq-level-trend mq-level-trend--<%= company[:status] %>">
+                  </span>
+                </li>
               <% end %>
 
               <% unless companies.any? %>

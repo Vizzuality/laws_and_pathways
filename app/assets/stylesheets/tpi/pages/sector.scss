@@ -51,6 +51,17 @@ $tape-color: rgba(25,25,25,0.1);
           color: white;
         }
 
+        li {
+          display: flex;
+          padding: 5px 0;
+        }
+
+        .mq-level-trend {
+          @include mq-level-trend(20px);
+
+          margin-left: 5px;
+        }
+
         &.level0 {
           background-color: $tpi-level0;
           margin-top: 120px;
