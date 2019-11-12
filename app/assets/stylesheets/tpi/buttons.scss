@@ -4,6 +4,7 @@ $button-border-width: 4px;
 
 .link {
   font-family: $family-sans-serif-bold;
+  cursor: pointer;
 
   &.is-hovered,
   &:hover,
@@ -18,12 +19,20 @@ $button-border-width: 4px;
     background: $yellow;
     padding: 0 3px 3px 3px;
   }
+
+  &.with-icon {
+    img {
+      margin-right: 3px;
+      vertical-align: middle;
+    }
+  }
 }
 
 .button {
   min-width: 160px;
   height: 40px;
   font-family: $family-sans-serif-bold;
+  cursor: pointer;
 
   &.is-small {
     border-radius: 0;

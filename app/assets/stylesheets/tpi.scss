@@ -1,3 +1,5 @@
+@import "font-awesome";
+
 @import "tpi/colors";
 @import "tpi/variables";
 @import "tpi/mixins";
@@ -26,6 +28,8 @@
 @import "tpi/footer";
 
 @import "tpi/pages/*";
+
+
 
 html {
   scroll-behavior: smooth;

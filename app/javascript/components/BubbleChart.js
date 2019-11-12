@@ -26,7 +26,7 @@ const BubbleChart = (data) => {
     data: Object.values(dataLevels[sectorName])
   }))
 
-  /** Parsed data has this format - 
+  /** Parsed data has this format -
   * [
   *   { sector: 'Sector1', data: [ [ {}, {}, {} ], [], [], [], [], [] ] },
   *   { sector: 'Sector2', data: [ [], [], [], [], [], [] ] },
@@ -50,7 +50,7 @@ const BubbleChart = (data) => {
         </div>
       ))}
       {parsedData.map(dataRow => createRow(dataRow.data, dataRow.sector))}
-    </div>   
+    </div>
   );
 }
 
@@ -59,7 +59,7 @@ const PackBubbleChart = (companiesBubbles, uniqueKey) => {
   const height = 38;
 
   return (
-    <SingleBubbleChart 
+    <SingleBubbleChart
       width={width}
       height={height}
       uniqueKey={uniqueKey}
@@ -68,7 +68,7 @@ const PackBubbleChart = (companiesBubbles, uniqueKey) => {
   )
 }
 
-const createRow = (dataRow, title) => { 
+const createRow = (dataRow, title) => {
   return (
     <React.Fragment key={Math.random()}>
       <div>
