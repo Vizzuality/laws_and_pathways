@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import legendImage from '../../assets/images/bubble-chart-legend.svg';
 import SingleBubbleChart from './SingleBubbleChart';
+import BaseTooltip from './BaseTooltip.js';
 
 const COMPANIES_SIZES = {
-  small: 18,
+  large: 45,
   medium: 33,
-  large: 45
+  small: 18
 };
 
 const LEVELS_COLORS = [
@@ -17,9 +19,19 @@ const LEVELS_COLORS = [
   '#042b82'
 ];
 
+const LEVELS_SUBTITLES = {
+  0: 'Unaware',
+  1: 'Awareness',
+  2: 'Building capacity',
+  3: 'Integrating into operational decision making',
+  4: 'Strategic assessment'
+};
+
+const tooltipDisclaimer = `Companies have to answer “yes” to all questions on a level to move to the next one`;
+
 const BubbleChart = (data) => {
   const dataLevels = data.levels;
-  const companies = data.companies;
+  const sectors = data.sectors;
 
   const parsedData = Object.keys(dataLevels).map(sectorName => ({
     sector: sectorName,
@@ -39,45 +51,69 @@ const BubbleChart = (data) => {
   * ]
   */
 
-  const levelsSignature = Object.keys(companies);
+  const levelsSignature = dataLevels && Object.keys(dataLevels[Object.keys(dataLevels)[0]]);
 
   return (
     <div className="bubble-chart__container" style={{ 'gridTemplateColumns': `repeat(${levelsSignature.length + 1}, 1fr)` }}>
-      <div></div>
+      <div className="bubble-chart__legend-container">
+        <div className="bubble-chart__title-container">
+          <span className="bubble-chart__title">Market cap</span>
+          <BaseTooltip 
+            tooltipTrigger={<button className="bubble-chart__info">?</button>}
+            tooltipContent={<span>{tooltipDisclaimer}</span>}
+          />
+        </div>
+        <div className="bubble-chart__legend">
+          <img className="bubble-chart__legend-image" src={legendImage} />
+          <div className="bubble-chart__legend-titles-container">
+            {Object.keys(COMPANIES_SIZES).map(companySize => (
+              <span className="bubble-chart__legend-title">{companySize}</span>
+            ))}
+          </div>
+        </div>
+      </div>
       {levelsSignature.map((el, i) => (
-        <div key={`${el}-${i}-${Math.random()}`}>
-          {`Level ${el}`}
+        <div className="bubble-chart__level" key={`${el}-${i}-${Math.random()}`}>
+          <div className="bubble-chart__level-container">
+            <div class="bubble-chart__level-title">{`Level ${el}`}</div>
+            <div class="bubble-chart__level-subtitle">{LEVELS_SUBTITLES[el]}</div>
+          </div>
         </div>
       ))}
-      {parsedData.map(dataRow => createRow(dataRow.data, dataRow.sector))}
-    </div>   
+      {parsedData.map(dataRow => createRow(dataRow.data, dataRow.sector, sectors))}
+    </div>
   );
 }
 
-const PackBubbleChart = (companiesBubbles, uniqueKey) => {
+const ForceLayoutBubbleChart = (companiesBubbles, uniqueKey) => {
   const width = 80;
   const height = 38;
+
+  const handleBubbleClick = (company) => window.open(`/tpi/companies/${company.slug}`, '_blank');
 
   return (
     <SingleBubbleChart 
       width={width}
       height={height}
       uniqueKey={uniqueKey}
+      handleNodeClick={handleBubbleClick}
       data={companiesBubbles.length && companiesBubbles}
     />
   )
 }
 
-const createRow = (dataRow, title) => { 
+const createRow = (dataRow, title, sectors) => { 
+  const sectorSlug = sectors.find(s => s.name === title).slug;
   return (
     <React.Fragment key={Math.random()}>
-      <div>
-        {title}
+      <div className="bubble-chart__sector-link">
+        <a href={`/tpi/sectors/${sectorSlug}`}>{title}</a>
       </div>
       {dataRow.map((el, i) => {
         const companiesBubbles = el.map(company => ({
           value: COMPANIES_SIZES[company.size],
           tooltipContent: [company.name, `Level ${company.level}`],
+          slug: company.slug,
           color: LEVELS_COLORS[i]
         }))
 
@@ -85,7 +121,7 @@ const createRow = (dataRow, title) => {
 
         return (
           <div className="bubble-chart__cell" key={uniqueKey}>
-            {PackBubbleChart(companiesBubbles, uniqueKey)}
+            {ForceLayoutBubbleChart(companiesBubbles, uniqueKey)}
           </div>
         )
       })}

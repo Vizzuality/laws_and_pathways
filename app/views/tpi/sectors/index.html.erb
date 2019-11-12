@@ -25,10 +25,7 @@ Companies:
 </div>
 
 <hr>
-
-<h4>Market Cap</h4>
-  <%= react_component("BubbleChart", { companies: @companies_by_levels, levels: @companies_by_sectors }) %>
-<hr>
+<%= react_component("BubbleChart", { levels: @companies_by_sectors, sectors: @sectors }) %>
 
 <h3>Carbon Performance: All sectors</h3>
 <p>CP alignment with the Paris agreement benchmarks by sector and cluster (number and % of companies). Please note that this information is not available for all sectors.</p>

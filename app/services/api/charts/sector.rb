@@ -29,6 +29,7 @@ module Api
 
       def companies_market_cap_by_sector
         lvls = companies_summaries_by_level.keys
+        lvls.delete('4STAR')
         grouped = companies_grouped_by_sector
           .map { |sector, companies| [sector, companies_market_cap(companies)] }
           .sort.to_h
@@ -136,7 +137,9 @@ module Api
             name: company.name,
             sector: company.sector.name,
             size: company.size,
-            level: company.latest_mq_assessment.level
+            slug: company.slug,
+            level4STAR: company.is4STAR?,
+            level: company.is4STAR? ? '4' : company.latest_mq_assessment.level
           }
         end
       end

@@ -15,6 +15,7 @@ const SingleBubbleChart = ({ width, height, handleNodeClick, data, uniqueKey }) 
     return {
       color: data[index].color,
       tooltipContent: data[index].tooltipContent,
+      slug: data[index].slug,
       radius: data[index].value
     }
   });
@@ -52,6 +53,7 @@ const SingleBubbleChart = ({ width, height, handleNodeClick, data, uniqueKey }) 
       .attr('cy', (d) => d.y)
       .on('mouseover', d3Tip.show)
       .on('mouseout', d3Tip.hide)
+      .on('click', (d) => handleNodeClick(d) )
   
     visualisation.call(d3Tip); // bind the d3 tooltip with the visualisation
     u.exit().remove();
