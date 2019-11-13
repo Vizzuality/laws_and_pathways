@@ -68,4 +68,8 @@ class Company < ApplicationRecord
 
     isin.split(',')
   end
+
+  def is_4_star?
+    mq_level.eql?('4STAR')
+  end
 end

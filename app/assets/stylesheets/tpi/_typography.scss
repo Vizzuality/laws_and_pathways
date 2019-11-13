@@ -8,6 +8,9 @@
   src: font-url("BrownTT-Bold.ttf") format("truetype");
 }
 
+$font-family-bold: "BrownTT Bold";
+$font-family-regular: "BrownTT Regular";
+
 ::selection {
   background-color: $yellow;
 }
