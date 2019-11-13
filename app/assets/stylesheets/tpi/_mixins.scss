@@ -37,6 +37,10 @@
   &--down {
     background-image: image-url('icons/trending-down');
   }
+
+  &--star {
+    background-image: image-url('icons/star');
+  }
 }
 
 @mixin mq-level-backgrounds {

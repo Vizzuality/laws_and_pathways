@@ -7,10 +7,14 @@
           <p>
             Number of assessments: <%= @company.mq_assessments.size %>
           </p>
-          <div class="mq-level level<%= @company.mq_level.to_i %>">
-            <%= @company.mq_level %>
+         <div class="mq-level level<%= @company.mq_level.to_i %>">
+            <%= @company.mq_level.to_i %>
             <div class="mq-level-trend mq-level-trend--<%= @company.mq_status %>">
             </div>
+            <% if @company.mq_level.include?('STAR') %>
+              <span class="mq-level-trend mq-level-trend--star">
+              </span>
+            <% end %>
           </div>
           <p>
             <%= t("tpi.company.level_description.#{@company.mq_level.to_i}") %></h3>

@@ -5,9 +5,13 @@
         Current level
       </p>
       <div class="mq-level level<%= assessment.level.to_i %>">
-        <%= assessment.level %>
+        <%= assessment.level.to_i %>
         <span class="mq-level-trend mq-level-trend--<%= assessment.status %>">
         </span>
+        <% if assessment.level.include?('STAR') %>
+          <span class="mq-level-trend mq-level-trend--star">
+          </span>
+        <% end %>
       </div>
       <p>
         <%= t("tpi.company.level_description.#{assessment.level.to_i}") %></h3>
