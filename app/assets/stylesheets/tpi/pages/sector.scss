@@ -62,28 +62,22 @@ $tape-color: rgba(25,25,25,0.1);
           margin-left: 5px;
         }
 
+        @include mq-level-backgrounds;
+
         &.level0 {
-          background-color: $tpi-level0;
           margin-top: 120px;
         }
 
         &.level1 {
-          background-color: $tpi-level1;
           margin-top: 90px;
         }
 
         &.level2 {
-          background-color: $tpi-level2;
           margin-top: 60px;
         }
 
         &.level3 {
-          background-color: $tpi-level3;
           margin-top: 30px;
-        }
-
-        &.level4 {
-          background-color: $tpi-level4;
         }
       }
     }

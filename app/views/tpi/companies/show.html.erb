@@ -7,7 +7,7 @@
           <p>
             Number of assessments: <%= @company.mq_assessments.size %>
           </p>
-          <div class="mq-level">
+          <div class="mq-level level<%= @company.mq_level.to_i %>">
             <%= @company.mq_level %>
             <div class="mq-level-trend mq-level-trend--<%= @company.mq_status %>">
             </div>

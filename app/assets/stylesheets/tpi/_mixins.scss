@@ -1,4 +1,6 @@
 @mixin mq-level($size, $font-size: $size-5) {
+  @include mq-level-backgrounds;
+
   height: $size;
   width: $size;
   line-height: $size;
@@ -6,7 +8,6 @@
 
   margin: 20px 0;
 
-  background: $blue-dark;
   color: white;
 
   font-weight: bold;
@@ -35,5 +36,27 @@
 
   &--down {
     background-image: image-url('icons/trending-down');
+  }
+}
+
+@mixin mq-level-backgrounds {
+  &.level0 {
+    background-color: $tpi-level0;
+  }
+
+  &.level1 {
+    background-color: $tpi-level1;
+  }
+
+  &.level2 {
+    background-color: $tpi-level2;
+  }
+
+  &.level3 {
+    background-color: $tpi-level3;
+  }
+
+  &.level4 {
+    background-color: $tpi-level4;
   }
 }

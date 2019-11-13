@@ -101,8 +101,9 @@
             }
 
             &--yes {
+              @include mq-level-backgrounds;
+
               background-image: image-url('icons/check.svg');
-              background-color: #083AAB;
             }
 
             &--not-applicable {
@@ -168,7 +169,7 @@
       }
 
       &--yes {
-        background-color: #083AAB;
+        @include mq-level-backgrounds;
       }
 
       &--not-applicable {

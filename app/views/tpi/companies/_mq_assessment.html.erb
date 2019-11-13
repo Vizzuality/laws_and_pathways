@@ -4,7 +4,7 @@
       <p>
         Current level
       </p>
-      <div class="mq-level">
+      <div class="mq-level level<%= assessment.level.to_i %>">
         <%= assessment.level %>
         <span class="mq-level-trend mq-level-trend--<%= assessment.status %>">
         </span>
@@ -39,7 +39,7 @@
         <% questions.each do |question| %>
 
           <p class="mq-assessment-question">
-            <span class="mq-assessment-answer mq-assessment-answer--<%= question.answer.parameterize %>">
+            <span class="mq-assessment-answer mq-assessment-answer--<%= question.answer.parameterize %> level<%= level %>">
             </span>
             <%= question.number %>. <%= question.question %>
           </p>
