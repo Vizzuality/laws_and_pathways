@@ -3,18 +3,14 @@ ActiveAdmin.register_page 'Dashboard' do
 
   content do
     if ActiveAdmin::Comment.any?
-      h1 'Latest Comments'
-      div class: 'index_content' do
-        div class: 'index_as_table' do
-          table_for ActiveAdmin::Comment.order(created_at: :desc).limit(20),
-                    class: 'index_table index' do
-            column :resource
-            column :body do |comment|
-              simple_format comment.body
-            end
-            column :author
-            column :created_at
+      panel 'Latest Comments' do
+        table_for ActiveAdmin::Comment.order(created_at: :desc).limit(20) do
+          column :resource
+          column :body do |comment|
+            simple_format comment.body
           end
+          column :author
+          column :created_at
         end
       end
     else
