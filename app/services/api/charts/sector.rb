@@ -137,7 +137,7 @@ module Api
             id: company.id,
             name: company.name,
             status: company.mq_status,
-            level4STAR: company.is_4_star?
+            level: company.mq_level
           }
         end
       end
