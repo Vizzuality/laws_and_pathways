@@ -1,0 +1,41 @@
+<% list = [{caption: 'Laws', count: geography_overview.number_of_laws, img: 'img'},
+           {caption: 'Policies', count: geography_overview.number_of_policies, img: 'img'},
+           {caption: 'Litigation cases', count: geography_overview.number_of_litigation_cases, img: 'img'},
+           {caption: 'Climate targets', count: geography_overview.number_of_litigation_cases, img: 'img'}] %>
+<% properties = [{caption: 'Region', value: geography.region},
+                 {caption: 'Rank as emitter'},
+                 {caption: 'Paris Agreement ratification status'},
+                 {caption: 'Income group (World Bank)'},
+                 {caption: 'Main groups', value: geography.political_groups.map(&:name).join('; ')},
+                 {caption: 'Federative/Unitary', value: geography.federal ? "Federative #{geography.federal_details}" : 'Unitary'}] %>
+<section class="section is-medium">
+  <div class="overview-section">
+    <div class="indicators">
+      <% list.each do |item| %>
+        <div class="indicator">
+          <div><%= item[:caption] %></div>
+          <div class="indicator-value">
+            <div class="value-container">
+              <%= item[:count] %>
+            </div>
+            <div class="img-type-container">
+              <%= item[:img] %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <hr>
+    <% 2.times do |i| %>
+      <div class="columns properties-container">
+        <% 3.times do |j| %>
+          <% item =  properties[(i * 3) + (j + 1) - 1]%>
+          <div class="column is-one-third">
+            <div class="property-name"><%= item[:caption] %></div>
+            <div class="property-value"><%= item[:value] %></div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</section>

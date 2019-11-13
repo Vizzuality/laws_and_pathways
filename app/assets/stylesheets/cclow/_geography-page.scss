@@ -125,5 +125,68 @@
       margin: 1.4rem 0;
     }
   }
+
+  .overview-section {
+    background-color: $blue-dark;
+    color: $white;
+    padding: 3rem 2rem;
+
+    hr {
+      margin: 3.75rem 0;
+    }
+
+    .indicators {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 1rem;
+    }
+
+    .indicator {
+      color: $white;
+      text-align: center;
+    }
+
+    .indicator-value {
+      height: 88px;
+      margin: 1.25rem auto 0;
+      position: relative;
+      width: 113px;
+    }
+
+    .value-container {
+      align-items: center;
+      background-color: $red;
+      border-radius: 50%;
+      display: flex;
+      font-family: "BrownTT Bold";
+      font-size: 2.25rem;
+      height: 80px;
+      justify-content: center;
+      width: 80px;
+    }
+
+    .img-type-container {
+      background-color: $white;
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 48px;
+      width: 48px;
+    }
+
+    .properties-container {
+
+      .property-name {
+        font-size: $size-7;
+        font-family: "BrownTT Bold";
+      }
+
+      .property-value {
+        font-size: $size-7;
+        margin-top: 0.3rem;
+      }
+    }
+  }
 }
 
