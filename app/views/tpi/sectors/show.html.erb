@@ -1,46 +1,71 @@
-<h1>Sector Details</h1>
-<%= link_to 'back to all Sectors', tpi_sectors_path %>
+<div class="sector-page">
+  <div class="sectors-header">
+    <div class="container">
+      <a href="#management-quality" class="link with-icon is-pulled-left">
+        <img src="<%= asset_path 'icons/arrow-down.svg'%>" />
+        Go to Management Quality
+      </a>
+      <a href="#carbon-performance" class="link with-icon is-pulled-left">
+        <img src="<%= asset_path 'icons/arrow-down.svg'%>" />
+        Go to Carbon Performance
+      </a>
 
-<hr>
-
-<h3>Management Quality: <%= @sector.name %></h3>
-<p>Distribution of companies in the <strong><%= @sector.name %></strong> sector according to the management of their greenhouse gas emissions and of risks and opportunities related to the low-carbon transition.</p>
-
-<div class="chart">
-  <%= pie_chart(
-    levels_chart_data_tpi_sector_path(@sector.id),
-    donut: true,
-    library: mq_sector_pie_chart_options
-  ) %>
-</div>
-
-<br><br><br>
-
-<div class="container">
-<%- @companies_by_levels.each do |level, companies| -%>
-  <div class="sector-level">
-    <div class="sector-level-desc">
-      <%= level %>
-    </div>
-    <div class="sector-companies">
-      <ul>
-      <%- companies.each do |company| %>
-        <li><%= link_to company[:name], tpi_company_path(company[:id]) %> [<%= company[:status] %>]</li>
-      <%- end %>
-      </ul>
+      <button class="button is-primary with-border is-pulled-right">
+        Download sector data
+      </button>
     </div>
   </div>
-<%- end %>
-</div>
 
-<hr>
+  <section id="management-quality" class="container">
+    <h4>Management Quality: <%= @sector.name %></h4>
 
-<h3>Carbon Performance: <%= @sector.name %></h3>
-<div class="chart">
-<%= line_chart(
-      emissions_chart_data_tpi_sector_path(@sector.id),
-      width: '1200px',
-      height: '800px',
-      library: default_chart_options
-  )%>
+    <p>
+      Distribution of companies in the <strong><%= @sector.name %></strong> sector according to the management of their greenhouse gas emissions and of risks and opportunities related to the low-carbon transition.
+    </p>
+
+    <div class="chart">
+      <%= pie_chart(
+        levels_chart_data_tpi_sector_path(@sector.id),
+        donut: true,
+        library: mq_sector_pie_chart_options
+        ) %>
+    </div>
+
+    <div class="sector-level-overview columns">
+      <% @companies_by_levels.each do |level, companies| -%>
+        <div class="sector-level column">
+          <div class="sector-level__title">
+            <h5>Level <%= level %></h5>
+            <p><%= t("tpi.company.level_description_short.#{level.to_i}") %></p>
+          </div>
+          <div class="sector-level__companies level<%= level.to_i %>">
+            <ul>
+              <% companies.each do |company| %>
+                <li>
+                  <%= link_to company[:name], tpi_company_path(company[:id]) %>
+                  <%= render 'tpi/companies/mq_level_trend', level: company[:level], status: company[:status] %>
+                </li>
+              <% end %>
+
+              <% unless companies.any? %>
+                <li>No companies</li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <section id="carbon-performance" class="container">
+    <h4>Carbon Performance: <%= @sector.name %></h4>
+    <div class="chart">
+      <%= line_chart(
+        emissions_chart_data_tpi_sector_path(@sector.id),
+        width: '1200px',
+        height: '800px',
+        library: default_chart_options
+        )%>
+    </div>
+  </section>
 </div>

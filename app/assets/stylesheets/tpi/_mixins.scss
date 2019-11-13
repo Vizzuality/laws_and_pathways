@@ -1,0 +1,66 @@
+@mixin mq-level($size, $font-size: $size-5) {
+  @include mq-level-backgrounds;
+
+  height: $size;
+  width: $size;
+  line-height: $size;
+  border-radius: 50%;
+
+  margin: 20px 0;
+
+  color: white;
+
+  font-weight: bold;
+  font-size: $font-size;
+
+  .mq-level-trend {
+    @include mq-level-trend($size / 4);
+  }
+}
+
+@mixin mq-level-trend($size) {
+  width: $size;
+  height: $size;
+
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: 100%;
+
+  &--unchanged, &--new {
+    display: none;
+  }
+
+  &--up {
+    background-image: image-url('icons/trending-up');
+  }
+
+  &--down {
+    background-image: image-url('icons/trending-down');
+  }
+
+  &--star {
+    background-image: image-url('icons/star');
+  }
+}
+
+@mixin mq-level-backgrounds {
+  &.level0 {
+    background-color: $tpi-level0;
+  }
+
+  &.level1 {
+    background-color: $tpi-level1;
+  }
+
+  &.level2 {
+    background-color: $tpi-level2;
+  }
+
+  &.level3 {
+    background-color: $tpi-level3;
+  }
+
+  &.level4 {
+    background-color: $tpi-level4;
+  }
+}

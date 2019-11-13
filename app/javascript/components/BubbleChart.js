@@ -38,7 +38,7 @@ const BubbleChart = (data) => {
     data: Object.values(dataLevels[sectorName])
   }))
 
-  /** Parsed data has this format - 
+  /** Parsed data has this format -
   * [
   *   { sector: 'Sector1', data: [ [ {}, {}, {} ], [], [], [], [], [] ] },
   *   { sector: 'Sector2', data: [ [], [], [], [], [], [] ] },
@@ -58,7 +58,7 @@ const BubbleChart = (data) => {
       <div className="bubble-chart__legend-container">
         <div className="bubble-chart__title-container">
           <span className="bubble-chart__title">Market cap</span>
-          <BaseTooltip 
+          <BaseTooltip
             tooltipTrigger={<button className="bubble-chart__info">?</button>}
             tooltipContent={<span>{tooltipDisclaimer}</span>}
           />
@@ -92,7 +92,7 @@ const ForceLayoutBubbleChart = (companiesBubbles, uniqueKey) => {
   const handleBubbleClick = (company) => window.open(`/tpi/companies/${company.slug}`, '_blank');
 
   return (
-    <SingleBubbleChart 
+    <SingleBubbleChart
       width={width}
       height={height}
       uniqueKey={uniqueKey}
@@ -102,8 +102,9 @@ const ForceLayoutBubbleChart = (companiesBubbles, uniqueKey) => {
   )
 }
 
-const createRow = (dataRow, title, sectors) => { 
+const createRow = (dataRow, title, sectors) => {
   const sectorSlug = sectors.find(s => s.name === title).slug;
+
   return (
     <React.Fragment key={Math.random()}>
       <div className="bubble-chart__sector-link">

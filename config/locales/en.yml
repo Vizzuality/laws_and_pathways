@@ -57,6 +57,12 @@ en:
         '2': Building Capacity
         '3': Integrating into Operational Decision Making
         '4': Strategic Assessment
+      level_description_short:
+        '0': Unaware
+        '1': Awareness
+        '2': Building capacity
+        '3': Integrating into operatinal decision making
+        '4': Strategic assessment
   cclow:
     legislation_types:
       executive: Executive
@@ -75,4 +81,3 @@ en:
       intensity_target_and_trajectory_target: Intensity Target And Trajectory Target
       no_document_submitted: No Document Submitted
       trajectory_target: Trajectory Target
-

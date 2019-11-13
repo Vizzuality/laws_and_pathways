@@ -22,9 +22,19 @@ module Api
       #    ]
       #   }
       def companies_summaries_by_level
-        companies_grouped_by_latest_assessment_level
-          .map { |level, companies| [level, companies_summary(companies)] }
-          .sort.to_h
+        result = {
+          '0' => [],
+          '1' => [],
+          '2' => [],
+          '3' => [],
+          '4' => []
+        }
+
+        companies_grouped_by_latest_assessment_level.each do |level, companies|
+          result[level.to_i.to_s].concat(companies_summary(companies)).sort_by! { |c| c[:name] }
+        end
+
+        result
       end
 
       def companies_market_cap_by_sector
@@ -126,7 +136,8 @@ module Api
           {
             id: company.id,
             name: company.name,
-            status: company.mq_status
+            status: company.mq_status,
+            level: company.mq_level
           }
         end
       end

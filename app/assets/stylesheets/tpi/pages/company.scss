@@ -1,39 +1,3 @@
-@mixin mq-level($size, $font-size: $size-5) {
-  height: $size;
-  width: $size;
-  line-height: $size;
-  border-radius: 50%;
-
-  margin: 20px 0;
-
-  background: $blue-dark;
-  color: white;
-
-  font-weight: bold;
-  font-size: $font-size;
-
-  .mq-level-trend {
-    width: $size / 4;
-    height: $size / 4;
-
-    display: inline-block;
-    background-repeat: no-repeat;
-    background-size: 100%;
-
-    &--unchanged, &--new {
-      display: none;
-    }
-
-    &--up {
-      background-image: image-url('icons/trending-up');
-    }
-
-    &--down {
-      background-image: image-url('icons/trending-down');
-    }
-  }
-}
-
 .company-page {
   .summary-box {
     background: $grey;
@@ -137,8 +101,9 @@
             }
 
             &--yes {
+              @include mq-level-backgrounds;
+
               background-image: image-url('icons/check.svg');
-              background-color: #083AAB;
             }
 
             &--not-applicable {
@@ -204,7 +169,7 @@
       }
 
       &--yes {
-        background-color: #083AAB;
+        @include mq-level-backgrounds;
       }
 
       &--not-applicable {

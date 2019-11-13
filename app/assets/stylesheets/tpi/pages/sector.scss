@@ -1,0 +1,87 @@
+$tape-color: rgba(25,25,25,0.1);
+
+.sector-page {
+  .sectors-header {
+    background: $blue;
+
+    height: 100px;
+    display: flex;
+    align-items: center;
+
+    a {
+      color: white;
+    }
+
+    a + a {
+      margin-left: 20px;
+    }
+  }
+
+  section {
+    margin-top: 70px;
+
+    > p {
+      margin-top: 30px;
+    }
+  }
+
+  .sector-level-overview {
+    margin-top: 50px;
+
+    .sector-level {
+      display: flex;
+      flex-direction: column;
+
+      padding-bottom: 0;
+
+      &:not(:last-child) {
+        border-right: 5px dotted $tape-color;
+      }
+
+      &__title {
+        height: 40px;
+        margin-bottom: 50px;
+      }
+
+      &__companies {
+        flex: 1;
+
+        padding: 12px 24px;
+        color: white;
+
+        a {
+          color: white;
+        }
+
+        li {
+          display: flex;
+          padding: 5px 0;
+        }
+
+        .mq-level-trend {
+          @include mq-level-trend(20px);
+
+          margin-left: 5px;
+        }
+
+        @include mq-level-backgrounds;
+
+        &.level0 {
+          margin-top: 120px;
+        }
+
+        &.level1 {
+          margin-top: 90px;
+        }
+
+        &.level2 {
+          margin-top: 60px;
+        }
+
+        &.level3 {
+          margin-top: 30px;
+        }
+      }
+    }
+  }
+}

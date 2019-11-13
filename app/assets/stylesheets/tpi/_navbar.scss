@@ -8,11 +8,6 @@
     background-color: $dark;
   }
 
-  .navbar-item,
-  .navbar-link {
-    padding: 0.5rem 1.25rem;
-  }
-
   .navbar-dropdown {
     @if $desktop {
       width: 300px;
