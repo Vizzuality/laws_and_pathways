@@ -9,24 +9,18 @@
     <%= javascript_pack_tag 'tpi' %>
   </head>
   <body>
-    <section class="tpi--banner">
+    <section class="tpi__banner">
       <%= render "layouts/banner" %>
     </section>
 
-    <section class="tpi--navbar">
+    <section class="tpi__navbar">
       <%= render "layouts/header" %>
     </section>
 
     <%= yield %>
 
-    <footer class="footer">
-      <section class="section subscribe">
-        <%= render "layouts/subscribe" %>
-      </section>
-
-      <section class="section">
-        <%= render "layouts/footer" %>
-      </section>
+    <footer>
+      <%= render "layouts/footer" %>
     </footer>
   </body>
 </html>

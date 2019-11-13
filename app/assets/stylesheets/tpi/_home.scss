@@ -24,7 +24,7 @@
       padding: 7rem;
     }
 
-    .button--hero {
+    .button__hero {
       @extend .is-medium;
 
       height: 5rem;
@@ -34,7 +34,7 @@
     }
   }
 
-  .hero--picture {
+  .hero__picture {
     position: absolute;
     top: -7rem;
     right: 0;
