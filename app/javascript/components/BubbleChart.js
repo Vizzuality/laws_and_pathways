@@ -5,9 +5,9 @@ import SingleBubbleChart from './SingleBubbleChart';
 import BaseTooltip from './BaseTooltip.js';
 
 const COMPANIES_SIZES = {
-  large: 45,
-  medium: 33,
-  small: 18
+  large: 65,
+  medium: 45,
+  small: 30
 };
 
 const LEVELS_COLORS = [
@@ -86,7 +86,7 @@ const BubbleChart = (data) => {
 }
 
 const ForceLayoutBubbleChart = (companiesBubbles, uniqueKey) => {
-  const width = 80;
+  const width = 120;
   const height = 38;
 
   const handleBubbleClick = (company) => window.open(`/tpi/companies/${company.slug}`, '_blank');

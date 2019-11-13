@@ -70,6 +70,6 @@ class Company < ApplicationRecord
   end
 
   def is_4_star?
-    latest_mq_assessment.level.eql?('4STAR')
+    mq_level.eql?('4STAR')
   end
 end

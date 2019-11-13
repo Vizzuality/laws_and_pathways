@@ -30,8 +30,6 @@ $legend-info-size: 20px;
   border-right: calc(#{$tape-height / 2}) dotted $tape-color;
 
   & > *:first-child {
-    height: unset !important;
-    width: 80% !important;
     margin: auto;
     z-index: 1;
   }
@@ -48,7 +46,7 @@ $legend-info-size: 20px;
 
 .bubble-chart_circle {
   circle:hover {
-    stroke-width: 10;
+    stroke-width: 14;
     stroke: $black;
   }
 }

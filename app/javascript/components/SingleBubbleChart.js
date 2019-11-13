@@ -63,8 +63,8 @@ const SingleBubbleChart = ({ width, height, handleNodeClick, data, uniqueKey }) 
 
   return (
     <Fragment>
-      <svg id={key} width={width} height={height} viewBox={`0 -${CELL_HEIGHT} 400 400`}>
-        <g className='bubble-chart_circle' transform="translate(200, 100)"></g>
+      <svg id={key} width={width} height={height} viewBox={`0 0 400 400`}>
+        <g className='bubble-chart_circle' transform="translate(200, 200)"></g>
       </svg>
     </Fragment>
   );
