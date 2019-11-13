@@ -45,6 +45,10 @@
                   <%= link_to company[:name], tpi_company_path(company[:id]) %>
                   <span class="mq-level-trend mq-level-trend--<%= company[:status] %>">
                   </span>
+                  <% if company[:level4STAR] %>
+                    <span class="mq-level-trend mq-level-trend--star">
+                    </span>
+                  <% end %>
                 </li>
               <% end %>
 
