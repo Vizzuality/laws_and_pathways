@@ -1,26 +1,24 @@
-@import 'settings';
+@import "tpi/colors";
+@import "tpi/variables";
+@import "tpi/sizes";
+@import "tpi/typography";
+
+@import "bulma/sass/utilities/all";
+@import "bulma/sass/base/all";
+@import "bulma/sass/elements/all";
+// @import "bulma/sass/form/all";
+@import "bulma/sass/components/all";
+@import "bulma/sass/grid/all";
+@import "bulma/sass/layout/all";
+
+@import "tpi/buttons";
+@import "tpi/forms";
+@import "tpi/tags";
+
 @import "tpi/banner";
 @import "tpi/navbar";
 @import "tpi/hero";
 @import "tpi/bubble-chart";
+@import "tpi/charts";
+
 @import "tpi/company";
-
-.chart {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  position: relative;
-}
-
-.chart-title {
-  position: absolute;
-  top: 42%;
-  width: 100px;
-  text-align: center;
-  line-height: 30px;
-}
-
-.companies-size {
-  font-size: $font-size-36;
-  font-family: $font-family-bold;
-}
