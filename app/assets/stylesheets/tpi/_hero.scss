@@ -1,6 +1,6 @@
 @import "colors";
 
-.tpi-home--hero {
+.tpi-home__hero {
   color: $white;
   position: relative;
   overflow: hidden;
@@ -12,8 +12,8 @@
     background: $blue-dark;
   }
 
-  .hero--body {
-    .hero--content {
+  .hero__body {
+    .hero__content {
       align-items: center;
 
       .title {
@@ -27,11 +27,11 @@
   }
 
 
-  .button--container {
+  .button__container {
     display: flex;
     margin-top: 50px;
 
-    .button--hero {
+    .button__hero {
       @extend .is-medium;
 
       height: 5rem;
@@ -41,7 +41,7 @@
     }
   }
 
-  .hero--splash {
+  .hero__splash {
     position: absolute;
     top: 0;
     left: 45%;
@@ -51,7 +51,7 @@
   &.is-secondary {
     background: $blue;
 
-    .button--icon {
+    .button__icon {
       background: $blue-darker;
     }
   }
