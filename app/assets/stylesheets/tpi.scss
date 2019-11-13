@@ -25,3 +25,23 @@
 @import "tpi/base-tooltip";
 @import "tpi/company";
 @import "tpi/footer";
+
+.chart {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  position: relative;
+}
+
+.chart-title {
+  position: absolute;
+  top: 42%;
+  width: 100px;
+  text-align: center;
+  line-height: 30px;
+}
+
+.companies-size {
+  font-size: $size-3;
+  font-family: $font-family-bold;
+}
