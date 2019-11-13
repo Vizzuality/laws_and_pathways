@@ -1,6 +1,6 @@
 
 @import "colors";
-@import "settings";
+@import "typography";
 
 $tape-height: 8px;
 $tape-color: rgba(25,25,25,0.1);
@@ -94,7 +94,8 @@ $legend-info-size: 20px;
 }
 
 .bubble-chart__legend-title {
-  @extend %small-title;
+  font-size: 12px;
+  font-family: $font-family-regular;
   margin: 2px 0;
   display: block;
 }
