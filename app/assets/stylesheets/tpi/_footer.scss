@@ -30,7 +30,7 @@
 
 .footer__information {
   background-color: $dark;
-  padding: 5rem 0;
+  padding-top: 5rem;
 
   hr {
     height: 1px;
@@ -47,11 +47,20 @@
   }
 
   .content {
-    font-size: $size-7;
+    font-size: $size-6;
   }
 
   .footer__contact {
     padding-bottom: $size-4;
+
+    .icon__twitter {
+      position: absolute;
+      margin-left: 20px;
+      width: 2rem;
+      height: 2rem;
+      background-image: image-url('icon_twitter/twitter_white.svg');
+      background-repeat: no-repeat;
+    }
 
     .button__contact {
       margin-top: $size-4;

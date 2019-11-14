@@ -17,22 +17,22 @@ $font-family-regular: "BrownTT Regular";
 
 h1 {
   @extend .is-size-1;
-  font-family: "BrownTT Bold";
+  font-family: $font-family-bold;
 }
 
 h2 {
   @extend .is-size-2;
-  font-family: "BrownTT Bold";
+  font-family: $font-family-bold;
 }
 
 h3 {
   @extend .is-size-3;
-  font-family: "BrownTT Bold";
+  font-family: $font-family-bold;
 }
 
 h4 {
   @extend .is-size-4;
-  font-family: "BrownTT Bold";
+  font-family: $font-family-bold;
 }
 
 h5, h6 {
@@ -40,7 +40,12 @@ h5, h6 {
 }
 
 p {
-  @extend .is-size-6;
+  // i'll leave this commented out because this was a bad idea.
+  // extending the class adds !important so, it's best to rely on using OOCSS:
+  // <p class="is-size-6">
+  // because it is more flexible and it relies on the previously defined sizes
+  // but since it may be used elsewhere, here's the heads up o/
+  // @extend .is-size-6;
 }
 
 small {
