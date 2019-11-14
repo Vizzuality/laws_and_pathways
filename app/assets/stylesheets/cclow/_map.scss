@@ -1,0 +1,97 @@
+@import 'variables';
+
+$color-low: #FECC5C;
+$color-medium: #FD8C3D;
+$color-high: #F03B21;
+$color-large: #BD0226;
+
+.map-container {
+  .map {
+    border: 1px solid $grey;
+    border-bottom: none;
+    height: 15rem;
+  }
+
+  .designations {
+    border: 1px solid $grey;
+    padding: 1.6rem 3rem;
+    font-size: $size-8;
+
+    .name {
+      font-family: $family-sans-serif-bold;
+      font-size: $size-7;
+      height: 2.85rem;
+      text-align: center;
+    }
+
+    .columns {
+      margin: 0;
+    }
+
+    .column {
+      padding: 0 1.5rem;
+      margin: 0;
+    }
+  }
+
+  .img-describe {
+    align-items: flex-end;
+    color: $grey-text;
+    display: flex;
+    height: 100px;
+    justify-content: center;
+    margin: 0.875rem 0;
+
+    &> * {
+      text-align: center;
+    }
+
+    .circle {
+      border-radius: 50%;
+      background-color: $border-cl;
+      margin: 0.5rem;
+
+      &.circle-size-1 {
+        height: 12px;
+        width: 12px;
+      }
+
+      &.circle-size-2 {
+        height: 24px;
+        width: 24px;
+      }
+
+      &.circle-size-3 {
+        height: 48px;
+        width: 48px;
+      }
+
+      &.circle-size-4 {
+        height: 64px;
+        width: 64px;
+      }
+    }
+
+    .rectangle {
+      height: 18px;
+      margin: 0.5rem;
+      width: 57px;
+
+      &.rectangle-cl-1 {
+        background-color: $color-low;
+      }
+
+      &.rectangle-cl-2 {
+        background-color: $color-medium;
+      }
+
+      &.rectangle-cl-3 {
+        background-color: $color-high;
+      }
+
+      &.rectangle-cl-4 {
+        background-color: $color-large;
+      }
+    }
+  }
+}
