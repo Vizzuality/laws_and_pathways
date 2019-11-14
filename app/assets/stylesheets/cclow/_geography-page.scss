@@ -49,7 +49,7 @@
 
   .highlight {
     color: $red;
-    font-family: "BrownTT Bold";
+    font-family: $family-sans-serif-bold;
     margin: 0 4px;
   }
 
@@ -140,7 +140,7 @@
     }
 
     .tags {
-      font-family: "BrownTT Bold";
+      font-family: $family-sans-serif-bold;
       font-size: $size-7;
       margin: 1.4rem 0;
     }
@@ -151,7 +151,7 @@
       .name {
         color: $red;
         font-size: $size-6;
-        font-family: "BrownTT Bold";
+        font-family: $family-sans-serif-bold;
         margin: 0.3rem 0;
       }
     }
@@ -243,7 +243,7 @@
       background-color: $red;
       border-radius: 50%;
       display: flex;
-      font-family: "BrownTT Bold";
+      font-family: $family-sans-serif-bold;
       font-size: 2.25rem;
       height: 80px;
       justify-content: center;
@@ -264,7 +264,7 @@
 
       .property-name {
         font-size: $size-7;
-        font-family: "BrownTT Bold";
+        font-family: $family-sans-serif-bold;
       }
 
       .property-value {

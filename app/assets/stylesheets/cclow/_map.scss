@@ -1,3 +1,5 @@
+@import 'variables';
+
 $color-low: #FECC5C;
 $color-medium: #FD8C3D;
 $color-high: #F03B21;
@@ -16,7 +18,7 @@ $color-large: #BD0226;
     font-size: $size-8;
 
     .name {
-      font-family: "BrownTT Bold";
+      font-family: $family-sans-serif-bold;
       font-size: $size-7;
       height: 2.85rem;
       text-align: center;
