@@ -1,5 +1,6 @@
 @import 'variables';
 @import 'events_timeline';
+@import 'map';
 
 .cclow-geography-page {
   margin-top: 2.8rem;
@@ -270,6 +271,12 @@
         font-size: $size-7;
         margin-top: 0.3rem;
       }
+    }
+  }
+
+  .publications-container {
+    .button-container {
+      text-align: center;
     }
   }
 
