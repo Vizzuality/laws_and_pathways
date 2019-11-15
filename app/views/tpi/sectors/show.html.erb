@@ -1,5 +1,8 @@
 <div class="sector-page">
-  <div class="sectors-header">
+  <div class="dropdown-selector-sector-page-wrapper">
+    <%= react_component("DropdownSelector", { sectors: @sectors, companies: @companies, selectedOption: @sector.name }) %>
+  </div>
+  <div class="sectors-header">    
     <div class="container">
       <a href="#management-quality" class="link with-icon is-pulled-left">
         <img src="<%= asset_path 'icons/arrow-down.svg'%>" />
