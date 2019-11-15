@@ -39,14 +39,14 @@ h5, h6 {
   @extend .is-size-5;
 }
 
-p {
-  // i'll leave this commented out because this was a bad idea.
-  // extending the class adds !important so, it's best to rely on using OOCSS:
-  // <p class="is-size-6">
-  // because it is more flexible and it relies on the previously defined sizes
-  // but since it may be used elsewhere, here's the heads up o/
-  // @extend .is-size-6;
-}
+// p {
+//   // i'll leave this commented out because this was a bad idea.
+//   // extending the class adds !important so, it's best to rely on using OOCSS:
+//   // <p class="is-size-6">
+//   // because it is more flexible and it relies on the previously defined sizes
+//   // but since it may be used elsewhere, here's the heads up o/
+//   // @extend .is-size-6;
+// }
 
 small {
   @extend .is-size-7;

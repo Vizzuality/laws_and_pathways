@@ -1,0 +1,99 @@
+.testimonials {
+  background-color: $blue-dark;
+  
+  & > .columns {
+    position: relative;
+
+    &:not(:first-of-type) {
+      display: none;
+    }
+  }
+
+  &__control {
+    position: absolute;
+    top: 50%;
+    background-color: $blue-darker;
+    color: $white;
+    font-size: $size-2;
+    border-radius: 50%;
+    height: 48px;
+    max-height: 48px;
+    width: 48px;
+    max-width: 48px;
+    padding: 1px 8px;
+    line-height: 2.5rem;
+
+    &.left {
+      left: -1.5rem;
+    }
+
+    &.right {
+      right: -1.5rem;
+    }
+
+    &.is-hovered,
+    &:hover {
+      color: $blue-light;
+    }
+  }
+
+  .image {
+    position: absolute;
+    // half the picture + column padding (0.75rem)
+    top: -2.875rem;
+
+    & > img {
+      max-width: 92px;
+      max-height: 92px;
+      width: 92px;
+      height: 92px;
+    }
+  }
+
+  // 90px - grid padding (0.75rem)
+  $margin-top: calc(90px - 0.75rem);
+
+  &__quote {
+    display: flex;
+    justify-content: flex-end;
+
+    & > img {
+      margin-top: calc(#{$margin-top} + 7px);
+      height: 43px;
+    }
+  }
+
+  &__content {
+    margin-top: $margin-top;
+    color: $white;
+    font-size: 1.25rem;
+    line-height: 1.875rem;
+  }
+
+  &__author {
+    margin: 1.25rem 0;
+    color: $blue-light;
+    font-size: $size-6;
+    line-height: 1.25rem;
+  }
+
+  &__pagination {
+    position: absolute;
+    bottom: 0;
+    right: 40px;
+    display: flex;
+
+    .page {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid $white;
+      background-color: $blue-dark;
+      margin: 0 0.5rem;
+      
+      &.active {
+        background-color: $white;
+      }
+    }
+  }
+}
