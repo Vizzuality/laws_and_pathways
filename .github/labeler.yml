@@ -1,0 +1,15 @@
+tpi:
+  - app/views/tpi/**/*
+  - app/controllers/tpi/**/*
+  - app/javascript/tpi/**/*
+
+cclow:
+  - app/views/cclow/**/*
+  - app/controllers/tpi/**/*
+  - app/decorators/cclow/**/*
+  - app/javascript/tpi/**/*
+
+admin:
+  - app/admin/**/*
+  - app/views/admin/**/*
+  - app/javascript/admin/**/*
