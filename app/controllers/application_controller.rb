@@ -4,6 +4,12 @@ class ApplicationController < ActionController::Base
   before_action :set_current_user
   before_action :set_paper_trail_whodunnit
 
+  around_action :use_logidze_responsible, only: %i[create update]
+
+  def use_logidze_responsible(&block)
+    Logidze.with_responsible(get_current_user.email, &block)
+  end
+
   private
 
   def set_current_user

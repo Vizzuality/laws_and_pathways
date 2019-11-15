@@ -21,6 +21,7 @@
 #
 
 class Target < ApplicationRecord
+  has_logidze
   include UserTrackable
   include VisibilityStatus
   include DiscardableModel

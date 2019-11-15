@@ -20,6 +20,7 @@
 #
 
 class Legislation < ApplicationRecord
+  has_logidze
   include UserTrackable
   include Taggable
   include VisibilityStatus

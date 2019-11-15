@@ -22,6 +22,7 @@ gem 'draper'
 gem 'google-cloud-storage', require: false
 
 gem 'paper_trail'
+gem 'logidze'
 gem 'discard'
 gem 'friendly_id'
 gem 'language_list'
