@@ -49,3 +49,7 @@ must be stored in `config/secrets` directory.
 Be sure to never commit credentials file!
 
 ## API
+
+## Flags Sourced from
+
+ * [FlagKit](https://github.com/madebybowtie/FlagKit)

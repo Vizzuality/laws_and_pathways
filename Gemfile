@@ -19,6 +19,8 @@ gem 'activeadmin_addons'
 gem 'devise', '>= 4.7.1'
 gem 'draper'
 
+gem "octokit", "~> 4.0"
+
 gem 'google-cloud-storage', require: false
 
 gem 'discard'
