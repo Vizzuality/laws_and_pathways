@@ -28,6 +28,8 @@ class Geography < ApplicationRecord
 
   friendly_id :name, use: :slugged, routes: :default
 
+  has_paper_trail
+
   EVENT_TYPES = %w[
     election
     government_change

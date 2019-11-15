@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_28_102103) do
+ActiveRecord::Schema.define(version: 2019_11_15_134208) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -336,11 +336,6 @@ ActiveRecord::Schema.define(version: 2019_10_28_102103) do
     t.index ["discarded_at"], name: "index_mq_assessments_on_discarded_at"
   end
 
-  create_table "publications", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "taggings", force: :cascade do |t|
     t.bigint "tag_id"
     t.string "taggable_type"
@@ -399,6 +394,16 @@ ActiveRecord::Schema.define(version: 2019_10_28_102103) do
     t.text "cp_unit"
     t.index ["name"], name: "index_tpi_sectors_on_name", unique: true
     t.index ["slug"], name: "index_tpi_sectors_on_slug", unique: true
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string "item_type", null: false
+    t.bigint "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object"
+    t.datetime "created_at"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

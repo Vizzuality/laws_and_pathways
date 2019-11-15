@@ -21,7 +21,10 @@ class Company < ApplicationRecord
   include DiscardableModel
   include VisibilityStatus
   extend FriendlyId
+
   friendly_id :name, use: :slugged, routes: :default
+
+  has_paper_trail
 
   SIZES = %w[small medium large].freeze
 
