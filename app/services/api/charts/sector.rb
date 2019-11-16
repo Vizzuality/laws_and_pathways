@@ -51,6 +51,7 @@ module Api
         grouped_by_sectors_and_levels
           .map do |sector, levels|
             lvls.each { |l| levels[l].nil? ? levels[l] = [] : '' }
+            levels.reject! { |l, _c| l.nil? }
             levels.sort.to_h
             [sector, levels]
           end
@@ -100,6 +101,7 @@ module Api
         @company_scope
           .includes(:latest_mq_assessment)
           .group_by(&:mq_level)
+          .reject { |l, _companies| l.nil? }
       end
 
       def companies_grouped_by_sector
