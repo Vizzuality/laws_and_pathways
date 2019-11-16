@@ -38,14 +38,16 @@ module Api
       end
 
       def companies_market_cap_by_sector
-        lvls = companies_summaries_by_level.keys
-        lvls.delete('4STAR')
+        lvls = MQ::Assessment::LEVELS.reject { |a| a == '4STAR' }
+
         grouped = companies_grouped_by_sector
           .map { |sector, companies| [sector, companies_market_cap(companies)] }
           .sort.to_h
+
         grouped_by_sectors_and_levels = grouped
           .map { |sector, companies| [sector, companies.group_by { |company| company[:level] }] }
           .sort.to_h
+
         grouped_by_sectors_and_levels
           .map do |sector, levels|
             lvls.each { |l| levels[l].nil? ? levels[l] = [] : '' }
@@ -96,19 +98,19 @@ module Api
 
       def companies_grouped_by_latest_assessment_level
         @company_scope
-          .includes(:mq_assessments)
-          .group_by { |company| company.latest_mq_assessment.level }
+          .includes(:latest_mq_assessment)
+          .group_by(&:mq_level)
       end
 
       def companies_grouped_by_sector
         @company_scope
-          .includes(:sector)
+          .includes(:sector, :latest_mq_assessment)
           .group_by { |company| company.sector.name }
       end
 
       def emissions_data_from_companies
         @company_scope
-          .includes(:mq_assessments, :cp_assessments)
+          .includes(:latest_cp_assessment)
           .map { |company| emissions_data_from_company(company) }
       end
 
@@ -119,7 +121,7 @@ module Api
             fillOpacity: 0.1,
             name: benchmark.scenario,
             data: benchmark.emissions
-          }\
+          }
         end
       end
 
@@ -150,7 +152,7 @@ module Api
             size: company.size,
             slug: company.slug,
             level4STAR: company.is_4_star?,
-            level: company.is_4_star? ? '4' : company.latest_mq_assessment.level
+            level: company.is_4_star? ? '4' : company.mq_level
           }
         end
       end
