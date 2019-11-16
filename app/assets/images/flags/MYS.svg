@@ -1,13 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 2800 1400">
-<rect width="2800" height="1400" id="red" style="fill:#cc0001"/>
-<rect width="2800" height="100" y="1300" id="white" style="fill:#fff"/>
-<use transform="translate(0,-200)" id="use3035" xlink:href="#white"/>
-<use transform="translate(0,-400)" id="use3038" xlink:href="#white"/>
-<use transform="translate(0,-600)" id="use3062" xlink:href="#white"/>
-<use transform="translate(0,-800)" id="use3064" xlink:href="#white"/>
-<use transform="translate(0,-1000)" id="use3066" xlink:href="#white"/>
-<use transform="translate(0,-1200)" id="use3068" xlink:href="#white"/>
-<rect width="1400" height="800" id="blue" style="fill:#010066"/>
-<path d="M 576,100 C 409.85356,100 275,234.40553 275,400 C 275,565.59446 409.85356,699.99999 576,700 C 636.02725,700 691.95466,682.43566 738.92693,652.21675 C 711.57383,661.65623 682.2175,666.81914 651.65599,666.81914 C 504.3291,666.81915 384.75944,547.64674 384.75944,400.80929 C 384.75944,253.97184 504.32908,134.79944 651.65599,134.79944 C 684.21403,134.79944 715.40185,140.61419 744.2578,151.26671 C 696.21698,118.90999 638.30493,100 576,100 z" id="path4945" style="fill:#fc0"/>
-<path d="M 914.28574,471.42858 L 814.74817,418.17806 L 844.17832,527.16068 L 777.60261,435.99589 L 756.83247,546.9551 L 736.40474,435.93234 L 669.5481,526.89131 L 699.31432,418.00001 L 599.61295,470.94319 L 673.67755,385.75059 L 560.87853,390.19195 L 664.57212,345.5715 L 561.01668,300.63137 L 673.80146,305.42069 L 600.00003,220.00001 L 699.53759,273.25053 L 670.10745,164.26791 L 736.68316,255.4327 L 757.4533,144.47349 L 777.88103,255.49624 L 844.73767,164.53728 L 814.97145,273.42858 L 914.67282,220.4854 L 840.60822,305.67799 L 953.40723,301.23664 L 849.71365,345.85709 L 953.26909,390.79722 L 840.48431,386.0079 z" transform="matrix(1.2737922,0,0,1.2422928,-89.4427,-29.478379)" id="path4959" style="fill:#fc0"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="21px" height="15px" viewBox="0 0 21 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 46 (44423) - http://www.bohemiancoding.com/sketch -->
+    <title>MY</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#F0F0F0" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#E1244A" offset="0%"></stop>
+            <stop stop-color="#BE1134" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-3">
+            <stop stop-color="#0C3F8E" offset="0%"></stop>
+            <stop stop-color="#032A67" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-4">
+            <stop stop-color="#FFD34F" offset="0%"></stop>
+            <stop stop-color="#FFCB2F" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="MY">
+            <rect id="FlagBackground" fill="url(#linearGradient-1)" x="0" y="0" width="21" height="15"></rect>
+            <path d="M10,0 L21,0 L21,1 L10,1 L10,0 Z M10,2 L21,2 L21,3 L10,3 L10,2 Z M10,4 L21,4 L21,5 L10,5 L10,4 Z M10,6 L21,6 L21,7 L10,7 L10,6 Z M0,8 L21,8 L21,9 L0,9 L0,8 Z M0,10 L21,10 L21,11 L0,11 L0,10 Z M0,12 L21,12 L21,13 L0,13 L0,12 Z M0,14 L21,14 L21,15 L0,15 L0,14 Z" id="Rectangle-537" fill="url(#linearGradient-2)"></path>
+            <rect id="Rectangle-1568" fill="url(#linearGradient-3)" x="0" y="0" width="12" height="8"></rect>
+            <path d="M6.87363497,1.6568923 C6.60168078,1.55545057 6.30731598,1.5 6,1.5 C4.61928813,1.5 3.5,2.61928813 3.5,4 C3.5,5.38071187 4.61928813,6.5 6,6.5 C6.30731598,6.5 6.60168078,6.44454943 6.87363497,6.3431077 C6.36024587,6.75416668 5.70883166,7 5,7 C3.34314575,7 2,5.65685425 2,4 C2,2.34314575 3.34314575,1 5,1 C5.70883166,1 6.36024587,1.24583332 6.87363497,1.6568923 Z M8,4.81999999 L7.13223252,5.80193774 L7.35889819,4.51126163 L6.05014418,4.44504187 L7.20055912,3.81753284 L6.43633704,2.7530204 L7.64421534,3.26120553 L8,2 L8.35578466,3.26120553 L9.56366296,2.7530204 L8.79944088,3.81753284 L9.94985582,4.44504187 L8.64110181,4.51126163 L8.86776748,5.80193774 L8,4.81999999 Z" id="Oval-12" fill="url(#linearGradient-4)"></path>
+        </g>
+    </g>
 </svg>
