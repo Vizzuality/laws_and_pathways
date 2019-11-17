@@ -1,6 +1,8 @@
-<div class="mq-level-trend mq-level-trend--<%= status %>">
+<div class="mq-level-trend__container">
+  <div class="mq-level-trend mq-level-trend--<%= status %>">
+  </div>
+  <% if level.include?('STAR') %>
+    <div class="mq-level-trend mq-level-trend--star">
+    </div>
+  <% end %>
 </div>
-<% if level.include?('STAR') %>
-  <span class="mq-level-trend mq-level-trend--star">
-  </span>
-<% end %>
