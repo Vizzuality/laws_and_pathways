@@ -37,6 +37,20 @@ module Api
         result
       end
 
+      # Returns Companies summaries (name, status) grouped by sector and current mq level
+      #
+      # @return [Hash]
+      # @example
+      #   {
+      #    'Airlines' => {
+      #      '1' => [{ name: 'Air China', sector: 'Airlines', size: 'large', ... }],
+      #      '2' => [{ name: 'China Southern', sector: 'Airlines', size: 'large', ... }],
+      #    ]
+      #    'Autos' => [
+      #      '1' => [{ name: 'Tesla', sector: 'Autos', size: 'large', ... }],
+      #      '3' => [{ name: 'BMW', sector: 'Airlines', size: 'large', ... }],
+      #    ]
+      #   }
       def companies_market_cap_by_sector
         lvls = MQ::Assessment::LEVELS.reject { |a| a == '4STAR' }
 
@@ -100,8 +114,8 @@ module Api
       def companies_grouped_by_latest_assessment_level
         @company_scope
           .includes(:latest_mq_assessment)
-          .group_by(&:mq_level)
-          .reject { |l, _companies| l.nil? }
+          .reject { |c| c.mq_level.nil? }
+          .group_by { |c| c.mq_level.to_i.to_s }
       end
 
       def companies_grouped_by_sector
