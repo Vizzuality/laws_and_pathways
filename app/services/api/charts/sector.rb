@@ -1,6 +1,14 @@
 module Api
   module Charts
     class Sector
+      EMPTY_LEVELS = {
+        '0' => [],
+        '1' => [],
+        '2' => [],
+        '3' => [],
+        '4' => []
+      }.freeze
+
       def initialize(company_scope)
         @company_scope = company_scope
       end
@@ -22,13 +30,7 @@ module Api
       #    ]
       #   }
       def companies_summaries_by_level
-        result = {
-          '0' => [],
-          '1' => [],
-          '2' => [],
-          '3' => [],
-          '4' => []
-        }
+        result = EMPTY_LEVELS.deep_dup
 
         companies_grouped_by_latest_assessment_level.each do |level, companies|
           result[level.to_i.to_s].concat(companies_summary(companies)).sort_by! { |c| c[:name] }
@@ -52,24 +54,14 @@ module Api
       #    ]
       #   }
       def companies_market_cap_by_sector
-        lvls = MQ::Assessment::LEVELS.reject { |a| a == '4STAR' }
-
-        grouped = companies_grouped_by_sector
-          .map { |sector, companies| [sector, companies_market_cap(companies)] }
-          .sort.to_h
-
-        grouped_by_sectors_and_levels = grouped
-          .map { |sector, companies| [sector, companies.group_by { |company| company[:level] }] }
-          .sort.to_h
-
-        grouped_by_sectors_and_levels
-          .map do |sector, levels|
-            lvls.each { |l| levels[l].nil? ? levels[l] = [] : '' }
-            levels.reject! { |l, _c| l.nil? }
-            levels.sort.to_h
-            [sector, levels]
-          end
-          .to_h
+        companies_grouped_by_sector.map do |sector, companies|
+          [
+            sector,
+            EMPTY_LEVELS.deep_dup.merge(
+              companies_market_cap(companies).group_by { |c| c[:level] }.sort.to_h
+            )
+          ]
+        end.sort.to_h
       end
 
       # Returns Companies count grouped by their latest MQ assessment levels.
@@ -168,7 +160,7 @@ module Api
             size: company.size,
             slug: company.slug,
             level4STAR: company.is_4_star?,
-            level: company.is_4_star? ? '4' : company.mq_level
+            level: company.mq_level.to_i.to_s
           }
         end
       end
