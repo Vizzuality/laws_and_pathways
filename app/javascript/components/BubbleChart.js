@@ -59,8 +59,7 @@ const BubbleChart = (data) => {
         <div className="bubble-chart__title-container">
           <span className="bubble-chart__title">Market cap</span>
           <BaseTooltip
-            tooltipTrigger={<button className="bubble-chart__info">?</button>}
-            tooltipContent={<span>{tooltipDisclaimer}</span>}
+            content={<span>{tooltipDisclaimer}</span>}
           />
         </div>
         <div className="bubble-chart__legend">

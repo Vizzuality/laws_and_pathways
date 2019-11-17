@@ -3,9 +3,9 @@
     <div class="columns">
       <div class="column">
         <div class="summary-box summary-box--assessment">
-          <h3>Management Quality</h3>
+          <h4>Management Quality</h4>
           <p>
-            Number of assessments: <%= @company.mq_assessments.size %>
+            <small>Number of assessments: <%= @company.mq_assessments.size %></small>
           </p>
           <%= render 'mq_level', level: @company.mq_level, status: @company.mq_status %>
           <p>
@@ -15,9 +15,9 @@
       </div>
       <div class="column">
         <div class="summary-box summary-box--assessment">
-          <h3>Carbon Performance</h3>
+          <h4>Carbon Performance</h4>
           <p>
-            Number of assessments: <%= @company.cp_assessments.size %>
+            <small>Number of assessments: <%= @company.cp_assessments.size %></small>
           </p>
           <p>
             Below 2 degrees
@@ -43,22 +43,22 @@
               <% end %>
             </div>
             <div class="column">
-              <%= render 'company_property', name: 'Market cap (Group)' do %>
+              <%= render 'company_property', name: 'Market cap (Group)', tooltip: t('.tooltips.market_cap') do %>
                 <%= @company.size %>
               <% end %>
             </div>
             <div class="column">
-              <%= render 'company_property', name: 'ISIN' do %>
+              <%= render 'company_property', name: 'ISIN', tooltip: t('.tooltips.ISIN') do %>
                 <%= @company.isin_array.join('<br/>').html_safe %>
               <% end %>
             </div>
             <div class="column">
-              <%= render 'company_property', name: 'SEDOL' do %>
+              <%= render 'company_property', name: 'SEDOL', tooltip: t('.tooltips.SEDOL') do %>
                 Don't have that
               <% end %>
             </div>
             <div class="column">
-              <%= render 'company_property', name: 'CA100+ engagement' do %>
+              <%= render 'company_property', name: 'CA100+ engagement', tooltip: t('.tooltips.CA100') do %>
                 <%= @company.ca100? ? 'Yes' : 'No' %>
               <% end %>
             </div>
@@ -70,10 +70,12 @@
 
   <section class="management-quality container">
     <div class="management-quality__header">
-      <h4>Management Quality: <%= @company.name %></h4>
+      <h4>
+        Management Quality: <%= @company.name %> <%= react_component("BaseTooltip", { content: t('.tooltips.mq_header') }) %>
+      </h4>
 
       <div>
-        Assessment Date
+        Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.mq_assessment_date') }) %>
         <%= select_tag :mq_assessment_id,
                        options_from_collection_for_select(@company.mq_assessments, "id", "assessment_date", @mq_assessment.id),
                        class: 'input',
@@ -97,10 +99,12 @@
   <% unless @company.cp_assessments.empty? %>
     <section class="carbon-performance container">
       <div class="management-quality__header">
-        <h4>Carbon Performance <%= @company.name %></h4>
+        <h4>
+          Carbon Performance <%= @company.name %> <%= react_component("BaseTooltip", { content: t('.tooltips.cp_header') }) %>
+        </h4>
         <div>
           <div>
-            Assessment Date
+            Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.cp_assessment_date') }) %>
             <%= select_tag :cp_assessment_id,
                            options_from_collection_for_select(@company.cp_assessments, "id", "assessment_date", @cp_assessment.id),
                            class: 'input',
