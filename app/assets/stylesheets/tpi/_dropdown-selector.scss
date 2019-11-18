@@ -8,7 +8,8 @@ $box-shadow: 30px;
 
 .dropdown-selector__container {
   background-color: $blue;
-  width: 75%;
+  min-width: 700px;
+  max-width: 880px;
   padding: $container-top-padding $container-side-padding 140px $container-side-padding;
   position: relative;
 

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import Fuse from "fuse.js";
 import cx from 'classnames';
 import groupBy from 'lodash/groupBy';
@@ -14,6 +14,8 @@ const DropdownSelector = ({ sectors, companies, selectedOption }) => {
   const [searchValue, setSearchValue ] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState(FILTER_BY.SECTOR);
+  const inputEl = useRef(null);
+  const searchContainer = useRef(null);
 
   const isFilterBySector = activeFilter === FILTER_BY.SECTOR;
   const isFilterByCompany = activeFilter === FILTER_BY.COMPANY;
@@ -41,12 +43,18 @@ const DropdownSelector = ({ sectors, companies, selectedOption }) => {
   const companiesBySector = isFilterByCompany && groupBy(options, 'sector_name');
 
   const input = () => (
-    <input 
+    <input
+      ref={inputEl}
       className="dropdown-selector__input"
       onChange={e => setSearchValue(e.target.value)}
       placeholder={`Type or select ${isFilterByCompany ? 'company' : 'sector'}`}
     />
   )
+
+  const setFilter = (filter) => {
+    setActiveFilter(filter);
+    inputEl.current && inputEl.current.focus();
+  } 
 
   const header = () => (
     <span>{selectedOption}</span>
@@ -61,29 +69,67 @@ const DropdownSelector = ({ sectors, companies, selectedOption }) => {
   }
 
   const handleCloseDropdown = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(false);
     setSearchValue('');
   }
+
+  const handleOpenSearch = () => {
+    !isOpen && setIsOpen(!isOpen)
+  }
+
+  // hooks
+
+  useEffect(() => {
+    if (isOpen) { inputEl.current.focus(); }
+  }, [isOpen])
+
+  const escFunction = useCallback((event) => {
+    if(event.keyCode === 27) { // escape key
+      handleCloseDropdown();
+    }
+  }, []);
+
+  const handleClickOutside = useCallback((event) => {
+    if (searchContainer.current && !searchContainer.current.contains(event.target)) {
+      handleCloseDropdown();
+    }
+  }, [])
+
+  useEffect(() => {
+    document.addEventListener("keydown", escFunction, false);
+
+    return () => {
+      document.removeEventListener("keydown", escFunction, false);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [])
 
   return (
     <>
       <div className="dropdown-selector__wrapper">
-        <div className={cx("dropdown-selector__container", { ["dropdown-selector__container--active"]: isOpen })}>
+        <div ref={searchContainer} className={cx("dropdown-selector__container", { ["dropdown-selector__container--active"]: isOpen })}>
           <div className="dropdown-selector__buttons">
             <button
-              onClick={() => isFilterBySector ? () => {} : setActiveFilter(FILTER_BY.SECTOR)}
+              onClick={() => isFilterBySector ? () => {} : setFilter(FILTER_BY.SECTOR)}
               className={cx({ ["dropdown-selector__button"]: isFilterByCompany, ["dropdown-selector__active-button"]: isFilterBySector, ["dropdown-selector__not-active-opened"]: isFilterByCompany && isOpen })}
             >
               Filter by {FILTER_BY.SECTOR}
             </button>
             <button
-              onClick={() => isFilterByCompany ? () => {} : setActiveFilter(FILTER_BY.COMPANY)}
+              onClick={() => isFilterByCompany ? () => {} : setFilter(FILTER_BY.COMPANY)}
               className={cx({ ["dropdown-selector__button"]: isFilterBySector, ["dropdown-selector__active-button"]: isFilterByCompany, ["dropdown-selector__not-active-opened"]: isFilterBySector && isOpen })}
             >
               Filter by {FILTER_BY.COMPANY}
             </button>
           </div>
-          <div onClick={() => !isOpen && setIsOpen(!isOpen)} className={cx("dropdown-selector__header", { ["dropdown-selector__header--active"]: isOpen })}>
+          <div onClick={handleOpenSearch} className={cx("dropdown-selector__header", { ["dropdown-selector__header--active"]: isOpen })}>
             {isOpen ? input() : header()}
             <img
               onClick={() => isOpen && handleCloseDropdown()}
