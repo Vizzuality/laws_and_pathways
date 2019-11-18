@@ -23,6 +23,7 @@ const DropdownSelector = ({ sectors, companies, selectedOption }) => {
   const fuse = (opt) => {
     const config = {
       shouldSort: true,
+      threshold: 0.3,
       keys: ['name']
     };
     const fuse = new Fuse(opt, config);
