@@ -175,7 +175,12 @@ ActiveAdmin.register Company do
 
   controller do
     def scoped_collection
-      super.includes(:geography, :headquarters_geography, *csv_includes)
+      super.includes(
+        :geography,
+        :headquarters_geography,
+        :latest_mq_assessment,
+        *csv_includes
+      )
     end
 
     def csv_includes

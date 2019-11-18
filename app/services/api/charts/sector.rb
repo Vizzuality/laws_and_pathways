@@ -1,6 +1,14 @@
 module Api
   module Charts
     class Sector
+      EMPTY_LEVELS = {
+        '0' => [],
+        '1' => [],
+        '2' => [],
+        '3' => [],
+        '4' => []
+      }.freeze
+
       def initialize(company_scope)
         @company_scope = company_scope
       end
@@ -22,13 +30,7 @@ module Api
       #    ]
       #   }
       def companies_summaries_by_level
-        result = {
-          '0' => [],
-          '1' => [],
-          '2' => [],
-          '3' => [],
-          '4' => []
-        }
+        result = EMPTY_LEVELS.deep_dup
 
         companies_grouped_by_latest_assessment_level.each do |level, companies|
           result[level.to_i.to_s].concat(companies_summary(companies)).sort_by! { |c| c[:name] }
@@ -37,22 +39,29 @@ module Api
         result
       end
 
+      # Returns Companies summaries (name, status) grouped by sector and current mq level
+      #
+      # @return [Hash]
+      # @example
+      #   {
+      #    'Airlines' => {
+      #      '1' => [{ name: 'Air China', sector: 'Airlines', size: 'large', ... }],
+      #      '2' => [{ name: 'China Southern', sector: 'Airlines', size: 'large', ... }],
+      #    ]
+      #    'Autos' => [
+      #      '1' => [{ name: 'Tesla', sector: 'Autos', size: 'large', ... }],
+      #      '3' => [{ name: 'BMW', sector: 'Airlines', size: 'large', ... }],
+      #    ]
+      #   }
       def companies_market_cap_by_sector
-        lvls = companies_summaries_by_level.keys
-        lvls.delete('4STAR')
-        grouped = companies_grouped_by_sector
-          .map { |sector, companies| [sector, companies_market_cap(companies)] }
-          .sort.to_h
-        grouped_by_sectors_and_levels = grouped
-          .map { |sector, companies| [sector, companies.group_by { |company| company[:level] }] }
-          .sort.to_h
-        grouped_by_sectors_and_levels
-          .map do |sector, levels|
-            lvls.each { |l| levels[l].nil? ? levels[l] = [] : '' }
-            levels.sort.to_h
-            [sector, levels]
-          end
-          .to_h
+        companies_grouped_by_sector.map do |sector, companies|
+          [
+            sector,
+            EMPTY_LEVELS.deep_dup.merge(
+              companies_market_cap(companies).group_by { |c| c[:level] }.sort.to_h
+            )
+          ]
+        end.sort.to_h
       end
 
       # Returns Companies count grouped by their latest MQ assessment levels.
@@ -96,19 +105,20 @@ module Api
 
       def companies_grouped_by_latest_assessment_level
         @company_scope
-          .includes(:mq_assessments)
-          .group_by { |company| company.latest_mq_assessment.level }
+          .includes(:latest_mq_assessment)
+          .reject { |c| c.mq_level.nil? }
+          .group_by { |c| c.mq_level.to_i.to_s }
       end
 
       def companies_grouped_by_sector
         @company_scope
-          .includes(:sector)
+          .includes(:sector, :latest_mq_assessment)
           .group_by { |company| company.sector.name }
       end
 
       def emissions_data_from_companies
         @company_scope
-          .includes(:mq_assessments, :cp_assessments)
+          .includes(:latest_cp_assessment)
           .map { |company| emissions_data_from_company(company) }
       end
 
@@ -119,7 +129,7 @@ module Api
             fillOpacity: 0.1,
             name: benchmark.scenario,
             data: benchmark.emissions
-          }\
+          }
         end
       end
 
@@ -150,7 +160,7 @@ module Api
             size: company.size,
             slug: company.slug,
             level4STAR: company.is_4_star?,
-            level: company.is_4_star? ? '4' : company.latest_mq_assessment.level
+            level: company.mq_level.to_i.to_s
           }
         end
       end

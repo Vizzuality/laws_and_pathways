@@ -112,7 +112,7 @@ module Api
       #
       # @return [TPISector::ActiveRecord_Relation]
       def all_sectors
-        ::TPISector.includes(:cp_benchmarks, companies: [:cp_assessments])
+        ::TPISector.includes(:cp_benchmarks, companies: [:latest_cp_assessment])
       end
 
       # @return [String] string with current year
