@@ -37,13 +37,13 @@ const DropdownSelector = ({ sectors, companies, selectedOption }) => {
   }
 
   const filteredByOptions = isFilterBySector ? sectorsWithExtraOption : companies;
-  const searchResults = useMemo(() => searchValue ? fuse(filteredByOptions) : [], [searchValue]);
+  const searchResults = useMemo(() => searchValue && activeFilter ? fuse(filteredByOptions) : [], [searchValue, activeFilter]);
 
   const options = useMemo(() => searchValue ? 
     searchResults : filteredByOptions,
   [searchValue, filteredByOptions]);
 
-  const companiesBySector = isFilterByCompany && groupBy(options, 'sector_name');
+  const companiesBySector = groupBy(options, 'sector_name');
 
   const input = () => (
     <input
