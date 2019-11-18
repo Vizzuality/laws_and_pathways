@@ -5,6 +5,9 @@ import groupBy from 'lodash/groupBy';
 import chevronIcon from '../../assets/images/icons/white-chevron-down.svg';
 import chevronIconBlack from '../../assets/images/icon_chevron_dark/chevron_down_black-1.svg';
 
+const ESCAPE_KEY = 27;
+const ENTER_KEY = 13;
+
 const FILTER_BY = {
   SECTOR: 'sector',
   COMPANY: 'company'
@@ -84,10 +87,18 @@ const DropdownSelector = ({ sectors, companies, selectedOption }) => {
   }, [isOpen])
 
   const escFunction = useCallback((event) => {
-    if(event.keyCode === 27) { // escape key
+    if(event.keyCode === ESCAPE_KEY) {
       handleCloseDropdown();
     }
   }, []);
+
+  const enterFunction = (event) => {
+    if(event.keyCode === ENTER_KEY) {
+      if (isOpen && searchResults.length) {
+        handleOptionClick(searchResults[0]);
+      }
+    }
+  }
 
   const handleClickOutside = useCallback((event) => {
     if (searchContainer.current && !searchContainer.current.contains(event.target)) {
@@ -109,7 +120,15 @@ const DropdownSelector = ({ sectors, companies, selectedOption }) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     }
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("keydown", enterFunction);
+
+    return () => {
+      document.removeEventListener("keydown", enterFunction);
+    };
+  }, [searchResults]);
 
   return (
     <>

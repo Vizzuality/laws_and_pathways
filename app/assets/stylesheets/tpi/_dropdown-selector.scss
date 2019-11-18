@@ -5,10 +5,11 @@
 $container-top-padding: 40px; // top
 $container-side-padding: 96px; // right and left padding
 $box-shadow: 30px;
+$header-height: 120px;
 
 .dropdown-selector__container {
   background-color: $blue;
-  min-width: 700px;
+  min-width: 800px;
   max-width: 880px;
   padding: $container-top-padding $container-side-padding 140px $container-side-padding;
   position: relative;
@@ -40,7 +41,7 @@ $box-shadow: 30px;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  height: 120px;
+  height: $header-height;
   width: 100%;
 
   &--active {
@@ -80,6 +81,7 @@ $box-shadow: 30px;
   margin: 0 $box-shadow $box-shadow $box-shadow;
   background-color: $white;
   padding-bottom: 20px;
+  min-height: $header-height;
   max-height: 290px;
   overflow-y: scroll;
 
