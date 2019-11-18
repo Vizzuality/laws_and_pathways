@@ -8,7 +8,7 @@ module TPI
       @company_summary = company_presenter.summary
 
       @sectors = TPISector.select(:id, :name, :slug).order(:name)
-      @companies = Company.joins(:sector).select(:id, :name, :slug, "tpi_sectors.name as sector_name")
+      @companies = Company.joins(:sector).select(:id, :name, :slug, 'tpi_sectors.name as sector_name')
     end
 
     def mq_assessment; end

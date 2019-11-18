@@ -44,7 +44,7 @@ const DropdownSelector = ({ sectors, companies, selectedOption }) => {
     <input 
       className="dropdown-selector__input"
       onChange={e => setSearchValue(e.target.value)}
-      placeholder={`Select ${isFilterByCompany ? 'company' : 'sector'}`}
+      placeholder={`Type or select ${isFilterByCompany ? 'company' : 'sector'}`}
     />
   )
 
