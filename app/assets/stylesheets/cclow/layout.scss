@@ -76,12 +76,12 @@ main {
   width: 100%;
   bottom: -30px;
 
-  border: 1px solid #C0C1CB;
+  border: 1px solid $grey;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1), 0 0 20px 0 rgba(46,49,82,0.05);
 
   .icon {
-    margin-right: 1rem;
     font-size: 1.625rem;
+    margin-right: 1rem;
 
     i {
       color: $blue-dark;
