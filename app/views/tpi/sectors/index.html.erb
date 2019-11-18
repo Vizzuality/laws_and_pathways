@@ -1,12 +1,8 @@
 <div class="sectors-index-page">
-  <div class="container">
-    Sectors:
-    <%= @sectors.map {|s| link_to s.name, tpi_sector_path(s.slug)}.join(', ').html_safe %>
-    <br>
-    <br>
-    Companies:
-    <%= @companies.map {|c| link_to c.name, tpi_company_path(c.slug)}.join(', ').html_safe %>
+  <div class="dropdown-selector-sector-page-wrapper">
+    <%= react_component("DropdownSelector", { sectors: @sectors, companies: @companies, selectedOption: 'All sectors' }) %>
   </div>
+  
 
   <div class="sectors-header">
     <div class="container">

@@ -2,12 +2,15 @@ module TPI
   class SectorsController < TPIController
     def index
       @sectors = TPISector.select(:id, :name, :slug).order(:name)
-      @companies = Company.select(:id, :name, :slug)
+      @companies = Company.joins(:sector).select(:id, :name, :slug, 'tpi_sectors.name as sector_name')
       @companies_by_sectors = ::Api::Charts::Sector.new(companies_scope(params)).companies_market_cap_by_sector
     end
 
     def show
       @sector = TPISector.friendly.find(params[:id])
+
+      @sectors = TPISector.select(:id, :name, :slug).order(:name)
+      @companies = Company.joins(:sector).select(:id, :name, :slug, 'tpi_sectors.name as sector_name')
 
       @companies_by_levels = ::Api::Charts::Sector.new(companies_scope(params)).companies_summaries_by_level
     end
