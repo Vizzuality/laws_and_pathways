@@ -24,6 +24,8 @@ class Litigation < ApplicationRecord
   include Taggable
   include VisibilityStatus
   include DiscardableModel
+  include PublicActivity::Common
+  include PublicActivityTrackable
   extend FriendlyId
 
   friendly_id :title, use: :slugged, routes: :default

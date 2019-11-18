@@ -2,6 +2,31 @@ ActiveAdmin.register_page 'Activity Log' do
   menu parent: 'Administration', priority: 3
 
   content do
+    panel 'Activity Log (paper_trail), [Litigations]' do
+      section do
+        # all tracked models versions are automatically fetched
+        record_versions_public_activity = PublicActivity::Activity.all
+
+        changesets_public_activity = record_versions_public_activity.map do |activity|
+          {
+            item: activity.trackable_id,
+            type: activity.trackable_type.underscore.humanize,
+            updated_at: activity.updated_at.to_s,
+            made_by: activity.owner_id,
+            changes: activity.key
+          }
+        end
+
+        table_for(changesets_public_activity) do
+          column('Item') { |v| v[:item] }
+          column('Type') { |v| v[:type] }
+          column('Updated at') { |v| v[:updated_at] }
+          column('Whodunnit') { |v| v[:made_by] }
+          column('Details') { |v| v[:changes] }
+        end
+      end
+    end
+
     panel 'Activity Log (paper_trail), [Companies, Geo]' do
       section do
         # all tracked models versions are automatically fetched
