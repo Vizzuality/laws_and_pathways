@@ -56,6 +56,7 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
 
   const setFilter = (filter) => {
     setActiveFilter(filter);
+    !isOpen && setIsOpen(true);
     inputEl.current && inputEl.current.focus();
   } 
 
