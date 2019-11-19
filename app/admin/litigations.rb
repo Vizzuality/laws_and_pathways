@@ -152,7 +152,6 @@ ActiveAdmin.register Litigation do
     redirect_to collection_path, message
   end
 
-
   controller do
     include DiscardableController
 
