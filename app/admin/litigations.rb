@@ -7,7 +7,7 @@ ActiveAdmin.register Litigation do
   publishable_sidebar only: :show
 
   permit_params :title, :jurisdiction_id, :sector_id, :document_type,
-                :visibility_status, :summary, :core_objective,
+                :visibility_status, :summary, :at_issue,
                 :citation_reference_number,
                 :created_by_id, :updated_by_id, :keywords_string,
                 litigation_sides_attributes: permit_params_for(:litigation_sides),
@@ -65,7 +65,7 @@ ActiveAdmin.register Litigation do
     column :citation_reference_number
     column :summary
     column :keywords, &:keywords_string
-    column :core_objective
+    column :at_issue
     column(:visibility_status) { |l| l.visibility_status&.humanize }
     column(:legislation_ids) { |l| l.legislation_ids.join('; ') }
   end
@@ -82,7 +82,7 @@ ActiveAdmin.register Litigation do
           row :document_type
           row :citation_reference_number
           row :summary
-          row :core_objective
+          row :at_issue
           row 'Keywords', &:keywords_string
           row :updated_at
           row :updated_by

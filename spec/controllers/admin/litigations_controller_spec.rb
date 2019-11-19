@@ -41,7 +41,7 @@ RSpec.describe Admin::LitigationsController, type: :controller do
           :litigation,
           title: 'Litigation POST title',
           summary: 'Litigation POST summary',
-          core_objective: 'objective',
+          at_issue: 'At issue',
           jurisdiction_id: geography.id,
           sector_id: sector.id,
           created_by_id: admin.id,
@@ -99,7 +99,7 @@ RSpec.describe Admin::LitigationsController, type: :controller do
         last_litigation_created.tap do |l|
           expect(l.title).to eq('Litigation POST title')
           expect(l.summary).to eq('Litigation POST summary')
-          expect(l.core_objective).to eq('objective')
+          expect(l.at_issue).to eq('At issue')
           expect(l.visibility_status).to eq('pending')
           expect(l.sector_id).to eq(sector.id)
           expect(l.jurisdiction_id).to eq(geography.id)

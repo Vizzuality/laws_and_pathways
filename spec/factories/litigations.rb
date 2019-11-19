@@ -31,7 +31,7 @@ FactoryBot.define do
     document_type { 'case' }
     citation_reference_number { 'SFKD777FDK77' }
     summary { 'Summary Lorem ipsum dolor dalej nie pamietam' }
-    core_objective { 'Core objectives Lorem ipsumumum' }
+    at_issue { 'At issue Lorem ipsumumum' }
     visibility_status { Litigation::VISIBILITY.first }
 
     trait :with_sides do
