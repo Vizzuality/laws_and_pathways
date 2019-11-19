@@ -115,6 +115,20 @@ ActiveAdmin.register Legislation do
     column :visibility_status
   end
 
+  batch_action :publish,
+               priority: 1,
+               if: proc { current_scope&.name != 'Published' } do |ids|
+    publish_command = ::Command::Batch::Publish.new(batch_action_collection, ids)
+
+    message = if publish_command.call
+                {notice: "Successfully published #{ids.count} Laws"}
+              else
+                {alert: 'Could not publish selected Laws'}
+              end
+
+    redirect_to collection_path(scope: 'published'), message
+  end
+
   batch_action :archive,
                priority: 1,
                if: proc { current_scope&.name != 'Archived' } do |ids|
