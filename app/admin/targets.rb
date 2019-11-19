@@ -83,6 +83,46 @@ ActiveAdmin.register Target do
     column :visibility_status
   end
 
+  batch_action :publish,
+               priority: 1,
+               if: proc { current_scope&.name != 'Published' } do |ids|
+    publish_command = ::Command::Batch::Publish.new(batch_action_collection, ids)
+
+    message = if publish_command.call
+                {notice: "Successfully published #{ids.count} Targets"}
+              else
+                {alert: 'Could not publish selected Targets'}
+              end
+
+    redirect_to collection_path(scope: 'published'), message
+  end
+
+  batch_action :archive,
+               priority: 1,
+               if: proc { current_scope&.name != 'Archived' } do |ids|
+    archive_command = ::Command::Batch::Archive.new(batch_action_collection, ids)
+
+    message = if archive_command.call
+                {notice: "Successfully archived #{ids.count} Targets"}
+              else
+                {alert: 'Could not archive selected Targets'}
+              end
+
+    redirect_to collection_path(scope: 'archived'), message
+  end
+
+  batch_action :destroy do |ids|
+    delete_command = Command::Batch::Delete.new(batch_action_collection, ids)
+
+    message = if delete_command.call
+                {notice: "Successfully deleted #{ids.count} Targets"}
+              else
+                {alert: 'Could not delete selected Targets'}
+              end
+
+    redirect_to collection_path, message
+  end
+
   controller do
     include DiscardableController
   end
