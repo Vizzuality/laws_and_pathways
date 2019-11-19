@@ -53,6 +53,63 @@ $search-field-height: 3.75rem;
   }
 }
 
+.footer {
+  font-size: $size-7;
+
+  .section-name {
+    color: $grey-text;
+  }
+
+  a {
+    color: $red;
+  }
+
+  .footer-content {
+    margin-top: 2.5rem;
+  }
+
+  .footer-chart {
+    background-image: image-url('cclow/footer.svg');
+    height: 123px;
+    background-position: center;
+    width: 100%;
+
+    .container {
+      height: 100%;
+    }
+  }
+
+  ul {
+    margin-top: 1.25rem;
+
+    &.social-links {
+      li {
+        display: inline-block;
+        margin: 0 1.5rem 0 0;
+      }
+
+      a {
+        color: $blue-dark;
+      }
+    }
+
+    li {
+      margin-top: 0.875rem;
+    }
+
+    i {
+      font-size: $size-5;
+    }
+  }
+
+  .copyright {
+    position: absolute;
+    right: 0;
+    bottom: 1.875rem;
+    font-size: $size-7;
+  }
+}
+
 main {
   margin-top: 1.5rem;
 }
