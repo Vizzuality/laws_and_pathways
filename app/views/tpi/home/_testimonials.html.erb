@@ -1,21 +1,11 @@
 <div class="container">
   <div class="columns">
-    <div class="column is-2 is-offset-1">
-      “
+    <%= react_component("Testimonials", {
+      testimonials: @testimonials,
+      quote_path: asset_path('quote.svg'),
+    }, {
+      class: 'column is-10 is-offset-1 testimonials',
+    }) %>
     </div>
-    <div class="column is-8 is-offset-1">
-      pic
-      <img src="" class="testimonials__avatar">
-
-      <p class="testimonials__content">
-        Businesses should be able explain to investors how they plan to manage climate change risks, invest and innovate on the way to the zero-carbon economy of the future. With the launch of the Transition Pathway Initiative, asset owners from around the world are sending a strong signal that portfolios will align in the future with companies that are taking the transition to a low carbon economy seriously.
-      </p>
-
-      <p class="testimonials__author">
-        Emma Howard Boyd
-        Chair of the Environment Agency
-      </p>
-    </div>
-
   </div>
 </div>
