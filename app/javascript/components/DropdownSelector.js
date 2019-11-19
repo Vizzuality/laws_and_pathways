@@ -13,10 +13,10 @@ const FILTER_BY = {
   COMPANY: 'company'
 };
 
-const DropdownSelector = ({ sectors, companies, selectedOption }) => {
+const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 'sector' }) => {
   const [searchValue, setSearchValue ] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-  const [activeFilter, setActiveFilter] = useState(FILTER_BY.SECTOR);
+  const [activeFilter, setActiveFilter] = useState(defaultFilter);
   const inputEl = useRef(null);
   const searchContainer = useRef(null);
 
@@ -56,6 +56,7 @@ const DropdownSelector = ({ sectors, companies, selectedOption }) => {
 
   const setFilter = (filter) => {
     setActiveFilter(filter);
+    !isOpen && setIsOpen(true);
     inputEl.current && inputEl.current.focus();
   } 
 
