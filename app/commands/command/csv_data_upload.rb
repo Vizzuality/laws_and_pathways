@@ -5,7 +5,7 @@ module Command
   # - creating/updating related DB records (via one of <CSVImport::*> service)
   # - storing other metadata related with the upload (as <DataUpload> record)
   #
-  class CsvDataUpload
+  class CSVDataUpload
     include ActiveModel::Model
 
     attr_reader :data_upload

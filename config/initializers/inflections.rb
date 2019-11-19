@@ -16,4 +16,5 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'CP'
   inflect.acronym 'MQ'
   inflect.acronym 'TPI'
+  inflect.acronym 'CSV'
 end
