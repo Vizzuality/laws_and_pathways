@@ -2,9 +2,13 @@
   @include mq-level-backgrounds;
 
   height: $size;
+  min-height: $size;
   width: $size;
-  line-height: $size;
   border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   margin: 20px 0;
 
@@ -12,9 +16,28 @@
 
   font-weight: bold;
   font-size: $font-size;
+  line-height: $font-size;
+
+  &> * {
+    &:not(:last-child) {
+      margin-right: 5px;
+    }
+  }
 
   .mq-level-trend {
     @include mq-level-trend($size / 4);
+
+    &__container {
+      flex-direction: column;
+      margin-top: -$size/16;
+
+      &> * {
+        &:not(:last-child) {
+          margin: 0;
+          margin-bottom: 5px;
+        }
+      }
+    }
   }
 }
 
@@ -22,9 +45,18 @@
   width: $size;
   height: $size;
 
-  display: inline-block;
   background-repeat: no-repeat;
   background-size: 100%;
+
+  &__container {
+    display: inline-flex;
+
+    &> * {
+      &:not(:last-child) {
+        margin-right: 5px;
+      }
+    }
+  }
 
   &--unchanged, &--new {
     display: none;

@@ -6,7 +6,6 @@ $tape-height: 8px;
 $tape-color: rgba(25,25,25,0.1);
 $cell-height: 55px;
 $legend-image-width: 60px;
-$legend-info-size: 20px;
 
 .bubble-chart__container {
   width: 100%;
@@ -127,23 +126,4 @@ $legend-info-size: 20px;
   color: $blue-dark;
   text-align: right;
   padding-right: 50px;
-}
-
-.bubble-chart__info {
-  font-family: $font-family-bold;
-  color: white;
-  background-color: $blue;
-  font-size: 16px;
-  height: $legend-info-size;
-  width: $legend-info-size;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  outline: none;
-  cursor: pointer;
-
-  &:hover {
-    background-color: $blue-dark;
-  }
 }

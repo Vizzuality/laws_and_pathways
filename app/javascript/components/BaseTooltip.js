@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const BaseTooltip = ({ tooltipTrigger, tooltipContent }) => {
+const BaseTooltip = ({ trigger, content }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -10,10 +10,10 @@ const BaseTooltip = ({ tooltipTrigger, tooltipContent }) => {
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
       >
-        {tooltipTrigger}
+        {trigger || (<span className="base-tooltip__default-trigger">?</span>)}
       </span>
-      {isOpen && <div className="base-tooltip-content">
-        {tooltipContent}
+      {isOpen && <div className="base-tooltip__content">
+        {content}
       </div>}
     </span>
   )
