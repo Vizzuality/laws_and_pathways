@@ -112,6 +112,20 @@ ActiveAdmin.register Litigation do
 
   form partial: 'form'
 
+  batch_action :publish,
+               priority: 1,
+               if: proc { current_scope&.name != 'Published' } do |ids|
+    publish_command = ::Command::Batch::Publish.new(batch_action_collection, ids)
+
+    message = if publish_command.call
+                {notice: "Successfully published #{ids.count} Litigations"}
+              else
+                {alert: 'Could not publish selected Litigations'}
+              end
+
+    redirect_to collection_path(scope: 'published'), message
+  end
+
   batch_action :archive,
                priority: 1,
                if: proc { current_scope&.name != 'Archived' } do |ids|

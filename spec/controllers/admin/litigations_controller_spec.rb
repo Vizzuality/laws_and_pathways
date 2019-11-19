@@ -271,6 +271,34 @@ RSpec.describe Admin::LitigationsController, type: :controller do
         expect(flash[:notice]).to match('Successfully archived 2 Litigations')
       end
     end
+
+    context 'publish' do
+      let!(:litigation_to_publish_1) { create(:litigation, visibility_status: 'draft') }
+      let!(:litigation_to_publish_2) { create(:litigation, visibility_status: 'draft') }
+      let!(:litigation_to_keep_1) { create(:litigation, visibility_status: 'draft') }
+      let!(:litigation_to_keep_2) { create(:litigation, visibility_status: 'draft') }
+
+      let(:ids_to_publish) { [litigation_to_publish_1.id, litigation_to_publish_2.id] }
+
+      subject do
+        post :batch_action,
+             params: {
+               batch_action: 'publish',
+               collection_selection: ids_to_publish
+             }
+      end
+
+      it 'publishes Litigations collection' do
+        subject
+
+        expect(litigation_to_publish_1.reload.visibility_status).to eq('published')
+        expect(litigation_to_publish_2.reload.visibility_status).to eq('published')
+        expect(litigation_to_keep_1.reload.visibility_status).to eq('draft')
+        expect(litigation_to_keep_2.reload.visibility_status).to eq('draft')
+
+        expect(flash[:notice]).to match('Successfully published 2 Litigations')
+      end
+    end
   end
 
   def last_litigation_created
