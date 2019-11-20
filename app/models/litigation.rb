@@ -28,7 +28,7 @@ class Litigation < ApplicationRecord
 
   friendly_id :title, use: :slugged, routes: :default
 
-  DOCUMENT_TYPES = %w[case investigation inquiry].freeze
+  DOCUMENT_TYPES = %w[administrative_case judicial_case inquiry].freeze
   EVENT_TYPES = %w[
     case_started
     case_dismissed

@@ -6,7 +6,7 @@ class LitigationDecorator < Draper::Decorator
   end
 
   def document_type
-    model.document_type.humanize
+    model.document_type&.humanize
   end
 
   def summary
