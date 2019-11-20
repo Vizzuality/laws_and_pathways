@@ -70,19 +70,17 @@ RSpec.describe Api::Charts::Sector do
     end
 
     it 'returns companies emissions' do
-      expect(subject.companies_emissions_data).to eq(
-        [
-          {
-            data: {'2017' => 90.0, '2018' => 120.0, '2019' => 110.0},
-            lineWidth: 4,
-            name: company.name
-          },
-          {
-            data: {'2017' => 190.0, '2018' => 220.0, '2019' => 90.0},
-            lineWidth: 4,
-            name: company2.name
-          }
-        ]
+      expect(subject.companies_emissions_data).to contain_exactly(
+        {
+          data: {'2017' => 90.0, '2018' => 120.0, '2019' => 110.0},
+          lineWidth: 4,
+          name: company.name
+        },
+        {
+          data: {'2017' => 190.0, '2018' => 220.0, '2019' => 90.0},
+          lineWidth: 4,
+          name: company2.name
+        }
       )
     end
   end
