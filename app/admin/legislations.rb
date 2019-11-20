@@ -10,7 +10,7 @@ ActiveAdmin.register Legislation do
   permit_params :title, :date_passed, :description,
                 :geography_id, :sector_id, :law_id, :legislation_type,
                 :created_by_id, :updated_by_id, :visibility_status,
-                :natural_hazards_string, :keywords_string,
+                :natural_hazards_string, :keywords_string, :responses_string,
                 events_attributes: permit_params_for(:events),
                 documents_attributes: permit_params_for(:documents),
                 framework_ids: [], document_type_ids: [], instrument_ids: [],
@@ -26,6 +26,9 @@ ActiveAdmin.register Legislation do
   filter :frameworks,
          as: :check_boxes,
          collection: proc { Framework.all }
+  filter :responses,
+         as: :check_boxes,
+         collection: proc { Response.all }
   filter :visibility_status,
          as: :select,
          collection: proc { array_to_select_collection(VisibilityStatus::VISIBILITY) }
@@ -36,6 +39,7 @@ ActiveAdmin.register Legislation do
     column :legislation_type
     column :date_passed
     column 'Frameworks', &:frameworks_string
+    column 'Responses', &:responses_string
     column :geography
     column :sector
     column :document_types
@@ -62,6 +66,7 @@ ActiveAdmin.register Legislation do
           row :law_id
           row :legislation_type
           row 'Frameworks', &:frameworks_string
+          row 'Responses (e.g. adaptation or mitigation)', &:responses_string
           row :updated_at
           row :updated_by
           row :created_at
@@ -109,6 +114,7 @@ ActiveAdmin.register Legislation do
     column(:geography_iso) { |l| l.geography.iso }
     column(:sector) { |l| l.sector&.name }
     column :frameworks, &:frameworks_string
+    column :responses, &:responses_string
     column :document_types, &:document_types_string
     column :keywords, &:keywords_string
     column :natural_hazards, &:natural_hazards_string
@@ -163,6 +169,7 @@ ActiveAdmin.register Legislation do
         :geography,
         :sector,
         :frameworks,
+        :responses,
         :keywords,
         :natural_hazards,
         :document_types,

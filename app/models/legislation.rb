@@ -40,6 +40,7 @@ class Legislation < ApplicationRecord
   tag_with :document_types
   tag_with :keywords
   tag_with :natural_hazards
+  tag_with :responses
 
   enum legislation_type: array_to_enum_hash(LEGISLATION_TYPES)
 

@@ -29,7 +29,8 @@
                 column { f.input :geography, collection: Geography.order(:name) }
                 column { f.input :date_passed }
                 column do
-                  f.input :framework_ids, label: 'Frameworks', as: :tags, collection: Framework.all
+                  f.input :framework_ids, label: 'Frameworks', as: :tags,
+                    collection: Framework.all
                 end
                 column do
                   f.input :visibility_status, as: :select
@@ -39,6 +40,8 @@
           %>
         <%= f.input :natural_hazards_string, label: 'Natural Hazards', hint: t('hint.tag'), as: :tags, collection: NaturalHazard.pluck(:name) %>
         <%= f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags, collection: Keyword.pluck(:name) %>
+        <%= f.input :responses_string, as: :tags, label: 'Responses (e.g. adaptation or mitigation)',
+          hint: t('hint.tag'), collection: Response.pluck(:name) %>
         <% end %>
       </div>
 

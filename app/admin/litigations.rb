@@ -87,7 +87,7 @@ ActiveAdmin.register Litigation do
           row :citation_reference_number
           row :summary
           row :at_issue
-          row 'Responses', &:responses_string
+          row 'Responses (e.g. adaptation or mitigation)', &:responses_string
           row 'Keywords', &:keywords_string
           row :updated_at
           row :updated_by
@@ -162,7 +162,8 @@ ActiveAdmin.register Litigation do
     include DiscardableController
 
     def scoped_collection
-      super.includes(:jurisdiction, :sector, :created_by, :updated_by)
+      super.includes(:jurisdiction, :sector, :responses,
+                     :created_by, :updated_by)
     end
   end
 end
