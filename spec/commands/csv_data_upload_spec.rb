@@ -2,7 +2,7 @@ require 'rails_helper'
 
 # TODO: Extract all importers tests from here to separate files
 
-describe 'CsvDataUpload (integration)' do
+describe 'CSVDataUpload (integration)' do
   let(:legislations_csv) { fixture_file('legislations.csv') }
   let(:companies_csv) { fixture_file('companies.csv') }
   let(:targets_csv) { fixture_file('targets.csv') }
@@ -29,14 +29,14 @@ describe 'CsvDataUpload (integration)' do
 
   describe 'errors handling' do
     it 'sets error for unknown uploader class' do
-      command = Command::CsvDataUpload.new(uploader: 'FooUploader', file: legislations_csv)
+      command = Command::CSVDataUpload.new(uploader: 'FooUploader', file: legislations_csv)
 
       expect(command.call).to eq(false)
       expect(command.errors.to_a).to include('Uploader is not included in the list')
     end
 
     it 'sets error for missing file' do
-      command = Command::CsvDataUpload.new(uploader: 'Legislations', file: nil)
+      command = Command::CSVDataUpload.new(uploader: 'Legislations', file: nil)
 
       expect(command.call).to eq(false)
       expect(command.errors.to_a).to include('File is not attached')
@@ -305,7 +305,7 @@ describe 'CsvDataUpload (integration)' do
 
   def expect_data_upload_results(uploaded_resource_klass, csv, expected_details)
     uploader_name = uploaded_resource_klass.name.tr('::', '').pluralize
-    command = Command::CsvDataUpload.new(uploader: uploader_name, file: csv)
+    command = Command::CSVDataUpload.new(uploader: uploader_name, file: csv)
 
     expect do
       expect(command).to be_valid
