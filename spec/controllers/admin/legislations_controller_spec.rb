@@ -116,6 +116,39 @@ RSpec.describe Admin::LegislationsController, type: :controller do
       end
     end
 
+    context 'with valid params setting parent_legislation' do
+      let!(:parent_legislation) { create(:legislation, visibility_status: 'published') }
+
+      let(:valid_attributes_with_parent) {
+        attributes_for(:legislation).merge(
+          title: 'Legislation POST title 22',
+          description: 'Legislation POST description 22',
+          date_passed: Date.parse('2/4/2004'),
+          law_id: 1003,
+          visibility_status: 'pending',
+          legislation_type: 'legislative',
+          geography_id: geography.id,
+          parent_id: parent_legislation.id
+        )
+      }
+
+      subject { post :create, params: {legislation: valid_attributes_with_parent} }
+
+      it 'creates a new Legislation' do
+        expect { subject }.to change(Legislation, :count).by(1)
+
+        last_legislation_created.tap do |l|
+          expect(l.title).to eq('Legislation POST title 22')
+          expect(l.description).to eq('Legislation POST description 22')
+          expect(l.visibility_status).to eq('pending')
+          expect(l.law_id).to eq(1003)
+          expect(l.date_passed).to eq(Date.parse('2/4/2004'))
+          expect(l.parent_id).to eq(parent_legislation.id)
+          expect(l.legislative?).to be(true)
+        end
+      end
+    end
+
     context 'with invalid params' do
       let(:invalid_attributes) { attributes_for(:legislation).merge(title: nil) }
 
