@@ -180,6 +180,96 @@ RSpec.describe Admin::TargetsController, type: :controller do
     end
   end
 
+  describe 'Batch Actions' do
+    context 'delete' do
+      let!(:target_to_delete_1) { create(:target) }
+      let!(:target_to_delete_2) { create(:target) }
+      let!(:target_to_delete_3) { create(:target) }
+      let!(:target_to_keep_1) { create(:target) }
+      let!(:target_to_keep_2) { create(:target) }
+
+      let(:ids_to_delete) do
+        [target_to_delete_1.id,
+         target_to_delete_2.id,
+         target_to_delete_3.id]
+      end
+
+      subject do
+        post :batch_action,
+             params: {
+               batch_action: 'destroy',
+               collection_selection: ids_to_delete
+             }
+      end
+
+      it 'soft deletes targets collection' do
+        expect { subject }.to change { Target.count }.by(-3)
+        expect(Target.find_by_id(ids_to_delete)).to be_nil
+
+        expect(target_to_delete_1.reload.discarded_at).to_not be_nil
+        expect(Target.all_discarded.find_by_id(ids_to_delete)).to_not be_nil
+
+        expect(flash[:notice]).to match('Successfully deleted 3 Targets')
+      end
+    end
+
+    context 'archive' do
+      let!(:target_to_archive_1) { create(:target, visibility_status: 'draft') }
+      let!(:target_to_archive_2) { create(:target, visibility_status: 'draft') }
+      let!(:target_to_keep_1) { create(:target, visibility_status: 'draft') }
+      let!(:target_to_keep_2) { create(:target, visibility_status: 'draft') }
+
+      let(:ids_to_archive) { [target_to_archive_1.id, target_to_archive_2.id] }
+
+      subject do
+        post :batch_action,
+             params: {
+               batch_action: 'archive',
+               collection_selection: ids_to_archive
+             }
+      end
+
+      it 'archives Targets collection' do
+        subject
+
+        expect(target_to_archive_1.reload.visibility_status).to eq('archived')
+        expect(target_to_archive_2.reload.visibility_status).to eq('archived')
+        expect(target_to_keep_1.reload.visibility_status).to eq('draft')
+        expect(target_to_keep_2.reload.visibility_status).to eq('draft')
+
+        expect(flash[:notice]).to match('Successfully archived 2 Targets')
+      end
+    end
+
+    context 'publish' do
+      let!(:target_to_publish_1) { create(:target, visibility_status: 'draft') }
+      let!(:target_to_publish_2) { create(:target, visibility_status: 'draft') }
+      let!(:target_to_keep_1) { create(:target, visibility_status: 'draft') }
+      let!(:target_to_keep_2) { create(:target, visibility_status: 'draft') }
+
+      let(:ids_to_publish) { [target_to_publish_1.id, target_to_publish_2.id] }
+
+      subject do
+        post :batch_action,
+             params: {
+               batch_action: 'publish',
+               collection_selection: ids_to_publish
+             }
+      end
+
+      it 'publishes Targets collection' do
+        subject
+
+        expect(target_to_publish_1.reload.visibility_status).to eq('published')
+        expect(target_to_publish_2.reload.visibility_status).to eq('published')
+        expect(target_to_keep_1.reload.visibility_status).to eq('draft')
+        expect(target_to_keep_2.reload.visibility_status).to eq('draft')
+
+        expect(flash[:notice]).to match('Successfully published 2 Targets')
+      end
+    end
+  end
+
   def response_as_csv
     CSV.parse(response.body, headers: true)
   end

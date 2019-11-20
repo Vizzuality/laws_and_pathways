@@ -32,7 +32,7 @@ FactoryBot.define do
     citation_reference_number { 'SFKD777FDK77' }
     summary { 'Summary Lorem ipsum dolor dalej nie pamietam' }
     core_objective { 'Core objectives Lorem ipsumumum' }
-    visibility_status { Litigation::VISIBILITY.sample }
+    visibility_status { Litigation::VISIBILITY.first }
 
     trait :with_sides do
       after(:create) do |l|
