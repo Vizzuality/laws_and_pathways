@@ -8,13 +8,12 @@ ActiveAdmin.register Litigation do
 
   permit_params :title, :jurisdiction_id, :sector_id, :document_type,
                 :visibility_status, :summary, :at_issue,
-                :citation_reference_number,
-                :created_by_id, :updated_by_id, :keywords_string,
+                :citation_reference_number, :created_by_id, :updated_by_id,
+                :keywords_string, :responses_string,
                 litigation_sides_attributes: permit_params_for(:litigation_sides),
                 documents_attributes: permit_params_for(:documents),
                 events_attributes: permit_params_for(:events),
-                legislation_ids: [], response_ids: [],
-                external_legislation_ids: []
+                legislation_ids: [], external_legislation_ids: []
 
   filter :title_contains
   filter :summary_contains
