@@ -33,6 +33,9 @@ FactoryBot.define do
     market_cap_group { Company::MARKET_CAP_GROUPS.sample }
     visibility_status { Litigation::VISIBILITY.sample }
 
+    latest_information { 'My information' }
+    historical_comments { 'I changed my name last week' }
+
     trait :with_mq_assessments do
       after(:create) do |c|
         create :mq_assessment, company: c, assessment_date: 1.year.ago
