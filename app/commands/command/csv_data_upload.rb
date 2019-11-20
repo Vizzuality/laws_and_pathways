@@ -9,13 +9,15 @@ module Command
     include ActiveModel::Model
 
     attr_reader :data_upload
+    attr_reader :uploaded_csv_file
 
-    delegate :id, :file, :file=, :details, :details=, :uploader, :uploader=, to: :data_upload
+    delegate :id, :details, :file, :file=, :details=, :uploader, :uploader=, to: :data_upload
 
     validate :validate_data_upload
 
     def initialize(attributes)
       @data_upload = ::DataUpload.new
+      @uploaded_csv_file = attributes[:file]
 
       super(attributes)
     end
@@ -51,10 +53,6 @@ module Command
       @import_service ||= CSVImport.const_get(importer_name).new(uploaded_csv_file)
     rescue NameError
       raise "Can't find 'CSVImport::#{importer_name}' importer service class!"
-    end
-
-    def uploaded_csv_file
-      file.download.force_encoding('UTF-8')
     end
 
     def validate_data_upload

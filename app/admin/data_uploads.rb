@@ -74,7 +74,7 @@ ActiveAdmin.register DataUpload do
     end
 
     def create
-      @data_upload = ::Command::CsvDataUpload.new(permitted_params[:data_upload])
+      @data_upload = ::Command::CSVDataUpload.new(permitted_params[:data_upload])
 
       if @data_upload.call
         redirect_to admin_data_upload_path(@data_upload.data_upload)
