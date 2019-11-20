@@ -89,13 +89,13 @@ ActiveAdmin.register Litigation do
           row :at_issue
           row 'Responses (e.g. adaptation or mitigation)', &:responses_string
           row 'Keywords', &:keywords_string
+          list_row 'Documents', :document_links
+          list_row 'Laws', :legislation_links
+          list_row 'External Laws', :external_legislation_links
           row :updated_at
           row :updated_by
           row :created_at
           row :created_by
-          list_row 'Documents', :document_links
-          list_row 'Laws', :legislation_links
-          list_row 'External Laws', :external_legislation_links
         end
       end
 

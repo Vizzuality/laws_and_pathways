@@ -66,17 +66,17 @@ ActiveAdmin.register Legislation do
           row :law_id
           row :legislation_type
           row 'Frameworks', &:frameworks_string
+          row 'Document Types', &:document_types_string
           row 'Responses (e.g. adaptation or mitigation)', &:responses_string
+          row 'Natural Hazards', &:natural_hazards_string
+          row 'Keywords', &:keywords_string
+          list_row 'Documents', :document_links
+          list_row 'Instruments', :instrument_links
+          list_row 'Governances', :governance_links
           row :updated_at
           row :updated_by
           row :created_at
           row :created_by
-          row 'Document Types', &:document_types_string
-          row 'Keywords', &:keywords_string
-          row 'Natural Hazards', &:natural_hazards_string
-          list_row 'Documents', :document_links
-          list_row 'Instruments', :instrument_links
-          list_row 'Governances', :governance_links
         end
       end
 
