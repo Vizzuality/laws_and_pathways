@@ -74,9 +74,9 @@ describe 'CSVDataUpload (integration)' do
     updated_litigation = create(:litigation)
 
     csv_content = <<-CSV
-      Id,Title,Document type,Geography iso,Jurisdiction iso,Sector,Citation reference number,Summary,Keywords,Core objective,Visibility status,Legislation ids
-      ,Litigation number 1,Case,GBR,GBR,Transport,EWHC 2752,Lyle requested judicial review,"keyword1,keyword2",Objectives,pending,"#{legislation1.id}, #{legislation2.id}"
-      #{updated_litigation.id},Litigation number 2,Case,GBR,GBR,,[2013] NIQB 24,The applicants were brothers ...,,,Draft,
+      Id,Title,Document type,Geography iso,Jurisdiction iso,Sector,Citation reference number,Summary,Keywords,At issue,Visibility status,Legislation ids
+      ,Litigation number 1,administrative_case,GBR,GBR,Transport,EWHC 2752,Lyle requested judicial review,"keyword1,keyword2",At issues,pending,"#{legislation1.id}, #{legislation2.id}"
+      #{updated_litigation.id},Litigation number 2,administrative_case,GBR,GBR,,[2013] NIQB 24,The applicants were brothers ...,,,Draft,
     CSV
 
     litigations_csv = fixture_file('litigations.csv', content: csv_content)
@@ -92,9 +92,9 @@ describe 'CSVDataUpload (integration)' do
     expect(litigation).to have_attributes(
       citation_reference_number: 'EWHC 2752',
       summary: 'Lyle requested judicial review',
-      core_objective: 'Objectives',
+      at_issue: 'At issues',
       visibility_status: 'pending',
-      document_type: 'case'
+      document_type: 'administrative_case'
     )
     expect(litigation.jurisdiction.iso).to eq('GBR')
     expect(litigation.sector.name).to eq('Transport')

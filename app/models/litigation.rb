@@ -28,7 +28,7 @@ class Litigation < ApplicationRecord
 
   friendly_id :title, use: :slugged, routes: :default
 
-  DOCUMENT_TYPES = %w[case investigation inquiry].freeze
+  DOCUMENT_TYPES = %w[administrative_case judicial_case inquiry].freeze
   EVENT_TYPES = %w[
     case_started
     case_dismissed
@@ -39,6 +39,7 @@ class Litigation < ApplicationRecord
   enum document_type: array_to_enum_hash(DOCUMENT_TYPES)
 
   tag_with :keywords
+  tag_with :responses
 
   belongs_to :jurisdiction, class_name: 'Geography'
   belongs_to :sector, class_name: 'LawsSector', foreign_key: 'sector_id', optional: true

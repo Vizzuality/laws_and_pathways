@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_19_224043) do
+ActiveRecord::Schema.define(version: 2019_11_20_152618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -260,9 +260,11 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
     t.datetime "discarded_at"
     t.string "legislation_type", null: false
     t.bigint "sector_id"
+    t.bigint "parent_id"
     t.index ["created_by_id"], name: "index_legislations_on_created_by_id"
     t.index ["discarded_at"], name: "index_legislations_on_discarded_at"
     t.index ["geography_id"], name: "index_legislations_on_geography_id"
+    t.index ["parent_id"], name: "index_legislations_on_parent_id"
     t.index ["sector_id"], name: "index_legislations_on_sector_id"
     t.index ["slug"], name: "index_legislations_on_slug", unique: true
     t.index ["updated_by_id"], name: "index_legislations_on_updated_by_id"
@@ -305,7 +307,7 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
     t.string "document_type"
     t.bigint "jurisdiction_id"
     t.text "summary"
-    t.text "core_objective"
+    t.text "at_issue"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "visibility_status", default: "draft"
@@ -418,6 +420,7 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
   add_foreign_key "legislations", "admin_users", column: "updated_by_id"
   add_foreign_key "legislations", "geographies"
   add_foreign_key "legislations", "laws_sectors", column: "sector_id"
+  add_foreign_key "legislations", "legislations", column: "parent_id"
   add_foreign_key "legislations_targets", "legislations", on_delete: :cascade
   add_foreign_key "legislations_targets", "targets", on_delete: :cascade
   add_foreign_key "litigation_sides", "litigations", on_delete: :cascade
