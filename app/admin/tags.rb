@@ -3,6 +3,7 @@
   NaturalHazard
   Keyword
   Framework
+  Response
 ].each do |tag_class|
   ActiveAdmin.register tag_class.constantize do
     config.sort_order = 'name_asc'

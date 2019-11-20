@@ -13,15 +13,15 @@ ActiveAdmin.register Litigation do
                 litigation_sides_attributes: permit_params_for(:litigation_sides),
                 documents_attributes: permit_params_for(:documents),
                 events_attributes: permit_params_for(:events),
-                legislation_ids: [], framework_ids: [],
+                legislation_ids: [], response_ids: [],
                 external_legislation_ids: []
 
   filter :title_contains
   filter :summary_contains
   filter :jurisdiction
-  filter :frameworks,
+  filter :responses,
          as: :check_boxes,
-         collection: proc { Framework.all }
+         collection: proc { Response.all }
   filter :document_type, as: :select, collection: proc {
     array_to_select_collection(Litigation::DOCUMENT_TYPES)
   }
@@ -50,7 +50,7 @@ ActiveAdmin.register Litigation do
     column :document_type
     column :jurisdiction
     column :sector
-    column 'Frameworks', &:frameworks_string
+    column 'Responses', &:responses_string
     column :citation_reference_number
     column :created_by
     column :updated_by
@@ -68,7 +68,7 @@ ActiveAdmin.register Litigation do
     column(:sector) { |l| l.sector&.name }
     column :citation_reference_number
     column :summary
-    column :frameworks, &:frameworks_string
+    column :responses, &:responses_string
     column :keywords, &:keywords_string
     column :at_issue
     column(:visibility_status) { |l| l.visibility_status&.humanize }
@@ -88,7 +88,7 @@ ActiveAdmin.register Litigation do
           row :citation_reference_number
           row :summary
           row :at_issue
-          row 'Frameworks', &:frameworks_string
+          row 'Responses', &:responses_string
           row 'Keywords', &:keywords_string
           row :updated_at
           row :updated_by
