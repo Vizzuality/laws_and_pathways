@@ -26,9 +26,9 @@ class Company < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged, routes: :default
 
-  SIZES = %w[small medium large].freeze
+  MARKET_CAP_GROUPS = %w[small medium large].freeze
 
-  enum size: array_to_enum_hash(SIZES)
+  enum market_cap_group: array_to_enum_hash(MARKET_CAP_GROUPS)
 
   belongs_to :sector, class_name: 'TPISector', foreign_key: 'sector_id'
   belongs_to :geography
@@ -45,7 +45,7 @@ class Company < ApplicationRecord
            to: :latest_mq_assessment, prefix: :mq, allow_nil: true
 
   validates :ca100, inclusion: {in: [true, false]}
-  validates_presence_of :name, :slug, :isin, :size
+  validates_presence_of :name, :slug, :isin, :market_cap_group
   validates_uniqueness_of :slug, :isin, :name
 
   def to_s

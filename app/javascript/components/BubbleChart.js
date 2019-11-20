@@ -111,7 +111,7 @@ const createRow = (dataRow, title, sectors) => {
       </div>
       {dataRow.map((el, i) => {
         const companiesBubbles = el.map(company => ({
-          value: COMPANIES_SIZES[company.size],
+          value: COMPANIES_SIZES[company.market_cap_group],
           tooltipContent: [company.name, `Level ${company.level}`],
           slug: company.slug,
           color: LEVELS_COLORS[i]

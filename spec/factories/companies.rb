@@ -30,7 +30,7 @@ FactoryBot.define do
     isin { SecureRandom.uuid }
 
     ca100 { true }
-    size { Company::SIZES.sample }
+    market_cap_group { Company::MARKET_CAP_GROUPS.sample }
     visibility_status { Litigation::VISIBILITY.sample }
 
     trait :with_mq_assessments do

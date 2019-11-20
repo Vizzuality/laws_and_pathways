@@ -40,7 +40,7 @@ module CSVImport
         name: row[:name],
         isin: row[:isin],
         sector: find_or_create_tpi_sector(row[:sector]),
-        size: row[:size],
+        market_cap_group: row[:market_cap_group],
         geography: geographies[row[:geography_iso]],
         headquarters_geography: geographies[row[:headquarters_geography_iso]],
         ca100: row[:ca100],
