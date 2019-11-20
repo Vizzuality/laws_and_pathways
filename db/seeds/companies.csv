@@ -1,4 +1,4 @@
-Id,Name,ISIN,Sector,Size,Geography iso,Headquarters geography iso,CA100,Visibility status
+Id,Name,ISIN,Sector,Market cap group,Geography iso,Headquarters geography iso,CA100,Visibility status
 ,AES,US00130H1059,Electricity Utilities,medium,USA,USA,false,published
 ,AGL Energy,AU000000AGL7,Electricity Utilities,large,AUS,AUS,false,published
 ,ANA Holdings,JP3429800000,Airlines,large,JPN,JPN,false,published
