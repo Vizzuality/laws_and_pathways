@@ -9,12 +9,15 @@
 #  name                      :string           not null
 #  slug                      :string           not null
 #  isin                      :string           not null
-#  size                      :string
+#  market_cap_group          :string
 #  ca100                     :boolean          default(FALSE), not null
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #  visibility_status         :string           default("draft")
 #  discarded_at              :datetime
+#  sedol                     :integer
+#  latest_information        :text
+#  historical_comments       :text
 #
 
 FactoryBot.define do
