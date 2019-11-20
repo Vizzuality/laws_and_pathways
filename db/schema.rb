@@ -420,6 +420,7 @@ ActiveRecord::Schema.define(version: 2019_11_20_152618) do
   add_foreign_key "legislations", "admin_users", column: "updated_by_id"
   add_foreign_key "legislations", "geographies"
   add_foreign_key "legislations", "laws_sectors", column: "sector_id"
+  add_foreign_key "legislations", "legislations", column: "parent_id"
   add_foreign_key "legislations_targets", "legislations", on_delete: :cascade
   add_foreign_key "legislations_targets", "targets", on_delete: :cascade
   add_foreign_key "litigation_sides", "litigations", on_delete: :cascade
