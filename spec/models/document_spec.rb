@@ -31,18 +31,18 @@ RSpec.describe Document, type: :model do
   end
 
   describe 'uploaded' do
-    subject { FactoryBot.build(:document_uploaded) }
+    subject { build(:document_uploaded) }
 
     it { is_expected.to be_valid }
 
     it 'should be invalid without file' do
-      subject.file.purge
+      subject.file = nil
       expect(subject).to have(1).errors_on(:file)
     end
   end
 
   describe 'external' do
-    subject { FactoryBot.build(:document) }
+    subject { build(:document) }
 
     it { is_expected.to be_valid }
 
