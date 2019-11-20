@@ -37,3 +37,7 @@ append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/syst
 
 set :init_system, :systemd
 set :rvm_custom_path, '/usr/share/rvm'
+
+set :nvm_type, :user
+set :nvm_node, 'v8.16.2'
+set :nvm_map_bins, %w{node npm yarn}
