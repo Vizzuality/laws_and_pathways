@@ -102,7 +102,8 @@ ActiveAdmin.register Litigation do
 
       tab :sides do
         panel 'Litigation Sides' do
-          table_for resource.litigation_sides.decorate do
+          table_for resource.litigation_sides
+            .includes(:connected_entity).decorate do
             column :side_type
             column :name
             column :party_type
