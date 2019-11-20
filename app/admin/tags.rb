@@ -1,8 +1,8 @@
 %w[
-  PoliticalGroup
-  NaturalHazard
-  Keyword
   Framework
+  Keyword
+  NaturalHazard
+  PoliticalGroup
   Response
 ].each do |tag_class|
   ActiveAdmin.register tag_class.constantize do
