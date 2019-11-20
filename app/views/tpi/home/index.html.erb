@@ -51,19 +51,16 @@
   </div>
 </section>
 
-<section class="section tpi-home__publications">
+<section class="section tpi-home__promoted-publications">
   <div class="container">
-    <div class="columns">
-      <div class="column is-half">
-        <h4>Publications and news</h4>
-      </div>
+    <div class="promoted-publications__title">
+      <h4>Publications and news</h4>
 
-      <div class="column">
-        <button class="button is-secondary">View all</button>
-      </div>
+      <button class="button is-secondary">View all publications and news</button>
     </div>
+
+    <%= render "publications/promoted" %>
   </div>
-  <%= render "publications/promoted" %>
 </section>
 
 <hr />
@@ -71,6 +68,8 @@
 <section class="section partners">
   <%= render "partners" %>
 </section>
+
+<hr />
 
 <section class="section testemonials">
   <%= render "testimonials" %>
