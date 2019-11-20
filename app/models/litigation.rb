@@ -39,6 +39,7 @@ class Litigation < ApplicationRecord
   enum document_type: array_to_enum_hash(DOCUMENT_TYPES)
 
   tag_with :keywords
+  tag_with :frameworks #as mitigation_adaptation
 
   belongs_to :jurisdiction, class_name: 'Geography'
   belongs_to :sector, class_name: 'LawsSector', foreign_key: 'sector_id', optional: true
