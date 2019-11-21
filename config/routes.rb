@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       resources :climate_targets, controller: 'geography/climate_targets', only: [:show, :index]
     end
 
+    resources :climate_targets, only: :index
     resources :legislation_and_policies, only: :index
     resources :litigation_cases, only: :index
   end

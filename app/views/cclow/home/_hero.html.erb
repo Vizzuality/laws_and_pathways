@@ -29,14 +29,9 @@
           <p>Use our database to search and browse climate laws, policies and litigation cases across all countries.</p>
         </div>
       </div>
-      <div class="search-field">
-        <p class="control has-icons-left has-icons-right">
-          <input class="input" placeholder="Search for countries, legislation and policies and litigation cases">
-          <span class="icon is-right">
-            <i class="fa fa-1x fa-search"></i>
-          </span>
-        </p>
-      </div>
+
+
+      <%= react_component("LawsDropdown", { geographies: @geographies, lawsAndPolicies: @laws_and_policies, litigations: @litigations, targets: @targets, recentDate: @recent_date }) %>
       <div class="overview-section">
         <div>
           <div class="item-name-block">

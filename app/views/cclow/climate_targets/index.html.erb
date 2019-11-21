@@ -1,0 +1,16 @@
+<div class="climate-targets-section">
+  <div class="nav">
+    <h5>Climate targets</h5>
+    <span class="counter"><%= @targets.count %> <%= @targets.count > 1 ? 'targets' : 'target' %></span>
+  </div>
+  <ul>
+    <% @targets.each do |target| %>
+      <li>
+        <div>
+          <%= target.description.html_safe %>
+        </div>
+        <div class="tags">Economy Wide | <%= I18n.t("cclow.target_types.#{target.target_type}") %> | Target year: 2050 | Base year: 1990</div>
+      </li>
+    <% end %>
+  </ul>
+</div>

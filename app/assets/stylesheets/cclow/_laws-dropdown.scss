@@ -1,0 +1,113 @@
+@import "colors";
+@import "variables";
+
+$side-padding: 54px;
+$space-between-options: 8px;
+$space-between-categories: 34px;
+
+.laws-dropdown__container {
+  width: 100%;
+  position: relative;
+}
+
+.laws-dropdown__input-container {
+  display: flex;
+  align-items: center;
+  background-color: $white;
+  border: 1px solid $french-gray;
+  cursor: pointer;
+
+  &:hover {
+    border: 1px solid $martinique;
+  }
+}
+
+.laws-input {
+  outline: none;
+  border: none;
+  width: 100%;
+  color: $blue-dark;
+  font-size: 14px;
+  font-family: $family-sans-serif;
+  padding: 20px 30px;
+}
+
+.icon {
+  font-size: 24px !important;
+  font-family: $family-sans-serif;
+  margin-right: 1.5rem;
+  color: $blue-dark;
+}
+
+.laws-dropdown__content {
+  max-height: 300px;
+  overflow-y: scroll;
+  width: 100%;
+  position: absolute;
+  top: 100%;
+  background-color: $white;
+  color: $grey-text;
+  border: 1px solid $french-gray;
+  border-top: none;
+  padding-bottom: $space-between-categories;
+}
+
+.laws-dropdown__category {
+  & > * {
+    padding: $space-between-options $side-padding;
+  }
+
+  & > *:first-child {
+    padding: $space-between-categories $side-padding $space-between-options $side-padding;
+  }
+}
+
+.laws-dropdown__category-title {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: $gun-powder;
+  line-height: 15px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+}
+
+.laws-dropdown__option {
+  color: $grey-text;
+  font-size: 16px;
+  line-height: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: baseline;
+
+  &:hover {
+    color: $white;
+    background-color: $comet;
+
+    .laws-dropdown__last-search-key {
+      color: $white;
+    }
+  }
+}
+
+.no-matches-text {
+  color: $grey-text;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.laws-dropdown__last-search-key {
+  color: $blue-dark;
+  font-family: $family-sans-serif-bold;
+}
+
+.laws-dropdown__category-icon {
+  margin-right: 10px;
+}
+
+.laws-dropdown__disclaimer {
+  color: $spun-pearl;
+  font-size: 12px;
+  margin-left: 12px;
+  line-height: 15px;
+}
