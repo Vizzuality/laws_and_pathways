@@ -1,6 +1,36 @@
 @import "sizes";
 @import "colors";
 
+.publications {
+  &__title {
+    margin-top: 80px;
+  }
+
+  &__menu {
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+    padding-bottom: 50px;
+
+    & > .column:last-child {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  &__grid {
+    margin-bottom: 80px;
+  }
+
+  &__load-more {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 80px;
+    margin-bottom: 80px;
+  }
+}
+
 .promoted-publications {
   &__title {
     display: flex;
