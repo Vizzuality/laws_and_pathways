@@ -2,7 +2,6 @@ module CCLOW
   class HomeController < CCLOWController
     include SearchController
 
-    def index
-    end
+    def index; end
   end
 end

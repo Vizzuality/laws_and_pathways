@@ -3,7 +3,6 @@ module CCLOW
     include GeographyController
     include SearchController
 
-    def show
-    end
+    def show; end
   end
 end
