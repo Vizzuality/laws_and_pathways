@@ -10,15 +10,16 @@ ActiveAdmin.register Company do
   publishable_sidebar only: :show
 
   permit_params :name, :isin, :sector_id, :geography_id, :headquarters_geography_id,
-                :ca100, :size, :visibility_status
+                :ca100, :market_cap_group, :visibility_status, :sedol,
+                :latest_information, :historical_comments
 
   filter :isin_contains, label: 'ISIN'
   filter :name_contains, label: 'Name'
   filter :geography
   filter :headquarters_geography
-  filter :size,
+  filter :market_cap_group,
          as: :check_boxes,
-         collection: proc { array_to_select_collection(Company::SIZES) }
+         collection: proc { array_to_select_collection(Company::MARKET_CAP_GROUPS) }
 
   data_export_sidebar 'Companies'
 
@@ -39,11 +40,14 @@ ActiveAdmin.register Company do
           row :slug
           row :sector
           row :isin, &:isin_as_tags
+          row :sedol
           row :geography
           row :headquarters_geography
           row :ca100
-          row :size
+          row :market_cap_group
           row 'Management Quality Level', &:mq_level_tag
+          row :latest_information
+          row :historical_comments
           row :created_at
           row :updated_at
         end
@@ -118,7 +122,7 @@ ActiveAdmin.register Company do
   index do
     column(:name) { |company| link_to company.name, admin_company_path(company) }
     column :isin, &:isin_as_tags
-    column(:size) { |company| company.size.humanize }
+    column(:market_cap_group) { |company| company.market_cap_group.humanize }
     column :level, &:mq_level_tag
     column :geography
     column :headquarters_geography
@@ -132,11 +136,13 @@ ActiveAdmin.register Company do
     column :name
     column :isin
     column(:sector) { |c| c.sector.name }
-    column :size
+    column :market_cap_group
+    column :sedol
     column(:geography_iso) { |c| c.geography.iso }
     column(:geography) { |c| c.geography.name }
     column(:headquarters_geography_iso) { |c| c.headquarters_geography.iso }
     column(:headquarters_geography) { |c| c.headquarters_geography.name }
+    column :latest_information
     column :ca100
     column :visibility_status
   end
@@ -148,14 +154,15 @@ ActiveAdmin.register Company do
       columns do
         column { f.input :name }
         column { f.input :isin, as: :tags }
+        column { f.input :sedol }
       end
 
       columns do
         column { f.input :sector }
         column do
-          f.input :size,
+          f.input :market_cap_group,
                   as: :select,
-                  collection: array_to_select_collection(Company::SIZES)
+                  collection: array_to_select_collection(Company::MARKET_CAP_GROUPS)
         end
       end
 
@@ -168,6 +175,9 @@ ActiveAdmin.register Company do
       end
 
       f.input :ca100
+
+      f.input :latest_information
+      f.input :historical_comments
     end
 
     f.actions

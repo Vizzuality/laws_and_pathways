@@ -53,19 +53,19 @@ RSpec.describe Api::Charts::CPAssessment do
             # company
             {
               name: company_sector_a_1.name,
-              data: {'2017' => 100.0, '2018' => 70.0, '2019' => 110.0}
+              data: {2017 => 100.0, 2018 => 70.0, 2019 => 110.0}
             },
             # sector average only taking cp assessments published before company selected assessment
             {
               name: "#{sector_a.name} sector mean",
-              data: {'2017' => (100.0 + 40.0) / 2, '2018' => (70.0 + 50.0) / 2, '2019' => 110.0}
+              data: {2017 => (100.0 + 40.0) / 2, 2018 => (70.0 + 50.0) / 2, 2019 => 110.0}
             },
             # CP benchmarks
             {
               type: 'area',
               fillOpacity: 0.1,
               name: 'scenario',
-              data: {'2016' => 115.5, '2017' => 122.0, '2018' => 124.0}
+              data: {2016 => 115.5, 2017 => 122.0, 2018 => 124.0}
             }
           ]
         end
@@ -79,19 +79,19 @@ RSpec.describe Api::Charts::CPAssessment do
             # company
             {
               name: company_sector_a_1.name,
-              data: {'2017' => 90.0, '2018' => 90.0, '2019' => 110.0}
+              data: {2017 => 90.0, 2018 => 90.0, 2019 => 110.0}
             },
             # sector average only taking cp assessments published before company selected assessment
             {
               name: "#{sector_a.name} sector mean",
-              data: {'2017' => (90.0 + 40.0) / 2, '2018' => (90.0 + 50.0) / 2, '2019' => 110.0}
+              data: {2017 => (90.0 + 40.0) / 2, 2018 => (90.0 + 50.0) / 2, 2019 => 110.0}
             },
             # CP benchmarks taken the latest valid before published assessment
             {
               type: 'area',
               fillOpacity: 0.1,
               name: 'scenario',
-              data: {'2016' => 130.0, '2017' => 120.0, '2018' => 100.0}
+              data: {2016 => 130.0, 2017 => 120.0, 2018 => 100.0}
             }
           ]
         end

@@ -41,7 +41,7 @@ RSpec.describe Admin::LitigationsController, type: :controller do
           :litigation,
           title: 'Litigation POST title',
           summary: 'Litigation POST summary',
-          core_objective: 'objective',
+          at_issue: 'At issue',
           jurisdiction_id: geography.id,
           sector_id: sector.id,
           created_by_id: admin.id,
@@ -99,7 +99,7 @@ RSpec.describe Admin::LitigationsController, type: :controller do
         last_litigation_created.tap do |l|
           expect(l.title).to eq('Litigation POST title')
           expect(l.summary).to eq('Litigation POST summary')
-          expect(l.core_objective).to eq('objective')
+          expect(l.at_issue).to eq('At issue')
           expect(l.visibility_status).to eq('pending')
           expect(l.sector_id).to eq(sector.id)
           expect(l.jurisdiction_id).to eq(geography.id)
@@ -207,6 +207,96 @@ RSpec.describe Admin::LitigationsController, type: :controller do
 
       it 'soft-delete even if jurisdiction is nil' do
         expect { subject }.to change { Litigation.count }.by(-1)
+      end
+    end
+  end
+
+  describe 'Batch Actions' do
+    context 'delete' do
+      let!(:litigation_to_delete_1) { create(:litigation) }
+      let!(:litigation_to_delete_2) { create(:litigation) }
+      let!(:litigation_to_delete_3) { create(:litigation) }
+      let!(:litigation_to_keep_1) { create(:litigation) }
+      let!(:litigation_to_keep_2) { create(:litigation) }
+
+      let(:ids_to_delete) do
+        [litigation_to_delete_1.id,
+         litigation_to_delete_2.id,
+         litigation_to_delete_3.id]
+      end
+
+      subject do
+        post :batch_action,
+             params: {
+               batch_action: 'destroy',
+               collection_selection: ids_to_delete
+             }
+      end
+
+      it 'soft deletes Litigations collection' do
+        expect { subject }.to change { Litigation.count }.by(-3)
+        expect(Litigation.find_by_id(ids_to_delete)).to be_nil
+
+        expect(litigation_to_delete_1.reload.discarded_at).to_not be_nil
+        expect(Litigation.all_discarded.find_by_id(ids_to_delete)).to_not be_nil
+
+        expect(flash[:notice]).to match('Successfully deleted 3 Litigations')
+      end
+    end
+
+    context 'archive' do
+      let!(:litigation_to_archive_1) { create(:litigation, visibility_status: 'draft') }
+      let!(:litigation_to_archive_2) { create(:litigation, visibility_status: 'draft') }
+      let!(:litigation_to_keep_1) { create(:litigation, visibility_status: 'draft') }
+      let!(:litigation_to_keep_2) { create(:litigation, visibility_status: 'draft') }
+
+      let(:ids_to_archive) { [litigation_to_archive_1.id, litigation_to_archive_2.id] }
+
+      subject do
+        post :batch_action,
+             params: {
+               batch_action: 'archive',
+               collection_selection: ids_to_archive
+             }
+      end
+
+      it 'archives Litigations collection' do
+        subject
+
+        expect(litigation_to_archive_1.reload.visibility_status).to eq('archived')
+        expect(litigation_to_archive_2.reload.visibility_status).to eq('archived')
+        expect(litigation_to_keep_1.reload.visibility_status).to eq('draft')
+        expect(litigation_to_keep_2.reload.visibility_status).to eq('draft')
+
+        expect(flash[:notice]).to match('Successfully archived 2 Litigations')
+      end
+    end
+
+    context 'publish' do
+      let!(:litigation_to_publish_1) { create(:litigation, visibility_status: 'draft') }
+      let!(:litigation_to_publish_2) { create(:litigation, visibility_status: 'draft') }
+      let!(:litigation_to_keep_1) { create(:litigation, visibility_status: 'draft') }
+      let!(:litigation_to_keep_2) { create(:litigation, visibility_status: 'draft') }
+
+      let(:ids_to_publish) { [litigation_to_publish_1.id, litigation_to_publish_2.id] }
+
+      subject do
+        post :batch_action,
+             params: {
+               batch_action: 'publish',
+               collection_selection: ids_to_publish
+             }
+      end
+
+      it 'publishes Litigations collection' do
+        subject
+
+        expect(litigation_to_publish_1.reload.visibility_status).to eq('published')
+        expect(litigation_to_publish_2.reload.visibility_status).to eq('published')
+        expect(litigation_to_keep_1.reload.visibility_status).to eq('draft')
+        expect(litigation_to_keep_2.reload.visibility_status).to eq('draft')
+
+        expect(flash[:notice]).to match('Successfully published 2 Litigations')
       end
     end
   end

@@ -71,7 +71,7 @@ module CSVImport
 
     def parse_csv
       CSV.parse(
-        file,
+        encoded_file_content,
         headers: true,
         skip_blanks: true,
         converters: csv_converters,
@@ -80,6 +80,10 @@ module CSVImport
     rescue CSV::MalformedCSVError => e
       errors.add(:base, e)
       false
+    end
+
+    def encoded_file_content
+      File.read(file).force_encoding('UTF-8')
     end
 
     def import_each_csv_row(csv)

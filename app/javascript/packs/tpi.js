@@ -1,7 +1,7 @@
 import Turbolinks from "turbolinks";
 import Chartkick from "chartkick";
 import HighCharts from "highcharts";
-import Rails from "rails-ujs";
+import Rails from "@rails/ujs";
 import ReactRailsUJS from "react_ujs";
 
 import "tpi";

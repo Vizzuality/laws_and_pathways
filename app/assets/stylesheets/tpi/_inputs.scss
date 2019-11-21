@@ -1,0 +1,12 @@
+.input {
+  padding: 10px 15px;
+  outline: none;
+  background: transparent;
+  border: 1px solid $dark;
+
+  &.is-focused,
+  &:focus {
+    outline: none;
+    border: 1px solid $yellow;
+  }
+}

@@ -2,15 +2,15 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_28_102103) do
+ActiveRecord::Schema.define(version: 2019_11_20_162650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,18 +71,21 @@ ActiveRecord::Schema.define(version: 2019_10_28_102103) do
     t.string "name", null: false
     t.string "slug", null: false
     t.string "isin", null: false
-    t.string "size"
+    t.string "market_cap_group"
     t.boolean "ca100", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "visibility_status", default: "draft"
     t.datetime "discarded_at"
+    t.integer "sedol"
+    t.text "latest_information"
+    t.text "historical_comments"
     t.index ["discarded_at"], name: "index_companies_on_discarded_at"
     t.index ["geography_id"], name: "index_companies_on_geography_id"
     t.index ["headquarters_geography_id"], name: "index_companies_on_headquarters_geography_id"
     t.index ["isin"], name: "index_companies_on_isin", unique: true
+    t.index ["market_cap_group"], name: "index_companies_on_market_cap_group"
     t.index ["sector_id"], name: "index_companies_on_sector_id"
-    t.index ["size"], name: "index_companies_on_size"
     t.index ["slug"], name: "index_companies_on_slug", unique: true
   end
 
@@ -260,9 +263,11 @@ ActiveRecord::Schema.define(version: 2019_10_28_102103) do
     t.datetime "discarded_at"
     t.string "legislation_type", null: false
     t.bigint "sector_id"
+    t.bigint "parent_id"
     t.index ["created_by_id"], name: "index_legislations_on_created_by_id"
     t.index ["discarded_at"], name: "index_legislations_on_discarded_at"
     t.index ["geography_id"], name: "index_legislations_on_geography_id"
+    t.index ["parent_id"], name: "index_legislations_on_parent_id"
     t.index ["sector_id"], name: "index_legislations_on_sector_id"
     t.index ["slug"], name: "index_legislations_on_slug", unique: true
     t.index ["updated_by_id"], name: "index_legislations_on_updated_by_id"
@@ -305,7 +310,7 @@ ActiveRecord::Schema.define(version: 2019_10_28_102103) do
     t.string "document_type"
     t.bigint "jurisdiction_id"
     t.text "summary"
-    t.text "core_objective"
+    t.text "at_issue"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "visibility_status", default: "draft"
@@ -418,6 +423,7 @@ ActiveRecord::Schema.define(version: 2019_10_28_102103) do
   add_foreign_key "legislations", "admin_users", column: "updated_by_id"
   add_foreign_key "legislations", "geographies"
   add_foreign_key "legislations", "laws_sectors", column: "sector_id"
+  add_foreign_key "legislations", "legislations", column: "parent_id"
   add_foreign_key "legislations_targets", "legislations", on_delete: :cascade
   add_foreign_key "legislations_targets", "targets", on_delete: :cascade
   add_foreign_key "litigation_sides", "litigations", on_delete: :cascade

@@ -91,17 +91,15 @@ RSpec.describe Api::Charts::CPBenchmark do
         end
 
         it 'returns chart data' do
-          expect(subject.cp_performance_data).to eq(
-            [
-              {
-                name: scenario_2,
-                data: [[sector.name, 2]]
-              },
-              {
-                name: scenario_1,
-                data: [[sector.name, 2]]
-              }
-            ]
+          expect(subject.cp_performance_data).to contain_exactly(
+            {
+              name: scenario_2,
+              data: [[sector.name, 2]]
+            },
+            {
+              name: scenario_1,
+              data: [[sector.name, 2]]
+            }
           )
         end
       end

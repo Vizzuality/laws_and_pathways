@@ -1,3 +1,64 @@
-// Place all the styles related to the publications controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "sizes";
+@import "colors";
+
+.promoted-publications {
+  &__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__publications {
+    margin-top: 50px;
+
+    & > columns {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
+
+.publication {
+  &__avatar {
+    width: 100%;
+  }
+
+  &__tags {
+    margin-top: 15px;
+    display: flex;
+    align-items: flex-start;
+
+    & > .tag {
+      margin-right: 12px;
+      
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &__content {
+    margin-top: 20px;
+
+    & > .updated_at {
+      font-size: $size-7;
+      color: $grey-dark;
+    }
+
+    & > .content__title {
+      margin-top: $size-7;
+      height: 80px;
+      max-height: 80px;
+    }
+    
+    & > .content__message {
+      height: 70px;
+      max-height: 70px;
+
+      & > p {
+        color: rgba($black, 0.9);
+        font-size: $size-6;
+      }
+    }
+  }
+}

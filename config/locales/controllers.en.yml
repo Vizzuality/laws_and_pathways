@@ -1,0 +1,14 @@
+en:
+  tpi:
+    companies:
+      show:
+        tooltips:
+          market_cap: 'Market cap'
+          ISIN: 'ISIN'
+          SEDOL: 'SEDOL'
+          CA100: 'CA100'
+          mq_header: 'Management quality'
+          mq_assessment_date: 'Assessment Date'
+          mq_current_level: 'Current Level'
+          cp_header: 'Carbon performance'
+          cp_assessment_date: 'Assessment Date'

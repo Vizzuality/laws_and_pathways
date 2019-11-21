@@ -4,7 +4,7 @@ import legendImage from '../../assets/images/bubble-chart-legend.svg';
 import SingleBubbleChart from './SingleBubbleChart';
 import BaseTooltip from './BaseTooltip.js';
 
-const COMPANIES_SIZES = {
+const COMPANIES_MARKET_CAP_GROUPS = {
   large: 65,
   medium: 45,
   small: 30
@@ -59,14 +59,13 @@ const BubbleChart = (data) => {
         <div className="bubble-chart__title-container">
           <span className="bubble-chart__title">Market cap</span>
           <BaseTooltip
-            tooltipTrigger={<button className="bubble-chart__info">?</button>}
-            tooltipContent={<span>{tooltipDisclaimer}</span>}
+            content={<span>{tooltipDisclaimer}</span>}
           />
         </div>
         <div className="bubble-chart__legend">
           <img className="bubble-chart__legend-image" src={legendImage} />
           <div className="bubble-chart__legend-titles-container">
-            {Object.keys(COMPANIES_SIZES).map(companySize => (
+            {Object.keys(COMPANIES_MARKET_CAP_GROUPS).map(companySize => (
               <span className="bubble-chart__legend-title">{companySize}</span>
             ))}
           </div>
@@ -75,8 +74,8 @@ const BubbleChart = (data) => {
       {levelsSignature.map((el, i) => (
         <div className="bubble-chart__level" key={`${el}-${i}-${Math.random()}`}>
           <div className="bubble-chart__level-container">
-            <div class="bubble-chart__level-title">{`Level ${el}`}</div>
-            <div class="bubble-chart__level-subtitle">{LEVELS_SUBTITLES[el]}</div>
+            <div className="bubble-chart__level-title">{`Level ${el}`}</div>
+            <div className="bubble-chart__level-subtitle">{LEVELS_SUBTITLES[el]}</div>
           </div>
         </div>
       ))}
@@ -112,7 +111,7 @@ const createRow = (dataRow, title, sectors) => {
       </div>
       {dataRow.map((el, i) => {
         const companiesBubbles = el.map(company => ({
-          value: COMPANIES_SIZES[company.size],
+          value: COMPANIES_MARKET_CAP_GROUPS[company.market_cap_group],
           tooltipContent: [company.name, `Level ${company.level}`],
           slug: company.slug,
           color: LEVELS_COLORS[i]

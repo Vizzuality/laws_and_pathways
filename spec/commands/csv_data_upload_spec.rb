@@ -2,7 +2,7 @@ require 'rails_helper'
 
 # TODO: Extract all importers tests from here to separate files
 
-describe 'CsvDataUpload (integration)' do
+describe 'CSVDataUpload (integration)' do
   let(:legislations_csv) { fixture_file('legislations.csv') }
   let(:companies_csv) { fixture_file('companies.csv') }
   let(:targets_csv) { fixture_file('targets.csv') }
@@ -29,14 +29,14 @@ describe 'CsvDataUpload (integration)' do
 
   describe 'errors handling' do
     it 'sets error for unknown uploader class' do
-      command = Command::CsvDataUpload.new(uploader: 'FooUploader', file: legislations_csv)
+      command = Command::CSVDataUpload.new(uploader: 'FooUploader', file: legislations_csv)
 
       expect(command.call).to eq(false)
       expect(command.errors.to_a).to include('Uploader is not included in the list')
     end
 
     it 'sets error for missing file' do
-      command = Command::CsvDataUpload.new(uploader: 'Legislations', file: nil)
+      command = Command::CSVDataUpload.new(uploader: 'Legislations', file: nil)
 
       expect(command.call).to eq(false)
       expect(command.errors.to_a).to include('File is not attached')
@@ -74,9 +74,9 @@ describe 'CsvDataUpload (integration)' do
     updated_litigation = create(:litigation)
 
     csv_content = <<-CSV
-      Id,Title,Document type,Geography iso,Jurisdiction iso,Sector,Citation reference number,Summary,Keywords,Core objective,Visibility status,Legislation ids
-      ,Litigation number 1,Case,GBR,GBR,Transport,EWHC 2752,Lyle requested judicial review,"keyword1,keyword2",Objectives,pending,"#{legislation1.id}, #{legislation2.id}"
-      #{updated_litigation.id},Litigation number 2,Case,GBR,GBR,,[2013] NIQB 24,The applicants were brothers ...,,,Draft,
+      Id,Title,Document type,Geography iso,Jurisdiction iso,Sector,Citation reference number,Summary,Keywords,At issue,Visibility status,Legislation ids
+      ,Litigation number 1,administrative_case,GBR,GBR,Transport,EWHC 2752,Lyle requested judicial review,"keyword1,keyword2",At issues,pending,"#{legislation1.id}, #{legislation2.id}"
+      #{updated_litigation.id},Litigation number 2,administrative_case,GBR,GBR,,[2013] NIQB 24,The applicants were brothers ...,,,Draft,
     CSV
 
     litigations_csv = fixture_file('litigations.csv', content: csv_content)
@@ -92,9 +92,9 @@ describe 'CsvDataUpload (integration)' do
     expect(litigation).to have_attributes(
       citation_reference_number: 'EWHC 2752',
       summary: 'Lyle requested judicial review',
-      core_objective: 'Objectives',
+      at_issue: 'At issues',
       visibility_status: 'pending',
-      document_type: 'case'
+      document_type: 'administrative_case'
     )
     expect(litigation.jurisdiction.iso).to eq('GBR')
     expect(litigation.sector.name).to eq('Transport')
@@ -305,7 +305,7 @@ describe 'CsvDataUpload (integration)' do
 
   def expect_data_upload_results(uploaded_resource_klass, csv, expected_details)
     uploader_name = uploaded_resource_klass.name.tr('::', '').pluralize
-    command = Command::CsvDataUpload.new(uploader: uploader_name, file: csv)
+    command = Command::CSVDataUpload.new(uploader: uploader_name, file: csv)
 
     expect do
       expect(command).to be_valid
