@@ -75,6 +75,7 @@ ActiveAdmin.register MQ::Assessment do
 
   csv do
     column :id
+    column(:company_id) { |a| a.company.id }
     column(:company) { |a| a.company.name }
     column :assessment_date
     column :publication_date, &:publication_date_csv
