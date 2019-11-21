@@ -1,0 +1,87 @@
+<div class="container publications">
+  <h1 class="publications__title">Publications and news</h1>
+
+  <div class="columns publications__menu">
+    <div class="column is-10">
+      <p>Showing <strong>34</strong> items in <strong>All Publications and news</strong></p>
+    </div>
+    <div class="column">
+      <button class="button is-secondary is-medium">Show filters</button>
+    </div>
+  </div>
+
+  <% 3.times.each do %>
+  <div class="columns publications__grid">
+    <div class="column is-one-third publication">
+      <img src="<%= asset_path 'mocks/tpi_publications_01.jpg' %>" class="publication__avatar">
+
+      <div class="publication__tags">
+        <span class="tag">Airlines</span>
+        <span class="tag">Sector reports</span>
+      </div>
+
+      <div class="publication__content">
+        <p class="updated_at">Mar 5, 2019</p>
+
+        <div class="content__title">
+          <a class="link is-strong">TPI State of Transition Report 2019</a>
+        </div>
+
+        <div class="content__message">
+          <p>
+            By Simon Dietz, Rhoda Byrne, Valentin Jahn, Michal Nachmany, Jolien Noels and Rory Sullivan
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="column is-one-third publication">
+      <img src="<%= asset_path 'mocks/tpi_publications_02.jpg' %>" class="publication__avatar">
+
+      <div class="publication__tags">
+        <span class="tag">Airlines</span>
+      </div>
+
+      <div class="publication__content">
+        <p class="updated_at">Mar 5, 2019</p>
+
+        <div class="content__title">
+          <a class="link is-strong">TPI research on world’s top airlines generates considerable global media coverage</a>
+        </div>
+        <div class="content__message">
+          <p>
+            On 5 March, TPI released new research on the world’s top 20 publicly-listed airline companies. Based on analysis by […]
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="column is-one-third publication">
+      <img src="<%= asset_path 'mocks/tpi_publications_03.jpg' %>" class="publication__avatar">
+
+      <div class="publication__tags">
+        <span class="tag">Airlines</span>
+        <span class="tag">Sector reports</span>
+      </div>
+
+      <div class="publication__content">
+        <p class="updated_at">Mar 5, 2019</p>
+
+        <div class="content__title">
+          <a class="link is-strong">New research shows only two large oil & gas companies have long-term, low-carbon ambitions</a>
+        </div>
+
+        <div class="content__message">
+          <p>
+            Innovative new research assesses the carbon performance of the world’s ten largest public oil and gas companies, taking into […]
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+
+  <div class="publications__load-more">
+    <button class="button is-secondary is-medium">Load more</button>
+  </div>
+</div>
