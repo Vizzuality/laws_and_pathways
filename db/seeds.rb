@@ -30,6 +30,7 @@ end
 
 # instruments: Instrument Type & Instrument
 # envs: ALL
+# rubocop:disable Style/WordArray
 [
   ['Capacity-building', ['Knowledge generation',
                          'Sharing and dissemination',
@@ -55,6 +56,7 @@ end
     Instrument.find_or_create_by!(name: inst, instrument_type: type)
   end
 end
+# rubocop:enable Style/WordArray
 
 # Laws sectors: Names
 # envs: ALL

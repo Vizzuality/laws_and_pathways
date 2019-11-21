@@ -216,8 +216,8 @@ describe 'CSVDataUpload (integration)' do
   end
 
   it 'imports CSV files with CP Assessments data' do
-    acme_company = create(:company, name: 'ACME')
-    create(:company, name: 'ACME Materials')
+    acme_company = create(:company, name: 'ACME', id: 1000)
+    create(:company, name: 'ACME Materials', id: 2000)
 
     expect_data_upload_results(
       CP::Assessment,
@@ -248,8 +248,8 @@ describe 'CSVDataUpload (integration)' do
   end
 
   it 'imports CSV files with MQ Assessments data' do
-    acme_company = create(:company, name: 'ACME')
-    create(:company, name: 'ACME Materials')
+    acme_company = create(:company, name: 'ACME', id: 1000)
+    create(:company, name: 'ACME Materials', id: 2000)
 
     expect_data_upload_results(
       MQ::Assessment,
