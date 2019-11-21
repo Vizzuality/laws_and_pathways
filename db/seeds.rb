@@ -28,6 +28,34 @@ end
   sector.update!(cp_unit: sector_cp_unit) if sector.new_record? && sector_cp_unit.present?
 end
 
+# instruments: Instrument Type & Instrument
+# envs: ALL
+[
+  ['Capacity-building', ['Knowledge generation',
+                         'Sharing and dissemination',
+                         'Research and development',
+                         'Education and training']],
+  ['Regulation', ['Standards and obligations',
+                  'Building codes',
+                  'Zoning and spatial planning',
+                  'Disclosure obligations']],
+  ['Incentives', ['Taxes', 'Subsidies']],
+  ['Governance and planning', ['Creating bodies/institutions',
+                               'Designing processes',
+                               'Developing plans and strategies',
+                               'Assigning responsibilities to other levels of government',
+                               'Monitoring and evaluation']],
+  ['Direct investment', ['Public goods - early warning systems',
+                         'Public goods - other',
+                         'Social safety nets',
+                         'Provision of climate finance']]
+].each do |inst_type, instruments|
+  type = InstrumentType.find_or_create_by!(name: inst_type)
+  instruments.each do |inst|
+    Instrument.find_or_create_by!(name: inst, instrument_type: type)
+  end
+end
+
 if Rails.env.development? || ENV['SEED_DATA']
   # import geographies
   TimedLogger.log('Import geographies') do
