@@ -56,6 +56,30 @@ end
   end
 end
 
+# Laws sectors: Names
+# envs: ALL
+[
+  'Agriculture',
+  'Residential and Commercial',
+  'Coastal zones',
+  'Economy-wide',
+  'Energy',
+  'Health',
+  'Industry',
+  'LULUCF',
+  'Social development',
+  'Tourism',
+  'Transportation',
+  'Urban',
+  'Waste',
+  'Water',
+  'Rural',
+  'Environment',
+  'Other'
+].each do |sector|
+  LawsSector.find_or_create_by!(name: sector)
+end
+
 if Rails.env.development? || ENV['SEED_DATA']
   # import geographies
   TimedLogger.log('Import geographies') do
