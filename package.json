@@ -29,6 +29,7 @@
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react_ujs": "^2.6.0",
+    "slick-carousel": "^1.8.1",
     "stimulus": "^1.1.1",
     "trix": "^1.1.1",
     "turbolinks": "^5.2.0"

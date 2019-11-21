@@ -1,0 +1,24 @@
+<div class="slider-container">
+  <div class="slider" data-slick='{"slidesToShow": 3, "slidesToScroll": 3}'>
+    <% @latest_additions.each do |item| %>
+      <div class="item-container">
+        <div class="item">
+          <div class="additions-kind"><%= item[:kind] %></div>
+          <div class="title"><a href="#"><%= item[:title] %></a></div>
+          <div class="meta">
+            <img class="flag" src=<%= asset_path "flags/#{item[:iso]}.svg"%> alt="">
+            <div><%= item[:jurisdiction] %>  |  <%= item[:addition_type] %>  |  <%= item[:date_passed] %></div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+<%= javascript_tag do %>
+  $(".slider").slick({
+    prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-1x fa-arrow-left"></i></button>',
+    nextArrow: '<button type="button" class="slick-next"><i class="fa fa-1x fa-arrow-right"></i></button>'
+  });
+<% end %>
