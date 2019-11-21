@@ -31,9 +31,9 @@ module CSVImport
     end
 
     def find_company!(row)
-      return unless row[:company].present?
+      return unless row[:company_id].present?
 
-      Company.where('lower(name) = ?', row[:company].downcase).first!
+      Company.find(row[:company_id])
     end
 
     def assessment_attributes(row)

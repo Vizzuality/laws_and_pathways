@@ -116,6 +116,9 @@ if Rails.env.development? || ENV['SEED_DATA']
 
     file = File.open(Rails.root.join('db', 'seeds', 'mq-assessments-M2.csv'), 'r')
     CSVImport::MQAssessments.new(file).call
+
+    file = File.open(Rails.root.join('db', 'seeds', 'mq-assessments-M3.csv'), 'r')
+    CSVImport::MQAssessments.new(file).call
   end
 
   # import Legislations
