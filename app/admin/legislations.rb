@@ -36,14 +36,11 @@ ActiveAdmin.register Legislation do
   index title: 'Laws and Policies' do
     selectable_column
     column :title, &:title_summary_link
-    column :legislation_type
-    column :date_passed
-    column 'Frameworks', &:frameworks_string
-    column 'Responses', &:responses_string
     column :geography
-    column 'Parent Legislation', &:parent
-    column :sector
+    column :legislation_type
     column :document_types
+    column :date_passed
+    column 'Parent Legislation', &:parent
     column :created_by
     column :updated_by
     tag_column :visibility_status
