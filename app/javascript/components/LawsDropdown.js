@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import Fuse from "fuse.js";
-// import cx from 'classnames';
 import search from '../../assets/images/icons/search.svg';
 import searchAgain from '../../assets/images/icons/search-again.svg';
 import countryFlag from '../../assets/images/icons/country-flag.svg';
@@ -13,14 +12,30 @@ const ESCAPE_KEY = 27;
 const GEOGRAPHY_TYPES = {
   national: 'Country profile',
   supranational: 'Country group profile',
-  subnational: '', // TODO: Define
-  local: '' // TODO: Define
+  subnational: 'Subnational profile',
+  local: 'Local profile'
+}
+
+const CATEGORIES = {
+  countries: 'Countries and territories',
+  laws: 'Laws and policies',
+  litigations: 'Litigation cases',
+  targets: 'Climate targets'
 }
 
 const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, recentDate }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue ] = useState('');
   const dropdownContainer = useRef(null);
+
+  const lastSearch = localStorage.getItem("lastSearch");
+  const lastSearchCategory = localStorage.getItem("lastSearchCategory");
+  const lastSearchLink = localStorage.getItem("lastSearchLink")
+  const setLastSearch = (search, category, link) => { 
+    localStorage.setItem("lastSearch", search);
+    localStorage.setItem("lastSearchCategory", category);
+    localStorage.setItem("lastSearchLink", link);
+  }
 
   // REFACTOR THIS to be one function that takes options and KEYS to search from
   const fuseGeographies = (opt) => {
@@ -78,13 +93,7 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
 
   const allSearchResults = [...searchGeographiesResults, ...searchLawsResults, ...searchLitigationsResults, ...searchTargetsResults];
 
-  console.log('searchGeographiesResults', searchGeographiesResults);
-  console.log('searchLawsResults', searchLawsResults);
-  console.log('searchLitigationsResults', searchLitigationsResults);
-  console.log('searchTargetsResults', searchTargetsResults);
-
   const first3Geographies = geographies.slice(0, 3);
-  const recentPolicies = lawsAndPolicies.filter(law => law.date_passed >= recentDate);
 
   const handleCloseDropdown = () => {
     setIsOpen(false);
@@ -106,17 +115,19 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
     }
   }, [])
 
-  const renderAllOptions = () => (
+  const renderAllOptions = (withLastSearch = true) => (
     <>
-      <div className="laws-dropdown__category">
-        <div className="laws-dropdown__category-title">
-          <img className="laws-dropdown__category-icon" src={searchAgain} />
-          <span>Last search</span>
+      {withLastSearch && lastSearch && (
+        <div className="laws-dropdown__category">
+          <div className="laws-dropdown__category-title">
+            <img className="laws-dropdown__category-icon" src={searchAgain} />
+            <span>Last search</span>
+          </div>
+          <a href={lastSearchLink} className="laws-dropdown__option">
+            <span className="laws-dropdown__last-search-key">{lastSearch}</span>&nbsp;in {lastSearchCategory}
+          </a>
         </div>
-        <div className="laws-dropdown__option">
-          <span className="laws-dropdown__last-search-key">adaptation</span>&nbsp;in Legislation
-        </div>
-      </div>
+      )}
 
       <div className="laws-dropdown__category">
         {/* category title */}
@@ -146,7 +157,7 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
         </a>
         <a href={`/cclow/legislation_and_policies?fromDate=${recentDate}`} className="laws-dropdown__option">
           <span>Most recent additions in Laws and policies</span>
-          <span className="laws-dropdown__disclaimer">{recentPolicies.length}</span>
+          <span className="laws-dropdown__disclaimer">todo</span>
         </a>
       </div>
 
@@ -225,10 +236,15 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
                 <div className="laws-dropdown__category">
                   <div className="laws-dropdown__category-title">
                     <img className="laws-dropdown__category-icon" src={countryFlag} />
-                    <span>Countries and territories</span>
+                    <span>{CATEGORIES.countries}</span>
                   </div>
                   {searchGeographiesResults.map(geography => (
-                    <a href={`/cclow/geographies/${geography.id}`} key={geography.slug} className="laws-dropdown__option">
+                    <a
+                      href={`/cclow/geographies/${geography.id}`}
+                      onClick={() => setLastSearch(searchValue, CATEGORIES.countries, `/cclow/geographies/${geography.id}`)}
+                      key={geography.slug}
+                      className="laws-dropdown__option"
+                    >
                       <span>{geography.name}</span>
                       <span className="laws-dropdown__disclaimer">{GEOGRAPHY_TYPES[geography.geography_type]}</span>
                     </a>
@@ -239,9 +255,13 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
                 <div className="laws-dropdown__category">
                   <div className="laws-dropdown__category-title">
                     <img className="laws-dropdown__category-icon" src={laws} />
-                    <span>Laws and policies</span>
+                    <span>{CATEGORIES.laws}</span>
                   </div>
-                  <a href={`/cclow/legislation_and_policies?ids=${searchLawsResults.map(l => l.id).join(',')}`} className="laws-dropdown__option">
+                  <a
+                    href={`/cclow/legislation_and_policies?ids=${searchLawsResults.map(l => l.id).join(',')}`}
+                    onClick={() => setLastSearch(searchValue, CATEGORIES.laws, `/cclow/legislation_and_policies?ids=${searchLawsResults.map(l => l.id).join(',')}`)}
+                    className="laws-dropdown__option"
+                  >
                     <span>Search&nbsp;</span>
                     <span className="laws-dropdown__last-search-key">{searchValue}</span>&nbsp;in Laws and policies
                     <span className="laws-dropdown__disclaimer">{searchLawsResults.length}</span>
@@ -252,9 +272,13 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
                 <div className="laws-dropdown__category">
                   <div className="laws-dropdown__category-title">
                     <img className="laws-dropdown__category-icon" src={legalScale} />
-                    <span>Litigation cases</span>
+                    <span>{CATEGORIES.litigations}</span>
                   </div>
-                  <a href={`/cclow/litigation_cases?ids=${searchLitigationsResults.map(l => l.id).join(',')}`} className="laws-dropdown__option">
+                  <a
+                    href={`/cclow/litigation_cases?ids=${searchLitigationsResults.map(l => l.id).join(',')}`}
+                    onClick={() => setLastSearch(searchValue, CATEGORIES.litigations, `/cclow/litigation_cases?ids=${searchLitigationsResults.map(l => l.id).join(',')}`)}
+                    className="laws-dropdown__option"
+                  >
                     <span>Search&nbsp;</span>
                     <span className="laws-dropdown__last-search-key">{searchValue}</span>&nbsp;in Litigation
                     <span className="laws-dropdown__disclaimer">{searchLitigationsResults.length}</span>
@@ -265,9 +289,13 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
                 <div className="laws-dropdown__category">
                   <div className="laws-dropdown__category-title">
                     <img className="laws-dropdown__category-icon" src={target} />
-                    <span>Climate targets</span>
+                    <span>{CATEGORIES.targets}</span>
                   </div>
-                  <a href={`/cclow/climate_targets?ids=${searchTargetsResults.map(l => l.id).join(',')}`} className="laws-dropdown__option">
+                  <a
+                    href={`/cclow/climate_targets?ids=${searchTargetsResults.map(l => l.id).join(',')}`}
+                    onClick={() => setLastSearch(searchValue, CATEGORIES.targets, `/cclow/climate_targets?ids=${searchTargetsResults.map(l => l.id).join(',')}`)}
+                    className="laws-dropdown__option"
+                  >
                     <span>Search&nbsp;</span>
                     <span className="laws-dropdown__last-search-key">{searchValue}</span>&nbsp;in Climate targets
                     <span className="laws-dropdown__disclaimer">{searchTargetsResults.length}</span>
@@ -285,7 +313,7 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
                   please try another term or browse the link below
                 </div>
               </div>
-              {renderAllOptions()}
+              {renderAllOptions(false)}
             </>
           )}
         </div>
