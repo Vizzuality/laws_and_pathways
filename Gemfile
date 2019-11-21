@@ -24,6 +24,7 @@ gem 'octokit', '~> 4.0'
 gem 'google-cloud-storage', require: false
 
 gem 'discard'
+gem 'public_activity'
 gem 'friendly_id'
 gem 'language_list'
 

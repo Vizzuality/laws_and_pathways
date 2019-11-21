@@ -21,9 +21,12 @@
 #
 
 class Company < ApplicationRecord
-  include DiscardableModel
   include VisibilityStatus
+  include DiscardableModel
+  include PublicActivity::Common
+  include PublicActivityTrackable
   extend FriendlyId
+
   friendly_id :name, use: :slugged, routes: :default
 
   MARKET_CAP_GROUPS = %w[small medium large].freeze

@@ -131,6 +131,22 @@ RSpec.describe Admin::LitigationsController, type: :controller do
     end
   end
 
+  describe 'PATCH update' do
+    context 'with valid params' do
+      subject { patch :update, params: {litigation: {title: "#{litigation.title} was updated"}} }
+
+      it { is_expected.to be_successful }
+
+      it 'updates existing Litigation' do
+        expect(litigation.reload.title).to eq('was updated')
+      end
+
+      it 'redirects to the updated Litigation' do
+        expect(subject).to redirect_to(admin_litigation_path(litigation))
+      end
+    end
+  end
+
   describe 'DELETE destroy' do
     let!(:litigation) { create(:litigation, discarded_at: nil) }
     subject { delete :destroy, params: {id: litigation.id} }
