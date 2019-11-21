@@ -87,7 +87,7 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
             <span>Last search</span>
           </div>
           <a href={lastSearchLink} className="laws-dropdown__option">
-            <span className="laws-dropdown__last-search-key">{lastSearch}</span>&nbsp;in {lastSearchCategory}
+            <span className="laws-dropdown__option-in-bold">{lastSearch}</span>&nbsp;in {lastSearchCategory}
           </a>
         </div>
       )}
@@ -208,7 +208,7 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
                       key={geography.slug}
                       className="laws-dropdown__option"
                     >
-                      <span>{geography.name}</span>
+                      <span className="laws-dropdown__option-in-bold">{geography.name}</span>
                       <span className="laws-dropdown__disclaimer">{GEOGRAPHY_TYPES[geography.geography_type]}</span>
                     </a>
                   ))}
@@ -226,7 +226,7 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
                     className="laws-dropdown__option"
                   >
                     <span>Search&nbsp;</span>
-                    <span className="laws-dropdown__last-search-key">{searchValue}</span>&nbsp;in Laws and policies
+                    <span className="laws-dropdown__option-in-bold">{searchValue}</span>&nbsp;in Laws and policies
                     <span className="laws-dropdown__disclaimer">{searchLawsResults.length}</span>
                   </a>
                 </div>
@@ -243,7 +243,7 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
                     className="laws-dropdown__option"
                   >
                     <span>Search&nbsp;</span>
-                    <span className="laws-dropdown__last-search-key">{searchValue}</span>&nbsp;in Litigation
+                    <span className="laws-dropdown__option-in-bold">{searchValue}</span>&nbsp;in Litigation
                     <span className="laws-dropdown__disclaimer">{searchLitigationsResults.length}</span>
                   </a>
                 </div>
@@ -260,7 +260,7 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
                     className="laws-dropdown__option"
                   >
                     <span>Search&nbsp;</span>
-                    <span className="laws-dropdown__last-search-key">{searchValue}</span>&nbsp;in Climate targets
+                    <span className="laws-dropdown__option-in-bold">{searchValue}</span>&nbsp;in Climate targets
                     <span className="laws-dropdown__disclaimer">{searchTargetsResults.length}</span>
                   </a>
                 </div>
@@ -272,7 +272,7 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
               <div className="laws-dropdown__category">
                 <div className="no-matches-text">
                   No matches for&nbsp;
-                  <span className="laws-dropdown__last-search-key">{searchValue}</span>,
+                  <span className="laws-dropdown__option-in-bold">{searchValue}</span>,
                   please try another term or browse the link below
                 </div>
               </div>
