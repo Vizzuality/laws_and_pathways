@@ -89,8 +89,12 @@ if Rails.env.development? || ENV['SEED_DATA']
 
   # import companies
   TimedLogger.log('Import companies') do
-    file = File.open(Rails.root.join('db', 'seeds', 'companies.csv'), 'r')
-    CSVImport::Companies.new(file).call
+    file = File.open(Rails.root.join('db', 'seeds', 'tpi-companies.csv'), 'r')
+    importer = CSVImport::Companies.new(file)
+    importer.override_id = true
+    importer.call
+
+    ActiveRecord::Base.connection.execute("select setval('companies_id_seq',max(id)) from companies;")
   end
 
   # import CP Benchmarks

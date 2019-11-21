@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_20_162650) do
+ActiveRecord::Schema.define(version: 2019_11_21_170141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,7 +83,6 @@ ActiveRecord::Schema.define(version: 2019_11_20_162650) do
     t.index ["discarded_at"], name: "index_companies_on_discarded_at"
     t.index ["geography_id"], name: "index_companies_on_geography_id"
     t.index ["headquarters_geography_id"], name: "index_companies_on_headquarters_geography_id"
-    t.index ["isin"], name: "index_companies_on_isin", unique: true
     t.index ["market_cap_group"], name: "index_companies_on_market_cap_group"
     t.index ["sector_id"], name: "index_companies_on_sector_id"
     t.index ["slug"], name: "index_companies_on_slug", unique: true
