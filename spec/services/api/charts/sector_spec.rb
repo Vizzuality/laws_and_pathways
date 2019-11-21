@@ -70,19 +70,17 @@ RSpec.describe Api::Charts::Sector do
     end
 
     it 'returns companies emissions' do
-      expect(subject.companies_emissions_data).to eq(
-        [
-          {
-            data: {'2017' => 90.0, '2018' => 120.0, '2019' => 110.0},
-            lineWidth: 4,
-            name: company.name
-          },
-          {
-            data: {'2017' => 190.0, '2018' => 220.0, '2019' => 90.0},
-            lineWidth: 4,
-            name: company2.name
-          }
-        ]
+      expect(subject.companies_emissions_data).to contain_exactly(
+        {
+          data: {'2017' => 90.0, '2018' => 120.0, '2019' => 110.0},
+          lineWidth: 4,
+          name: company.name
+        },
+        {
+          data: {'2017' => 190.0, '2018' => 220.0, '2019' => 90.0},
+          lineWidth: 4,
+          name: company2.name
+        }
       )
     end
   end
@@ -97,7 +95,7 @@ RSpec.describe Api::Charts::Sector do
               name: company.name,
               slug: company.slug,
               sector: company.sector.name,
-              size: company.size,
+              market_cap_group: company.market_cap_group,
               level: company.mq_level.to_i.to_s,
               level4STAR: false
             }
@@ -116,7 +114,7 @@ RSpec.describe Api::Charts::Sector do
               name: company2.name,
               slug: company2.slug,
               sector: company2.sector.name,
-              size: company2.size,
+              market_cap_group: company2.market_cap_group,
               level: company2.mq_level.to_i.to_s,
               level4STAR: true
             }

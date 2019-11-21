@@ -45,12 +45,12 @@ module Api
       # @example
       #   {
       #    'Airlines' => {
-      #      '1' => [{ name: 'Air China', sector: 'Airlines', size: 'large', ... }],
-      #      '2' => [{ name: 'China Southern', sector: 'Airlines', size: 'large', ... }],
+      #      '1' => [{ name: 'Air China', sector: 'Airlines', market_cap_group: 'large', ... }],
+      #      '2' => [{ name: 'China Southern', sector: 'Airlines', market_cap_group: 'large', ... }],
       #    ]
       #    'Autos' => [
-      #      '1' => [{ name: 'Tesla', sector: 'Autos', size: 'large', ... }],
-      #      '3' => [{ name: 'BMW', sector: 'Airlines', size: 'large', ... }],
+      #      '1' => [{ name: 'Tesla', sector: 'Autos', market_cap_group: 'large', ... }],
+      #      '3' => [{ name: 'BMW', sector: 'Airlines', market_cap_group: 'large', ... }],
       #    ]
       #   }
       def companies_market_cap_by_sector
@@ -157,7 +157,7 @@ module Api
           {
             name: company.name,
             sector: company.sector.name,
-            size: company.size,
+            market_cap_group: company.market_cap_group,
             slug: company.slug,
             level4STAR: company.is_4_star?,
             level: company.mq_level.to_i.to_s

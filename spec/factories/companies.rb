@@ -9,12 +9,15 @@
 #  name                      :string           not null
 #  slug                      :string           not null
 #  isin                      :string           not null
-#  size                      :string
+#  market_cap_group          :string
 #  ca100                     :boolean          default(FALSE), not null
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #  visibility_status         :string           default("draft")
 #  discarded_at              :datetime
+#  sedol                     :integer
+#  latest_information        :text
+#  historical_comments       :text
 #
 
 FactoryBot.define do
@@ -27,8 +30,11 @@ FactoryBot.define do
     isin { SecureRandom.uuid }
 
     ca100 { true }
-    size { Company::SIZES.sample }
+    market_cap_group { Company::MARKET_CAP_GROUPS.sample }
     visibility_status { Litigation::VISIBILITY.sample }
+
+    latest_information { 'My information' }
+    historical_comments { 'I changed my name last week' }
 
     trait :with_mq_assessments do
       after(:create) do |c|

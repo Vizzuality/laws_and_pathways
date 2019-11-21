@@ -1,4 +1,4 @@
-"Id","Name","ISIN","Sector id","Sector","Size","Geography iso","Geography","Headquarters geography iso","Headquarters geography","CA100","Visibility status"
+"Id","Name","ISIN","Sector id","Sector","Market Cap Group","Geography iso","Geography","Headquarters geography iso","Headquarters geography","CA100","Visibility status"
 "69","Consol Energy","US20854P1093","2","Coal Mining","small","USA","United States of America","USA","United States of America","true","published"
 "74","Daio Paper","JP3440400004,23783837783","14","Paper","small","JPN","Japan","JPN","Japan","false","draft"
 "81","Domtar","US2575592033","14","Paper","small","USA","United States of America","USA","United States of America","false","draft"
