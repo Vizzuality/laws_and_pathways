@@ -1,7 +1,9 @@
 module CCLOW
   class GeographiesController < CCLOWController
     include GeographyController
+    include SearchController
 
-    def show; end
+    def show
+    end
   end
 end

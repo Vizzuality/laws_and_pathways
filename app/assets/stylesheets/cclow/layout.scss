@@ -3,7 +3,10 @@
 
 $search-field-height: 3.75rem;
 
+
+
 .header {
+  position: relative;
   height: $navbar-height + $search-field-height / 2;
 
   .navbar {

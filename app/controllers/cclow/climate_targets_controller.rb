@@ -1,11 +1,13 @@
 module CCLOW
   class ClimateTargetsController < CCLOWController
+    include SearchController
+    
     def index 
       if (params[:ids])
         ids = params[:ids].split(',').map(&:to_i)
-        @targets = Target.find(ids)
+        @climate_targets = Target.find(ids)
       else
-        @targets = Target.all
+        @climate_targets = Target.all
       end
     end
   end

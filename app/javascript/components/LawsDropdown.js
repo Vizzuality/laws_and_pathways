@@ -37,62 +37,25 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
     localStorage.setItem("lastSearchLink", link);
   }
 
-  // REFACTOR THIS to be one function that takes options and KEYS to search from
-  const fuseGeographies = (opt) => {
+  const fuse = (opt, keys) => {
     const config = {
       shouldSort: true,
       threshold: 0.3,
-      keys: ['name']
+      keys
     };
     const fuse = new Fuse(opt, config);
     const searchResults = fuse.search(searchValue);
     return searchResults;
   }
-
-  const fuseLaws = (opt) => {
-    const config = {
-      shouldSort: true,
-      threshold: 0.3,
-      keys: ['name', 'geography_name']
-    };
-    const fuse = new Fuse(opt, config);
-    const searchResults = fuse.search(searchValue);
-    return searchResults;
-  }
-
-  const fuseLitigations = (opt) => {
-    const config = {
-      shouldSort: true,
-      threshold: 0.3,
-      keys: ['name', 'jurisdiction_name']
-    };
-    const fuse = new Fuse(opt, config);
-    const searchResults = fuse.search(searchValue);
-    return searchResults;
-  }
-
-  const fuseTargets = (opt) => {
-    const config = {
-      shouldSort: true,
-      threshold: 0.3,
-      keys: ['name', 'geography_name']
-    };
-    const fuse = new Fuse(opt, config);
-    const searchResults = fuse.search(searchValue);
-    return searchResults;
-  }
-  // END OF FUSE FUNCTIONS
-
 
   // SEARCH RESULTS for each category
-  const searchGeographiesResults = useMemo(() => searchValue ? fuseGeographies(geographies) : [], [searchValue]);
-  const searchLawsResults = useMemo(() => searchValue ? fuseLaws(lawsAndPolicies) : [], [searchValue]);
-  const searchLitigationsResults = useMemo(() => searchValue ? fuseLitigations(litigations) : [], [searchValue]);
-  const searchTargetsResults = useMemo(() => searchValue ? fuseTargets(targets) : [], [searchValue]);
+  const searchGeographiesResults = useMemo(() => searchValue ? fuse(geographies, ['name']) : [], [searchValue]);
+  const searchLawsResults = useMemo(() => searchValue ? fuse(lawsAndPolicies, ['name', 'geography_name']) : [], [searchValue]);
+  const searchLitigationsResults = useMemo(() => searchValue ? fuse(litigations, ['name', 'jurisdiction_name']) : [], [searchValue]);
+  const searchTargetsResults = useMemo(() => searchValue ? fuse(targets, ['name', 'geography_name']) : [], [searchValue]);
   // end of search results
 
   const allSearchResults = [...searchGeographiesResults, ...searchLawsResults, ...searchLitigationsResults, ...searchTargetsResults];
-
   const first3Geographies = geographies.slice(0, 3);
 
   const handleCloseDropdown = () => {

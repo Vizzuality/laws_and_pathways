@@ -1,5 +1,7 @@
 module CCLOW
   class LegislationAndPoliciesController < CCLOWController
+    include SearchController
+    
     def index
       if (params[:fromDate])
         @legislations = CCLOW::LegislationDecorator.decorate_collection(Legislation.where('date_passed >= ?', params[:fromDate]))
