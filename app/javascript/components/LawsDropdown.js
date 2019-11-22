@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import Fuse from "fuse.js";
+import debounce from 'lodash/debounce';
 import search from '../../assets/images/icons/search.svg';
 import searchAgain from '../../assets/images/icons/search-again.svg';
 import countryFlag from '../../assets/images/icons/country-flag.svg';
@@ -31,6 +32,14 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
   const lastSearch = localStorage.getItem("lastSearch");
   const lastSearchCategory = localStorage.getItem("lastSearchCategory");
   const lastSearchLink = localStorage.getItem("lastSearchLink")
+
+  const handleInput = input => {
+    setSearchValue(input)
+  }
+
+  const delaySettingInput = useRef(debounce(value => handleInput(value), 400)).current;
+  const handleInputThrottled = e => delaySettingInput(e.target.value);
+
   const setLastSearch = (search, category, link) => { 
     localStorage.setItem("lastSearch", search);
     localStorage.setItem("lastSearchCategory", category);
@@ -182,7 +191,7 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
       <div className="laws-dropdown__input-container">
         <input 
           id="search-input"
-          onChange={e => setSearchValue(e.target.value)}
+          onChange={handleInputThrottled}
           placeholder="Search for countries, legislation and policies and litigation cases" className="laws-input"
           onClick={handleInputClick}
         />
