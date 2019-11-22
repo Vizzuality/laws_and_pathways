@@ -92,11 +92,7 @@ if Rails.env.development? || ENV['SEED_DATA']
   # import companies
   TimedLogger.log('Import companies') do
     file = File.open(Rails.root.join('db', 'seeds', 'tpi-companies.csv'), 'r')
-    importer = CSVImport::Companies.new(file)
-    importer.override_id = true
-    importer.call
-
-    ActiveRecord::Base.connection.execute("select setval('companies_id_seq',max(id)) from companies;")
+    CSVImport::Companies.new(file, override_id: true).call
   end
 
   # import CP Benchmarks
@@ -126,19 +122,13 @@ if Rails.env.development? || ENV['SEED_DATA']
   # import Legislations
   TimedLogger.log('Import Legislations') do
     file = File.open(Rails.root.join('db', 'seeds', 'legislations.csv'), 'r')
-    importer = CSVImport::Legislations.new(file)
-    importer.override_id = true
-    importer.call
-    ActiveRecord::Base.connection.execute("select setval('legislations_id_seq',max(id)) from legislations;")
+    CSVImport::Legislations.new(file, override_id: true).call
   end
 
   TimedLogger.log('Import Litigations') do
     # import Litigations
     file = File.open(Rails.root.join('db', 'seeds', 'litigations.csv'), 'r')
-    importer = CSVImport::Litigations.new(file)
-    importer.override_id = true
-    importer.call
-    ActiveRecord::Base.connection.execute("select setval('litigations_id_seq',max(id)) from litigations;")
+    CSVImport::Litigations.new(file, override_id: true).call
 
     # import Litigation Sides
     file = File.open(Rails.root.join('db', 'seeds', 'litigation-sides.csv'), 'r')
