@@ -58,10 +58,10 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
   }
 
   // SEARCH RESULTS for each category
-  const searchGeographiesResults = useMemo(() => searchValue ? fuse(geographies, ['name']) : [], [searchValue]);
-  const searchLawsResults = useMemo(() => searchValue ? fuse(lawsAndPolicies, ['name', 'geography_name']) : [], [searchValue]);
-  const searchLitigationsResults = useMemo(() => searchValue ? fuse(litigations, ['name', 'jurisdiction_name']) : [], [searchValue]);
-  const searchTargetsResults = useMemo(() => searchValue ? fuse(targets, ['name', 'geography_name']) : [], [searchValue]);
+  const searchGeographiesResults = useMemo(() => searchValue ? fuse(geographies, ['name', 'region', 'legislative_process']) : [], [searchValue]);
+  const searchLawsResults = useMemo(() => searchValue ? fuse(lawsAndPolicies, ['title', 'description', 'geography_name']) : [], [searchValue]);
+  const searchLitigationsResults = useMemo(() => searchValue ? fuse(litigations, ['title', 'summary', 'jurisdiction_name']) : [], [searchValue]);
+  const searchTargetsResults = useMemo(() => searchValue ? fuse(targets, ['description', 'target_type', 'geography_name']) : [], [searchValue]);
   // end of search results
 
   const allSearchResults = [...searchGeographiesResults, ...searchLawsResults, ...searchLitigationsResults, ...searchTargetsResults];
