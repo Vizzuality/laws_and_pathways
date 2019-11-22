@@ -1,0 +1,3 @@
+import './controllers';
+
+window.LawsAndPathways = {};
