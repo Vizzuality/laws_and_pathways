@@ -21,7 +21,6 @@ module Api
          iso: item.jurisdiction.iso,
          addition_type: addition_type,
          jurisdiction: item.jurisdiction,
-         created_at: item.created_at,
          link: item.link}
       end
     end
@@ -34,7 +33,6 @@ module Api
          iso: item.geography.iso,
          addition_type: I18n.t("cclow.legislation_types.#{item.legislation_type}"),
          jurisdiction: item.geography,
-         created_at: item.created_at,
          link: item.link}
       end
     end
