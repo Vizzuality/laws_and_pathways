@@ -37,7 +37,7 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
     setSearchValue(input)
   }
 
-  const delaySettingInput = useRef(debounce(value => handleInput(value), 400)).current;
+  const delaySettingInput = useCallback(debounce(value => handleInput(value), 400));
   const handleInputThrottled = e => delaySettingInput(e.target.value);
 
   const setLastSearch = (search, category, link) => { 
