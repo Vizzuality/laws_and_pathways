@@ -66,6 +66,7 @@ ActiveAdmin.register MQ::Assessment do
   form partial: 'form'
 
   index do
+    column :methodology_version
     column :title, &:title_link
     column :assessment_date
     column :publication_date
@@ -75,6 +76,7 @@ ActiveAdmin.register MQ::Assessment do
 
   csv do
     column :id
+    column :methodology_version
     column(:company_id) { |a| a.company.id }
     column(:company) { |a| a.company.name }
     column :assessment_date

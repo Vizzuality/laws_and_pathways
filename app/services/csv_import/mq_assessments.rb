@@ -52,7 +52,8 @@ module CSVImport
         publication_date: publication_date(row),
         level: row[:level],
         notes: row[:notes],
-        questions: get_questions(row)
+        questions: get_questions(row),
+        methodology_version: row[:methodology_version]
       }
     end
 
