@@ -162,6 +162,33 @@ RSpec.describe Admin::LegislationsController, type: :controller do
     end
   end
 
+  describe 'PATCH update' do
+    context 'with valid params' do
+      let(:valid_update_params) { {title: 'title was updated'} }
+
+      subject { patch :update, params: {id: legislation.id, legislation: valid_update_params} }
+
+      it 'does not create another record' do
+        expect { subject }.not_to change(Legislation, :count)
+      end
+
+      it 'updates existing Legislation' do
+        expect { subject }.to change { legislation.reload.title }.to('title was updated')
+      end
+
+      it 'creates records update activity' do
+        expect { subject }.to change(PublicActivity::Activity, :count).by(1)
+
+        expect(PublicActivity::Activity.last.trackable_id).to eq(legislation.id)
+        expect(PublicActivity::Activity.last.key).to eq('legislation.edited')
+      end
+
+      it 'redirects to the updated Legislation' do
+        expect(subject).to redirect_to(admin_legislation_path(legislation))
+      end
+    end
+  end
+
   describe 'DELETE destroy' do
     let!(:legislation_to_delete) { create(:legislation, discarded_at: nil) }
 

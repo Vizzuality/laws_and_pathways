@@ -133,12 +133,23 @@ RSpec.describe Admin::LitigationsController, type: :controller do
 
   describe 'PATCH update' do
     context 'with valid params' do
-      subject { patch :update, params: {litigation: {title: "#{litigation.title} was updated"}} }
+      let(:valid_update_params) { {title: 'title was updated'} }
 
-      it { is_expected.to be_successful }
+      subject { patch :update, params: {id: litigation.id, litigation: valid_update_params} }
+
+      it 'does not create another record' do
+        expect { subject }.not_to change(Litigation, :count)
+      end
 
       it 'updates existing Litigation' do
-        expect(litigation.reload.title).to eq('was updated')
+        expect { subject }.to change { litigation.reload.title }.to('title was updated')
+      end
+
+      it 'creates records update activity' do
+        expect { subject }.to change(PublicActivity::Activity, :count).by(1)
+
+        expect(PublicActivity::Activity.last.trackable_id).to eq(litigation.id)
+        expect(PublicActivity::Activity.last.key).to eq('litigation.edited')
       end
 
       it 'redirects to the updated Litigation' do
