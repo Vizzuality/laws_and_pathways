@@ -4,7 +4,6 @@
 #
 # Required to be implemmented by the model
 # - create_activity (from PublicActivity::Common)
-# - updated_by (from UserTrackable)
 #
 module PublicActivityTrackable
   extend ActiveSupport::Concern

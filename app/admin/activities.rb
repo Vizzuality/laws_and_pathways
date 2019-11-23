@@ -1,5 +1,6 @@
 ActiveAdmin.register PublicActivity::Activity do
   config.per_page = 30
+
   menu parent: 'Administration', priority: 3, label: 'Users Activity'
 
   decorate_with PublicActivity::ActivityDecorator
