@@ -24,9 +24,7 @@ module PublicActivityTrackable
   end
 
   def owner
-    return unless respond_to?(:updated_by)
-
-    updated_by
+    ::Current.admin_user
   end
 
   def activity_key_for_last_update
