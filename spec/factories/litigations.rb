@@ -41,5 +41,11 @@ FactoryBot.define do
         create :litigation_side, :geography, litigation: l, side_type: 'b'
       end
     end
+
+    trait :with_events do
+      after(:create) do |l|
+        create_list :litigation_event, 2, eventable: l
+      end
+    end
   end
 end

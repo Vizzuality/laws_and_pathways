@@ -1,0 +1,17 @@
+<div class="slider-container">
+  <div class="slider" data-controller='slider' data-slick='{"slidesToShow": 3, "slidesToScroll": 3}'>
+    <% @latest_additions.each do |item| %>
+      <% jurisdiction_link = link_to(item[:jurisdiction][:name], cclow_geography_path(item[:jurisdiction][:id]))%>
+      <div class="item-container">
+        <div class="item">
+          <div class="additions-kind"><%= item[:kind] %></div>
+          <div class="title"><%= item[:link].html_safe %></div>
+          <div class="meta">
+            <img class="flag" src=<%= asset_path "flags/#{item[:iso]}.svg"%> alt="">
+            <div><%=([jurisdiction_link] + item.values_at(:addition_type, :date_passed)).compact.join(' | ').html_safe %></div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
