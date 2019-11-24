@@ -27,7 +27,7 @@ class PublicActivity::ActivityDecorator < Draper::Decorator
 
   def trackable_link
     # link to record if exists
-    return h.link_to trackable_display_name(trackable) if trackable
+    return h.link_to trackable_display_name(trackable), h.polymorphic_url([:admin, trackable]) if trackable
 
     # if trackable record does not exist, it could have been discarded
     discarded_trackable = find_discarded_trackable
