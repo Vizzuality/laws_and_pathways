@@ -9,6 +9,8 @@ module PublicActivityTrackable
   extend ActiveSupport::Concern
 
   included do
+    include PublicActivity::Common
+
     around_update :track_updates_activity
   end
 

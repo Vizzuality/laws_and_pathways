@@ -24,7 +24,6 @@ class Target < ApplicationRecord
   include UserTrackable
   include VisibilityStatus
   include DiscardableModel
-  include PublicActivity::Common
   include PublicActivityTrackable
 
   TYPES = %w[
