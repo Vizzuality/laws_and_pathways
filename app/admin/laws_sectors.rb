@@ -1,5 +1,6 @@
 ActiveAdmin.register LawsSector do
   config.batch_actions = false
+  config.sort_order = 'name_asc'
 
   menu parent: 'Laws', priority: 5
 

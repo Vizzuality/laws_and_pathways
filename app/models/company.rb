@@ -46,7 +46,7 @@ class Company < ApplicationRecord
 
   validates :ca100, inclusion: {in: [true, false]}
   validates_presence_of :name, :slug, :isin, :market_cap_group
-  validates_uniqueness_of :slug, :isin, :name
+  validates_uniqueness_of :slug, :name
 
   def to_s
     name

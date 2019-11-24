@@ -46,10 +46,8 @@ ActiveAdmin.register Litigation do
   index do
     selectable_column
     column :title, class: 'max-width-300', &:title_link
-    column :document_type
     column :jurisdiction
-    column :sector
-    column 'Responses', &:responses_string
+    column :document_type
     column :citation_reference_number
     column :created_by
     column :updated_by

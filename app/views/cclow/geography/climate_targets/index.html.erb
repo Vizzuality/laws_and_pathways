@@ -8,10 +8,10 @@
       <div class="climate-targets-section ndc-content">
         <div class="nav">
           <h5>NDC content</h5>
-          <span class="counter"><%= @targets.count %> <%= @targets.count > 1 ? 'targets' : 'target' %></span>
+          <span class="counter"><%= @climate_targets.count %> <%= @climate_targets.count > 1 ? 'targets' : 'target' %></span>
         </div>
         <ul>
-          <% @targets.each do |target| %>
+          <% @climate_targets.each do |target| %>
             <li>
               <div>
                 <%= target.description.html_safe %>
@@ -30,10 +30,10 @@
       <div class="climate-targets-section">
         <div class="nav">
           <h5>Climate targets in this law</h5>
-          <span class="counter"><%= @targets.count %> <%= @targets.count > 1 ? 'targets' : 'target' %></span>
+          <span class="counter"><%= @climate_targets.count %> <%= @climate_targets.count > 1 ? 'targets' : 'target' %></span>
         </div>
         <ul>
-          <% @targets.each do |target| %>
+          <% @climate_targets.each do |target| %>
             <li>
               <div>
                 <%= target.description.html_safe %>

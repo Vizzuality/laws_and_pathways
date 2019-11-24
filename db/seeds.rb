@@ -28,6 +28,60 @@ end
   sector.update!(cp_unit: sector_cp_unit) if sector.new_record? && sector_cp_unit.present?
 end
 
+# instruments: Instrument Type & Instrument
+# envs: ALL
+# rubocop:disable Style/WordArray
+[
+  ['Capacity-building', ['Knowledge generation',
+                         'Sharing and dissemination',
+                         'Research and development',
+                         'Education and training']],
+  ['Regulation', ['Standards and obligations',
+                  'Building codes',
+                  'Zoning and spatial planning',
+                  'Disclosure obligations']],
+  ['Incentives', ['Taxes', 'Subsidies']],
+  ['Governance and planning', ['Creating bodies/institutions',
+                               'Designing processes',
+                               'Developing plans and strategies',
+                               'Assigning responsibilities to other levels of government',
+                               'Monitoring and evaluation']],
+  ['Direct investment', ['Public goods - early warning systems',
+                         'Public goods - other',
+                         'Social safety nets',
+                         'Provision of climate finance']]
+].each do |inst_type, instruments|
+  type = InstrumentType.find_or_create_by!(name: inst_type)
+  instruments.each do |inst|
+    Instrument.find_or_create_by!(name: inst, instrument_type: type)
+  end
+end
+# rubocop:enable Style/WordArray
+
+# Laws sectors: Names
+# envs: ALL
+[
+  'Agriculture',
+  'Residential and Commercial',
+  'Coastal zones',
+  'Economy-wide',
+  'Energy',
+  'Health',
+  'Industry',
+  'LULUCF',
+  'Social development',
+  'Tourism',
+  'Transportation',
+  'Urban',
+  'Waste',
+  'Water',
+  'Rural',
+  'Environment',
+  'Other'
+].each do |sector|
+  LawsSector.find_or_create_by!(name: sector)
+end
+
 if Rails.env.development? || ENV['SEED_DATA']
   # import geographies
   TimedLogger.log('Import geographies') do
@@ -37,8 +91,8 @@ if Rails.env.development? || ENV['SEED_DATA']
 
   # import companies
   TimedLogger.log('Import companies') do
-    file = File.open(Rails.root.join('db', 'seeds', 'companies.csv'), 'r')
-    CSVImport::Companies.new(file).call
+    file = File.open(Rails.root.join('db', 'seeds', 'tpi-companies.csv'), 'r')
+    CSVImport::Companies.new(file, override_id: true).call
   end
 
   # import CP Benchmarks
@@ -60,24 +114,21 @@ if Rails.env.development? || ENV['SEED_DATA']
 
     file = File.open(Rails.root.join('db', 'seeds', 'mq-assessments-M2.csv'), 'r')
     CSVImport::MQAssessments.new(file).call
+
+    file = File.open(Rails.root.join('db', 'seeds', 'mq-assessments-M3.csv'), 'r')
+    CSVImport::MQAssessments.new(file).call
   end
 
   # import Legislations
   TimedLogger.log('Import Legislations') do
     file = File.open(Rails.root.join('db', 'seeds', 'legislations.csv'), 'r')
-    importer = CSVImport::Legislations.new(file)
-    importer.override_id = true
-    importer.call
-    ActiveRecord::Base.connection.execute("select setval('legislations_id_seq',max(id)) from legislations;")
+    CSVImport::Legislations.new(file, override_id: true).call
   end
 
   TimedLogger.log('Import Litigations') do
     # import Litigations
     file = File.open(Rails.root.join('db', 'seeds', 'litigations.csv'), 'r')
-    importer = CSVImport::Litigations.new(file)
-    importer.override_id = true
-    importer.call
-    ActiveRecord::Base.connection.execute("select setval('litigations_id_seq',max(id)) from litigations;")
+    CSVImport::Litigations.new(file, override_id: true).call
 
     # import Litigation Sides
     file = File.open(Rails.root.join('db', 'seeds', 'litigation-sides.csv'), 'r')

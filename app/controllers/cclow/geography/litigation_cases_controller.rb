@@ -2,6 +2,7 @@ module CCLOW
   module Geography
     class LitigationCasesController < CCLOWController
       include GeographyController
+      include SearchController
 
       def index
         add_breadcrumb('Litigation cases', request.path)

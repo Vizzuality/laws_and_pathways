@@ -1,13 +1,13 @@
 module CCLOW
-  class LitigationCasesController < CCLOWController
+  class ClimateTargetsController < CCLOWController
     include SearchController
 
     def index
       if params[:ids]
         ids = params[:ids].split(',').map(&:to_i)
-        @litigations = Litigation.find(ids)
+        @climate_targets = Target.find(ids)
       else
-        @litigations = Litigation.all
+        @climate_targets = Target.all
       end
     end
   end

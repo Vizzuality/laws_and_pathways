@@ -4,6 +4,7 @@ ActiveAdmin.register Instrument do
   permit_params :name, :instrument_type_id
 
   config.batch_actions = false
+  config.sort_order = 'name_asc'
 
   decorate_with InstrumentDecorator
 

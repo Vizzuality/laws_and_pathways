@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         get :emissions_chart_data
       end
     end
+    
     resources :companies, only: [:show] do
       member do
         get :emissions_chart_data
@@ -23,6 +24,8 @@ Rails.application.routes.draw do
         get :cp_assessment
       end
     end
+
+    resources :publications, only: :index
   end
 
   namespace :cclow do
@@ -35,6 +38,7 @@ Rails.application.routes.draw do
       resources :climate_targets, controller: 'geography/climate_targets', only: [:show, :index]
     end
 
+    resources :climate_targets, only: :index
     resources :legislation_and_policies, only: :index
     resources :litigation_cases, only: :index
   end
