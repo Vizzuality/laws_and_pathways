@@ -62,6 +62,35 @@ RSpec.describe Admin::CompaniesController, type: :controller do
     end
   end
 
+  describe 'PATCH update' do
+    let!(:company_to_update) { create(:company) }
+
+    context 'with valid params' do
+      let(:valid_update_params) { {name: 'name was updated'} }
+
+      subject { patch :update, params: {id: company_to_update.id, company: valid_update_params} }
+
+      it 'does not create another record' do
+        expect { subject }.not_to change(Company, :count)
+      end
+
+      it 'updates existing Company' do
+        expect { subject }.to change { company_to_update.reload.name }.to('name was updated')
+      end
+
+      it 'creates "edited" activity' do
+        expect { subject }.to change(PublicActivity::Activity, :count).by(1)
+
+        expect(PublicActivity::Activity.last.trackable_id).to eq(company_to_update.id)
+        expect(PublicActivity::Activity.last.key).to eq('company.edited')
+      end
+
+      it 'redirects to the updated Company' do
+        expect(subject).to redirect_to(admin_company_path(company_to_update))
+      end
+    end
+  end
+
   describe 'DELETE destroy' do
     let!(:company) { create(:company, discarded_at: nil) }
 
