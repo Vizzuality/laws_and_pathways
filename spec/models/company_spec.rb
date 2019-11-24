@@ -47,12 +47,6 @@ RSpec.describe Company, type: :model do
     expect(subject).to have(1).errors_on(:isin)
   end
 
-  it 'should be invalid if isin is taken' do
-    create(:company, isin: 'ISIN123')
-    subject.isin = 'ISIN123'
-    expect(subject).to have(1).errors_on(:isin)
-  end
-
   it 'should be invalid if name is taken' do
     create(:company, name: 'ACME')
     subject.name = 'ACME'
