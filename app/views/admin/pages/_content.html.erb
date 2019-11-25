@@ -1,7 +1,6 @@
 <div data-controller="nested-list">
   <template>
     <%= form.semantic_fields_for :contents, Content.new, child_index: 'NEW_RECORD' do |content| %>
-      <%= byebug %>
       <%= render "content_fields", form: content %>
     <% end %>
   </template>
