@@ -1,16 +1,15 @@
 module TPI
   class SectorsController < TPIController
+    before_action :fetch_companies, only: [:show, :index]
+    before_action :fetch_sectors, only: [:show, :index]
+
     def index
-      @sectors = TPISector.select(:id, :name, :slug).order(:name)
-      @companies = Company.joins(:sector).select(:id, :name, :slug, 'tpi_sectors.name as sector_name')
       @companies_by_sectors = ::Api::Charts::Sector.new(companies_scope(params)).companies_market_cap_by_sector
     end
 
     def show
       @sector = TPISector.friendly.find(params[:id])
-
-      @sectors = TPISector.select(:id, :name, :slug).order(:name)
-      @companies = Company.joins(:sector).select(:id, :name, :slug, 'tpi_sectors.name as sector_name')
+      @sector_companies = @companies.select { |c| c.sector_id == @sector.id }
 
       @companies_by_levels = ::Api::Charts::Sector.new(companies_scope(params)).companies_summaries_by_level
     end
@@ -48,6 +47,17 @@ module TPI
     end
 
     private
+
+    def fetch_sectors
+      @sectors = TPISector.select(:id, :name, :slug).order(:name)
+    end
+
+    def fetch_companies
+      @companies = Company
+        .published
+        .joins(:sector)
+        .select(:id, :name, :slug, :sector_id, 'tpi_sectors.name as sector_name')
+    end
 
     def companies_scope(params)
       if params[:id]
