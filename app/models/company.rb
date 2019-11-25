@@ -9,23 +9,28 @@
 #  name                      :string           not null
 #  slug                      :string           not null
 #  isin                      :string           not null
-#  size                      :string
+#  market_cap_group          :string
 #  ca100                     :boolean          default(FALSE), not null
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #  visibility_status         :string           default("draft")
 #  discarded_at              :datetime
+#  sedol                     :integer
+#  latest_information        :text
+#  historical_comments       :text
 #
 
 class Company < ApplicationRecord
-  include DiscardableModel
   include VisibilityStatus
+  include DiscardableModel
+  include PublicActivityTrackable
   extend FriendlyId
+
   friendly_id :name, use: :slugged, routes: :default
 
-  SIZES = %w[small medium large].freeze
+  MARKET_CAP_GROUPS = %w[small medium large].freeze
 
-  enum size: array_to_enum_hash(SIZES)
+  enum market_cap_group: array_to_enum_hash(MARKET_CAP_GROUPS)
 
   belongs_to :sector, class_name: 'TPISector', foreign_key: 'sector_id'
   belongs_to :geography
@@ -42,8 +47,8 @@ class Company < ApplicationRecord
            to: :latest_mq_assessment, prefix: :mq, allow_nil: true
 
   validates :ca100, inclusion: {in: [true, false]}
-  validates_presence_of :name, :slug, :isin, :size
-  validates_uniqueness_of :slug, :isin, :name
+  validates_presence_of :name, :slug, :isin, :market_cap_group
+  validates_uniqueness_of :slug, :name
 
   def to_s
     name

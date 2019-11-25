@@ -24,6 +24,7 @@ class Legislation < ApplicationRecord
   include Taggable
   include VisibilityStatus
   include DiscardableModel
+  include PublicActivityTrackable
   extend FriendlyId
 
   friendly_id :title, use: :slugged, routes: :default
@@ -40,11 +41,13 @@ class Legislation < ApplicationRecord
   tag_with :document_types
   tag_with :keywords
   tag_with :natural_hazards
+  tag_with :responses
 
   enum legislation_type: array_to_enum_hash(LEGISLATION_TYPES)
 
   belongs_to :geography
   belongs_to :sector, class_name: 'LawsSector', foreign_key: 'sector_id', optional: true
+  belongs_to :parent, class_name: 'Legislation', foreign_key: 'parent_id', optional: true
   has_many :documents, as: :documentable, dependent: :destroy
   has_many :events, as: :eventable, dependent: :destroy
   has_and_belongs_to_many :targets

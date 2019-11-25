@@ -116,6 +116,39 @@ RSpec.describe Admin::LegislationsController, type: :controller do
       end
     end
 
+    context 'with valid params setting parent_legislation' do
+      let!(:parent_legislation) { create(:legislation, visibility_status: 'published') }
+
+      let(:valid_attributes_with_parent) {
+        attributes_for(:legislation).merge(
+          title: 'Legislation POST title 22',
+          description: 'Legislation POST description 22',
+          date_passed: Date.parse('2/4/2004'),
+          law_id: 1003,
+          visibility_status: 'pending',
+          legislation_type: 'legislative',
+          geography_id: geography.id,
+          parent_id: parent_legislation.id
+        )
+      }
+
+      subject { post :create, params: {legislation: valid_attributes_with_parent} }
+
+      it 'creates a new Legislation' do
+        expect { subject }.to change(Legislation, :count).by(1)
+
+        last_legislation_created.tap do |l|
+          expect(l.title).to eq('Legislation POST title 22')
+          expect(l.description).to eq('Legislation POST description 22')
+          expect(l.visibility_status).to eq('pending')
+          expect(l.law_id).to eq(1003)
+          expect(l.date_passed).to eq(Date.parse('2/4/2004'))
+          expect(l.parent_id).to eq(parent_legislation.id)
+          expect(l.legislative?).to be(true)
+        end
+      end
+    end
+
     context 'with invalid params' do
       let(:invalid_attributes) { attributes_for(:legislation).merge(title: nil) }
 
@@ -125,6 +158,35 @@ RSpec.describe Admin::LegislationsController, type: :controller do
 
       it 'invalid_attributes do not create a Litigation' do
         expect { subject }.not_to change(Legislation, :count)
+      end
+    end
+  end
+
+  describe 'PATCH update' do
+    let!(:legislation_to_update) { create(:legislation, visibility_status: 'published') }
+
+    context 'with valid params' do
+      let(:valid_update_params) { {title: 'title was updated'} }
+
+      subject { patch :update, params: {id: legislation_to_update.id, legislation: valid_update_params} }
+
+      it 'does not create another record' do
+        expect { subject }.not_to change(Legislation, :count)
+      end
+
+      it 'updates existing Legislation' do
+        expect { subject }.to change { legislation_to_update.reload.title }.to('title was updated')
+      end
+
+      it 'creates "edited" activity' do
+        expect { subject }.to change(PublicActivity::Activity, :count).by(1)
+
+        expect(PublicActivity::Activity.last.trackable_id).to eq(legislation_to_update.id)
+        expect(PublicActivity::Activity.last.key).to eq('legislation.edited')
+      end
+
+      it 'redirects to the updated Legislation' do
+        expect(subject).to redirect_to(admin_legislation_path(legislation_to_update))
       end
     end
   end

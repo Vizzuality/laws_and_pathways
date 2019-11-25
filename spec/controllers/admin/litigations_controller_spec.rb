@@ -41,7 +41,7 @@ RSpec.describe Admin::LitigationsController, type: :controller do
           :litigation,
           title: 'Litigation POST title',
           summary: 'Litigation POST summary',
-          core_objective: 'objective',
+          at_issue: 'At issue',
           jurisdiction_id: geography.id,
           sector_id: sector.id,
           created_by_id: admin.id,
@@ -99,7 +99,7 @@ RSpec.describe Admin::LitigationsController, type: :controller do
         last_litigation_created.tap do |l|
           expect(l.title).to eq('Litigation POST title')
           expect(l.summary).to eq('Litigation POST summary')
-          expect(l.core_objective).to eq('objective')
+          expect(l.at_issue).to eq('At issue')
           expect(l.visibility_status).to eq('pending')
           expect(l.sector_id).to eq(sector.id)
           expect(l.jurisdiction_id).to eq(geography.id)
@@ -127,6 +127,35 @@ RSpec.describe Admin::LitigationsController, type: :controller do
 
       it 'invalid_attributes do not create a Litigation' do
         expect { subject }.not_to change(Litigation, :count)
+      end
+    end
+  end
+
+  describe 'PATCH update' do
+    let!(:litigation_to_update) { create(:litigation, :with_sides) }
+
+    context 'with valid params' do
+      let(:valid_update_params) { {title: 'title was updated'} }
+
+      subject { patch :update, params: {id: litigation_to_update.id, litigation: valid_update_params} }
+
+      it 'does not create another record' do
+        expect { subject }.not_to change(Litigation, :count)
+      end
+
+      it 'updates existing Litigation' do
+        expect { subject }.to change { litigation_to_update.reload.title }.to('title was updated')
+      end
+
+      it 'creates "edited" activity' do
+        expect { subject }.to change(PublicActivity::Activity, :count).by(1)
+
+        expect(PublicActivity::Activity.last.trackable_id).to eq(litigation_to_update.id)
+        expect(PublicActivity::Activity.last.key).to eq('litigation.edited')
+      end
+
+      it 'redirects to the updated Litigation' do
+        expect(subject).to redirect_to(admin_litigation_path(litigation_to_update))
       end
     end
   end

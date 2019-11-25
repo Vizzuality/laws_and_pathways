@@ -137,6 +137,35 @@ RSpec.describe Admin::TargetsController, type: :controller do
     end
   end
 
+  describe 'PATCH update' do
+    let!(:target_to_update) { create(:target, year: 2055) }
+
+    context 'with valid params' do
+      let(:valid_update_params) { {year: 2080} }
+
+      subject { patch :update, params: {id: target_to_update.id, target: valid_update_params} }
+
+      it 'does not create another record' do
+        expect { subject }.not_to change(Target, :count)
+      end
+
+      it 'updates existing Target' do
+        expect { subject }.to change { target_to_update.reload.year }.to(2080)
+      end
+
+      it 'creates "edited" activity' do
+        expect { subject }.to change(PublicActivity::Activity, :count).by(1)
+
+        expect(PublicActivity::Activity.last.trackable_id).to eq(target_to_update.id)
+        expect(PublicActivity::Activity.last.key).to eq('target.edited')
+      end
+
+      it 'redirects to the updated Target' do
+        expect(subject).to redirect_to(admin_target_path(target_to_update))
+      end
+    end
+  end
+
   describe 'DELETE destroy' do
     let!(:target) { create(:target, discarded_at: nil) }
 

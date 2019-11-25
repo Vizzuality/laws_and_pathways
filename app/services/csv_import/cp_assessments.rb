@@ -31,9 +31,9 @@ module CSVImport
     end
 
     def find_company!(row)
-      return unless row[:company].present?
+      return unless row[:company_id].present?
 
-      Company.where('lower(name) = ?', row[:company].downcase).first!
+      Company.find(row[:company_id])
     end
 
     def assessment_attributes(row)
@@ -47,7 +47,7 @@ module CSVImport
     end
 
     def assessment_date(row)
-      CSVImport::DateUtils.safe_parse(row[:assessment_date], ['%Y-%m-%d'])
+      CSVImport::DateUtils.safe_parse(row[:assessment_date], ['%Y-%m-%d']) if row[:assessment_date]
     end
 
     def publication_date(row)

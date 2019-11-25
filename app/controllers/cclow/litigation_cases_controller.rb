@@ -1,7 +1,14 @@
 module CCLOW
   class LitigationCasesController < CCLOWController
+    include SearchController
+
     def index
-      @litigations = Litigation.first(5)
+      if params[:ids]
+        ids = params[:ids].split(',').map(&:to_i)
+        @litigations = Litigation.find(ids)
+      else
+        @litigations = Litigation.all
+      end
     end
   end
 end

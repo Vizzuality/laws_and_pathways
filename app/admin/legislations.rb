@@ -7,10 +7,10 @@ ActiveAdmin.register Legislation do
 
   publishable_scopes
 
-  permit_params :title, :date_passed, :description,
+  permit_params :title, :date_passed, :description, :parent_id,
                 :geography_id, :sector_id, :law_id, :legislation_type,
                 :created_by_id, :updated_by_id, :visibility_status,
-                :natural_hazards_string, :keywords_string,
+                :natural_hazards_string, :keywords_string, :responses_string,
                 events_attributes: permit_params_for(:events),
                 documents_attributes: permit_params_for(:documents),
                 framework_ids: [], document_type_ids: [], instrument_ids: [],
@@ -26,6 +26,9 @@ ActiveAdmin.register Legislation do
   filter :frameworks,
          as: :check_boxes,
          collection: proc { Framework.all }
+  filter :responses,
+         as: :check_boxes,
+         collection: proc { Response.all }
   filter :visibility_status,
          as: :select,
          collection: proc { array_to_select_collection(VisibilityStatus::VISIBILITY) }
@@ -33,12 +36,11 @@ ActiveAdmin.register Legislation do
   index title: 'Laws and Policies' do
     selectable_column
     column :title, &:title_summary_link
-    column :legislation_type
-    column :date_passed
-    column 'Frameworks', &:frameworks_string
     column :geography
-    column :sector
+    column :legislation_type
     column :document_types
+    column :date_passed
+    column 'Parent Legislation', &:parent
     column :created_by
     column :updated_by
     tag_column :visibility_status
@@ -58,20 +60,22 @@ ActiveAdmin.register Legislation do
           row :description
           row :date_passed
           row :geography
+          row 'Parent legislation', &:parent
           row :sector
           row :law_id
           row :legislation_type
           row 'Frameworks', &:frameworks_string
+          row 'Document Types', &:document_types_string
+          row 'Responses (e.g. adaptation or mitigation)', &:responses_string
+          row 'Natural Hazards', &:natural_hazards_string
+          row 'Keywords', &:keywords_string
+          list_row 'Documents', :document_links
+          list_row 'Instruments', :instrument_links
+          list_row 'Governances', :governance_links
           row :updated_at
           row :updated_by
           row :created_at
           row :created_by
-          row 'Document Types', &:document_types_string
-          row 'Keywords', &:keywords_string
-          row 'Natural Hazards', &:natural_hazards_string
-          list_row 'Documents', :document_links
-          list_row 'Instruments', :instrument_links
-          list_row 'Governances', :governance_links
         end
       end
 
@@ -105,10 +109,12 @@ ActiveAdmin.register Legislation do
     column(:legislation_type) { |l| l.legislation_type.downcase }
     column :date_passed
     column :description
+    column(:parent) { |l| l.parent&.title }
     column(:geography) { |l| l.geography.name }
     column(:geography_iso) { |l| l.geography.iso }
     column(:sector) { |l| l.sector&.name }
     column :frameworks, &:frameworks_string
+    column :responses, &:responses_string
     column :document_types, &:document_types_string
     column :keywords, &:keywords_string
     column :natural_hazards, &:natural_hazards_string
@@ -161,8 +167,10 @@ ActiveAdmin.register Legislation do
     def scoped_collection
       super.includes(
         :geography,
+        :parent,
         :sector,
         :frameworks,
+        :responses,
         :keywords,
         :natural_hazards,
         :document_types,

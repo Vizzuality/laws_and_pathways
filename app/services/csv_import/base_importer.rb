@@ -5,8 +5,12 @@ module CSVImport
     attr_reader :file, :import_results
     attr_accessor :override_id
 
-    def initialize(file)
+    # @param file [File]
+    # @param options [Hash]
+    # @option override_id [Boolean] override automatic ids and make use of id in the import data
+    def initialize(file, options = {})
       @file = file
+      @override_id = options[:override_id] if options[:override_id]
     end
 
     def call
@@ -17,6 +21,7 @@ module CSVImport
 
       ActiveRecord::Base.transaction(requires_new: true) do
         import
+        reset_id_seq if override_id
         raise ActiveRecord::Rollback if errors.any?
       end
 
@@ -59,6 +64,12 @@ module CSVImport
     end
 
     private
+
+    def reset_id_seq
+      table_name = resource_klass.table_name
+      seq_name = "#{table_name}_id_seq"
+      ActiveRecord::Base.connection.execute("select setval('#{seq_name}', max(id)) from #{table_name};")
+    end
 
     def reset_import_results
       @import_results = {

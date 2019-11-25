@@ -7,18 +7,20 @@ ActiveAdmin.register Litigation do
   publishable_sidebar only: :show
 
   permit_params :title, :jurisdiction_id, :sector_id, :document_type,
-                :visibility_status, :summary, :core_objective,
-                :citation_reference_number,
-                :created_by_id, :updated_by_id, :keywords_string,
+                :visibility_status, :summary, :at_issue,
+                :citation_reference_number, :created_by_id, :updated_by_id,
+                :keywords_string, :responses_string,
                 litigation_sides_attributes: permit_params_for(:litigation_sides),
                 documents_attributes: permit_params_for(:documents),
                 events_attributes: permit_params_for(:events),
-                legislation_ids: [],
-                external_legislation_ids: []
+                legislation_ids: [], external_legislation_ids: []
 
   filter :title_contains
   filter :summary_contains
   filter :jurisdiction
+  filter :responses,
+         as: :check_boxes,
+         collection: proc { Response.all }
   filter :document_type, as: :select, collection: proc {
     array_to_select_collection(Litigation::DOCUMENT_TYPES)
   }
@@ -44,9 +46,8 @@ ActiveAdmin.register Litigation do
   index do
     selectable_column
     column :title, class: 'max-width-300', &:title_link
-    column :document_type
     column :jurisdiction
-    column :sector
+    column :document_type
     column :citation_reference_number
     column :created_by
     column :updated_by
@@ -64,8 +65,9 @@ ActiveAdmin.register Litigation do
     column(:sector) { |l| l.sector&.name }
     column :citation_reference_number
     column :summary
+    column :responses, &:responses_string
     column :keywords, &:keywords_string
-    column :core_objective
+    column :at_issue
     column(:visibility_status) { |l| l.visibility_status&.humanize }
     column(:legislation_ids) { |l| l.legislation_ids.join('; ') }
   end
@@ -82,21 +84,23 @@ ActiveAdmin.register Litigation do
           row :document_type
           row :citation_reference_number
           row :summary
-          row :core_objective
+          row :at_issue
+          row 'Responses (e.g. adaptation or mitigation)', &:responses_string
           row 'Keywords', &:keywords_string
+          list_row 'Documents', :document_links
+          list_row 'Laws', :legislation_links
+          list_row 'External Laws', :external_legislation_links
           row :updated_at
           row :updated_by
           row :created_at
           row :created_by
-          list_row 'Documents', :document_links
-          list_row 'Laws', :legislation_links
-          list_row 'External Laws', :external_legislation_links
         end
       end
 
       tab :sides do
         panel 'Litigation Sides' do
-          table_for resource.litigation_sides.decorate do
+          table_for resource.litigation_sides
+            .includes(:connected_entity).decorate do
             column :side_type
             column :name
             column :party_type
@@ -156,7 +160,8 @@ ActiveAdmin.register Litigation do
     include DiscardableController
 
     def scoped_collection
-      super.includes(:jurisdiction, :sector, :created_by, :updated_by)
+      super.includes(:jurisdiction, :sector, :responses,
+                     :created_by, :updated_by)
     end
   end
 end

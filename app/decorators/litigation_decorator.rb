@@ -6,15 +6,15 @@ class LitigationDecorator < Draper::Decorator
   end
 
   def document_type
-    model.document_type.humanize
+    model.document_type&.humanize
   end
 
   def summary
     model.summary&.html_safe
   end
 
-  def core_objective
-    model.core_objective&.html_safe
+  def at_issue
+    model.at_issue&.html_safe
   end
 
   def document_links

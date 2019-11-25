@@ -91,6 +91,35 @@ RSpec.describe Admin::GeographiesController, type: :controller do
     end
   end
 
+  describe 'PATCH update' do
+    let!(:geography_to_update) { create(:geography) }
+
+    context 'with valid params' do
+      let(:valid_update_params) { {name: 'name was updated'} }
+
+      subject { patch :update, params: {id: geography_to_update.id, geography: valid_update_params} }
+
+      it 'does not create another record' do
+        expect { subject }.not_to change(Geography, :count)
+      end
+
+      it 'updates existing Geography' do
+        expect { subject }.to change { geography_to_update.reload.name }.to('name was updated')
+      end
+
+      it 'creates "edited" activity' do
+        expect { subject }.to change(PublicActivity::Activity, :count).by(1)
+
+        expect(PublicActivity::Activity.last.trackable_id).to eq(geography_to_update.id)
+        expect(PublicActivity::Activity.last.key).to eq('geography.edited')
+      end
+
+      it 'redirects to the updated Geography' do
+        expect(subject).to redirect_to(admin_geography_path(geography_to_update))
+      end
+    end
+  end
+
   describe 'DELETE destroy' do
     let!(:geography) { create(:geography, discarded_at: nil) }
 

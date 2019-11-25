@@ -9,12 +9,15 @@
 #  name                      :string           not null
 #  slug                      :string           not null
 #  isin                      :string           not null
-#  size                      :string
+#  market_cap_group          :string
 #  ca100                     :boolean          default(FALSE), not null
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #  visibility_status         :string           default("draft")
 #  discarded_at              :datetime
+#  sedol                     :integer
+#  latest_information        :text
+#  historical_comments       :text
 #
 
 require 'rails_helper'
@@ -41,12 +44,6 @@ RSpec.describe Company, type: :model do
 
   it 'should be invalid if isin is nil' do
     subject.isin = nil
-    expect(subject).to have(1).errors_on(:isin)
-  end
-
-  it 'should be invalid if isin is taken' do
-    create(:company, isin: 'ISIN123')
-    subject.isin = 'ISIN123'
     expect(subject).to have(1).errors_on(:isin)
   end
 

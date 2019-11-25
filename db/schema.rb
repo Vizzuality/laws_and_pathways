@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_19_224043) do
+ActiveRecord::Schema.define(version: 2019_11_22_133323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,25 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "activities", force: :cascade do |t|
+    t.string "trackable_type"
+    t.bigint "trackable_id"
+    t.string "owner_type"
+    t.bigint "owner_id"
+    t.string "key"
+    t.text "parameters"
+    t.string "recipient_type"
+    t.bigint "recipient_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
+    t.index ["owner_type", "owner_id"], name: "index_activities_on_owner_type_and_owner_id"
+    t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
+    t.index ["recipient_type", "recipient_id"], name: "index_activities_on_recipient_type_and_recipient_id"
+    t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
+    t.index ["trackable_type", "trackable_id"], name: "index_activities_on_trackable_type_and_trackable_id"
+  end
+
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -71,18 +90,20 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
     t.string "name", null: false
     t.string "slug", null: false
     t.string "isin", null: false
-    t.string "size"
+    t.string "market_cap_group"
     t.boolean "ca100", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "visibility_status", default: "draft"
     t.datetime "discarded_at"
+    t.integer "sedol"
+    t.text "latest_information"
+    t.text "historical_comments"
     t.index ["discarded_at"], name: "index_companies_on_discarded_at"
     t.index ["geography_id"], name: "index_companies_on_geography_id"
     t.index ["headquarters_geography_id"], name: "index_companies_on_headquarters_geography_id"
-    t.index ["isin"], name: "index_companies_on_isin", unique: true
+    t.index ["market_cap_group"], name: "index_companies_on_market_cap_group"
     t.index ["sector_id"], name: "index_companies_on_sector_id"
-    t.index ["size"], name: "index_companies_on_size"
     t.index ["slug"], name: "index_companies_on_slug", unique: true
   end
 
@@ -260,9 +281,11 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
     t.datetime "discarded_at"
     t.string "legislation_type", null: false
     t.bigint "sector_id"
+    t.bigint "parent_id"
     t.index ["created_by_id"], name: "index_legislations_on_created_by_id"
     t.index ["discarded_at"], name: "index_legislations_on_discarded_at"
     t.index ["geography_id"], name: "index_legislations_on_geography_id"
+    t.index ["parent_id"], name: "index_legislations_on_parent_id"
     t.index ["sector_id"], name: "index_legislations_on_sector_id"
     t.index ["slug"], name: "index_legislations_on_slug", unique: true
     t.index ["updated_by_id"], name: "index_legislations_on_updated_by_id"
@@ -305,7 +328,7 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
     t.string "document_type"
     t.bigint "jurisdiction_id"
     t.text "summary"
-    t.text "core_objective"
+    t.text "at_issue"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "visibility_status", default: "draft"
@@ -332,6 +355,7 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "discarded_at"
+    t.integer "methodology_version"
     t.index ["company_id"], name: "index_mq_assessments_on_company_id"
     t.index ["discarded_at"], name: "index_mq_assessments_on_discarded_at"
   end
@@ -418,6 +442,7 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
   add_foreign_key "legislations", "admin_users", column: "updated_by_id"
   add_foreign_key "legislations", "geographies"
   add_foreign_key "legislations", "laws_sectors", column: "sector_id"
+  add_foreign_key "legislations", "legislations", column: "parent_id"
   add_foreign_key "legislations_targets", "legislations", on_delete: :cascade
   add_foreign_key "legislations_targets", "targets", on_delete: :cascade
   add_foreign_key "litigation_sides", "litigations", on_delete: :cascade
