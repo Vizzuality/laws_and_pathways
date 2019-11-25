@@ -3,6 +3,7 @@
 <%= content_tag :div, class: 'nested-fields inline-fields', data: { controller: 'content', new_record: is_new_record } do %>
   <%= form.input :title %>
   <%= form.input :text, as: :trix %>
+  <%= form.input :images, as: :file, input_html: { multiple: true } %>
 
   <li class="input">
     <%= button_tag 'Remove', type: 'button', class: 'button button--raised button--red', data: { action: 'click->nested-list#removeRecord' } %>

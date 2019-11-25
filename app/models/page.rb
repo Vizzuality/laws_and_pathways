@@ -1,5 +1,5 @@
 class Page < ApplicationRecord
-  has_many :contents
+  has_many :contents, dependent: :destroy
 
   validates :slug, uniqueness: true, presence: true
   validates :title, presence: true

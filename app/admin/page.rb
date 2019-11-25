@@ -3,7 +3,7 @@ ActiveAdmin.register Page do
 
   menu priority: 6, parent: 'TPI'
 
-  permit_params :title, :slug, :description, contents_attributes: [:title, :text], content_ids: []
+  permit_params :title, :slug, :description, contents_attributes: [:title, :text, images: []], content_ids: []
 
   index do
     column :slug
@@ -32,6 +32,15 @@ ActiveAdmin.register Page do
             table_for resource.contents do
               column :title
               column :text
+              column :images do |content|
+                if content.images.attached?
+                  content.images.each do |image|
+                    image_tag image
+                  end
+                else
+                  'No images attached'
+                end
+              end
             end
           end
         end
