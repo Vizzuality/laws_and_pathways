@@ -5,7 +5,7 @@ class DynamicRouter
         # It will fail if the database does not exist
         ActiveRecord::Base.connection
       rescue
-        exit 1
+        exit 0
       else
         LawsAndPathways::Application.routes.draw do
           Page.all.each do |page|
