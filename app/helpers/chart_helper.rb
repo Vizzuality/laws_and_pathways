@@ -70,6 +70,10 @@ module ChartHelper
 
   def mq_company_no_of_assessments_chart_options
     {
+      chart: {
+        marginTop: 50
+      },
+      colors: ['#00C170'],
       legend: {
         enabled: false
       },
@@ -86,13 +90,20 @@ module ChartHelper
       xAxis: {
         type: 'datetime',
         dateTimeLabelFormats: {
+          month: '%Y',
           year: '%Y'
-        }
+        },
+        tickInterval: (Time.now - 1.year.ago).round * 1000
       },
       yAxis: {
         tickInterval: 1,
         title: {
-          text: 'Level'
+          text: 'Level',
+          textAlign: 'right',
+          align: 'high',
+          rotation: 0,
+          x: 20,
+          y: -20
         }
       }
     }
