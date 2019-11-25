@@ -3,6 +3,18 @@
   flex-flow: row wrap;
   justify-content: center;
   position: relative;
+
+  &--mq-sector-pie-chart {
+    .chart-title {
+      font-family: $font-family-regular;
+      font-size: 16px;
+
+      .companies-size {
+        font-size: 36px;
+        font-family: $font-family-bold;
+      }
+    }
+  }
 }
 
 .chart-title {
