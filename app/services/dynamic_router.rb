@@ -1,17 +1,15 @@
 class DynamicRouter
   class << self
     def load
-      begin
-        # It will fail if the database does not exist
-        ActiveRecord::Base.connection
-      rescue
-        exit 0
-      else
-        LawsAndPathways::Application.routes.draw do
-          Page.all.each do |page|
-            puts "Routing #{page.slug}"
-            get "/tpi/#{page.slug}", :to => "tpi/pages#show", defaults: { id: page.id }
-          end
+      # It will fail if the database does not exist
+      ActiveRecord::Base.connection
+    rescue StandardError
+      exit 0
+    else
+      LawsAndPathways::Application.routes.draw do
+        Page.all.each do |page|
+          puts "Routing #{page.slug}"
+          get "/tpi/#{page.slug}", to: 'tpi/pages#show', defaults: {id: page.id}
         end
       end
     end
@@ -21,4 +19,3 @@ class DynamicRouter
     end
   end
 end
-
