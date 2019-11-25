@@ -107,6 +107,15 @@ ActiveRecord::Schema.define(version: 2019_11_26_085901) do
     t.index ["slug"], name: "index_companies_on_slug", unique: true
   end
 
+  create_table "contents", force: :cascade do |t|
+    t.string "title"
+    t.text "text"
+    t.bigint "page_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["page_id"], name: "index_contents_on_page_id"
+  end
+
   create_table "cp_assessments", force: :cascade do |t|
     t.bigint "company_id"
     t.date "publication_date", null: false
@@ -153,6 +162,11 @@ ActiveRecord::Schema.define(version: 2019_11_26_085901) do
     t.datetime "discarded_at"
     t.index ["discarded_at"], name: "index_documents_on_discarded_at"
     t.index ["documentable_type", "documentable_id"], name: "index_documents_on_documentable_type_and_documentable_id"
+  end
+
+  create_table "dynamic_routers", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "events", force: :cascade do |t|
@@ -360,9 +374,12 @@ ActiveRecord::Schema.define(version: 2019_11_26_085901) do
     t.index ["discarded_at"], name: "index_mq_assessments_on_discarded_at"
   end
 
-  create_table "publications", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "pages", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "slug"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -429,6 +446,7 @@ ActiveRecord::Schema.define(version: 2019_11_26_085901) do
   add_foreign_key "companies", "geographies"
   add_foreign_key "companies", "geographies", column: "headquarters_geography_id"
   add_foreign_key "companies", "tpi_sectors", column: "sector_id"
+  add_foreign_key "contents", "pages"
   add_foreign_key "cp_assessments", "companies", on_delete: :cascade
   add_foreign_key "cp_benchmarks", "tpi_sectors", column: "sector_id", on_delete: :cascade
   add_foreign_key "data_uploads", "admin_users", column: "uploaded_by_id"

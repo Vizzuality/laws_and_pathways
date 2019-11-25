@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     end
 
     resources :publications, only: :index
+    DynamicRouter.load
   end
 
   namespace :cclow do
