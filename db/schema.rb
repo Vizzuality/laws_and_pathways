@@ -164,11 +164,6 @@ ActiveRecord::Schema.define(version: 2019_11_26_085901) do
     t.index ["documentable_type", "documentable_id"], name: "index_documents_on_documentable_type_and_documentable_id"
   end
 
-  create_table "dynamic_routers", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "events", force: :cascade do |t|
     t.string "eventable_type"
     t.bigint "eventable_id"

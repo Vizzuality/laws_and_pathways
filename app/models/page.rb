@@ -8,7 +8,7 @@ class Page < ApplicationRecord
     accepts_nested_attributes_for :contents
   end
 
-  after_save :reload_routes
+  after_commit :reload_routes
 
   def reload_routes
     DynamicRouter.reload
