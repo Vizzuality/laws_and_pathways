@@ -3,7 +3,7 @@ ActiveAdmin.register Page do
 
   menu priority: 6, parent: 'TPI'
 
-  permit_params :title, :slug, :description, :active_tab, contents_attributes: [:title, :text], content_ids: []
+  permit_params :title, :slug, :description, contents_attributes: [:title, :text], content_ids: []
 
   index do
     column :slug
