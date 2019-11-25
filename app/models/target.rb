@@ -24,6 +24,7 @@ class Target < ApplicationRecord
   include UserTrackable
   include VisibilityStatus
   include DiscardableModel
+  include PublicActivityTrackable
 
   TYPES = %w[
     base_year_target
