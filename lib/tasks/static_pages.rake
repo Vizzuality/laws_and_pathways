@@ -7,6 +7,7 @@ namespace :static_pages do
 
     pages.each do |page|
       next if Page.find_by(slug: page)
+
       puts "Creating page: #{page}"
       Page.create(
         slug: page,
@@ -17,6 +18,7 @@ namespace :static_pages do
 
     supporters_content.each do |content|
       next if Content.find_by(content_type: content)
+
       puts "Creating content: #{content} for Supporters page"
       Content.create(
         content_type: content,

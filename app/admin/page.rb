@@ -4,7 +4,8 @@ ActiveAdmin.register Page do
   menu priority: 6, parent: 'TPI'
 
   permit_params :title, :slug, :description,
-                contents_attributes: [:id, :title, :content_type, :text, :_destroy, images_attributes: [:id, :link, :logo, :_destroy]],
+                contents_attributes: [:id, :title, :content_type, :text, :_destroy,
+                                      images_attributes: [:id, :link, :logo, :_destroy]],
                 content_ids: []
 
   index do
