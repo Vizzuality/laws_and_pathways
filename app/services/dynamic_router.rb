@@ -1,7 +1,7 @@
 class DynamicRouter
   class << self
     def load
-      return unless ActiveRecord::Base.connected? && ActiveRecord::Base.connection.table_exists?(:pages)
+      return unless ActiveRecord::Base.connection.table_exists?(:pages)
 
       LawsAndPathways::Application.routes.draw do
         Page.all.each do |page|
