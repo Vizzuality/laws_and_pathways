@@ -1,5 +1,5 @@
 module TPI
-  class PagesController < ApplicationController
+  class PagesController < TPIController
     def show
       @page = Page.find(params[:id])
       redirect_to '' unless @page
