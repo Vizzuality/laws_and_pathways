@@ -3,7 +3,9 @@ ActiveAdmin.register Page do
 
   menu priority: 6, parent: 'TPI'
 
-  permit_params :title, :slug, :description, contents_attributes: [:id, :title, :text, images: []], content_ids: []
+  permit_params :title, :slug, :description,
+    contents_attributes: [:id, :title, :text, :_destroy, images_attributes: [:id, :link, :logo, :_destroy]],
+    content_ids: []
 
   index do
     column :slug
@@ -33,9 +35,12 @@ ActiveAdmin.register Page do
               column :title
               column :text
               column :images do |content|
-                if content.images.attached?
-                  content.images.each do |image|
-                    image_tag url_for(image)
+                if content.images.any?
+                  span do
+                    content.images.count
+                  end
+                  span do
+                    'images. Click "Edit" to browse through them.' 
                   end
                 else
                   'No images attached'

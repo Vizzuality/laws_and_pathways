@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_26_085901) do
+ActiveRecord::Schema.define(version: 2019_11_26_094227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -241,6 +241,12 @@ ActiveRecord::Schema.define(version: 2019_11_26_085901) do
     t.index ["legislation_id"], name: "index_governances_legislations_on_legislation_id"
   end
 
+  create_table "images", force: :cascade do |t|
+    t.string "link"
+    t.bigint "content_id", null: false
+    t.index ["content_id"], name: "index_images_on_content_id"
+  end
+
   create_table "instrument_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -449,6 +455,7 @@ ActiveRecord::Schema.define(version: 2019_11_26_085901) do
   add_foreign_key "geographies", "admin_users", column: "created_by_id"
   add_foreign_key "geographies", "admin_users", column: "updated_by_id"
   add_foreign_key "governances", "governance_types"
+  add_foreign_key "images", "contents"
   add_foreign_key "instruments", "instrument_types"
   add_foreign_key "laws_sectors", "laws_sectors", column: "parent_id"
   add_foreign_key "legislations", "admin_users", column: "created_by_id"

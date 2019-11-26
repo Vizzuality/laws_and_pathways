@@ -10,6 +10,7 @@
   <% end %>
 
   <div class="nested-list__actions" data-target="nested-list.links">
-    <%= button_tag "Add Content", type: 'button', class: 'button button--raised', data: { action: "click->nested-list#addRecord" } %>
+    <% contents_present = form.object.contents.any? %>
+    <%= button_tag contents_present ? "Add Another Content" : "Add Content", type: 'button', class: 'button button--raised', data: { action: "click->nested-list#addRecord" } %>
   </div>
 </div>
