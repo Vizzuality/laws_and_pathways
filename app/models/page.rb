@@ -9,7 +9,7 @@ class Page < ApplicationRecord
     accepts_nested_attributes_for :contents, allow_destroy: true
   end
 
-  after_commit :reload_routes, :only => [:create, :update, :destroy]
+  after_commit :reload_routes, only: [:create, :update, :destroy]
 
   def reload_routes
     DynamicRouter.reload
