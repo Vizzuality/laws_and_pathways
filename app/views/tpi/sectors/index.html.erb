@@ -2,7 +2,7 @@
   <div class="dropdown-selector-sector-page-wrapper">
     <%= react_component("DropdownSelector", { sectors: @sectors, companies: @companies, selectedOption: 'All sectors' }) %>
   </div>
-  
+
 
   <div class="sectors-header">
     <div class="container">
@@ -26,9 +26,10 @@
 
     <p>Distribution of companies in All sectors according to the management of their greenhouse gas emissions and of risks and opportunities to the low-carbon transition.</p>
 
-    <div class="chart">
+    <div class="chart chart--mq-sector-pie-chart">
       <%= pie_chart(
         levels_chart_data_tpi_sectors_path,
+        height: '400px',
         donut: true,
         library: mq_sector_pie_chart_options
         ) %>
@@ -46,12 +47,13 @@
 
     <p>CP alignment with the Paris agreement benchmarks by sector and cluster (number and % of companies). Please note that this information is not available for all sectors.</p>
 
-    <div class="chart">
+    <div class="chart chart--cp-all-sectors">
       <%= column_chart(
         benchmarks_chart_data_tpi_sectors_path,
         stacked: true,
-        width: '1200px',
-        library: default_chart_options
+        width: '100%',
+        height: '600px',
+        library: cp_all_sectors_chart_options
         ) %>
     </div>
   </section>

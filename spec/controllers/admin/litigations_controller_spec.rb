@@ -131,6 +131,35 @@ RSpec.describe Admin::LitigationsController, type: :controller do
     end
   end
 
+  describe 'PATCH update' do
+    let!(:litigation_to_update) { create(:litigation, :with_sides) }
+
+    context 'with valid params' do
+      let(:valid_update_params) { {title: 'title was updated'} }
+
+      subject { patch :update, params: {id: litigation_to_update.id, litigation: valid_update_params} }
+
+      it 'does not create another record' do
+        expect { subject }.not_to change(Litigation, :count)
+      end
+
+      it 'updates existing Litigation' do
+        expect { subject }.to change { litigation_to_update.reload.title }.to('title was updated')
+      end
+
+      it 'creates "edited" activity' do
+        expect { subject }.to change(PublicActivity::Activity, :count).by(1)
+
+        expect(PublicActivity::Activity.last.trackable_id).to eq(litigation_to_update.id)
+        expect(PublicActivity::Activity.last.key).to eq('litigation.edited')
+      end
+
+      it 'redirects to the updated Litigation' do
+        expect(subject).to redirect_to(admin_litigation_path(litigation_to_update))
+      end
+    end
+  end
+
   describe 'DELETE destroy' do
     let!(:litigation) { create(:litigation, discarded_at: nil) }
     subject { delete :destroy, params: {id: litigation.id} }

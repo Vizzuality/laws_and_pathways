@@ -9,7 +9,7 @@ module Command
       def call
         @collection
           .where(id: [*@ids])
-          .update_all(visibility_status: 'archived')
+          .update(visibility_status: 'archived')
       end
     end
   end

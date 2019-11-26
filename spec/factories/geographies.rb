@@ -21,7 +21,7 @@
 
 FactoryBot.define do
   factory :geography do
-    sequence(:name) { |n| 'name-' + ('AA'..'ZZ').to_a[n] }
+    sequence(:name) { |n| "name-#{('AA'..'ZZ').to_a[n]}" }
     sequence(:iso) { |n| ('AAA'..'ZZZ').to_a[n] }
 
     geography_type { 'national' }
