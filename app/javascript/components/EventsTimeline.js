@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import Select, {components} from 'react-select';
 import PropTypes from "prop-types";
 import Testimonials from "./Testimonials";
@@ -58,29 +58,29 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
 
   return (
     <div className="timeline-events-container">
-      <div className={isFiltered ? 'title-block' : ''}>
-        <h5>Timeline of events</h5>
-        {
-          isFiltered &&
-          <div className="filter-block">
-            <span>Show events:</span>
-            <Select
-              components={{ Option }}
-              styles={customStyles}
-              options={options}
-              isMulti
-              placeholder='All events'
-              closeMenuOnSelect={false}
-              hideSelectedOptions={false}
-              onChange={(e) => setCurrentTypes(e)} />
-          </div>
-        }
-      </div>
+      { !isFiltered && <h5>Timeline of events</h5> }
       {
         isFiltered &&
+        <Fragment>
+          <div className='title-block'>
+            <h5>Timeline of events</h5>
+            <div className="filter-block">
+              <span>Show events:</span>
+              <Select
+                components={{ Option }}
+                styles={customStyles}
+                options={options}
+                isMulti
+                placeholder='All events'
+                closeMenuOnSelect={false}
+                hideSelectedOptions={false}
+                onChange={(e) => setCurrentTypes(e)} />
+            </div>
+          </div>
           <div className="topic-details">
             Use the dropdown menu to select the different events you wish to see displayed on the country timeline.
           </div>
+        </Fragment>
       }
       <div className="timeline-events">
         <div className="arrow-left" onClick={() => {el.current.scrollBy(-40, 0)}}>
