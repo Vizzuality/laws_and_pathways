@@ -57,12 +57,12 @@
             </div>
             <div class="column">
               <%= render 'company_property', name: 'SEDOL', tooltip: t('.tooltips.SEDOL') do %>
-                Don't have that
+                <%= @company.sedol %>
               <% end %>
             </div>
             <div class="column">
               <%= render 'company_property', name: 'CA100+ engagement', tooltip: t('.tooltips.CA100') do %>
-                <%= @company.ca100? ? 'Yes' : 'No' %>
+                <%= humanize_boolean(@company.ca100?) %>
               <% end %>
             </div>
           </div>

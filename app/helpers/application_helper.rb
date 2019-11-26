@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def humanize_boolean(value)
+    value ? 'Yes' : 'No'
+  end
+
   def render_breadcrumb
     return unless defined?(@breadcrumb)
 

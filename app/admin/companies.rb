@@ -16,6 +16,7 @@ ActiveAdmin.register Company do
   filter :isin_contains, label: 'ISIN'
   filter :name_contains, label: 'Name'
   filter :geography
+  filter :sector
   filter :headquarters_geography
   filter :market_cap_group,
          as: :check_boxes,
@@ -121,6 +122,7 @@ ActiveAdmin.register Company do
 
   index do
     column(:name) { |company| link_to company.name, admin_company_path(company) }
+    column :sector
     column :isin, &:isin_as_tags
     column(:market_cap_group) { |company| company.market_cap_group.humanize }
     column :level, &:mq_level_tag
@@ -187,6 +189,7 @@ ActiveAdmin.register Company do
     def scoped_collection
       super.includes(
         :geography,
+        :sector,
         :headquarters_geography,
         :latest_mq_assessment,
         *csv_includes
