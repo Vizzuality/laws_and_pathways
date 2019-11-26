@@ -84,6 +84,47 @@
     font-size: $size-7;
     margin: 0.875rem 0;
   }
+
+}
+
+.timeline-events-container {
+  .title-block {
+    margin-bottom: 1.5rem;
+
+    & >* {
+      display: inline-block;
+    }
+  }
+
+  .filter-block {
+    float: right;
+    font-size: $size-7;
+
+    & >span {
+      color: $grey-text;
+      margin-right: 10px;
+    }
+  }
+}
+
+.select-checkbox {
+  color: $white;
+  display: inline-block;
+  height: 24px;
+  margin-right: 10px;
+  vertical-align: bottom;
+  width: 24px;
+
+  &.checked {
+    background-color: $blue-dark;
+    color: $white;
+    text-align: center;
+    padding-top: 2px;
+  }
+
+  &.unchecked {
+    border: solid 2px $blue-dark;
+  }
 }
 
 .timeline-events {
@@ -96,7 +137,7 @@
     position: absolute;
     z-index: 1;
     border-radius: 50%;
-    top: 44px;
+    top: 50px;
     cursor: pointer;
     display: flex;
     align-items: center;
