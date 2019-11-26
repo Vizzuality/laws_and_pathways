@@ -4,7 +4,7 @@ ActiveAdmin.register Page do
   menu priority: 6, parent: 'TPI'
 
   permit_params :title, :slug, :description,
-                contents_attributes: [:id, :title, :text, :_destroy, images_attributes: [:id, :link, :logo, :_destroy]],
+                contents_attributes: [:id, :title, :content_type, :text, :_destroy, images_attributes: [:id, :link, :logo, :_destroy]],
                 content_ids: []
 
   index do
@@ -33,6 +33,7 @@ ActiveAdmin.register Page do
           else
             table_for resource.contents do
               column :title
+              column :content_type
               column :text
               column :images do |content|
                 if content.images.any?
