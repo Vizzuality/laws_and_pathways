@@ -23,18 +23,16 @@ const customStyles = {
   }),
   control: (provided, state) => ({
     ...provided,
-    borderRadius: '0',
+    borderRadius: 0,
     borderColor: state.isFocused ? blueDarkColor : blueDarkColor,
     minWidth: 200,
   }),
   menu: (provided) => ({
     ...provided,
-    borderRadius: '0',
-    borderWidth: '4px',
-    marginTop: '0',
+    borderRadius: 0,
+    marginTop: 0,
     width: 250,
-    right: '0',
-    marginRight: '0',
+    right: 0,
     zIndex: 9,
   }),
 }

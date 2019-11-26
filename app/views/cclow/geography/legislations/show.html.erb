@@ -17,7 +17,7 @@
   </section>
   <% if @legislation.events.present? %>
     <section class="section is-medium">
-      <%= react_component("EventsTimeline", { events: @geography.events }) %>
+      <%= react_component("EventsTimeline", { events: legislation.events }) %>
     </section>
   <% end %>
   <hr>
