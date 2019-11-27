@@ -23,6 +23,9 @@ function WorldMap(props) {
   const zoomOut = () => dispatch({ type: "zoomOut" });
   const setActiveLayerId = e =>
     dispatch({ type: "setActiveLayerId", payload: e.target.value });
+  const onZoomEnd = (e, position) =>
+    dispatch({ type: "zoomEnd", payload: position });
+
   return (
     <div className="world-map__container">
       <div className="world-map__controls">
@@ -35,7 +38,9 @@ function WorldMap(props) {
       </div>
       <select onChange={setActiveLayerId} defaultValue={state.activeLayerId}>
         {layers.map(layer => (
-          <option value={layer.id}>{layer.name}</option>
+          <option key={layer.id} value={layer.id}>
+            {layer.name}
+          </option>
         ))}
       </select>
       <ComposableMap
@@ -44,7 +49,7 @@ function WorldMap(props) {
       >
         <ZoomableGroup
           zoom={state.zoom}
-          disablePanning
+          onZoomEnd={onZoomEnd}
           className="world-map__zoomable-group"
         >
           <Geographies geography={geoUrl} className="world-map__geographies">
