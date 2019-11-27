@@ -1,18 +1,30 @@
 namespace :static_pages do
   desc 'Scaffold static pages'
   task generate: :environment do
-    pages = %w(methodology supporters)
+    pages = [
+      ['overview', 'Overview of the TPI'],
+      ['methodology', 'Methodology'],
+      ['strategic-relationships', 'Strategic Relationships'],
+      ['technical-advisory-group', 'Technical Advisory Group'],
+      ['supporters', 'Supporters'],
+      ['investors', 'How Investors can use TPI'],
+      ['endorsements', 'Endorsements'],
+      ['team', 'Team'],
+      ['faq', 'FAQ'],
+      ['methodology', 'Methodology'],
+      ['data-background', 'Data Background']
+    ]
 
     supporters_content = %w(partners supporters)
 
-    pages.each do |page|
-      next if Page.find_by(slug: page)
+    pages.each do |slug, title|
+      next if Page.find_by(slug: slug)
 
-      puts "Creating page: #{page}"
+      puts "Creating page: #{slug}"
       Page.create(
-        slug: page,
-        title: page.capitalize,
-        description: 'Lorem ipsum - Page subtitle'
+        slug: slug,
+        title: title,
+        description: "#{title} Description goes here"
       )
     end
 
