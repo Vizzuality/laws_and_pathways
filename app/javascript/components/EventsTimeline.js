@@ -2,7 +2,7 @@ import React, { useState, Fragment } from "react";
 import Select, {components} from 'react-select';
 import PropTypes from "prop-types";
 import Testimonials from "./Testimonials";
-import moment from 'moment';
+import { format } from 'date-fns'
 
 Testimonials.propTypes = {
   events: PropTypes.array,
@@ -35,7 +35,7 @@ const customStyles = {
     right: 0,
     zIndex: 9,
   }),
-}
+};
 
 const Option = props => (
   <div>
@@ -48,13 +48,22 @@ const Option = props => (
   </div>
 );
 
+const ValueContainer = ({children, ...props}) => {
+  const controls = React.Children.toArray(children).filter(item => ['Input', 'Placeholder'].includes(item.type.name))
+  return <components.ValueContainer { ...props }>
+    {(props.selectProps.value || []).length !== 0 && <span>{props.selectProps.value.length} selected</span>}
+    {controls}
+  </components.ValueContainer>
+}
+
 const EventsTimeline = ({ events, options, isFiltered = false }) => {
   const [currentTypes, setCurrentTypes] = useState(false);
-  const el = React.createRef();
-    if (isFiltered && (currentTypes || []).length !== 0) {
-      const types = currentTypes.map(e => e.value);
-      events = events.filter(e => types.includes(e.event_type));
-    }
+  const eventsContainerEl = React.createRef();
+  let currentEvents = events.concat();
+  if (isFiltered && (currentTypes || []).length !== 0) {
+    const types = currentTypes.map(e => e.value);
+    currentEvents = currentEvents.filter(e => types.includes(e.event_type));
+  }
 
   return (
     <div className="timeline-events-container">
@@ -67,7 +76,7 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
             <div className="filter-block">
               <span>Show events:</span>
               <Select
-                components={{ Option }}
+                components={{ Option, ValueContainer }}
                 styles={customStyles}
                 options={options}
                 isMulti
@@ -83,21 +92,21 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
         </Fragment>
       }
       <div className="timeline-events">
-        <div className="arrow-left" onClick={() => {el.current.scrollBy(-40, 0)}}>
+        <div className="arrow-left" onClick={() => {eventsContainerEl.current.scrollBy({left: -100, behavior: 'smooth'})}}>
           <i className="fa fa-arrow-left"></i>
         </div>
-        <div ref={ el } className="events-container">
+        <div ref={ eventsContainerEl } className="events-container">
           <div className="timeline">
-            {events.map((event, i) => (
+            {currentEvents.map((event, i) => (
               <div key={i} className="time-point">
                 <div className="event-title">{ event.title }</div>
                 <div className="point"></div>
-                <div className="date">{ moment(event.date).format('MMMM Y') }</div>
+                <div className="date">{ format(new Date(event.date), 'MMMM Y') }</div>
               </div>
             ))}
           </div>
         </div>
-        <div className="arrow-right" onClick={() => el.current.scrollBy(40, 0)}>
+        <div className="arrow-right" onClick={() => eventsContainerEl.current.scrollBy({left: 100, behavior: 'smooth'})}>
           <i className="fa fa-arrow-right"></i>
         </div>
       </div>

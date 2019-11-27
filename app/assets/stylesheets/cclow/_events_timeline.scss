@@ -5,7 +5,7 @@ $arrow-btn-width: 48px;
 .events-container {
   display: flex;
   position: relative;
-  overflow-y: hidden;
+  overflow: hidden;
   margin-left: $arrow-btn-width;
   width: calc(100% - #{$arrow-btn-width * 2});
 
