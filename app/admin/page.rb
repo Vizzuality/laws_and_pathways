@@ -1,6 +1,8 @@
 ActiveAdmin.register Page do
   config.batch_actions = false
 
+  decorate_with PageDecorator
+
   menu priority: 6, parent: 'TPI'
 
   permit_params :title, :slug, :description,
@@ -8,10 +10,12 @@ ActiveAdmin.register Page do
                                       images_attributes: [:id, :link, :logo, :_destroy]],
                 content_ids: []
 
+  filter :title
+  filter :slug
+
   index do
     column :slug
     column :title
-    column :description
     actions
   end
 

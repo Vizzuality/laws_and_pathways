@@ -1,1 +1,5 @@
-<div>Hello: <%= @page.slug %></div>
+<% content_for(:page_title, @page.title) %>
+
+<div class="page container">
+  <%= @page.description.html_safe %>
+</div>
