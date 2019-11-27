@@ -10,6 +10,7 @@ Testimonials.propTypes = {
 };
 
 const blueDarkColor = '#2E3152';
+const eventSliderMoveBy = 300;
 
 const customStyles = {
   option: (provided, state) => ({
@@ -107,7 +108,7 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
       <div className="timeline-events">
         {
           isShowLeftBtn &&
-            <div className="arrow-left" onClick={() => eventsContainerEl.current.scrollBy({left: -100, behavior: 'smooth'})}>
+            <div className="arrow-left" onClick={() => eventsContainerEl.current.scrollBy({left: -eventSliderMoveBy, behavior: 'smooth'})}>
               <i className="fa fa-arrow-left"></i>
             </div>
         }
@@ -124,7 +125,7 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
         </div>
         {
           isShowRightBtn &&
-            <div className="arrow-right" onClick={() => eventsContainerEl.current.scrollBy({left: 100, behavior: 'smooth'})}>
+            <div className="arrow-right" onClick={() => eventsContainerEl.current.scrollBy({left: eventSliderMoveBy, behavior: 'smooth'})}>
               <i className="fa fa-arrow-right"></i>
             </div>
         }
