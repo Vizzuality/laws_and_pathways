@@ -1,10 +1,13 @@
 @import 'variables';
 
+$arrow-btn-width: 48px;
+
 .events-container {
   display: flex;
   position: relative;
-  overflow-y: hidden;
-  width: 100%;
+  overflow: hidden;
+  margin-left: $arrow-btn-width;
+  width: calc(100% - #{$arrow-btn-width * 2});
 
   .timeline {
     display: flex;
@@ -84,19 +87,60 @@
     font-size: $size-7;
     margin: 0.875rem 0;
   }
+
+}
+
+.timeline-events-container {
+  .title-block {
+    margin-bottom: 1.5rem;
+
+    & >* {
+      display: inline-block;
+    }
+  }
+
+  .filter-block {
+    float: right;
+    font-size: $size-7;
+
+    & >span {
+      color: $grey-text;
+      margin-right: 10px;
+    }
+  }
+}
+
+.select-checkbox {
+  color: $white;
+  display: inline-block;
+  height: 24px;
+  margin-right: 10px;
+  vertical-align: bottom;
+  width: 24px;
+
+  &.checked {
+    background-color: $blue-dark;
+    color: $white;
+    text-align: center;
+    padding-top: 2px;
+  }
+
+  &.unchecked {
+    border: solid 2px $blue-dark;
+  }
 }
 
 .timeline-events {
   position: relative;
 
   .arrow-left, .arrow-right {
-    height: 48px;
-    width: 48px;
+    height: $arrow-btn-width;
+    width: $arrow-btn-width;
     background-color: $grey-light;
     position: absolute;
     z-index: 1;
     border-radius: 50%;
-    top: 44px;
+    top: 50px;
     cursor: pointer;
     display: flex;
     align-items: center;

@@ -64,6 +64,11 @@ en:
         '3': Integrating into operatinal decision making
         '4': Strategic assessment
   cclow:
+    geography:
+      event_types:
+        election: Election
+        government_change: Government Change
+        international_agreement: International Agreement
     legislation_types:
       executive: Executive
       legislative: Legislative

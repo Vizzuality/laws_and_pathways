@@ -12,8 +12,7 @@
   </section>
   <% if @litigation.events.present? %>
     <section class="section is-medium">
-      <h5>Timeline of events</h5>
-      <%= render 'events_timeline', events: @litigation.events %>
+      <%= react_component("EventsTimeline", { events: @litigation.events }) %>
     </section>
   <% end %>
   <hr>

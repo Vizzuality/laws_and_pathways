@@ -31,11 +31,8 @@
   </section>
   <% if @geography.events.present? %>
     <section class="section is-large">
-      <h5>Timeline of events</h5>
-      <div class="topic-details">
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.
-      </div>
-      <%= render 'events_timeline', events: @geography.events %>
+      <% event_options = Geography::EVENT_TYPES.map{|type| {value: type, label: I18n.t("cclow.geography.event_types.#{type}")}} %>
+      <%= react_component("EventsTimeline", { events: @geography.events, options: event_options, isFiltered: true }) %>
     </section>
   <% end %>
   <hr>
