@@ -26,16 +26,22 @@
 
     <p>Distribution of companies in All sectors according to the management of their greenhouse gas emissions and of risks and opportunities to the low-carbon transition.</p>
 
-    <div class="chart chart--mq-sector-pie-chart">
-      <%= pie_chart(
-        levels_chart_data_tpi_sectors_path,
-        height: '400px',
-        donut: true,
-        library: mq_sector_pie_chart_options
-        ) %>
-      <div class="chart-title">
-        <p class="companies-size"><%= @companies.size %></p>
-        companies
+    <div class="container">
+      <div class="columns">
+        <div class="column is-6 is-offset-3">
+          <div class="chart chart--mq-sector-pie-chart">
+            <%= pie_chart(
+              levels_chart_data_tpi_sectors_path,
+              height: '400px',
+              donut: true,
+              library: mq_sector_pie_chart_options
+            ) %>
+            <div class="chart-title">
+              <p class="companies-size"><%= @companies.size %></p>
+              companies
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -54,7 +60,7 @@
         width: '100%',
         height: '600px',
         library: cp_all_sectors_chart_options
-        ) %>
+      ) %>
     </div>
   </section>
 </div>
