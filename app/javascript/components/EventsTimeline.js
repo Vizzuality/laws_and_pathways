@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import Select, {components} from 'react-select';
 import PropTypes from "prop-types";
 import Testimonials from "./Testimonials";
@@ -54,16 +54,29 @@ const ValueContainer = ({children, ...props}) => {
     {(props.selectProps.value || []).length !== 0 && <span>{props.selectProps.value.length} selected</span>}
     {controls}
   </components.ValueContainer>
-}
+};
 
 const EventsTimeline = ({ events, options, isFiltered = false }) => {
   const [currentTypes, setCurrentTypes] = useState(false);
+  const [isShowRightBtn, setIsShowRightBtn] = useState(true);
+  const [isShowLeftBtn, setIsShowLeftBtn] = useState(true);
   const eventsContainerEl = React.createRef();
+  useEffect(() => checkButtons());
+
   let currentEvents = events.concat();
   if (isFiltered && (currentTypes || []).length !== 0) {
     const types = currentTypes.map(e => e.value);
     currentEvents = currentEvents.filter(e => types.includes(e.event_type));
   }
+
+  const checkButtons = () => {
+    const {scrollLeft, scrollWidth, offsetWidth} = eventsContainerEl.current;
+    if (isShowLeftBtn && scrollLeft === 0) setIsShowLeftBtn(false);
+    if (!isShowLeftBtn && scrollLeft !== 0) setIsShowLeftBtn(true);
+
+    if (isShowRightBtn && scrollWidth - scrollLeft - offsetWidth === 0) setIsShowRightBtn(false);
+    if (!isShowRightBtn && scrollWidth - scrollLeft - offsetWidth !== 0) setIsShowRightBtn(true);
+  };
 
   return (
     <div className="timeline-events-container">
@@ -92,10 +105,13 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
         </Fragment>
       }
       <div className="timeline-events">
-        <div className="arrow-left" onClick={() => {eventsContainerEl.current.scrollBy({left: -100, behavior: 'smooth'})}}>
-          <i className="fa fa-arrow-left"></i>
-        </div>
-        <div ref={ eventsContainerEl } className="events-container">
+        {
+          isShowLeftBtn &&
+            <div className="arrow-left" onClick={() => eventsContainerEl.current.scrollBy({left: -100, behavior: 'smooth'})}>
+              <i className="fa fa-arrow-left"></i>
+            </div>
+        }
+        <div ref={ eventsContainerEl } onScroll={checkButtons} className="events-container">
           <div className="timeline">
             {currentEvents.map((event, i) => (
               <div key={i} className="time-point">
@@ -106,9 +122,12 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
             ))}
           </div>
         </div>
-        <div className="arrow-right" onClick={() => eventsContainerEl.current.scrollBy({left: 100, behavior: 'smooth'})}>
-          <i className="fa fa-arrow-right"></i>
-        </div>
+        {
+          isShowRightBtn &&
+            <div className="arrow-right" onClick={() => eventsContainerEl.current.scrollBy({left: 100, behavior: 'smooth'})}>
+              <i className="fa fa-arrow-right"></i>
+            </div>
+        }
       </div>
     </div>
   )
