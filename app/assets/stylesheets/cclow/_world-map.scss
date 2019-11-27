@@ -1,0 +1,46 @@
+.world-map {
+  &__container {
+    position: relative;
+    width: 100%;
+    height: 642px;
+    margin: 0 auto;
+    overflow: hidden;
+    background-color: $grey-light;
+  }
+
+  &__geography {
+    fill: $white;
+    stroke: #C0C1CB;
+    stroke-width: 0.5;
+  }
+
+  &__map-bubble {
+    cursor: pointer;
+    mix-blend-mode: multiply;
+  }
+
+  &__controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    height: 80px;
+    width: 40px;
+  }
+
+  &__controls-zoom-in,
+  &__controls-zoom-out {
+    cursor: pointer;
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background-color: $white;
+
+    &:active {
+      background-color: darken($white, 7%);
+    }
+  }
+
+  &__controls-zoom-in {
+    border-bottom: 1px solid $grey;
+  }
+}
