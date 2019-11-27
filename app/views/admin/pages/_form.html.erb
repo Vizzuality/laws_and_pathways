@@ -1,0 +1,34 @@
+<%= semantic_form_for [:admin, resource], builder: ActiveAdmin::FormBuilder, html: {'data-controller' => 'check-modified'} do |f| %>
+  <%= f.semantic_errors(*f.object.errors.keys) %>
+
+  <div class="tabs" data-controller="tabs">
+    <ul class="nav nav-tabs" role="tablist">
+      <li><a href="#details">Page Details</a></li>
+      <li><a href="#content">Content</a></li>
+    </ul>
+
+    <%= hidden_field_tag :active_tab, params[:active_tab], 'data-target' => 'tabs.activeTab' %>
+
+    <div class="tab-content">
+
+      <div id="details">
+        <%= f.inputs do %>
+          <%= f.input :slug %>
+          <%= f.input :title %>
+          <%= f.input :description, as: :trix %>
+        <% end %>
+      </div>
+
+      <div id="content">
+        <%= f.inputs 'Content' do %>
+          <%= render 'content', form: f %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <%= f.actions do %>
+    <%= f.action :submit %>
+    <%= f.action :cancel, :wrapper_html => { :class => 'cancel' } %>
+  <% end %>
+<% end %>

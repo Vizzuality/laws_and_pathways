@@ -15,7 +15,7 @@ Rails.application.routes.draw do
         get :emissions_chart_data
       end
     end
-    
+
     resources :companies, only: [:show] do
       member do
         get :emissions_chart_data
@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     end
 
     resources :publications, only: :index
+    DynamicRouter.load
   end
 
   namespace :cclow do

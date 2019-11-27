@@ -1,0 +1,15 @@
+<% is_new_record = form.object.new_record? %>
+
+<%= content_tag :div, class: 'nested-fields', data: { controller: 'content', new_record: is_new_record } do %>
+  <%= form.input :title %>
+  <%= form.input :content_type %>
+  <%= form.input :text, as: :trix %>
+  <%= form.inputs 'Images' do %>
+    <%= render 'image', form: form %>
+  <% end %>
+
+  <li class="input">
+    <%= button_tag 'Remove content', type: 'button', class: 'button button--raised button--red', data: { action: 'click->nested-list#removeRecord' } %>
+  </li>
+  <%= form.hidden_field :_destroy %>
+<% end %>

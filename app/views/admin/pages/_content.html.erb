@@ -1,0 +1,16 @@
+<div data-controller="nested-list">
+  <template>
+    <%= form.semantic_fields_for :contents, Content.new, child_index: 'NEW_RECORD' do |content| %>
+      <%= render "content_fields", form: content %>
+    <% end %>
+  </template>
+
+  <%= form.semantic_fields_for :contents do |content| %>
+    <%= render "content_fields", form: content %>
+  <% end %>
+
+  <div class="nested-list__actions" data-target="nested-list.links">
+    <% contents_present = form.object.contents.any? %>
+    <%= button_tag contents_present ? "Add Another Content" : "Add Content", type: 'button', class: 'button button--raised', data: { action: "click->nested-list#addRecord" } %>
+  </div>
+</div>

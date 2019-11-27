@@ -1,0 +1,15 @@
+<div data-controller="nested-list">
+  <template>
+    <%= form.semantic_fields_for :images, Image.new, child_index: 'NEW_RECORD' do |image| %>
+      <%= render "image_fields", form: image %>
+    <% end %>
+  </template>
+
+  <%= form.semantic_fields_for :images do |image| %>
+    <%= render "image_fields", form: image %>
+  <% end %>
+
+  <div class="nested-list__actions" data-target="nested-list.links">
+    <%= button_tag "Add Image", type: 'button', class: 'button button--raised', data: { action: "click->nested-list#addRecord" } %>
+  </div>
+</div>

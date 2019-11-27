@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_26_085901) do
+ActiveRecord::Schema.define(version: 2019_11_26_123014) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,6 +105,16 @@ ActiveRecord::Schema.define(version: 2019_11_26_085901) do
     t.index ["market_cap_group"], name: "index_companies_on_market_cap_group"
     t.index ["sector_id"], name: "index_companies_on_sector_id"
     t.index ["slug"], name: "index_companies_on_slug", unique: true
+  end
+
+  create_table "contents", force: :cascade do |t|
+    t.string "title"
+    t.text "text"
+    t.bigint "page_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "content_type"
+    t.index ["page_id"], name: "index_contents_on_page_id"
   end
 
   create_table "cp_assessments", force: :cascade do |t|
@@ -230,6 +240,12 @@ ActiveRecord::Schema.define(version: 2019_11_26_085901) do
     t.bigint "governance_id", null: false
     t.index ["governance_id"], name: "index_governances_legislations_on_governance_id"
     t.index ["legislation_id"], name: "index_governances_legislations_on_legislation_id"
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.string "link"
+    t.bigint "content_id", null: false
+    t.index ["content_id"], name: "index_images_on_content_id"
   end
 
   create_table "instrument_types", force: :cascade do |t|
@@ -360,9 +376,12 @@ ActiveRecord::Schema.define(version: 2019_11_26_085901) do
     t.index ["discarded_at"], name: "index_mq_assessments_on_discarded_at"
   end
 
-  create_table "publications", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "pages", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "slug"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -429,6 +448,7 @@ ActiveRecord::Schema.define(version: 2019_11_26_085901) do
   add_foreign_key "companies", "geographies"
   add_foreign_key "companies", "geographies", column: "headquarters_geography_id"
   add_foreign_key "companies", "tpi_sectors", column: "sector_id"
+  add_foreign_key "contents", "pages"
   add_foreign_key "cp_assessments", "companies", on_delete: :cascade
   add_foreign_key "cp_benchmarks", "tpi_sectors", column: "sector_id", on_delete: :cascade
   add_foreign_key "data_uploads", "admin_users", column: "uploaded_by_id"
@@ -436,6 +456,7 @@ ActiveRecord::Schema.define(version: 2019_11_26_085901) do
   add_foreign_key "geographies", "admin_users", column: "created_by_id"
   add_foreign_key "geographies", "admin_users", column: "updated_by_id"
   add_foreign_key "governances", "governance_types"
+  add_foreign_key "images", "contents"
   add_foreign_key "instruments", "instrument_types"
   add_foreign_key "laws_sectors", "laws_sectors", column: "parent_id"
   add_foreign_key "legislations", "admin_users", column: "created_by_id"
