@@ -2,7 +2,7 @@ class DynamicRouter
   class << self
     def load
       unless ActiveRecord::Base.connection.table_exists?(:pages) ||
-          (!Rails.env.development && ActiveRecord::Base.connected?)
+          (!Rails.env.development? && ActiveRecord::Base.connected?)
         return
       end
 
