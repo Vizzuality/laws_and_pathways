@@ -3,15 +3,14 @@ namespace :static_pages do
   task generate: :environment do
     pages = [
       ['overview', 'Overview of the TPI'],
-      ['methodology', 'Methodology'],
       ['strategic-relationships', 'Strategic Relationships'],
       ['technical-advisory-group', 'Technical Advisory Group'],
-      ['supporters', 'Supporters'],
+      %w[supporters Supporters],
       ['investors', 'How Investors can use TPI'],
-      ['endorsements', 'Endorsements'],
-      ['team', 'Team'],
-      ['faq', 'FAQ'],
-      ['methodology', 'Methodology'],
+      %w[endorsements Endorsements],
+      %w[team Team],
+      %w[faq FAQ],
+      %w[methodology Methodology],
       ['data-background', 'Data Background']
     ]
 
