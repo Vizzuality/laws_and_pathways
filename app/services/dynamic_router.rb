@@ -7,7 +7,7 @@ class DynamicRouter
         end
       end
     rescue PG::ConnectionBad, ActiveRecord::NoDatabaseError
-      puts $!
+      puts $ERROR_INFO
       puts 'No database or connection failed. Skipping DynamicRoutes load'
     end
 
