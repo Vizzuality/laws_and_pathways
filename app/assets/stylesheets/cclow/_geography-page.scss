@@ -304,6 +304,38 @@
       }
     }
   }
+
+  .sidebar {
+    margin-top: 1.5rem;
+
+    li {
+      &:not(:last-child) {
+        margin-bottom: 1rem;
+      }
+    }
+
+    a {
+      font-size: $size-7;
+      color: $grey-text;
+      position: relative;
+
+      &.active {
+        color: $blue-dark;
+        font-family: $family-sans-serif-bold;
+
+        &::after {
+          content: '';
+          position: absolute;
+          width: 24px;
+          height: 24px;
+          right: -34px;
+          background-image: image-url('icons/arrow-right.svg');
+          background-repeat: no-repeat;
+        }
+      }
+
+    }
+  }
 }
 
 .search-wrapper {
