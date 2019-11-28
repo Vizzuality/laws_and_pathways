@@ -56,7 +56,7 @@ module ChartHelper
           }
         },
         column: {
-          grouping: true
+          stacking: 'percent'
         }
       },
       yAxis: {
