@@ -65,8 +65,6 @@ $navigator-series-border: $highlight-color-80 !default;
 $scrollbar-track-background: $neutral-color-5 !default;
 $scrollbar-track-border: $neutral-color-5 !default;
 
-@import "highcharts/css/highcharts";
-
 $tpi-pie-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB;
 
 .chart {
@@ -74,6 +72,10 @@ $tpi-pie-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB;
   flex-flow: row wrap;
   justify-content: center;
   position: relative;
+
+  &--styled {
+    @import "highcharts/css/highcharts";
+  }
 
   &--mq-sector-pie-chart {
     @for $i from 1 through length($tpi-pie-chart-colors) {
