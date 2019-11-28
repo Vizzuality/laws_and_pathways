@@ -10,12 +10,14 @@ $search-field-height: 3.75rem;
   height: $navbar-height + $search-field-height / 2;
 
   .navbar {
-     &> .container {
+    &> .container {
       .navbar-menu {
         margin-right: 0;
       }
 
       .navbar-brand {
+        align-items: flex-start;
+        padding: 2.3rem 0 0 ;
         margin-left: 0;
       }
     }

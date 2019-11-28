@@ -187,7 +187,7 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
   }, []);
 
   return (
-    <div ref={dropdownContainer} className="laws-dropdown__container">
+    <div ref={dropdownContainer} className="laws-dropdown__container container">
       <div className="laws-dropdown__input-container">
         <input 
           id="search-input"

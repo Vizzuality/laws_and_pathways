@@ -3,8 +3,9 @@
     <div class="navbar">
       <div class="container">
         <div class="brand">
-          <span>icon-1</span>
-          <span>icon-2</span>
+          <%= link_to cclow_root_path do %>
+            <img src="<%= asset_path 'logo/CCLOW_logo.svg'%>" />
+          <% end %>
         </div>
         <div class="navbar-menu">
           <div class="navbar-end">
