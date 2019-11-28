@@ -2,7 +2,7 @@ namespace :static_pages do
   desc 'Scaffold static pages'
   task generate: :environment do
     MENU_HEADERS = OpenStruct.new(Hash[Page::MENU_HEADERS.map { |el| [el, el] }])
-    
+
     pages = [
       ['overview', 'Overview of the TPI', MENU_HEADERS.about],
       ['strategic-relationships', 'Strategic Relationships', MENU_HEADERS.about],
