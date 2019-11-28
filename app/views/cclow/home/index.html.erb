@@ -1,17 +1,28 @@
 <section class="section is-medium">
-  <h5 class="title">
-    Latest additions
-  </h5>
-  <%= render 'cclow/home/latest_additions' %>
+    <h5 class="title">
+        Latest additions
+    </h5>
+    <%= render 'cclow/home/latest_additions' %>
+</section>
+<section class="section is-medium">
+    <h5 class="title">
+        Visualise data on the map
+    </h5>
+    <p>
+        The Climate Change Laws of the World map helps you visualise our data by showing climate laws, policies and
+        litigation cases (content – left dropdown) in relation to key contextual indicators (context – right dropdown).
+        Select two options from the dropdown menus below to get started.
+    </p>
+    <%= react_component("world-map/WorldMap") %>
 </section>
 <section>
-  <h1>Climate Change Laws of the World</h1>
+    <h1>Climate Change Laws of the World</h1>
 
-  <p>
-    Our database covers country profiles, climate change legislation and
-    policies globally and climate litigation cases from 25 countries.
-  </p>
+    <p>
+        Our database covers country profiles, climate change legislation and
+        policies globally and climate litigation cases from 25 countries.
+    </p>
 
-  <%= link_to 'All Legislation and policies', cclow_legislation_and_policies_path %><br/>
-  <%= link_to 'All Litigation cases', cclow_litigation_cases_path %>
+    <%= link_to 'All Legislation and policies', cclow_legislation_and_policies_path %><br/>
+    <%= link_to 'All Litigation cases', cclow_litigation_cases_path %>
 </section>
