@@ -384,6 +384,11 @@ ActiveRecord::Schema.define(version: 2019_11_26_123014) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "publications", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "taggings", force: :cascade do |t|
     t.bigint "tag_id"
     t.string "taggable_type"
