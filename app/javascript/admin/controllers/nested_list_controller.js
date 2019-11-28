@@ -8,18 +8,21 @@ export default class extends Controller {
   }
 
   addRecord(event) {
-    event.preventDefault();
-
     const templateName = event.target.dataset['template'];
     const content = this._getTemplateElement(templateName)
-          .innerHTML
-          .replace(/NEW_RECORD/g, new Date().getTime());
+                        .innerHTML
+                        .replace(/NEW_RECORD/g, new Date().getTime());
 
-    this.linksTarget.insertAdjacentHTML('beforebegin', content);
+    this._manipulateDOM(content);
+  }
 
-    // very nasty trick, using dynamic list instead of AA has_many forms
-    // many plugins listen to this event to reinitialize, for example select2 from activeadmin addons
-    document.dispatchEvent(new Event('has_many_add:after'));
+  addNestedRecord(event) {
+    const templateName = event.target.dataset['template'];
+    const content = this._getTemplateElement(templateName)
+                        .innerHTML
+                        .replace(/NEW_IMAGE_RECORD/g, new Date().getTime());
+
+    this._manipulateDOM(content);
   }
 
   removeRecord(event) {
@@ -42,5 +45,13 @@ export default class extends Controller {
     if (!name) return this.element.querySelector('template');
 
     return this.element.querySelector(`template[name*=${name}]`);
+  }
+
+  _manipulateDOM(content) {
+    this.linksTarget.insertAdjacentHTML('beforebegin', content);
+
+    // very nasty trick, using dynamic list instead of AA has_many forms
+    // many plugins listen to this event to reinitialize, for example select2 from activeadmin addons
+    document.dispatchEvent(new Event('has_many_add:after'));
   }
 }
