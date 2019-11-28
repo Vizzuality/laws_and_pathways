@@ -57,12 +57,34 @@ module ChartHelper
           }
         },
         column: {
-          stacking: 'percent'
+          grouping: true
         }
       },
       yAxis: {
         labels: {
           format: '{value}%' # does not work!
+        }
+      }
+    }
+  end
+
+  def cp_company_chart_options
+    {
+      colors: [
+        '#00C170', '#ED3D4A', '#FFDD49', '#440388', '#FF9600', '#B75038', '#00A8FF', '#F78FB3', '#191919', '#F602B4'
+      ],
+      legend: {
+        verticalAlign: 'top'
+      },
+      plotOptions: {
+        area: {
+          # fillOpacity: 0.3,
+          marker: {
+            enabled: false
+          }
+        },
+        column: {
+          stacking: 'normal'
         }
       }
     }
