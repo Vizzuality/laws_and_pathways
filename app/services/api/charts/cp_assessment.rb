@@ -1,10 +1,7 @@
 module Api
   module Charts
     class CPAssessment
-      BENCHMARK_FILL_COLOR = '#2465F5'.freeze
       BENCHMARK_FILL_COLORS = ['#86A9F9', '#5587F7', '#2465F5', '#0A4BDC', '#083AAB'].freeze
-
-      # BENCHMARK_FILL_COLORS = ['rgba(134, 169, 249, 0.7)', 'rgba(134, 169, 249, 0.5)', 'rgba(134, 169, 249, 0.3)'].freeze
 
       attr_reader :assessment
 
@@ -65,9 +62,7 @@ module Api
             {
               type: 'area',
               color: BENCHMARK_FILL_COLORS[index],
-              # fillColor: BENCHMARK_FILL_COLORS[index],
-              fillOpacity: 0.3,
-              opacity: 0.3,
+              fillColor: BENCHMARK_FILL_COLORS[index],
               name: benchmark.scenario,
               data: benchmark.emissions.transform_keys(&:to_i)
             }

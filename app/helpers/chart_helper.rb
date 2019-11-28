@@ -51,7 +51,6 @@ module ChartHelper
       },
       plotOptions: {
         area: {
-          fillOpacity: 0.3,
           marker: {
             enabled: false
           }
