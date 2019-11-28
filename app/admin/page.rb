@@ -5,7 +5,7 @@ ActiveAdmin.register Page do
 
   menu priority: 6, parent: 'TPI'
 
-  permit_params :title, :slug, :description,
+  permit_params :title, :slug, :description, :menu,
                 contents_attributes: [:id, :title, :content_type, :text, :_destroy,
                                       images_attributes: [:id, :link, :logo, :_destroy]],
                 content_ids: []
@@ -16,6 +16,7 @@ ActiveAdmin.register Page do
   index do
     column :slug
     column :title
+    column :menu
     actions
   end
 
@@ -25,6 +26,7 @@ ActiveAdmin.register Page do
         attributes_table do
           row :slug
           row :title
+          row :menu
           row :description
         end
       end
