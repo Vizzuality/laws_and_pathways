@@ -2,8 +2,9 @@
   <%= line_chart(
     emissions_chart_data_tpi_company_path(assessment.company, cp_assessment_id: assessment.id),
     id: 'cp_assessment_chart',
+    curve: false,
     width: '100%',
     height: '600px',
-    library: default_chart_options
-  )%>
+    library: cp_company_chart_options
+    )%>
 </div>

@@ -58,7 +58,6 @@ module ChartHelper
       },
       plotOptions: {
         area: {
-          fillOpacity: 0.3,
           marker: {
             enabled: false
           }
@@ -75,8 +74,34 @@ module ChartHelper
     }
   end
 
+  def cp_company_chart_options
+    {
+      colors: [
+        '#00C170', '#ED3D4A', '#FFDD49', '#440388', '#FF9600', '#B75038', '#00A8FF', '#F78FB3', '#191919', '#F602B4'
+      ],
+      legend: {
+        verticalAlign: 'top'
+      },
+      plotOptions: {
+        area: {
+          # fillOpacity: 0.3,
+          marker: {
+            enabled: false
+          }
+        },
+        column: {
+          stacking: 'normal'
+        }
+      }
+    }
+  end
+
   def mq_company_no_of_assessments_chart_options
     {
+      chart: {
+        marginTop: 50
+      },
+      colors: ['#00C170'],
       legend: {
         enabled: false
       },
@@ -93,13 +118,20 @@ module ChartHelper
       xAxis: {
         type: 'datetime',
         dateTimeLabelFormats: {
+          month: '%Y',
           year: '%Y'
-        }
+        },
+        tickInterval: (Time.now - 1.year.ago).round * 1000
       },
       yAxis: {
         tickInterval: 1,
         title: {
-          text: 'Level'
+          text: 'Level',
+          textAlign: 'right',
+          align: 'high',
+          rotation: 0,
+          x: 20,
+          y: -20
         }
       }
     }

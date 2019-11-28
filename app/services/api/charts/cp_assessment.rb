@@ -1,6 +1,8 @@
 module Api
   module Charts
     class CPAssessment
+      BENCHMARK_FILL_COLORS = ['#86A9F9', '#5587F7', '#2465F5', '#0A4BDC', '#083AAB'].freeze
+
       attr_reader :assessment
 
       delegate :company, to: :assessment
@@ -29,9 +31,9 @@ module Api
         return [] unless assessment.present?
 
         [
+          emissions_data_from_sector_benchmarks,
           emissions_data_from_company,
-          emissions_data_from_sector,
-          emissions_data_from_sector_benchmarks
+          emissions_data_from_sector
         ].flatten
       end
 
@@ -52,14 +54,19 @@ module Api
       end
 
       def emissions_data_from_sector_benchmarks
-        company.sector.latest_benchmarks_for_date(assessment.assessment_date).map do |benchmark|
-          {
-            type: 'area',
-            fillOpacity: 0.1,
-            name: benchmark.scenario,
-            data: benchmark.emissions.transform_keys(&:to_i)
-          }
-        end
+        company
+          .sector
+          .latest_benchmarks_for_date(assessment.assessment_date)
+          .sort_by(&:average_emission)
+          .map.with_index do |benchmark, index|
+            {
+              type: 'area',
+              color: BENCHMARK_FILL_COLORS[index],
+              fillColor: BENCHMARK_FILL_COLORS[index],
+              name: benchmark.scenario,
+              data: benchmark.emissions.transform_keys(&:to_i)
+            }
+          end.reverse
       end
 
       # Returns average emissions history for given TPISector.
