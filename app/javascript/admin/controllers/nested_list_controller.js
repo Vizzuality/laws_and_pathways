@@ -9,18 +9,10 @@ export default class extends Controller {
 
   addRecord(event) {
     const templateName = event.target.dataset['template'];
+    const newRecordRegex = new RegExp(this.newRecordId, 'g');
     const content = this._getTemplateElement(templateName)
                         .innerHTML
-                        .replace(/NEW_RECORD/g, new Date().getTime());
-
-    this._manipulateDOM(content);
-  }
-
-  addNestedRecord(event) {
-    const templateName = event.target.dataset['template'];
-    const content = this._getTemplateElement(templateName)
-                        .innerHTML
-                        .replace(/NEW_IMAGE_RECORD/g, new Date().getTime());
+                        .replace(newRecordRegex, new Date().getTime());
 
     this._manipulateDOM(content);
   }
@@ -53,5 +45,9 @@ export default class extends Controller {
     // very nasty trick, using dynamic list instead of AA has_many forms
     // many plugins listen to this event to reinitialize, for example select2 from activeadmin addons
     document.dispatchEvent(new Event('has_many_add:after'));
+  }
+
+  get newRecordId() {
+    return this.element.dataset['newRecordId'] || 'NEW_RECORD';
   }
 }

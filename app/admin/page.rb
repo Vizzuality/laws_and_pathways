@@ -14,8 +14,8 @@ ActiveAdmin.register Page do
   filter :slug
 
   index do
+    column :title, &:title_link
     column :slug
-    column :title
     column :menu
     actions
   end
@@ -24,8 +24,8 @@ ActiveAdmin.register Page do
     tabs do
       tab :details do
         attributes_table do
-          row :slug
           row :title
+          row :slug
           row :menu
           row :description
         end
