@@ -1,6 +1,7 @@
 module Api
   module Charts
     class Sector
+      BENCHMARK_FILL_COLORS = ['#86A9F9', '#5587F7', '#2465F5', '#0A4BDC', '#083AAB'].freeze
       EMPTY_LEVELS = {
         '0' => [],
         '1' => [],
@@ -96,8 +97,8 @@ module Api
       #
       def companies_emissions_data
         [
-          emissions_data_from_companies,
-          emissions_data_from_sector_benchmarks
+          emissions_data_from_sector_benchmarks,
+          emissions_data_from_companies
         ].flatten
       end
 
@@ -120,23 +121,29 @@ module Api
         @company_scope
           .includes(:latest_cp_assessment)
           .map { |company| emissions_data_from_company(company) }
+          .reject { |company_data| company_data[:data].empty? }
       end
 
       def emissions_data_from_sector_benchmarks
-        @company_scope.first.latest_sector_benchmarks.map do |benchmark|
-          {
-            type: 'area',
-            fillOpacity: 0.1,
-            name: benchmark.scenario,
-            data: benchmark.emissions
-          }
-        end
+        @company_scope
+          .first
+          .latest_sector_benchmarks
+          .sort_by(&:average_emission)
+          .map.with_index do |benchmark, index|
+            {
+              type: 'area',
+              color: BENCHMARK_FILL_COLORS[index],
+              fillColor: BENCHMARK_FILL_COLORS[index],
+              name: benchmark.scenario,
+              data: benchmark.emissions.transform_keys(&:to_i)
+            }
+          end.reverse
       end
 
       def emissions_data_from_company(company)
         {
           name: company.name,
-          data: company.latest_cp_assessment&.emissions,
+          data: company.latest_cp_assessment&.emissions&.transform_keys(&:to_i),
           lineWidth: 4
         }
       end
