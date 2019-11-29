@@ -23,7 +23,9 @@
             <small>Number of assessments: <%= @company.cp_assessments.size %></small>
           </p>
           <p class="cp-alignment">
-            <%= @company.cp_alignment %>
+            <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment.color %>">
+            </span>
+            <%= @company_presenter.cp_alignment.text %>
           </p>
           <% unless ['not aligned', 'no disclosure', nil].include?(@company.cp_alignment&.downcase) %>
             <p>

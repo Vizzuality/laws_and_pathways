@@ -5,7 +5,7 @@ module TPI
     before_action :fetch_mq_assessment, only: [:show, :mq_assessment, :assessments_levels_chart_data]
 
     def show
-      @company_summary = company_presenter.summary
+      @company_presenter = ::Api::Presenters::Company.new(@company)
 
       @sectors = TPISector.select(:id, :name, :slug).order(:name)
       @companies = Company.joins(:sector).select(:id, :name, :slug, 'tpi_sectors.name as sector_name')
@@ -36,10 +36,6 @@ module TPI
     end
 
     private
-
-    def company_presenter
-      @company_presenter ||= ::Api::Presenters::Company.new(@company)
-    end
 
     def fetch_company
       @company = Company.friendly.find(params[:id])

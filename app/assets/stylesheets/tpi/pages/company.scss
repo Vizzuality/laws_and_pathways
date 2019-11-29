@@ -31,6 +31,16 @@
       font-family: $font-family-bold;
       font-size: 20px;
       padding: 30px 0;
+      display: inline-flex;
+
+      &__circle {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: block;
+        margin-right: 10px;
+        margin-top: 3px;
+      }
     }
 
     .mq-level {
