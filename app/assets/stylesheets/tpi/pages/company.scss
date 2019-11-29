@@ -27,6 +27,12 @@
       text-align: center;
     }
 
+    .cp-alignment {
+      font-family: $font-family-bold;
+      font-size: 20px;
+      padding: 30px 0;
+    }
+
     .mq-level {
       @include mq-level(80px);
     }
@@ -153,6 +159,19 @@
       align-items: center;
 
       margin-bottom: 20px;
+    }
+
+    &__assumptions {
+      padding: 15px 30px;
+
+      h6 {
+        font-family: $font-family-bold;
+        font-size: 14px;
+      }
+
+      p {
+        font-size: 16px;
+      }
     }
   }
 }

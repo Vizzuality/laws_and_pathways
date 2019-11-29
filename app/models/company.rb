@@ -45,6 +45,7 @@ class Company < ApplicationRecord
 
   delegate :level, :status, :status_description_short,
            to: :latest_mq_assessment, prefix: :mq, allow_nil: true
+  delegate :cp_alignment, to: :latest_cp_assessment, allow_nil: true
 
   validates :ca100, inclusion: {in: [true, false]}
   validates_presence_of :name, :slug, :isin, :market_cap_group
