@@ -15,7 +15,7 @@
 #  updated_at                :datetime         not null
 #  visibility_status         :string           default("draft")
 #  discarded_at              :datetime
-#  sedol                     :integer
+#  sedol                     :string
 #  latest_information        :text
 #  historical_comments       :text
 #

@@ -8,3 +8,12 @@
     library: cp_chart_options
     )%>
 </div>
+
+<% unless assessment.assumptions.blank? %>
+  <div class="carbon-performance__assumptions">
+    <h6>TPI notes:</h6>
+    <p>
+      <%= assessment.assumptions %>
+    </p>
+  </div>
+<% end %>

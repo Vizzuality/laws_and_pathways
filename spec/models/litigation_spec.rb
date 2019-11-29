@@ -9,7 +9,7 @@
 #  document_type             :string
 #  jurisdiction_id           :bigint
 #  summary                   :text
-#  core_objective            :text
+#  at_issue                  :text
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #  visibility_status         :string           default("draft")

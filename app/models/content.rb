@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: contents
+#
+#  id           :bigint           not null, primary key
+#  title        :string
+#  text         :text
+#  page_id      :bigint           not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  content_type :string
+#
+
 class Content < ApplicationRecord
   belongs_to :page
   has_many :images, dependent: :destroy

@@ -22,12 +22,17 @@
           <p>
             <small>Number of assessments: <%= @company.cp_assessments.size %></small>
           </p>
-          <p>
-            Below 2 degrees
+          <p class="cp-alignment">
+            <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment.color %>">
+            </span>
+            <%= @company_presenter.cp_alignment.text %>
           </p>
-          <p>
-            The company’s emissions intensity and target are aligned with the Paris agreement benchmark of 2 degrees (high efficiency)
-          </p>
+          <% unless ['not aligned', 'no disclosure', nil].include?(@company.cp_alignment&.downcase) %>
+            <p>
+              The company’s emissions intensity and target are aligned
+              with the Paris agreement benchmark of <%= @company.cp_alignment %>
+            </p>
+          <% end %>
         </div>
       </div>
     </div>
@@ -123,10 +128,6 @@
       <div id="cp-assessment">
         <%= render partial: 'cp_assessment', locals: { assessment: @cp_assessment } %>
       </div>
-
-      <p>
-        Carbon Performance alignment of <%= @company.name %> with the Paris agreement benchmarks.
-      </p>
     </section>
   <% end %>
 </div>

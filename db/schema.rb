@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(version: 2019_11_29_033008) do
     t.datetime "updated_at", null: false
     t.datetime "discarded_at"
     t.integer "last_reported_year"
+    t.string "cp_alignment"
     t.index ["company_id"], name: "index_cp_assessments_on_company_id"
     t.index ["discarded_at"], name: "index_cp_assessments_on_discarded_at"
   end

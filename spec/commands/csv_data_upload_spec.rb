@@ -245,6 +245,7 @@ describe 'CSVDataUpload (integration)' do
       '2019' => 99,
       '2020' => 98
     )
+    expect(assessment.cp_alignment).to eq('Paris Pledges')
   end
 
   it 'imports CSV files with MQ Assessments data' do

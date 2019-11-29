@@ -17,6 +17,7 @@
 #  discarded_at      :datetime
 #  legislation_type  :string           not null
 #  sector_id         :bigint
+#  parent_id         :bigint
 #
 
 FactoryBot.define do

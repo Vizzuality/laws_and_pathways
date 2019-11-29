@@ -7,6 +7,7 @@ FactoryBot.define do
     last_reported_year { 2020 }
 
     assumptions { 'Assumptions about the assessment' }
+    cp_alignment { 'Paris Pledges' }
 
     emissions do
       (2013..2030).map do |year|
