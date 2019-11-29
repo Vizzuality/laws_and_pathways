@@ -77,6 +77,41 @@ $tpi-pie-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB;
     @import "highcharts/css/highcharts";
   }
 
+  &--cp-emissions {
+    margin-top: 10px;
+    justify-content: unset;
+
+    .legend {
+      display: flex;
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+        font-size: 12px;
+
+        &::before {
+          content: '';
+          display: block;
+          width: 40px;
+          margin-right: 10px;
+        }
+
+        &--reported {
+          &::before {
+            border-bottom: 4px solid black;
+          }
+        }
+
+        &--targeted {
+          &::before {
+            border-bottom: 4px dotted black;
+          }
+        }
+      }
+    }
+  }
+
   &--mq-sector-pie-chart {
     @for $i from 1 through length($tpi-pie-chart-colors) {
       $color: nth($tpi-pie-chart-colors, $i);
