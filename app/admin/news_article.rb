@@ -6,7 +6,7 @@ ActiveAdmin.register NewsArticle do
 
   decorate_with NewsArticleDecorator
 
-  permit_params :title, :content, :publication_date,
+  permit_params :title, :content, :publication_date, :article_type,
                 :created_by_id, :updated_by_id
 
   filter :title
@@ -18,6 +18,7 @@ ActiveAdmin.register NewsArticle do
       tab :details do
         attributes_table do
           row :title
+          row :article_type
           row :content
           row :publication_date
           row :updated_at
@@ -32,6 +33,7 @@ ActiveAdmin.register NewsArticle do
 
   index do
     column 'Title', :title_link
+    column :article_type
     column :content
     column :publication_date
     column :created_by
@@ -43,6 +45,7 @@ ActiveAdmin.register NewsArticle do
   csv do
     column :id
     column :title
+    column :article_type
     column :content
     column :publication_date
   end
@@ -52,6 +55,7 @@ ActiveAdmin.register NewsArticle do
 
     f.inputs do
       f.input :title
+      f.input :article_type, as: :select, collection: array_to_select_collection(NewsArticle::ARTICLE_TYPES)
       f.input :content, as: :trix
       f.input :publication_date
     end
