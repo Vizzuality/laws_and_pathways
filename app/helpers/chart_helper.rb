@@ -89,8 +89,16 @@ module ChartHelper
             enabled: false
           }
         },
+        line: {
+          marker: {
+            enabled: false
+          }
+        },
         column: {
           stacking: 'normal'
+        },
+        series: {
+          lineWidth: 4
         }
       }
     }
