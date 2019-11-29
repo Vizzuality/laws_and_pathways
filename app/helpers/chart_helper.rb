@@ -74,7 +74,7 @@ module ChartHelper
     }
   end
 
-  def cp_company_chart_options
+  def cp_chart_options
     {
       colors: [
         '#00C170', '#ED3D4A', '#FFDD49', '#440388', '#FF9600', '#B75038', '#00A8FF', '#F78FB3', '#191919', '#F602B4'
