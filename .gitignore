@@ -4,7 +4,7 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-.vscode/launch.json 
+.vscode/launch.json
 .browserslistrc
 # Ignore bundler config.
 /.bundle
@@ -52,3 +52,5 @@ TODO.md
 # Apple
 .DS_Store
 
+# libreoffice lock files
+*.~lock.*
