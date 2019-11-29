@@ -92,7 +92,9 @@ ActiveAdmin.register Company do
                 attributes_table_for a do
                   row :publication_date
                   row :assessment_date
+                  row :cp_alignment
                   row :assumptions
+                  row :last_reported_year
                 end
 
                 render 'admin/cp/emissions_table', emissions: a.emissions

@@ -42,7 +42,13 @@ module Api
       def emissions_data_from_company
         {
           name: company.name,
-          data: assessment&.emissions&.transform_keys(&:to_i)
+          data: assessment&.emissions&.transform_keys(&:to_i),
+          zoneAxis: 'x',
+          zones: [{
+            value: assessment.last_reported_year&.to_i
+          }, {
+            dashStyle: 'dot'
+          }]
         }
       end
 
