@@ -3,7 +3,8 @@ FactoryBot.define do
     title { "MyString" }
     content { "MyText" }
     publication_date { "2019-11-29" }
-    created_by { nil }
-    updated_by { nil }
+
+    association :created_by, factory: :admin_user
+    association :updated_by, factory: :admin_user
   end
 end
