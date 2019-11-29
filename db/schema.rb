@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_26_123014) do
+ActiveRecord::Schema.define(version: 2019_11_29_023418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -376,17 +376,24 @@ ActiveRecord::Schema.define(version: 2019_11_26_123014) do
     t.index ["discarded_at"], name: "index_mq_assessments_on_discarded_at"
   end
 
+  create_table "news_articles", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.date "publication_date"
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_by_id"], name: "index_news_articles_on_created_by_id"
+    t.index ["updated_by_id"], name: "index_news_articles_on_updated_by_id"
+  end
+
   create_table "pages", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.string "slug"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "publications", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -477,6 +484,8 @@ ActiveRecord::Schema.define(version: 2019_11_26_123014) do
   add_foreign_key "litigations", "geographies", column: "jurisdiction_id", on_delete: :cascade
   add_foreign_key "litigations", "laws_sectors", column: "sector_id"
   add_foreign_key "mq_assessments", "companies", on_delete: :cascade
+  add_foreign_key "news_articles", "admin_users", column: "created_by_id"
+  add_foreign_key "news_articles", "admin_users", column: "updated_by_id"
   add_foreign_key "taggings", "tags", on_delete: :cascade
   add_foreign_key "targets", "admin_users", column: "created_by_id"
   add_foreign_key "targets", "admin_users", column: "updated_by_id"
