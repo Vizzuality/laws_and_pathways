@@ -89,6 +89,12 @@ if Rails.env.development? || ENV['SEED_DATA']
     CSVImport::Geographies.new(file).call
   end
 
+  # import NewsArticles
+  TimedLogger.log('Import news articles') do
+    file = File.open(Rails.root.join('db', 'seeds', 'tpi-news.csv'), 'r')
+    CSVImport::NewsArticles.new(file).call
+  end
+
   # import companies
   TimedLogger.log('Import companies') do
     file = File.open(Rails.root.join('db', 'seeds', 'tpi-companies.csv'), 'r')
