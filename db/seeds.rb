@@ -24,8 +24,9 @@ end
   ['Services'],
   ['Steel', 'Carbon intensity (tonnes of CO2 per tonne of steel)']
 ].each do |sector_name, sector_cp_unit|
-  sector = TPISector.find_or_create_by!(name: sector_name)
-  sector.update!(cp_unit: sector_cp_unit) if sector.new_record? && sector_cp_unit.present?
+  TPISector.find_or_create_by!(name: sector_name) do |sector|
+    sector.cp_unit = sector_cp_unit
+  end
 end
 
 # instruments: Instrument Type & Instrument
