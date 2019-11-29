@@ -383,7 +383,11 @@ ActiveRecord::Schema.define(version: 2019_11_29_001618) do
     t.string "slug"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "menu"
+  end
+
+  create_table "publications", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "taggings", force: :cascade do |t|
