@@ -76,9 +76,6 @@ module ChartHelper
 
   def cp_chart_options(unit)
     {
-      # chart: {
-      #   spacingTop: 50
-      # },
       colors: [
         '#00C170', '#ED3D4A', '#FFDD49', '#440388', '#FF9600', '#B75038', '#00A8FF', '#F78FB3', '#191919', '#F602B4'
       ],
