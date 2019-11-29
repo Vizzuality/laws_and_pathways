@@ -2,16 +2,17 @@
 #
 # Table name: mq_assessments
 #
-#  id               :bigint           not null, primary key
-#  company_id       :bigint
-#  level            :string           not null
-#  notes            :text
-#  assessment_date  :date             not null
-#  publication_date :date             not null
-#  questions        :jsonb
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  discarded_at     :datetime
+#  id                  :bigint           not null, primary key
+#  company_id          :bigint
+#  level               :string           not null
+#  notes               :text
+#  assessment_date     :date             not null
+#  publication_date    :date             not null
+#  questions           :jsonb
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  discarded_at        :datetime
+#  methodology_version :integer
 #
 
 require 'rails_helper'

@@ -12,6 +12,7 @@
 #  updated_at         :datetime         not null
 #  discarded_at       :datetime
 #  last_reported_year :integer
+#  cp_alignment       :string
 #
 
 module CP
