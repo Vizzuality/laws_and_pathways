@@ -1,29 +1,31 @@
 namespace :static_pages do
   desc 'Scaffold static pages'
   task generate: :environment do
+    MENU_HEADERS = OpenStruct.new(Hash[Page::MENU_HEADERS.map { |el| [el, el] }])
+
     pages = [
-      ['overview', 'Overview of the TPI'],
-      ['strategic-relationships', 'Strategic Relationships'],
-      ['technical-advisory-group', 'Technical Advisory Group'],
-      %w[supporters Supporters],
-      ['investors', 'How Investors can use TPI'],
-      %w[endorsements Endorsements],
-      %w[team Team],
-      %w[faq FAQ],
-      %w[methodology Methodology],
-      ['data-background', 'Data Background']
+      ['Overview of the TPI', MENU_HEADERS.about],
+      ['Strategic Relationships', MENU_HEADERS.about],
+      ['Technical Advisory Group', MENU_HEADERS.about],
+      ['Supporters', MENU_HEADERS.about],
+      ['How Investors can use TPI', MENU_HEADERS.about],
+      ['Endorsements', MENU_HEADERS.about],
+      ['Team', MENU_HEADERS.about],
+      ['FAQ', MENU_HEADERS.about],
+      ['Methodology', MENU_HEADERS.tpi_tool],
+      ['Data Background', MENU_HEADERS.tpi_tool]
     ]
 
     supporters_content = %w(partners supporters)
 
-    pages.each do |slug, title|
-      next if Page.find_by(slug: slug)
+    pages.each do |title, menu_header|
+      next if Page.find_by(title: title)
 
-      puts "Creating page: #{slug}"
+      puts "Creating page: #{title}"
       Page.create(
-        slug: slug,
         title: title,
-        description: "#{title} Description goes here"
+        description: "#{title} Description goes here",
+        menu: menu_header
       )
     end
 
@@ -34,7 +36,7 @@ namespace :static_pages do
       Content.create(
         content_type: content,
         title: content.capitalize,
-        page: Page.find_by(slug: 'supporters'),
+        page: Page.find_by(title: 'Supporters'),
         text: 'Lorem ipsum - Content Text'
       )
     end

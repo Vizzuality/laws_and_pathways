@@ -18,12 +18,11 @@
 
             <div class="navbar-dropdown">
               <%= link_to 'TPI tool', tpi_sectors_path, class: 'navbar-item' %>
-              <a class="navbar-item">
-                Methodology
-              </a>
-              <a class="navbar-item">
-                Data background
-              </a>
+              <% @tpi_tool_pages.each do |page| %>
+                <a href="/tpi/<%= page.slug %>" class="navbar-item">
+                  <%= page.title %>
+                </a>
+              <% end %>
             </div>
           </div>
 
@@ -37,27 +36,11 @@
             </a>
 
             <div class="navbar-dropdown">
-              <a class="navbar-item">
-                Overview of the TPI
-              </a>
-              <a class="navbar-item">
-                Partners
-              </a>
-              <a class="navbar-item">
-                Technical advisory
-              </a>
-              <a class="navbar-item">
-                Supporters
-              </a>
-              <a class="navbar-item">
-                Investors
-              </a>
-              <a class="navbar-item">
-                Endorsements
-              </a>
-              <a class="navbar-item">
-                FAQ
-              </a>
+              <% @about_pages.each do |page| %>
+                <a href="/tpi/<%= page.slug %>" class="navbar-item">
+                  <%= page.title %>
+                </a>
+              <% end %>
               <!-- <hr class="navbar-divider"> -->
             </div>
           </div>

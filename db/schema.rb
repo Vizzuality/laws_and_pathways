@@ -395,6 +395,7 @@ ActiveRecord::Schema.define(version: 2019_11_29_033008) do
     t.string "slug"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "menu"
   end
 
   create_table "taggings", force: :cascade do |t|

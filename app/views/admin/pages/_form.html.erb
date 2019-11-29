@@ -13,8 +13,8 @@
 
       <div id="details">
         <%= f.inputs do %>
-          <%= f.input :slug %>
           <%= f.input :title %>
+          <%= f.input :menu, as: :select, collection: array_to_select_collection(Page::MENU_HEADERS) %>
           <%= f.input :description, as: :trix %>
         <% end %>
       </div>

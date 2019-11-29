@@ -1,5 +1,19 @@
-<% content_for(:page_title, @page.title) %>
-
-<div class="page container">
-  <%= @page.description.html_safe %>
+<div class="container">
+  <h1 class="pages__title"><%= @page.title %></h1>
+  <div class="pages__description">
+    <%= @page.description.html_safe %>
+  </div>
+  <% @page.contents.each do |content| %>
+    <div class="pages__content">
+      <h4 class="pages__content-title"><%= content.title %></h4>
+      <div class="pages__description"><%= content.text.html_safe %></div>
+      <% if content.images.any? %>
+        <div class="pages__content-logos">
+          <% content.images.each do |image| %>
+            <%= link_to(image_tag(image.logo), image.link) %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>
