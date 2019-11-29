@@ -19,11 +19,10 @@ namespace :static_pages do
     supporters_content = %w(partners supporters)
 
     pages.each do |title, menu_header|
-      next if Page.find_by(slug: slug)
+      next if Page.find_by(title: title)
 
-      puts "Creating page: #{slug}"
+      puts "Creating page: #{title}"
       Page.create(
-        slug: slug,
         title: title,
         description: "#{title} Description goes here",
         menu: menu_header
@@ -37,7 +36,7 @@ namespace :static_pages do
       Content.create(
         content_type: content,
         title: content.capitalize,
-        page: Page.find_by(slug: 'supporters'),
+        page: Page.find_by(title: 'Supporters'),
         text: 'Lorem ipsum - Content Text'
       )
     end
