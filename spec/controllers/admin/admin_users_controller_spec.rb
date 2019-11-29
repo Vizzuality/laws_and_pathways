@@ -54,4 +54,25 @@ RSpec.describe Admin::AdminUsersController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH update' do
+    let(:admin_to_update) { create(:admin_user, role: 'publisher_tpi') }
+
+    subject { patch :update, params: {id: admin_to_update.id, admin_user: {role: 'editor_tpi'}} }
+
+    before { admin_to_update }
+
+    it 'does not create another record' do
+      expect { subject }.not_to change(AdminUser, :count)
+    end
+
+    it 'updates existing AdminUser' do
+      expect { subject }.to change { admin_to_update.reload.role }
+        .from('publisher_tpi').to('editor_tpi')
+    end
+
+    it 'redirects to the last updated AdminUser' do
+      expect(subject).to redirect_to(admin_admin_user_path(AdminUser.order(:updated_at).last))
+    end
+  end
 end
