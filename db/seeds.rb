@@ -3,7 +3,11 @@ require "#{Rails.root}/lib/timed_logger"
 # admin users
 # envs: DEV
 if Rails.env.development? && !AdminUser.find_by(email: 'admin@example.com')
-  AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
+  AdminUser.create!(
+    email: 'admin@example.com',
+    password: 'password', password_confirmation: 'password',
+    role: 'super_user'
+  )
 end
 
 # sectors: names & CP benchmarks units (optional)
