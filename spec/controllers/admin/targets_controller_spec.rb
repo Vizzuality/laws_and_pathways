@@ -30,7 +30,7 @@ RSpec.describe Admin::TargetsController, type: :controller do
     it('returns all targets') do
       csv = response_as_csv
 
-      expect(csv.by_col[0].sort).to eq([target.id, target2.id, target3.id].map(&:to_s))
+      expect(csv.by_col[0].sort).to eq([target.id, target2.id, target3.id].map(&:to_s).sort)
       expect(csv.by_col[4].sort).to eq(%w[2030 2040 2050])
     end
   end
