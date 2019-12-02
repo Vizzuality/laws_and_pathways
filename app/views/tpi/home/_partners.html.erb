@@ -15,7 +15,7 @@
       </p>
     </div>
   </div>
-  <% if @partners_logos.any? %>
+  <% if @partners_logos&.any? %>
     <div class="logos">
       <% @partners_logos.each do |image| %>
         <div>
