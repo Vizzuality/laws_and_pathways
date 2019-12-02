@@ -100,6 +100,8 @@ module Api
 
       # @return [Array] of years for which emissions was reported
       def years_with_reported_emissions
+        return [] if sector_all_emission_years.empty?
+
         (sector_all_emission_years.min..sector_last_reported_year).map.to_a
       end
 
@@ -117,15 +119,16 @@ module Api
           .companies
           .includes(:cp_assessments)
           .flat_map do |c|
-            c.cp_assessments.published_on_or_before(assessment.publication_date).last&.emissions&.transform_keys(&:to_i)
+            c.cp_assessments
+              .select { |a| a.publication_date <= assessment.publication_date }
+              .max_by(&:publication_date)&.emissions&.transform_keys(&:to_i)
           end
           .compact
       end
 
       # @return [Integer]
       def sector_last_reported_year
-        # TODO: change to last reported year (to be done in https://www.pivotaltracker.com/story/show/168850542)
-        current_year
+        assessment.last_reported_year
       end
 
       # @return [Integer]
