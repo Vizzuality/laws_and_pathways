@@ -51,7 +51,7 @@ module ChartHelper
       # I couldn't make highcharts to use color directly from the chart data so sorting chart data
       # by cp alignment name and then we will use below colors in the right order
       colors: [
-        '#00C170', '#FFDD49', '#FF9600', '#ED3D4A', '#191919'
+        '#00C170', '#FFDD49', '#FF9600', '#ED3D4A', '#595B5D'
       ],
       legend: {
         align: 'left',

@@ -11,7 +11,7 @@ module CP
       '2 degrees' => '#FFDD49', # yellow
       'paris pledges' => '#FF9600', # orange,
       'not aligned' => '#ED3D4A', # red
-      'no disclosure' => '#191919' # black
+      'no disclosure' => '#595B5D' # black
     }.freeze
 
     ORDER = ['below 2 degrees', '2 degrees', 'paris pledges', 'not aligned', 'no disclosure'].freeze
