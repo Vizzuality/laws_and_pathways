@@ -10,7 +10,7 @@ module TPI
         }
       end
 
-      @partners_logos = Page.find_by(title: 'Supporters').contents&.find_by(content_type: 'partners')&.images
+      @partners_logos = Page.find_by(slug: 'supporters')&.contents&.find_by(content_type: 'partners')&.images
     end
 
     def about; end
