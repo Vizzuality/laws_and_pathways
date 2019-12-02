@@ -23,9 +23,7 @@ ActiveAdmin.register Publication do
           row :thumbnail do |t|
             image_tag(url_for(t.thumbnail)) if t.thumbnail.present?
           end
-          row :file do |t|
-            link_to t.file
-          end
+          row :file, &:file_link
           row :updated_at
           row :updated_by
           row :created_at
@@ -38,6 +36,7 @@ ActiveAdmin.register Publication do
 
   index do
     column 'Title', :title_link
+    column :file, &:file_link
     column :short_description
     column :publication_date
     column :created_by
