@@ -39,10 +39,16 @@
 
     &> * {
       color: $grey-text;
-      display: inline-block;
+      display: flex;
+      justify-content: center;
 
       &:not(:last-child) {
         margin-right: 1.5rem;
+      }
+
+      &> * {
+        margin-right: 10px;
+        //vertical-align: middle;
       }
     }
   }
@@ -203,6 +209,7 @@
       img {
         height: 20px;
         margin-right: 10px;
+        vertical-align: bottom;
       }
     }
 
@@ -336,6 +343,21 @@
 
     }
   }
+
+  h5 {
+    &.search-title {
+      color: $grey-text;
+
+      .search-text {
+        color: $blue-dark;
+      }
+    }
+  }
+}
+
+mark {
+  background: $grey-light;
+  color: inherit;
 }
 
 .search-wrapper {
@@ -345,4 +367,3 @@
   left: 10%;
   z-index: 35;
 }
-

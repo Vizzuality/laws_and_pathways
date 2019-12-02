@@ -1,9 +1,12 @@
 <li>
   <h5 class="title"><%= title %></h5>
-  <p class="meta">
-    <span>Passed in <%= date_passed.year %></span>
-    <span><%= I18n.t("cclow.legislation_types.#{legislation_type}") %></span>
-  </p>
+  <div class="meta">
+    <div>
+      <img class="flag" src=<%= asset_path "icons/legislation_types/#{legislation_type}.svg"%> alt="">
+      <%= I18n.t("cclow.legislation_types.#{legislation_type}") %>
+    </div>
+    <div>Passed in <%= date_passed.year %></div>
+  </div>
   <p>
     <%= description&.html_safe %>
   </p>
