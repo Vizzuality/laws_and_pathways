@@ -82,7 +82,6 @@ RSpec.describe Api::Charts::CPPerformance do
           ]
         )
 
-
         # map below alignments
         # '2 degrees (high efficiency)' => 'below 2 degrees',
         # '2 degrees (shift-improve)' => '2 degrees',

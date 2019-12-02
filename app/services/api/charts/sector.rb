@@ -135,7 +135,7 @@ module Api
               color: BENCHMARK_FILL_COLORS[index],
               fillColor: BENCHMARK_FILL_COLORS[index],
               name: benchmark.scenario,
-              data: benchmark.emissions.transform_keys(&:to_i)
+              data: (benchmark.emissions || {}).transform_keys(&:to_i)
             }
           end.reverse
       end
