@@ -97,32 +97,7 @@ if Rails.env.development? || ENV['SEED_DATA']
     CSVImport::Geographies.new(seed_file('geographies.csv')).call
   end
 
-  # import NewsArticles
-  TimedLogger.log('Import news articles') do
-    CSVImport::NewsArticles.new(seed_file('tpi-news.csv')).call
-  end
-
-  # import companies
-  TimedLogger.log('Import companies') do
-    CSVImport::Companies.new(seed_file('tpi-companies.csv'), override_id: true).call
-  end
-
-  # import CP Benchmarks
-  TimedLogger.log('Import CP Benchmarks') do
-    CSVImport::CPBenchmarks.new(seed_file('cp-benchmarks.csv')).call
-  end
-
-  # import CP Assessments
-  TimedLogger.log('Import CP Assessments') do
-    CSVImport::CPAssessments.new(seed_file('cp-assessments.csv')).call
-  end
-
-  # import MQ Assessments
-  TimedLogger.log('Import MQ Assessments') do
-    CSVImport::MQAssessments.new(seed_file('mq-assessments-M1.csv')).call
-    CSVImport::MQAssessments.new(seed_file('mq-assessments-M2.csv')).call
-    CSVImport::MQAssessments.new(seed_file('mq-assessments-M3.csv')).call
-  end
+  Seed::TPIData.call
 
   # import Legislations
   TimedLogger.log('Import Legislations') do

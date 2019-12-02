@@ -25,6 +25,7 @@ module CSVImport
 
     def prepare_news_article(row)
       find_record_by(:id, row) ||
+        find_record_by(:title, row) ||
         resource_klass.new
     end
 
