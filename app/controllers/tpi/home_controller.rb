@@ -28,7 +28,7 @@ module TPI
             'Those with loaded guns, and those who dig. You dig.'
         ]
       }]
-      
+
       @partners_logos = Page.find_by(title: 'Supporters').contents&.find_by(content_type: 'partners')&.images
     end
     # rubocop:enable Metrics/MethodLength
