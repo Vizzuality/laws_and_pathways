@@ -26,7 +26,7 @@
               <small>Number of assessments: <%= @company.cp_assessments.size %></small>
             </p>
 
-            <% if @company_presenter.model.cp_alignment.present? %>
+            <% if @company_presenter.cp_alignment.present? %>
               <p class="cp-alignment">
                 <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment.color %>">
                 </span>

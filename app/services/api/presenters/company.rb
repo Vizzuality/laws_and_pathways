@@ -17,11 +17,9 @@ module Api
         )
       end
 
-      def model
-        @company
-      end
-
       def cp_alignment
+        return unless @company.cp_alignment.present?
+
         CP::Alignment.new(name: @company.cp_alignment)
       end
     end
