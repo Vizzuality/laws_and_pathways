@@ -4,11 +4,17 @@ import legendImage from '../../assets/images/bubble-chart-legend.svg';
 import SingleBubbleChart from './SingleBubbleChart';
 import BaseTooltip from './BaseTooltip.js';
 
+const SCALE = 5;
+
+// radius of bubbles
 const COMPANIES_MARKET_CAP_GROUPS = {
-  large: 65,
-  medium: 45,
-  small: 30
+  large: 8 * SCALE,
+  medium: 5 * SCALE,
+  small: 3 * SCALE
 };
+
+const SINGLE_CELL_SVG_WIDTH = 120 * SCALE;
+const SINGLE_CELL_SVG_HEIGHT = 70 * SCALE;
 
 const LEVELS_COLORS = [
   '#86A9F9',
@@ -85,15 +91,12 @@ const BubbleChart = (data) => {
 }
 
 const ForceLayoutBubbleChart = (companiesBubbles, uniqueKey) => {
-  const width = 120;
-  const height = 38;
-
   const handleBubbleClick = (company) => window.open(`/tpi/companies/${company.slug}`, '_blank');
 
   return (
     <SingleBubbleChart
-      width={width}
-      height={height}
+      width={SINGLE_CELL_SVG_WIDTH}
+      height={SINGLE_CELL_SVG_HEIGHT}
       uniqueKey={uniqueKey}
       handleNodeClick={handleBubbleClick}
       data={companiesBubbles.length && companiesBubbles}
