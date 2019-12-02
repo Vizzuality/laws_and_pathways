@@ -135,7 +135,7 @@ module Api
               color: BENCHMARK_FILL_COLORS[index],
               fillColor: BENCHMARK_FILL_COLORS[index],
               name: benchmark.scenario,
-              data: benchmark.emissions.transform_keys(&:to_i)
+              data: emissions_data_as_numbers(benchmark&.emissions)
             }
           end.reverse
       end
@@ -145,7 +145,7 @@ module Api
 
         {
           name: company.name,
-          data: assessment&.emissions&.transform_keys(&:to_i),
+          data: emissions_data_as_numbers(assessment&.emissions),
           zoneAxis: 'x',
           zones: [{
             value: assessment&.last_reported_year&.to_i
@@ -177,6 +177,12 @@ module Api
             level: company.mq_level.to_i.to_s
           }
         end
+      end
+
+      def emissions_data_as_numbers(emissions)
+        return {} unless emissions
+
+        emissions.transform_keys(&:to_i)
       end
     end
   end

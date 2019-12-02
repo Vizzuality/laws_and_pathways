@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resources :sectors, only: [:show, :index] do
       collection do
         get :levels_chart_data
-        get :benchmarks_chart_data
+        get :cp_performance_chart_data
       end
       member do
         get :levels_chart_data

@@ -1,18 +1,20 @@
-<div class="chart chart--cp-emissions">
-  <div class="legend">
-    <span class="legend-item legend-item--reported">Reported</span>
-    <span class="legend-item legend-item--targeted">Targeted</span>
-  </div>
+<% if assessment.emissions.any?  %>
+  <div class="chart chart--cp-emissions">
+    <div class="legend">
+      <span class="legend-item legend-item--reported">Reported</span>
+      <span class="legend-item legend-item--targeted">Targeted</span>
+    </div>
 
-  <%= line_chart(
-    emissions_chart_data_tpi_company_path(assessment.company, cp_assessment_id: assessment.id),
-    id: 'cp_assessment_chart',
-    curve: false,
-    width: '100%',
-    height: '600px',
-    library: cp_chart_options(assessment.company.sector.cp_unit)
-    )%>
-</div>
+    <%= line_chart(
+      emissions_chart_data_tpi_company_path(assessment.company, cp_assessment_id: assessment.id),
+      id: 'cp_assessment_chart',
+      curve: false,
+      width: '100%',
+      height: '600px',
+      library: cp_chart_options(assessment.company.sector.cp_unit)
+      )%>
+  </div>
+<% end %>
 
 <% unless assessment.assumptions.blank? %>
   <div class="carbon-performance__assumptions">

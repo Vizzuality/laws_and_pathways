@@ -1,275 +1,275 @@
-id,methodology_version,company_id,Company,Assessment date,Publication date,Level,Notes,Q1L0|Does the company acknowledge climate change as a significant issue for the business?,Q2L1|Does the company explicitly recognise climate change as a relevant risk and/or opportunity to the business?,Q3L1|Does the company have a policy (or equivalent) commitment to action on climate change?,Q4L2|Has the company set greenhouse gas emission reduction targets?,Q5L2|Has the company published information on its Scope 1 and 2 greenhouse gas emissions?,Q6L3|Has the company nominated a board member or board committee with explicit responsibility for oversight of the climate change policy?,Q7L3|Has the company set quantitative targets for reducing its greenhouse gas emissions?,Q8L3|Does the company report on Scope 3 emissions?,Q9L3|Has the company had its operational (Scope 1 and/or 2) greenhouse gas emissions data verified?,Q10L3|Does the company support domestic and international efforts to mitigate climate change?,Q11L3|Does the company have a process to manage climate-related risks?,Q12L3|Does the company disclose Scope 3 use of product emissions?,Q13L4|Has the company set long-term quantitative targets for reducing its greenhouse gas emissions?,"Q14L4|Has the company incorporated environmental, social and governance issues into executive remuneration?",Q15L4|Does the company incorporate climate change risks and opportunities in their strategy?,Q16L4|Does the company undertake climate scenario planning?,Q17L4|Does the company have an internal price of carbon?
-,2,1225,AES,2018-01-25,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,No,No,No
-,2,1294,AGL Energy,2018-05-04,2018-7,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes
-,2,1246,Alliant Energy,2018-05-04,2018-7,2,,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,No,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1248,Ameren,2017-09-20,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,No,No,Yes,Not applicable,No,Yes,No,No,Yes
-,2,1250,American Electric Power,2018-05-04,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes
-,2,1017,CenterPoint Energy,2017-09-27,2018-7,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,Not applicable,No,Yes,No,No,No
-,2,1211,CEZ,2018-04-24,2018-12,1,,Yes,No,Yes,Yes,No,No,Yes,Yes,No,Yes,No,Not applicable,Yes,No,Yes,No,No
-,2,1027,Chubu Electric Power,2018-04-03,2018-7,1,,Yes,No,Yes,Yes,Yes,No,No,Yes,No,No,No,Not applicable,No,No,No,No,No
-,2,1028,CLP,2018-05-04,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No
-,2,1030,CMS Energy,2018-04-09,2018-7,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No
-,2,1038,Con Edison,2018-01-10,2018-7,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,No,No,No
-,2,1051,Dominion Energy,2018-05-04,2018-7,2,,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,Yes,No,Not applicable,Yes,Yes,Yes,No,No
-,2,1053,DTE Energy,2017-11-01,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,No,No,No
-,2,1054,Duke Energy,2018-04-19,2018-7,2,,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,No,No,No
-,2,1055,E.ON,2018-03-04,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,Yes,Yes
-,2,1059,EDF,2018-03-29,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
-,2,1058,Edison International,2017-12-14,2018-7,1,,Yes,Yes,No,No,Yes,Yes,No,Yes,No,No,No,Not applicable,No,Yes,No,No,No
-,2,1063,Enel,2018-01-31,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,Yes,Yes
-,2,1064,Engie,2017-12-31,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1066,Entergy,2017-09-14,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
-,2,1070,Eversource Energy,2017-10-19,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Not applicable,No,Yes,Yes,No,No
-,2,1072,Exelon,2018-05-04,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Not applicable,No,Yes,Yes,No,Yes
-,2,1078,Firstenergy,2018-02-20,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No
-,2,1082,Fortis,2017-09-21,2018-7,2,,Yes,Yes,Yes,No,Yes,No,No,No,No,No,No,Not applicable,No,Yes,No,No,No
-,2,1083,Fortum,2017-10-24,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1100,Iberdrola,2018-02-19,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,Yes,Yes
-,2,1109,KEPCO,2018-01-04,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Not applicable,No,No,No,No,No
-,2,1127,National Grid,2018-04-23,2018-7,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes
-,2,1129,NextEra Energy,2017-12-12,2018-7,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,Not applicable,No,Yes,No,No,No
-,2,1223,NRG Energy,2017-10-17,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1047,NTPC,2018-05-05,2018-12,1,,Yes,No,Yes,No,Yes,No,No,No,Yes,No,No,Not applicable,No,No,No,No,No
-,2,1146,Origin Energy,2018-05-04,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,No,Yes,Yes,Not applicable,No,Yes,Yes,Yes,Yes
-,2,1147,Orsted,2018-04-16,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No
-,2,1155,PG&E,2018-03-19,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No
-,2,1157,Pinnacle West Capital,2018-04-16,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No
-,2,1160,Power Assets,2017-09-14,2018-7,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1161,PPL,2017-12-27,2018-7,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,Not applicable,No,Yes,No,No,No
-,2,1166,Red Electrica,2017-09-13,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
-,2,1174,RWE,2017-12-19,2018-7,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
-,2,1181,Sempra Energy,2017-12-05,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Not applicable,Yes,Yes,No,No,Yes
-,2,1190,Southern Company,2017-12-27,2018-7,2,,Yes,Yes,Yes,No,No,Yes,No,No,Yes,No,No,Not applicable,No,Yes,No,No,No
-,2,1193,SSE,2018-05-02,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No
-,2,1208,Tenaga Nasional,2018-04-27,2018-7,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,Yes,Not applicable,No,No,No,No,No
-,2,1233,Vistra Energy,2018-04-09,2018-12,1,,Yes,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1235,WEC Energy Group,2018-05-08,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1241,XCEL Energy,2017-10-09,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes
-,2,1264,Adaro Energy,2018-05-04,2018-7,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,2,1266,African Rainbow Minerals,2018-03-23,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,No,No
-,2,1253,Anglo American,2017-09-14,2018-7,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
-,2,1260,Banpu,2018-04-27,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,No
-,2,1003,BHP Billiton,2018-03-22,2018-7,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
-,2,1204,Bukit Asam,2017-09-26,2018-7,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No
-,2,1025,China Shenhua Energy,2018-05-08,2018-7,1,,Yes,No,Yes,No,No,No,No,No,Yes,No,No,No,No,No,No,No,No
-,2,1032,Coal India,2018-04-16,2018-7,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,2,1050,DMCI Holdings,2017-09-14,2018-7,1,,Yes,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,2,1073,Exxaro Resources,2018-04-27,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No,Yes
-,2,1089,Glencore,2017-10-03,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,No
-,2,1103,Inner Mongolia Yitai Coal,2018-04-15,2018-7,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,2,1105,Jastrzebska Spolka Weglowa,2017-09-20,2018-7,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,2,1358,Rio Tinto (Coal Mining),2017-11-06,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No
-,2,1184,Shougang Fushan Resources,2017-08-22,2018-7,0,,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,2,1360,South32 (Coal Mining),2018-05-04,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No
-,2,1226,Vale,2017-09-21,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No
-,2,1238,Whitehaven Coal,2018-05-04,2018-7,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,Yes,No,No,No
-,2,1242,Yanzhou Coal Mining,2018-05-04,2018-7,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,2,1251,Anadarko Petroleum,2018-04-27,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,No,Yes,Yes,Yes,No,Yes,No,Yes,No
-,2,1252,Andeavor,2018-05-04,2018-7,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,Yes,No,No,No
-,2,1256,Apache,2018-02-07,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,No,No,Yes,Yes,No,No,Yes,No,No,No
-,2,1008,BP,2018-05-08,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes
-,2,1012,Canadian Natural Resources,2018-05-08,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,No,No,Yes,No,No,No
-,2,1016,Cenovus Energy,2018-05-04,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No
-,2,1020,Chevron,2017-12-05,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,No,Yes,Yes,No,Yes,No,No,No
-,2,1023,China Petroleum & Chemical,2018-05-04,2018-7,2,,Yes,Yes,Yes,No,No,Yes,No,No,No,No,Yes,No,No,No,No,No,No
-,2,1031,CNOOC,2017-09-28,2018-7,2,,Yes,Yes,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No
-,2,1036,Concho Resources,2017-09-19,2018-7,1,,Yes,Yes,No,No,No,No,No,No,No,No,No,No,No,Yes,No,No,No
-,2,1037,ConocoPhillips,2018-05-04,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,No,No,Yes
-,2,1048,Devon Energy,2018-03-27,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,No,No,Yes,No,Yes,Yes
-,2,1049,Diamondback Energy,2017-09-17,2018-7,1,,Yes,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,2,1057,Ecopetrol,2018-05-04,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Yes,No,No,Yes,No,No,No
-,2,1061,Encana,2018-05-04,2018-7,2,,Yes,Yes,Yes,No,No,Yes,No,No,No,No,Yes,No,No,Yes,No,No,No
-,2,1065,Eni,2017-10-13,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes
-,2,1067,EOG Resources,2017-09-28,2018-7,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,Yes,No,No,Yes,No,No,No
-,2,1194,Equinor,2018-05-04,2018-7,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
-,2,1074,Exxon Mobil,2018-05-04,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,No,Yes,Yes,Yes,No,No,Yes,No,No,No
-,2,1081,Formosa Petrochemical,2018-05-04,2018-7,2,,Yes,Yes,Yes,No,Yes,No,No,Yes,Yes,No,Yes,No,No,No,No,No,No
-,2,1141,Gazprom,2018-05-08,2018-7,2,,Yes,Yes,Yes,No,Yes,No,No,Yes,Yes,Yes,Yes,No,No,Yes,No,No,No
-,2,1093,Hess,2018-04-27,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,No,Yes
-,2,1101,Imperial Oil,2018-05-09,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No,No
-,2,1108,JXTG,2018-02-15,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,No,Yes,No,Yes,No,No
-,2,1118,Lukoil,2018-04-23,2018-7,3,,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,No,Yes,No,No,Yes,No,No,No
-,2,1120,Marathon Oil,2018-05-08,2018-7,2,,Yes,Yes,Yes,No,No,Yes,No,No,No,No,Yes,No,No,No,No,No,No
-,2,1121,Marathon Petroleum,2017-12-31,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,No,No,No,Yes,No,No,Yes,No,Yes,No
-,2,1135,Noble Energy,2018-05-04,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,No,No,Yes,Yes,No,Yes,No,No,No
-,2,1136,NovaTek,2018-03-12,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,No,No,Yes,No,No,No,No,No,No
-,2,1142,Occidental Petroleum,2018-05-04,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,No,No,Yes,Yes,No,No,Yes,No,Yes,No
-,2,1143,Oil & Natural Gas,2018-05-04,2018-7,2,,Yes,Yes,Yes,No,Yes,No,No,Yes,Yes,No,No,No,No,No,No,No,No
-,2,1145,OMV,2018-05-08,2018-7,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,No,No,No
-,2,1153,Petrobras,2018-03-06,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,No,No,Yes,No,No
-,2,1154,Petrochina,2017-12-17,2018-7,1,,Yes,No,Yes,No,No,No,No,No,No,Yes,No,No,No,No,No,No,No
-,2,1156,Phillips 66,2018-01-08,2018-7,2,,Yes,Yes,Yes,No,No,No,No,No,Yes,No,No,No,No,Yes,No,No,No
-,2,1163,PTT,2017-09-28,2018-7,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,No,No,Yes
-,2,1167,Reliance Industries,2018-05-04,2018-7,2,,Yes,Yes,Yes,No,Yes,No,No,No,Yes,No,No,No,No,No,No,No,No
-,2,1169,Repsol,2018-05-04,2018-7,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
-,2,1172,Rosneft Oil,2018-05-08,2018-7,1,,Yes,No,Yes,No,Yes,No,No,No,Yes,No,No,No,No,No,No,No,No
-,2,1173,Royal Dutch Shell,2017-09-18,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes
-,2,1188,SK Innovation,2018-01-04,2018-7,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,No
-,2,1206,TATNEFT,2018-05-04,2018-7,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,2,1216,Total,2018-05-09,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes
-,2,1227,Valero Energy,2017-09-18,2018-7,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,No,Yes,No,No,No
-,2,1239,Woodside Petroleum,2017-09-14,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No,No
-,2,1263,Acerinox,2018-01-19,2018-9,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Not applicable,Yes,No,Yes,No,No
-,2,1254,Arcelor Mittal,2018-01-29,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1092,Bluescope Steel,2018-05-05,2018-9,1,,Yes,No,Yes,No,Yes,Yes,No,No,No,No,Yes,Not applicable,No,Yes,No,No,No
-,2,1132,China Steel,2018-05-18,2018-9,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,Yes,No,No
-,2,1068,Erdemir,2017-11-17,2018-9,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1071,Evraz,2018-01-19,2018-9,1,,Yes,No,Yes,No,Yes,Yes,No,No,No,No,Yes,Not applicable,No,Yes,No,No,No
-,2,1088,Gerdau,2017-11-10,2018-9,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1099,Hyundai Steel,2017-11-10,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,No,No,No,No
-,2,1106,JFE Holdings,2018-05-24,2018-9,1,,Yes,No,Yes,No,Yes,No,No,Yes,No,No,No,Not applicable,No,No,No,No,No
-,2,1107,JSW Steel,2018-05-23,2018-9,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,No,No,No
-,2,1112,Kobe Steel,2018-04-04,2018-9,1,,Yes,No,Yes,Yes,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1007,Nippon Steel & Sumitomo Metal,2018-03-28,2018-9,1,,Yes,No,Yes,Yes,Yes,Yes,Yes,No,No,No,No,Not applicable,Yes,No,No,No,No
-,2,1134,Nisshin Steel,2018-03-08,2018-9,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1137,Novolipetsk Steel,2018-04-09,2018-9,0,,No,No,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1140,Nucor,2017-10-18,2018-9,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1015,Posco,2018-01-23,2018-9,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Not applicable,Yes,No,No,No,Yes
-,2,1214,Severstal,2018-04-28,2018-9,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1195,Steel Dynamics,2017-11-15,2018-9,1,,Yes,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1205,Tata Steel,2018-03-07,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,No,Yes,Yes,Yes
-,2,1209,Tenaris,2017-12-22,2018-9,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1176,ThyssenKrupp,2018-05-05,2018-9,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
-,2,1222,United States Steel,2017-09-18,2018-9,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,Yes,Yes,Not applicable,No,No,No,No,No
-,2,1230,Voestalpine,2018-05-05,2018-9,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,Not applicable,No,Yes,No,No,No
-,2,1040,Adelaide Brighton,2017-10-18,2018-9,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,Yes,No,No,No
-,2,1247,Ambuja Cements,2018-04-19,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes
-,2,1265,Anhui Conch Cement,2017-09-15,2018-9,0,,No,No,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1259,Asia Cement,2018-04-16,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,No,Yes,No,No
-,2,1115,Boral,2018-04-19,2018-9,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,No,Yes,Yes,Not applicable,No,No,No,No,No
-,2,1122,Cemex,2018-01-09,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,No,No,Yes
-,2,1022,China National Building Materials,2018-01-05,2018-9,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1024,China Resources Cement Holdings,2017-09-15,2018-9,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1159,CRH,2018-05-05,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
-,2,1056,Eagle Materials,2018-05-23,2018-9,1,,Yes,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1079,Fletcher Building,2018-02-08,2018-9,2,,Yes,Yes,Yes,No,Yes,No,No,Yes,No,No,Yes,Not applicable,No,No,No,No,No
-,2,1182,HeidelbergCement,2018-05-09,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes
-,2,1257,LafargeHolcim,2017-10-03,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,Yes
-,2,1004,Martin Marietta Materials,2017-09-15,2018-9,0,,No,No,No,No,No,No,No,No,No,No,No,Not applicable,No,Yes,No,No,No
-,2,1179,Semen Indonesia,2017-10-31,2018-9,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1185,Shree Cements,2017-10-31,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,Yes
-,2,1186,Siam Cement,2018-04-19,2018-9,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,Not applicable,Yes,No,No,No,No
-,2,1198,Sumitomo Osaka Cement,2018-02-05,2018-9,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1202,Taiheiyo Cement,2018-05-05,2018-9,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,No,Not applicable,Yes,No,No,No,No
-,2,1203,Taiwan Cement,2018-04-04,2018-9,1,,Yes,No,Yes,No,Yes,No,No,No,Yes,No,No,Not applicable,No,No,No,No,No
-,2,1219,UltraTech Cement,2018-04-24,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
-,2,1124,CMPC,2018-01-04,2018-11,2,,Yes,Yes,Yes,No,Yes,Yes,No,No,No,No,Yes,Not applicable,No,No,Yes,No,No
-,2,1126,Daio Paper,2018-06-07,2018-11,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1130,Domtar,2017-12-04,2018-11,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1131,Ence Energia y Celulosa,2018-01-04,2018-11,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1133,Fibria,2017-12-06,2018-11,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,Yes
-,2,1144,Hokuetsu,2018-06-05,2018-11,1,,Yes,No,Yes,Yes,No,No,Yes,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1150,International Paper,2017-12-05,2018-11,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
-,2,1168,Lee & Man Paper Manufacturing,2017-12-07,2018-11,0,,No,No,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1177,Mondi,2017-10-18,2018-11,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes
-,2,1178,Nine Dragons Paper Industries,2018-02-05,2018-11,0,,No,No,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1183,Nippon Paper Industries,2018-01-05,2018-11,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No,No,Yes,Not applicable,No,Yes,No,No,No
-,2,1187,Oji Holdings,2018-01-12,2018-11,1,,Yes,No,Yes,Yes,Yes,No,Yes,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1191,Pap Y Cart Euro,2018-01-03,2018-11,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1196,Sappi,2018-03-21,2018-11,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1197,Shandong Chenming,2017-09-15,2018-11,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1200,Stora Enso,2017-11-21,2018-11,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No
-,2,1201,Suzano Papel e Celulose,2018-01-04,2018-11,2,,Yes,Yes,Yes,No,Yes,No,No,Yes,No,No,No,Not applicable,No,No,No,No,No
-,2,1207,UPM-Kymmene,2017-10-07,2018-11,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,Yes,No
-,2,1001,BMW,2017-10-18,2018-11,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes
-,2,1002,Brilliance,2017-10-26,2018-11,0,,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,2,1005,Daimler,2017-12-27,2018-11,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No
-,2,1006,Ferrari,2017-10-26,2018-11,1,,Yes,Yes,No,Yes,No,No,Yes,No,No,No,No,No,Yes,No,No,No,No
-,2,1009,Fiat Chrysler,2018-02-26,2018-11,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No
-,2,1011,Ford,2017-12-14,2018-11,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No
-,2,1029,Geely,2017-10-24,2018-11,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No
-,2,1043,General Motors,2017-12-15,2018-11,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,No,Yes
-,2,1044,Groupe PSA,2017-10-31,2018-11,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,No
-,2,1052,Honda,2018-01-24,2018-11,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,No,No,No
-,2,1062,Hyundai,2017-12-07,2018-11,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,No,No,No
-,2,1075,Kia,2017-11-13,2018-11,1,,Yes,No,Yes,Yes,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,No
-,2,1076,Mazda,2018-01-26,2018-11,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No
-,2,1077,Mitsubishi,2018-02-01,2018-11,2,,Yes,Yes,Yes,No,Yes,No,No,Yes,No,No,Yes,Yes,No,Yes,Yes,No,No
-,2,1080,Nissan,2017-12-07,2018-11,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No
-,2,1085,Renault,2018-02-27,2018-11,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,No
-,2,1087,Subaru,2018-05-05,2018-11,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,No,No,Yes,No,No
-,2,1090,Suzuki,2018-04-23,2018-11,1,,Yes,No,Yes,Yes,Yes,No,Yes,Yes,No,No,No,Yes,No,No,No,No,No
-,2,1095,Tesla,2017-12-14,2018-11,0,,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,2,1097,Toyota,2018-02-08,2018-11,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No
-,2,1098,Volkswagen,2018-01-08,2018-11,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,No,No
-,2,1210,Bunge,2018-04-03,2018-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Not applicable,No,No,No,No,No
-,2,1228,Coca-Cola,2018-05-05,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1212,Colgate-Palmolive,2017-09-19,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1217,Danone,2018-05-05,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes
-,2,1102,Nestle,2017-11-29,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1046,Panasonic,2018-03-01,2018-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,No
-,2,1165,Pepsico,2018-05-05,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1138,Procter & Gamble,2018-04-10,2018-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,No,No,No
-,2,1231,Unilever,2017-10-06,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes
-,2,1111,Centrica,2018-03-27,2018-12,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes
-,2,1218,Enbridge,2018-05-05,2018-12,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,No,Yes,Yes,No,No,Yes,Yes,No,Yes
-,2,1113,Naturgy Energy,2018-05-09,2018-12,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes
-,2,1220,Kinder Morgan,2018-05-05,2018-12,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,No,Yes,No,No,No
-,2,1224,Santos,2018-04-30,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes
-,2,1229,Transcanada,2018-04-26,2018-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,Yes
-,2,1221,Air Liquide,2017-10-20,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,Yes,No,No
-,2,1034,BASF,2018-04-28,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
-,2,1041,LyondellBasell Industries,2018-01-30,2018-12,2,,Yes,Yes,Yes,No,Yes,No,No,Yes,Yes,Yes,No,Not applicable,No,Yes,No,No,No
-,2,1139,Nornickel,2018-05-09,2018-12,2,,Yes,Yes,Yes,No,No,No,No,No,Yes,No,No,Not applicable,No,No,No,No,No
-,2,1171,Sasol,2018-04-27,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,Yes,Yes,No
-,2,1148,Southern Copper,2017-12-04,2018-12,2,,Yes,Yes,Yes,No,No,No,No,No,Yes,No,No,Not applicable,No,No,No,No,No
-,2,1149,Teck Resources,2017-09-28,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
-,2,1042,Toray Industries,2018-03-29,2018-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Not applicable,No,No,Yes,No,No
-,2,1119,Vedanta,2018-04-05,2018-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Not applicable,No,Yes,Yes,No,No
-,2,1262,Airbus,2018-03-06,2018-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1125,AP Moller – Maersk,2018-01-09,2018-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,Yes,Yes,Not applicable,Yes,No,No,No,No
-,2,1245,Boeing,2017-10-30,2018-12,2,,Yes,Yes,Yes,No,Yes,No,No,Yes,Yes,No,Yes,Not applicable,No,Yes,No,No,No
-,2,1018,Caterpillar,2018-04-24,2018-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,Yes,No,No,Yes,No,No,No,No
-,2,1019,Cummins,2018-04-24,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No
-,2,1014,Daikin Industries,2018-04-28,2018-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
-,2,1084,General Electric,2018-05-01,2018-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Not applicable,Yes,Yes,No,Yes,No
-,2,1096,Hitachi,2018-02-13,2018-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,No
-,2,1094,Hon Hai Precision Industry,2018-05-24,2018-12,1,,Yes,No,Yes,Yes,No,No,Yes,No,Yes,No,No,Not applicable,No,No,No,No,No
-,2,1117,Ingersoll-Rand,2018-05-30,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1060,Lockheed Martin,2018-03-05,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1026,PACCAR,2018-04-28,2018-12,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,2,1128,Philips,2018-04-09,2018-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,No,No,No
-,2,1249,Rolls-Royce,2018-04-02,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1086,Siemens,2018-04-17,2018-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
-,2,1215,St Gobain,2018-05-12,2018-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes
-,2,1261,United Technologies,2018-02-08,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,Yes,No,No
-,2,1232,United Tractors,2018-04-24,2018-12,2,,Yes,Yes,Yes,No,No,Yes,No,No,No,No,Yes,No,No,No,No,No,No
-,2,1033,Volvo,2018-01-09,2018-12,1,,Yes,No,Yes,Yes,Yes,No,Yes,Yes,No,No,No,No,Yes,No,No,No,No
-,2,1152,Bayer,2017-11-08,2018-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,Yes,No,No
-,2,1162,Berkshire Hathaway,2017-10-03,2018-12,1,,Yes,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1236,Walmart,2017-12-16,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1114,Wesfarmers,2018-04-28,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,Yes,No,Yes
-,2,1237,Weyerhaeuser,2018-04-25,2018-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Not applicable,Yes,Yes,No,No,No
-,2,1240,Woolworths,2018-04-27,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,Yes,No,No
-,2,1267,Air China,2018-04-16,2019-2,1,,Yes,No,Yes,No,Yes,No,No,No,Yes,No,No,Not applicable,No,No,No,No,No
-,2,1268,Alaska Air,2018-01-09,2019-2,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,No,No,Not applicable,Yes,Yes,No,No,No
-,2,1104,American Airlines,2018-03-20,2019-2,2,,Yes,Yes,Yes,No,Yes,No,No,Yes,No,Yes,Yes,Not applicable,No,No,No,Yes,No
-,2,1269,ANA Holdings,2018-04-09,2019-2,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,No
-,2,1270,China Southern,2018-02-21,2019-2,1,,Yes,No,Yes,No,Yes,No,No,No,No,Yes,No,Not applicable,No,No,No,No,No
-,2,1110,Delta Air Lines,2018-05-05,2019-2,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No
-,2,1272,Easyjet,2018-05-05,2019-2,2,,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,Yes,Yes,Not applicable,Yes,Yes,No,No,No
-,2,1274,IAG,2018-04-28,2019-2,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,No,No,Yes,No
-,2,1273,IndiGo,2018-05-05,2019-2,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1275,Japan Airlines,2018-01-31,2019-2,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No,No,No,Not applicable,Yes,No,No,No,No
-,2,1276,Jetblue,2018-02-15,2019-2,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No,Yes,No,Not applicable,Yes,Yes,No,No,No
-,2,1277,Korean Air,2017-12-18,2019-2,1,,Yes,No,Yes,Yes,Yes,No,Yes,No,Yes,No,Yes,Not applicable,No,No,No,No,No
-,2,1278,LATAM,2018-01-09,2019-2,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Not applicable,Yes,No,No,No,No
-,2,1271,Lufthansa,2018-03-13,2019-2,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1116,Qantas,2018-05-05,2019-2,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1279,Singapore Airlines,2018-05-05,2019-2,1,,Yes,No,Yes,No,No,No,No,No,No,Yes,No,Not applicable,No,No,No,No,No
-,2,1280,Southwest,2018-03-21,2019-2,2,,Yes,Yes,Yes,No,Yes,No,No,Yes,Yes,Yes,Yes,Not applicable,No,No,No,No,No
-,2,1281,Turkish Airlines,2018-03-06,2019-2,1,,Yes,No,Yes,Yes,No,Yes,Yes,No,No,No,Yes,Not applicable,No,No,No,No,No
-,2,1123,United Continental,2018-05-05,2019-2,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,No,Yes,Yes,No
-,2,1283,Wizz Air,2018-05-05,2019-2,0,,No,No,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1285,Alcoa,2018-05-05,2019-2,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No
-,2,1286,Alumina,2018-05-05,2019-2,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,No
-,2,1284,Arconic,2018-05-05,2019-2,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1287,Chalco,2017-09-15,2019-2,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1288,China Zhongwang,2018-04-16,2019-2,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1289,Nippon Light Metal,2018-06-07,2019-2,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Not applicable,Yes,No,No,No,No
-,2,1290,Norsk Hydro,2018-05-05,2019-2,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Not applicable,No,Yes,No,Yes,No
-,2,1291,Press Metal,2017-12-13,2019-2,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
-,2,1170,Rio Tinto (Aluminium),2017-11-06,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
-,2,1189,South32 (Aluminium),2018-05-04,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,Yes,No
-,2,1292,UACJ,2018-06-07,2019-2,2,,Yes,Yes,Yes,No,Yes,No,No,No,No,No,Yes,Not applicable,No,No,No,No,No
-,2,1293,UC RUSAL,2018-03-21,2019-2,2,,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,Yes,Yes,Not applicable,Yes,No,No,Yes,No
+Company id,Company,Assessment date,Publication date,Level,Notes,Q1L0|Does the company acknowledge climate change as a significant issue for the business?,Q2L1|Does the company explicitly recognise climate change as a relevant risk and/or opportunity to the business?,Q3L1|Does the company have a policy (or equivalent) commitment to action on climate change?,Q4L2|Has the company set greenhouse gas emission reduction targets?,Q5L2|Has the company published information on its Scope 1 and 2 greenhouse gas emissions?,Q6L3|Has the company nominated a board member or board committee with explicit responsibility for oversight of the climate change policy?,Q7L3|Has the company set quantitative targets for reducing its greenhouse gas emissions?,Q8L3|Does the company report on Scope 3 emissions?,Q9L3|Has the company had its operational (Scope 1 and/or 2) greenhouse gas emissions data verified?,Q10L3|Does the company support domestic and international efforts to mitigate climate change?,Q11L3|Does the company have a process to manage climate-related risks?,Q12L3|Does the company disclose Scope 3 use of product emissions?,Q13L4|Has the company set long-term quantitative targets for reducing its greenhouse gas emissions?,"Q14L4|Has the company incorporated environmental, social and governance issues into executive remuneration?",Q15L4|Does the company incorporate climate change risks and opportunities in their strategy?,Q16L4|Does the company undertake climate scenario planning?,Q17L4|Does the company have an internal price of carbon?
+1225,AES,2018-01-25,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,No,No,No
+1294,AGL Energy,2018-05-04,2018-7,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes
+1246,Alliant Energy,2018-05-04,2018-7,2,,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,No,Yes,Not applicable,Yes,Yes,Yes,No,No
+1248,Ameren,2017-09-20,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,No,No,Yes,Not applicable,No,Yes,No,No,Yes
+1250,American Electric Power,2018-05-04,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes
+1017,CenterPoint Energy,2017-09-27,2018-7,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,Not applicable,No,Yes,No,No,No
+1211,CEZ,2018-04-24,2018-12,1,,Yes,No,Yes,Yes,No,No,Yes,Yes,No,Yes,No,Not applicable,Yes,No,Yes,No,No
+1027,Chubu Electric Power,2018-04-03,2018-7,1,,Yes,No,Yes,Yes,Yes,No,No,Yes,No,No,No,Not applicable,No,No,No,No,No
+1028,CLP,2018-05-04,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No
+1030,CMS Energy,2018-04-09,2018-7,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No
+1038,Con Edison,2018-01-10,2018-7,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,No,No,No
+1051,Dominion Energy,2018-05-04,2018-7,2,,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,Yes,No,Not applicable,Yes,Yes,Yes,No,No
+1053,DTE Energy,2017-11-01,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,No,No,No
+1054,Duke Energy,2018-04-19,2018-7,2,,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,No,No,No
+1055,E.ON,2018-03-04,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,Yes,Yes
+1059,EDF,2018-03-29,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
+1058,Edison International,2017-12-14,2018-7,1,,Yes,Yes,No,No,Yes,Yes,No,Yes,No,No,No,Not applicable,No,Yes,No,No,No
+1063,Enel,2018-01-31,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,Yes,Yes
+1064,Engie,2017-12-31,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
+1066,Entergy,2017-09-14,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
+1070,Eversource Energy,2017-10-19,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Not applicable,No,Yes,Yes,No,No
+1072,Exelon,2018-05-04,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Not applicable,No,Yes,Yes,No,Yes
+1078,Firstenergy,2018-02-20,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No
+1082,Fortis,2017-09-21,2018-7,2,,Yes,Yes,Yes,No,Yes,No,No,No,No,No,No,Not applicable,No,Yes,No,No,No
+1083,Fortum,2017-10-24,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
+1100,Iberdrola,2018-02-19,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,Yes,Yes
+1109,KEPCO,2018-01-04,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Not applicable,No,No,No,No,No
+1127,National Grid,2018-04-23,2018-7,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes
+1129,NextEra Energy,2017-12-12,2018-7,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,Not applicable,No,Yes,No,No,No
+1223,NRG Energy,2017-10-17,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
+1047,NTPC,2018-05-05,2018-12,1,,Yes,No,Yes,No,Yes,No,No,No,Yes,No,No,Not applicable,No,No,No,No,No
+1146,Origin Energy,2018-05-04,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,No,Yes,Yes,Not applicable,No,Yes,Yes,Yes,Yes
+1147,Orsted,2018-04-16,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No
+1155,PG&E,2018-03-19,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No
+1157,Pinnacle West Capital,2018-04-16,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No
+1160,Power Assets,2017-09-14,2018-7,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1161,PPL,2017-12-27,2018-7,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,Not applicable,No,Yes,No,No,No
+1166,Red Electrica,2017-09-13,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
+1174,RWE,2017-12-19,2018-7,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
+1181,Sempra Energy,2017-12-05,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Not applicable,Yes,Yes,No,No,Yes
+1190,Southern Company,2017-12-27,2018-7,2,,Yes,Yes,Yes,No,No,Yes,No,No,Yes,No,No,Not applicable,No,Yes,No,No,No
+1193,SSE,2018-05-02,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No
+1208,Tenaga Nasional,2018-04-27,2018-7,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,Yes,Not applicable,No,No,No,No,No
+1233,Vistra Energy,2018-04-09,2018-12,1,,Yes,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1235,WEC Energy Group,2018-05-08,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
+1241,XCEL Energy,2017-10-09,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes
+1264,Adaro Energy,2018-05-04,2018-7,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No
+1266,African Rainbow Minerals,2018-03-23,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,No,No
+1253,Anglo American,2017-09-14,2018-7,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
+1260,Banpu,2018-04-27,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,No
+1003,BHP Billiton,2018-03-22,2018-7,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
+1204,Bukit Asam,2017-09-26,2018-7,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No
+1025,China Shenhua Energy,2018-05-08,2018-7,1,,Yes,No,Yes,No,No,No,No,No,Yes,No,No,No,No,No,No,No,No
+1032,Coal India,2018-04-16,2018-7,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No
+1050,DMCI Holdings,2017-09-14,2018-7,1,,Yes,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
+1073,Exxaro Resources,2018-04-27,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No,Yes
+1089,Glencore,2017-10-03,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,No
+1103,Inner Mongolia Yitai Coal,2018-04-15,2018-7,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No
+1105,Jastrzebska Spolka Weglowa,2017-09-20,2018-7,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No
+1358,Rio Tinto (Coal Mining),2017-11-06,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No
+1184,Shougang Fushan Resources,2017-08-22,2018-7,0,,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
+1360,South32 (Coal Mining),2018-05-04,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No
+1226,Vale,2017-09-21,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No
+1238,Whitehaven Coal,2018-05-04,2018-7,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,Yes,No,No,No
+1242,Yanzhou Coal Mining,2018-05-04,2018-7,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No
+1251,Anadarko Petroleum,2018-04-27,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,No,Yes,Yes,Yes,No,Yes,No,Yes,No
+1252,Andeavor,2018-05-04,2018-7,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,Yes,No,No,No
+1256,Apache,2018-02-07,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,No,No,Yes,Yes,No,No,Yes,No,No,No
+1008,BP,2018-05-08,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes
+1012,Canadian Natural Resources,2018-05-08,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,No,No,Yes,No,No,No
+1016,Cenovus Energy,2018-05-04,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No
+1020,Chevron,2017-12-05,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,No,Yes,Yes,No,Yes,No,No,No
+1023,China Petroleum & Chemical,2018-05-04,2018-7,2,,Yes,Yes,Yes,No,No,Yes,No,No,No,No,Yes,No,No,No,No,No,No
+1031,CNOOC,2017-09-28,2018-7,2,,Yes,Yes,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No
+1036,Concho Resources,2017-09-19,2018-7,1,,Yes,Yes,No,No,No,No,No,No,No,No,No,No,No,Yes,No,No,No
+1037,ConocoPhillips,2018-05-04,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,No,No,Yes
+1048,Devon Energy,2018-03-27,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,No,No,Yes,No,Yes,Yes
+1049,Diamondback Energy,2017-09-17,2018-7,1,,Yes,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
+1057,Ecopetrol,2018-05-04,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Yes,No,No,Yes,No,No,No
+1061,Encana,2018-05-04,2018-7,2,,Yes,Yes,Yes,No,No,Yes,No,No,No,No,Yes,No,No,Yes,No,No,No
+1065,Eni,2017-10-13,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes
+1067,EOG Resources,2017-09-28,2018-7,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,Yes,No,No,Yes,No,No,No
+1194,Equinor,2018-05-04,2018-7,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
+1074,Exxon Mobil,2018-05-04,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,No,Yes,Yes,Yes,No,No,Yes,No,No,No
+1081,Formosa Petrochemical,2018-05-04,2018-7,2,,Yes,Yes,Yes,No,Yes,No,No,Yes,Yes,No,Yes,No,No,No,No,No,No
+1141,Gazprom,2018-05-08,2018-7,2,,Yes,Yes,Yes,No,Yes,No,No,Yes,Yes,Yes,Yes,No,No,Yes,No,No,No
+1093,Hess,2018-04-27,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,No,Yes
+1101,Imperial Oil,2018-05-09,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No,No
+1108,JXTG,2018-02-15,2018-7,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,No,Yes,No,Yes,No,No
+1118,Lukoil,2018-04-23,2018-7,3,,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,No,Yes,No,No,Yes,No,No,No
+1120,Marathon Oil,2018-05-08,2018-7,2,,Yes,Yes,Yes,No,No,Yes,No,No,No,No,Yes,No,No,No,No,No,No
+1121,Marathon Petroleum,2017-12-31,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,No,No,No,Yes,No,No,Yes,No,Yes,No
+1135,Noble Energy,2018-05-04,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,No,No,Yes,Yes,No,Yes,No,No,No
+1136,NovaTek,2018-03-12,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,No,No,Yes,No,No,No,No,No,No
+1142,Occidental Petroleum,2018-05-04,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,No,No,Yes,Yes,No,No,Yes,No,Yes,No
+1143,Oil & Natural Gas,2018-05-04,2018-7,2,,Yes,Yes,Yes,No,Yes,No,No,Yes,Yes,No,No,No,No,No,No,No,No
+1145,OMV,2018-05-08,2018-7,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,No,No,No
+1153,Petrobras,2018-03-06,2018-7,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,No,No,Yes,No,No
+1154,Petrochina,2017-12-17,2018-7,1,,Yes,No,Yes,No,No,No,No,No,No,Yes,No,No,No,No,No,No,No
+1156,Phillips 66,2018-01-08,2018-7,2,,Yes,Yes,Yes,No,No,No,No,No,Yes,No,No,No,No,Yes,No,No,No
+1163,PTT,2017-09-28,2018-7,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,No,No,Yes
+1167,Reliance Industries,2018-05-04,2018-7,2,,Yes,Yes,Yes,No,Yes,No,No,No,Yes,No,No,No,No,No,No,No,No
+1169,Repsol,2018-05-04,2018-7,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
+1172,Rosneft Oil,2018-05-08,2018-7,1,,Yes,No,Yes,No,Yes,No,No,No,Yes,No,No,No,No,No,No,No,No
+1173,Royal Dutch Shell,2017-09-18,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes
+1188,SK Innovation,2018-01-04,2018-7,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,No
+1206,TATNEFT,2018-05-04,2018-7,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No
+1216,Total,2018-05-09,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes
+1227,Valero Energy,2017-09-18,2018-7,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,No,Yes,No,No,No
+1239,Woodside Petroleum,2017-09-14,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No,No
+1263,Acerinox,2018-01-19,2018-9,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Not applicable,Yes,No,Yes,No,No
+1254,Arcelor Mittal,2018-01-29,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
+1092,Bluescope Steel,2018-05-05,2018-9,1,,Yes,No,Yes,No,Yes,Yes,No,No,No,No,Yes,Not applicable,No,Yes,No,No,No
+1132,China Steel,2018-05-18,2018-9,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,Yes,No,No
+1068,Erdemir,2017-11-17,2018-9,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1071,Evraz,2018-01-19,2018-9,1,,Yes,No,Yes,No,Yes,Yes,No,No,No,No,Yes,Not applicable,No,Yes,No,No,No
+1088,Gerdau,2017-11-10,2018-9,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1099,Hyundai Steel,2017-11-10,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,No,No,No,No
+1106,JFE Holdings,2018-05-24,2018-9,1,,Yes,No,Yes,No,Yes,No,No,Yes,No,No,No,Not applicable,No,No,No,No,No
+1107,JSW Steel,2018-05-23,2018-9,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,No,No,No
+1112,Kobe Steel,2018-04-04,2018-9,1,,Yes,No,Yes,Yes,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1007,Nippon Steel & Sumitomo Metal,2018-03-28,2018-9,1,,Yes,No,Yes,Yes,Yes,Yes,Yes,No,No,No,No,Not applicable,Yes,No,No,No,No
+1134,Nisshin Steel,2018-03-08,2018-9,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1137,Novolipetsk Steel,2018-04-09,2018-9,0,,No,No,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1140,Nucor,2017-10-18,2018-9,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1015,Posco,2018-01-23,2018-9,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Not applicable,Yes,No,No,No,Yes
+1214,Severstal,2018-04-28,2018-9,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1195,Steel Dynamics,2017-11-15,2018-9,1,,Yes,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1205,Tata Steel,2018-03-07,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,No,Yes,Yes,Yes
+1209,Tenaris,2017-12-22,2018-9,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1176,ThyssenKrupp,2018-05-05,2018-9,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
+1222,United States Steel,2017-09-18,2018-9,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,Yes,Yes,Not applicable,No,No,No,No,No
+1230,Voestalpine,2018-05-05,2018-9,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,Not applicable,No,Yes,No,No,No
+1040,Adelaide Brighton,2017-10-18,2018-9,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,Yes,No,No,No
+1247,Ambuja Cements,2018-04-19,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes
+1265,Anhui Conch Cement,2017-09-15,2018-9,0,,No,No,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1259,Asia Cement,2018-04-16,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,No,Yes,No,No
+1115,Boral,2018-04-19,2018-9,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,No,Yes,Yes,Not applicable,No,No,No,No,No
+1122,Cemex,2018-01-09,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,No,No,Yes
+1022,China National Building Materials,2018-01-05,2018-9,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1024,China Resources Cement Holdings,2017-09-15,2018-9,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1159,CRH,2018-05-05,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
+1056,Eagle Materials,2018-05-23,2018-9,1,,Yes,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1079,Fletcher Building,2018-02-08,2018-9,2,,Yes,Yes,Yes,No,Yes,No,No,Yes,No,No,Yes,Not applicable,No,No,No,No,No
+1182,HeidelbergCement,2018-05-09,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes
+1257,LafargeHolcim,2017-10-03,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,Yes
+1004,Martin Marietta Materials,2017-09-15,2018-9,0,,No,No,No,No,No,No,No,No,No,No,No,Not applicable,No,Yes,No,No,No
+1179,Semen Indonesia,2017-10-31,2018-9,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1185,Shree Cements,2017-10-31,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,Yes
+1186,Siam Cement,2018-04-19,2018-9,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,Not applicable,Yes,No,No,No,No
+1198,Sumitomo Osaka Cement,2018-02-05,2018-9,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1202,Taiheiyo Cement,2018-05-05,2018-9,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,No,Not applicable,Yes,No,No,No,No
+1203,Taiwan Cement,2018-04-04,2018-9,1,,Yes,No,Yes,No,Yes,No,No,No,Yes,No,No,Not applicable,No,No,No,No,No
+1219,UltraTech Cement,2018-04-24,2018-9,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
+1124,CMPC,2018-01-04,2018-11,2,,Yes,Yes,Yes,No,Yes,Yes,No,No,No,No,Yes,Not applicable,No,No,Yes,No,No
+1126,Daio Paper,2018-06-07,2018-11,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1130,Domtar,2017-12-04,2018-11,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
+1131,Ence Energia y Celulosa,2018-01-04,2018-11,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1133,Fibria,2017-12-06,2018-11,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,Yes
+1144,Hokuetsu,2018-06-05,2018-11,1,,Yes,No,Yes,Yes,No,No,Yes,No,No,No,No,Not applicable,No,No,No,No,No
+1150,International Paper,2017-12-05,2018-11,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
+1168,Lee & Man Paper Manufacturing,2017-12-07,2018-11,0,,No,No,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1177,Mondi,2017-10-18,2018-11,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes
+1178,Nine Dragons Paper Industries,2018-02-05,2018-11,0,,No,No,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1183,Nippon Paper Industries,2018-01-05,2018-11,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No,No,Yes,Not applicable,No,Yes,No,No,No
+1187,Oji Holdings,2018-01-12,2018-11,1,,Yes,No,Yes,Yes,Yes,No,Yes,No,No,No,No,Not applicable,No,No,No,No,No
+1191,Pap Y Cart Euro,2018-01-03,2018-11,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1196,Sappi,2018-03-21,2018-11,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
+1197,Shandong Chenming,2017-09-15,2018-11,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1200,Stora Enso,2017-11-21,2018-11,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No
+1201,Suzano Papel e Celulose,2018-01-04,2018-11,2,,Yes,Yes,Yes,No,Yes,No,No,Yes,No,No,No,Not applicable,No,No,No,No,No
+1207,UPM-Kymmene,2017-10-07,2018-11,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,Yes,No
+1001,BMW,2017-10-18,2018-11,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes
+1002,Brilliance,2017-10-26,2018-11,0,,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
+1005,Daimler,2017-12-27,2018-11,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No
+1006,Ferrari,2017-10-26,2018-11,1,,Yes,Yes,No,Yes,No,No,Yes,No,No,No,No,No,Yes,No,No,No,No
+1009,Fiat Chrysler,2018-02-26,2018-11,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No
+1011,Ford,2017-12-14,2018-11,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No
+1029,Geely,2017-10-24,2018-11,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No
+1043,General Motors,2017-12-15,2018-11,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,No,Yes
+1044,Groupe PSA,2017-10-31,2018-11,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,No
+1052,Honda,2018-01-24,2018-11,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,No,No,No
+1062,Hyundai,2017-12-07,2018-11,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,No,No,No
+1075,Kia,2017-11-13,2018-11,1,,Yes,No,Yes,Yes,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,No
+1076,Mazda,2018-01-26,2018-11,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No
+1077,Mitsubishi,2018-02-01,2018-11,2,,Yes,Yes,Yes,No,Yes,No,No,Yes,No,No,Yes,Yes,No,Yes,Yes,No,No
+1080,Nissan,2017-12-07,2018-11,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No
+1085,Renault,2018-02-27,2018-11,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,No
+1087,Subaru,2018-05-05,2018-11,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,No,No,Yes,No,No
+1090,Suzuki,2018-04-23,2018-11,1,,Yes,No,Yes,Yes,Yes,No,Yes,Yes,No,No,No,Yes,No,No,No,No,No
+1095,Tesla,2017-12-14,2018-11,0,,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
+1097,Toyota,2018-02-08,2018-11,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No
+1098,Volkswagen,2018-01-08,2018-11,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,No,No
+1210,Bunge,2018-04-03,2018-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Not applicable,No,No,No,No,No
+1228,Coca-Cola,2018-05-05,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
+1212,Colgate-Palmolive,2017-09-19,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
+1217,Danone,2018-05-05,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes
+1102,Nestle,2017-11-29,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
+1046,Panasonic,2018-03-01,2018-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,No
+1165,Pepsico,2018-05-05,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
+1138,Procter & Gamble,2018-04-10,2018-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,No,No,No
+1231,Unilever,2017-10-06,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes
+1111,Centrica,2018-03-27,2018-12,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes
+1218,Enbridge,2018-05-05,2018-12,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,No,Yes,Yes,No,No,Yes,Yes,No,Yes
+1113,Naturgy Energy,2018-05-09,2018-12,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes
+1220,Kinder Morgan,2018-05-05,2018-12,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,No,Yes,No,No,No
+1224,Santos,2018-04-30,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes
+1229,Transcanada,2018-04-26,2018-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,Yes
+1221,Air Liquide,2017-10-20,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,Yes,No,No
+1034,BASF,2018-04-28,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
+1041,LyondellBasell Industries,2018-01-30,2018-12,2,,Yes,Yes,Yes,No,Yes,No,No,Yes,Yes,Yes,No,Not applicable,No,Yes,No,No,No
+1139,Nornickel,2018-05-09,2018-12,2,,Yes,Yes,Yes,No,No,No,No,No,Yes,No,No,Not applicable,No,No,No,No,No
+1171,Sasol,2018-04-27,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,Yes,Yes,No
+1148,Southern Copper,2017-12-04,2018-12,2,,Yes,Yes,Yes,No,No,No,No,No,Yes,No,No,Not applicable,No,No,No,No,No
+1149,Teck Resources,2017-09-28,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
+1042,Toray Industries,2018-03-29,2018-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Not applicable,No,No,Yes,No,No
+1119,Vedanta,2018-04-05,2018-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Not applicable,No,Yes,Yes,No,No
+1262,Airbus,2018-03-06,2018-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
+1125,AP Moller – Maersk,2018-01-09,2018-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,Yes,Yes,Not applicable,Yes,No,No,No,No
+1245,Boeing,2017-10-30,2018-12,2,,Yes,Yes,Yes,No,Yes,No,No,Yes,Yes,No,Yes,Not applicable,No,Yes,No,No,No
+1018,Caterpillar,2018-04-24,2018-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,Yes,No,No,Yes,No,No,No,No
+1019,Cummins,2018-04-24,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No
+1014,Daikin Industries,2018-04-28,2018-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
+1084,General Electric,2018-05-01,2018-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Not applicable,Yes,Yes,No,Yes,No
+1096,Hitachi,2018-02-13,2018-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,No
+1094,Hon Hai Precision Industry,2018-05-24,2018-12,1,,Yes,No,Yes,Yes,No,No,Yes,No,Yes,No,No,Not applicable,No,No,No,No,No
+1117,Ingersoll-Rand,2018-05-30,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
+1060,Lockheed Martin,2018-03-05,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
+1026,PACCAR,2018-04-28,2018-12,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No
+1128,Philips,2018-04-09,2018-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,No,No,No
+1249,Rolls-Royce,2018-04-02,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
+1086,Siemens,2018-04-17,2018-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,No,No
+1215,St Gobain,2018-05-12,2018-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes
+1261,United Technologies,2018-02-08,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,Yes,No,No
+1232,United Tractors,2018-04-24,2018-12,2,,Yes,Yes,Yes,No,No,Yes,No,No,No,No,Yes,No,No,No,No,No,No
+1033,Volvo,2018-01-09,2018-12,1,,Yes,No,Yes,Yes,Yes,No,Yes,Yes,No,No,No,No,Yes,No,No,No,No
+1152,Bayer,2017-11-08,2018-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,Yes,No,No
+1162,Berkshire Hathaway,2017-10-03,2018-12,1,,Yes,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1236,Walmart,2017-12-16,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
+1114,Wesfarmers,2018-04-28,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,Yes,No,Yes
+1237,Weyerhaeuser,2018-04-25,2018-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Not applicable,Yes,Yes,No,No,No
+1240,Woolworths,2018-04-27,2018-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,Yes,No,No
+1267,Air China,2018-04-16,2019-2,1,,Yes,No,Yes,No,Yes,No,No,No,Yes,No,No,Not applicable,No,No,No,No,No
+1268,Alaska Air,2018-01-09,2019-2,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,No,No,Not applicable,Yes,Yes,No,No,No
+1104,American Airlines,2018-03-20,2019-2,2,,Yes,Yes,Yes,No,Yes,No,No,Yes,No,Yes,Yes,Not applicable,No,No,No,Yes,No
+1269,ANA Holdings,2018-04-09,2019-2,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,No
+1270,China Southern,2018-02-21,2019-2,1,,Yes,No,Yes,No,Yes,No,No,No,No,Yes,No,Not applicable,No,No,No,No,No
+1110,Delta Air Lines,2018-05-05,2019-2,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No
+1272,Easyjet,2018-05-05,2019-2,2,,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,Yes,Yes,Not applicable,Yes,Yes,No,No,No
+1274,IAG,2018-04-28,2019-2,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,No,No,Yes,No
+1273,IndiGo,2018-05-05,2019-2,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1275,Japan Airlines,2018-01-31,2019-2,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No,No,No,Not applicable,Yes,No,No,No,No
+1276,Jetblue,2018-02-15,2019-2,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No,Yes,No,Not applicable,Yes,Yes,No,No,No
+1277,Korean Air,2017-12-18,2019-2,1,,Yes,No,Yes,Yes,Yes,No,Yes,No,Yes,No,Yes,Not applicable,No,No,No,No,No
+1278,LATAM,2018-01-09,2019-2,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Not applicable,Yes,No,No,No,No
+1271,Lufthansa,2018-03-13,2019-2,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
+1116,Qantas,2018-05-05,2019-2,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
+1279,Singapore Airlines,2018-05-05,2019-2,1,,Yes,No,Yes,No,No,No,No,No,No,Yes,No,Not applicable,No,No,No,No,No
+1280,Southwest,2018-03-21,2019-2,2,,Yes,Yes,Yes,No,Yes,No,No,Yes,Yes,Yes,Yes,Not applicable,No,No,No,No,No
+1281,Turkish Airlines,2018-03-06,2019-2,1,,Yes,No,Yes,Yes,No,Yes,Yes,No,No,No,Yes,Not applicable,No,No,No,No,No
+1123,United Continental,2018-05-05,2019-2,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,No,Yes,Yes,No
+1283,Wizz Air,2018-05-05,2019-2,0,,No,No,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1285,Alcoa,2018-05-05,2019-2,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No
+1286,Alumina,2018-05-05,2019-2,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,No
+1284,Arconic,2018-05-05,2019-2,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
+1287,Chalco,2017-09-15,2019-2,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1288,China Zhongwang,2018-04-16,2019-2,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1289,Nippon Light Metal,2018-06-07,2019-2,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Not applicable,Yes,No,No,No,No
+1290,Norsk Hydro,2018-05-05,2019-2,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Not applicable,No,Yes,No,Yes,No
+1291,Press Metal,2017-12-13,2019-2,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No
+1170,Rio Tinto (Aluminium),2017-11-06,2019-2,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No
+1189,South32 (Aluminium),2018-05-04,2018-7,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,No,Yes,No
+1292,UACJ,2018-06-07,2019-2,2,,Yes,Yes,Yes,No,Yes,No,No,No,No,No,Yes,Not applicable,No,No,No,No,No
+1293,UC RUSAL,2018-03-21,2019-2,2,,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,Yes,Yes,Not applicable,Yes,No,No,Yes,No

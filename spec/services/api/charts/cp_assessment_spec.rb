@@ -31,16 +31,19 @@ RSpec.describe Api::Charts::CPAssessment do
         create(:cp_assessment,
                assessment_date: 10.months.ago,
                publication_date: 10.months.ago,
+               last_reported_year: 2018,
                company: company_sector_a_1,
                emissions: {'2017' => 90.0, '2018' => 90.0, '2019' => 110.0})
         create(:cp_assessment,
                assessment_date: 6.months.ago,
                publication_date: 6.months.ago,
+               last_reported_year: 2018,
                company: company_sector_a_1,
                emissions: {'2017' => 100.0, '2018' => 70.0, '2019' => 110.0})
         create(:cp_assessment,
                assessment_date: 11.months.ago,
                publication_date: 11.months.ago,
+               last_reported_year: 2018,
                company: company_sector_a_2,
                emissions: {'2017' => 40.0, '2018' => 50.0})
       end
@@ -54,7 +57,8 @@ RSpec.describe Api::Charts::CPAssessment do
           cp_benchmarks_data = subject.emissions_data.find { |s| s[:name] == 'scenario' }[:data]
 
           expect(company_sector_a_1_data).to eq(2017 => 100.0, 2018 => 70.0, 2019 => 110.0)
-          expect(sector_average_data).to eq(2017 => (100.0 + 40.0) / 2, 2018 => (70.0 + 50.0) / 2, 2019 => 110.0)
+          # sector average_data is only up to last_reported_year
+          expect(sector_average_data).to eq(2017 => (100.0 + 40.0) / 2, 2018 => (70.0 + 50.0) / 2)
           expect(cp_benchmarks_data).to eq(2016 => 115.5, 2017 => 122.0, 2018 => 124.0)
         end
       end
@@ -68,7 +72,8 @@ RSpec.describe Api::Charts::CPAssessment do
           cp_benchmarks_data = subject.emissions_data.find { |s| s[:name] == 'scenario' }[:data]
 
           expect(company_sector_a_1_data).to eq(2017 => 90.0, 2018 => 90.0, 2019 => 110.0)
-          expect(sector_average_data).to eq(2017 => (90.0 + 40.0) / 2, 2018 => (90.0 + 50.0) / 2, 2019 => 110.0)
+          # sector average_data is only up to last_reported_year
+          expect(sector_average_data).to eq(2017 => (90.0 + 40.0) / 2, 2018 => (90.0 + 50.0) / 2)
           expect(cp_benchmarks_data).to eq(2016 => 130.0, 2017 => 120.0, 2018 => 100.0)
         end
       end

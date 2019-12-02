@@ -1,14 +1,6 @@
 module Api
   module Presenters
     class Company
-      CP_ALIGNMENT_COLORS = {
-        '#00C170' => ['below 2 degrees', '2 degrees (high efficiency)'], # green
-        '#FFDD49' => ['2 degrees', '2 degrees (shift-improve)'], # yellow
-        '#FF9600' => ['paris pledges', 'international pledges'], # orange
-        '#ED3D4A' => ['not aligned'], # red
-        '#191919' => ['no disclosure'] # black
-      }.freeze
-
       def initialize(company)
         @company = company
       end
@@ -26,16 +18,9 @@ module Api
       end
 
       def cp_alignment
-        OpenStruct.new(
-          color: map_cp_alignment_color,
-          text: @company.cp_alignment
-        )
-      end
+        return unless @company.cp_alignment.present?
 
-      private
-
-      def map_cp_alignment_color
-        CP_ALIGNMENT_COLORS.select { |_k, v| v.include?(@company.cp_alignment&.downcase) }.keys.first || '#191919'
+        CP::Alignment.new(name: @company.cp_alignment)
       end
     end
   end
