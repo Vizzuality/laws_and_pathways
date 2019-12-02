@@ -30,7 +30,7 @@
               <p class="cp-alignment">
                 <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment.color %>">
                 </span>
-                <%= @company_presenter.cp_alignment.text %>
+                <%= @company_presenter.cp_alignment.name %>
               </p>
               <% unless ['not aligned', 'no disclosure', nil].include?(@company.cp_alignment&.downcase) %>
                 <p>

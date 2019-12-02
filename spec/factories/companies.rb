@@ -31,7 +31,7 @@ FactoryBot.define do
 
     ca100 { true }
     market_cap_group { Company::MARKET_CAP_GROUPS.sample }
-    visibility_status { Litigation::VISIBILITY.sample }
+    visibility_status { Company::VISIBILITY.sample }
 
     latest_information { 'My information' }
     historical_comments { 'I changed my name last week' }
