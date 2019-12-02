@@ -3,7 +3,7 @@
   <div class="pages__description">
     <%= @page.description.html_safe %>
   </div>
-  <% @page.contents.each do |content| %>
+  <% @page.contents.order(:created_at).each do |content| %>
     <div class="pages__content">
       <h4 class="pages__content-title"><%= content.title %></h4>
       <div class="pages__description"><%= content.text.html_safe %></div>
