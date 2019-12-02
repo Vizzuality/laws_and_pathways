@@ -145,7 +145,7 @@ module Api
 
         {
           name: company.name,
-          data: assessment&.emissions&.transform_keys(&:to_i),
+          data: (assessment&.emissions || {}).transform_keys(&:to_i),
           zoneAxis: 'x',
           zones: [{
             value: assessment&.last_reported_year&.to_i

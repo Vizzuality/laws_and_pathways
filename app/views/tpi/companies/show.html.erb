@@ -49,7 +49,7 @@
           <div class="columns">
             <div class="column">
               <%= render 'company_property', name: 'Country' do %>
-                <%= link_to @company.geography.name, cclow_geography_path(@company.geography) %>
+                <%= @company.geography.name %>
               <% end %>
             </div>
             <div class="column">
