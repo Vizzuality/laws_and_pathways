@@ -26,11 +26,21 @@
   .content {
     padding-bottom: $size-4;
   }
+
+  a {
+    color: $white;
+  }
 }
 
 .footer__information {
   background-color: $dark;
+  padding: 1.75rem;
   padding-top: 5rem;
+
+  @media #{$tablet-portrait} {
+    padding: unset;
+    padding-top: 5rem;
+  }
 
   hr {
     height: 1px;
@@ -82,4 +92,15 @@
     justify-content: flex-end;
     color: $grey-dark;
   }
+
+  .footer__menu-list {
+    .column {
+      flex-basis: auto;
+    }
+  }
+
+  .footer-link {
+    color: $white;
+  }
 }
+

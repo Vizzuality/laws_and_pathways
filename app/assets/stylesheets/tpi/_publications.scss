@@ -36,6 +36,19 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-direction: column;
+
+    @media #{$tablet-portrait} {
+      flex-direction: row;
+    }
+  }
+
+  &__title-text {
+    margin-bottom: 20px;
+
+    @media #{$tablet-portrait} {
+      margin-bottom: 0;
+    }
   }
 
   &__publications {
