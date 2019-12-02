@@ -5,38 +5,42 @@
   <section class="container">
     <div class="columns">
       <div class="column">
-        <div class="summary-box summary-box--assessment">
-          <h4>Management Quality</h4>
-          <p>
-            <small>Number of assessments: <%= @company.mq_assessments.size %></small>
-          </p>
-          <%= render 'mq_level', level: @company.mq_level, status: @company.mq_status %>
-          <p>
-            <%= t("tpi.company.level_description.#{@company.mq_level.to_i}") %></h3>
-          </p>
-        </div>
+        <a href="#management-quality" class="summary-box-link">
+          <div class="summary-box summary-box--assessment">
+            <h4>Management Quality</h4>
+            <p>
+              <small>Number of assessments: <%= @company.mq_assessments.size %></small>
+            </p>
+            <%= render 'mq_level', level: @company.mq_level, status: @company.mq_status %>
+            <p>
+              <%= t("tpi.company.level_description.#{@company.mq_level.to_i}") %></h3>
+            </p>
+          </div>
+        </a>
       </div>
       <div class="column">
-        <div class="summary-box summary-box--assessment">
-          <h4>Carbon Performance</h4>
-          <p>
-            <small>Number of assessments: <%= @company.cp_assessments.size %></small>
-          </p>
-
-          <% if @company_presenter.model.cp_alignment.present? %>
-            <p class="cp-alignment">
-              <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment.color %>">
-              </span>
-              <%= @company_presenter.cp_alignment.text %>
+        <a href="#carbon-performance" class="summary-box-link">
+          <div class="summary-box summary-box--assessment">
+            <h4>Carbon Performance</h4>
+            <p>
+              <small>Number of assessments: <%= @company.cp_assessments.size %></small>
             </p>
-            <% unless ['not aligned', 'no disclosure', nil].include?(@company.cp_alignment&.downcase) %>
-              <p>
-                The company’s emissions intensity and target are aligned
-                with the Paris agreement benchmark of <%= @company.cp_alignment %>
+
+            <% if @company_presenter.model.cp_alignment.present? %>
+              <p class="cp-alignment">
+                <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment.color %>">
+                </span>
+                <%= @company_presenter.cp_alignment.text %>
               </p>
+              <% unless ['not aligned', 'no disclosure', nil].include?(@company.cp_alignment&.downcase) %>
+                <p>
+                  The company’s emissions intensity and target are aligned
+                  with the Paris agreement benchmark of <%= @company.cp_alignment %>
+                </p>
+              <% end %>
             <% end %>
-          <% end %>
-        </div>
+          </div>
+        </a>
       </div>
     </div>
     <div class="columns">
@@ -79,7 +83,7 @@
     </div>
   </section>
 
-  <section class="management-quality container">
+  <section id="management-quality" class="management-quality container">
     <div class="management-quality__header">
       <h4>
         Management Quality: <%= @company.name %> <%= react_component("BaseTooltip", { content: t('.tooltips.mq_header') }) %>
@@ -108,7 +112,7 @@
   </section>
 
   <% unless @company.cp_assessments.empty? %>
-    <section class="carbon-performance container">
+    <section id="carbon-performance" class="carbon-performance container">
       <div class="management-quality__header">
         <h4>
           Carbon Performance <%= @company.name %> <%= react_component("BaseTooltip", { content: t('.tooltips.cp_header') }) %>

@@ -49,6 +49,13 @@
     }
   }
 
+  .summary-box-link {
+    color: unset;
+    &:hover, &:visited {
+      color: unset;
+    }
+  }
+
   .company-property {
     &__name {
       white-space: nowrap;
