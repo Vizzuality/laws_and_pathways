@@ -8,12 +8,11 @@ module Seed
       delegate :call, to: :instance
     end
 
-    # rubocop:disable Metrics/AbcSize
     def call
       # import NewsArticles
-      #TimedLogger.log('Import news articles') do
-      #  CSVImport::NewsArticles.new(seed_file('tpi-news.csv')).call
-      #end
+      # TimedLogger.log('Import news articles') do
+      #   CSVImport::NewsArticles.new(seed_file('tpi-news.csv')).call
+      # end
 
       # import companies
       TimedLogger.log('Import companies') do
@@ -37,7 +36,6 @@ module Seed
         CSVImport::MQAssessments.new(seed_file('mq-assessments-M3.csv')).call
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     private
 
