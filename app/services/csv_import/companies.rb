@@ -45,7 +45,7 @@ module CSVImport
         market_cap_group: row[:market_cap_group].downcase,
         geography: geographies[row[:geography_iso]],
         headquarters_geography: geographies[row[:headquarters_geography_iso]],
-        ca100: row[:ca100],
+        ca100: row[:ca100] || false,
         sedol: row[:sedol],
         latest_information: row[:latest_information],
         historical_comments: row[:historical_comments],

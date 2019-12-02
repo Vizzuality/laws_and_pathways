@@ -48,7 +48,7 @@ module CSVImport
     end
 
     def assessment_date(row)
-      CSVImport::DateUtils.safe_parse(row[:assessment_date], ['%Y-%m-%d']) if row[:assessment_date]
+      CSVImport::DateUtils.safe_parse(row[:assessment_date], ['%Y-%m-%d', '%m/%d/%Y']) if row[:assessment_date]
     end
 
     def publication_date(row)
