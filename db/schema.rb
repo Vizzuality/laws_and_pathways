@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_29_033008) do
+ActiveRecord::Schema.define(version: 2019_12_02_115009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -447,6 +447,15 @@ ActiveRecord::Schema.define(version: 2019_11_29_033008) do
     t.index ["sector_id"], name: "index_targets_on_sector_id"
     t.index ["target_scope_id"], name: "index_targets_on_target_scope_id"
     t.index ["updated_by_id"], name: "index_targets_on_updated_by_id"
+  end
+
+  create_table "testimonials", force: :cascade do |t|
+    t.string "quote"
+    t.string "author"
+    t.string "role"
+    t.bigint "avatar"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "tpi_sectors", force: :cascade do |t|
