@@ -11,9 +11,9 @@ module Seed
     # rubocop:disable Metrics/AbcSize
     def call
       # import NewsArticles
-      TimedLogger.log('Import news articles') do
-        CSVImport::NewsArticles.new(seed_file('tpi-news.csv')).call
-      end
+      #TimedLogger.log('Import news articles') do
+      #  CSVImport::NewsArticles.new(seed_file('tpi-news.csv')).call
+      #end
 
       # import companies
       TimedLogger.log('Import companies') do
