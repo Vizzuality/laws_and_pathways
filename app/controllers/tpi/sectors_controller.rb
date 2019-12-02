@@ -36,11 +36,11 @@ module TPI
       render json: data.chart_json
     end
 
-    # Data:     Sector Companies numbers, grouped by CP Benchmarks from given Sector
+    # Data:     Sector Companies numbers, grouped by CP Alignement from given Sector
     # Section:  CP
     # Type:     column chart
     # On pages: :index
-    def benchmarks_chart_data
+    def cp_performance_chart_data
       data = ::Api::Charts::CPPerformance.new.cp_performance_all_sectors_data
 
       render json: data.chart_json
