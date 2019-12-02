@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_02_132618) do
+ActiveRecord::Schema.define(version: 2019_12_02_115009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -400,20 +400,6 @@ ActiveRecord::Schema.define(version: 2019_12_02_132618) do
     t.string "menu"
   end
 
-  create_table "publications", force: :cascade do |t|
-    t.string "title"
-    t.text "short_description"
-    t.bigint "file"
-    t.bigint "thumbnail"
-    t.date "publication_date"
-    t.bigint "created_by_id"
-    t.bigint "updated_by_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["created_by_id"], name: "index_publications_on_created_by_id"
-    t.index ["updated_by_id"], name: "index_publications_on_updated_by_id"
-  end
-
   create_table "taggings", force: :cascade do |t|
     t.bigint "tag_id"
     t.string "taggable_type"
@@ -513,8 +499,6 @@ ActiveRecord::Schema.define(version: 2019_12_02_132618) do
   add_foreign_key "mq_assessments", "companies", on_delete: :cascade
   add_foreign_key "news_articles", "admin_users", column: "created_by_id"
   add_foreign_key "news_articles", "admin_users", column: "updated_by_id"
-  add_foreign_key "publications", "admin_users", column: "created_by_id"
-  add_foreign_key "publications", "admin_users", column: "updated_by_id"
   add_foreign_key "taggings", "tags", on_delete: :cascade
   add_foreign_key "targets", "admin_users", column: "created_by_id"
   add_foreign_key "targets", "admin_users", column: "updated_by_id"

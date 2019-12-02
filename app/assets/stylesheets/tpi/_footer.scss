@@ -19,7 +19,20 @@
   }
 
   .subscribe__container {
-    padding-left: 3rem;
+    padding: 1.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    @media #{$tablet-portrait} {
+      padding-left: 3rem;
+      align-items: flex-start;
+    }
+  }
+
+  .subscribe__button {
+    width: 150px;
   }
 
   h4,
