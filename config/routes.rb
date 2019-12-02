@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     root to: 'home#index'
 
     get '/about', to: 'home#about'
+    get '/newsletter', to: 'home#newsletter'
     get '/sandbox', to: 'home#sandbox' if Rails.env.development?
 
     resources :sectors, only: [:show, :index] do

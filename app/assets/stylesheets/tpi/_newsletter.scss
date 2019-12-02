@@ -1,0 +1,13 @@
+@import "bulma/sass/utilities/all";
+@import "sizes";
+@import "colors";
+@import "typography";
+
+.newsletter__title {
+  margin-top: 80px;
+  margin-bottom: 40px;
+}
+
+.newsletter__container {
+  margin-bottom: 70px;
+}
