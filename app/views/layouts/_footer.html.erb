@@ -1,22 +1,24 @@
-<section class="footer__subscribe">
-  <div class="container">
-    <div class="columns">
-      <div class="column is-5 subscribe__logo">
-        <img src="<%= asset_path 'newsletter_background/newsletter img@2x.png' %>" alt="tpi newsletter logo">
-      </div>
+<% unless action_name == "newsletter" %>
+  <section class="footer__subscribe">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-5 subscribe__logo">
+          <img src="<%= asset_path 'newsletter_background/newsletter img@2x.png' %>" alt="tpi newsletter logo">
+        </div>
 
-      <div class="column is-5 subscribe__container">
-        <h4>Subscribe to the TPI newsletter</h4>
+        <div class="column is-5 subscribe__container">
+          <h4>Subscribe to the TPI newsletter</h4>
 
-        <p class="content">
-          Receive updates on the TPI, including on latest developments and research findings, by signing-up to our newsletter.
-        </p>
+          <p class="content">
+            Receive updates on the TPI, including on latest developments and research findings, by signing-up to our newsletter.
+          </p>
 
-        <button class="button is-primary">Subscribe</button>
+          <%= link_to 'Subscribe', tpi_newsletter_path, class: 'button is-primary' %>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+<% end %>
 
 <section class="footer__information">
   <div class="container">

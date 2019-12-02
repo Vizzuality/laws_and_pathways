@@ -34,5 +34,7 @@ module TPI
     def about; end
 
     def sandbox; end
+
+    def newsletter; end
   end
 end
