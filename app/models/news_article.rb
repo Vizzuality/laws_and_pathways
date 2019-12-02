@@ -17,6 +17,8 @@ class NewsArticle < ApplicationRecord
   include UserTrackable
   include PublicActivityTrackable
 
+  has_one_attached :thumbnail
+
   ARTICLE_TYPES = [
     'Announcement',
     'Commentaries',
