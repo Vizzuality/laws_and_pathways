@@ -25,6 +25,10 @@ module Api
         )
       end
 
+      def model
+        @company
+      end
+
       def cp_alignment
         OpenStruct.new(
           color: map_cp_alignment_color,

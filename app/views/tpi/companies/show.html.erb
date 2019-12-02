@@ -22,16 +22,19 @@
           <p>
             <small>Number of assessments: <%= @company.cp_assessments.size %></small>
           </p>
-          <p class="cp-alignment">
-            <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment.color %>">
-            </span>
-            <%= @company_presenter.cp_alignment.text %>
-          </p>
-          <% unless ['not aligned', 'no disclosure', nil].include?(@company.cp_alignment&.downcase) %>
-            <p>
-              The company’s emissions intensity and target are aligned
-              with the Paris agreement benchmark of <%= @company.cp_alignment %>
+
+          <% if @company_presenter.model.cp_alignment.present? %>
+            <p class="cp-alignment">
+              <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment.color %>">
+              </span>
+              <%= @company_presenter.cp_alignment.text %>
             </p>
+            <% unless ['not aligned', 'no disclosure', nil].include?(@company.cp_alignment&.downcase) %>
+              <p>
+                The company’s emissions intensity and target are aligned
+                with the Paris agreement benchmark of <%= @company.cp_alignment %>
+              </p>
+            <% end %>
           <% end %>
         </div>
       </div>
