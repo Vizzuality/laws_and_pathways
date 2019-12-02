@@ -30,3 +30,11 @@
     }
   }
 }
+
+.logos {
+  display: grid;
+  grid-row-gap: 30px;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  padding: 1.75rem;
+}

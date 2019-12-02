@@ -76,3 +76,11 @@ $navbar-bottom-box-shadow-size: 0;
 $tag-background-color: $white;
 $tag-color: $grey-dark;
 $tag-radius: 0;
+
+// Responsive breakpoints
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 992px;
+$breakpoint-desktop-large: 1400px;
+
+//RESPONSIVE
+$tablet-portrait: 'screen and (min-width: #{$breakpoint-tablet})';

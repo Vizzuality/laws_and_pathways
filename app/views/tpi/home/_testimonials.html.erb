@@ -1,11 +1,13 @@
-<div class="container">
-  <div class="columns">
-    <%= react_component("Testimonials", {
-      testimonials: @testimonials,
-      quote_path: asset_path('quote.svg'),
-    }, {
-      class: 'column is-10 is-offset-1 testimonials',
-    }) %>
+<% if @testimonials.any? %>
+  <div class="container">
+    <div class="columns">
+      <%= react_component("Testimonials", {
+        testimonials: @testimonials,
+        quote_path: asset_path('quote.svg'),
+      }, {
+        class: 'column is-10 is-offset-1 testimonials',
+      }) %>
+      </div>
     </div>
   </div>
-</div>
+<% end %>
