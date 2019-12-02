@@ -35,6 +35,7 @@ ActiveAdmin.register AdminUser do
   end
 
   filter :email
+  filter :role, as: :select, label: 'User Role', collection: proc { AdminUser::ROLES }
 
   form html: {'data-controller' => 'check-modified'} do |f|
     f.semantic_errors(*f.object.errors.keys)
