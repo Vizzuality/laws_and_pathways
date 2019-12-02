@@ -40,11 +40,7 @@ Rails.application.routes.draw do
     end
 
     resources :climate_targets, only: :index
-    resources :legislation_and_policies, only: :index do
-      collection do
-        get :search
-      end
-    end
+    resources :legislation_and_policies, only: :index
     resources :litigation_cases, only: :index
   end
 

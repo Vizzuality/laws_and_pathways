@@ -13,7 +13,5 @@ module CCLOW
         @legislations = CCLOW::LegislationDecorator.decorate_collection(Legislation.all)
       end
     end
-
-    def search; end
   end
 end

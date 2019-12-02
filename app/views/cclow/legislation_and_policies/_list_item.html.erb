@@ -1,5 +1,5 @@
 <li>
-  <h5 class="title"><%= highlight legislation.title, 'plan' %></h5>
+  <h5 class="title"><%= highlight legislation.title, @query %></h5>
   <div class="meta">
     <div>
       <img class="flag" src=<%= asset_path "flags/#{legislation.geography.iso}.svg"%> alt="">
@@ -13,7 +13,7 @@
   </div>
 
   <p>
-    <%= highlight legislation.description&.html_safe, 'establishes' %>
+    <%= highlight legislation.description&.html_safe, @query %>
   </p>
 </li>
 

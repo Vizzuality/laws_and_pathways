@@ -25,6 +25,7 @@ module CCLOW
         %w[id geography_id target_scope_id created_at updated_at created_by_id updated_by_id discarded_at sector_id]
       @search_targets = Target.joins(:geography).select(:id, target_columns, 'geographies.name as geography_name')
       @search_recent_date = 1.year.ago.strftime('%F')
+      @query = params[:q]
     end
   end
 end

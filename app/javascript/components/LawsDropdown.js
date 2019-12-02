@@ -230,8 +230,8 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
                     <span>{CATEGORIES.laws}</span>
                   </div>
                   <a
-                    href={`/cclow/legislation_and_policies?ids=${searchLawsResults.map(l => l.id).join(',')}`}
-                    onClick={() => setLastSearch(searchValue, CATEGORIES.laws, `/cclow/legislation_and_policies?ids=${searchLawsResults.map(l => l.id).join(',')}`)}
+                    href={`/cclow/legislation_and_policies?ids=${searchLawsResults.map(l => l.id).join(',')}&q=${searchValue}`}
+                    onClick={() => setLastSearch(searchValue, CATEGORIES.laws, `/cclow/legislation_and_policies?ids=${searchLawsResults.map(l => l.id).join(',')}&q=${searchValue}`)}
                     className="laws-dropdown__option"
                   >
                     <span>Search&nbsp;</span>
