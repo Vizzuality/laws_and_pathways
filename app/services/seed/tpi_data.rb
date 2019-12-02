@@ -9,11 +9,6 @@ module Seed
     end
 
     def call
-      # import NewsArticles
-      # TimedLogger.log('Import news articles') do
-      #   CSVImport::NewsArticles.new(seed_file('tpi-news.csv')).call
-      # end
-
       # import companies
       TimedLogger.log('Import companies') do
         CSVImport::Companies.new(seed_file('tpi-companies.csv'), override_id: true).call

@@ -97,6 +97,11 @@ if Rails.env.development? || ENV['SEED_DATA']
     CSVImport::Geographies.new(seed_file('geographies.csv')).call
   end
 
+  # import NewsArticles
+  # TimedLogger.log('Import news articles') do
+  #   CSVImport::NewsArticles.new(seed_file('tpi-news.csv')).call
+  # end
+
   Seed::TPIData.call
 
   # import Legislations
