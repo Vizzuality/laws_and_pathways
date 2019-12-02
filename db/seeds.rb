@@ -3,7 +3,11 @@ require "#{Rails.root}/lib/timed_logger"
 # admin users
 # envs: DEV
 if Rails.env.development? && !AdminUser.find_by(email: 'admin@example.com')
-  AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
+  AdminUser.create!(
+    email: 'admin@example.com',
+    password: 'password', password_confirmation: 'password',
+    role: 'super_user'
+  )
 end
 
 # sectors: names & CP benchmarks units (optional)
@@ -83,62 +87,52 @@ end
   LawsSector.find_or_create_by!(name: sector)
 end
 
+def seed_file(filename)
+  File.open(Rails.root.join('db', 'seeds', filename), 'r')
+end
+
 if Rails.env.development? || ENV['SEED_DATA']
   # import geographies
   TimedLogger.log('Import geographies') do
-    file = File.open(Rails.root.join('db', 'seeds', 'geographies.csv'), 'r')
-    CSVImport::Geographies.new(file).call
+    CSVImport::Geographies.new(seed_file('geographies.csv')).call
   end
 
   # import NewsArticles
   TimedLogger.log('Import news articles') do
-    file = File.open(Rails.root.join('db', 'seeds', 'tpi-news.csv'), 'r')
-    CSVImport::NewsArticles.new(file).call
+    CSVImport::NewsArticles.new(seed_file('tpi-news.csv')).call
   end
 
   # import companies
   TimedLogger.log('Import companies') do
-    file = File.open(Rails.root.join('db', 'seeds', 'tpi-companies.csv'), 'r')
-    CSVImport::Companies.new(file, override_id: true).call
+    CSVImport::Companies.new(seed_file('tpi-companies.csv'), override_id: true).call
   end
 
   # import CP Benchmarks
   TimedLogger.log('Import CP Benchmarks') do
-    file = File.open(Rails.root.join('db', 'seeds', 'cp-benchmarks.csv'), 'r')
-    CSVImport::CPBenchmarks.new(file).call
+    CSVImport::CPBenchmarks.new(seed_file('cp-benchmarks.csv')).call
   end
 
   # import CP Assessments
   TimedLogger.log('Import CP Assessments') do
-    file = File.open(Rails.root.join('db', 'seeds', 'cp-assessments.csv'), 'r')
-    CSVImport::CPAssessments.new(file).call
+    CSVImport::CPAssessments.new(seed_file('cp-assessments.csv')).call
   end
 
   # import MQ Assessments
   TimedLogger.log('Import MQ Assessments') do
-    file = File.open(Rails.root.join('db', 'seeds', 'mq-assessments-M1.csv'), 'r')
-    CSVImport::MQAssessments.new(file).call
-
-    file = File.open(Rails.root.join('db', 'seeds', 'mq-assessments-M2.csv'), 'r')
-    CSVImport::MQAssessments.new(file).call
-
-    file = File.open(Rails.root.join('db', 'seeds', 'mq-assessments-M3.csv'), 'r')
-    CSVImport::MQAssessments.new(file).call
+    CSVImport::MQAssessments.new(seed_file('mq-assessments-M1.csv')).call
+    CSVImport::MQAssessments.new(seed_file('mq-assessments-M2.csv')).call
+    CSVImport::MQAssessments.new(seed_file('mq-assessments-M3.csv')).call
   end
 
   # import Legislations
   TimedLogger.log('Import Legislations') do
-    file = File.open(Rails.root.join('db', 'seeds', 'legislations.csv'), 'r')
-    CSVImport::Legislations.new(file, override_id: true).call
+    CSVImport::Legislations.new(seed_file('legislations.csv'), override_id: true).call
   end
 
   TimedLogger.log('Import Litigations') do
     # import Litigations
-    file = File.open(Rails.root.join('db', 'seeds', 'litigations.csv'), 'r')
-    CSVImport::Litigations.new(file, override_id: true).call
-
+    CSVImport::Litigations.new(seed_file('litigations.csv'), override_id: true).call
     # import Litigation Sides
-    file = File.open(Rails.root.join('db', 'seeds', 'litigation-sides.csv'), 'r')
-    CSVImport::LitigationSides.new(file).call
+    CSVImport::LitigationSides.new(seed_file('litigation-sides.csv')).call
   end
 end

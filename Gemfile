@@ -17,6 +17,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'activeadmin'
 gem 'activeadmin_addons'
 gem 'devise', '>= 4.7.1'
+gem 'cancancan'
 gem 'draper'
 
 gem 'octokit', '~> 4.0'

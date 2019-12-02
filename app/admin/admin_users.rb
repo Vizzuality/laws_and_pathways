@@ -5,7 +5,7 @@ ActiveAdmin.register AdminUser do
 
   decorate_with AdminUserDecorator
 
-  permit_params :email, :first_name, :last_name, :password, :password_confirmation
+  permit_params :email, :first_name, :last_name, :role, :password, :password_confirmation
 
   index do
     selectable_column
@@ -13,6 +13,7 @@ ActiveAdmin.register AdminUser do
     column :gravatar
     column :email
     column :full_name
+    column(:role) { |user| user.role.titleize }
     column :created_at
     actions
   end
@@ -24,6 +25,7 @@ ActiveAdmin.register AdminUser do
       row :first_name
       row :last_name
       row :full_name
+      row(:role) { |user| user.role.titleize }
       row :gravatar
       row :updated_at
       row :created_at
@@ -33,6 +35,10 @@ ActiveAdmin.register AdminUser do
   end
 
   filter :email
+  filter :role,
+         as: :select,
+         label: 'User Role',
+         collection: proc { array_to_select_collection(AdminUser::ROLES, :titleize) }
 
   form html: {'data-controller' => 'check-modified'} do |f|
     f.semantic_errors(*f.object.errors.keys)
@@ -43,6 +49,9 @@ ActiveAdmin.register AdminUser do
           f.input :email
           f.input :first_name
           f.input :last_name
+          f.input :role,
+                  as: :select,
+                  collection: array_to_select_collection(AdminUser::ROLES, :titleize)
 
           if f.object.new_record?
             f.input :password
@@ -72,7 +81,8 @@ ActiveAdmin.register AdminUser do
   controller do
     # update without password if not provided
     def update_resource(object, attributes)
-      update_method = attributes.first[:password].present? ? :update_attributes : :update_without_password
+      update_method = attributes.first[:password].present? ? :update : :update_without_password
+
       object.send(update_method, *attributes)
     end
   end

@@ -20,4 +20,14 @@ RSpec.describe AdminUser, type: :model do
   subject { build(:admin_user) }
 
   it { is_expected.to be_valid }
+
+  it 'should be invalid without email' do
+    subject.email = nil
+    expect(subject).to have(1).errors_on(:email)
+  end
+
+  it 'should be invalid without role' do
+    subject.role = nil
+    expect(subject).to have(2).errors_on(:role)
+  end
 end
