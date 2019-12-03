@@ -5,7 +5,7 @@ ActiveAdmin.register Testimonial do
 
   menu priority: 7, parent: 'TPI'
 
-  permit_params :quote, :author, :role, :avatar
+  permit_params :quote, :author, :role
 
   filter :author
   filter :role
@@ -24,9 +24,6 @@ ActiveAdmin.register Testimonial do
           row :author
           row :quote
           row :role
-          row :avatar do |t|
-            image_tag(url_for(t.avatar)) if t.avatar.present?
-          end
         end
       end
     end
@@ -40,7 +37,6 @@ ActiveAdmin.register Testimonial do
       f.input :author
       f.input :quote, as: :text
       f.input :role
-      f.input :avatar, as: :file
     end
 
     f.actions

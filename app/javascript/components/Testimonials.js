@@ -46,16 +46,8 @@ Controls.propTypes = {
   changePage: PropTypes.func.isRequired,
 };
 
-const Quote = ({avatar_url, message, author, role, handleClick}) => (
+const Quote = ({message, author, role, handleClick}) => (
   <div className="column is-8" onClick={handleClick}>
-    <figure className="image is-92x92">
-      <img
-        src={avatar_url}
-        className="is-rounded testimonials__avatar"
-        alt="author avatar"
-      />
-    </figure>
-
     <div className="testimonials__content">
       {message.map((p, i) => (
         <p key={`paragraph-${i}`}>{p}</p>
@@ -64,7 +56,9 @@ const Quote = ({avatar_url, message, author, role, handleClick}) => (
 
     <div className="testimonials__author">
       <p>{author}</p>
-      <p>{role}</p>
+      { role &&
+        <p>{role}</p>
+      }
     </div>
   </div>
 );
@@ -125,20 +119,18 @@ const Testimonials = ({testimonials, quote_path}) => {
   return (
     <div className="testimonials__container">
       <Controls changePage={changePage} />
-      
       <div className="columns">
         <div className="column is-2 testimonials__quote">
           <img src={quote_path} alt="quote" />
         </div>
-        
+
         <Quote
           author={author}
           role={role}
-          avatar_url={avatar_url}
           message={message}
           handleClick={stopChangePage}
-        /> 
-        
+        />
+
         <Pagination
           page={current}
           quotes={testimonials}
