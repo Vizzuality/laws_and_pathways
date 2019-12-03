@@ -8,7 +8,7 @@ const SCALE = 5;
 
 // radius of bubbles
 const COMPANIES_MARKET_CAP_GROUPS = {
-  large: 8 * SCALE,
+  large: 10 * SCALE,
   medium: 5 * SCALE,
   small: 3 * SCALE
 };
