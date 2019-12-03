@@ -33,6 +33,6 @@ class NewsArticle < ApplicationRecord
   validates_presence_of :title, :content
 
   def thumbnail
-    self.image.present? ? self.image.variant(resize: '300x300') : nil
+    self.image.present? ? self.image.variant(resize: '400x400') : nil
   end
 end
