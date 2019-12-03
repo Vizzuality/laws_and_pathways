@@ -1,0 +1,11 @@
+<div class="container">
+  <h1 class="pages__title"><%= @publication.title %></h1>
+  <p class="pages__date"><%= @publication.publication_date %></p>
+  <div class="pages__description">
+    <% if @publication.class.name.eql?("NewsArticle") %>
+      <%= @publication.content %>
+    <% else %>
+      <%= @publication.short_description %>
+    <% end %>
+  </div>
+</div>
