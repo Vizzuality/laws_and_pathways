@@ -10,6 +10,7 @@ gem 'puma', '~> 4.1'
 gem 'sass-rails', '>= 6'
 gem 'uglifier', '>= 1.3.0'
 gem 'webpacker'
+gem 'mini_magick'
 
 gem 'turbolinks', '~> 5'
 gem 'bootsnap', '>= 1.4.2', require: false
