@@ -1,6 +1,6 @@
 module CSVExport
   module User
-    class MQAssessments
+    class CPAssessments
       def initialize(assessments)
         @assessments = assessments
       end
@@ -11,10 +11,10 @@ module CSVExport
         return if @assessments.empty?
 
         headers = ['Company Name', 'Country Code', 'Sector Code', 'CA100 Company?', 'Large/Medium Classification',
-                   'ISINs', 'SEDOL', 'Publication Date', 'Assessment Date', 'Methodology Version', 'Level',
-                   'Performance compared to previous year']
-        question_headers = @assessments.first.questions.map(&:csv_column_name)
-        headers.concat(question_headers)
+                   'ISINs', 'SEDOL', 'Publication Date', 'Assessment Date', 'Carbon Performance Alignment',
+                   'History to Projection cutoff year']
+        year_columns = @assessments.flat_map(&:emissions_all_years).uniq.sort
+        headers.concat(year_columns) << 'Assumptions'
 
         CSV.generate do |csv|
           csv << headers
@@ -30,12 +30,12 @@ module CSVExport
               assessment.company.sedol,
               assessment.publication_date,
               assessment.assessment_date,
-              assessment.methodology_version,
-              assessment.level,
-              assessment.status,
-              assessment.questions.map do |q|
-                assessment.find_answer_by_key(q.key)
-              end
+              assessment.cp_alignment,
+              assessment.last_reported_year,
+              year_columns.map do |year|
+                assessment.emissions[year]
+              end,
+              assessment.assumptions
             ].flatten
           end
         end

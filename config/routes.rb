@@ -23,6 +23,7 @@ Rails.application.routes.draw do
         get :assessments_levels_chart_data
         get :mq_assessment
         get :cp_assessment
+        get :user_download
       end
     end
 

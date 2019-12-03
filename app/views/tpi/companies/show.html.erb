@@ -2,6 +2,25 @@
   <div class="dropdown-selector-company-page-wrapper">
     <%= react_component("DropdownSelector", { sectors: @sectors, companies: @companies, selectedOption: @company.name, defaultFilter: 'company' }) %>
   </div>
+
+  <div class="companies-header">
+    <div class="container">
+      <a href="#management-quality" class="link with-icon is-pulled-left">
+        <img src="<%= asset_path 'icons/arrow-down.svg'%>" />
+        Go to Management Quality
+      </a>
+      <a href="#carbon-performance" class="link with-icon is-pulled-left">
+        <img src="<%= asset_path 'icons/arrow-down.svg'%>" />
+        Go to Carbon Performance
+      </a>
+
+      <%= link_to user_download_tpi_company_path(@company), class: 'button is-primary is-pulled-right with-icon with-border' do %>
+        <img src="<%= asset_path 'icons/download.svg'%>" />
+        Download company data
+      <% end %>
+    </div>
+  </div>
+
   <section class="container">
     <div class="columns">
       <div class="column">

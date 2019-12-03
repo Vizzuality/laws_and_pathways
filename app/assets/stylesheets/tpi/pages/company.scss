@@ -1,4 +1,19 @@
 .company-page {
+  .companies-header {
+    background: $blue;
+
+    height: 100px;
+    display: flex;
+    align-items: center;
+
+    a {
+      color: white;
+    }
+
+    a + a {
+      margin-left: 20px;
+    }
+  }
 
   .dropdown-selector-company-page-wrapper {
     height: 335px;
