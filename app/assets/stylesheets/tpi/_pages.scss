@@ -11,8 +11,18 @@
 .pages__description {
   color: $dark;
   font-size: 16px;
-  line-height: 24px;
+  line-height: 30px;
   margin-bottom: 60px;
+
+  h1, h2, h3, h4, h5 {
+    margin-top: 45px;
+    margin-bottom: 15px;
+  }
+
+  img {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
 }
 
 .pages__content {
@@ -31,4 +41,13 @@
   grid-row-gap: 4px;
   grid-template-columns: repeat(6, 1fr);
   align-items: center;
+}
+
+.pages__date {
+  margin-bottom: 30px;
+  font-style: italic;
+}
+
+.pages__image {
+  margin-bottom: 30px;
 }

@@ -10,6 +10,11 @@ module TPI
       end
 
       @partners_logos = Page.find_by(slug: 'supporters')&.contents&.find_by(content_type: 'partners')&.images
+
+      publications = Publication.all.sort_by(&:created_at)
+      news = NewsArticle.all.sort_by(&:created_at)
+
+      @publications_and_articles = publications + news
     end
 
     def about; end

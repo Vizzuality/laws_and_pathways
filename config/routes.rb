@@ -26,7 +26,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :publications, only: :index
+    resources :publications, only: [:index, :show]
     DynamicRouter.load
   end
 

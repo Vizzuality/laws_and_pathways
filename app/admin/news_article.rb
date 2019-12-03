@@ -7,7 +7,7 @@ ActiveAdmin.register NewsArticle do
   decorate_with NewsArticleDecorator
 
   permit_params :title, :content, :publication_date, :article_type,
-                :created_by_id, :updated_by_id
+                :created_by_id, :updated_by_id, :image
 
   filter :title
   filter :content
@@ -21,6 +21,9 @@ ActiveAdmin.register NewsArticle do
           row :article_type
           row :content
           row :publication_date
+          row :image do |t|
+            image_tag(url_for(t.image)) if t.image.present?
+          end
           row :updated_at
           row :updated_by
           row :created_at
@@ -57,6 +60,7 @@ ActiveAdmin.register NewsArticle do
       f.input :article_type, as: :select, collection: array_to_select_collection(NewsArticle::ARTICLE_TYPES)
       f.input :content, as: :trix
       f.input :publication_date
+      f.input :image, as: :file
     end
 
     f.actions

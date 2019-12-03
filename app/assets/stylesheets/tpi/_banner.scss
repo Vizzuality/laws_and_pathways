@@ -38,3 +38,13 @@
   align-items: center;
   padding: 1.75rem;
 }
+
+.image__container {
+  text-align: center;
+
+  a {
+    img {
+      height: 50px;
+    }
+  }
+}

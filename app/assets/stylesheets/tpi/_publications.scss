@@ -1,6 +1,9 @@
 @import "sizes";
 @import "colors";
 
+$line-height: 1.5rem;
+$max-lines: 3;
+
 .publications {
   &__title {
     margin-top: 80px;
@@ -38,7 +41,7 @@
     justify-content: space-between;
     flex-direction: column;
 
-    @media #{$tablet-portrait} {
+    @include desktop {
       flex-direction: row;
     }
   }
@@ -46,7 +49,7 @@
   &__title-text {
     margin-bottom: 20px;
 
-    @media #{$tablet-portrait} {
+    @include desktop {
       margin-bottom: 0;
     }
   }
@@ -62,46 +65,96 @@
 }
 
 .publication {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px;
+
   &__avatar {
-    width: 100%;
-  }
+    max-height: 150px;
+    margin: 0 auto;
+    margin-bottom: 20px;
 
-  &__tags {
-    margin-top: 15px;
-    display: flex;
-    align-items: flex-start;
-
-    & > .tag {
-      margin-right: 12px;
-      
-      &:last-child {
-        margin-right: 0;
-      }
+    @include desktop {
+      margin-bottom: 20px;
     }
+    
   }
-
   &__content {
-    margin-top: 20px;
+    margin-top: auto;
 
     & > .updated_at {
       font-size: $size-7;
       color: $grey-dark;
+      margin-bottom: 10px;
     }
 
-    & > .content__title {
-      margin-top: $size-7;
-      height: 80px;
-      max-height: 80px;
-    }
-    
     & > .content__message {
-      height: 70px;
-      max-height: 70px;
+      display: flex;
+      align-items: flex-end;
 
       & > p {
         color: rgba($black, 0.9);
         font-size: $size-6;
       }
     }
+  }
+
+  .content__title-wrapper {
+    height: calc(#{$line-height} * #{$max-lines});
+    margin-bottom: 10px;
+  }
+
+  .content__title {
+    max-height: calc(#{$line-height} * #{$max-lines});
+    overflow: hidden;
+    position: relative;
+    margin-right: -1rem;
+    padding-right: 1rem;
+
+    &::before {
+      content: "[...]";
+      font-size: 12px;
+      position: absolute;
+      bottom: 3px;
+      right: 0;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0; /* note: not using bottom */
+      width: 1.7rem;
+      height: 1.7rem;
+      background: white;
+      margin-top: 0.2rem;
+    }
+  }
+
+  // &__tags {
+  //   margin-top: 15px;
+  //   display: flex;
+  //   align-items: flex-start;
+
+  //   & > .tag {
+  //     margin-right: 12px;
+      
+  //     &:last-child {
+  //       margin-right: 0;
+  //     }
+  //   }
+  // }
+}
+
+.publications__grid {
+  display: grid;
+  grid-row-gap: 30px;
+  grid-column-gap: 30px;
+  grid-template-columns: repeat(1, 1fr);
+  align-items: center;
+  padding: 1.75rem;
+
+  @include desktop {
+    grid-template-columns: repeat(3, 1fr);
   }
 }

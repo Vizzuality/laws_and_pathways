@@ -18,6 +18,7 @@ FactoryBot.define do
     title { 'MyString' }
     content { 'MyText' }
     publication_date { '2019-11-29' }
+    image { fixture_file_upload(Rails.root.join('spec', 'support', 'fixtures', 'files', 'test.jpg'), 'jpg') }
 
     association :created_by, factory: :admin_user
     association :updated_by, factory: :admin_user
