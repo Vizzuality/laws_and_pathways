@@ -20,6 +20,8 @@ class NewsArticle < ApplicationRecord
   has_one_attached :thumbnail
   has_one_attached :image
 
+  validates :image, attached: true
+
   ARTICLE_TYPES = [
     'Announcement',
     'Commentaries',
