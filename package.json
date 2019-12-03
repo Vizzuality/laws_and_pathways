@@ -4,6 +4,7 @@
   "scripts": {
     "start": "run-p -r rails:server js:server",
     "js:server": "yarn install && ./bin/webpack-dev-server",
+    "js:lint": "eslint app/javascript --ext js --ext jsx",
     "test": "run-p rails:test rails:lint",
     "rails:server": "bundle exec rails s",
     "rails:test": "bundle exec rspec",
@@ -42,6 +43,12 @@
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.7.2",
+    "eslint-loader": "^3.0.2",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.17.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.19.1",
     "webpack-dev-server": "^3.9.0"
