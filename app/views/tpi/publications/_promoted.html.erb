@@ -8,9 +8,10 @@
 
         <div class="publication__content">
           <p class="updated_at"><%= publication.publication_date %></p>
-
-          <div class="content__title">
-            <%= link_to publication.title, tpi_publication_path(id: publication.id, type: publication.class.name), class: "link is-strong" %>
+          <div class="content__title-wrapper">
+            <div class="content__title">
+              <%= link_to publication.title, tpi_publication_path(id: publication.id, type: publication.class.name), class: "link is-strong" %>
+            </div>
           </div>
 
           <div class="content__message">

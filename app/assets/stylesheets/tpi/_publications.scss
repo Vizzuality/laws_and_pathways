@@ -1,6 +1,9 @@
 @import "sizes";
 @import "colors";
 
+$line-height: 1.5rem;
+$max-lines: 3;
+
 .publications {
   &__title {
     margin-top: 80px;
@@ -65,28 +68,61 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+  height: 200px;
 
   &__avatar {
     width: 100%;
     margin-bottom: 20px;
   }
   &__content {
-    margin-top: 20px;
+    margin-top: auto;
 
     & > .updated_at {
       font-size: $size-7;
       color: $grey-dark;
+      margin-bottom: 10px;
     }
 
     & > .content__message {
-      height: 70px;
-      max-height: 70px;
+      display: flex;
+      align-items: flex-end;
 
       & > p {
         color: rgba($black, 0.9);
         font-size: $size-6;
       }
+    }
+  }
+
+  .content__title-wrapper {
+    height: calc(#{$line-height} * #{$max-lines});
+    margin-bottom: 10px;
+  }
+
+  .content__title {
+    max-height: calc(#{$line-height} * #{$max-lines});
+    overflow: hidden;
+    position: relative;
+    margin-right: -1rem;
+    padding-right: 1rem;
+
+    &::before {
+      content: "[...]";
+      font-size: 12px;
+      position: absolute;
+      bottom: 3px;
+      right: 0;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0; /* note: not using bottom */
+      width: 1.7rem;
+      height: 1.7rem;
+      background: white;
+      margin-top: 0.2rem;
+      margin-right: 0.1rem;
     }
   }
 
