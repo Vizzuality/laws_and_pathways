@@ -18,9 +18,8 @@ module TPI
     end
 
     def about; end
-
     def sandbox; end
-
     def newsletter; end
+    def register; end
   end
 end
