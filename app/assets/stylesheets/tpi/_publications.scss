@@ -41,7 +41,7 @@ $max-lines: 3;
     justify-content: space-between;
     flex-direction: column;
 
-    @media #{$tablet-portrait} {
+    @include desktop {
       flex-direction: row;
     }
   }
@@ -49,7 +49,7 @@ $max-lines: 3;
   &__title-text {
     margin-bottom: 20px;
 
-    @media #{$tablet-portrait} {
+    @include desktop {
       margin-bottom: 0;
     }
   }
@@ -75,7 +75,7 @@ $max-lines: 3;
     margin: 0 auto;
     margin-bottom: 20px;
 
-    @media #{$tablet-portrait} {
+    @include desktop {
       margin-bottom: 20px;
     }
     
@@ -154,7 +154,7 @@ $max-lines: 3;
   align-items: center;
   padding: 1.75rem;
 
-  @media #{$tablet-portrait} {
+  @include desktop {
     grid-template-columns: repeat(3, 1fr);
   }
 }
