@@ -6,7 +6,7 @@ module TPI
           author: test.author,
           role: test.role,
           message: [test.quote],
-          avatar_url: url_for(test.avatar)
+          avatar_url: (url_for(test.avatar) if test.avatar.present?)
         }
       end
 
