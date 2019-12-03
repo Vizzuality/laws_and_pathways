@@ -145,7 +145,11 @@ $max-lines: 3;
   display: grid;
   grid-row-gap: 30px;
   grid-column-gap: 30px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   align-items: center;
   padding: 1.75rem;
+
+  @media #{$tablet-portrait} {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
