@@ -48,9 +48,14 @@
       @extend .is-medium;
 
       height: 5rem;
-      padding-left: 4.125rem;
-      padding-right: 4.125rem;
       background-color: $blue-darker;
+
+      &:focus, &.is-focused {
+
+        $padding: calc(4.125rem - #{$button-border-width});
+        padding-left: $padding;
+        padding-right: $padding;
+      }
     }
   }
 
@@ -63,6 +68,11 @@
 
   &.is-secondary {
     background: $blue;
+    background-image: image-url('hero_background_dark.svg');
+    background-position: -50px -100px;
+    background-repeat: no-repeat;
+    background-size: contain;
+
 
     .button__icon {
       background: $blue-darker;
@@ -150,8 +160,7 @@
     @extend .is-medium;
   
     height: 5rem;
-    padding-left: 4.125rem;
-    padding-right: 4.125rem;
+    width: 280px;
     background-color: $blue-darker;
   }
 
