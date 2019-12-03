@@ -38,6 +38,7 @@
     }
 
     &> * {
+      align-items: center;
       color: $grey-text;
       display: flex;
       justify-content: center;

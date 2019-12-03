@@ -2,7 +2,7 @@
   <h5 class="title"><%= title %></h5>
   <div class="meta">
     <div>
-      <img class="flag" src=<%= asset_path "icons/legislation_types/#{legislation_type}.svg"%> alt="">
+      <img src=<%= asset_path "icons/legislation_types/#{legislation_type}.svg"%> alt="">
       <%= I18n.t("cclow.legislation_types.#{legislation_type}") %>
     </div>
     <div>Passed in <%= date_passed.year %></div>
