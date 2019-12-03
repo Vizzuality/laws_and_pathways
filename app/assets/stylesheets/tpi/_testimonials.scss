@@ -41,19 +41,6 @@
     }
   }
 
-  .image {
-    position: absolute;
-    // half the picture + column padding (0.75rem)
-    top: -2.875rem;
-
-    & > img {
-      max-width: 92px;
-      max-height: 92px;
-      width: 92px;
-      height: 92px;
-    }
-  }
-
   // 90px - grid padding (0.75rem)
   $margin-top: calc(90px - 0.75rem);
 
