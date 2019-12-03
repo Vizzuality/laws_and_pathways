@@ -1,26 +1,56 @@
-<div class="banner is-hidden-mobile">
+<div class="banner">
   <div class="container">
     <div class="columns">
       <div class="column is-3 logo">
         <%= link_to tpi_root_path do %>
-          <img src="<%= asset_path 'logo/TPI_logo@2x.png' %>" class="banner__logo">
+          <img
+            src="<%= asset_path 'logo/TPI_logo@2x.png' %>"
+            class="banner__logo"
+            alt="TPI Logo"
+          />
         <% end %>
       </div>
-      <div class="column is-offset-2 partners__container">
-        <p class="content is-size-7">In partnership with:</p>
+      <div class="column is-offset-3 partners__container">
+        <p class="content is-size-6">In partnership with:</p>
 
-        <div class="columns partners">
-          <div class="column">
-            <a href="https://www.ftserussell.com/"><img src="<%= asset_path 'partners/partner_01/partner_01@2x.png' %>" alt="" class="banner__partner"></a>
-          </div>
-          <div class="column">
-            <a href="http://www.lse.ac.uk/GranthamInstitute/"><img src="<%= asset_path 'partners/partner_02/partner_02@2x.png' %>" alt="" class="banner__partner"></a>
-          </div>
-          <div class="column">
-            <a href="http://www.lse.ac.uk/"><img src="<%= asset_path 'partners/partner_03/partner_03@2x.png' %>" alt="" class="banner__partner"></a>
-          </div>
-          <div class="column">
-            <a href="https://www.unpri.org/"><img src="<%= asset_path 'partners/partner_04/partner_04@2x.png' %>" alt="" class="banner__partner"></a>
+        <div class="container">
+          <div class="columns partners">
+            <div class="column">
+              <a href="https://www.ftserussell.com/">
+                <img
+                  src="<%= asset_path 'partners/partner_01/partner_01@2x.png' %>"
+                  alt="FTSE Russel"
+                  class="banner__partner"
+                />
+              </a>
+            </div>
+            <div class="column">
+              <a href="http://www.lse.ac.uk/GranthamInstitute/">
+                <img
+                  src="<%= asset_path 'partners/partner_02/partner_02@2x.png' %>"
+                  alt="Grantham Research Institute on Climate Change and the Environment"
+                  class="banner__partner"
+                />
+              </a>
+            </div>
+            <div class="column">
+              <a href="http://www.lse.ac.uk/">
+                <img
+                  src="<%= asset_path 'partners/partner_03/partner_03@2x.png' %>"
+                  alt="The London School of Economics and Political Sciences"
+                  class="banner__partner"
+                />
+              </a>
+            </div>
+            <div class="column">
+              <a href="https://www.unpri.org/">
+                <img
+                  src="<%= asset_path 'partners/partner_04/partner_04@2x.png' %>"
+                  alt="Principles for Responsible Investment"
+                  class="banner__partner"
+                />
+              </a>
+            </div>
           </div>
         </div>
       </div>

@@ -29,20 +29,22 @@ $button-border-width: 4px;
 }
 
 .button {
+  $button-height: 40px;
   min-width: 160px;
-  height: 40px;
+  height: $button-height;
   font-family: $family-sans-serif-bold;
   cursor: pointer;
-
-  &.is-small {
-    border-radius: 0;
-    height: 30px;
-    min-width: 100px;
-  }
 
   &.is-primary {
     justify-content: center;
     align-items: center;
+    height: $button-height;
+
+    &.is-small {
+      border-radius: 0;
+      height: 30px;
+      min-width: 100px;
+    }
 
     &.is-hovered,
     &:hover {
@@ -54,10 +56,12 @@ $button-border-width: 4px;
       background-color: $blue-darker;
       border-color: $yellow;
       border-width: 4px;
+      height: $button-height;
     }
 
     &.with-border {
       border: 2px solid $grey;
+      height: $button-height;
 
       &.is-hovered,
       &:hover {
@@ -71,6 +75,12 @@ $button-border-width: 4px;
     color: $blue;
     justify-content: center;
     align-items: center;
+
+    &.is-small {
+      border-radius: 0;
+      height: 30px;
+      min-width: 100px;
+    }
 
     &.is-hovered,
     &:hover,
