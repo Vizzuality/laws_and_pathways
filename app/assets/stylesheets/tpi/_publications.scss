@@ -62,24 +62,15 @@
 }
 
 .publication {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
   &__avatar {
     width: 100%;
+    margin-bottom: 20px;
   }
-
-  &__tags {
-    margin-top: 15px;
-    display: flex;
-    align-items: flex-start;
-
-    & > .tag {
-      margin-right: 12px;
-      
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-  }
-
   &__content {
     margin-top: 20px;
 
@@ -88,12 +79,6 @@
       color: $grey-dark;
     }
 
-    & > .content__title {
-      margin-top: $size-7;
-      height: 80px;
-      max-height: 80px;
-    }
-    
     & > .content__message {
       height: 70px;
       max-height: 70px;
@@ -104,11 +89,26 @@
       }
     }
   }
+
+  // &__tags {
+  //   margin-top: 15px;
+  //   display: flex;
+  //   align-items: flex-start;
+
+  //   & > .tag {
+  //     margin-right: 12px;
+      
+  //     &:last-child {
+  //       margin-right: 0;
+  //     }
+  //   }
+  // }
 }
 
 .publications__grid {
   display: grid;
   grid-row-gap: 30px;
+  grid-column-gap: 30px;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
   padding: 1.75rem;
