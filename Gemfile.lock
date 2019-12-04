@@ -217,6 +217,9 @@ GEM
     i18n (1.7.0)
       concurrent-ruby (~> 1.0)
     i18n_data (0.8.0)
+    image_processing (1.9.3)
+      mini_magick (>= 4.9.5, < 5)
+      ruby-vips (>= 2.0.13, < 3)
     inherited_resources (1.11.0)
       actionpack (>= 5.0, < 6.1)
       has_scope (~> 0.6)
@@ -380,6 +383,8 @@ GEM
     rubocop-performance (1.5.1)
       rubocop (>= 0.71.0)
     ruby-progressbar (1.10.1)
+    ruby-vips (2.0.16)
+      ffi (~> 1.9)
     ruby_dep (1.5.0)
     rubyzip (2.0.0)
     sass (3.7.4)
@@ -497,9 +502,9 @@ DEPENDENCIES
   font-awesome-rails
   friendly_id
   google-cloud-storage
+  image_processing
   language_list
   listen (>= 3.0.5, < 3.2)
-  mini_magick
   octokit (~> 4.0)
   pg (>= 0.18, < 2.0)
   public_activity
