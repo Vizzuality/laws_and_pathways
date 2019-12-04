@@ -107,8 +107,8 @@ const NavbarComponent = ({items, openSearchMode}) => {
           </div>
 
           <div className="navbar-end">
-            <a className="navbar-item" href={newsletter.content}>{newsletter.entry}</a>
-            <a className="navbar-item" href={login.content}>{login.entry}</a>
+            <a className="navbar-item" href={newsletter.path}>{newsletter.entry}</a>
+            <a className="navbar-item" href={login.path}>{login.entry}</a>
             <a className="navbar-item" aria-label={search.entry} onClick={openSearchMode}>
               {search.hasIcon && (
                 <span className="icon icon__search"></span>
