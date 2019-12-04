@@ -2,15 +2,62 @@
 @import "colors";
 
 .tpi__navbar {
+
+  .navbar {    
+    &__search {
+      background: $white;
+      border: none;
+      box-shadow: 0 0 30px 0 rgba($dark, 0.25);
+
+      & > .container {
+        height: 60px;
+        position: relative;
+      }
+    }
+
+    &__search-input {
+      width: 100%;
+      height: 100%;
+      border: none;
+      outline: none;
+      font-size: 1.25rem;
+      line-height: 1.875rem;
+      color: $dark;
+
+      &::placeholder {
+        color: rgba($dark, 0.5);
+      }
+    }
+
+    &__search--close {
+      border: none;
+      position: absolute;
+      // 60px height / 2 + 24px icon / 2
+      top: 18px;
+      right: 0;
+
+      & > .icon__close {
+        background-image: image-url('icon_search/close.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+    }
+  }
   .header-nav {
     width: 100%;
     background-color: $dark;
   }
 
-  .navbar-link {
+  .navbar-item {
     .icon {
-      &.chevron-down {
-        margin-left: 10px;
+      &__search {
+        background-image: image-url('icon_search/search.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+
+      &__chevron-down {
+        margin-left: 5px;
         background-image: image-url('icons/white-chevron-down.svg');
         background-repeat: no-repeat;
         background-position: center;
@@ -26,7 +73,6 @@
       font-size: $size-6;
       padding-top: 10px;
       padding-bottom: 10px;
-
     }
   }
 }

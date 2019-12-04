@@ -33,4 +33,9 @@ class NewsArticle < ApplicationRecord
   belongs_to :sector, class_name: 'TPISector', foreign_key: 'sector_id', optional: true
 
   validates_presence_of :title, :content
+
+  def self.search(query)
+    where('title ilike ? OR content ilike ?',
+          "%#{query}%", "%#{query}%")
+  end
 end

@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     get '/disclaimer', to: 'home#disclaimer'
     get '/sandbox', to: 'home#sandbox' if Rails.env.development?
 
+    get '/search', to: 'search#index'
+
     resources :sectors, only: [:show, :index] do
       collection do
         get :levels_chart_data

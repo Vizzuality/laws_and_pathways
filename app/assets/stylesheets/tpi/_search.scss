@@ -1,0 +1,21 @@
+.search-results {
+  > h1 {
+    margin-top: 30px;
+  }
+
+  > h3 {
+    margin-top: 30px;
+  }
+
+  li {
+    margin-top: 20px;
+
+    > a {
+      font-family: $family-sans-serif-bold;
+    }
+  }
+
+  &__empty {
+    margin-top: 30px;
+  }
+}
