@@ -17,7 +17,7 @@ module TPI
       render zip: mq_assessments_files.merge(
         "CP_Assessments_#{timestamp}.csv" => CSVExport::User::CPAssessments.new(cp_assessments).call,
         "Sector_Benchmarks_#{timestamp}.csv" => CSVExport::User::CPBenchmarks.new(cp_benchmarks).call
-      ), filename: filename
+      ).compact, filename: filename
     end
   end
 end

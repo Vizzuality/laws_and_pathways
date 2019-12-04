@@ -9,10 +9,13 @@
         <img src="<%= asset_path 'icons/arrow-down.svg'%>" />
         Go to Management Quality
       </a>
-      <a href="#carbon-performance" class="link with-icon is-pulled-left">
-        <img src="<%= asset_path 'icons/arrow-down.svg'%>" />
-        Go to Carbon Performance
-      </a>
+
+      <% unless @company.cp_assessments.empty? %>
+        <a href="#carbon-performance" class="link with-icon is-pulled-left">
+          <img src="<%= asset_path 'icons/arrow-down.svg'%>" />
+          Go to Carbon Performance
+        </a>
+      <% end %>
 
       <%= link_to user_download_tpi_company_path(@company), class: 'button is-primary is-pulled-right with-icon with-border' do %>
         <img src="<%= asset_path 'icons/download.svg'%>" />
