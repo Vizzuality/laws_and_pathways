@@ -1,8 +1,35 @@
-<h1>Legislation and policies</h1>
-
-<div class="list">
-  <% @legislations.each do |l| %>
-    <%= render 'list_item', title: l.link, description: l.description
-    %>
-  <% end %>
-</div>
+<% content_for :content do %>
+  <div class="cclow-geography-page">
+    <div class="title-page">
+      <% if @query.present? %>
+        <h5 class="search-title">Search results: <span class="search-text"><%= @query %></span> in Laws and policies</h5>
+      <% else %>
+        <h5>All Legislation and policies</h5>
+      <% end %>
+    </div>
+    <hr>
+    <div class="columns">
+      <aside class="column is-one-quarter">
+        <ul class="sidebar">
+          FILTERS
+        </ul>
+      </aside>
+      <main class="column is-three-quarters" data-controller="content-list">
+        <div class="columns pre-content">
+          <span class="column is-half">Showing <%= @legislations.count %> results</span>
+          <span class="column is-half download-link">
+            <a class="download-link" href="#">Download results (CSV in .zip)</a>
+          </span>
+        </div>
+        <ul class="content-list">
+          <% @legislations.each do |l| %>
+            <%= render 'cclow/legislation_and_policies/list_item', legislation: l %>
+          <% end %>
+        </ul>
+        <div class="column is-offset-5">
+          <button class="button is-primary load-more-btn">Load 10 more entries</button>
+        </div>
+      </main>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,18 @@
+<li class="content-item">
+  <h5 class="title"><%= highlight legislation.link, @query %></h5>
+  <div class="meta">
+    <div>
+      <img class="flag" src=<%= asset_path "flags/#{legislation.geography.iso}.svg"%> alt="">
+      <%= legislation.geography.name %>
+    </div>
+    <div>
+      <img class="flag" src=<%= asset_path "icons/legislation_types/#{legislation.legislation_type}.svg"%> alt="">
+      <%= I18n.t("cclow.legislation_types.#{legislation.legislation_type}") %>
+    </div>
+    <div>Passed in <%= legislation.date_passed&.year %></div>
+  </div>
+  <div class="description">
+    <%= highlight legislation.description&.html_safe, @query %>
+  </div>
+</li>
+

@@ -1,14 +1,15 @@
-<li>
-  <h5 class="title"><%= title %></h5>
-  <p class="meta">
-    <% if date_passed.present? %>
-      <span>Opened in <%= date_passed&.year %></span>
+<li class="content-item">
+  <h5 class="title"><%= highlight litigation.link, @query %></h5>
+  <div class="meta">
+    <div>
+      <img src=<%= asset_path "flags/#{litigation.jurisdiction.iso}.svg"%> alt="">
+      <%= litigation.jurisdiction.name %>
+    </div>
+    <% if litigation.started_event.present? %>
+      <div>Opened in <%= litigation.started_event.date&.year %></div>
     <% end %>
-    <% if event_type.present? %>
-      <span><%= I18n.t("cclow.litigation.event_types.#{event_type}") %></span>
-    <% end %>
-  </p>
-  <p>
-    <%= description&.html_safe %>
-  </p>
+  </div>
+  <div class="description">
+    <%= highlight litigation.summary&.html_safe, @query %>
+  </div>
 </li>

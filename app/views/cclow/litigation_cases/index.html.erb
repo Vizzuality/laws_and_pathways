@@ -1,28 +1,27 @@
 <div class="cclow-geography-page">
   <div class="container">
-    <h3>All Litigation cases</h3>
+    <% if @query.present? %>
+      <h5 class="search-title">Search results: <span class="search-text"><%= @query %></span> in Litigation cases</h5>
+    <% else %>
+      <h5>All Litigation cases</h5>
+    <% end %>
     <hr>
     <div class="columns">
       <div class="column is-one-quarter">
         FILTERS
       </div>
-      <main class="column is-three-quarters">
+      <main class="column is-three-quarters" data-controller="content-list">
         <div class="columns pre-content">
-          <span class="column is-half">Showing 296 results</span>
+          <span class="column is-half">Showing <%= @litigations.count %> results</span>
           <a class="column is-half download-link" href="#">Download results (CSV in .zip)</a>
         </div>
         <ul class="content-list">
           <% @litigations.each do   |l| %>
-            <%= render 'cclow/litigation_cases/list_item',
-                         title: link_to(l.title, cclow_geography_litigation_case_path(l.jurisdiction, l)),
-                         description: l.summary,
-                         date_passed: l.started_event&.date,
-                         event_type: l.events.last&.event_type
-            %>
+            <%= render 'cclow/litigation_cases/list_item', litigation: l %>
           <% end %>
         </ul>
         <div class="column is-offset-5">
-          <button class="button is-primary">Load 10 more entries</button>
+          <button class="button is-primary load-more-btn">Load 10 more entries</button>
         </div>
       </main>
     </div>
