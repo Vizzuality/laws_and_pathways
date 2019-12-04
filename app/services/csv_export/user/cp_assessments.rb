@@ -10,11 +10,11 @@ module CSVExport
       def call
         return if @assessments.empty?
 
-        headers = ['Company Name', 'Geography', 'Geography Code', 'Sector', 'CA100 Company?', 'Large/Medium Classification',
+        headers = ['Company Name', 'Geography', 'Geography Code', 'Sector', 'CA100 Focus Company', 'Large/Medium Classification',
                    'ISINs', 'SEDOL', 'Publication Date', 'Assessment Date', 'Carbon Performance Alignment',
-                   'History to Projection cutoff year', 'CP Unit']
+                   'History to Projection cutoff year', 'CP Unit', 'Assumptions']
         year_columns = @assessments.flat_map(&:emissions_all_years).uniq.sort
-        headers.concat(year_columns) << 'Assumptions'
+        headers.concat(year_columns)
 
         CSV.generate do |csv|
           csv << headers
@@ -34,10 +34,10 @@ module CSVExport
               assessment.cp_alignment,
               assessment.last_reported_year,
               assessment.company.sector.cp_unit,
+              assessment.assumptions,
               year_columns.map do |year|
                 assessment.emissions[year]
-              end,
-              assessment.assumptions
+              end
             ].flatten
           end
         end
