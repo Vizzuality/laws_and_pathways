@@ -1,3 +1,5 @@
+<% content_for :page_title, "TPI - Company #{@company.name}" %>
+
 <div class="company-page" data-controller="companies">
   <div class="dropdown-selector-company-page-wrapper">
     <%= react_component("DropdownSelector", { sectors: @sectors, companies: @companies, selectedOption: @company.name, defaultFilter: 'company' }) %>

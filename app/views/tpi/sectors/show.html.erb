@@ -1,3 +1,5 @@
+<% content_for :page_title, "TPI - Sector #{@sector.name}" %>
+
 <div class="sector-page">
   <div class="dropdown-selector-sector-page-wrapper">
     <%= react_component("DropdownSelector", { sectors: @sectors, companies: @companies, selectedOption: @sector.name }) %>
