@@ -1,4 +1,4 @@
-<% content_for :page_title, "TPI - Publications and news" %>
+<% content_for :page_title, "TPI - Search results" %>
 
 <section class="section">
   <div class="container search-results">
@@ -26,8 +26,9 @@
       </ul>
     <% end %>
 
-    <!-- <% if @publications_and_articles.any? %> -->
+    <% if @publications_and_articles.any? %>
+      <h3>Publications and news</h3>
       <%= render 'tpi/publications/promoted' %>
-    <!-- <% end %> -->
+    <% end %>
   </div>
 </section>
