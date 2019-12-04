@@ -34,7 +34,7 @@ class NewsArticle < ApplicationRecord
 
   validates_presence_of :title, :content
 
-  def self.search query
+  def self.search(query)
     where('title ilike ? OR content ilike ?',
           "%#{query}%", "%#{query}%")
   end

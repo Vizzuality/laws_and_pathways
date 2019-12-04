@@ -73,7 +73,7 @@ class Company < ApplicationRecord
     mq_level.eql?('4STAR')
   end
 
-  def self.search query
+  def self.search(query)
     where('name ilike ? OR historical_comments ilike ?',
           "%#{query}%", "%#{query}%")
   end

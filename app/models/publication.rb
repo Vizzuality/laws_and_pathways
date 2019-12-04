@@ -13,7 +13,7 @@ class Publication < ApplicationRecord
   validates :file, attached: true
   validates_presence_of :title, :short_description, :publication_date
 
-  def self.search query
+  def self.search(query)
     where('title ilike ? OR short_description ilike ?',
           "%#{query}%", "%#{query}%")
   end
