@@ -1,5 +1,7 @@
 module TPI
   class CompaniesController < TPIController
+    include UserDownloads
+
     before_action :fetch_company
     before_action :fetch_cp_assessment, only: [:show, :cp_assessment, :emissions_chart_data]
     before_action :fetch_mq_assessment, only: [:show, :mq_assessment, :assessments_levels_chart_data]
@@ -36,18 +38,11 @@ module TPI
     end
 
     def user_download
-      @assessments = @company.mq_assessments
-      mq_assessments_by_methodology = @assessments.group_by(&:methodology_version)
-
-      mq_assessments_files = mq_assessments_by_methodology.map do |methodology, assessments|
-        {
-          "MQ_Assessments_Methodology_#{methodology}.csv" => CSVExport::User::MQAssessments.new(assessments).call
-        }
-      end.reduce(&:merge)
-
-      render zip: {
-        'CP_Assessments.csv' => CSVExport::User::CPAssessments.new(@company.cp_assessments).call
-      }.merge(mq_assessments_files), filename: "TPI company data - #{@company.name}"
+      send_tpi_user_file(
+        mq_assessments: @company.mq_assessments,
+        cp_assessments: @company.cp_assessments,
+        filename: "TPI company data - #{@company.name}"
+      )
     end
 
     private

@@ -1,0 +1,23 @@
+module TPI
+  module UserDownload
+    extend ActiveSupport::Concern
+
+    included do
+      before_action :static_pages
+    end
+
+    def send_tpi_user_file(mq_assessments:, cp_assessments:, filename:)
+      mq_assessments_by_methodology = mq_assessments.group_by(&:methodology_version)
+
+      mq_assessments_files = mq_assessments_by_methodology.map do |methodology, assessments|
+        {
+          "MQ_Assessments_Methodology_#{methodology}.csv" => CSVExport::User::MQAssessments.new(assessments).call
+        }
+      end.reduce(&:merge)
+
+      render zip: mq_assessments_files.merge(
+        'CP_Assessments.csv' => CSVExport::User::CPAssessments.new(cp_assessments).call
+      ), filename: filename
+    end
+  end
+end

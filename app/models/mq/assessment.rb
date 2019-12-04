@@ -33,10 +33,12 @@ module MQ
     end
 
     def previous_assessments
+      # do not use active record relations here
+      # keep select and sort by, company - mq assessments will be cached once
       company
         .mq_assessments
-        .where('assessment_date < ?', assessment_date)
-        .order(:assessment_date)
+        .select { |a| a.assessment_date < assessment_date }
+        .sort_by(&:assessment_date)
     end
 
     def status
