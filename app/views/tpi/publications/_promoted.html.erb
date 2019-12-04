@@ -7,6 +7,13 @@
         <% end %>
 
         <div class="publication__content">
+          <% if publication.keywords.any? %>
+            <div class="publication__tags">
+              <% publication.keywords.each do |tag| %>
+                <span class="tag"><%= tag.name %></span>
+              <% end %>
+            </div>
+          <% end %>
           <p class="updated_at"><%= publication.publication_date %></p>
           <div class="content__title-wrapper">
             <div class="content__title">
