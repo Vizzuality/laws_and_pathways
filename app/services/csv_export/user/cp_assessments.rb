@@ -10,7 +10,8 @@ module CSVExport
       def call
         return if @assessments.empty?
 
-        headers = ['Company Name', 'Geography', 'Geography Code', 'Sector', 'CA100 Focus Company', 'Large/Medium Classification',
+        headers = ['Company Name', 'Geography', 'Geography Code', 'Sector',
+                   'CA100 Focus Company', 'Large/Medium Classification',
                    'ISINs', 'SEDOL', 'Publication Date', 'Assessment Date', 'Carbon Performance Alignment',
                    'History to Projection cutoff year', 'CP Unit', 'Assumptions']
         year_columns = @assessments.flat_map(&:emissions_all_years).uniq.sort
