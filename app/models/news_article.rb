@@ -16,6 +16,7 @@
 class NewsArticle < ApplicationRecord
   include UserTrackable
   include PublicActivityTrackable
+  include Taggable
 
   has_one_attached :image
 
@@ -25,6 +26,8 @@ class NewsArticle < ApplicationRecord
     'In the news',
     'Press Releases'
   ].freeze
+
+  tag_with :keywords
 
   enum article_type: array_to_enum_hash(ARTICLE_TYPES)
 
