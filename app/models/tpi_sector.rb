@@ -52,6 +52,6 @@ class TPISector < ApplicationRecord
   end
 
   def self.search query
-    where('name ilike ?', "%#{params[:query]}%")
+    where('name ilike ?', "%#{query}%")
   end
 end

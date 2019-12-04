@@ -1,0 +1,32 @@
+<% content_for :page_title, "TPI - Publications and news" %>
+
+<div class="container">
+  <h1>Search results for: <%= params[:query] %></h1>
+
+  <% unless @sectors.any? || @companies.any? || @publications_and_articles.any? %>
+    <p>Your search didn't return any results. Try another term or <%= link_to 'explore the tool', tpi_sectors_path, class: 'link' %>.</p>
+    y
+  <% end %>
+
+  <% if @sectors.any? %>
+    <h3>Sectors</h3>
+    <ul>
+      <% @sectors.each do |sector| %>
+        <li><%= link_to sector.name, tpi_sector_path(sector) %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <% if @companies.any? %>
+    <h3>Companies</h3>
+    <ul>
+      <% @companies.each do |company| %>
+        <li><%= link_to company.name, tpi_company_path(company) %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <% if @publications_and_articles.any? %>
+    <%= render 'tpi/publications/promoted' %>
+  <% end %>
+</div>

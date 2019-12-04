@@ -15,6 +15,6 @@ class Publication < ApplicationRecord
 
   def self.search query
     where('title ilike ? OR short_description ilike ?',
-          "%#{params[:query]}%", "%#{params[:query]}%")
+          "%#{query}%", "%#{query}%")
   end
 end

@@ -75,6 +75,6 @@ class Company < ApplicationRecord
 
   def self.search query
     where('name ilike ? OR historical_comments ilike ?',
-          "%#{params[:query]}%", "%#{params[:query]}%")
+          "%#{query}%", "%#{query}%")
   end
 end

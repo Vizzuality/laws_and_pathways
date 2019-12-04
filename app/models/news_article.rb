@@ -36,6 +36,6 @@ class NewsArticle < ApplicationRecord
 
   def self.search query
     where('title ilike ? OR content ilike ?',
-          "%#{params[:query]}%", "%#{params[:query]}%")
+          "%#{query}%", "%#{query}%")
   end
 end
