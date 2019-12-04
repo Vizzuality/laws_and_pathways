@@ -53,6 +53,8 @@ module TPI
       companies_ids = Company.published.select(:id).where(sector_id: @sectors.pluck(:id))
       mq_assessments = MQ::Assessment
         .where(company_id: companies_ids)
+        .joins(:company)
+        .order('companies.name ASC, assessment_date DESC')
         .includes(company: [:sector, :geography, :mq_assessments])
       cp_assessments = CP::Assessment
         .where(company_id: companies_ids)
