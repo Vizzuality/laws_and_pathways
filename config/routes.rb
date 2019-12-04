@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     get '/about', to: 'home#about'
     get '/newsletter', to: 'home#newsletter'
     get '/register', to: 'home#register'
+    get '/disclaimer', to: 'home#disclaimer'
     get '/sandbox', to: 'home#sandbox' if Rails.env.development?
 
     resources :sectors, only: [:show, :index] do
