@@ -1,5 +1,5 @@
-<li>
-  <h5 class="title"><%= highlight legislation.title, @query %></h5>
+<li class="content-item">
+  <h5 class="title"><%= highlight legislation.link, @query %></h5>
   <div class="meta">
     <div>
       <img class="flag" src=<%= asset_path "flags/#{legislation.geography.iso}.svg"%> alt="">
@@ -11,9 +11,8 @@
     </div>
     <div>Passed in <%= legislation.date_passed&.year %></div>
   </div>
-
-  <p>
+  <div class="description">
     <%= highlight legislation.description&.html_safe, @query %>
-  </p>
+  </div>
 </li>
 

@@ -10,7 +10,7 @@
       <div class="column is-one-quarter">
         FILTERS
       </div>
-      <main class="column is-three-quarters">
+      <main class="column is-three-quarters" data-controller="content-list">
         <div class="columns pre-content">
           <span class="column is-half">Showing <%= @litigations.count %> results</span>
           <a class="column is-half download-link" href="#">Download results (CSV in .zip)</a>
@@ -21,7 +21,7 @@
           <% end %>
         </ul>
         <div class="column is-offset-5">
-          <button class="button is-primary">Load 10 more entries</button>
+          <button class="button is-primary load-more-btn">Load 10 more entries</button>
         </div>
       </main>
     </div>

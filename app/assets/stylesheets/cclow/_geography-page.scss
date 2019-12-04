@@ -2,6 +2,8 @@
 @import 'events_timeline';
 @import 'map';
 
+$count-description-lines: 2;
+
 .cclow-geography-page {
   margin-top: 2.8rem;
 
@@ -49,7 +51,6 @@
 
       &> * {
         margin-right: 10px;
-        //vertical-align: middle;
       }
     }
   }
@@ -67,6 +68,15 @@
 
     li {
       margin-top: 2.85rem;
+
+      .description {
+        display: -webkit-box;
+        overflow: hidden;
+        max-height: #{$count-description-lines * $body-line-height}rem;
+        overflow: hidden;
+        -webkit-line-clamp: $count-description-lines;
+        -webkit-box-orient: vertical;
+      }
     }
 
     .with-meta {
