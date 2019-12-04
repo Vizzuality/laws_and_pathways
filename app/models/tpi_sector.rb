@@ -50,4 +50,8 @@ class TPISector < ApplicationRecord
 
     cp_benchmarks.where(release_date: release_date)
   end
+
+  def self.search query
+    where('name ilike ?', "%#{params[:query]}%")
+  end
 end

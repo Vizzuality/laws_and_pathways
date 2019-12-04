@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     get '/register', to: 'home#register'
     get '/sandbox', to: 'home#sandbox' if Rails.env.development?
 
+    get '/search', to: 'search#index'
+
     resources :sectors, only: [:show, :index] do
       collection do
         get :levels_chart_data
