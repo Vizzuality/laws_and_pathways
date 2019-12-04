@@ -50,8 +50,12 @@ module TPI
 
     def user_download_all
       companies_ids = Company.published.select(:id).where(sector_id: @sectors.pluck(:id))
-      mq_assessments = MQ::Assessment.where(company_id:  companies_ids).includes(company: [:sector, :geography, :mq_assessments])
-      cp_assessments = CP::Assessment.where(company_id:  companies_ids).includes(company: [:sector, :geography])
+      mq_assessments = MQ::Assessment
+        .where(company_id:  companies_ids)
+        .includes(company: [:sector, :geography, :mq_assessments])
+      cp_assessments = CP::Assessment
+        .where(company_id:  companies_ids)
+        .includes(company: [:sector, :geography])
 
       send_tpi_user_file(
         mq_assessments: mq_assessments,
@@ -61,8 +65,13 @@ module TPI
     end
 
     def user_download
-      mq_assessments = MQ::Assessment.where(company_id:  @sector.companies.published.select(:id))
-      cp_assessments = CP::Assessment.where(company_id:  @sector.companies.published.select(:id))
+      companies_ids = @sector.companies.published.select(:id)
+      mq_assessments = MQ::Assessment
+        .where(company_id: companies_ids)
+        .includes(company: [:sector, :geography, :mq_assessments])
+      cp_assessments = CP::Assessment
+        .where(company_id: companies_ids)
+        .includes(company: [:sector, :geography])
 
       send_tpi_user_file(
         mq_assessments: mq_assessments,

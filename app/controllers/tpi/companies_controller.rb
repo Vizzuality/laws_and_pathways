@@ -1,8 +1,8 @@
 module TPI
   class CompaniesController < TPIController
-    include UserDownloads
+    include UserDownload
 
-    before_action :fetch_company
+    before_action :fetch_company, only: [:show, :user_download]
     before_action :fetch_cp_assessment, only: [:show, :cp_assessment, :emissions_chart_data]
     before_action :fetch_mq_assessment, only: [:show, :mq_assessment, :assessments_levels_chart_data]
 

@@ -12,7 +12,7 @@ module CSVExport
 
         headers = ['Company Name', 'Country Code', 'Sector Code', 'CA100 Company?', 'Large/Medium Classification',
                    'ISINs', 'SEDOL', 'Publication Date', 'Assessment Date', 'Carbon Performance Alignment',
-                   'History to Projection cutoff year']
+                   'History to Projection cutoff year', 'CP Unit']
         year_columns = @assessments.flat_map(&:emissions_all_years).uniq.sort
         headers.concat(year_columns) << 'Assumptions'
 
@@ -32,6 +32,7 @@ module CSVExport
               assessment.assessment_date,
               assessment.cp_alignment,
               assessment.last_reported_year,
+              assessment.company.sector.cp_unit,
               year_columns.map do |year|
                 assessment.emissions[year]
               end,
