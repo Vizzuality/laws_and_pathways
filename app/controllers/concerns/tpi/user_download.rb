@@ -5,7 +5,10 @@ module TPI
     def send_tpi_user_file(mq_assessments:, cp_assessments:, filename:)
       timestamp = Time.now.strftime('%d%m%Y')
       mq_assessments_by_methodology = mq_assessments.group_by(&:methodology_version)
-      cp_benchmarks = CP::Benchmark.includes(:sector)
+      cp_benchmarks = CP::Benchmark
+        .joins(:sector)
+        .order('tpi_sectors.name ASC, release_date DESC')
+        .includes(:sector)
 
       mq_assessments_files = mq_assessments_by_methodology.map do |methodology, assessments|
         {
