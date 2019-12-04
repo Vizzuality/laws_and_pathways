@@ -39,4 +39,8 @@ class Page < ApplicationRecord
   def reload_routes
     DynamicRouter.reload
   end
+
+  def slug_path
+    "/tpi/#{slug}"
+  end
 end
