@@ -17,8 +17,7 @@ class NewsArticle < ApplicationRecord
   include UserTrackable
   include PublicActivityTrackable
   include Taggable
-
-  has_one_attached :image
+  include ImageWithThumb
 
   ARTICLE_TYPES = [
     'Announcement',
@@ -32,8 +31,4 @@ class NewsArticle < ApplicationRecord
   enum article_type: array_to_enum_hash(ARTICLE_TYPES)
 
   validates_presence_of :title, :content
-
-  def thumbnail
-    image.present? ? image.variant(resize: '400x400') : nil
-  end
 end
