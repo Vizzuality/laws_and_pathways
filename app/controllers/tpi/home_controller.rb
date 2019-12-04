@@ -11,10 +11,11 @@ module TPI
 
       @partners_logos = Page.find_by(slug: 'supporters')&.contents&.find_by(content_type: 'partners')&.images
 
-      publications = Publication.all.sort_by(&:created_at)
-      news = NewsArticle.all.sort_by(&:created_at)
+      publications = Publication.order(publication_date: :desc).limit(3)
+      news = NewsArticle.order(publication_date: :desc).limit(3)
 
-      @publications_and_articles = publications + news
+      @publications_and_articles = (publications + news)
+        .sort { |a, b| b.publication_date <=> a.publication_date }[0, 3]
     end
 
     def about; end

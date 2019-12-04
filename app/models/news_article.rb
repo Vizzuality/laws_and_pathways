@@ -16,8 +16,8 @@
 class NewsArticle < ApplicationRecord
   include UserTrackable
   include PublicActivityTrackable
-
-  has_one_attached :image
+  include Taggable
+  include ImageWithThumb
 
   ARTICLE_TYPES = [
     'Announcement',
@@ -26,11 +26,11 @@ class NewsArticle < ApplicationRecord
     'Press Releases'
   ].freeze
 
+  tag_with :keywords
+
   enum article_type: array_to_enum_hash(ARTICLE_TYPES)
 
-  validates_presence_of :title, :content
+  belongs_to :sector, class_name: 'TPISector', foreign_key: 'sector_id', optional: true
 
-  def thumbnail
-    image.present? ? image.variant(resize: '400x400') : nil
-  end
+  validates_presence_of :title, :content
 end
