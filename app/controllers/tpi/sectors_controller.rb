@@ -51,10 +51,10 @@ module TPI
     def user_download_all
       companies_ids = Company.published.select(:id).where(sector_id: @sectors.pluck(:id))
       mq_assessments = MQ::Assessment
-        .where(company_id:  companies_ids)
+        .where(company_id: companies_ids)
         .includes(company: [:sector, :geography, :mq_assessments])
       cp_assessments = CP::Assessment
-        .where(company_id:  companies_ids)
+        .where(company_id: companies_ids)
         .includes(company: [:sector, :geography])
 
       send_tpi_user_file(
