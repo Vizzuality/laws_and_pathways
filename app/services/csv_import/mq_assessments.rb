@@ -43,7 +43,11 @@ module CSVImport
     def find_company!(row)
       return unless row[:company_id].present?
 
-      Company.find(row[:company_id])
+      company = Company.find(row[:company_id])
+      if company.name.strip.downcase != row[:company].strip.downcase
+        puts "!!WARNING!! CHECK YOUR FILE ID DOESN'T MATCH COMPANY NAME!! #{row[:company_id]} #{row[:company]}"
+      end
+      company
     end
 
     def assessment_attributes(row)
