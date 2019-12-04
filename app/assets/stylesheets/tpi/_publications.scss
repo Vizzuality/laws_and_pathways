@@ -132,19 +132,20 @@ $max-lines: 3;
     }
   }
 
-  // &__tags {
-  //   margin-top: 15px;
-  //   display: flex;
-  //   align-items: flex-start;
+  &__tags {
+    margin-top: 15px;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 22px;
 
-  //   & > .tag {
-  //     margin-right: 12px;
+    & > .tag {
+      margin-right: 12px;
       
-  //     &:last-child {
-  //       margin-right: 0;
-  //     }
-  //   }
-  // }
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
 }
 
 .publications__grid {
