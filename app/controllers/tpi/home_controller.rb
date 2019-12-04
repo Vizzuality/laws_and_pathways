@@ -15,7 +15,7 @@ module TPI
       news = NewsArticle.order(publication_date: :desc).limit(3)
 
       @publications_and_articles = (publications + news)
-        .sort { |a, b| b.publication_date <=> a.publication_date }[0,3]
+        .sort { |a, b| b.publication_date <=> a.publication_date }[0, 3]
     end
 
     def about; end

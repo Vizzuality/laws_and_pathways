@@ -56,8 +56,7 @@ ActiveAdmin.register Publication do
       f.input :short_description, as: :text
       f.input :publication_date
       f.input :sector
-      f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'),
-        as: :tags, collection: Keyword.pluck(:name)
+      f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags, collection: Keyword.pluck(:name)
       f.input :file, as: :file
       f.input :image, as: :file
     end

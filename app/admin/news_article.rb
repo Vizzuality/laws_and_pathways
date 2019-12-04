@@ -65,8 +65,7 @@ ActiveAdmin.register NewsArticle do
       f.input :content, as: :trix
       f.input :publication_date
       f.input :sector
-      f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'),
-        as: :tags, collection: Keyword.pluck(:name)
+      f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags, collection: Keyword.pluck(:name)
       f.input :image, as: :file
     end
 
