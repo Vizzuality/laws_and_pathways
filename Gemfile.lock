@@ -90,6 +90,8 @@ GEM
     annotate (3.0.3)
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 14.0)
+    appsignal (2.10.0)
+      rack
     arbre (1.2.1)
       activesupport (>= 3.0.0)
     ast (2.4.0)
@@ -480,6 +482,7 @@ DEPENDENCIES
   activeadmin
   activeadmin_addons
   annotate
+  appsignal
   bootsnap (>= 1.4.2)
   bullet
   byebug
