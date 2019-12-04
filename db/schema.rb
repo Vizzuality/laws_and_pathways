@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_04_095451) do
+ActiveRecord::Schema.define(version: 2019_12_04_100945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -387,7 +387,9 @@ ActiveRecord::Schema.define(version: 2019_12_04_095451) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "article_type"
+    t.bigint "sector_id"
     t.index ["created_by_id"], name: "index_news_articles_on_created_by_id"
+    t.index ["sector_id"], name: "index_news_articles_on_sector_id"
     t.index ["updated_by_id"], name: "index_news_articles_on_updated_by_id"
   end
 
@@ -410,7 +412,9 @@ ActiveRecord::Schema.define(version: 2019_12_04_095451) do
     t.bigint "updated_by_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "sector_id"
     t.index ["created_by_id"], name: "index_publications_on_created_by_id"
+    t.index ["sector_id"], name: "index_publications_on_sector_id"
     t.index ["updated_by_id"], name: "index_publications_on_updated_by_id"
   end
 
@@ -512,8 +516,10 @@ ActiveRecord::Schema.define(version: 2019_12_04_095451) do
   add_foreign_key "mq_assessments", "companies", on_delete: :cascade
   add_foreign_key "news_articles", "admin_users", column: "created_by_id"
   add_foreign_key "news_articles", "admin_users", column: "updated_by_id"
+  add_foreign_key "news_articles", "tpi_sectors", column: "sector_id"
   add_foreign_key "publications", "admin_users", column: "created_by_id"
   add_foreign_key "publications", "admin_users", column: "updated_by_id"
+  add_foreign_key "publications", "tpi_sectors", column: "sector_id"
   add_foreign_key "taggings", "tags", on_delete: :cascade
   add_foreign_key "targets", "admin_users", column: "created_by_id"
   add_foreign_key "targets", "admin_users", column: "updated_by_id"

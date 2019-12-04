@@ -7,7 +7,8 @@ ActiveAdmin.register NewsArticle do
   decorate_with NewsArticleDecorator
 
   permit_params :title, :content, :publication_date, :article_type,
-                :created_by_id, :updated_by_id, :image, :keywords_string
+                :created_by_id, :updated_by_id, :sector_id,
+                :image, :keywords_string
 
   filter :title
   filter :content
@@ -21,10 +22,11 @@ ActiveAdmin.register NewsArticle do
           row :article_type
           row :content
           row :publication_date
+          row :sector
+          row 'Keywords', &:keywords_string
           row :image do |t|
             image_tag(url_for(t.image)) if t.image.present?
           end
-          row 'Keywords', &:keywords_string
           row :updated_at
           row :updated_by
           row :created_at
@@ -51,6 +53,7 @@ ActiveAdmin.register NewsArticle do
     column :article_type
     column :content
     column :publication_date
+    column(:sector) { |l| l.sector&.name }
   end
 
   form html: {'data-controller' => 'check-modified'} do |f|
@@ -61,9 +64,10 @@ ActiveAdmin.register NewsArticle do
       f.input :article_type, as: :select, collection: array_to_select_collection(NewsArticle::ARTICLE_TYPES)
       f.input :content, as: :trix
       f.input :publication_date
-      f.input :image, as: :file
+      f.input :sector
       f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'),
         as: :tags, collection: Keyword.pluck(:name)
+      f.input :image, as: :file
     end
 
     f.actions
@@ -73,7 +77,7 @@ ActiveAdmin.register NewsArticle do
     include DiscardableController
 
     def scoped_collection
-      super
+      super.includes(:sector, :keywords)
     end
 
     def apply_filtering(chain)

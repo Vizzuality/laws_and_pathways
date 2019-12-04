@@ -8,7 +8,7 @@ ActiveAdmin.register Publication do
 
   permit_params :title, :short_description, :publication_date,
                 :file, :image, :created_by_id, :updated_by_id,
-                :keywords_string
+                :sector_id, :keywords_string
 
   filter :title
   filter :short_description
@@ -21,11 +21,12 @@ ActiveAdmin.register Publication do
           row :title
           row :short_description
           row :publication_date
+          row :sector
+          row 'Keywords', &:keywords_string
           row :image do |t|
             image_tag(url_for(t.image)) if t.image.present?
           end
           row :file, &:file_link
-          row 'Keywords', &:keywords_string
           row :updated_at
           row :updated_by
           row :created_at
@@ -54,10 +55,11 @@ ActiveAdmin.register Publication do
       f.input :title
       f.input :short_description, as: :text
       f.input :publication_date
-      f.input :file, as: :file
-      f.input :image, as: :file
+      f.input :sector
       f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'),
         as: :tags, collection: Keyword.pluck(:name)
+      f.input :file, as: :file
+      f.input :image, as: :file
     end
 
     f.actions

@@ -30,5 +30,7 @@ class NewsArticle < ApplicationRecord
 
   enum article_type: array_to_enum_hash(ARTICLE_TYPES)
 
+  belongs_to :sector, class_name: 'TPISector', foreign_key: 'sector_id', optional: true
+
   validates_presence_of :title, :content
 end
