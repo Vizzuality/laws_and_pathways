@@ -7,7 +7,6 @@ const ENTER_KEY = 13;
 const SearchComponent = ({placeholder, action, closeSearchMode}) => {
   const input = useRef(null);
   const container = useRef(null);
-  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => (input.current.focus()));
 
@@ -18,8 +17,12 @@ const SearchComponent = ({placeholder, action, closeSearchMode}) => {
   };
 
   const handlePressEnter = event => {
-    if (event.keyCode === ENTER_KEY) {
-      // do something!
+    const {origin} = window.location;
+    const {value} = event.target;
+    const path = origin + action;
+
+    if (event.keyCode === ENTER_KEY && value && value.length > 0) {
+      window.location.href = `${path}?query=${encodeURIComponent(value)}`;
     }
   }
 
@@ -149,6 +152,12 @@ Navbar.propTypes = {
     hasIcon: PropTypes.bool,
     className: PropTypes.string,
   })).isRequired,
+  controls: PropTypes.shape({
+    search: PropTypes.shape({
+      placeholder: PropTypes.string.isRequired,
+      action: PropTypes.string.isRequired,
+    }),
+  }),
 };
 
 export default Navbar;
