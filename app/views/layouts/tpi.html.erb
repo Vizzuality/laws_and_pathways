@@ -5,6 +5,28 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <% title = 'Transition Pathway Initiative' %>
+    <% description = "The Transition Pathway Initiative (TPI) is a global initiative led by asset owners and supported by asset managers. Aimed at investors and free to use, it assesses companies’ preparedness for the transition to a low-carbon economy, supporting efforts to address climate change. Launched in 2017, it is rapidly becoming the ‘go-to’ corporate climate action benchmark."%>
+    <% img_src = "#{request.original_url}/tpi.jpg" %>
+
+    <meta itemprop="name" content="<%= title %>">
+    <meta itemprop="description" content="<%= description %>">
+    <meta name="description" content="<%= description %>">
+    <meta name="keywords" content="Low-carbon economy,climate change,private sector,asset managers,global initiative">
+    <meta name="author" content="Vizzuality">
+    <meta property="og:title" content="<%= title %>">
+    <meta property="og:description" content="<%= description %>">
+    <meta property="og:image" content="<%= img_src %>">
+    <meta property="og:url" content="<%= request.original_url %>">
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:site" content="@tp_initiative"/>
+    <meta name="twitter:title" content="<%= title %>"/>
+    <meta name="twitter:creator" content="@tp_initiative"/>
+    <meta name="twitter:description" content="<%= description %>"/>
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:image" content="<%= img_src %>"/>
+
     <%= stylesheet_link_tag 'tpi' %>
     <%= javascript_pack_tag 'tpi' %>
   </head>
