@@ -22,5 +22,7 @@ module TPI
     def sandbox; end
 
     def newsletter; end
+
+    def register; end
   end
 end

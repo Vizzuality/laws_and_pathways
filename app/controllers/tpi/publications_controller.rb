@@ -1,10 +1,11 @@
 module TPI
   class PublicationsController < TPIController
     def index
-      publications = Publication.all.sort_by(&:created_at)
-      news = NewsArticle.all.sort_by(&:created_at)
+      publications = Publication.order(:created_at)
+      news = NewsArticle.order(:created_at)
 
-      @publications_and_articles = publications + news
+      @publications_and_articles = (publications + news)
+        .sort { |a, b| b.publication_date <=> a.publication_date }
     end
 
     def show

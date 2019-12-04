@@ -2,7 +2,7 @@
   <div class="publications__grid">
     <% @publications_and_articles.each do |publication| %>
       <div class="publication">
-        <% if publication.thumbnail.present? %>
+        <% if publication.thumbnail %>
           <%= image_tag(publication.thumbnail, class: "publication__avatar") %>
         <% end %>
 
@@ -10,7 +10,11 @@
           <p class="updated_at"><%= publication.publication_date %></p>
           <div class="content__title-wrapper">
             <div class="content__title">
-              <%= link_to publication.title, tpi_publication_path(id: publication.id, type: publication.class.name), class: "link is-strong" %>
+              <% if publication.is_a?(Publication) %>
+                <%= link_to publication.title, rails_blob_path(publication.file, disposition: 'attachment'), class: 'link is-strong' %>
+              <% else %>
+                <%= link_to publication.title, tpi_publication_path(id: publication.id, type: publication.class.name), class: "link is-strong" %>
+              <% end %>
             </div>
           </div>
 
