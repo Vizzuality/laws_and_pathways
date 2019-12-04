@@ -35,6 +35,12 @@ $button-border-width: 4px;
   font-family: $family-sans-serif-bold;
   cursor: pointer;
 
+  &.is-centered {
+    justify-content: center;
+    align-items: center;
+    height: $button-height;
+  }
+
   &.is-primary {
     justify-content: center;
     align-items: center;
