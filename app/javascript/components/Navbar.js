@@ -57,18 +57,26 @@ const SearchComponent = ({placeholder, action, closeSearchMode}) => {
 const NavbarComponent = ({items, openSearchMode}) => {
   const [tpi, publications, about, newsletter, login, search] = items;
 
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div className="navbar" role="navigation" aria-label="main navigation">
       <div className="container">
         <div className="navbar-brand is-hidden-desktop">
           <a className="navbar-item" href="#">MENU</a>
-          <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="HeaderMenu">
+          <a role="button"
+            className={`navbar-burger ${isOpen ? 'is-active' : ''}`}
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="HeaderMenu"
+          >
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </a>
         </div>
-        <div id="HeaderMenu" className="navbar-menu">
+        <div id="HeaderMenu" className={`navbar-menu ${isOpen ? 'is-active' : ''}`}>
           <div className="navbar-start">
             <div className="navbar-item has-dropdown is-hoverable">
               <a className="navbar-link is-arrowless">
@@ -136,7 +144,7 @@ const Navbar = ({items, controls}) => {
 
   return (
     <header className="header">
-      <NavbarComponent items={items} openSearchMode={openSearchMode} />  
+      <NavbarComponent items={items} openSearchMode={openSearchMode} />
     </header>
   );
 }
