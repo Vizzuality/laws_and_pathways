@@ -6,7 +6,7 @@ module TPI
 
       publications = Publication.search(params[:query]).order(:title)
       news = NewsArticle.search(params[:query]).order(:title)
-      @publications_and_articles = (publications + news).sort_by(:title)
+      @publications_and_articles = (publications + news).sort_by(&:title)
 
       @query = params[:query]
     end
