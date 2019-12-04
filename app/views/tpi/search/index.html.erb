@@ -5,7 +5,7 @@
     <h1>Search results for: <%= @query %></h1>
 
     <% unless @sectors.any? || @companies.any? || @publications_and_articles.any? %>
-      <p>Your search didn't return any results. Try another term or <%= link_to 'explore the tool', tpi_sectors_path, class: 'link' %>.</p>
+      <p class="search-results__empty">Your search didn't return any results. Try another term or <%= link_to 'explore the tool', tpi_sectors_path, class: 'link' %>.</p>
     <% end %>
 
     <% if @sectors.any? %>
@@ -26,8 +26,8 @@
       </ul>
     <% end %>
 
-    <% if @publications_and_articles.any? %>
+    <!-- <% if @publications_and_articles.any? %> -->
       <%= render 'tpi/publications/promoted' %>
-    <% end %>
+    <!-- <% end %> -->
   </div>
 </section>
