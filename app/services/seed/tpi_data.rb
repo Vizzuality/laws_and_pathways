@@ -9,6 +9,8 @@ module Seed
     end
 
     def call
+      import_sectors
+
       # import companies
       TimedLogger.log('Import companies') do
         CSVImport::Companies.new(seed_file('tpi-companies.csv'), override_id: true).call
@@ -36,6 +38,29 @@ module Seed
 
     def seed_file(filename)
       File.open(Rails.root.join('db', 'seeds', filename), 'r')
+    end
+
+    def import_sectors
+      [
+        ['Airlines', 'gCO2 / passenger-kilometre (pkm)'],
+        ['Aluminium', 'tCO2e / t aluminium'],
+        ['Autos', 'Average new vehicle emissions (grams of CO2 per kilometre [NEDC])'],
+        ['Cement', 'Carbon intensity (tonnes of CO2 per tonne of cementitious product)'],
+        ['Coal Mining'],
+        ['Consumer Goods'],
+        ['Electricity Utilities', 'Carbon intensity (metric tonnes of CO2 per MWh electricity generation)'],
+        ['Oil & Gas Distribution'],
+        ['Oil & gas'],
+        ['Other Basic Materials'],
+        ['Other Industrials'],
+        ['Paper', 'Carbon intensity (tonnes of CO2 per tonne of pulp, paper and paperboard)'],
+        ['Services'],
+        ['Steel', 'Carbon intensity (tonnes of CO2 per tonne of steel)']
+      ].each do |sector_name, sector_cp_unit|
+        TPISector.find_or_create_by!(name: sector_name) do |sector|
+          sector.cp_unit = sector_cp_unit unless sector.cp_unit
+        end
+      end
     end
   end
 end

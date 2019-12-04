@@ -10,11 +10,10 @@ module CSVExport
       def call
         return if @assessments.empty?
 
-        headers = ['Company Name', 'Geography', 'Geography Code', 'Sector Code',
+        headers = ['Company Name', 'Geography', 'Geography Code', 'Sector',
                    'CA100 Company?', 'Large/Medium Classification',
                    'ISINs', 'SEDOL', 'Publication Date', 'Assessment Date',
-                   'Methodology Version', 'Level',
-                   'Performance compared to previous year']
+                   'Level', 'Performance compared to previous year']
         question_headers = @assessments.first.questions.map(&:csv_column_name)
         headers.concat(question_headers)
 
@@ -33,7 +32,6 @@ module CSVExport
               assessment.company.sedol,
               assessment.publication_date,
               assessment.assessment_date,
-              assessment.methodology_version,
               assessment.level,
               assessment.status,
               assessment.questions.map do |q|
