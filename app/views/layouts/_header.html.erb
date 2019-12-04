@@ -1,61 +1,35 @@
-<header class="header">
-  <navbar class="navbar" role="navigation" aria-label="main navigation">
-    <div class="container">
-      <div class="navbar-brand is-hidden-desktop">
-        <a class="navbar-item" href="#">MENU</a>
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="HeaderMenu">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-      </div>
-      <div id="HeaderMenu" class="navbar-menu">
-        <div class="navbar-start">
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link is-arrowless">
-              TPI tool
-              <span class="icon chevron-down"></span>
-            </a>
-
-            <div class="navbar-dropdown">
-              <%= link_to 'TPI tool', tpi_sectors_path, class: 'navbar-item' %>
-              <% @tpi_tool_pages.each do |page| %>
-                <a href="/tpi/<%= page.slug %>" class="navbar-item">
-                  <%= page.title %>
-                </a>
-              <% end %>
-            </div>
-          </div>
-
-          <a href="/tpi/publications" class="navbar-item">
-            Publications and news
-          </a>
-
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link is-arrowless">
-              About
-              <span class="icon chevron-down"></span>
-            </a>
-
-            <div class="navbar-dropdown">
-              <% @about_pages.each do |page| %>
-                <a href="/tpi/<%= page.slug %>" class="navbar-item">
-                  <%= page.title %>
-                </a>
-              <% end %>
-              <!-- <hr class="navbar-divider"> -->
-            </div>
-          </div>
-        </div>
-
-        <div class="navbar-end">
-          <%= link_to 'Newsletter', tpi_newsletter_path, class: 'navbar-item' %>
-          <%= link_to 'Login / Register', tpi_register_path, class: 'navbar-item' %>
-          <a class="navbar-item">
-            <%= render 'shared/search-icon' %>
-          </a>
-        </div>
-      </div>
-    </div>
-  </navbar>
-</header>
+<%= react_component("Navbar", {
+  items: [
+    {
+      entry: 'TPI tool',
+      path: tpi_sectors_path,
+      content: @tpi_tool_pages,
+    },
+    {
+      entry: 'Publications and news',
+      path: '/tpi/publications',
+    },
+    {
+      entry: 'About',
+      content: @about_pages,
+    },
+    {
+      entry: 'Newsletter',
+      path: tpi_newsletter_path,
+    },
+    {
+      entry: 'Login / Register',
+      path: '',
+    },
+    {
+      entry: 'Search',
+      hasIcon: true,
+    },
+  ],
+  controls: {
+    search: {
+      placeholder: 'Search the TPI website',
+      action: '/tpi/search',
+    },
+  },
+}) %>
