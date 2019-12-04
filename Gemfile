@@ -11,6 +11,7 @@ gem 'sass-rails', '>= 6'
 gem 'uglifier', '>= 1.3.0'
 gem 'webpacker'
 gem 'mini_magick'
+gem 'rubyzip'
 
 gem 'turbolinks', '~> 5'
 gem 'bootsnap', '>= 1.4.2', require: false

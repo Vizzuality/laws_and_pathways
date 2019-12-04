@@ -13,9 +13,10 @@
         Go to Carbon Performance
       </a>
 
-      <button class="button is-primary with-border is-pulled-right">
+      <%= link_to user_download_tpi_sector_path(@sector), class: 'button is-primary is-pulled-right with-icon with-border' do %>
+        <img src="<%= asset_path 'icons/download.svg'%>" />
         Download sector data
-      </button>
+      <% end %>
     </div>
   </div>
 

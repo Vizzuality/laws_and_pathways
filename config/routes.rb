@@ -11,10 +11,12 @@ Rails.application.routes.draw do
       collection do
         get :levels_chart_data
         get :cp_performance_chart_data
+        get :user_download_all
       end
       member do
         get :levels_chart_data
         get :emissions_chart_data
+        get :user_download
       end
     end
 
@@ -24,6 +26,7 @@ Rails.application.routes.draw do
         get :assessments_levels_chart_data
         get :mq_assessment
         get :cp_assessment
+        get :user_download
       end
     end
 
@@ -49,5 +52,5 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
-  root to: 'admin/dashboard#index'
+  root to: 'tpi/home#index'
 end

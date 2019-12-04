@@ -1,6 +1,8 @@
 module TPI
   class CompaniesController < TPIController
-    before_action :fetch_company
+    include UserDownload
+
+    before_action :fetch_company, only: [:show, :user_download]
     before_action :fetch_cp_assessment, only: [:show, :cp_assessment, :emissions_chart_data]
     before_action :fetch_mq_assessment, only: [:show, :mq_assessment, :assessments_levels_chart_data]
 
@@ -33,6 +35,15 @@ module TPI
       data = ::Api::Charts::CPAssessment.new(@cp_assessment).emissions_data
 
       render json: data.chart_json
+    end
+
+    def user_download
+      timestamp = Time.now.strftime('%d%m%Y')
+      send_tpi_user_file(
+        mq_assessments: @company.mq_assessments,
+        cp_assessments: @company.cp_assessments,
+        filename: "TPI company data - #{@company.name} - #{timestamp}"
+      )
     end
 
     private
