@@ -38,10 +38,11 @@ module TPI
     end
 
     def user_download
+      timestamp = Time.now.strftime('%d%m%Y')
       send_tpi_user_file(
         mq_assessments: @company.mq_assessments,
         cp_assessments: @company.cp_assessments,
-        filename: "TPI company data - #{@company.name}"
+        filename: "TPI company data - #{@company.name} - #{timestamp}"
       )
     end
 

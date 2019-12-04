@@ -10,8 +10,10 @@ module CSVExport
       def call
         return if @assessments.empty?
 
-        headers = ['Company Name', 'Country Code', 'Sector Code', 'CA100 Company?', 'Large/Medium Classification',
-                   'ISINs', 'SEDOL', 'Publication Date', 'Assessment Date', 'Methodology Version', 'Level',
+        headers = ['Company Name', 'Geography', 'Geography Code', 'Sector Code',
+                   'CA100 Company?', 'Large/Medium Classification',
+                   'ISINs', 'SEDOL', 'Publication Date', 'Assessment Date',
+                   'Methodology Version', 'Level',
                    'Performance compared to previous year']
         question_headers = @assessments.first.questions.map(&:csv_column_name)
         headers.concat(question_headers)
@@ -22,6 +24,7 @@ module CSVExport
           @assessments.each do |assessment|
             csv << [
               assessment.company.name,
+              assessment.company.geography.name,
               assessment.company.geography.iso,
               assessment.company.sector.name,
               assessment.company.ca100? ? 'Yes' : 'No',

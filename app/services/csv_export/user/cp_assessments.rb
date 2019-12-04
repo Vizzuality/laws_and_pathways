@@ -10,7 +10,7 @@ module CSVExport
       def call
         return if @assessments.empty?
 
-        headers = ['Company Name', 'Country Code', 'Sector Code', 'CA100 Company?', 'Large/Medium Classification',
+        headers = ['Company Name', 'Geography', 'Geography Code', 'CA100 Company?', 'Large/Medium Classification',
                    'ISINs', 'SEDOL', 'Publication Date', 'Assessment Date', 'Carbon Performance Alignment',
                    'History to Projection cutoff year', 'CP Unit']
         year_columns = @assessments.flat_map(&:emissions_all_years).uniq.sort
@@ -22,6 +22,7 @@ module CSVExport
           @assessments.each do |assessment|
             csv << [
               assessment.company.name,
+              assessment.company.geography.name,
               assessment.company.geography.iso,
               assessment.company.sector.name,
               assessment.company.ca100? ? 'Yes' : 'No',

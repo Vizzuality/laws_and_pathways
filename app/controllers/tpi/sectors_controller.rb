@@ -49,6 +49,7 @@ module TPI
     end
 
     def user_download_all
+      timestamp = Time.now.strftime('%d%m%Y')
       companies_ids = Company.published.select(:id).where(sector_id: @sectors.pluck(:id))
       mq_assessments = MQ::Assessment
         .where(company_id: companies_ids)
@@ -60,11 +61,12 @@ module TPI
       send_tpi_user_file(
         mq_assessments: mq_assessments,
         cp_assessments: cp_assessments,
-        filename: 'TPI sector data - All sectors'
+        filename: "TPI sector data - All sectors - #{timestamp}"
       )
     end
 
     def user_download
+      timestamp = Time.now.strftime('%d%m%Y')
       companies_ids = @sector.companies.published.select(:id)
       mq_assessments = MQ::Assessment
         .where(company_id: companies_ids)
@@ -76,7 +78,7 @@ module TPI
       send_tpi_user_file(
         mq_assessments: mq_assessments,
         cp_assessments: cp_assessments,
-        filename: "TPI sector data - #{@sector.name}"
+        filename: "TPI sector data - #{@sector.name} - #{timestamp}"
       )
     end
 
