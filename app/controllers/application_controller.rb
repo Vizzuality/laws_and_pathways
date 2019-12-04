@@ -1,6 +1,4 @@
 class ApplicationController < ActionController::Base
-  include BaseAuth
-
   before_action :set_current_user
 
   private

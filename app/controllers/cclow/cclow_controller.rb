@@ -1,5 +1,6 @@
 module CCLOW
   class CCLOWController < ApplicationController
+    include BaseAuth
     layout 'cclow'
 
     protected
