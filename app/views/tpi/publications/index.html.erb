@@ -3,8 +3,8 @@
 <div class="container publications">
   <h1 class="publications__title">Publications and news</h1>
 </div>
-<%= react_component("Filters", { tags: @tags, sectors: @sectors, activeTags: @active_tags, activeSectors: @active_sectors, filtersOpen: @filters_open, resultsSize: @publications_and_articles.size }) %>
-<div class="container publications">
+<%= react_component("Filters", { tags: @tags, sectors: @sectors, activeTags: params[:tags], activeSectors: params[:sectors], resultsSize: @publications_and_articles.size }) %>
+<div id="publications" class="container publications">
   <%= render 'promoted' %>
 
   <!-- TODO

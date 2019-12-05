@@ -33,7 +33,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :publications, only: [:index, :show]
+    resources :publications, only: [:index, :show] do
+      collection do
+        get :partial
+      end
+    end
     DynamicRouter.load
   end
 

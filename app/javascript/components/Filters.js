@@ -6,6 +6,7 @@ import filterBlueIcon from '../../assets/images/icons/filter-blue.svg';
 
 const Filters = ({ tags, activeTags, filtersOpen, activeSectors, sectors, resultsSize }) => {
   const [isFilterOpen, setIsFiltersOpen] = useState(filtersOpen);
+  const [resultsCount, setResultsCount] = useState(resultsSize);
 
   const buttonTitle = isFilterOpen ? 'Hide filters' : 'Show filters';
 
@@ -28,6 +29,18 @@ const Filters = ({ tags, activeTags, filtersOpen, activeSectors, sectors, result
     setIsFiltersOpen(!isFilterOpen);
   }
 
+  const refreshPublicationsHtml = (query) => {
+    const url = `/tpi/publications/partial?${query}`
+
+    fetch(url)
+      .then(response => response.text())
+      .then(html => {
+        document.querySelector('#publications').innerHTML = html;
+        const newPublicationsCount = document.querySelector('#input_publications_count').value;
+        setResultsCount(newPublicationsCount);
+      });
+  }
+
   const handleTagClick = (tag) => {
     const isAllClicked = tag.name === 'All';
     const otherOptions = tagsMap.filter(t => t.name !== 'All');
@@ -42,21 +55,19 @@ const Filters = ({ tags, activeTags, filtersOpen, activeSectors, sectors, result
     const queryParams = qs.parse(currentQueryParams, { ignoreQueryPrefix: true });
 
     if (shouldALLbeSelected) {
-      queryParams['activeTags'] = '';
-      queryParams['filtersOpen'] = true;
+      queryParams['tags'] = '';
       const stringifiedQuery = qs.stringify(queryParams);
-      window.open(`/tpi/publications?${stringifiedQuery}`, "_self");
+      refreshPublicationsHtml(stringifiedQuery);
     } else {
       const activeTagsQueryParam = mapOfTags.filter(t => t.active && t.name !== 'All').map(t => t.name).join(', ');
-    
+
       if (currentQueryParams) {
-        queryParams['activeTags'] = activeTagsQueryParam;
-        queryParams['filtersOpen'] = true;
+        queryParams['tags'] = activeTagsQueryParam;
         const stringifiedQuery = qs.stringify(queryParams);
 
-        window.open(`/tpi/publications?${stringifiedQuery}`, "_self");
+        refreshPublicationsHtml(stringifiedQuery);
       } else {
-        window.open(`/tpi/publications?activeTags=${activeTagsQueryParam}&filtersOpen=true`, "_self");
+        refreshPublicationsHtml(`tags=${activeTagsQueryParam}`);
       }
     }
   }
@@ -75,21 +86,19 @@ const Filters = ({ tags, activeTags, filtersOpen, activeSectors, sectors, result
     const queryParams = qs.parse(currentQueryParams, { ignoreQueryPrefix: true });
 
     if (shouldALLbeSelected) {
-      queryParams['activeSectors'] = '';
-      queryParams['filtersOpen'] = true;
+      queryParams['sectors'] = '';
       const stringifiedQuery = qs.stringify(queryParams);
-      window.open(`/tpi/publications?${stringifiedQuery}`, "_self");
+      refreshPublicationsHtml(stringifiedQuery);
     } else {
       const activeSectorsQueryParam = mapOfSectors.filter(s => s.active && s.name !== 'All').map(s => s.name).join(', ');
 
       if (currentQueryParams) {
-        queryParams['activeSectors'] = activeSectorsQueryParam;
-        queryParams['filtersOpen'] = true;
+        queryParams['sectors'] = activeSectorsQueryParam;
         const stringifiedQuery = qs.stringify(queryParams);
 
-        window.open(`/tpi/publications?${stringifiedQuery}`, "_self");
+        refreshPublicationsHtml(stringifiedQuery);
       } else {
-        window.open(`/tpi/publications?activeSectors=${activeSectorsQueryParam}&filtersOpen=true`, "_self");
+        refreshPublicationsHtml(`sectors=${activeSectorsQueryParam}`);
       }
     }
   }
@@ -99,7 +108,7 @@ const Filters = ({ tags, activeTags, filtersOpen, activeSectors, sectors, result
       <div className="container publications">
         <div className="filters__wrapper">
           <div className="">
-            <p>Showing <strong>{resultsSize}</strong> items in <strong>All Publications and news</strong></p>
+            <p>Showing <strong>{resultsCount}</strong> items in <strong>All Publications and news</strong></p>
           </div>
           <div className="filters__button">
             <button className={cx("button is-centered", { ['filters__button-active']: !isFilterOpen, ['filters__button-notactive']: isFilterOpen} )} onClick={handleButtonClick}>

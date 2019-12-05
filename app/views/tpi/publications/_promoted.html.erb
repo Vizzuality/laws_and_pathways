@@ -1,3 +1,4 @@
+<%= hidden_field_tag :input_publications_count, @publications_and_articles.size %>
 <div class="promoted-publications__publications">
   <div class="publications__grid">
     <% @publications_and_articles.each do |publication| %>
@@ -29,7 +30,7 @@
             <p>
               <% if publication.class.name.eql?("NewsArticle") %>
                 Article type: <%= publication.article_type %>
-              <% else %> 
+              <% else %>
                 <%= publication.short_description %>
               <% end %>
             </p>
