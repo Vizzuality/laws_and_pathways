@@ -4,8 +4,12 @@ const webpack = require('webpack')
 environment.loaders.append('eslint', {
   enforce: 'pre',
   test: /\.js$/,
-  use: 'eslint-loader',
-  exclude: /node_modules/
+  loader: 'eslint-loader',
+  exclude: /node_modules/,
+  options: {
+    emitWarning: true,
+    failOnWarning: false
+  }
 });
 
 module.exports = environment
