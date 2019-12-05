@@ -10,6 +10,8 @@ import { geoCylindricalEqualArea } from 'd3-geo-projection';
 import reducer, { initialState } from './world-map.reducer';
 import { useMarkers } from './world-map.hooks';
 import MapBubble from './MapBubble';
+import MinusIcon from 'images/cclow/icons/minus.svg';
+import PlusIcon from 'images/cclow/icons/plus.svg';
 
 const geoUrl = 'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json';
 const PetersGall = geoCylindricalEqualArea().parallel(45);
@@ -27,11 +29,11 @@ function WorldMap(props) {
   return (
     <div className="world-map__container">
       <div className="world-map__controls">
-        <button type="button" onClick={zoomIn} className="world-map__controls-zoom-in">
-          zoom in
+        <button type="button" onClick={zoomIn} className="button world-map__controls-zoom-in">
+          <img src={PlusIcon} alt="zoom-in" />
         </button>
-        <button type="button" onClick={zoomOut} className="world-map__controls-zoom-out">
-          zoom out
+        <button type="button" onClick={zoomOut} className="button world-map__controls-zoom-out">
+          <img src={MinusIcon} alt="zoom-out" />
         </button>
       </div>
       <select onChange={setActiveLayerId} defaultValue={state.activeLayerId}>
