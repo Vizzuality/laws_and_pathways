@@ -7,7 +7,7 @@ module Queries
       attr_accessor :tags, :sectors
 
       def call
-        (publications + news).sort_by(&:publication_date)
+        (publications + news).uniq.sort_by(&:publication_date)
       end
 
       private
@@ -30,13 +30,13 @@ module Queries
       def filter_by_tags(scope)
         return scope if tags.blank?
 
-        scope.joins(:keywords).where(tags: {name: tags})
+        scope.joins(:keywords).where(tags: {name: tags.split(', ')})
       end
 
       def filter_by_sectors(scope)
         return scope if sectors.blank?
 
-        scope.joins(:sector).where('tpi_sectors.name IN (?)', sectors)
+        scope.joins(:sector).where('tpi_sectors.name IN (?)', sectors.split(', '))
       end
     end
   end

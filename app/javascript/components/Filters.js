@@ -1,29 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import cx from 'classnames';
-import qs from 'qs';
 import filterIcon from '../../assets/images/icons/filter-white.svg';
 import filterBlueIcon from '../../assets/images/icons/filter-blue.svg';
 
-const Filters = ({ tags, activeTags, filtersOpen, activeSectors, sectors, resultsSize }) => {
-  const [isFilterOpen, setIsFiltersOpen] = useState(filtersOpen);
+const ALL_OPTION_NAME = 'All';
+
+const Filters = ({ tags, sectors, resultsSize }) => {
+  const [isFilterOpen, setIsFiltersOpen] = useState(false);
   const [resultsCount, setResultsCount] = useState(resultsSize);
 
-  const buttonTitle = isFilterOpen ? 'Hide filters' : 'Show filters';
+  const tagsWithAllOption = [ALL_OPTION_NAME, ...tags];
+  const sectorsWithAlloption = [ALL_OPTION_NAME, ...sectors];
 
-  const tagsWithAllOption = ['All', ...tags];
-  const sectorsWithAlloption = ['All', ...sectors];
-
-  const tagsMap = tagsWithAllOption.map(tag => ({
+  const defaultActiveTags = tagsWithAllOption.map(tag => ({
     name: tag,
-    active: (activeTags && activeTags.length && activeTags.includes(tag))
-      || (tag === 'All' && activeTags && !activeTags.length)
-  }))
+    active: tag === ALL_OPTION_NAME
+  }));
 
-  const sectorsMap = sectorsWithAlloption.map(sector => ({
+  const defaultActiveSectors = sectorsWithAlloption.map(sector => ({
     name: sector,
-    active: (activeSectors && activeSectors.length && activeSectors.includes(sector))
-      || (sector === 'All' && activeSectors && !activeSectors.length)
-  }))
+    active: sector === ALL_OPTION_NAME
+  }));
+
+  const [activeTags, setActiveTags] = useState(defaultActiveTags);
+  const [activeSectors, setActiveSectors] = useState(defaultActiveSectors);
+
+  const isAllClicked = (option) => option.name === ALL_OPTION_NAME;
+  const isAllSelected = (options) => options.filter(o => o.active).length === 0;
+  const optionsWithoutALL = (options) => options.filter(t => t.name !== ALL_OPTION_NAME);
+  const isOtherOptionsActive = (options) => !!options.filter(o => o.active).length;
+
+  const buttonTitle = isFilterOpen ? 'Hide filters' : 'Show filters';
 
   const handleButtonClick = () => {
     setIsFiltersOpen(!isFilterOpen);
@@ -41,65 +48,59 @@ const Filters = ({ tags, activeTags, filtersOpen, activeSectors, sectors, result
       });
   }
 
+  useEffect(() => {
+    const activeTagsQueryParam =
+      activeTags
+        .filter(t => t.active && t.name !== ALL_OPTION_NAME)
+        .map(t => t.name)
+        .join(', ');
+    const activeSectorsQueryParam =
+      activeSectors
+        .filter(s => s.active && s.name !== ALL_OPTION_NAME)
+        .map(s => s.name)
+        .join(', ');
+    refreshPublicationsHtml(`tags=${activeTagsQueryParam}&sectors=${activeSectorsQueryParam}`);
+  }, [activeTags, activeSectors])
+
   const handleTagClick = (tag) => {
-    const isAllClicked = tag.name === 'All';
-    const otherOptions = tagsMap.filter(t => t.name !== 'All');
-    const shouldALLbeSelected = isAllClicked && !!otherOptions.filter(o => o.active).length;
-
-    const mapOfTags = tagsMap.map(originalTag => {
-      if(originalTag.name === tag.name) { return { name: originalTag.name, active: !originalTag.active }; }
-      else { return { name: originalTag.name, active: originalTag.active }; }
-    })
-
-    const currentQueryParams = window.location.search;
-    const queryParams = qs.parse(currentQueryParams, { ignoreQueryPrefix: true });
+    const otherOptions = optionsWithoutALL(activeTags);
+    
+    const shouldALLbeSelected = isAllClicked(tag) && (isOtherOptionsActive(otherOptions) || isAllSelected(otherOptions));
 
     if (shouldALLbeSelected) {
-      queryParams['tags'] = '';
-      const stringifiedQuery = qs.stringify(queryParams);
-      refreshPublicationsHtml(stringifiedQuery);
+      const tagsWithALLSelected = activeTags.map(t => ({
+        name: t.name,
+        active: t.name === ALL_OPTION_NAME ? true : false
+      }));
+      setActiveTags(tagsWithALLSelected)
     } else {
-      const activeTagsQueryParam = mapOfTags.filter(t => t.active && t.name !== 'All').map(t => t.name).join(', ');
-
-      if (currentQueryParams) {
-        queryParams['tags'] = activeTagsQueryParam;
-        const stringifiedQuery = qs.stringify(queryParams);
-
-        refreshPublicationsHtml(stringifiedQuery);
-      } else {
-        refreshPublicationsHtml(`tags=${activeTagsQueryParam}`);
-      }
+      const updatedTags = activeTags.map(t => {
+        if(t.name === tag.name) { return { name: t.name, active: !t.active }; }
+        else if(t.name === ALL_OPTION_NAME) { return { name: t.name, active: false } }
+        else { return { name: t.name, active: t.active }; }
+      })
+      setActiveTags(updatedTags);
     }
   }
 
   const handleSectorClick = (sector) => {
-    const isAllClicked = sector.name === 'All';
-    const otherOptions = sectorsMap.filter(s => s.name !== 'All');
-    const shouldALLbeSelected = isAllClicked && !!otherOptions.filter(o => o.active).length;
+    const otherOptions = optionsWithoutALL(activeSectors);
 
-    const mapOfSectors = sectorsMap.map(originalSector => {
-      if(originalSector.name === sector.name) { return { name: originalSector.name, active: !originalSector.active }; }
-      else { return { name: originalSector.name, active: originalSector.active }; }
-    })
-
-    const currentQueryParams = window.location.search;
-    const queryParams = qs.parse(currentQueryParams, { ignoreQueryPrefix: true });
+    const shouldALLbeSelected = isAllClicked(sector) && (isOtherOptionsActive(otherOptions) || isAllSelected(otherOptions));
 
     if (shouldALLbeSelected) {
-      queryParams['sectors'] = '';
-      const stringifiedQuery = qs.stringify(queryParams);
-      refreshPublicationsHtml(stringifiedQuery);
+      const sectorsWithALLSelected = activeSectors.map(s => ({
+        name: s.name,
+        active: s.name === ALL_OPTION_NAME ? true : false
+      }));
+      setActiveSectors(sectorsWithALLSelected)
     } else {
-      const activeSectorsQueryParam = mapOfSectors.filter(s => s.active && s.name !== 'All').map(s => s.name).join(', ');
-
-      if (currentQueryParams) {
-        queryParams['sectors'] = activeSectorsQueryParam;
-        const stringifiedQuery = qs.stringify(queryParams);
-
-        refreshPublicationsHtml(stringifiedQuery);
-      } else {
-        refreshPublicationsHtml(`sectors=${activeSectorsQueryParam}`);
-      }
+      const updatedSectors = activeSectors.map(s => {
+        if(s.name === sector.name) { return { name: s.name, active: !s.active }; }
+        else if(s.name === ALL_OPTION_NAME) { return { name: s.name, active: false } }
+        else { return { name: s.name, active: s.active }; }
+      })
+      setActiveSectors(updatedSectors);
     }
   }
 
@@ -123,13 +124,13 @@ const Filters = ({ tags, activeTags, filtersOpen, activeSectors, sectors, result
         {isFilterOpen && <div className="filters__container">
           <div className="filters__title">Tag</div>
           <div className="filters__tags-container">
-            {tagsMap.length && tagsMap.map(tag => (
+            {activeTags.length && activeTags.map(tag => (
               <button onClick={() => handleTagClick(tag)} className={cx("filters__tag", {["filters__tag-selected"]: tag.active})}>{tag.name}</button>
             ))}
           </div>
           <div className="filters__title">Sector</div>
           <div className="filters__tags-container">
-            {sectorsMap.length && sectorsMap.map(sector => (
+            {activeSectors.length && activeSectors.map(sector => (
               <button onClick={() => handleSectorClick(sector)} className={cx("filters__tag", {["filters__tag-selected"]: sector.active})}>{sector.name}</button>
             ))}
           </div>

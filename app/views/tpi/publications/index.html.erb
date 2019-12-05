@@ -1,7 +1,7 @@
 <div class="container publications">
   <h1 class="publications__title">Publications and news</h1>
 </div>
-<%= react_component("Filters", { tags: @tags, sectors: @sectors, activeTags: params[:tags], activeSectors: params[:sectors], resultsSize: @publications_and_articles.size }) %>
+<%= react_component("Filters", { tags: @tags, sectors: @sectors, resultsSize: @publications_and_articles.size }) %>
 <div id="publications" class="container publications">
   <%= render 'promoted' %>
 
