@@ -1,5 +1,5 @@
-import React, { useState, useMemo, useRef, useEffect, useCallback } from "react";
-import Fuse from "fuse.js";
+import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
+import Fuse from 'fuse.js';
 import cx from 'classnames';
 import groupBy from 'lodash/groupBy';
 import chevronIcon from '../../assets/images/icons/white-chevron-down.svg';
@@ -14,7 +14,7 @@ const FILTER_BY = {
 };
 
 const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 'sector' }) => {
-  const [searchValue, setSearchValue ] = useState('');
+  const [searchValue, setSearchValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState(defaultFilter);
   const inputEl = useRef(null);
@@ -31,16 +31,16 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
       threshold: 0.3,
       keys: ['name']
     };
-    const fuse = new Fuse(opt, config);
-    const searchResults = fuse.search(searchValue);
+    const fuzzy = new Fuse(opt, config);
+    const searchResults = fuzzy.search(searchValue);
     return searchResults;
-  }
+  };
 
   const filteredByOptions = isFilterBySector ? sectorsWithExtraOption : companies;
-  const searchResults = useMemo(() => searchValue && activeFilter ? fuse(filteredByOptions) : [], [searchValue, activeFilter]);
+  const searchResults = useMemo(() => (searchValue && activeFilter ? fuse(filteredByOptions) : []), [searchValue, activeFilter]);
 
-  const options = useMemo(() => searchValue ? 
-    searchResults : filteredByOptions,
+  const options = useMemo(() => (searchValue
+    ? searchResults : filteredByOptions),
   [searchValue, filteredByOptions]);
 
   const companiesBySector = groupBy(options, 'sector_name');
@@ -52,66 +52,66 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
       onChange={e => setSearchValue(e.target.value)}
       placeholder={`Type or select ${isFilterByCompany ? 'company' : 'sector'}`}
     />
-  )
+  );
 
   const setFilter = (filter) => {
     setActiveFilter(filter);
-    !isOpen && setIsOpen(true);
-    inputEl.current && inputEl.current.focus();
-  } 
+    if (!isOpen) setIsOpen(true);
+    if (inputEl.current) inputEl.current.focus();
+  };
 
   const header = () => (
     <span>{selectedOption}</span>
-  )
+  );
 
   const handleOptionClick = (option) => {
     const url = isFilterBySector ? '/tpi/sectors/' : '/tpi/companies/';
     setIsOpen(false);
     if (!(window.location.pathname === '/tpi/sectors/' && option.id === 'all-sectors')) {
-      window.open(`${url}${option.slug}`, "_self");
+      window.open(`${url}${option.slug}`, '_self');
     }
-  }
+  };
 
   const handleCloseDropdown = () => {
     setIsOpen(false);
     setSearchValue('');
-  }
+  };
 
   const handleOpenSearch = () => {
-    !isOpen && setIsOpen(!isOpen)
-  }
+    if (!isOpen) setIsOpen(true);
+  };
 
   // hooks
 
   useEffect(() => {
     if (isOpen) { inputEl.current.focus(); }
-  }, [isOpen])
+  }, [isOpen]);
 
   const escFunction = useCallback((event) => {
-    if(event.keyCode === ESCAPE_KEY) {
+    if (event.keyCode === ESCAPE_KEY) {
       handleCloseDropdown();
     }
   }, []);
 
   const enterFunction = (event) => {
-    if(event.keyCode === ENTER_KEY) {
+    if (event.keyCode === ENTER_KEY) {
       if (isOpen && searchResults.length) {
         handleOptionClick(searchResults[0]);
       }
     }
-  }
+  };
 
   const handleClickOutside = useCallback((event) => {
     if (searchContainer.current && !searchContainer.current.contains(event.target)) {
       handleCloseDropdown();
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    document.addEventListener("keydown", escFunction, false);
+    document.addEventListener('keydown', escFunction, false);
 
     return () => {
-      document.removeEventListener("keydown", escFunction, false);
+      document.removeEventListener('keydown', escFunction, false);
     };
   }, []);
 
@@ -120,73 +120,82 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-    }
+    };
   }, []);
 
   useEffect(() => {
-    document.addEventListener("keydown", enterFunction);
+    document.addEventListener('keydown', enterFunction);
 
     return () => {
-      document.removeEventListener("keydown", enterFunction);
+      document.removeEventListener('keydown', enterFunction);
     };
   }, [searchResults]);
 
   return (
     <>
       <div className="dropdown-selector__wrapper">
-        <div ref={searchContainer} className={cx("dropdown-selector__container", { ["dropdown-selector__container--active"]: isOpen })}>
+        <div ref={searchContainer} className={cx('dropdown-selector__container', { 'dropdown-selector__container--active': isOpen })}>
           <div className="dropdown-selector__buttons">
             <button
-              onClick={() => isFilterBySector ? () => {} : setFilter(FILTER_BY.SECTOR)}
-              className={cx({ ["dropdown-selector__button"]: isFilterByCompany, ["dropdown-selector__active-button"]: isFilterBySector, ["dropdown-selector__not-active-opened"]: isFilterByCompany && isOpen })}
+              type="button"
+              onClick={() => (isFilterBySector ? () => {} : setFilter(FILTER_BY.SECTOR))}
+              className={cx({
+                'dropdown-selector__button': isFilterByCompany,
+                'dropdown-selector__active-button': isFilterBySector,
+                'dropdown-selector__not-active-opened': isFilterByCompany && isOpen
+              })}
             >
               Filter by {FILTER_BY.SECTOR}
             </button>
             <button
-              onClick={() => isFilterByCompany ? () => {} : setFilter(FILTER_BY.COMPANY)}
-              className={cx({ ["dropdown-selector__button"]: isFilterBySector, ["dropdown-selector__active-button"]: isFilterByCompany, ["dropdown-selector__not-active-opened"]: isFilterBySector && isOpen })}
+              type="button"
+              onClick={() => (isFilterByCompany ? () => {} : setFilter(FILTER_BY.COMPANY))}
+              className={cx({
+                'dropdown-selector__button': isFilterBySector,
+                'dropdown-selector__active-button': isFilterByCompany,
+                'dropdown-selector__not-active-opened': isFilterBySector && isOpen
+              })}
             >
               Filter by {FILTER_BY.COMPANY}
             </button>
           </div>
-          <div onClick={handleOpenSearch} className={cx("dropdown-selector__header", { ["dropdown-selector__header--active"]: isOpen })}>
+          <div onClick={handleOpenSearch} className={cx('dropdown-selector__header', { 'dropdown-selector__header--active': isOpen })}>
             {isOpen ? input() : header()}
             <img
               onClick={() => isOpen && handleCloseDropdown()}
-              className={cx("chevron-icon", { ["chevron-icon-rotated"]: isOpen })}
-              src={isOpen ? chevronIconBlack : chevronIcon} 
+              className={cx('chevron-icon', { 'chevron-icon-rotated': isOpen })}
+              src={isOpen ? chevronIconBlack : chevronIcon}
             />
           </div>
           {isOpen && (
             <div className="dropdown-selector__options-wrapper">
               {isFilterBySector && (
                 <div className="dropdown-selector__options">
-                  {options.map(option => {
-                    return (
-                      <div onClick={() => handleOptionClick(option)} className="dropdown-selector__option">
-                        {option.name}
-                      </div>
-                    )
-                  })}
+                  {options.map(option => (
+                    <div onClick={() => handleOptionClick(option)} className="dropdown-selector__option">
+                      {option.name}
+                    </div>
+                  ))}
                   {searchValue && !options.length && <div>No results found.</div>}
                 </div>
               )}
               {isFilterByCompany && (
                 <div className="dropdown-selector__options">
-                  {Object.keys(companiesBySector).map(sector => {
-                    return (
-                      <>
-                        <div className="dropdown-selector__sector-name">
-                          {sector}
+                  {Object.keys(companiesBySector).map(sector => (
+                    <>
+                      <div className="dropdown-selector__sector-name">
+                        {sector}
+                      </div>
+                      {companiesBySector[sector].map(option => (
+                        <div
+                          className={cx('dropdown-selector__option', 'dropdown-selector__option-company')}
+                          onClick={() => handleOptionClick(option)}
+                        >
+                          {option.name}
                         </div>
-                        {companiesBySector[sector].map(option => (
-                          <div onClick={() => handleOptionClick(option)} className={cx("dropdown-selector__option", "dropdown-selector__option-company")}>
-                            {option.name}
-                          </div>
-                        ))}
-                      </>
-                    )
-                  })}
+                      ))}
+                    </>
+                  ))}
                   {searchValue && !options.length && <div>No results found.</div>}
                 </div>
               )}
@@ -195,7 +204,7 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
 export default DropdownSelector;

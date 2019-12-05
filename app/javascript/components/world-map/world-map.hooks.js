@@ -1,25 +1,25 @@
-import { useMemo } from "react";
-import { scaleDivergingSqrt, scaleQuantize } from "d3-scale";
-import centroids from "./centroids";
+import { useMemo } from 'react';
+import { scaleDivergingSqrt, scaleQuantize } from 'd3-scale';
+import centroids from './centroids';
 
 const COLOR_RAMPS = {
   risk: [
-    "#FCDE9C",
-    "#FCBC81",
-    "#FC9764",
-    "#FC6C42",
-    "#F04129",
-    "#D22228",
-    "#B10226"
+    '#FCDE9C',
+    '#FCBC81',
+    '#FC9764',
+    '#FC6C42',
+    '#F04129',
+    '#D22228',
+    '#B10226'
   ],
   emissions: [
-    "#FCDE9C",
-    "#BEC5A9",
-    "#8DA8AD",
-    "#668BA8",
-    "#466A9F",
-    "#2C4B93",
-    "#062A89"
+    '#FCDE9C',
+    '#BEC5A9',
+    '#8DA8AD',
+    '#668BA8',
+    '#466A9F',
+    '#2C4B93',
+    '#062A89'
   ]
 };
 

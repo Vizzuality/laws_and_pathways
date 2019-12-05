@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 import legendImage from '../../assets/images/bubble-chart-legend.svg';
 import SingleBubbleChart from './SingleBubbleChart';
-import BaseTooltip from './BaseTooltip.js';
+import BaseTooltip from './BaseTooltip';
 
 const SCALE = 5;
 
@@ -33,34 +33,31 @@ const LEVELS_SUBTITLES = {
   4: 'Strategic assessment'
 };
 
-const tooltipDisclaimer = `Companies have to answer “yes” to all questions on a level to move to the next one`;
+const tooltipDisclaimer = 'Companies have to answer “yes” to all questions on a level to move to the next one';
 
-const BubbleChart = (data) => {
-  const dataLevels = data.levels;
-  const sectors = data.sectors;
-
-  const parsedData = Object.keys(dataLevels).map(sectorName => ({
+const BubbleChart = ({ levels, sectors }) => {
+  const parsedData = Object.keys(levels).map(sectorName => ({
     sector: sectorName,
-    data: Object.values(dataLevels[sectorName])
-  }))
+    data: Object.values(levels[sectorName])
+  }));
 
   /** Parsed data has this format -
-  * [
-  *   { sector: 'Sector1', data: [ [ {}, {}, {} ], [], [], [], [], [] ] },
-  *   { sector: 'Sector2', data: [ [], [], [], [], [], [] ] },
-  *   { sector: 'Sector3', data: [ [], [], [], [], [], [] ] },
-  *   { sector: 'Sector4', data: [ [], [], [], [], [], [] ] },
-  *   { sector: 'Sector5', data: [ [], [], [], [], [], [] ] },
-  *   { sector: 'Sector6', data: [ [], [], [], [], [], [] ] },
-  *   { sector: 'Sector7', data: [ [], [], [], [], [], [] ] },
-  *   { sector: 'Sector8', data: [ [], [], [], [], [], [] ] }
-  * ]
-  */
+   * [
+   *   { sector: 'Sector1', data: [ [ {}, {}, {} ], [], [], [], [], [] ] },
+   *   { sector: 'Sector2', data: [ [], [], [], [], [], [] ] },
+   *   { sector: 'Sector3', data: [ [], [], [], [], [], [] ] },
+   *   { sector: 'Sector4', data: [ [], [], [], [], [], [] ] },
+   *   { sector: 'Sector5', data: [ [], [], [], [], [], [] ] },
+   *   { sector: 'Sector6', data: [ [], [], [], [], [], [] ] },
+   *   { sector: 'Sector7', data: [ [], [], [], [], [], [] ] },
+   *   { sector: 'Sector8', data: [ [], [], [], [], [], [] ] }
+   * ]
+   */
 
-  const levelsSignature = dataLevels && Object.keys(dataLevels[Object.keys(dataLevels)[0]]);
+  const levelsSignature = levels && Object.keys(levels[Object.keys(levels)[0]]);
 
   return (
-    <div className="bubble-chart__container" style={{ 'gridTemplateColumns': `repeat(${levelsSignature.length + 1}, 1fr)` }}>
+    <div className="bubble-chart__container" style={{ gridTemplateColumns: `repeat(${levelsSignature.length + 1}, 1fr)` }}>
       <div className="bubble-chart__legend-container">
         <div className="bubble-chart__title-container">
           <span className="bubble-chart__title">Market cap</span>
@@ -88,7 +85,7 @@ const BubbleChart = (data) => {
       {parsedData.map(dataRow => createRow(dataRow.data, dataRow.sector, sectors))}
     </div>
   );
-}
+};
 
 const ForceLayoutBubbleChart = (companiesBubbles, uniqueKey) => {
   const handleBubbleClick = (company) => window.open(`/tpi/companies/${company.slug}`, '_blank');
@@ -101,8 +98,8 @@ const ForceLayoutBubbleChart = (companiesBubbles, uniqueKey) => {
       handleNodeClick={handleBubbleClick}
       data={companiesBubbles.length && companiesBubbles}
     />
-  )
-}
+  );
+};
 
 const createRow = (dataRow, title, sectors) => {
   const sectorSlug = sectors.find(s => s.name === title).slug;
@@ -118,7 +115,7 @@ const createRow = (dataRow, title, sectors) => {
           tooltipContent: [company.name, `Level ${company.level}`],
           slug: company.slug,
           color: LEVELS_COLORS[i]
-        }))
+        }));
 
         const uniqueKey = `${title}-${el.length}-${i}`;
 
@@ -126,13 +123,14 @@ const createRow = (dataRow, title, sectors) => {
           <div className="bubble-chart__cell" key={uniqueKey}>
             {ForceLayoutBubbleChart(companiesBubbles, uniqueKey)}
           </div>
-        )
+        );
       })}
     </React.Fragment>
-  )
-}
+  );
+};
 
 BubbleChart.propTypes = {
-  data: PropTypes.object
+  levels: PropTypes.array.isRequired,
+  sectors: PropTypes.array.isRequired
 };
 export default BubbleChart;

@@ -8,10 +8,10 @@ const fixUserMenuWidth = () => {
       if (el.clientWidth > maxWidth) maxWidth = el.clientWidth;
     });
     menuElements.forEach((el) => {
-      el.style.width = `${maxWidth}px`;
+      el.style.width = `${maxWidth}px`; /* eslint-disable-line no-param-reassign */
     });
   }
 };
 
-document.addEventListener("DOMContentLoaded", fixUserMenuWidth);
-document.addEventListener("turbolinks:load", fixUserMenuWidth);
+document.addEventListener('DOMContentLoaded', fixUserMenuWidth);
+document.addEventListener('turbolinks:load', fixUserMenuWidth);

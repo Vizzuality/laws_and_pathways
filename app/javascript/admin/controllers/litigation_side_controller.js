@@ -1,8 +1,8 @@
 import { Controller } from 'stimulus';
 
 const ENTITY_TYPE_PARTY_TYPE_MAP = {
-  'Company': 'corporation',
-  'Geography': 'government'
+  Company: 'corporation',
+  Geography: 'government'
 };
 
 export default class extends Controller {
@@ -24,14 +24,14 @@ export default class extends Controller {
     }
   }
 
-  get connectedWithSelect () {
+  get connectedWithSelect() {
     return this.element.querySelector('select[id*="_connected_with"');
   }
 
-  get connectedWithSelectedOption () {
-    return this.connectedWithSelect.selectedOptions &&
-      this.connectedWithSelect.selectedOptions.length &&
-      this.connectedWithSelect.selectedOptions[0];
+  get connectedWithSelectedOption() {
+    return this.connectedWithSelect.selectedOptions
+      && this.connectedWithSelect.selectedOptions.length
+      && this.connectedWithSelect.selectedOptions[0];
   }
 
   get nameInput() {

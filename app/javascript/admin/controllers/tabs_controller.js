@@ -13,7 +13,7 @@ export default class extends Controller {
 
     if (this.hasActiveTabTarget) {
       const activeTab = this.activeTabTarget.value;
-      this._clickTab(activeTab)
+      this._clickTab(activeTab);
     }
   }
 
@@ -22,7 +22,7 @@ export default class extends Controller {
   }
 
   _selectTab(tabName) {
-    history.replaceState({}, '', tabName);
+    window.history.replaceState({}, '', tabName);
 
     if (this.hasActiveTabTarget) {
       this.activeTabTarget.value = tabName;
