@@ -7,7 +7,7 @@
 
     <% title = 'Transition Pathway Initiative' %>
     <% description = "The Transition Pathway Initiative (TPI) is a global initiative led by asset owners and supported by asset managers. Aimed at investors and free to use, it assesses companies’ preparedness for the transition to a low-carbon economy, supporting efforts to address climate change. Launched in 2017, it is rapidly becoming the ‘go-to’ corporate climate action benchmark."%>
-    <% img_src = "#{request.original_url}/tpi.jpg" %>
+    <% img_src = image_url("tpi.jpg", skip_pipeline: true) %>
 
     <meta itemprop="name" content="<%= title %>">
     <meta itemprop="description" content="<%= description %>">
