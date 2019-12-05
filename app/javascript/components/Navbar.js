@@ -24,7 +24,7 @@ const SearchComponent = ({placeholder, action, closeSearchMode}) => {
     if (event.keyCode === ENTER_KEY && value && value.length > 0) {
       window.location.href = `${path}?query=${encodeURIComponent(value)}`;
     }
-  }
+  };
 
   const handleClickOutside = event => {
     if (!container.current.contains(event.target)) closeSearchMode();
@@ -47,11 +47,17 @@ const SearchComponent = ({placeholder, action, closeSearchMode}) => {
       <div ref={container} className="container">
         <input ref={input} type="text" className="navbar__search-input" placeholder={placeholder} />
         <a onClick={closeSearchMode} className="navbar__search--close">
-          <span className="icon icon__close"></span>
+          <span className="icon icon__close" />
         </a>
       </div>
     </div>
   );
+};
+
+SearchComponent.propTypes = {
+  action: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  closeSearchMode: PropTypes.func.isRequired
 };
 
 const NavbarComponent = ({items, openSearchMode}) => {
@@ -64,16 +70,17 @@ const NavbarComponent = ({items, openSearchMode}) => {
       <div className="container">
         <div className="navbar-brand is-hidden-desktop">
           <a className="navbar-item" href="#">MENU</a>
-          <a role="button"
+          <a
+            role="button"
             className={`navbar-burger ${isOpen ? 'is-active' : ''}`}
             onClick={() => setIsOpen(!isOpen)}
             aria-label="menu"
             aria-expanded="false"
             data-target="HeaderMenu"
           >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
           </a>
         </div>
         <div id="HeaderMenu" className={`navbar-menu ${isOpen ? 'is-active' : ''}`}>
@@ -81,7 +88,7 @@ const NavbarComponent = ({items, openSearchMode}) => {
             <div className="navbar-item has-dropdown is-hoverable">
               <a className="navbar-link is-arrowless">
                 {tpi.entry}
-                <span className="icon icon__chevron-down"></span>
+                <span className="icon icon__chevron-down" />
               </a>
 
               <div className="navbar-dropdown">
@@ -101,7 +108,7 @@ const NavbarComponent = ({items, openSearchMode}) => {
             <div className="navbar-item has-dropdown is-hoverable">
               <a className="navbar-link is-arrowless">
                 {about.entry}
-                <span className="icon icon__chevron-down"></span>
+                <span className="icon icon__chevron-down" />
               </a>
 
               <div className="navbar-dropdown">
@@ -119,15 +126,20 @@ const NavbarComponent = ({items, openSearchMode}) => {
             <a className="navbar-item" href={login.path}>{login.entry}</a>
             <a className="navbar-item" aria-label={search.entry} onClick={openSearchMode}>
               {search.hasIcon && (
-                <span className="icon icon__search"></span>
+                <span className="icon icon__search" />
               )}
             </a>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
+
+NavbarComponent.propTypes = {
+  items: PropTypes.array.isRequired,
+  openSearchMode: PropTypes.func.isRequired
+};
 
 const Navbar = ({items, controls}) => {
   const [searchMode, setSearchMode] = useState(false);
@@ -136,18 +148,20 @@ const Navbar = ({items, controls}) => {
   const openSearchMode = () => (setSearchMode(true));
   const closeSearchMode = () => (setSearchMode(false));
 
-  if (searchMode === true) return (
-    <header className="header">
-      <SearchComponent {...search} closeSearchMode={closeSearchMode} />
-    </header>
-  );
+  if (searchMode === true) {
+    return (
+      <header className="header">
+        <SearchComponent {...search} closeSearchMode={closeSearchMode} />
+      </header>
+    );
+  }
 
   return (
     <header className="header">
       <NavbarComponent items={items} openSearchMode={openSearchMode} />
     </header>
   );
-}
+};
 
 Navbar.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({
@@ -155,17 +169,17 @@ Navbar.propTypes = {
     path: PropTypes.string,
     content: PropTypes.arrayOf(PropTypes.shape({
       title: PropTypes.string.isRequired,
-      slug: PropTypes.string.isRequired,
+      slug: PropTypes.string.isRequired
     })),
     hasIcon: PropTypes.bool,
-    className: PropTypes.string,
+    className: PropTypes.string
   })).isRequired,
   controls: PropTypes.shape({
     search: PropTypes.shape({
       placeholder: PropTypes.string.isRequired,
-      action: PropTypes.string.isRequired,
-    }),
-  }),
+      action: PropTypes.string.isRequired
+    })
+  }).isRequired
 };
 
 export default Navbar;

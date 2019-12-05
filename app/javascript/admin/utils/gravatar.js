@@ -7,5 +7,5 @@ const loadGravatar = () => {
   `;
 };
 
-document.addEventListener("DOMContentLoaded", loadGravatar);
-document.addEventListener("turbolinks:load", loadGravatar);
+document.addEventListener('DOMContentLoaded', loadGravatar);
+document.addEventListener('turbolinks:load', loadGravatar);

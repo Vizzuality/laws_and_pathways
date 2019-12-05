@@ -1,0 +1,4 @@
+{
+  "*.{js,jsx}": ["eslint --ext .js --ext .jsx"],
+  "*.rb": ["bundle exec rubocop"]
+}

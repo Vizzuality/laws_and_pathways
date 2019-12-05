@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const BaseTooltip = ({ trigger, content }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,11 +12,18 @@ const BaseTooltip = ({ trigger, content }) => {
       >
         {trigger || (<span className="base-tooltip__default-trigger">?</span>)}
       </span>
-      {isOpen && <div className="base-tooltip__content">
-        {content}
-      </div>}
+      {isOpen && (
+        <div className="base-tooltip__content">
+          {content}
+        </div>
+      )}
     </span>
-  )
-}
+  );
+};
+
+BaseTooltip.propTypes = {
+  trigger: PropTypes.any.isRequired,
+  content: PropTypes.any.isRequired
+};
 
 export default BaseTooltip;
