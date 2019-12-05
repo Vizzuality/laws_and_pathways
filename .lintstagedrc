@@ -1,4 +1,4 @@
 {
-  "*.{js,jsx}": ["eslint --ext .js --ext .jsx --fix", "git add"],
-  "*.rb": ["bundle exec rubocop -a", "git add"]
+  "*.{js,jsx}": ["eslint --ext .js --ext .jsx"],
+  "*.rb": ["bundle exec rubocop"]
 }
