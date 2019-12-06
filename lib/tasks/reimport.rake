@@ -8,4 +8,11 @@ namespace :reimport do
 
     Seed::TPIData.call
   end
+
+  desc 'Reimport CCLOW data - USE WITH CAUTION'
+  task cclow: :environment do
+    Legislation.delete_all
+
+    Seed::CCLOWData.call
+  end
 end

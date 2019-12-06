@@ -43,10 +43,9 @@ module CSVImport
       {
         law_id: row[:law],
         title: row[:title],
-        date_passed: row[:date_passed],
         description: row[:description],
         geography: geographies[row[:geography_iso]],
-        sector: find_or_create_laws_sector(row[:sector]),
+        sector: find_or_create_laws_sector(row[:sector].split(',')),
         legislation_type: row[:legislation_type].downcase,
         visibility_status: row[:visibility_status]
       }
