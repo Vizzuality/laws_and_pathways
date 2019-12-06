@@ -5,9 +5,8 @@ import minus from '../../assets/images/icons/dark-minus.svg';
 import plus from '../../assets/images/icons/dark-plus.svg';
 
 
-const SearchFilter = ({filterName, params, onClose}) => {
+const SearchFilter = ({filterName, params, onChange}) => {
   const [isShowOptions, setShowOptions] = useState(false);
-  const [isDirty, setIsDirty] = useState(false);
   const [selectedList, setSelectedList] = useState({});
   const [searchValue, setSearchValue] = useState('');
   const optionsContainer = useRef(null);
@@ -24,7 +23,6 @@ const SearchFilter = ({filterName, params, onClose}) => {
 
   const handleCloseOptions = () => {
     setSearchValue('');
-    onClose(selectedList, isDirty);
     setShowOptions(false);
   };
 
@@ -43,7 +41,7 @@ const SearchFilter = ({filterName, params, onClose}) => {
       if (!blocks[blockName]) blocks[blockName] = [];
       blocks[blockName].push(value);
     }
-    setIsDirty(true);
+    onChange(blocks);
     setSelectedList(blocks);
   };
 
@@ -115,13 +113,13 @@ const SearchFilter = ({filterName, params, onClose}) => {
 };
 
 SearchFilter.defaultProps = {
-  onClose: () => {}
+  onChange: () => {}
 };
 
 SearchFilter.propTypes = {
   filterName: PropTypes.string.isRequired,
   params: PropTypes.array.isRequired,
-  onClose: PropTypes.func
+  onChange: PropTypes.func
 };
 
 export default SearchFilter;
