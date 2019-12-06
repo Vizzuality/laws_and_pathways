@@ -24,7 +24,6 @@ FactoryBot.define do
   factory :legislation do
     sequence(:title) { |n| "Legislation #{n} Title" }
     description { 'Test Legislation Description' }
-    date_passed { 2.years.ago }
     sequence(:law_id)
     visibility_status { Legislation::VISIBILITY.first }
     legislation_type { 'executive' }
@@ -34,6 +33,6 @@ FactoryBot.define do
     association :updated_by, factory: :admin_user
 
     association :geography
-    association :sector, factory: :laws_sector
+    laws_sectors { |a| [a.association(:laws_sector)] }
   end
 end

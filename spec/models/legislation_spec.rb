@@ -37,11 +37,6 @@ RSpec.describe Legislation, type: :model do
     expect(subject).to have(1).errors_on(:title)
   end
 
-  it 'should be invalid if date_passed is nil' do
-    subject.date_passed = nil
-    expect(subject).to have(1).errors_on(:date_passed)
-  end
-
   it 'should be invalid if visibility_status is nil' do
     subject.visibility_status = nil
     expect(subject).to have(2).errors_on(:visibility_status)

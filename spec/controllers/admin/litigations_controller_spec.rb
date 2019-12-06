@@ -43,7 +43,7 @@ RSpec.describe Admin::LitigationsController, type: :controller do
           summary: 'Litigation POST summary',
           at_issue: 'At issue',
           jurisdiction_id: geography.id,
-          sector_id: sector.id,
+          laws_sector_ids: [sector.id],
           created_by_id: admin.id,
           updated_by_id: admin.id,
           visibility_status: 'pending',
@@ -101,7 +101,7 @@ RSpec.describe Admin::LitigationsController, type: :controller do
           expect(l.summary).to eq('Litigation POST summary')
           expect(l.at_issue).to eq('At issue')
           expect(l.visibility_status).to eq('pending')
-          expect(l.sector_id).to eq(sector.id)
+          expect(l.laws_sectors.first.id).to eq(sector.id)
           expect(l.jurisdiction_id).to eq(geography.id)
           expect(l.litigation_sides.pluck(:party_type)).to eq(%w[individual corporation government])
           expect(

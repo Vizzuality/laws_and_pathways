@@ -29,7 +29,7 @@ module Api
       CCLOW::LegislationDecorator.decorate_collection(Legislation.published.last(@count)).map do |item|
         {kind: 'Laws and policies',
          title: item.title,
-         date_passed: item.date_passed&.year,
+         date_passed: item.updated_at&.year,
          iso: item.geography.iso,
          addition_type: I18n.t("cclow.legislation_types.#{item.legislation_type}"),
          jurisdiction: item.geography,

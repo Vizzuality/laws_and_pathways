@@ -22,7 +22,7 @@
 FactoryBot.define do
   factory :litigation do
     association :jurisdiction, factory: :geography
-    association :sector, factory: :laws_sector
+    laws_sectors { |a| [a.association(:laws_sector)] }
 
     association :created_by, factory: :admin_user
     association :updated_by, factory: :admin_user

@@ -7,6 +7,7 @@ module CSVImport
         litigation = prepare_litigation(row)
         litigation.keywords = parse_tags(row[:keywords], keywords)
         litigation.assign_attributes(litigation_attributes(row))
+        litigation.laws_sectors = find_or_create_laws_sectors(row[:sector]&.split(','))
 
         was_new_record = litigation.new_record?
         any_changes = litigation.changed?
@@ -37,7 +38,6 @@ module CSVImport
         title: row[:title],
         document_type: row[:document_type]&.parameterize&.underscore,
         jurisdiction: geographies[row[:jurisdiction_iso]],
-        sector: find_or_create_laws_sector(row[:sector]),
         citation_reference_number: row[:citation_reference_number],
         at_issue: row[:at_issue],
         summary: row[:summary],

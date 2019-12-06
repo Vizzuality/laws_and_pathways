@@ -14,7 +14,7 @@ RSpec.describe Api::LatestAdditions do
     end
 
     it 'latest additions have current keys' do
-      expect(subject.first.keys).to contain_exactly(:kind, :title, :date_passed, :iso,
+      expect(subject.first.keys).to contain_exactly(:kind, :title, :iso, :date_passed,
                                                     :addition_type, :jurisdiction, :link)
     end
   end

@@ -52,7 +52,7 @@ describe 'CSVDataUpload (integration)' do
     )
     expect(legislation.document_types_list).to include('Law')
     expect(legislation.geography.iso).to eq('POL')
-    expect(legislation.sector.name).to eq('Waste')
+    expect(legislation.laws_sectors.count).to eq(1)
     expect(legislation.frameworks.size).to eq(2)
     expect(legislation.frameworks_list).to include('Mitigation', 'Adaptation')
     expect(legislation.keywords.size).to eq(2)
@@ -90,7 +90,7 @@ describe 'CSVDataUpload (integration)' do
       document_type: 'administrative_case'
     )
     expect(litigation.jurisdiction.iso).to eq('GBR')
-    expect(litigation.sector.name).to eq('Transport')
+    expect(litigation.laws_sectors.first.name).to eq('Transport')
     expect(litigation.keywords.size).to eq(2)
     expect(litigation.keywords_list).to include('keyword1', 'keyword2')
     expect(litigation.legislation_ids).to include(legislation1.id, legislation2.id)

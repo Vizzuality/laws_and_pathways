@@ -14,12 +14,6 @@ class LegislationDecorator < Draper::Decorator
               title: model.title
   end
 
-  def date_passed
-    return 'n/a' if model.date_passed.nil?
-
-    model.date_passed.to_s(:date_short)
-  end
-
   def legislation_type
     model.legislation_type.humanize
   end
@@ -61,6 +55,15 @@ class LegislationDecorator < Draper::Decorator
                 h.admin_governance_path(governance),
                 target: '_blank',
                 title: governance.name
+    end
+  end
+
+  def laws_sector_links
+    model.laws_sectors.map do |laws_sector|
+      h.link_to laws_sector.name,
+                h.admin_laws_sector_path(laws_sector),
+                target: '_blank',
+                title: laws_sector.name
     end
   end
 end

@@ -47,7 +47,6 @@ class Legislation < ApplicationRecord
   enum legislation_type: array_to_enum_hash(LEGISLATION_TYPES)
 
   belongs_to :geography
-  belongs_to :sector, class_name: 'LawsSector', foreign_key: 'sector_id', optional: true
   belongs_to :parent, class_name: 'Legislation', foreign_key: 'parent_id', optional: true
   has_many :documents, as: :documentable, dependent: :destroy
   has_many :events, as: :eventable, dependent: :destroy
@@ -55,6 +54,7 @@ class Legislation < ApplicationRecord
   has_and_belongs_to_many :litigations
   has_and_belongs_to_many :instruments
   has_and_belongs_to_many :governances
+  has_and_belongs_to_many :laws_sectors
 
   scope :laws, -> { legislative }
   scope :policies, -> { executive }
@@ -64,7 +64,7 @@ class Legislation < ApplicationRecord
     accepts_nested_attributes_for :events
   end
 
-  validates_presence_of :title, :slug, :date_passed
+  validates_presence_of :title, :slug
   validates_uniqueness_of :slug
 
   def law?
@@ -73,5 +73,9 @@ class Legislation < ApplicationRecord
 
   def policy?
     executive?
+  end
+
+  def date_passed
+    nil # ToDo
   end
 end

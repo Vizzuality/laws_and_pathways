@@ -67,9 +67,17 @@ module UploaderHelpers
       TPISector.new(name: sector_name)
   end
 
-  def find_or_create_laws_sector(sector_name)
-    return unless sector_name.present?
+  def find_or_create_laws_sectors(sector_names)
+    return [] unless sector_names
 
+    sectors = []
+    sector_names.each do |sector_name|
+      sectors << find_or_create_laws_sector(sector_name)
+    end
+    sectors
+  end
+
+  def find_or_create_laws_sector(sector_name)
     LawsSector.where('lower(name) = ?', sector_name.downcase).first ||
       LawsSector.new(name: sector_name)
   end
