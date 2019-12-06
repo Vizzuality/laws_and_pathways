@@ -7,7 +7,6 @@ RSpec.describe Admin::TargetsController, type: :controller do
   let!(:target3) { create(:target, year: 2050) }
   let(:sector) { create(:laws_sector) }
   let(:geography) { create(:geography) }
-  let(:target_scope) { create(:target_scope) }
   let(:legislations) { create_list(:legislation, 2) }
 
   before { sign_in admin }
@@ -65,7 +64,6 @@ RSpec.describe Admin::TargetsController, type: :controller do
         legislation_ids: legislations.pluck(:id),
         geography_id: geography.id,
         sector_id: sector.id,
-        target_scope_id: target_scope.id,
         events_attributes: [
           {
             date: 5.days.ago,
@@ -105,7 +103,6 @@ RSpec.describe Admin::TargetsController, type: :controller do
           expect(t.target_type).to eq('base_year_target')
           expect(t.geography_id).to eq(geography.id)
           expect(t.sector_id).to eq(sector.id)
-          expect(t.target_scope_id).to eq(target_scope.id)
           expect(t.legislation_ids.sort).to eq(legislations.pluck(:id).sort)
           expect(
             t.events.order(:date).pluck(:title, :event_type, :description, :url)
