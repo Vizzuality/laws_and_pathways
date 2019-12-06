@@ -23,7 +23,7 @@ const COLOR_RAMPS = {
   ]
 };
 
-export function useMarkers(layers, activeLayerId) {
+export function useMarkers(activeLayer) {
   const getScales = (items, ramp) => {
     const allSizeValues = [];
     const allColorValues = [];
@@ -49,7 +49,8 @@ export function useMarkers(layers, activeLayerId) {
   };
 
   return useMemo(() => {
-    const activeLayer = layers.find(l => l.id === activeLayerId);
+    if (!activeLayer) return null;
+
     const { sizeScale, colorScale } = getScales(
       activeLayer.features,
       activeLayer.ramp
@@ -60,5 +61,5 @@ export function useMarkers(layers, activeLayerId) {
       color: colorScale(feature.contextValue),
       coordinates: centroids[feature.iso]
     }));
-  }, [activeLayerId, layers]);
+  }, [activeLayer]);
 }

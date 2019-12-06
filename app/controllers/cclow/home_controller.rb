@@ -3,7 +3,7 @@ module CCLOW
     include SearchController
 
     def index
-      @latest_additions = Api::LatestAdditions.new(5).call
+      @latest_additions = ::Api::LatestAdditions.new(5).call
     end
 
     def sandbox; end

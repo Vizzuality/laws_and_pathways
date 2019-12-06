@@ -23,11 +23,17 @@
     position: absolute;
     top: 10px;
     left: 20px;
-    width: 500px;
+    width: 700px;
+
+    display: flex;
   }
 
   &__selector {
-    max-width: 300px;
+    flex: 1;
+
+    & + & {
+      margin-left: 30px;
+    }
 
     label {
       font-size: 12px;
