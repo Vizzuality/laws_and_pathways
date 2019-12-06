@@ -73,7 +73,10 @@ SingleBubbleChart.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   handleNodeClick: PropTypes.func.isRequired,
-  data: PropTypes.array.isRequired,
+  data: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.array
+  ]).isRequired,
   uniqueKey: PropTypes.string.isRequired
 };
 

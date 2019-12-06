@@ -1,4 +1,12 @@
-import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
+import React, {
+  useState,
+  useMemo,
+  useRef,
+  useEffect,
+  useCallback,
+  Fragment
+} from 'react';
+import PropTypes from 'prop-types';
 import Fuse from 'fuse.js';
 import cx from 'classnames';
 import groupBy from 'lodash/groupBy';
@@ -132,9 +140,14 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
   }, [searchResults]);
 
   return (
-    <>
+    <Fragment>
       <div className="dropdown-selector__wrapper">
-        <div ref={searchContainer} className={cx('dropdown-selector__container', { 'dropdown-selector__container--active': isOpen })}>
+        <div
+          ref={searchContainer}
+          className={cx('dropdown-selector__container', {
+            'dropdown-selector__container--active': isOpen
+          })}
+        >
           <div className="dropdown-selector__buttons">
             <button
               type="button"
@@ -159,7 +172,12 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
               Filter by {FILTER_BY.COMPANY}
             </button>
           </div>
-          <div onClick={handleOpenSearch} className={cx('dropdown-selector__header', { 'dropdown-selector__header--active': isOpen })}>
+          <div
+            onClick={handleOpenSearch}
+            className={cx('dropdown-selector__header', {
+              'dropdown-selector__header--active': isOpen
+            })}
+          >
             {isOpen ? input() : header()}
             <img
               onClick={() => isOpen && handleCloseDropdown()}
@@ -171,40 +189,62 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
             <div className="dropdown-selector__options-wrapper">
               {isFilterBySector && (
                 <div className="dropdown-selector__options">
-                  {options.map(option => (
-                    <div onClick={() => handleOptionClick(option)} className="dropdown-selector__option">
+                  {(options.length > 0 && options.map((option, i) => (
+                    <div
+                      onClick={() => handleOptionClick(option)}
+                      className="dropdown-selector__option"
+                      key={`${option.name}-${i}`}
+                    >
                       {option.name}
                     </div>
+                  ))) || (searchValue.length > 0 && options.length === 0 && (
+                    <div>No results found.</div>
                   ))}
-                  {searchValue && !options.length && <div>No results found.</div>}
                 </div>
               )}
               {isFilterByCompany && (
                 <div className="dropdown-selector__options">
-                  {Object.keys(companiesBySector).map(sector => (
-                    <>
-                      <div className="dropdown-selector__sector-name">
+                  {(options.length > 0 && Object.keys(companiesBySector).map((sector, i) => (
+                    <Fragment key={`filter-companies-fragment-${i}`}>
+                      <div
+                        key={`${sector}-${i}`}
+                        className="dropdown-selector__sector-name"
+                      >
                         {sector}
                       </div>
-                      {companiesBySector[sector].map(option => (
+                      {companiesBySector[sector].map((option, j) => (
                         <div
                           className={cx('dropdown-selector__option', 'dropdown-selector__option-company')}
                           onClick={() => handleOptionClick(option)}
+                          key={`${option.name}-${i}-${j}`}
                         >
                           {option.name}
                         </div>
                       ))}
-                    </>
-                  ))}
-                  {searchValue && !options.length && <div>No results found.</div>}
+                    </Fragment>
+                  ))) || (searchValue.length > 0 && options.length === 0 && (
+                    <div>No results found.</div>
+                  ))
+                }
                 </div>
               )}
             </div>
           )}
         </div>
       </div>
-    </>
+    </Fragment>
   );
+};
+
+DropdownSelector.propTypes = {
+  sectors: PropTypes.array.isRequired,
+  companies: PropTypes.array.isRequired,
+  selectedOption: PropTypes.string.isRequired,
+  defaultFilter: PropTypes.string
+};
+
+DropdownSelector.defaultProps = {
+  defaultFilter: 'sector'
 };
 
 export default DropdownSelector;
