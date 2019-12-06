@@ -68,8 +68,13 @@ const BubbleChart = ({ levels, sectors }) => {
         <div className="bubble-chart__legend">
           <img className="bubble-chart__legend-image" src={legendImage} />
           <div className="bubble-chart__legend-titles-container">
-            {Object.keys(COMPANIES_MARKET_CAP_GROUPS).map(companySize => (
-              <span className="bubble-chart__legend-title">{companySize}</span>
+            {Object.keys(COMPANIES_MARKET_CAP_GROUPS).map((companySize, i) => (
+              <span
+                key={`${companySize}-${i}`}
+                className="bubble-chart__legend-title"
+              >
+                {companySize}
+              </span>
             ))}
           </div>
         </div>
@@ -130,7 +135,7 @@ const createRow = (dataRow, title, sectors) => {
 };
 
 BubbleChart.propTypes = {
-  levels: PropTypes.array.isRequired,
+  levels: PropTypes.object.isRequired,
   sectors: PropTypes.array.isRequired
 };
 export default BubbleChart;
