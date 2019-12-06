@@ -5,12 +5,16 @@
       <div class="column is-one-quarter">
         <div class="section-name">Navigation</div>
         <ul>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Methodology</a></li>
-          <li><a href="#">Publications</a></li>
-          <li><a href="#">Invitation to contribute</a></li>
-          <li><a href="#">Privacy and data protection</a></li>
-          <li><a href="#">Terms of use</a></li>
+          <% if @both.any? %>
+            <% @both.each do |page| %>
+              <li><a href="<%= page[:slug] %>"><%= page[:title] %></a></li>
+            <% end %>
+          <% end %>
+          <% if @footer_pages.any? %>
+            <% @header_pages.each do |page| %>
+              <li><a href="<%= page[:slug] %>"><%= page[:title] %></a></li>
+            <% end %>
+          <% end %>
         </ul>
       </div>
       <div class="column is-one-quarter">
