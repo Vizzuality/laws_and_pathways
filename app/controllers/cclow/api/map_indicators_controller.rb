@@ -3,8 +3,8 @@ module CCLOW
     class MapIndicatorsController < CCLOWController
       def index
         render json: {
-          content: [],
-          context: CCLOWMapData.all_data
+          content: CCLOWMapContentData.all,
+          context: CCLOWMapContextData.all
         }
       end
     end

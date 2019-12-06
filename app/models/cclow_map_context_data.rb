@@ -1,4 +1,4 @@
-class CCLOWMapData
+class CCLOWMapContextData
   DATASETS = {
     total_emissions_fossil_fuels_2018: {
       file: 'emissions_total_fossil_fuels_and_cement_in_MtCO2e_2018',
@@ -44,7 +44,7 @@ class CCLOWMapData
       end
     end
 
-    def all_data
+    def all
       DATASETS.keys.map do |key|
         {id: key}.merge(send(key))
       end
