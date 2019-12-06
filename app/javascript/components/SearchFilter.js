@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useCallback, useRef, Fragment } from "react";
-import search from "../../assets/images/icons/search.svg";
-import minus from "../../assets/images/icons/dark-minus.svg";
-import plus from "../../assets/images/icons/dark-plus.svg";
+import React, { useState, useEffect, useCallback, useRef, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import search from '../../assets/images/icons/search.svg';
+import minus from '../../assets/images/icons/dark-minus.svg';
+import plus from '../../assets/images/icons/dark-plus.svg';
 
 
 const SearchFilter = ({filter_name: filterName, params}) => {
   const [isShowOptions, setShowOptions] = useState(false);
   const [selectedList, setSelectedList] = useState([]);
-  const [searchValue, setSearchValue ] = useState('');
+  const [searchValue, setSearchValue] = useState('');
   const optionsContainer = useRef(null);
 
-  let listBlocks = [];
-  for (let i in params) {
-      listBlocks[i] = Object.assign({}, params[i]);
+  const listBlocks = [];
+  for (let i = 0; i < params.length; i += 1) {
+    listBlocks[i] = Object.assign({}, params[i]);
     if (searchValue) {
       listBlocks[i].options = listBlocks[i].options.concat().filter(item => item.label.toLowerCase().includes(searchValue.toLowerCase()));
     }
@@ -41,7 +42,7 @@ const SearchFilter = ({filter_name: filterName, params}) => {
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-    }
+    };
   }, []);
 
   const renderBlockList = (block, index) => {
@@ -49,31 +50,30 @@ const SearchFilter = ({filter_name: filterName, params}) => {
     if ((options || []).length === 0) return null;
     return (
       <Fragment key={fieldName}>
-        {index !== 0 && <hr/>}
+        { index !== 0 && <hr /> }
         <ul>
           {options.map(option => (
-            <li key={option.value} onClick={()=>handleCheckItem(option.value)}>
+            <li key={option.value} onClick={() => handleCheckItem(option.value)}>
               <input type="checkbox" hidden checked={selectedList.includes(option.value)} onChange={() => {}} />
-              <div
-                className={`${selectedList.includes(option.value) ? 'checked' : 'unchecked'} select-checkbox`}>
-                {selectedList.includes(option.value) && <i className="fa fa-check"></i>}
+              <div className={`${selectedList.includes(option.value) ? 'checked' : 'unchecked'} select-checkbox`}>
+                {selectedList.includes(option.value) && <i className="fa fa-check" />}
               </div>
               <label>{option.label}</label>
             </li>
           ))}
         </ul>
       </Fragment>
-  )};
-
+    );
+  };
 
   const renderOptions = () => (
     <div className="options-container" ref={optionsContainer}>
-      <div className="select-field" onClick={()=>setShowOptions(false)}>
-        <span>{filterName}</span><span className="toggle-indicator"><img src={minus} alt=""/></span>
+      <div className="select-field" onClick={() => setShowOptions(false)}>
+        <span>{filterName}</span><span className="toggle-indicator"><img src={minus} alt="" /></span>
       </div>
       <div>
         <div className="search-input-container">
-          <input id="search-input" type="text" onChange={handleSearchInput}/>
+          <input id="search-input" type="text" onChange={handleSearchInput} />
           <label htmlFor="search-input">
             <img src={search} />
           </label>
@@ -90,14 +90,19 @@ const SearchFilter = ({filter_name: filterName, params}) => {
       <div className="filter-container">
         <div className="control-field" onClick={() => setShowOptions(true)}>
           <div className="select-field">
-            <span>Regions and countries</span><span className="toggle-indicator"><img src={plus} alt=""/></span>
+            <span>Regions and countries</span><span className="toggle-indicator"><img src={plus} alt="" /></span>
           </div>
           {selectedList.length !== 0 && <div className="selected-count">{selectedList.length} selected</div>}
         </div>
         { isShowOptions && renderOptions()}
       </div>
     </Fragment>
-  )
+  );
+};
+
+SearchFilter.propTypes = {
+  filter_name: PropTypes.string.isRequired,
+  params: PropTypes.array.isRequired
 };
 
 export default SearchFilter;
