@@ -1,0 +1,2 @@
+class Scope < Tag
+end
