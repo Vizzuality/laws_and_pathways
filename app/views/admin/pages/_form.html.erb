@@ -13,15 +13,16 @@
 
       <div id="details">
         <%= f.inputs do %>
+          <%= f.input :type, as: :hidden %>
           <%= f.input :title %>
-          <%= f.input :menu, as: :select, collection: array_to_select_collection(Page::MENU_HEADERS) %>
+          <%= f.input :menu, as: :select, collection: array_to_select_collection(f.object.class::MENU_HEADERS) %>
           <%= f.input :description, as: :trix %>
         <% end %>
       </div>
 
       <div id="content">
         <%= f.inputs 'Content' do %>
-          <%= render 'content', form: f %>
+          <%= render 'admin/pages/content', form: f %>
         <% end %>
       </div>
     </div>
