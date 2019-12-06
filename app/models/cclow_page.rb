@@ -4,6 +4,6 @@ class CCLOWPage < Page
   end
 
   def admin_path
-    "admin_cclow_page_path"
+    'admin_cclow_page_path'
   end
 end

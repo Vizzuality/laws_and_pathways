@@ -45,9 +45,9 @@ namespace :static_pages do
 
   desc 'Scaffold static pages for CCLOW'
   task generate_cclow: :environment do
-    pages = [
-      'About',
-      'Methodology'
+    pages = %w[
+      About
+      Methodology
     ]
 
     pages.each do |title|

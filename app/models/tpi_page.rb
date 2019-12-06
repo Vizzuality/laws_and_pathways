@@ -12,6 +12,6 @@ class TPIPage < Page
   end
 
   def admin_path
-    "admin_tpi_page_path"
+    'admin_tpi_page_path'
   end
 end

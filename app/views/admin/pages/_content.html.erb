@@ -1,12 +1,12 @@
 <div data-controller="nested-list">
   <template>
     <%= form.semantic_fields_for :contents, Content.new, child_index: 'NEW_RECORD' do |content| %>
-      <%= render "content_fields", form: content %>
+      <%= render "admin/pages/content_fields", form: content %>
     <% end %>
   </template>
 
   <%= form.semantic_fields_for :contents do |content| %>
-    <%= render "content_fields", form: content %>
+    <%= render "admin/pages/content_fields", form: content %>
   <% end %>
 
   <div class="nested-list__actions" data-target="nested-list.links">

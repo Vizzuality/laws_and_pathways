@@ -16,5 +16,6 @@ FactoryBot.define do
     title { 'MyString' }
     description { 'MyText' }
     slug { 'MyString' }
+    type { 'TPIPage' }
   end
 end
