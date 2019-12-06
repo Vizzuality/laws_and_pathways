@@ -2,8 +2,11 @@ import { Controller } from 'stimulus';
 
 export default class extends Controller {
   showCount = 10;
+
   step = 10;
+
   items = [];
+
   buttonEl = null;
 
   connect() {
@@ -35,4 +38,3 @@ export default class extends Controller {
     $(this.buttonEl).off('click');
   }
 }
-

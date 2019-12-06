@@ -30,13 +30,13 @@ export default class extends Controller {
     return result;
   }
 
-  //actions
+  // actions
   addEmission() {
     const content = this.emissionRowTemplateTarget.innerHTML;
     this.emissionRowAddTarget.insertAdjacentHTML('beforebegin', content);
   }
 
-  removeEmission() {
+  removeEmission(event) {
     const element = event.target.closest('tr');
     element.remove();
   }

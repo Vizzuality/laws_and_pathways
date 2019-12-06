@@ -1,0 +1,73 @@
+@import 'colors';
+@import 'typography';
+
+.filters__filter-icon {
+  margin-right: 8px;
+}
+
+.filters__button-notactive {
+  background-color: $blue;
+  color: $white;
+}
+
+.filters__button-active {
+  color: $blue;
+  background-color: $white;
+  border: 2px solid $blue !important;
+}
+
+.filters__button {
+  margin-left: auto;
+}
+
+.filters__container {
+
+}
+
+.filters__wrapper-margin {
+  margin-top: 30px;
+}
+
+.filters__wrapper-background {
+  background-color: $grey;
+}
+
+.filters__wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 0;
+}
+
+.filters__title {
+  font-size: 16px;
+  line-height: 20px;
+  color: $grey-dark;
+  margin-bottom: 18px;
+}
+
+.filters__tags-container {
+  display: flex;
+  padding-bottom: 52px;
+}
+
+%tag {
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: $family-sans-serif;
+  margin-right: 16px;
+}
+
+.filters__tag {
+  @extend %tag;
+  color: $dark;
+  background-color: $white;
+  border: 1px solid $dark;
+  outline: none;
+}
+
+.filters__tag-selected {
+  color: $white;
+  background-color: $dark;
+  border: none;
+}

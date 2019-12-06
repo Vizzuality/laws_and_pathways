@@ -20,30 +20,34 @@ function useInterval(callback, delay) {
     }
 
     if (delay !== null) {
-      let timer = setInterval(tick, delay);
+      const timer = setInterval(tick, delay);
       return () => clearInterval(timer);
     }
+
+    return () => {};
   }, [delay]);
 }
 
-const nextPage = (current, total) => current === total ? 0 : current + 1;
-const previousPage = (current, total) => current === 0 ? total : current - 1;
+const nextPage = (current, total) => (current === total ? 0 : current + 1);
+const previousPage = (current, total) => (current === 0 ? total : current - 1);
 
 const Controls = ({changePage}) => (
   <>
     <a
       onClick={() => changePage(previousPage)}
       className="testimonials__control left"
-    >&#8592;</a>
+    >&#8592;
+    </a>
     <a
       onClick={() => changePage(nextPage)}
       className="testimonials__control right"
-    >&#8594;</a>
+    >&#8594;
+    </a>
   </>
 );
 
 Controls.propTypes = {
-  changePage: PropTypes.func.isRequired,
+  changePage: PropTypes.func.isRequired
 };
 
 const Quote = ({message, author, role, handleClick}) => (
@@ -56,19 +60,18 @@ const Quote = ({message, author, role, handleClick}) => (
 
     <div className="testimonials__author">
       <p>{author}</p>
-      { role &&
-        <p>{role}</p>
+      { role
+        && <p>{role}</p>
       }
     </div>
   </div>
 );
 
 Quote.propTypes = {
-  avatar_url: PropTypes.string.isRequired,
   message: PropTypes.arrayOf(PropTypes.string).isRequired,
   author: PropTypes.string.isRequired,
   role: PropTypes.string.isRequired,
-  handleClick: PropTypes.func.isRequired,
+  handleClick: PropTypes.func.isRequired
 };
 
 const Pagination = ({page, quotes, changePage}) => (
@@ -78,7 +81,7 @@ const Pagination = ({page, quotes, changePage}) => (
         key={`page-${i}`}
         className={classnames('page', {active: i === page})}
         onClick={() => changePage(() => i)}
-      ></a>
+      />
     ))}
   </div>
 );
@@ -86,33 +89,33 @@ const Pagination = ({page, quotes, changePage}) => (
 Pagination.propTypes = {
   page: PropTypes.number.isRequired,
   quotes: PropTypes.array.isRequired,
-  changePage: PropTypes.func.isRequired,
+  changePage: PropTypes.func.isRequired
 };
 
 const Testimonials = ({testimonials, quote_path}) => {
   const [state, setState] = useState({
     current: 0,
-    isRunning: true,
+    isRunning: true
   });
   const {current, isRunning} = state;
-  const {avatar_url, message, author, role} = testimonials[current];
+  const {message, author, role} = testimonials[current];
   const totalQuotes = testimonials.length - 1;
 
   const changePage = (callback) => {
     setState({
       ...state,
-      current: callback(current, totalQuotes),
+      current: callback(current, totalQuotes)
     });
   };
 
   const stopChangePage = () => {
     setState({...state, isRunning: !isRunning});
   };
-  
+
   useInterval(() => {
     setState({
       ...state,
-      current: nextPage(current, totalQuotes),
+      current: nextPage(current, totalQuotes)
     });
   }, isRunning ? SLIDE_DELAY : null);
 
@@ -141,9 +144,13 @@ const Testimonials = ({testimonials, quote_path}) => {
   );
 };
 
+Testimonials.defaultProps = {
+  testimonials: []
+};
+
 Testimonials.propTypes = {
   testimonials: PropTypes.array,
-  quote_path: PropTypes.string,
+  quote_path: PropTypes.string.isRequired
 };
 
 export default Testimonials;

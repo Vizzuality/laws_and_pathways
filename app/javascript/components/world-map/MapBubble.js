@@ -4,7 +4,7 @@ import { Marker } from 'react-simple-maps';
 function MapBubble(props) {
   const { weight, color, opacity, ...markerProps } = props;
   return (
-    <Marker {...markerProps} onMouseDown={() => console.log(props)}>
+    <Marker {...markerProps} onMouseDown={() => {}}>
       <circle
         r={weight}
         fill={color}

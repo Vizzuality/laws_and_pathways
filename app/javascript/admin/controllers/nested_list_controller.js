@@ -8,11 +8,11 @@ export default class extends Controller {
   }
 
   addRecord(event) {
-    const templateName = event.target.dataset['template'];
+    const templateName = event.target.dataset.template;
     const newRecordRegex = new RegExp(this.newRecordId, 'g');
     const content = this._getTemplateElement(templateName)
-                        .innerHTML
-                        .replace(newRecordRegex, new Date().getTime());
+      .innerHTML
+      .replace(newRecordRegex, new Date().getTime());
 
     this._manipulateDOM(content);
   }
@@ -20,10 +20,10 @@ export default class extends Controller {
   removeRecord(event) {
     event.preventDefault();
 
-    const wrapper = event.target.closest('.' + this.wrapperClass);
+    const wrapper = event.target.closest(`.${this.wrapperClass}`);
 
     // New records are simply removed from the page
-    if (wrapper.dataset.newRecord == 'true') {
+    if (wrapper.dataset.newRecord === 'true') {
       wrapper.remove();
 
       // Existing records are hidden and flagged for deletion
@@ -48,6 +48,6 @@ export default class extends Controller {
   }
 
   get newRecordId() {
-    return this.element.dataset['newRecordId'] || 'NEW_RECORD';
+    return this.element.dataset.newRecordId || 'NEW_RECORD';
   }
 }

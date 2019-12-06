@@ -1,5 +1,8 @@
+/* eslint-disable max-len */
+
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
-import Fuse from "fuse.js";
+import PropTypes from 'prop-types';
+import Fuse from 'fuse.js';
 import debounce from 'lodash/debounce';
 import search from '../../assets/images/icons/search.svg';
 import searchAgain from '../../assets/images/icons/search-again.svg';
@@ -15,36 +18,36 @@ const GEOGRAPHY_TYPES = {
   supranational: 'Country group profile',
   subnational: 'Subnational profile',
   local: 'Local profile'
-}
+};
 
 const CATEGORIES = {
   countries: 'Countries and territories',
   laws: 'Laws and policies',
   litigations: 'Litigation cases',
   targets: 'Climate targets'
-}
+};
 
 const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, recentDate }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [searchValue, setSearchValue ] = useState('');
+  const [searchValue, setSearchValue] = useState('');
   const dropdownContainer = useRef(null);
 
-  const lastSearch = localStorage.getItem("lastSearch");
-  const lastSearchCategory = localStorage.getItem("lastSearchCategory");
-  const lastSearchLink = localStorage.getItem("lastSearchLink")
+  const lastSearch = localStorage.getItem('lastSearch');
+  const lastSearchCategory = localStorage.getItem('lastSearchCategory');
+  const lastSearchLink = localStorage.getItem('lastSearchLink');
 
   const handleInput = input => {
-    setSearchValue(input)
-  }
+    setSearchValue(input);
+  };
 
   const delaySettingInput = useCallback(debounce(value => handleInput(value), 400));
   const handleInputThrottled = e => delaySettingInput(e.target.value);
 
-  const setLastSearch = (search, category, link) => { 
-    localStorage.setItem("lastSearch", search);
-    localStorage.setItem("lastSearchCategory", category);
-    localStorage.setItem("lastSearchLink", link);
-  }
+  const setLastSearch = (s, category, link) => {
+    localStorage.setItem('lastSearch', s);
+    localStorage.setItem('lastSearchCategory', category);
+    localStorage.setItem('lastSearchLink', link);
+  };
 
   const fuse = (opt, keys) => {
     const config = {
@@ -52,16 +55,24 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
       threshold: 0.3,
       keys
     };
-    const fuse = new Fuse(opt, config);
-    const searchResults = fuse.search(searchValue);
+    const fuzzy = new Fuse(opt, config);
+    const searchResults = fuzzy.search(searchValue);
     return searchResults;
-  }
+  };
 
   // SEARCH RESULTS for each category
-  const searchGeographiesResults = useMemo(() => searchValue ? fuse(geographies, ['name', 'region', 'legislative_process']) : [], [searchValue]);
-  const searchLawsResults = useMemo(() => searchValue ? fuse(lawsAndPolicies, ['title', 'description', 'geography_name']) : [], [searchValue]);
-  const searchLitigationsResults = useMemo(() => searchValue ? fuse(litigations, ['title', 'summary', 'jurisdiction_name']) : [], [searchValue]);
-  const searchTargetsResults = useMemo(() => searchValue ? fuse(targets, ['description', 'target_type', 'geography_name']) : [], [searchValue]);
+  const searchGeographiesResults = useMemo(
+    () => (searchValue ? fuse(geographies, ['name', 'region', 'legislative_process']) : []), [searchValue]
+  );
+  const searchLawsResults = useMemo(
+    () => (searchValue ? fuse(lawsAndPolicies, ['title', 'description', 'geography_name']) : []), [searchValue]
+  );
+  const searchLitigationsResults = useMemo(
+    () => (searchValue ? fuse(litigations, ['title', 'summary', 'jurisdiction_name']) : []), [searchValue]
+  );
+  const searchTargetsResults = useMemo(
+    () => (searchValue ? fuse(targets, ['description', 'target_type', 'geography_name']) : []), [searchValue]
+  );
   // end of search results
 
   const allSearchResults = [...searchGeographiesResults, ...searchLawsResults, ...searchLitigationsResults, ...searchTargetsResults];
@@ -69,14 +80,14 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
 
   const handleCloseDropdown = () => {
     setIsOpen(false);
-  }
+  };
 
   const handleInputClick = () => {
-    !isOpen && setIsOpen(true);
-  }
+    if (!isOpen) setIsOpen(true);
+  };
 
   const escFunction = useCallback((event) => {
-    if(event.keyCode === ESCAPE_KEY) {
+    if (event.keyCode === ESCAPE_KEY) {
       handleCloseDropdown();
     }
   }, []);
@@ -85,7 +96,7 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
     if (dropdownContainer.current && !dropdownContainer.current.contains(event.target)) {
       handleCloseDropdown();
     }
-  }, [])
+  }, []);
 
   const renderAllOptions = (withLastSearch = true) => (
     <>
@@ -171,10 +182,10 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
 
   // hooks
   useEffect(() => {
-    document.addEventListener("keydown", escFunction, false);
+    document.addEventListener('keydown', escFunction, false);
 
     return () => {
-      document.removeEventListener("keydown", escFunction, false);
+      document.removeEventListener('keydown', escFunction, false);
     };
   }, []);
 
@@ -183,16 +194,17 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-    }
+    };
   }, []);
 
   return (
     <div ref={dropdownContainer} className="laws-dropdown__container container">
       <div className="laws-dropdown__input-container">
-        <input 
+        <input
           id="search-input"
           onChange={handleInputThrottled}
-          placeholder="Search for countries, legislation and policies and litigation cases" className="laws-input"
+          placeholder="Search for countries, legislation and policies and litigation cases"
+          className="laws-input"
           onClick={handleInputClick}
         />
         <label htmlFor="search-input">
@@ -291,7 +303,15 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
         </div>
       )}
     </div>
-  )
-}
+  );
+};
+
+LawsDropdown.propTypes = {
+  geographies: PropTypes.array.isRequired,
+  lawsAndPolicies: PropTypes.array.isRequired,
+  litigations: PropTypes.array.isRequired,
+  targets: PropTypes.array.isRequired,
+  recentDate: PropTypes.string.isRequired
+};
 
 export default LawsDropdown;
