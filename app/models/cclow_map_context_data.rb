@@ -19,8 +19,8 @@ class CCLOWMapContextData
   }.freeze
 
   class << self
-    DATASETS.each do |key, dataset|
-      define_method(key) do
+    def all
+      DATASETS.map do |key, dataset|
         csv_file = File.read(Rails.root.join('map_data', "#{dataset[:file]}.csv"))
         metadata_file = File.read(Rails.root.join('map_data', "#{dataset[:file]}.jsonld"))
         value_column = dataset[:value_column]
@@ -38,29 +38,25 @@ class CCLOWMapContextData
         end
 
         {
+          id: key,
           values: data,
           metadata: JSON.parse(metadata_file)
         }
       end
     end
 
-    def all
-      DATASETS.keys.map do |key|
-        {id: key}.merge(send(key))
-      end
-    end
-
     def check_data_integrity
       all_geographies = Geography.all
 
-      DATASETS.each_key do |key|
-        result = send(key)
-        result[:values].each do |value|
+      all.each do |indicator|
+        indicator[:values].each do |value|
           unless all_geographies.find { |g| g.iso == value[:geography_iso] }
-            puts "#{key}: Geography with iso #{value[:geography_iso]} does not exist"
+            puts "#{indicator[:id]}: Geography with iso #{value[:geography_iso]} does not exist"
           end
         end
       end
+
+      nil
     end
   end
 end
