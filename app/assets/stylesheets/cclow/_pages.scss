@@ -1,0 +1,43 @@
+@import "variables";
+@import "colors";
+
+.pages__title {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  color: $blue-dark;
+  font-family: $family-sans-serif-bold;
+  font-size: 28px;
+}
+
+.pages__content {
+  margin: 0 150px;
+}
+
+.pages__description {
+  line-height: 32px;
+  font-size: 18px;
+  color: $blue-dark;
+  margin-bottom: 40px;
+
+  h1, h2, h3, h4, h5 {
+    margin-top: 40px;
+    margin-bottom: 15px;
+  }
+
+  img {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+
+  a {
+    color: $red;
+  }
+}
+
+.pages__content-logos {
+  display: grid;
+  grid-row-gap: 4px;
+  grid-column-gap: 50px;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+}
