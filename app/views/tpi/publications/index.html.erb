@@ -2,16 +2,9 @@
 
 <div class="container publications">
   <h1 class="publications__title">Publications and news</h1>
-
-  <div class="columns publications__menu">
-    <div class="column is-10">
-      <p>Showing <strong><%= @publications_and_articles.size %></strong> items in <strong>All Publications and news</strong></p>
-    </div>
-    <div class="column">
-      <!-- TODO <button class="button is-secondary is-medium">Show filters</button> -->
-    </div>
-  </div>
-
+</div>
+<%= react_component("Filters", { tags: @tags, sectors: @sectors, resultsSize: @publications_and_articles.size }) %>
+<div id="publications" class="container publications">
   <%= render 'promoted' %>
 
   <!-- TODO
