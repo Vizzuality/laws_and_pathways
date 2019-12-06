@@ -4,18 +4,24 @@
       entry: 'TPI tool',
       path: tpi_sectors_path,
       content: @tpi_tool_pages,
+      controller: 'sectors',
     },
     {
       entry: 'Publications and news',
       path: '/tpi/publications',
+      controller: 'publications',
     },
     {
       entry: 'About',
       content: @about_pages,
+      controller: 'static_pages',
+      action: ''
     },
     {
       entry: 'Newsletter',
       path: tpi_newsletter_path,
+      controller: 'home',
+      action: 'newsletter',
     },
     {
       entry: 'Login / Register',
@@ -24,6 +30,7 @@
     {
       entry: 'Search',
       hasIcon: true,
+      controller: 'search',
     },
   ],
   controls: {
@@ -31,5 +38,9 @@
       placeholder: 'Search the TPI website',
       action: '/tpi/search',
     },
+  },
+  active: {
+    controller: params[:controller],
+    action: params[:action],
   },
 }) %>
