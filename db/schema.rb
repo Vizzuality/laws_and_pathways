@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_06_082828) do
+ActiveRecord::Schema.define(version: 2019_12_06_120828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -437,17 +437,8 @@ ActiveRecord::Schema.define(version: 2019_12_06_082828) do
     t.index ["name", "type"], name: "index_tags_on_name_and_type", unique: true
   end
 
-  create_table "target_scopes", force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "discarded_at"
-    t.index ["discarded_at"], name: "index_target_scopes_on_discarded_at"
-  end
-
   create_table "targets", force: :cascade do |t|
     t.bigint "geography_id"
-    t.bigint "target_scope_id"
     t.boolean "ghg_target", default: false, null: false
     t.boolean "single_year", default: false, null: false
     t.text "description"
@@ -465,7 +456,6 @@ ActiveRecord::Schema.define(version: 2019_12_06_082828) do
     t.index ["discarded_at"], name: "index_targets_on_discarded_at"
     t.index ["geography_id"], name: "index_targets_on_geography_id"
     t.index ["sector_id"], name: "index_targets_on_sector_id"
-    t.index ["target_scope_id"], name: "index_targets_on_target_scope_id"
     t.index ["updated_by_id"], name: "index_targets_on_updated_by_id"
   end
 
@@ -526,5 +516,4 @@ ActiveRecord::Schema.define(version: 2019_12_06_082828) do
   add_foreign_key "targets", "admin_users", column: "updated_by_id"
   add_foreign_key "targets", "geographies"
   add_foreign_key "targets", "laws_sectors", column: "sector_id"
-  add_foreign_key "targets", "target_scopes"
 end

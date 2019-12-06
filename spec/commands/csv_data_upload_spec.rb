@@ -20,13 +20,6 @@ describe 'CSVDataUpload (integration)' do
     ]
   end
 
-  let!(:target_scopes) do
-    [
-      create(:target_scope, name: 'Default Scope'),
-      create(:target_scope, name: 'High')
-    ]
-  end
-
   describe 'errors handling' do
     it 'sets error for unknown uploader class' do
       command = Command::CSVDataUpload.new(uploader: 'FooUploader', file: legislations_csv)

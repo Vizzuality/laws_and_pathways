@@ -25,6 +25,7 @@ class Target < ApplicationRecord
   include VisibilityStatus
   include DiscardableModel
   include PublicActivityTrackable
+  include Taggable
 
   TYPES = %w[
     base_year_target
@@ -42,11 +43,12 @@ class Target < ApplicationRecord
     met
   ].freeze
 
+  tag_with :scopes
+
   enum target_type: array_to_enum_hash(TYPES)
 
   belongs_to :geography
   belongs_to :sector, class_name: 'LawsSector', foreign_key: 'sector_id'
-  belongs_to :target_scope
   has_many :events, as: :eventable, dependent: :destroy
   has_and_belongs_to_many :legislations
 

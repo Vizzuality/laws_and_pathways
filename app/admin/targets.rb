@@ -6,16 +6,15 @@ ActiveAdmin.register Target do
   publishable_scopes
   publishable_sidebar only: :show
 
-  permit_params :description, :sector_id, :geography_id, :single_year, :target_scope_id,
+  permit_params :description, :sector_id, :geography_id, :single_year,
                 :year, :base_year_period, :ghg_target, :target_type,
-                :visibility_status,
+                :visibility_status, :scopes_string,
                 :created_by_id, :updated_by_id,
                 events_attributes: permit_params_for(:events),
                 legislation_ids: []
 
   filter :ghg_target
   filter :sector
-  filter :target_scope
   filter :target_type,
          as: :select,
          collection: proc { array_to_select_collection(Target::TYPES) }
@@ -27,7 +26,6 @@ ActiveAdmin.register Target do
     column(:description) { |target| link_to target.description, admin_target_path(target) }
     column :geography
     column :sector
-    column :target_scope
     column :single_year
     column :ghg_target
     column :year
@@ -48,10 +46,10 @@ ActiveAdmin.register Target do
           row :year
           row :base_year_period
           row :sector
-          row :target_scope
           row :target_type
           row :description
           row :geography
+          row 'Scopes', &:scopes_string
           list_row 'Laws', :legislation_links
           row :updated_at
           row :updated_by
@@ -79,7 +77,7 @@ ActiveAdmin.register Target do
     column(:geography) { |t| t.geography.name }
     column(:geography_iso) { |t| t.geography.iso }
     column(:sector) { |t| t.sector.name }
-    column(:target_scope) { |t| t.target_scope.name }
+    column :scopes, &:scopes_string
     column :visibility_status
   end
 

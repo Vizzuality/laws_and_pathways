@@ -42,15 +42,8 @@ module CSVImport
         single_year: row[:single_year],
         geography: geographies[row[:geography_iso]],
         sector: find_or_create_laws_sector(row[:sector]),
-        target_scope: find_target_scope(row[:target_scope]),
         visibility_status: row[:visibility_status]
       }
-    end
-
-    def find_target_scope(target_scope_name)
-      return unless target_scope_name.present?
-
-      TargetScope.where('lower(name) = ?', target_scope_name.downcase).first
     end
   end
 end
