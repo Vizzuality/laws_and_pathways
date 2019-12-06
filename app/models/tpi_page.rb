@@ -3,8 +3,6 @@ class TPIPage < Page
     tpi_tool
     about
   ].freeze
-  validates :menu, presence: true
-
   enum menu: array_to_enum_hash(MENU_HEADERS)
 
   def slug_path

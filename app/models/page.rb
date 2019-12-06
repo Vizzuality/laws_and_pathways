@@ -22,6 +22,8 @@ class Page < ApplicationRecord
   validates :slug, uniqueness: true, presence: true
   validates :title, uniqueness: true, presence: true
 
+  validates :menu, presence: true
+
   with_options allow_destroy: true, reject_if: :all_blank do
     accepts_nested_attributes_for :contents, allow_destroy: true
   end
