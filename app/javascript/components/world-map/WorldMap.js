@@ -6,10 +6,13 @@ import {
   Geography,
   Geographies
 } from 'react-simple-maps';
+import Select from 'react-select';
 import { geoCylindricalEqualArea } from 'd3-geo-projection';
 import reducer, { initialState } from './world-map.reducer';
 import { useMarkers } from './world-map.hooks';
 import MapBubble from './MapBubble';
+import MinusIcon from 'images/cclow/icons/minus.svg';
+import PlusIcon from 'images/cclow/icons/plus.svg';
 
 const geoUrl = 'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json';
 const PetersGall = geoCylindricalEqualArea().parallel(45);
@@ -21,26 +24,33 @@ function WorldMap(props) {
   const markers = useMarkers(layers, state.activeLayerId);
   const zoomIn = () => dispatch({ type: 'zoomIn' });
   const zoomOut = () => dispatch({ type: 'zoomOut' });
-  const setActiveLayerId = e => dispatch({ type: 'setActiveLayerId', payload: e.target.value });
+  const setActiveLayerId = selectedOption => dispatch({ type: 'setActiveLayerId', payload: selectedOption.value });
   const onZoomEnd = (e, position) => dispatch({ type: 'zoomEnd', payload: position });
+  const layerOptions = layers.map(l => ({ value: l.id, label: l.name }));
+  const selectedOption = layerOptions.find(l => l.value === state.activeLayerId);
 
   return (
     <div className="world-map__container">
       <div className="world-map__controls">
-        <button type="button" onClick={zoomIn} className="world-map__controls-zoom-in">
-          zoom in
+        <button type="button" onClick={zoomIn} className="button world-map__controls-zoom-in">
+          <img src={PlusIcon} alt="zoom-in" />
         </button>
-        <button type="button" onClick={zoomOut} className="world-map__controls-zoom-out">
-          zoom out
+        <button type="button" onClick={zoomOut} className="button world-map__controls-zoom-out">
+          <img src={MinusIcon} alt="zoom-out" />
         </button>
       </div>
-      <select onChange={setActiveLayerId} defaultValue={state.activeLayerId}>
-        {layers.map(layer => (
-          <option key={layer.id} value={layer.id}>
-            {layer.name}
-          </option>
-        ))}
-      </select>
+      <div className="world-map__selectors">
+        <div className="world-map__selector">
+          <label>Content</label>
+          <Select
+            options={layerOptions}
+            value={selectedOption}
+            onChange={setActiveLayerId}
+            isSearchable={false}
+            width="300px"
+          />
+        </div>
+      </div>
       <ComposableMap
         projection={PetersGall}
         style={{ width: '100%', height: 642 }}

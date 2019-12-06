@@ -1,0 +1,96 @@
+@import "variables";
+
+$button-border-width: 4px;
+
+.link {
+  color: $red;
+  padding: 3px;
+
+  &:hover {
+    color: $red-medium;
+    text-decoration: underline;
+  }
+
+  &:focus {
+    color: white;
+    background-color: $red-medium;
+    text-decoration: underline;
+  }
+}
+
+.button {
+  $button-height: 40px;
+  height: $button-height;
+  font-family: $family-sans-serif-bold;
+  cursor: pointer;
+
+  &.is-primary {
+    justify-content: center;
+    align-items: center;
+    height: $button-height;
+
+    color: white;
+
+    background-color: $red;
+
+    &.is-small {
+      border-radius: 0;
+      height: 30px;
+      min-width: 100px;
+    }
+
+    &.is-hovered,
+    &:hover {
+      background-color: $red-dark;
+    }
+
+    &.is-focused,
+    &:focus {
+      background-color: $red-dark;
+      height: $button-height;
+      text-decoration: underline;
+    }
+
+    &.with-border {
+      border: 2px solid $grey;
+      height: $button-height;
+
+      &.is-hovered,
+      &:hover {
+        border: 2px solid $white;
+      }
+    }
+  }
+
+  &.is-secondary {
+    border: 2px solid $red;
+    color: $red;
+    justify-content: center;
+    align-items: center;
+
+    &.is-small {
+      border-radius: 0;
+      height: 30px;
+      min-width: 100px;
+    }
+
+    &.is-hovered,
+    &:hover,
+    &.is-focused,
+    &:focus {
+      color: $red-medium;
+    }
+
+    &.is-focused,
+    &:focus {
+      text-decoration: underline;
+    }
+  }
+
+  &.with-icon {
+    img {
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+  }
+}

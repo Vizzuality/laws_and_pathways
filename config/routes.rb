@@ -43,10 +43,11 @@ Rails.application.routes.draw do
 
   namespace :cclow do
     root to: 'home#index'
+    get '/sandbox', to: 'home#sandbox' if Rails.env.development?
 
     resources :geographies, only: [:show] do
-      resources :laws, controller: 'geography/legislations', only: [:show, :index], defaults: { scope: :laws }
-      resources :policies, controller: 'geography/legislations', only: [:show, :index], defaults: { scope: :policies }
+      resources :laws, controller: 'geography/legislations', only: [:show, :index], defaults: {scope: :laws}
+      resources :policies, controller: 'geography/legislations', only: [:show, :index], defaults: {scope: :policies}
       resources :litigation_cases, controller: 'geography/litigation_cases', only: [:show, :index]
       resources :climate_targets, controller: 'geography/climate_targets', only: [:show, :index]
     end

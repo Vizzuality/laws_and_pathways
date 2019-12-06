@@ -19,6 +19,21 @@
     mix-blend-mode: multiply;
   }
 
+  &__selectors {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    width: 500px;
+  }
+
+  &__selector {
+    max-width: 300px;
+
+    label {
+      font-size: 12px;
+    }
+  }
+
   &__controls {
     position: absolute;
     top: 20px;
@@ -30,10 +45,16 @@
   &__controls-zoom-in,
   &__controls-zoom-out {
     cursor: pointer;
-    display: inline-block;
     height: 40px;
     width: 40px;
     background-color: $white;
+
+    padding: 0;
+
+    img {
+      height: 24px;
+      width: 24px;
+    }
 
     &:active {
       background-color: darken($white, 7%);

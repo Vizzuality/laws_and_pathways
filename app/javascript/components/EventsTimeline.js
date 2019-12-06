@@ -1,8 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import Select, {components} from 'react-select';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import Testimonials from './Testimonials';
+import MultiSelect from './MultiSelect';
 
 Testimonials.propTypes = {
   events: PropTypes.array,
@@ -38,27 +38,6 @@ const customStyles = {
   })
 };
 
-const Option = props => (
-  <div>
-    <components.Option {...props}>
-      <input type="checkbox" hidden checked={props.isSelected} onChange={() => null} />
-      {props.isSelected && <div className="checked select-checkbox"><i className="fa fa-check" /></div>}
-      {!props.isSelected && <div className="unchecked select-checkbox" />}
-      <label>{props.label}</label>
-    </components.Option>
-  </div>
-);
-
-const ValueContainer = ({children, ...props}) => {
-  const controls = React.Children.toArray(children).filter(item => ['Input', 'Placeholder'].includes(item.type.name));
-  return (
-    <components.ValueContainer {...props}>
-      {(props.selectProps.value || []).length !== 0 && <span>{props.selectProps.value.length} selected</span>}
-      {controls}
-    </components.ValueContainer>
-  );
-};
-
 const EventsTimeline = ({ events, options, isFiltered = false }) => {
   const [currentTypes, setCurrentTypes] = useState(false);
   const [isShowRightBtn, setIsShowRightBtn] = useState(true);
@@ -90,11 +69,9 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
             <h5>Timeline of events</h5>
             <div className="filter-block">
               <span>Show events:</span>
-              <Select
-                components={{ Option, ValueContainer }}
+              <MultiSelect
                 styles={customStyles}
                 options={options}
-                isMulti
                 placeholder="All events"
                 closeMenuOnSelect={false}
                 hideSelectedOptions={false}
