@@ -4,6 +4,7 @@
 $padding: 10px 15px;
 $checkbox-width: 24px;
 $unchecked-checkbox-cl: #9698a8;
+$shadow-cl: #rgba(46,49,82,0.05);
 
 .filter-container {
   color: $blue-dark;
@@ -42,6 +43,7 @@ $unchecked-checkbox-cl: #9698a8;
   .options-container {
     background-color: $white;
     border: 1px solid $blue-dark;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1), 0 0 20px 0 $shadow-cl;
     position: absolute;
     padding: $padding;
     width: 100%;
@@ -89,7 +91,7 @@ $unchecked-checkbox-cl: #9698a8;
       hr {
         height: 1px;
         background-color: $border-cl;
-        margin: 1.5rem;
+        margin: 1.5rem 0;
       }
 
       li {

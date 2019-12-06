@@ -5,11 +5,14 @@ import minus from '../../assets/images/icons/dark-minus.svg';
 import plus from '../../assets/images/icons/dark-plus.svg';
 
 
-const SearchFilter = ({filter_name: filterName, params}) => {
+const SearchFilter = ({filterName, params, onClose}) => {
   const [isShowOptions, setShowOptions] = useState(false);
-  const [selectedList, setSelectedList] = useState([]);
+  const [isDirty, setIsDirty] = useState(false);
+  const [selectedList, setSelectedList] = useState({});
   const [searchValue, setSearchValue] = useState('');
   const optionsContainer = useRef(null);
+  let selectedCount = 0;
+  Object.values(selectedList).forEach(list => { selectedCount += list.length; });
 
   const listBlocks = [];
   for (let i = 0; i < params.length; i += 1) {
@@ -19,23 +22,34 @@ const SearchFilter = ({filter_name: filterName, params}) => {
     }
   }
 
+  const handleCloseOptions = () => {
+    setSearchValue('');
+    onClose(selectedList, isDirty);
+    setShowOptions(false);
+  };
+
   const handleClickOutside = useCallback((event) => {
     if (optionsContainer.current && !optionsContainer.current.contains(event.target)) {
-      setShowOptions(false);
+      handleCloseOptions();
     }
   }, []);
 
-  const handleCheckItem = (value) => {
-    let list = selectedList.concat();
-    if (selectedList.includes(value)) {
-      list = selectedList.filter(item => item !== value);
+  const handleCheckItem = (blockName, value) => {
+    const blocks = Object.assign({}, selectedList);
+    if ((blocks[blockName] || []).includes(value)) {
+      blocks[blockName] = blocks[blockName].filter(item => item !== value);
+      if (blocks[blockName].length === 0) delete blocks[blockName];
     } else {
-      list.push(value);
+      if (!blocks[blockName]) blocks[blockName] = [];
+      blocks[blockName].push(value);
     }
-    setSelectedList(list);
+    setIsDirty(true);
+    setSelectedList(blocks);
   };
 
   const handleSearchInput = e => setSearchValue(e.target.value);
+  const itemIsSelected = (fieldName, value) => selectedList[fieldName] && selectedList[fieldName].includes(value);
+
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
@@ -53,10 +67,10 @@ const SearchFilter = ({filter_name: filterName, params}) => {
         { index !== 0 && <hr /> }
         <ul>
           {options.map(option => (
-            <li key={option.value} onClick={() => handleCheckItem(option.value)}>
-              <input type="checkbox" hidden checked={selectedList.includes(option.value)} onChange={() => {}} />
-              <div className={`${selectedList.includes(option.value) ? 'checked' : 'unchecked'} select-checkbox`}>
-                {selectedList.includes(option.value) && <i className="fa fa-check" />}
+            <li key={option.value} onClick={() => handleCheckItem(fieldName, option.value)}>
+              <input type="checkbox" hidden checked={itemIsSelected(fieldName, option.value) || false} onChange={() => {}} />
+              <div className={`${itemIsSelected(fieldName, option.value) ? 'checked' : 'unchecked'} select-checkbox`}>
+                {itemIsSelected(fieldName, option.value) && <i className="fa fa-check" />}
               </div>
               <label>{option.label}</label>
             </li>
@@ -68,7 +82,7 @@ const SearchFilter = ({filter_name: filterName, params}) => {
 
   const renderOptions = () => (
     <div className="options-container" ref={optionsContainer}>
-      <div className="select-field" onClick={() => setShowOptions(false)}>
+      <div className="select-field" onClick={handleCloseOptions}>
         <span>{filterName}</span><span className="toggle-indicator"><img src={minus} alt="" /></span>
       </div>
       <div>
@@ -90,9 +104,9 @@ const SearchFilter = ({filter_name: filterName, params}) => {
       <div className="filter-container">
         <div className="control-field" onClick={() => setShowOptions(true)}>
           <div className="select-field">
-            <span>Regions and countries</span><span className="toggle-indicator"><img src={plus} alt="" /></span>
+            <span>{filterName}</span><span className="toggle-indicator"><img src={plus} alt="" /></span>
           </div>
-          {selectedList.length !== 0 && <div className="selected-count">{selectedList.length} selected</div>}
+          {selectedCount !== 0 && <div className="selected-count">{selectedCount} selected</div>}
         </div>
         { isShowOptions && renderOptions()}
       </div>
@@ -100,9 +114,14 @@ const SearchFilter = ({filter_name: filterName, params}) => {
   );
 };
 
+SearchFilter.defaultProps = {
+  onClose: () => {}
+};
+
 SearchFilter.propTypes = {
-  filter_name: PropTypes.string.isRequired,
-  params: PropTypes.array.isRequired
+  filterName: PropTypes.string.isRequired,
+  params: PropTypes.array.isRequired,
+  onClose: PropTypes.func
 };
 
 export default SearchFilter;

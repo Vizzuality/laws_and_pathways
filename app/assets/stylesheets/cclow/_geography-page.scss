@@ -364,6 +364,16 @@ $count-description-lines: 2;
       }
     }
   }
+
+  .filter-column {
+    margin-top: 1.5rem;
+
+    .search-by {
+      color: $grey-text;
+      font-size: $size-7;
+      margin-bottom: 1.5rem;
+    }
+  }
 }
 
 mark {
