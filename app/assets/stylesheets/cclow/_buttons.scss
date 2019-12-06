@@ -2,6 +2,22 @@
 
 $button-border-width: 4px;
 
+.link {
+  color: $red;
+  padding: 3px;
+
+  &:hover {
+    color: $red-medium;
+    text-decoration: underline;
+  }
+
+  &:focus {
+    color: white;
+    background-color: $red-medium;
+    text-decoration: underline;
+  }
+}
+
 .button {
   $button-height: 40px;
   height: $button-height;
@@ -62,7 +78,6 @@ $button-border-width: 4px;
     &:hover,
     &.is-focused,
     &:focus {
-      background-color: $red-medium;
       color: $red-medium;
     }
 
