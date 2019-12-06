@@ -7,7 +7,7 @@ id,law_id,title,description,geography_iso,sector,legislation_type,visibility_sta
 9223,9223,General Tourism Planning Programme of the Territory,,MEX,"",Executive,,,Programme,Adaptation; Disaster Risk Management,hazards
 8933,8933,Erosion Control Work Act,,KOR,"",Legislative,,,Law,Adaptation,hazards
 8935,8935,Reservoir and Dam Safety Control and Disaster Prevention Act,,KOR,"",Legislative,,,Law,Adaptation; Disaster Risk Management; Institutions / Administrative arrangements; Research and development,hazards
-9347,9347,"Law 1955 issuing the National Development Plan 2018-2022 â€œPact for Colombia, Pact for Equityâ€",,COL,"",Legislative,,,Law,Adaptation; Energy Supply; Institutions / Administrative arrangements; Mitigation,hazards
+9347,9347,"Law 1955 issuing the National Development Plan 2018-2022 'Pact for Colombia, Pact for Equity'",,COL,"",Legislative,,,Law,Adaptation; Energy Supply; Institutions / Administrative arrangements; Mitigation,hazards
 9342,9342,National Climate Change Adaptation Plan 2018-2022,,FRA,"",Executive,,,Plan,Adaptation,hazards
 8812,8812,National Energy Efficiency Strategy,,ZAF,"",Executive,,,Strategy,Energy Demand; Energy Supply; Industry,hazards
 9348,9348,National Climate Change Adaptation Strategy,,PRY,"",Executive,,,Strategy,Adaptation; Disaster Risk Management; Institutions / Administrative arrangements,hazards
@@ -127,10 +127,10 @@ id,law_id,title,description,geography_iso,sector,legislation_type,visibility_sta
 9084,9084,Decree No. 4.819 - Creates the Adaptation Fund,,COL,"",Executive,,,Decree,Adaptation,hazards
 9226,9226,Order No. 99-0277 / PR / MATETA establishing the National Steering Committee on Climate Change,,DJI,"",Executive,,,Decree/order/ordinance,Institutions / Administrative arrangements,hazards
 9130,9130,Supreme Decree No. 2.858 on responding to adverse events hitting the agricultural sector,,BOL,Agriculture,Executive,,,Decree,Adaptation,hazards
-9192,9192,Ministerial Order No. 9.048 on the Steering Committee of the Program â€œTowards a Local Development Less Emitter of Greenhouse Gases and More Resistant to Climate Change (TACC Senegal),,SEN,"",Executive,,,Decree/order/ordinance,Institutions / Administrative arrangements,hazards
+9192,9192,Ministerial Order No. 9.048 on the Steering Committee of the Program 'Towards a Local Development Less Emitter of Greenhouse Gases and More Resistant to Climate Change (TACC Senegal),,SEN,"",Executive,,,Decree/order/ordinance,Institutions / Administrative arrangements,hazards
 9208,9208,Decree No. 2013-163 (Flood Zones),,SEN,"",Executive,,,Decree,Adaptation; Water management,hazards
 9224,9224,Public Health Act (No. 1 of 2010),,TZA,"",Legislative,,,Act,Adaptation,hazards
-9324,9324,Ordinance No. 70 - â€œManagement System to demonstrate C-neutrality Requirementsâ€,,CRI,"",Executive,,,Decree/order/ordinance,Industry; Institutions / Administrative arrangements; Mitigation,hazards
+9324,9324,Ordinance No. 70 - 'Management System to demonstrate C-neutrality Requirements',,CRI,"",Executive,,,Decree/order/ordinance,Industry; Institutions / Administrative arrangements; Mitigation,hazards
 8916,8916,Law No. 36-15 on water,,MAR,Water,Legislative,,,Law,Adaptation; Water management,hazards
 8920,8920,Decree No. 2-17-672 creating the training institute for the professions of renewable energies and energetic efficiency (IFMEREE) in Oujda,,MAR,"",Executive,,,Decree law,Energy Supply; Institutions / Administrative arrangements; Mitigation,hazards
 8924,8924,Law No. 48-15 on the regulation of the electricity sector and the creation of the National Electricity Regulatory Authority,,MAR,"",Legislative,,,Law,Energy Supply; Institutions / Administrative arrangements,hazards
@@ -148,7 +148,7 @@ id,law_id,title,description,geography_iso,sector,legislation_type,visibility_sta
 8960,8960,Israel National Plan for the Implementation of the Paris Agreement,,ISR,"",Executive,,,Plan,Industry; Mitigation,hazards
 8980,8980,National Action Program against Desertification (PAND),,ESP,"",Executive,,,Programme,Adaptation; LULUCF,hazards
 9096,9096,Resolution No. 453 on Agricultural Insurance (,,COL,"",Executive,,,Resolution,Adaptation,hazards
-8945,8945,Federal Law No. 219-FZ on â€˜Amendments to the Federal Law No. 7-FZ â€œOn Environmental Protectionâ€,,RUS,"",Legislative,,,Law,Energy Demand; Energy Supply; Institutions / Administrative arrangements,hazards
+8945,8945,Federal Law No. 219-FZ on 'Amendments to the Federal Law No. 7-FZ 'On Environmental Protection',,RUS,"",Legislative,,,Law,Energy Demand; Energy Supply; Institutions / Administrative arrangements,hazards
 8986,8986,"Royal Decrees No. 163/2014 and No 1.007/2015 on carbon footprint, compensation and carbon dioxide absorption",,ESP,Transportation,Executive,,,Decree,Carbon Pricing; Industry; Mitigation,hazards
 8994,8994,Law No 45/2007 and Royal Decree No. 752/2010 on rural sustainable development,,ESP,"",Executive,,,Decree; Law,Adaptation; Energy Supply; Institutions / Administrative arrangements; REDD+ and LULUCF,hazards
 9026,9026,Royal Decree No. 425/2016 - Regulatory basis for the granting of subsidies from the General State Administration to Agrarian Insurance,,ESP,"",Executive,,,Decree,Adaptation; LULUCF,hazards
@@ -171,7 +171,7 @@ id,law_id,title,description,geography_iso,sector,legislation_type,visibility_sta
 9110,9110,National Policy for Climate Change,,COL,"",Executive,,,Policy,Adaptation; Mitigation,hazards
 9112,9112,Supreme Decree No. 25.558 creating the Interinstitutional Council for Climate Change,,BOL,"",Executive,,,Decree,Adaptation; Institutions / Administrative arrangements; Mitigation,hazards
 9114,9114,Supreme Decree No. 2.914 on Deforestation monitoring and control,,BOL,LULUCF,Executive,,,Decree,Adaptation; Mitigation; REDD+ and LULUCF,hazards
-9118,9118,Supreme Decrees No. 2.472 and No. 2.854 creating the â€œHarvesting Life - Sowing Lightâ€ Program,,BOL,"",Executive,,,Decree,Adaptation; Energy Supply; Water management,hazards
+9118,9118,Supreme Decrees No. 2.472 and No. 2.854 creating the 'Harvesting Life - Sowing Light' Program,,BOL,"",Executive,,,Decree,Adaptation; Energy Supply; Water management,hazards
 9120,9120,Supreme Decree No. 2.342 on Risk Management,,BOL,"",Executive,,,Decree,Adaptation,hazards
 9124,9124,Law No. 602 on Risk Management Law,,BOL,"",Legislative,,,Law,Adaptation,hazards
 9126,9126,Supreme Decree No. 942 regulating the Universal Agrarian Insurance Pachamama,,BOL,"",Executive,,,Decree,Adaptation,hazards
@@ -195,7 +195,7 @@ id,law_id,title,description,geography_iso,sector,legislation_type,visibility_sta
 9180,9180,Zimbabwe: National contingency plan 2012-2013,,ZWE,"",Executive,,,Plan,Adaptation; Institutions / Administrative arrangements,hazards
 9185,9185,Natural Damage Insurance Act,,NOR,"",Legislative,,,Act; Law,Adaptation; Institutions / Administrative arrangements,hazards
 9190,9190,Decree No. 2011-1689 establishing the National Committee on Climate Change,,SEN,"",Executive,,,Decree,Institutions / Administrative arrangements,hazards
-9196,9196,Ministerial Order No. 8807 MEPNBRLA-DEEC on the Steering Committee of the Project â€œAdaptation to Climate Change-Response to Coastal Change and its Human Dimensions in West Africa,,SEN,"",Executive,,,Decree/order/ordinance,Adaptation,hazards
+9196,9196,Ministerial Order No. 8807 MEPNBRLA-DEEC on the Steering Committee of the Project 'Adaptation to Climate Change-Response to Coastal Change and its Human Dimensions in West Africa,,SEN,"",Executive,,,Decree/order/ordinance,Adaptation,hazards
 9204,9204,Ministerial Decree No. 9.719 on the institutional framework of the Project for the Development of Resilience to Recurrent Food Insecurity in the Sahel,,SEN,"",Executive,,,Decree,Adaptation,hazards
 9206,9206,Ministerial Order No. 6579 establishing the Technical Committee for disaster risk declaration,,SEN,"",Executive,,,Decree/order/ordinance,Adaptation,hazards
 9210,9210,Disaster Preparedness and Relief Act (Cap. 33:05),,MWI,"",Legislative,,,Act,Adaptation,hazards
@@ -235,7 +235,7 @@ id,law_id,title,description,geography_iso,sector,legislation_type,visibility_sta
 9314,9314,National disaster risk reduction framework 2017-2030,,PNG,"",Executive,,,Framework,Adaptation; Institutions / Administrative arrangements,hazards
 9320,9320,Marshall Islands: National strategic plan 2015-2017,,MHL,"",Executive,,,Plan,Adaptation; Institutions / Administrative arrangements; Mitigation,hazards
 9322,9322,National Policy on Risk Management 2016 - 2030,,CRI,"",Executive,,,Policy,Adaptation,hazards
-9326,9326,Decree No. 41122 - â€œFormalises the Program Carbon Neutral Country 2.0â€,,CRI,"",Executive,,,Decree,Industry; Institutions / Administrative arrangements; Mitigation,hazards
+9326,9326,Decree No. 41122 - 'Formalises the Program Carbon Neutral Country 2.0',,CRI,"",Executive,,,Decree,Industry; Institutions / Administrative arrangements; Mitigation,hazards
 9330,9330,Decree No. 40616 creating the Citizen Consultive Council on Climate change,,CRI,"",Executive,,,Decree,Adaptation; Institutions / Administrative arrangements; Mitigation,hazards
 9332,9332,Decree No. 40615 creating the Scientific Council on Climate Change,,CRI,"",Executive,,,Decree,Adaptation; Institutions / Administrative arrangements; Mitigation; Research and development,hazards
 9334,9334,Decree No. 41127 creating the National Measuring System for Climate Change,,CRI,"",Executive,,,Decree,Adaptation; Institutions / Administrative arrangements; Mitigation; Research and development,hazards
@@ -484,7 +484,7 @@ id,law_id,title,description,geography_iso,sector,legislation_type,visibility_sta
 8573,8573,"Royal Decrees on the National Climate Council (177/1998, 1188/2001, 415/2014)",,ESP,"",Executive,,,Decree/order/ordinance,Institutions / Administrative arrangements,hazards
 8572,8572,"Royal Decrees on the Spanish Office for Climate Change (371/2001, 1000/2003, 1477/2004, 1334/2006, 424/2016, 895/2017)",,ESP,"",Executive,,,Decree/order/ordinance,Institutions / Administrative arrangements,hazards
 8571,8571,Regulation (EU) No 1293/2013 on the establishment of a Programme for the Environment and Climate Action (LIFE) and repealing Regulation (EC) No 614/2007,,EUR,"",Legislative,,,EU regulation,Adaptation; Energy Demand; Energy Supply; REDD+ and LULUCF,hazards
-8570,8570,"Decision No 1386/2013/EU on a General Union Environment Action Programme to 2020 â€˜Living well, within the limits of our planet'",,EUR,"",Legislative,,,EU decision,Adaptation; Energy Demand; Energy Supply; Institutions / Administrative arrangements; REDD+ and LULUCF; Research and development; Transportation,hazards
+8570,8570,"Decision No 1386/2013/EU on a General Union Environment Action Programme to 2020 'Living well, within the limits of our planet'",,EUR,"",Legislative,,,EU decision,Adaptation; Energy Demand; Energy Supply; Institutions / Administrative arrangements; REDD+ and LULUCF; Research and development; Transportation,hazards
 8569,8569,Regulation (EC) No 106/2008 on a Community energy-efficiency labelling programme for office equipment,,EUR,Energy,Legislative,,,EU regulation,Energy Demand,hazards
 8567,8567,Commission Decision 2017/175 on establishing EU Ecolabel criteria for tourist accommodation,,EUR,Tourism,Legislative,,,EU decision,Energy Demand; Energy Supply; Institutions / Administrative arrangements,hazards
 8568,8568,Commission Decisions 2009/300/EC and 2018/59 on the ecological criteria for the award of the Community Eco-label to televisions,,EUR,"",Legislative,,,EU decision,Energy Demand; Institutions / Administrative arrangements,hazards
@@ -721,9 +721,9 @@ id,law_id,title,description,geography_iso,sector,legislation_type,visibility_sta
 4967,4967,Energy Efficiency Evidence Act,,LIE,"",Legislative,,,Law,Energy Demand,hazards
 4966,4966,Environment Act 2008 (No. 10 of 2008),,LSO,"",Legislative,,,Law,REDD+ and LULUCF,hazards
 4965,4965,Environmental Protection Law (2013 version),,LAO,"",Legislative,,,Law,REDD+ and LULUCF,hazards
-4964,4964,Law no. 88 â€œOn energy savingâ€,,KGZ,Energy,Legislative,,,Law,Energy Demand,hazards
-4963,4963,Law no. 137 â€œOn the energy efficiency of buildingsâ€,,KGZ,"Residential and Commercial,Energy",Legislative,,,Law,Energy Demand,hazards
-4962,4962,Law No. 283 â€œOn renewable sources of energyâ€,,KGZ,Energy,Legislative,,,Law,Energy Supply,hazards
+4964,4964,Law no. 88 'On energy saving',,KGZ,Energy,Legislative,,,Law,Energy Demand,hazards
+4963,4963,Law no. 137 'On the energy efficiency of buildings',,KGZ,"Residential and Commercial,Energy",Legislative,,,Law,Energy Demand,hazards
+4962,4962,Law No. 283 'On renewable sources of energy',,KGZ,Energy,Legislative,,,Law,Energy Supply,hazards
 4961,4961,2013 Act no. 40 (on renewable fuels in transport on land),,ISL,Transportation,Legislative,,,Law,Energy Supply,hazards
 4959,4959,Decree no. 279/10 - Special regulatory law on public renewable energy projects,,HND,Energy,Legislative,,,Law,Energy Supply,hazards
 4960,4960,Act no. 30 of 2008 (on the guarantee of origin of electricity produced from renewable energy sources),,ISL,Energy,Legislative,,,Law,Energy Supply,hazards
@@ -886,7 +886,7 @@ id,law_id,title,description,geography_iso,sector,legislation_type,visibility_sta
 8674,8674,Decree No. 449 on the Mechanism for the Promotion of Renewable Energy on the Wholesale Electricity and Market,,RUS,"",Executive,,,Decree/order/ordinance,Energy Supply,hazards
 8681,8681,Executive Decree no 40615 creating the Scientific Council on Climate Change,,CRI,"",Executive,,,Decree/order/ordinance,Institutions / Administrative arrangements,hazards
 1463,1463,National Action Programme on Climate Change (NAPCC),,MNG,"",Executive,,,Programme,Adaptation; Energy Supply; Institutions / Administrative arrangements; Research and development,hazards
-4730,4730,Resolution 941/07 definining â€˜forest' for carbon capture and reduction projects,,PRY,"LULUCF,Transportation",Executive,,,Policy,REDD+ and LULUCF,hazards
+4730,4730,Resolution 941/07 definining 'forest' for carbon capture and reduction projects,,PRY,"LULUCF,Transportation",Executive,,,Policy,REDD+ and LULUCF,hazards
 4729,4729,Framework law on natural gas no. 3254/07 (mitigation of environmental impact),,PRY,"",Legislative,,,Law,Energy Demand; Energy Supply; Institutions / Administrative arrangements,hazards
 4728,4728,Law 2748/05 on the promotion of biofuels,,PRY,"",Legislative,,,Law,Energy Supply,hazards
 8673,8673,"Ministerial Decree of March 2, 2018, promoting the use of biomethane in the transport sector",,ITA,Transportation,Executive,,,Decree/order/ordinance,Energy Supply; Transportation,hazards
@@ -987,7 +987,7 @@ id,law_id,title,description,geography_iso,sector,legislation_type,visibility_sta
 4056,4056,Resolution no. 7/2012 (approving the Strategic Plan for Renewable Energy),,CPV,"",Executive,,,Resolution,Energy Supply; Research and development,hazards
 4984,4984,Decree no. 2013-316 on Rainwater Management and Climate Change Adaption Project,,SEN,Water,Executive,,,Decree/order/ordinance,Adaptation,hazards
 2037,2037,National Roadmap for Greenhouse Gas Reductions by 2030,,KOR,"",Executive,,,Radmap,Energy Demand; Energy Supply; Institutions / Administrative arrangements; Research and development; Transportation,hazards
-4054,4054,Resolution no. 87/2014 (creating the Steering Committee of the project â€œStrengthening Capacity of Adaptation and Resilience to Climate Change in the Water Sector in Cape Verdeâ€),,CPV,"",Executive,,,Resolution,Adaptation; Institutions / Administrative arrangements; REDD+ and LULUCF,hazards
+4054,4054,Resolution no. 87/2014 (creating the Steering Committee of the project 'Strengthening Capacity of Adaptation and Resilience to Climate Change in the Water Sector in Cape Verde'),,CPV,"",Executive,,,Resolution,Adaptation; Institutions / Administrative arrangements; REDD+ and LULUCF,hazards
 4945,4945,Executive Decree No 1 - Creation of the National Committee on Climate Change in Panama,,PAN,"",Executive,,,Decree/order/ordinance,Institutions / Administrative arrangements,hazards
 4042,4042,Renewable Energy Act 2013,,GMB,"",Legislative,,,Law,Energy Demand; Energy Supply; Institutions / Administrative arrangements; Research and development,hazards
 4931,4931,"Decree No. 2014-0816-P-RM of 27 October 2014 suspending the collection of Value Added Tax, duties and taxes on renewable energy equipment on importation",,MLI,Energy,Executive,,,Decree/order/ordinance,Energy Supply,hazards
@@ -1060,7 +1060,7 @@ id,law_id,title,description,geography_iso,sector,legislation_type,visibility_sta
 1417,1417,The National Climate Change Policy of the Hashemite Kingdom of Jordan 2013-2020,,JOR,"",Executive,,,Policy,Adaptation; Energy Demand; Energy Supply; Institutions / Administrative arrangements; REDD+ and LULUCF; Research and development,hazards
 1403,1403,National Plan for Biofuels and Biomass (CIPE resolutions: 15/02/2000 ),,ITA,"",Executive,,,Plan,Energy Supply; REDD+ and LULUCF,hazards
 2012,2012,Royal Decree 900/2015 on Energy Self-Consumption,,ESP,"",Executive,,,Decree/order/ordinance,Energy Demand; Energy Supply; Institutions / Administrative arrangements,hazards
-2010,2010,"Act on Renewable Energy Sources (â€œRES Actâ€, Dz.U. 2015 poz. 478)",,POL,"",Legislative,,,Law,Energy Demand; Energy Supply; Institutions / Administrative arrangements,hazards
+2010,2010,"Act on Renewable Energy Sources ('RES Act', Dz.U. 2015 poz. 478)",,POL,"",Legislative,,,Law,Energy Demand; Energy Supply; Institutions / Administrative arrangements,hazards
 2009,2009,Act on Biocomponents and Liquid Biofuels (Dz.U. 2006 nr 169 poz. 1199),,POL,"",Legislative,,,Law,Energy Supply,hazards
 2008,2008,Law 27191 on Renewable Energy,,ARG,"",Legislative,,,Law,Energy Demand; Energy Supply,hazards
 2007,2007,Law 26.190 Regime for the National Promotion for the Production and Use of Renewable Sources of Electric Energy,,ARG,"",Legislative,,,Law,Energy Supply; Research and development,hazards
@@ -1214,7 +1214,7 @@ id,law_id,title,description,geography_iso,sector,legislation_type,visibility_sta
 1663,1663,"Law 8/2013 on urban rehabilitation, regeneration and renovation",,ESP,Urban,Legislative,,,Law,Energy Demand; Energy Supply; Institutions / Administrative arrangements,hazards
 1664,1664,Law 2/2013 on the protection and sustainable use of coastal areas,,ESP,"",Legislative,,,Law,Adaptation; Institutions / Administrative arrangements,hazards
 1662,1662,"Royal Decree Law 2/2013, which implements urgent measures in the electricity and financial sectors",,ESP,"",Executive,,,Decree/order/ordinance,Energy Demand; Energy Supply; Institutions / Administrative arrangements,hazards
-1661,1661,"Royal Decree 635/2013, developing the â€œPlan to Promote the Environment in the hotel sector PIMA SOL\ for the energy renovation of its installations, and regulating the further acquisition of carbon credits by the Carbon Fund for a sustainable economy",,ESP,"Economy-wide,Energy,Transportation",Executive,,,Decree/order/ordinance,Carbon Pricing; Energy Demand; Institutions / Administrative arrangements,hazards
+1661,1661,"Royal Decree 635/2013, developing the 'Plan to Promote the Environment in the hotel sector PIMA SOL\ for the energy renovation of its installations, and regulating the further acquisition of carbon credits by the Carbon Fund for a sustainable economy",,ESP,"Economy-wide,Energy,Transportation",Executive,,,Decree/order/ordinance,Carbon Pricing; Energy Demand; Institutions / Administrative arrangements,hazards
 1660,1660,"Royal Decree 413/2014, regulating the production of electricity generation from renewable energy, cogeneration and waste",,ESP,"Energy,Waste",Executive,,,Decree/order/ordinance,Energy Supply; Institutions / Administrative arrangements,hazards
 1659,1659,"Royal Decree 525/2014, on the subsidization of the Incentives Programme for Efficient Vehicles (PIVE-6)",,ESP,"",Executive,,,Decree/order/ordinance,Energy Demand; Institutions / Administrative arrangements; Research and development; Transportation,hazards
 1658,1658,Energy Use Rationalization Act,,KOR,"",Legislative,,,Law,Energy Demand; Energy Supply; Institutions / Administrative arrangements,hazards
@@ -1357,7 +1357,7 @@ id,law_id,title,description,geography_iso,sector,legislation_type,visibility_sta
 1517,1517,Nigerian Biofuel and Incentives,,NGA,"",Executive,,,Policy,Energy Supply; Institutions / Administrative arrangements,hazards
 1504,1504,"National Programme for Spatial Adaptation to Climate Change (ARK), Implementation via the National Adaptation Strategy",,NLD,"",Executive,,,Out of date,Adaptation; Energy Demand; REDD+ and LULUCF,hazards
 1514,1514,Energy Efficiency and Conservation Act 2000,,NZL,"",Legislative,,,Law,Energy Demand; Energy Supply; Institutions / Administrative arrangements,hazards
-8454,8454,â€˜Estonia 2020' National Reform Programme,,EST,"",Executive,,,Programme,Energy Demand; Energy Supply; Transportation,hazards
+8454,8454,'Estonia 2020' National Reform Programme,,EST,"",Executive,,,Programme,Energy Demand; Energy Supply; Transportation,hazards
 1512,1512,Forests Amendment Act 2004,,NZL,"",Legislative,,,Law,Institutions / Administrative arrangements; REDD+ and LULUCF,hazards
 1511,1511,Gas Amendment Act 2004,,NZL,"",Legislative,,,Law,Energy Demand; Energy Supply,hazards
 8608,8608,National Energy Efficiency Action Plan 2017-2023 (High Planning Council decision number 2017/22 ),,TUR,"",Executive,,,Plan,Energy Demand; Energy Supply; Transportation,hazards
@@ -1475,8 +1475,8 @@ id,law_id,title,description,geography_iso,sector,legislation_type,visibility_sta
 1387,1387,2010 and 2019 Finance Laws on Energy efficient buildings and biofuel standards and on incentives for biogas,,ITA,Residential and Commercial,Legislative,,,Law,Carbon Pricing; Energy Demand; Energy Supply,hazards
 1610,1610,"Decree No. 2013-684 on the establishment, organization and functioning of the National Agency for Renewable Energies",,SEN,"",Executive,,,Decree/order/ordinance,Energy Supply; Institutions / Administrative arrangements; Research and development,hazards
 1609,1609,Ministerial Decree No. 9317 establishing the organization and functioning of the National Greenhouse Gas Reduction Programme through energy efficiency in the building sector and related regulation,,SEN,"Residential and Commercial,Energy",Executive,,,Decree/order/ordinance,Energy Demand; Institutions / Administrative arrangements; Research and development,hazards
-1384,1384,"Law no. 116, ratifying with amendments the Law Decree no. 91 of 24 June 2014 on â€œUrgent provisions for the agricultural sector, environment, company development and, inter alia, reduction of energy billsâ€",,ITA,"Agriculture,Energy",Legislative,,,Law,Energy Supply; Institutions / Administrative arrangements,hazards
-1383,1383,Law Decree no. 145/20131 (the â€œDestinazione Italia Decreeâ€),,ITA,"",Legislative,,,Law,Carbon Pricing; Energy Demand; Energy Supply,hazards
+1384,1384,"Law no. 116, ratifying with amendments the Law Decree no. 91 of 24 June 2014 on 'Urgent provisions for the agricultural sector, environment, company development and, inter alia, reduction of energy bills'",,ITA,"Agriculture,Energy",Legislative,,,Law,Energy Supply; Institutions / Administrative arrangements,hazards
+1383,1383,Law Decree no. 145/20131 (the 'Destinazione Italia Decree'),,ITA,"",Legislative,,,Law,Carbon Pricing; Energy Demand; Energy Supply,hazards
 8265,8265,Energy Resources Regulations (Testing Energy Efficiency of Pumping Installations) 2004,,ISR,"",Executive,,,Regulation/rules,Energy Demand,hazards
 1381,1381,The Energy Resources Act 1989,,ISR,"",Legislative,,,Law,Energy Demand,hazards
 8264,8264,"Energy Sources Regulations (Energy Efficiency, Energy Markings and Energy Ratings Of Air Conditioners), 2004",,ISR,"",Executive,,,Regulation/rules,Energy Demand,hazards
@@ -1492,7 +1492,7 @@ id,law_id,title,description,geography_iso,sector,legislation_type,visibility_sta
 1370,1370,"Electricity Regulation Act, Number 23 of 1999",,IRL,"",Legislative,,,Law,Energy Demand; Energy Supply; Institutions / Administrative arrangements,hazards
 1369,1369,"Motor Vehicle (Duties and Licences) Act, no 22/2001 and no 9/2013",,IRL,"",Legislative,,,Law,Energy Demand; Transportation,hazards
 1368,1368,Sustainable Energy Act Number 2 of 2002,,IRL,"",Legislative,,,Law,Energy Demand; Energy Supply; Institutions / Administrative arrangements; Research and development; Transportation,hazards
-1367,1367,Energy White Papers on â€œDelivering a Sustainable Energy Future for Ireland? : The Energy Policy Framework 2007-2020â€,,IRL,"",Executive,,,Policy,Energy Demand; Energy Supply; Research and development,hazards
+1367,1367,Energy White Papers on 'Delivering a Sustainable Energy Future for Ireland? : The Energy Policy Framework 2007-2020',,IRL,"",Executive,,,Policy,Energy Demand; Energy Supply; Research and development,hazards
 1365,1365,Smarter Travel - A Sustainable Transport Future: A New Transport Policy for Ireland 2009-2020,,IRL,"",Executive,,,Policy,Energy Demand; Energy Supply; Institutions / Administrative arrangements; Research and development; Transportation,hazards
 1366,1366,"Carbon Fund Act 2007, Number 12 of 2007",,IRL,"",Legislative,,,Law,Carbon Pricing; Institutions / Administrative arrangements,hazards
 1364,1364,Energy (Biofuel Obligation and Miscellaneous Provisions) Act 2010 (No. 11 of 2010) of the National Oil Reserves Agency Act 2007 (No.7 of 2007),,IRL,"",Legislative,,,Law,Energy Supply; Institutions / Administrative arrangements; Transportation,hazards
@@ -1572,9 +1572,9 @@ id,law_id,title,description,geography_iso,sector,legislation_type,visibility_sta
 1273,1273,Law L3468/2006 on the Generation of electricity from renewable energy sources and through high-efficiency co-generation of electricity and heat and miscellaneous provisions,,GRC,Energy,Legislative,,,Law,Energy Supply,hazards
 1274,1274,Law 3423/2005 on Introducing Biofuels and other Renewable Fuels to the Greek Market,,GRC,"",Legislative,,,Law,Energy Supply; Transportation,hazards
 1272,1272,Law 3661/2008 on Measures to reduce energy consumption in buildings and other provisions,,GRC,"Residential and Commercial,Energy",Legislative,,,Law,Energy Demand,hazards
-1271,1271,"Law 3831/2010 on â€œRevision of the vehicle taxes regime for vehicles, abolishment of the vehicles recycling measures (scrappage scheme) and measures for tackling atmospheric pollutionâ€",,GRC,"Transportation,Waste",Legislative,,,Law,Transportation,hazards
-1270,1270,"Law 3851/2010 on â€œAccelerating the development of Renewable Energy Sources to address climate change and other provisions on jurisdiction of the Ministry of Environment, Energy and Climate Changeâ€",,GRC,"",Legislative,,,Law,Energy Supply; Institutions / Administrative arrangements,hazards
-1269,1269,"Law 3855/2010 on â€œMeasures to improve energy efficiency in end?use, energy services and other provisionsâ€",,GRC,Energy,Legislative,,,Law,Energy Demand,hazards
+1271,1271,"Law 3831/2010 on 'Revision of the vehicle taxes regime for vehicles, abolishment of the vehicles recycling measures (scrappage scheme) and measures for tackling atmospheric pollution'",,GRC,"Transportation,Waste",Legislative,,,Law,Transportation,hazards
+1270,1270,"Law 3851/2010 on 'Accelerating the development of Renewable Energy Sources to address climate change and other provisions on jurisdiction of the Ministry of Environment, Energy and Climate Change'",,GRC,"",Legislative,,,Law,Energy Supply; Institutions / Administrative arrangements,hazards
+1269,1269,"Law 3855/2010 on 'Measures to improve energy efficiency in end?use, energy services and other provisions'",,GRC,Energy,Legislative,,,Law,Energy Demand,hazards
 1267,1267,"Law 4001/2011 on the Operation of Electricity and Gas Energy Markets, for Exploration, Production and Transmission Networks of Hydrocarbons and other provisions",,GRC,Transportation,Legislative,,,Law,Energy Supply,hazards
 1268,1268,"Law 3889/2010 Financing Environmental Interventions, Green Fund, Ratification of Forest Maps and other provisions",,GRC,"",Legislative,,,Law,Energy Demand; Institutions / Administrative arrangements; REDD+ and LULUCF,hazards
 1266,1266,Ministerial Decision (21906) on the Compensation to those carbon intensive industries (sectors and sub-sectors) exposed to carbon leakage caused by the indirect costs of the EU Emissions Trading Scheme (as defined in the Directive 2009/29/EC),,GRC,Transportation,Legislative,,,Law,Institutions / Administrative arrangements,hazards
@@ -1804,7 +1804,7 @@ id,law_id,title,description,geography_iso,sector,legislation_type,visibility_sta
 1024,1024,Law 26473 Prohibiting commercialisation of incandescent light bulbs,,ARG,Residential and Commercial,Legislative,,,Law,Energy Demand,hazards
 1176,1176,National Energy Efficiency Action Plan (2012-2015),,EGY,"",Executive,,,Plan,Energy Demand,hazards
 1021,1021,Law 06/10 on sugar cane production for biofuel,,AGO,"",Legislative,,,Law,Energy Supply; Institutions / Administrative arrangements; REDD+ and LULUCF; Research and development,hazards
-1061,1061,Decree No. 625 on â€œSome GHG Emission Reduction Issuesâ€,,BLR,"",Executive,,,Decree/order/ordinance,Carbon Pricing; Energy Demand; Energy Supply; Institutions / Administrative arrangements,hazards
+1061,1061,Decree No. 625 on 'Some GHG Emission Reduction Issues',,BLR,"",Executive,,,Decree/order/ordinance,Carbon Pricing; Energy Demand; Energy Supply; Institutions / Administrative arrangements,hazards
 1065,1065,"Tax relief for renewable energy investors (Decree No 10 of 6 August 2009 on additional conditions for investment activities as amended; Tax Code of Belarus of 29 December 2009, No 71-W)",,BLR,Energy,Executive,,,Decree/order/ordinance,Energy Supply; Institutions / Administrative arrangements,hazards
 1044,1044,Feed-in Tariff Decree,,AUT,"",Executive,,,Decree/order/ordinance,Energy Supply,hazards
 1029,1029,National Decree 1070/05 (2005) Creation of the Argentine Carbon Fund,,ARG,"",Executive,,,Decree/order/ordinance,Institutions / Administrative arrangements,hazards
@@ -1820,7 +1820,7 @@ id,law_id,title,description,geography_iso,sector,legislation_type,visibility_sta
 1006,1006,Executive Decree No. 10-258 establishing the powers of the Minister of Planning and the Environment,,DZA,"",Executive,,,Decree/order/ordinance,Institutions / Administrative arrangements,hazards
 1005,1005,"Executive Decree No. 2011-33 on the establishment, organization and functioning of the Algerian Institute of Renewable Energy",,DZA,"",Executive,,,Decree/order/ordinance,Institutions / Administrative arrangements,hazards
 4624,4624,Strategic National Action Plan for Disaster Risk Reduction (SNAP),,AFG,"",Executive,,,Plan,Adaptation,hazards
-1003,1003,Executive Decree No. 2011-423 fixing the operating procedures of the Trust Account No. 302-1221 â€œNational Fund for Renewable Energy and Cogenerationâ€,,DZA,"",Executive,,,Decree/order/ordinance,Energy Supply; Research and development,hazards
+1003,1003,Executive Decree No. 2011-423 fixing the operating procedures of the Trust Account No. 302-1221 'National Fund for Renewable Energy and Cogeneration',,DZA,"",Executive,,,Decree/order/ordinance,Energy Supply; Research and development,hazards
 4621,4621,Rural Renewable Energy Policy (RREP),,AFG,"",Executive,,,Policy,Adaptation; Energy Supply,hazards
 1001,1001,Regulatory Order fixing the guaranteed purchase price and the conditions of their application for electricity generated from facilities using photovoltaic segment,,DZA,Energy,Executive,,,Decree/order/ordinance,Energy Supply,hazards
 9072,9072,Climate Change Adaptation Plan for the Agricultural and Forestry sectors,,CHL,"",Executive,,,Plan,Adaptation; REDD+ and LULUCF,hazards
