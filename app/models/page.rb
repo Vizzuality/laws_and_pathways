@@ -19,9 +19,6 @@ class Page < ApplicationRecord
   has_many :contents, dependent: :destroy
   has_many :images, through: :contents
 
-  validates :slug, uniqueness: true, presence: true
-  validates :title, uniqueness: true, presence: true
-
   validates :menu, presence: true
 
   with_options allow_destroy: true, reject_if: :all_blank do

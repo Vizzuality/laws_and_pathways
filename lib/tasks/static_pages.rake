@@ -57,7 +57,8 @@ namespace :static_pages do
       Page.create(
         slug: title.downcase,
         title: title,
-        type: 'CCLOWPage'
+        type: 'CCLOWPage',
+        menu: 'header'
       )
     end
   end
