@@ -36,17 +36,17 @@ RSpec.describe Queries::TPI::NewsPublicationsQuery do
     end
 
     it 'should filter by tags' do
-      results = subject.new(tags: ['keyword1']).call
+      results = subject.new(tags: 'keyword1').call
       expect(results.count).to eq(3)
     end
 
     it 'should filter by sectors' do
-      results = subject.new(sectors: ['sector1']).call
+      results = subject.new(sectors: 'sector1').call
       expect(results.count).to eq(1)
     end
 
     it 'should filter by tags and sectors' do
-      results = subject.new(tags: ['keyword1'], sectors: ['sector1']).call
+      results = subject.new(tags: 'keyword1', sectors: 'sector1').call
       expect(results.count).to eq(1)
     end
   end
