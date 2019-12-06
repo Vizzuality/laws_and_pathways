@@ -1,0 +1,22 @@
+{
+  "@context": "http://schema.org",
+  "type": "Dataset",
+  "temporalCoverage": "2018",
+  "license": "http://creativecommons.org/licenses/by/4.0/",
+  "keywords": ["Carbon dioxide", "Fossil fuel", "Emissions"],
+  "isBasedOn": "https://doi.org/10.18160/GCP-2018",
+  "isAccessibleForFree": true,
+  "creator": {
+    "type": "Organization",
+    "contactPoint": {
+      "type": "ContactPoint",
+      "email": "info@icos-cp.eu",
+      "contactType": "General enquiries"
+    },
+    "url": "https://www.icos-cp.eu/GCP",
+    "name": "ICOS Carbon Portal - Global Carbon Project, Lund University"
+  },
+  "sameAs": "https://www.earth-syst-sci-data.net/10/2141/2018/",
+  "name": "Carbon dioxide emissions from the use of fossil fuel and the manufacture of cement",
+  "description": "This dataset shows carbon dioxide emissions from the use of coal, oil and gas (combustion and industrial processes), the process of gas flaring and the manufacture of cement for the year 2018 grouped by country. This dataset shows carbon dioxide emissions from the use of coal, oil and gas (combustion and industrial processes), the process of gas flaring and the manufacture of cement for the year 2018 grouped by country. ICOS Carbon Portal Global Carbon Project’s Global Carbon Budget includes territorial, consumption, and transfer CO2 emissions data for 220 countries and territories. The data is updated annually. This dataset includes only CO2 emissions (instead of all GHGs). Data for emissions from land use, land use change and forestry, are reported separately at a global level and are not shown on Climate Watch. Emissions from bunker fuels are included in the world total but are not included in territorial emission totals. For details see “Methods” at http://www.globalcarbonatlas.org/en/CO2-emissions."
+}

@@ -1,0 +1,22 @@
+{
+  "@context": "http://schema.org",
+  "type": "Dataset",
+  "temporalCoverage": "1751/2017",
+  "license": "http://creativecommons.org/licenses/by/4.0/",
+  "keywords": ["Carbon dioxide", "Fossil fuel", "Emissions", "Cumalitive"],
+  "isBasedOn": "https://ourworldindata.org/grapher/cumulative-co-emissions",
+  "isAccessibleForFree": true,
+  "creator": {
+    "type": "Organization",
+    "contactPoint": {
+      "type": "ContactPoint",
+      "email": "info@ourworldindata.org",
+      "contactType": "General enquiries"
+    },
+    "url": "https://ourworldindata.org",
+    "name": "Our World In Data - Global Change Data Lab, Oxford University"
+  },
+  "sameAs": "https://ourworldindata.org/grapher/cumulative-co-emissions",
+  "name": "Carbon dioxide emissions from the use of fossil fuel and the manufacture of cement",
+  "description": "This dataset shows cumulative carbon dioxide (CO₂) emissions grouped by country; the total quantity of CO₂ emissions emitted from 1751 until 2017, measured in megatonnes. This is based on territorial emissions, which do not account for emissions embedded in traded goods. Cumulative carbon dioxide (CO₂) emissions have been calculated by Our World in Data based on annual CO₂ emissions published by the Global Carbon Project (GCP) and Carbon Dioxide Information Analysis Centre (CDIAC). By summing the annual emissions to a given year we have calculated the cumulative total. This is given as the share of global cumulative emissions by dividing each country or region's cumulative emissions by the cumulative world emissions for that given year. Data has been converted by Our World in Data from tonnes of carbon to tonnes of carbon dioxide (CO₂) using a conversion factor of 3.664. Our World in Data have renamed the category 'bunker fuels' as 'International transport' which includes emissions from international aviation and shipping. We have renamed this category for clarity. Historical data for Australia in CDIAC from 1820 until 1860 reports negative CO2 emissions. In this dataset, pre-1860 data for Australia has been removed. Data from pre-1959 is sourced from the archived Carbon Dioxide Information Analysis Centre (CDIAC). Reference: Tom Boden and Bob Andres (Oak Ridge National Laboratory); Gregg Marland (Appalachian State University). Available at: http://cdiac.ornl.gov/. Data from 1959 onwards is sourced from the Global Carbon Project (2018). Full reference of the Global Carbon Budget (2018): Corinne Le Quéré, Robbie M. Andrew, Pierre Friedlingstein, Stephen Sitch, Judith Hauck, Julia Pongratz, Penelope A. Pickers, Jan Ivar Korsbakken, Glen P. Peters, Josep G. Canadell, Almut Arneth, Vivek K. Arora, Leticia Barbero, Ana Bastos, Laurent Bopp, Frédéric Chevallier, Louise P. Chini, Philippe Ciais, Scott C. Doney, Thanos Gkritzalis, Daniel S. Goll, Ian Harris, Vanessa Haverd, Forrest M. Hoffman, Mario Hoppema, Richard A. Houghton, George Hurtt, Tatiana Ilyina, Atul K. Jain, Truls Johannesen, Chris D. Jones, Etsushi Kato, Ralph F. Keeling, Kees Klein Goldewijk, Peter Landschützer, Nathalie Lefèvre, Sebastian Lienert, Zhu Liu, Danica Lombardozzi, Nicolas Metzl, David R. Munro, Julia E. M. S. Nabel, Shin-ichiro Nakaoka, Craig Neill, Are Olsen, Tsueno Ono, Prabir Patra, Anna Peregon, Wouter Peters, Philippe Peylin, Benjamin Pfeil, Denis Pierrot, Benjamin Poulter, Gregor Rehder, Laure Resplandy, Eddy Robertson, Matthias Rocher, Christian Rödenbeck, Ute Schuster, Jörg Schwinger, Roland Séférian, Ingunn Skjelvan, Tobias Steinhoff, Adrienne Sutton, Pieter P. Tans, Hanqin Tian, Bronte Tilbrook, Francesco N Tubiello, Ingrid T. van der Laan-Luijkx, Guido R. van der Werf, Nicolas Viovy, Anthony P. Walker, Andrew J. Wiltshire, Rebecca Wright, Sönke Zaehle, Bo Zheng: Global Carbon Budget 2018, Earth Syst. Sci. Data, 2018b. https://doi.org/10.5194/essd-10-2141-2018."
+}

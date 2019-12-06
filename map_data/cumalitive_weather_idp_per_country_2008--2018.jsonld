@@ -1,0 +1,22 @@
+{
+  "@context": "http://schema.org",
+  "type": "Dataset",
+  "temporalCoverage": "2008-01-01/2018-12-02",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "keywords": ["Society", "Disasters", "Natural Disasters", "Internally Displaced", "Displaced People", "Migration"],
+  "isBasedOn": "http://www.internal-displacement.org/database/displacement-data",
+  "isAccessibleForFree": true,
+  "creator": {
+    "type": "Organization",
+    "contactPoint": {
+      "type": "ContactPoint",
+      "telephone": "+41 22 552 3600",
+      "email": "data@idmc.ch",
+      "contactType": "Data/database inquiries"
+    },
+    "url": "http://www.internal-displacement.org",
+    "name": "Global Internal Displacement Database (GIDD), Internal Displacement Monitoring Center (IDMC)"
+  },
+  "sameAs": "http://www.internal-displacement.org/sites/gidd/idmc-conflict-dataset-codebook-2017-05-22.pdf",
+  "name": "Cumalitive number of persons iternally displaced due to weather hazards grouped by country"
+}
