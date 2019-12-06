@@ -1,12 +1,12 @@
 <div data-controller="nested-list" data-new-record-id="NEW_IMAGE_RECORD">
   <template>
     <%= form.semantic_fields_for :images, Image.new, child_index: 'NEW_IMAGE_RECORD' do |image| %>
-      <%= render "image_fields", form: image %>
+      <%= render "admin/pages/image_fields", form: image %>
     <% end %>
   </template>
 
   <%= form.semantic_fields_for :images do |image| %>
-    <%= render "image_fields", form: image %>
+    <%= render "admin/pages/image_fields", form: image %>
   <% end %>
 
   <div class="nested-list__actions" data-target="nested-list.links">

@@ -7,10 +7,10 @@ module TPI
     end
 
     def static_pages
-      @tpi_tool_pages = Page.where(menu: 'tpi_tool').map do |t|
+      @tpi_tool_pages = TPIPage.where(menu: 'tpi_tool').map do |t|
         {slug: t.slug_path, title: t.title}
       end
-      @about_pages = Page.where(menu: 'about').map do |t|
+      @about_pages = TPIPage.where(menu: 'about').map do |t|
         {slug: t.slug_path, title: t.title}
       end
     end
