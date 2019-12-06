@@ -1,6 +1,6 @@
 namespace :static_pages do
-  desc 'Scaffold static pages'
-  task generate: :environment do
+  desc 'Scaffold static pages for TPI'
+  task generate_tpi: :environment do
     MENU_HEADERS = OpenStruct.new(Hash[Page::MENU_HEADERS.map { |el| [el, el] }])
 
     pages = [
@@ -19,13 +19,14 @@ namespace :static_pages do
     supporters_content = %w(partners supporters)
 
     pages.each do |title, menu_header|
-      next if Page.find_by(title: title)
+      next if Page.find_by(title: title, type: 'TPIPage')
 
       puts "Creating page: #{title}"
       Page.create(
         title: title,
         description: "#{title} Description goes here",
-        menu: menu_header
+        menu: menu_header,
+        type: 'TPIPage'
       )
     end
 
@@ -38,6 +39,25 @@ namespace :static_pages do
         title: content.capitalize,
         page: Page.find_by(title: 'Supporters'),
         text: 'Lorem ipsum - Content Text'
+      )
+    end
+  end
+
+  desc 'Scaffold static pages for CCLOW'
+  task generate_cclow: :environment do
+    pages = [
+      'About',
+      'Methodology'
+    ]
+
+    pages.each do |title|
+      next if page.find_by(slug: title.downcase, type: 'CCLOWPage')
+
+      puts "Creating CCLOW page: #{title}"
+      Page.create(
+        slug: title.downcase,
+        title: title,
+        type: 'CCLOWPage'
       )
     end
   end

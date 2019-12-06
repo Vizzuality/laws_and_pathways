@@ -4,8 +4,11 @@ class DynamicRouter
       return unless ActiveRecord::Base.connection.table_exists?('pages')
 
       LawsAndPathways::Application.routes.draw do
-        Page.all.each do |page|
+        TPIPage.all.each do |page|
           get "/tpi/#{page.slug}", to: 'tpi/pages#show', defaults: {id: page.id}
+        end
+        CCLOWPage.all.each do |page|
+          get "/cclow/#{page.slug}", to: 'cclow/pages#show', defaults: {id: page.id}
         end
       end
     rescue PG::ConnectionBad, ActiveRecord::NoDatabaseError

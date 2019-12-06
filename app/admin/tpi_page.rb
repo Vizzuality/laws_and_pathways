@@ -1,4 +1,4 @@
-ActiveAdmin.register Page do
+ActiveAdmin.register TPIPage do
   config.batch_actions = false
 
   decorate_with PageDecorator
