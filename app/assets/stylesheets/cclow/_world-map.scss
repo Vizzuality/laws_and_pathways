@@ -19,6 +19,21 @@
     mix-blend-mode: multiply;
   }
 
+  &__selectors {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    width: 500px;
+  }
+
+  &__selector {
+    max-width: 300px;
+
+    label {
+      font-size: 12px;
+    }
+  }
+
   &__controls {
     position: absolute;
     top: 20px;
