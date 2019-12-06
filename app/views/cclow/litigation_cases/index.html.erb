@@ -1,3 +1,6 @@
+<% geography_options = {field_name: 'geography', options: Geography.all.map { |l| {value: l.id, label: l.name }}} %>
+<% region_options = {field_name: 'region', options: Geography::REGIONS.map { |l| {value: l, label: l }}} %>
+
 <div class="cclow-geography-page">
   <div class="container">
     <% if @query.present? %>
@@ -8,7 +11,7 @@
     <hr>
     <div class="columns">
       <div class="column is-one-quarter">
-        FILTERS
+        <%= react_component("SearchFilter", { filter_name: 'Regions and countries', params: [region_options, geography_options] })%>
       </div>
       <main class="column is-three-quarters" data-controller="content-list">
         <div class="columns pre-content">

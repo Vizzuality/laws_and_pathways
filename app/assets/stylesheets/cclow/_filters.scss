@@ -1,0 +1,106 @@
+@import "colors";
+@import "variables";
+
+$padding: 10px 15px;
+$checkbox-width: 24px;
+$unchecked-checkbox-cl: #9698a8;
+
+.filter-container {
+  color: $blue-dark;
+  display: flex;
+  font-size: $size-7;
+  position: relative;
+
+  .select-field {
+    display: flex;
+    cursor: pointer;
+    justify-content: space-between;
+    align-items: center;
+
+    img {
+      display: flex;
+    }
+  }
+
+  .control-field {
+    border: 1px solid $border-cl;
+    cursor: pointer;
+    padding: $padding;
+    width: 100%;
+
+    .toggle-indicator {
+      font-size: 1rem;
+    }
+
+    .selected-count {
+      color: $grey-text;
+      font-size: $size-8;
+      margin-top: 5px;
+    }
+  }
+
+  .options-container {
+    background-color: $white;
+    border: 1px solid $blue-dark;
+    position: absolute;
+    padding: $padding;
+    width: 100%;
+    z-index: 1;
+
+    .select-checkbox {
+      min-width: $checkbox-width;
+
+      &.unchecked {
+        border-color: $unchecked-checkbox-cl;;
+      }
+    }
+
+    .search-input-container {
+      align-items: center;
+      border: 1px solid $blue-dark;
+      display: flex;
+      margin-top: 15px;
+      width: 100%;
+
+      input {
+        border: none;
+        color: #2E3152;
+        font-size: $size-7;
+        outline: none;
+        padding: 12px;
+        width: 100%;
+      }
+
+      img {
+        display: flex;
+        height: 16px;
+        margin-right: 1rem;
+        width: 16px;
+      }
+    }
+
+    .options-list {
+      margin-top: 20px;
+      margin-bottom: 10px;
+      max-height: 15rem;
+      overflow-y: auto;
+      padding: 0 5px;
+
+      hr {
+        height: 1px;
+        background-color: $border-cl;
+        margin: 1.5rem;
+      }
+
+      li {
+        align-items: center;
+        display: flex;
+        cursor: pointer;
+
+        &:not(:first-child) {
+          margin-top: 1rem;
+        }
+      }
+    }
+  }
+}
