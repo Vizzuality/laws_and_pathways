@@ -56,9 +56,9 @@ describe 'CSVDataUpload (integration)' do
     expect(legislation.frameworks.size).to eq(2)
     expect(legislation.frameworks_list).to include('Mitigation', 'Adaptation')
     expect(legislation.keywords.size).to eq(2)
-    expect(legislation.keywords_list).to include('keyword1', 'keyword3')
+    expect(legislation.keywords_list).to include('Keyword1', 'Keyword3')
     expect(legislation.natural_hazards.size).to eq(2)
-    expect(legislation.natural_hazards_list).to include('sharkinados', 'flooding')
+    expect(legislation.natural_hazards_list).to include('Sharkinados', 'Flooding')
   end
 
   it 'imports CSV files with Litigation data' do
@@ -67,7 +67,7 @@ describe 'CSVDataUpload (integration)' do
     updated_litigation = create(:litigation)
 
     csv_content = <<-CSV
-      Id,Title,Document type,Geography iso,Jurisdiction iso,Sector,Citation reference number,Summary,Keywords,At issue,Visibility status,Legislation ids
+      Id,Title,Document type,Geography iso,Jurisdiction,Sector,Citation reference number,Summary,Keywords,At issue,Visibility status,Legislation ids
       ,Litigation number 1,administrative_case,GBR,GBR,Transport,EWHC 2752,Lyle requested judicial review,"keyword1,keyword2",At issues,pending,"#{legislation1.id}, #{legislation2.id}"
       #{updated_litigation.id},Litigation number 2,administrative_case,GBR,GBR,,[2013] NIQB 24,The applicants were brothers ...,,,Draft,
     CSV
@@ -89,10 +89,10 @@ describe 'CSVDataUpload (integration)' do
       visibility_status: 'pending',
       document_type: 'administrative_case'
     )
-    expect(litigation.jurisdiction.iso).to eq('GBR')
+    expect(litigation.geography.iso).to eq('GBR')
     expect(litigation.laws_sectors.first.name).to eq('Transport')
     expect(litigation.keywords.size).to eq(2)
-    expect(litigation.keywords_list).to include('keyword1', 'keyword2')
+    expect(litigation.keywords_list).to include('Keyword1', 'Keyword2')
     expect(litigation.legislation_ids).to include(legislation1.id, legislation2.id)
   end
 

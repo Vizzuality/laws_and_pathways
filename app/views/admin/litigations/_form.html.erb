@@ -16,7 +16,8 @@
       <div id="details">
         <%= f.inputs do %>
           <%= f.input :title %>
-          <%= f.input :jurisdiction, collection: Geography.order(:name) %>
+          <%= f.input :geography, collection: Geography.order(:name) %>
+          <%= f.input :jurisdiction %>
           <%= f.input :citation_reference_number %>
           <%= f.input :laws_sector_ids, label: 'Sectors', as: :select,
             collection: LawsSector.order(:name), input_html: { multiple: true } %>

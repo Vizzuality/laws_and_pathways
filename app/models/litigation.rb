@@ -42,7 +42,7 @@ class Litigation < ApplicationRecord
   tag_with :keywords
   tag_with :responses
 
-  belongs_to :jurisdiction, class_name: 'Geography'
+  belongs_to :geography
   has_and_belongs_to_many :laws_sectors
   has_many :litigation_sides, -> { order(:side_type) }, inverse_of: :litigation
   has_many :documents, as: :documentable, dependent: :destroy

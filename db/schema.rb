@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_06_175055) do
+ActiveRecord::Schema.define(version: 2019_12_07_060117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -355,7 +355,7 @@ ActiveRecord::Schema.define(version: 2019_12_06_175055) do
     t.string "slug", null: false
     t.string "citation_reference_number"
     t.string "document_type"
-    t.bigint "jurisdiction_id"
+    t.bigint "geography_id"
     t.text "summary"
     t.text "at_issue"
     t.datetime "created_at", null: false
@@ -364,10 +364,11 @@ ActiveRecord::Schema.define(version: 2019_12_06_175055) do
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
     t.datetime "discarded_at"
+    t.string "jurisdiction"
     t.index ["created_by_id"], name: "index_litigations_on_created_by_id"
     t.index ["discarded_at"], name: "index_litigations_on_discarded_at"
     t.index ["document_type"], name: "index_litigations_on_document_type"
-    t.index ["jurisdiction_id"], name: "index_litigations_on_jurisdiction_id"
+    t.index ["geography_id"], name: "index_litigations_on_geography_id"
     t.index ["slug"], name: "index_litigations_on_slug", unique: true
     t.index ["updated_by_id"], name: "index_litigations_on_updated_by_id"
   end
@@ -510,7 +511,7 @@ ActiveRecord::Schema.define(version: 2019_12_06_175055) do
   add_foreign_key "litigation_sides", "litigations", on_delete: :cascade
   add_foreign_key "litigations", "admin_users", column: "created_by_id"
   add_foreign_key "litigations", "admin_users", column: "updated_by_id"
-  add_foreign_key "litigations", "geographies", column: "jurisdiction_id", on_delete: :cascade
+  add_foreign_key "litigations", "geographies", on_delete: :cascade
   add_foreign_key "mq_assessments", "companies", on_delete: :cascade
   add_foreign_key "news_articles", "admin_users", column: "created_by_id"
   add_foreign_key "news_articles", "admin_users", column: "updated_by_id"

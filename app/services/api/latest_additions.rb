@@ -18,7 +18,7 @@ module Api
         {kind: 'Litigation cases',
          title: item.title,
          date_passed: item.started_event&.date&.year,
-         iso: item.jurisdiction.iso,
+         iso: item.geography.iso,
          addition_type: addition_type,
          jurisdiction: item.jurisdiction,
          link: item.link}

@@ -18,6 +18,8 @@ namespace :reimport do
     NaturalHazard.delete_all
     DocumentType.delete_all
     Response.delete_all
+    LitigationSide.delete_all
+    Litigation.delete_all
 
     Seed::CCLOWData.call
   end

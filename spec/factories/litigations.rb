@@ -21,7 +21,8 @@
 
 FactoryBot.define do
   factory :litigation do
-    association :jurisdiction, factory: :geography
+    association :geography, factory: :geography
+    jurisdiction { 'Court in Country' }
     laws_sectors { |a| [a.association(:laws_sector)] }
 
     association :created_by, factory: :admin_user

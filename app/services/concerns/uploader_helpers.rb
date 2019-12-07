@@ -33,7 +33,7 @@ module UploaderHelpers
 
   def political_groups
     @political_groups ||= Hash.new do |hash, keyword|
-      hash[keyword] = PoliticalGroup.find_or_initialize_by(name: keyword.titleize)
+      hash[keyword] = PoliticalGroup.find_or_initialize_by(name: keyword)
     end
   end
 
