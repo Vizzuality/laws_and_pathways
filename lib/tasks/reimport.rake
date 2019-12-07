@@ -20,6 +20,7 @@ namespace :reimport do
     Response.delete_all
     LitigationSide.delete_all
     Litigation.delete_all
+    Target.delete_all
 
     Seed::CCLOWData.call
   end

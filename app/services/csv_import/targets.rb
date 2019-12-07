@@ -12,6 +12,8 @@ module CSVImport
         any_changes = target.changed?
 
         target.save!
+        target.scopes = parse_tags(row[:scopes], scopes)
+        target.legislations = connect_laws(row[:source_documents])
 
         update_import_results(was_new_record, any_changes)
       end
@@ -24,6 +26,8 @@ module CSVImport
     end
 
     def prepare_target(row)
+      return prepare_overridden_resource(row) if override_id
+
       find_record_by(:id, row) || resource_klass.new
     end
 
@@ -34,16 +38,28 @@ module CSVImport
     #
     def target_attributes(row)
       {
-        target_type: row[:target_type],
-        description: row[:description],
-        ghg_target: row[:ghg_target],
+        target_type: row[:type],
+        description: row[:full_description],
+        ghg_target: (row[:ghg_target] == 'ghg'),
         year: row[:year],
         base_year_period: row[:base_year_period],
-        single_year: row[:single_year],
-        geography: geographies[row[:geography_iso]],
+        single_year: (row[:single_year] == 'single year'),
+        geography: geographies_names[row[:country]],
         sector: find_or_create_laws_sector(row[:sector]),
         visibility_status: row[:visibility_status]
       }
+    end
+
+    def connect_laws(documents)
+      return [] unless documents
+
+      laws = []
+      documents.split(';').each do |doc|
+        contents = doc.split('|')
+        find_it = Legislation.find(contents[1])
+        laws << find_it
+      end
+      laws
     end
   end
 end

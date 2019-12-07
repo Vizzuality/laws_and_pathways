@@ -32,6 +32,9 @@ module Seed
       ### /Litigations
 
       ### import targets ###
+      TimedLogger.log('Import targets') do
+        CSVImport::Targets.new(seed_file('targets.csv'), override_id: true).call
+      end
       ### /targets
 
       ### import events ###

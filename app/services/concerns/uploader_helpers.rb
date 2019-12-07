@@ -7,6 +7,12 @@ module UploaderHelpers
     end
   end
 
+  def geographies_names
+    @geographies_names ||= Hash.new do |hash, name|
+      hash[name] = Geography.find_by(name: name)
+    end
+  end
+
   def keywords
     @keywords ||= Hash.new do |hash, keyword|
       hash[keyword] = Keyword.find_or_initialize_by(name: keyword.titleize)
@@ -16,6 +22,12 @@ module UploaderHelpers
   def frameworks
     @frameworks ||= Hash.new do |hash, keyword|
       hash[keyword] = Framework.find_or_initialize_by(name: keyword.titleize)
+    end
+  end
+
+  def scopes
+    @scopes ||= Hash.new do |hash, scope|
+      hash[keyword] = Scope.find_or_initialize_by(name: scope.titleize)
     end
   end
 
