@@ -16,7 +16,6 @@ module CSVImport
         legislation.keywords = parse_tags(row[:keywords], keywords)
         legislation.natural_hazards = parse_tags(row[:natural_hazards], natural_hazards)
         legislation.responses = parse_tags(row[:responses], responses)
-        legislation.laws_sectors = find_or_create_laws_sectors(row[:sector].split(',')) if row[:sector]
 
         legislation.assign_attributes(legislation_attributes(row))
 
@@ -24,6 +23,7 @@ module CSVImport
         any_changes = legislation.changed?
 
         legislation.save!
+        legislation.laws_sectors = find_or_create_laws_sectors(row[:sector].split(',')) if row[:sector]
 
         update_import_results(was_new_record, any_changes)
       end

@@ -9,37 +9,37 @@ module UploaderHelpers
 
   def keywords
     @keywords ||= Hash.new do |hash, keyword|
-      hash[keyword] = Keyword.find_or_initialize_by(name: keyword)
+      hash[keyword] = Keyword.find_or_initialize_by(name: keyword.titleize)
     end
   end
 
   def frameworks
     @frameworks ||= Hash.new do |hash, keyword|
-      hash[keyword] = Framework.find_or_initialize_by(name: keyword)
+      hash[keyword] = Framework.find_or_initialize_by(name: keyword.titleize)
     end
   end
 
   def document_types
     @document_types ||= Hash.new do |hash, keyword|
-      hash[keyword] = DocumentType.find_or_initialize_by(name: keyword)
+      hash[keyword] = DocumentType.find_or_initialize_by(name: keyword.titleize)
     end
   end
 
   def natural_hazards
     @natural_hazards ||= Hash.new do |hash, keyword|
-      hash[keyword] = NaturalHazard.find_or_initialize_by(name: keyword)
+      hash[keyword] = NaturalHazard.find_or_initialize_by(name: keyword.titleize)
     end
   end
 
   def political_groups
     @political_groups ||= Hash.new do |hash, keyword|
-      hash[keyword] = PoliticalGroup.find_or_initialize_by(name: keyword)
+      hash[keyword] = PoliticalGroup.find_or_initialize_by(name: keyword.titleize)
     end
   end
 
   def responses
     @responses ||= Hash.new do |hash, keyword|
-      hash[keyword] = Response.find_or_initialize_by(name: keyword)
+      hash[keyword] = Response.find_or_initialize_by(name: keyword.titleize)
     end
   end
 
@@ -74,11 +74,12 @@ module UploaderHelpers
     sector_names.each do |sector_name|
       sectors << find_or_create_laws_sector(sector_name)
     end
-    sectors
+    sectors.uniq
   end
 
   def find_or_create_laws_sector(sector_name)
+    sector_name = sector_name.strip
     LawsSector.where('lower(name) = ?', sector_name.downcase).first ||
-      LawsSector.new(name: sector_name)
+      LawsSector.new(name: sector_name.titleize)
   end
 end
