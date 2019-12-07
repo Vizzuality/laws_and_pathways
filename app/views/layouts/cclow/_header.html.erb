@@ -14,9 +14,16 @@
           <div class="navbar-item">
             <div class="field">
               <div class="menu">
-                <a href="#about">About</a>
-                <a href="#methodology">Methodology</a>
-                <a href="#invitation">Invitation to contribute</a>
+                <% if @header_pages.any? %>
+                  <% @header_pages.each do |page| %>
+                    <a href="<%= page[:slug] %>"><%= page[:title] %></a>
+                  <% end %>
+                <% end %>
+                <% if @both.any? %>
+                  <% @both.each do |page| %>
+                    <a href="<%= page[:slug] %>"><%= page[:title] %></a>
+                  <% end %>
+                <% end %>
               </div>
               <div class="title">
                 Climate Change Laws of the World

@@ -11,6 +11,7 @@
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  article_type     :string
+#  sector_id        :bigint
 #
 
 class NewsArticle < ApplicationRecord

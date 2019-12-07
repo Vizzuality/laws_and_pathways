@@ -1,6 +1,8 @@
 module CCLOW
   class CCLOWController < ApplicationController
     include BaseAuth
+    include StaticPagesController
+
     layout 'cclow'
 
     protected
