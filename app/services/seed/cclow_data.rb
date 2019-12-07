@@ -9,10 +9,28 @@ module Seed
     end
 
     def call
-      # import companies
-      TimedLogger.log('Import companies') do
+      ### import Laws ###
+      TimedLogger.log('Import legislation') do
         CSVImport::Legislations.new(seed_file('legislation.csv'), override_id: true).call
       end
+      # update responses from data
+      TimedLogger.log('Fill in responses for laws') do
+        Migration::Legislation.fill_responses
+      end
+      # import source links
+      # import instruments
+      # import hazards
+
+      ### /Laws ###
+
+      ### import Litigations ###
+      # sources links
+      ### /Litigations
+
+      ### import targets ###
+      ### /targets
+
+      ### import events ###
     end
 
     private
