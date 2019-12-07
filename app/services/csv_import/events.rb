@@ -33,9 +33,9 @@ module CSVImport
 
     def event_attributes(row)
       {
-        eventable_id: row[:eventable],
-        eventable_type: row[:eventable_type],
-        event_type: row[:event_type].downcase,
+        eventable_id: row[:eventable].to_i,
+        eventable_type: row[:eventable_type].constantize,
+        event_type: row[:event_type]&.downcase&.gsub(' ', '_'),
         title: row[:title],
         description: row[:description],
         date: row[:date],

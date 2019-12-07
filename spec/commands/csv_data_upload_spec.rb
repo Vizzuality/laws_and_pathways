@@ -13,10 +13,10 @@ describe 'CSVDataUpload (integration)' do
 
   let!(:countries) do
     [
-      create(:geography, iso: 'POL'),
-      create(:geography, iso: 'GBR'),
-      create(:geography, iso: 'JPN'),
-      create(:geography, iso: 'USA')
+      create(:geography, iso: 'POL', name: 'Poland'),
+      create(:geography, iso: 'GBR', name: 'United Kingdom'),
+      create(:geography, iso: 'JPN', name: 'Japan'),
+      create(:geography, iso: 'USA', name: 'United States')
     ]
   end
 

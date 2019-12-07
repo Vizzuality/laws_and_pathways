@@ -38,6 +38,9 @@ module Seed
       ### /targets
 
       ### import events ###
+      TimedLogger.log('Import events') do
+        CSVImport::Events.new(seed_file('events.csv'), override_id: true).call
+      end
     end
 
     private

@@ -32,10 +32,30 @@ class Legislation < ApplicationRecord
 
   LEGISLATION_TYPES = %w[executive legislative].freeze
   EVENT_TYPES = %w[
-    drafted
+    amended
     approved
-    came_into_effect
-    repealed
+    deadline_for_regulation
+    decree_passed
+    document_amended
+    document_passed
+    endorsement
+    entry_into_force
+    executive_decree_issued
+    federal_decree_issued
+    first_phase_approved
+    last_amended
+    last_amendment
+    law_amended
+    law_passed
+    law_published
+    ordinance_issued
+    plan_adopted
+    policy_revised
+    regulation_issued
+    repealed_and_replaced
+    replaced
+    start_of_reporting_period
+    wholly_amended
   ].freeze
 
   tag_with :frameworks

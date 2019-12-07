@@ -30,9 +30,11 @@ class Geography < ApplicationRecord
   friendly_id :name, use: :slugged, routes: :default
 
   EVENT_TYPES = %w[
+    declaration_of_climate_emergency
     election
     government_change
     international_agreement
+    net_zero_pledge
   ].freeze
 
   GEOGRAPHY_TYPES = %w[

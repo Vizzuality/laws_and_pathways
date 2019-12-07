@@ -67,7 +67,7 @@ RSpec.describe Admin::LegislationsController, type: :controller do
           events_attributes: [
             {
               date: 5.days.ago,
-              event_type: 'drafted',
+              event_type: 'amended',
               title: 'Event 1',
               description: 'Description 1',
               url: 'https://validurl1.com'
@@ -89,7 +89,7 @@ RSpec.describe Admin::LegislationsController, type: :controller do
         expect { subject }.to change(Legislation, :count).by(1)
 
         expected_events_attrs = [
-          ['Event 1', 'drafted', 'Description 1', 'https://validurl1.com'],
+          ['Event 1', 'amended', 'Description 1', 'https://validurl1.com'],
           ['Event 2', 'approved', 'Description 2', 'https://validurl2.com']
         ]
 

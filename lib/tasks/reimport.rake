@@ -12,7 +12,6 @@ namespace :reimport do
   desc 'Reimport CCLOW data - USE WITH CAUTION'
   task cclow: :environment do
     Legislation.delete_all
-    Target.delete_all
     Keyword.delete_all
     Framework.delete_all
     NaturalHazard.delete_all
@@ -21,6 +20,7 @@ namespace :reimport do
     LitigationSide.delete_all
     Litigation.delete_all
     Target.delete_all
+    Event.delete_all
 
     Seed::CCLOWData.call
   end
