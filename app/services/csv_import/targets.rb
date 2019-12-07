@@ -4,6 +4,10 @@ module CSVImport
 
     def import
       import_each_csv_row(csv) do |row|
+        if override_id && Target.where(id: row[:id]).any?
+          puts "skipping #{row[:id]}"
+          next
+        end
         target = prepare_target(row)
 
         target.assign_attributes(target_attributes(row))
@@ -38,7 +42,7 @@ module CSVImport
     #
     def target_attributes(row)
       {
-        target_type: row[:type],
+        target_type: row[:type]&.downcase&.gsub(' ', '_'),
         description: row[:full_description],
         ghg_target: (row[:ghg_target] == 'ghg'),
         year: row[:year],
@@ -56,6 +60,7 @@ module CSVImport
       laws = []
       documents.split(';').each do |doc|
         contents = doc.split('|')
+        next unless contents.size == 3 && contents[1].to_i != 0
         find_it = Legislation.find(contents[1])
         laws << find_it
       end
