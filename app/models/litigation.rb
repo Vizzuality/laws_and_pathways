@@ -7,7 +7,7 @@
 #  slug                      :string           not null
 #  citation_reference_number :string
 #  document_type             :string
-#  jurisdiction_id           :bigint
+#  geography_id              :bigint
 #  summary                   :text
 #  at_issue                  :text
 #  created_at                :datetime         not null
@@ -16,7 +16,7 @@
 #  created_by_id             :bigint
 #  updated_by_id             :bigint
 #  discarded_at              :datetime
-#  sector_id                 :bigint
+#  jurisdiction              :string
 #
 
 class Litigation < ApplicationRecord

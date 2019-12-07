@@ -10,13 +10,11 @@
 #  geography_id      :bigint
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
-#  date_passed       :date
 #  visibility_status :string           default("draft")
 #  created_by_id     :bigint
 #  updated_by_id     :bigint
 #  discarded_at      :datetime
 #  legislation_type  :string           not null
-#  sector_id         :bigint
 #  parent_id         :bigint
 #
 
