@@ -29,7 +29,7 @@ class Litigation < ApplicationRecord
 
   friendly_id :title, use: :slugged, routes: :default
 
-  DOCUMENT_TYPES = %w[administrative_case judicial_case inquiry].freeze
+  DOCUMENT_TYPES = %w[case administrative_case judicial_case inquiry].freeze
   EVENT_TYPES = %w[
     case_started
     case_dismissed
@@ -42,7 +42,7 @@ class Litigation < ApplicationRecord
   tag_with :keywords
   tag_with :responses
 
-  belongs_to :geography
+  belongs_to :geography, optional: true
   has_and_belongs_to_many :laws_sectors
   has_many :litigation_sides, -> { order(:side_type) }, inverse_of: :litigation
   has_many :documents, as: :documentable, dependent: :destroy
