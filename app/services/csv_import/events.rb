@@ -32,8 +32,13 @@ module CSVImport
     end
 
     def event_attributes(row)
+      eventable_id = if row[:eventable_type] == 'Geography'
+                       geographies[row[:eventable]].id
+                     else
+                       row[:eventable].to_i
+                     end
       {
-        eventable_id: row[:eventable].to_i,
+        eventable_id: eventable_id,
         eventable_type: row[:eventable_type].constantize,
         event_type: row[:event_type]&.downcase&.gsub(' ', '_'),
         title: row[:title],
