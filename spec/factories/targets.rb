@@ -4,8 +4,6 @@
 #
 #  id                :bigint           not null, primary key
 #  geography_id      :bigint
-#  sector_id         :bigint
-#  target_scope_id   :bigint
 #  ghg_target        :boolean          default(FALSE), not null
 #  single_year       :boolean          default(FALSE), not null
 #  description       :text
@@ -18,6 +16,7 @@
 #  created_by_id     :bigint
 #  updated_by_id     :bigint
 #  discarded_at      :datetime
+#  sector_id         :bigint
 #
 
 FactoryBot.define do
