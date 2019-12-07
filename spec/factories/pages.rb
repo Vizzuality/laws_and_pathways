@@ -9,6 +9,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  menu        :string
+#  type        :string
 #
 
 FactoryBot.define do

@@ -53,3 +53,11 @@ Be sure to never commit credentials file!
 ## Flags Sourced from
 
  * [FlagKit](https://github.com/madebybowtie/FlagKit)
+
+## MISC
+
+### Model annotations
+
+To annotate models run
+
+`bundle exec annotate --models`
