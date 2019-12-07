@@ -21,7 +21,7 @@ class Event < ApplicationRecord
   validates_presence_of :title, :date
   validates :url, url: true
 
-  validates :event_type, presence: true, inclusion: {in: :event_types}
+  # validates :event_type, presence: true, inclusion: {in: :event_types}
 
   def event_types
     return [] unless eventable.present?

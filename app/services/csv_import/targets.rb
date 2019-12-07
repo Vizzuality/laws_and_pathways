@@ -61,6 +61,7 @@ module CSVImport
       documents.split(';').each do |doc|
         contents = doc.split('|')
         next unless contents.size == 3 && contents[1].to_i != 0
+
         find_it = Legislation.find(contents[1])
         laws << find_it
       end

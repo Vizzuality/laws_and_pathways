@@ -1,7 +1,7 @@
 module Migration
   class Legislation
     class << self
-      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Style/IfUnlessModifier
       def fill_responses
         adaptation = Response.find_or_create_by(name: 'Adaptation')
         drm = Response.find_or_create_by(name: 'Disaster Risk Management')
@@ -35,7 +35,7 @@ module Migration
           l.save
         end
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Style/IfUnlessModifier
     end
   end
 end

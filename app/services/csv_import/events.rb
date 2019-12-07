@@ -41,7 +41,7 @@ module CSVImport
         eventable_id: eventable_id,
         eventable_type: row[:eventable_type].constantize,
         event_type: row[:event_type]&.downcase&.gsub(' ', '_'),
-        title: row[:title],
+        title: (row[:title].presence || row[:event_type]),
         description: row[:description],
         date: row[:date],
         url: row[:url]
