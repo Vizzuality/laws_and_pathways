@@ -33,7 +33,7 @@ module CSVImport
 
     def event_attributes(row)
       eventable_id = if row[:eventable_type] == 'Geography'
-                       geographies[row[:eventable]].id
+                       geographies[row[:eventable]]&.id
                      else
                        row[:eventable].to_i
                      end
