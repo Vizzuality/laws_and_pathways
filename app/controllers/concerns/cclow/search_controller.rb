@@ -19,7 +19,7 @@ module CCLOW
       litigation_columns = Litigation.attribute_names -
         %w[id slug citation_reference_number jurisdiction_id at_issue
            created_at updated_at created_by_id updated_by_id discarded_at sector_id]
-      @search_litigations = Litigation.joins(:jurisdiction)
+      @search_litigations = Litigation.joins(:geography)
         .select(:id, litigation_columns, 'geographies.name as jurisdiction_name')
       target_columns = Target.attribute_names -
         %w[id geography_id target_scope_id created_at updated_at created_by_id updated_by_id discarded_at sector_id]

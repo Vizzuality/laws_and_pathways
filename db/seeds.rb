@@ -80,16 +80,5 @@ if Rails.env.development? || ENV['SEED_DATA']
   # end
 
   Seed::TPIData.call
-
-  # import Legislations
-  TimedLogger.log('Import Legislations') do
-    CSVImport::Legislations.new(seed_file('legislations.csv'), override_id: true).call
-  end
-
-  TimedLogger.log('Import Litigations') do
-    # import Litigations
-    CSVImport::Litigations.new(seed_file('litigations.csv'), override_id: true).call
-    # import Litigation Sides
-    CSVImport::LitigationSides.new(seed_file('litigation-sides.csv')).call
-  end
+  Seed::CCLOWData.call
 end
