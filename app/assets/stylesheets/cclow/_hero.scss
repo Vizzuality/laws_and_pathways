@@ -61,6 +61,28 @@ $hero-head-height: 7.5rem;
         justify-content: center;
         margin-right: 12px;
         width: 48px;
+
+        & > .icon {
+          margin: 0;
+          background-position: center;
+          background-repeat: no-repeat;
+        }
+
+        & > .icon__paper {
+          background-image: image-url('icons/laws.svg');
+        }
+
+        & > .icon__scale {
+          background-image: image-url('icons/legal-scale.svg');
+        }
+
+        & > .icon__white-flag {
+          background-image: image-url('icons/country-flag.svg');
+        }
+
+        & > .icon__globe {
+          background-image: image-url('icons/world.svg');
+        }
       }
     }
 
