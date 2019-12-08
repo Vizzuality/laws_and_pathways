@@ -12,6 +12,9 @@ function MapLegend({ content, context, scales }) {
 
   const colors = COLOR_RAMPS[context.ramp];
   const displayContextValue = (color, index) => formatNumber(Math.round(scales.colorScale.invertExtent(color)[index]));
+  const renderDataSource = (creator) => (
+    <a href={creator.url} className="link" target="_blank" rel="noopener noreferrer">{creator.name}</a>
+  );
 
   return (
     <div className="world-map__legend">
@@ -26,7 +29,10 @@ function MapLegend({ content, context, scales }) {
               </div>
             ))}
           </div>
-          <div dangerouslySetInnerHTML={{__html: content.legend_description}} />
+          <div>
+            <span dangerouslySetInnerHTML={{__html: content.legend_description}} />
+            {renderDataSource(content.creator)}
+          </div>
         </div>
         <div className="column is-half world-map__legend-scale">
           <div className="name">{context.name}</div>
@@ -40,7 +46,10 @@ function MapLegend({ content, context, scales }) {
               </div>
             ))}
           </div>
-          <div dangerouslySetInnerHTML={{__html: context.legend_description}} />
+          <div>
+            <span dangerouslySetInnerHTML={{__html: context.legend_description}} />
+            {renderDataSource(context.creator)}
+          </div>
         </div>
       </div>
     </div>

@@ -26,6 +26,10 @@ class CCLOWMapContentData
         legend_description: <<-TEXT,
         The <b>size</b> of the circle represents the number of climate laws and policies. The larger the circle, the higher the number of climate laws and policies.
         TEXT
+        creator: {
+          name: 'Grantham Research Institute',
+          url: url.cclow_root_path
+        },
         values: result
       }
     end
@@ -49,8 +53,16 @@ class CCLOWMapContentData
         legend_description: <<-TEXT,
         The <b>size</b> of the circle represents the number of climate lawsuits. The larger the circle, the higher the number of climate lawsuits.
         TEXT
+        creator: {
+          name: 'Grantham Research Institute',
+          url: url.cclow_root_path
+        },
         values: result
       }
+    end
+
+    def url
+      Rails.application.routes.url_helpers
     end
   end
 end
