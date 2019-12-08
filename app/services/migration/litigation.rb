@@ -17,6 +17,8 @@ module Migration
             puts "Can't find litigation with this Id: #{row['case_id']}"
             next
           end
+          next unless row['url'].present?
+
           puts "Found--> #{l.title}"
           source = row['url']
           puts "url to get the file from --> #{source}"
