@@ -6,7 +6,7 @@ module CCLOW
 
       def index
         add_breadcrumb('Climate targets', request.path)
-        @climate_targets = @geography.targets.order(:date)
+        @climate_targets = @geography.targets
       end
 
       def show

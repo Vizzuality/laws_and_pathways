@@ -32,11 +32,13 @@
       <%= render 'cclow/geography/legislations/climate_targets', targets: @legislation.targets %>
     </section>
   <% end %>
-  <section>
-    <h5>Related laws and policies</h5>
-    <%= render 'related_laws_list', legislations: Legislation.first(2) %>
-  </section>
-  <hr>
+  <% if false %>
+    <section>
+      <h5>Related laws and policies</h5>
+      <%= render 'related_laws_list', legislations: Legislation.first(2) %>
+    </section>
+    <hr>
+  <% end %>
   <% if @legislation.litigations.any? %>
     <section>
       <h5>Related litigation cases</h5>
