@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types';
 import Fuse from 'fuse.js';
 import debounce from 'lodash/debounce';
-import search from '../../assets/images/icons/search.svg';
+// import search from '../../assets/images/icons/search.svg';
 import searchAgain from '../../assets/images/icons/search-again.svg';
 import countryFlag from '../../assets/images/icons/country-flag.svg';
 import laws from '../../assets/images/icons/laws.svg';
@@ -207,9 +207,9 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
           className="laws-input"
           onClick={handleInputClick}
         />
-        <label htmlFor="search-input">
-          <img className="icon" src={search} />
-        </label>
+        <a className="search-input__icon">
+          <span className="icon icon__search" />
+        </a>
       </div>
       {isOpen && (
         <div className="laws-dropdown__content">

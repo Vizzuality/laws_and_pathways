@@ -16,6 +16,7 @@ $space-between-categories: 34px;
   background-color: $white;
   border: 1px solid $french-gray;
   cursor: pointer;
+  position: relative;
 
   &:hover {
     border: 1px solid $martinique;
@@ -37,6 +38,20 @@ $space-between-categories: 34px;
   font-family: $family-sans-serif;
   margin-right: 1.5rem;
   color: $blue-dark;
+}
+
+.search-input__icon {
+  border: none;
+  position: absolute;
+  // 60px height / 2 + 24px icon / 2
+  top: 16px;
+  right: 0;
+
+  .icon__search {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: image-url('icons/search.svg');
+  }
 }
 
 .laws-dropdown__content {
