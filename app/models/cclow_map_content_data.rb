@@ -23,6 +23,9 @@ class CCLOWMapContentData
       {
         id: :number_of_climate_laws_and_policies,
         name: 'Number of Climate Laws and Policies',
+        legend_description: <<-TEXT,
+        The <b>size</b> of the circle represents the number of climate laws and policies. The larger the circle, the higher the number of climate laws and policies.
+        TEXT
         values: result
       }
     end
@@ -43,6 +46,9 @@ class CCLOWMapContentData
       {
         id: :number_of_climate_lawsuits,
         name: 'Number of Climate Lawsuits',
+        legend_description: <<-TEXT,
+        The <b>size</b> of the circle represents the number of climate lawsuits. The larger the circle, the higher the number of climate lawsuits.
+        TEXT
         values: result
       }
     end

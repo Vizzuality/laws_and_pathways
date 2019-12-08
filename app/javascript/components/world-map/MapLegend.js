@@ -1,3 +1,5 @@
+/* eslint-disable react/no-danger */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -24,9 +26,7 @@ function MapLegend({ content, context, scales }) {
               </div>
             ))}
           </div>
-          <div>
-            The <b>size</b> of the circle represents the data from selected Context.
-          </div>
+          <div dangerouslySetInnerHTML={{__html: content.legend_description}} />
         </div>
         <div className="column is-half world-map__legend-scale">
           <div className="name">{context.name}</div>
@@ -40,9 +40,7 @@ function MapLegend({ content, context, scales }) {
               </div>
             ))}
           </div>
-          <div>
-            The <b>colour</b> of the circle represents a country’s renewable energy consumption. The darker the circle, the higher the percentage of renewable energy consumption.
-          </div>
+          <div dangerouslySetInnerHTML={{__html: context.legend_description}} />
         </div>
       </div>
     </div>
