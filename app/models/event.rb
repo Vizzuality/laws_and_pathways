@@ -24,9 +24,9 @@ class Event < ApplicationRecord
   validates :event_type, presence: true, inclusion: {in: :event_types}
 
   def event_types
-    return [] unless eventable.present?
+    return [] unless eventable_type.present?
 
-    eventable.class.const_get(:EVENT_TYPES)
+    eventable_type.constantize.const_get(:EVENT_TYPES)
   rescue NameError
     raise "please define EVENT_TYPES const in #{eventable.class.name}"
   end

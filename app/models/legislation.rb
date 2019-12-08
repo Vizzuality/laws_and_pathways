@@ -36,6 +36,7 @@ class Legislation < ApplicationRecord
     decree_passed
     document_amended
     document_passed
+    document_approved
     endorsement
     entry_into_force
     executive_decree_issued
@@ -46,6 +47,7 @@ class Legislation < ApplicationRecord
     law_amended
     law_passed
     law_published
+    law_adopted
     ordinance_issued
     plan_adopted
     policy_revised

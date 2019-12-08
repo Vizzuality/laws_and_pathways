@@ -76,6 +76,8 @@ class Litigation < ApplicationRecord
     request_rejected
     retraction_and_apology_issued
     second_appeal_filed
+    appeal_filed
+    license_issued
     site_visit
     tax_abolished
     withdrawn
