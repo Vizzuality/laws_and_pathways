@@ -1,4 +1,5 @@
 name: Cumalitive number of persons iternally displaced due to weather hazards grouped by country
+ramp: risk
 unit: persons
 creator:
   url: http://www.internal-displacement.org

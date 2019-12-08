@@ -1,4 +1,5 @@
 name: Cumulative direct economic loss attributed to disasters relative to global GDP (%)
+ramp: risk
 unit: '%'
 creator:
   url: https://unstats.un.org

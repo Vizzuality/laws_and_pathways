@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { COLOR_RAMPS, BUBBLE_LEGEND_RADIUSES } from './constants';
+import { formatNumber } from './helpers';
 
 function MapLegend({ content, context, scales }) {
-  const colors = COLOR_RAMPS.emissions;
-
   if (!content) return null;
   if (!context) return null;
+
+  const colors = COLOR_RAMPS[context.ramp];
+  const displayContextValue = (color, index) => formatNumber(Math.round(scales.colorScale.invertExtent(color)[index]));
 
   return (
     <div className="world-map__legend">
@@ -31,10 +33,10 @@ function MapLegend({ content, context, scales }) {
           <div className="img-describe">
             {colors.map((color, i) => (
               <div>
-                <div className="rectangle" style={{backgroundColor: color}} />
-                &nbsp;
-                {(i === 0) && `<${Math.round(scales.colorScale.invertExtent(color)[1])}`}
-                {(i === colors.length - 1) && `>${Math.round(scales.colorScale.invertExtent(color)[0])}`}
+                <div className="rectangle" style={{backgroundColor: color}} />&nbsp;
+
+                {(i === 0) && `<${displayContextValue(color, 1)}`}
+                {(i === colors.length - 1) && `>${displayContextValue(color, 0)}`}
               </div>
             ))}
           </div>

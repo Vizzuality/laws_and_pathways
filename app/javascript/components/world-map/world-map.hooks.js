@@ -49,7 +49,7 @@ export function useCombinedLayer(selectedContext, selectedContent) {
     }).filter(x => x);
 
     return {
-      ramp: 'emissions',
+      ramp: selectedContext.ramp,
       features
     };
   }, [selectedContext, selectedContent]);

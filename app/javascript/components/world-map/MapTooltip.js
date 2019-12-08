@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { formatNumber } from './helpers';
+
 function MapTooltip({ geography, content, context }) {
   if (!geography) return null;
 
@@ -12,11 +14,11 @@ function MapTooltip({ geography, content, context }) {
       <p className="world-map__tooltip-title">{geography.name}</p>
       <div className="world-map__tooltip-row">
         <p className="world-map__tooltip-text">{content.name}</p>
-        <p className="world-map__tooltip-number">{contentValue && contentValue.value}</p>
+        <p className="world-map__tooltip-number">{contentValue && formatNumber(contentValue.value)}</p>
       </div>
       <div className="world-map__tooltip-row">
         <p className="world-map__tooltip-text">{context.name}</p>
-        <p className="world-map__tooltip-number">{contextValue && contextValue.value}</p>
+        <p className="world-map__tooltip-number">{contextValue && formatNumber(contextValue.value)} {context.unit}</p>
       </div>
       <a href={geography.link} target="_blank" rel="noopener noreferrer" className="world-map__tooltip-link">Go to full profile</a>
     </div>

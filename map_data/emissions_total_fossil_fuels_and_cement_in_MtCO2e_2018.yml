@@ -1,4 +1,5 @@
-name: Carbon dioxide emissions from the use of fossil fuel and the manufacture of cement
+name: Carbon dioxide emissions from the use of fossil fuel and the manufacture of cement (MtCO2e)
+ramp: emissions
 unit: MtCO2e
 creator:
   url: https://www.icos-cp.eu/GCP
