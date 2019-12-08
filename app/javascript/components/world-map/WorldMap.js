@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useState } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
 import {
   ComposableMap,
@@ -10,8 +10,11 @@ import Select from 'react-select';
 import { geoCylindricalEqualArea } from 'd3-geo-projection';
 import reducer, { initialState } from './world-map.reducer';
 import { useMarkers, useScale, useCombinedLayer } from './world-map.hooks';
+
 import MapBubble from './MapBubble';
 import MapLegend from './MapLegend';
+import MapTooltip from './MapTooltip';
+
 import MinusIcon from 'images/cclow/icons/minus.svg';
 import PlusIcon from 'images/cclow/icons/plus.svg';
 
@@ -19,28 +22,14 @@ const geoUrl = 'https://raw.githubusercontent.com/zcreativelabs/react-simple-map
 const PetersGall = geoCylindricalEqualArea().parallel(45);
 
 function WorldMap() {
-  const getTooltip = (tooltipContent) => {
-    const { country, climateLawsPolicies, emissions, link } = tooltipContent;
-    return (
-      <div className="world-map__tooltip-container">
-        <p className="world-map__tooltip-title">{country}</p>
-        <div className="world-map__tooltip-row">
-          <p className="world-map__tooltip-text">Number of climate laws and policies</p>
-          <p className="world-map__tooltip-number">{climateLawsPolicies}</p>
-        </div>
-        <div className="world-map__tooltip-row">
-          <p className="world-map__tooltip-text">Greenhouse gas emissions (% of global emissions)</p>
-          <p className="world-map__tooltip-number">{emissions}</p>
-        </div>
-        <a href="https://todo-link-to-that-country" className="world-map__tooltip-link">{link}</a>
-      </div>
-    );
-  };
-
-  const [tooltipContent, setTooltipContent] = useState('');
-
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { data } = state;
+  const {
+    data,
+    selectedContentId,
+    selectedContextId,
+    tooltipGeography,
+    zoom
+  } = state;
 
   const zoomIn = () => dispatch({ type: 'zoomIn' });
   const zoomOut = () => dispatch({ type: 'zoomOut' });
@@ -50,6 +39,10 @@ function WorldMap() {
 
   const context = (data || {}).context || [];
   const content = (data || {}).content || [];
+  const geographiesDB = (data || {}).geographies || [];
+
+  // tooltip
+  const setTooltipGeography = iso => dispatch({ type: 'setTooltipGeography', payload: geographiesDB.find(g => g.iso === iso) });
 
   // react-select
   const setContentId = selectedOption => dispatch({ type: 'setContentId', payload: selectedOption.value });
@@ -58,11 +51,11 @@ function WorldMap() {
   const contextOptions = context.map(c => ({ value: c.id, label: c.name }));
   const contentOptions = content.map(c => ({ value: c.id, label: c.name }));
 
-  const selectedContextOption = contextOptions.find(o => o.value === state.selectedContextId);
-  const selectedContentOption = contentOptions.find(o => o.value === state.selectedContentId);
+  const selectedContextOption = contextOptions.find(o => o.value === selectedContextId);
+  const selectedContentOption = contentOptions.find(o => o.value === selectedContentId);
 
-  const selectedContent = content.find(c => c.id === state.selectedContentId);
-  const selectedContext = context.find(c => c.id === state.selectedContextId);
+  const selectedContent = content.find(c => c.id === selectedContentId);
+  const selectedContext = context.find(c => c.id === selectedContextId);
 
   const activeLayer = useCombinedLayer(
     selectedContext,
@@ -117,7 +110,7 @@ function WorldMap() {
           style={{ width: '100%', height: 642 }}
         >
           <ZoomableGroup
-            zoom={state.zoom}
+            zoom={zoom}
             onZoomEnd={onZoomEnd}
             className="world-map__zoomable-group"
           >
@@ -131,28 +124,28 @@ function WorldMap() {
               ))}
             </Geographies>
             {(markers || []).map(marker => (
-
               <MapBubble
                 {...marker}
                 key={marker.iso}
                 data-tip=""
                 data-event="click"
-                onMouseEnter={() => {
-                  setTooltipContent({
-                    country: 'Country',
-                    climateLawsPolicies: 'todo',
-                    emissions: 'todo',
-                    link: 'TODO link'
-                  });
+                onMouseDown={() => {
+                  setTooltipGeography(marker.iso);
                 }}
               />
             ))}
           </ZoomableGroup>
         </ComposableMap>
 
-        <ReactTooltip globalEventOff="click" clickable class="world-map__tooltip">
-          {tooltipContent ? getTooltip(tooltipContent) : ''}
-        </ReactTooltip>
+        {tooltipGeography && (
+          <ReactTooltip globalEventOff="click" clickable class="world-map__tooltip">
+            <MapTooltip
+              content={selectedContent}
+              context={selectedContext}
+              geography={tooltipGeography}
+            />
+          </ReactTooltip>
+        )}
       </div>
       {scales && (
         <MapLegend content={selectedContent} context={selectedContext} scales={scales} />

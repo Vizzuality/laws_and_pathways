@@ -7,7 +7,8 @@ export const initialState = {
   zoom: 1,
   data: {},
   selectedContextId: undefined,
-  selectedContentId: undefined
+  selectedContentId: undefined,
+  tooltipGeography: undefined
 };
 
 export default function worldMapReducer(state, action) {
@@ -36,6 +37,9 @@ export default function worldMapReducer(state, action) {
     }
     case 'setContentId': {
       return { ...state, selectedContentId: action.payload };
+    }
+    case 'setTooltipGeography': {
+      return { ...state, tooltipGeography: action.payload };
     }
     default:
       return state;
