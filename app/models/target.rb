@@ -34,6 +34,7 @@ class Target < ApplicationRecord
     intensity_target_and_trajectory_target
     no_document_submitted
     trajectory_target
+    not_applicable
   ].freeze
 
   EVENT_TYPES = %w[

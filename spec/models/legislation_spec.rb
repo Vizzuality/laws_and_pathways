@@ -10,13 +10,11 @@
 #  geography_id      :bigint
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
-#  date_passed       :date
 #  visibility_status :string           default("draft")
 #  created_by_id     :bigint
 #  updated_by_id     :bigint
 #  discarded_at      :datetime
 #  legislation_type  :string           not null
-#  sector_id         :bigint
 #  parent_id         :bigint
 #
 
@@ -35,11 +33,6 @@ RSpec.describe Legislation, type: :model do
   it 'should be invalid if title is nil' do
     subject.title = nil
     expect(subject).to have(1).errors_on(:title)
-  end
-
-  it 'should be invalid if date_passed is nil' do
-    subject.date_passed = nil
-    expect(subject).to have(1).errors_on(:date_passed)
   end
 
   it 'should be invalid if visibility_status is nil' do

@@ -32,15 +32,24 @@ module CSVImport
     end
 
     def event_attributes(row)
+      eventable_id = if row[:eventable_type] == 'Geography'
+                       geographies[row[:eventable]]&.id
+                     else
+                       row[:eventable].to_i
+                     end
       {
-        eventable_id: row[:eventable],
-        eventable_type: row[:eventable_type],
-        event_type: row[:event_type].downcase,
-        title: row[:title],
+        eventable_id: eventable_id,
+        eventable_type: row[:eventable_type].constantize,
+        event_type: row[:event_type]&.downcase&.gsub(' ', '_'),
+        title: (row[:title].presence || row[:event_type]),
         description: row[:description],
-        date: row[:date],
+        date: event_date(row),
         url: row[:url]
       }
+    end
+
+    def event_date(row)
+      CSVImport::DateUtils.safe_parse(row[:date], ['%d/%m/%y', '%Y-%m-%d', '%Y']) if row[:date]
     end
   end
 end

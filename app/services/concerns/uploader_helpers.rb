@@ -7,27 +7,39 @@ module UploaderHelpers
     end
   end
 
+  def geographies_names
+    @geographies_names ||= Hash.new do |hash, name|
+      hash[name] = Geography.find_by(name: name)
+    end
+  end
+
   def keywords
     @keywords ||= Hash.new do |hash, keyword|
-      hash[keyword] = Keyword.find_or_initialize_by(name: keyword)
+      hash[keyword] = Keyword.find_or_initialize_by(name: keyword.titleize)
     end
   end
 
   def frameworks
     @frameworks ||= Hash.new do |hash, keyword|
-      hash[keyword] = Framework.find_or_initialize_by(name: keyword)
+      hash[keyword] = Framework.find_or_initialize_by(name: keyword.titleize)
+    end
+  end
+
+  def scopes
+    @scopes ||= Hash.new do |hash, scope|
+      hash[keyword] = Scope.find_or_initialize_by(name: scope.titleize)
     end
   end
 
   def document_types
     @document_types ||= Hash.new do |hash, keyword|
-      hash[keyword] = DocumentType.find_or_initialize_by(name: keyword)
+      hash[keyword] = DocumentType.find_or_initialize_by(name: keyword.titleize)
     end
   end
 
   def natural_hazards
     @natural_hazards ||= Hash.new do |hash, keyword|
-      hash[keyword] = NaturalHazard.find_or_initialize_by(name: keyword)
+      hash[keyword] = NaturalHazard.find_or_initialize_by(name: keyword.titleize)
     end
   end
 
@@ -39,7 +51,7 @@ module UploaderHelpers
 
   def responses
     @responses ||= Hash.new do |hash, keyword|
-      hash[keyword] = Response.find_or_initialize_by(name: keyword)
+      hash[keyword] = Response.find_or_initialize_by(name: keyword.titleize)
     end
   end
 
@@ -67,10 +79,19 @@ module UploaderHelpers
       TPISector.new(name: sector_name)
   end
 
-  def find_or_create_laws_sector(sector_name)
-    return unless sector_name.present?
+  def find_or_create_laws_sectors(sector_names)
+    return [] unless sector_names
 
+    sectors = []
+    sector_names.each do |sector_name|
+      sectors << find_or_create_laws_sector(sector_name)
+    end
+    sectors.uniq
+  end
+
+  def find_or_create_laws_sector(sector_name)
+    sector_name = sector_name.strip
     LawsSector.where('lower(name) = ?', sector_name.downcase).first ||
-      LawsSector.new(name: sector_name)
+      LawsSector.new(name: sector_name.titleize)
   end
 end

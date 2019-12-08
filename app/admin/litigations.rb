@@ -6,18 +6,19 @@ ActiveAdmin.register Litigation do
   publishable_scopes
   publishable_sidebar only: :show
 
-  permit_params :title, :jurisdiction_id, :sector_id, :document_type,
+  permit_params :title, :geography_id, :document_type, :jurisdiction,
                 :visibility_status, :summary, :at_issue,
                 :citation_reference_number, :created_by_id, :updated_by_id,
                 :keywords_string, :responses_string,
                 litigation_sides_attributes: permit_params_for(:litigation_sides),
                 documents_attributes: permit_params_for(:documents),
                 events_attributes: permit_params_for(:events),
-                legislation_ids: [], external_legislation_ids: []
+                legislation_ids: [], external_legislation_ids: [],
+                laws_sector_ids: []
 
   filter :title_contains
   filter :summary_contains
-  filter :jurisdiction
+  filter :geography
   filter :responses,
          as: :check_boxes,
          collection: proc { Response.all }
@@ -46,7 +47,7 @@ ActiveAdmin.register Litigation do
   index do
     selectable_column
     column :title, class: 'max-width-300', &:title_link
-    column :jurisdiction
+    column :geography
     column :document_type
     column :citation_reference_number
     column :created_by
@@ -60,9 +61,9 @@ ActiveAdmin.register Litigation do
     column :id
     column :title
     column :document_type
-    column(:jurisdiction_iso) { |l| l.jurisdiction.iso }
-    column(:jurisdiction) { |l| l.jurisdiction.name }
-    column(:sector) { |l| l.sector&.name }
+    column(:geography_iso) { |l| l.geography.iso }
+    column(:geography) { |l| l.geography.name }
+    column :jurisdiction
     column :citation_reference_number
     column :summary
     column :responses, &:responses_string
@@ -79,8 +80,9 @@ ActiveAdmin.register Litigation do
           row :id
           row :title
           row :slug
+          row :geography
           row :jurisdiction
-          row :sector
+          list_row 'Sectors', :laws_sector_links
           row :document_type
           row :citation_reference_number
           row :summary
@@ -160,7 +162,7 @@ ActiveAdmin.register Litigation do
     include DiscardableController
 
     def scoped_collection
-      super.includes(:jurisdiction, :sector, :responses,
+      super.includes(:geography, :laws_sectors, :responses,
                      :created_by, :updated_by)
     end
   end
