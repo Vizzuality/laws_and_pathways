@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { scaleDivergingSqrt, scaleQuantize } from 'd3-scale';
+import { scaleLinear, scaleQuantize } from 'd3-scale';
 import centroids from './centroids';
 
 export const COLOR_RAMPS = {
@@ -39,7 +39,7 @@ export function useScale(layer) {
     const maxColor = Math.max(...allColorValues) + 1;
     const minColor = Math.min(...allColorValues);
 
-    const sizeScale = scaleDivergingSqrt()
+    const sizeScale = scaleLinear()
       .domain([minSize, maxSize])
       .range([4, 24]);
 

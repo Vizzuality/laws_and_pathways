@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { COLOR_RAMPS } from './world-map.hooks';
 
+const sizes = [4, 8, 16, 24];
+
 function MapLegend({ scales }) {
   const colors = COLOR_RAMPS.emissions;
 
@@ -12,7 +14,12 @@ function MapLegend({ scales }) {
         <div className="column is-half">
           <div className="name">Number of renewable energy laws and policies</div>
           <div className="img-describe">
-            <div><div className="circle" />1</div>
+            {sizes.map((size) => (
+              <div>
+                <div className="circle" style={{width: size, height: size}} />
+                {Math.round(scales.sizeScale.invert(size))}
+              </div>
+            ))}
           </div>
           <div>
             The <b>size</b> of the circle represents the data from selected Context.
@@ -21,12 +28,12 @@ function MapLegend({ scales }) {
         <div className="column is-half">
           <div className="name">Renewable energy consumption (% of total final energy consumption)</div>
           <div className="img-describe">
-            {colors.map((color) => (
+            {colors.map((color, i) => (
               <div>
                 <div className="rectangle" style={{backgroundColor: color}} />
                 &nbsp;
-                {colors[0] === color && `<${Math.round(scales.colorScale.invertExtent(color)[1])}`}
-                {colors.slice(-1)[0] === color && `>${Math.round(scales.colorScale.invertExtent(color)[0])}`}
+                {(i === 0) && `<${Math.round(scales.colorScale.invertExtent(color)[1])}`}
+                {(i === colors.length - 1) && `>${Math.round(scales.colorScale.invertExtent(color)[0])}`}
               </div>
             ))}
           </div>
