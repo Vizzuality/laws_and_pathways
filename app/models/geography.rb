@@ -30,9 +30,11 @@ class Geography < ApplicationRecord
   friendly_id :name, use: :slugged, routes: :default
 
   EVENT_TYPES = %w[
+    declaration_of_climate_emergency
     election
     government_change
     international_agreement
+    net_zero_pledge
   ].freeze
 
   GEOGRAPHY_TYPES = %w[
@@ -56,7 +58,7 @@ class Geography < ApplicationRecord
 
   tag_with :political_groups
 
-  has_many :litigations, foreign_key: 'jurisdiction_id'
+  has_many :litigations
   has_many :legislations
   has_many :targets
   has_many :events, as: :eventable, dependent: :destroy

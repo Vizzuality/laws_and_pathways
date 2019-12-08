@@ -22,7 +22,7 @@ module CSVImport
       ActiveRecord::Base.transaction(requires_new: true) do
         import
         reset_id_seq if override_id
-        raise ActiveRecord::Rollback if errors.any?
+        # raise ActiveRecord::Rollback if errors.any?
       end
 
       errors.empty?
@@ -68,7 +68,8 @@ module CSVImport
     def reset_id_seq
       table_name = resource_klass.table_name
       seq_name = "#{table_name}_id_seq"
-      ActiveRecord::Base.connection.execute("select setval('#{seq_name}', max(id)) from #{table_name};")
+      ActiveRecord::Base.connection
+        .execute("select setval('#{seq_name}', max(id)) from #{table_name};")
     end
 
     def reset_import_results

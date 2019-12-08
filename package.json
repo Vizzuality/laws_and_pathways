@@ -40,6 +40,7 @@
     "react-dom": "^16.11.0",
     "react-select": "^3.0.8",
     "react-simple-maps": "^1.0.0-beta.0",
+    "react-tooltip": "^3.11.1",
     "react_ujs": "^2.6.0",
     "slick-carousel": "^1.8.1",
     "stimulus": "^1.1.1",

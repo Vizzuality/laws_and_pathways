@@ -5,6 +5,11 @@ module CSVImport
     # rubocop:disable Metrics/AbcSize
     def import
       import_each_csv_row(csv) do |row|
+        if override_id && Legislation.where(id: row[:id]).any?
+          puts "skipping #{row[:id]}"
+          next
+        end
+
         legislation = prepare_legislation(row)
         legislation.frameworks = parse_tags(row[:frameworks], frameworks)
         legislation.document_types = parse_tags(row[:document_types], document_types)
@@ -18,6 +23,7 @@ module CSVImport
         any_changes = legislation.changed?
 
         legislation.save!
+        legislation.laws_sectors = find_or_create_laws_sectors(row[:sector].split(',')) if row[:sector]
 
         update_import_results(was_new_record, any_changes)
       end
@@ -43,11 +49,9 @@ module CSVImport
       {
         law_id: row[:law],
         title: row[:title],
-        date_passed: row[:date_passed],
         description: row[:description],
         geography: geographies[row[:geography_iso]],
-        sector: find_or_create_laws_sector(row[:sector]),
-        legislation_type: row[:legislation_type].downcase,
+        legislation_type: row[:legislation_type]&.downcase,
         visibility_status: row[:visibility_status]
       }
     end

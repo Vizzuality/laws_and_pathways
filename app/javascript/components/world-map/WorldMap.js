@@ -1,4 +1,5 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
+import ReactTooltip from 'react-tooltip';
 import {
   ComposableMap,
   ZoomableGroup,
@@ -38,6 +39,26 @@ function combineLayers(selectedContext, selectedContent) {
 }
 
 function WorldMap() {
+  const getTooltip = (tooltipContent) => {
+    const { country, climateLawsPolicies, emissions, link } = tooltipContent;
+    return (
+      <div className="world-map__tooltip-container">
+        <p className="world-map__tooltip-title">{country}</p>
+        <div className="world-map__tooltip-row">
+          <p className="world-map__tooltip-text">Number of climate laws and policies</p>
+          <p className="world-map__tooltip-number">{climateLawsPolicies}</p>
+        </div>
+        <div className="world-map__tooltip-row">
+          <p className="world-map__tooltip-text">Greenhouse gas emissions (% of global emissions)</p>
+          <p className="world-map__tooltip-number">{emissions}</p>
+        </div>
+        <a href="https://todo-link-to-that-country" className="world-map__tooltip-link">{link}</a>
+      </div>
+    );
+  };
+
+  const [tooltipContent, setTooltipContent] = useState('');
+
   const [state, dispatch] = useReducer(reducer, initialState);
   const { data } = state;
 
@@ -126,10 +147,27 @@ function WorldMap() {
             ))}
           </Geographies>
           {(markers || []).map(marker => (
-            <MapBubble {...marker} key={marker.iso} />
+
+            <MapBubble
+              {...marker}
+              key={marker.iso}
+              data-tip=""
+              data-event="click"
+              onMouseEnter={() => {
+                setTooltipContent({
+                  country: 'Country',
+                  climateLawsPolicies: 'todo',
+                  emissions: 'todo',
+                  link: 'TODO link'
+                });
+              }}
+            />
           ))}
         </ZoomableGroup>
       </ComposableMap>
+      <ReactTooltip globalEventOff="click" clickable class="world-map__tooltip">
+        {tooltipContent ? getTooltip(tooltipContent) : ''}
+      </ReactTooltip>
     </div>
   );
 }
