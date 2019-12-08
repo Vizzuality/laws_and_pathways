@@ -28,6 +28,6 @@ class Event < ApplicationRecord
 
     eventable_type.constantize.const_get(:EVENT_TYPES)
   rescue NameError
-    raise "please define EVENT_TYPES const in #{eventable.class.name}"
+    raise "please define EVENT_TYPES const in #{eventable_type.class.name}"
   end
 end
