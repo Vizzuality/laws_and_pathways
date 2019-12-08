@@ -8,8 +8,9 @@ class CCLOWMapContentData
     end
 
     def number_of_climate_laws_and_policies
-      result = Geography
+      result = Geography.published
         .joins(:legislations)
+        .where(legislations: {visibility_status: ::Legislation.visibility_statuses[:published]})
         .group(:iso)
         .pluck('iso, count(*) as count')
         .map do |data|
@@ -27,8 +28,9 @@ class CCLOWMapContentData
     end
 
     def number_of_climate_lawsuits
-      result = Geography
+      result = Geography.published
         .joins(:litigations)
+        .where(litigations: {visibility_status: Litigation.visibility_statuses[:published]})
         .group(:iso)
         .pluck('iso, count(*) as count')
         .map do |data|
