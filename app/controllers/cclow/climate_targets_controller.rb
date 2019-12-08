@@ -7,9 +7,9 @@ module CCLOW
       @climate_targets = if params[:ids]
                            ids = params[:ids].split(',').map(&:to_i)
                            add_breadcrumb('Search results', request.path)
-                           Target.find(ids)
+                           Target.published.find(ids)
                          else
-                           Target.all
+                           Target.published.all
                          end
       @climate_targets = CCLOW::TargetDecorator.decorate_collection(@climate_targets)
     end
