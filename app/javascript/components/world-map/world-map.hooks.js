@@ -55,11 +55,20 @@ export function useMarkers(activeLayer) {
       activeLayer.features,
       activeLayer.ramp
     );
-    return activeLayer.features.map(feature => ({
-      iso: feature.iso,
-      weight: sizeScale(feature.contentValue),
-      color: colorScale(feature.contextValue),
-      coordinates: centroids[feature.iso]
-    }));
+    return activeLayer
+      .features
+      .map(feature => {
+        const coordinates = centroids[feature.iso];
+
+        if (!coordinates) return null;
+
+        return {
+          iso: feature.iso,
+          weight: sizeScale(feature.contentValue),
+          color: colorScale(feature.contextValue),
+          coordinates
+        };
+      })
+      .filter(x => x);
   }, [activeLayer]);
 }
