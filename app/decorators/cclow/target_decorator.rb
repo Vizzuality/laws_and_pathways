@@ -3,7 +3,7 @@ module CCLOW
     delegate_all
 
     def link
-      h.link_to(model, h.cclow_geography_climate_target_path(model.geography, model))
+      h.link_to(model, h.cclow_geography_climate_targets_path(model.geography))
     end
   end
 end
