@@ -8,30 +8,31 @@ module Seed
       delegate :call, to: :instance
     end
 
+    # rubocop:disable Metrics/AbcSize
     def call
       ### import Laws ###
       TimedLogger.log('Import legislation') do
         CSVImport::Legislations.new(seed_file('legislation.csv'), override_id: true).call
       end
-      # update responses from data
       TimedLogger.log('Fill in responses for laws') do
         Migration::Legislation.fill_responses
       end
-      # import source links
+      TimedLogger.log('Migrate source files') do
+        Migration::Legislation.migrate_source_files(seed_file('legislation-sources.csv'))
+      end
       # import instruments
       # import hazards
-
-      ### /Laws ###
 
       ### import Litigations ###
       TimedLogger.log('Import Litigations') do
         CSVImport::Litigations.new(seed_file('litigations.csv'), override_id: true).call
       end
-      # litigation sides
       TimedLogger.log('Import Litigations Sides') do
         CSVImport::LitigationSides.new(seed_file('litigations-sides.csv')).call
       end
-      # sources links
+      TimedLogger.log('Migrate litigations source files') do
+        Migration::Litigation.migrate_source_files(seed_file('litigation-sources.csv'))
+      end
       ### /Litigations
 
       ### import targets ###
@@ -45,6 +46,7 @@ module Seed
         CSVImport::Events.new(seed_file('events.csv'), override_id: true).call
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     private
 
