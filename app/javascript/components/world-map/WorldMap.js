@@ -61,9 +61,12 @@ function WorldMap() {
   const selectedContextOption = contextOptions.find(o => o.value === state.selectedContextId);
   const selectedContentOption = contentOptions.find(o => o.value === state.selectedContentId);
 
+  const selectedContent = content.find(c => c.id === state.selectedContentId);
+  const selectedContext = context.find(c => c.id === state.selectedContextId);
+
   const activeLayer = useCombinedLayer(
-    context.find(c => c.id === state.selectedContextId),
-    content.find(c => c.id === state.selectedContentId)
+    selectedContext,
+    selectedContent
   );
   const scales = useScale(activeLayer);
   const markers = useMarkers(activeLayer, scales);
@@ -152,7 +155,7 @@ function WorldMap() {
         </ReactTooltip>
       </div>
       {scales && (
-        <MapLegend scales={scales} />
+        <MapLegend content={selectedContent} context={selectedContext} scales={scales} />
       )}
     </React.Fragment>
   );

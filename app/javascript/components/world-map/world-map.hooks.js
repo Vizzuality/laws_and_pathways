@@ -2,26 +2,7 @@ import { useMemo } from 'react';
 import { scaleLinear, scaleQuantize } from 'd3-scale';
 import centroids from './centroids';
 
-export const COLOR_RAMPS = {
-  risk: [
-    '#FCDE9C',
-    '#FCBC81',
-    '#FC9764',
-    '#FC6C42',
-    '#F04129',
-    '#D22228',
-    '#B10226'
-  ],
-  emissions: [
-    '#FCDE9C',
-    '#BEC5A9',
-    '#8DA8AD',
-    '#668BA8',
-    '#466A9F',
-    '#2C4B93',
-    '#062A89'
-  ]
-};
+import { BUBBLE_MIN_RADIUS, BUBBLE_MAX_RADIUS, COLOR_RAMPS } from './constants';
 
 export function useScale(layer) {
   return useMemo(() => {
@@ -41,7 +22,7 @@ export function useScale(layer) {
 
     const sizeScale = scaleLinear()
       .domain([minSize, maxSize])
-      .range([4, 24]);
+      .range([BUBBLE_MIN_RADIUS, BUBBLE_MAX_RADIUS]);
 
     const colorScale = scaleQuantize()
       .domain([minColor, maxColor])

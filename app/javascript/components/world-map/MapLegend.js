@@ -1,23 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { COLOR_RAMPS } from './world-map.hooks';
+import { COLOR_RAMPS, BUBBLE_LEGEND_RADIUSES } from './constants';
 
-const sizes = [4, 8, 16, 24];
-
-function MapLegend({ scales }) {
+function MapLegend({ content, context, scales }) {
   const colors = COLOR_RAMPS.emissions;
+
+  if (!content) return null;
+  if (!context) return null;
 
   return (
     <div className="world-map__legend">
       <div className="columns">
-        <div className="column is-half">
-          <div className="name">Number of renewable energy laws and policies</div>
+        <div className="column is-half world-map__legend-scale">
+          <div className="name">{content.name}</div>
           <div className="img-describe">
-            {sizes.map((size) => (
+            {BUBBLE_LEGEND_RADIUSES.map((radius) => (
               <div>
-                <div className="circle" style={{width: size, height: size}} />
-                {Math.round(scales.sizeScale.invert(size))}
+                <div className="circle" style={{width: radius * 2, height: radius * 2}} />
+                {Math.round(scales.sizeScale.invert(radius))}
               </div>
             ))}
           </div>
@@ -25,8 +26,8 @@ function MapLegend({ scales }) {
             The <b>size</b> of the circle represents the data from selected Context.
           </div>
         </div>
-        <div className="column is-half">
-          <div className="name">Renewable energy consumption (% of total final energy consumption)</div>
+        <div className="column is-half world-map__legend-scale">
+          <div className="name">{context.name}</div>
           <div className="img-describe">
             {colors.map((color, i) => (
               <div>
@@ -47,7 +48,9 @@ function MapLegend({ scales }) {
 }
 
 MapLegend.propTypes = {
-  scales: PropTypes.any.isRequired
+  scales: PropTypes.any.isRequired,
+  content: PropTypes.object.isRequired,
+  context: PropTypes.object.isRequired
 };
 
 export default MapLegend;

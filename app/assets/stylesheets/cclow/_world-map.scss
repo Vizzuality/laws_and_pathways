@@ -136,15 +136,9 @@
       font-family: $family-sans-serif-bold;
       font-size: $size-7;
       height: 2.85rem;
-      text-align: center;
     }
 
     .columns {
-      margin: 0;
-    }
-
-    .column {
-      padding: 0 1.5rem;
       margin: 0;
     }
 
@@ -152,9 +146,7 @@
       align-items: flex-end;
       color: $grey-text;
       display: flex;
-      height: 100px;
-      justify-content: center;
-      margin: 0.875rem 0;
+      margin-bottom: 20px;
 
       &> * {
         text-align: center;
@@ -172,5 +164,10 @@
         width: 57px;
       }
     }
+  }
+
+  &__legend-scale {
+    padding: 0 1.5rem;
+    margin: 0;
   }
 }
