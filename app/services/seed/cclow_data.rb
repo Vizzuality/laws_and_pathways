@@ -28,6 +28,9 @@ module Seed
         CSVImport::Litigations.new(seed_file('litigations.csv'), override_id: true).call
       end
       # litigation sides
+      TimedLogger.log('Import Litigations Sides') do
+        CSVImport::LitigationSides.new(seed_file('litigations-sides.csv')).call
+      end
       # sources links
       ### /Litigations
 
