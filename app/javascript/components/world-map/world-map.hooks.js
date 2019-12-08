@@ -23,11 +23,13 @@ const COLOR_RAMPS = {
   ]
 };
 
-export function useMarkers(activeLayer) {
-  const getScales = (items, ramp) => {
+export function useScale(layer) {
+  return useMemo(() => {
+    if (!layer) return null;
+
     const allSizeValues = [];
     const allColorValues = [];
-    items.forEach(i => {
+    layer.features.forEach(i => {
       allSizeValues.push(i.contentValue);
       allColorValues.push(i.contextValue);
     });
@@ -43,18 +45,41 @@ export function useMarkers(activeLayer) {
 
     const colorScale = scaleQuantize()
       .domain([minColor, maxColor])
-      .range(COLOR_RAMPS[ramp]);
+      .range(COLOR_RAMPS[layer.ramp]);
 
     return { sizeScale, colorScale };
-  };
+  }, [layer]);
+}
 
+export function useCombinedLayer(selectedContext, selectedContent) {
+  return useMemo(() => {
+    if (!selectedContext || !selectedContent) return null;
+
+    const features = selectedContext.values.map(cx => {
+      const contentValue = selectedContent.values.find(cxv => cxv.geography_iso === cx.geography_iso);
+
+      if (!contentValue) return null;
+
+      return {
+        iso: cx.geography_iso,
+        contentValue: contentValue.value,
+        contextValue: cx.value
+      };
+    }).filter(x => x);
+
+    return {
+      ramp: 'emissions',
+      features
+    };
+  }, [selectedContext, selectedContent]);
+}
+
+export function useMarkers(activeLayer, scales) {
   return useMemo(() => {
     if (!activeLayer) return null;
 
-    const { sizeScale, colorScale } = getScales(
-      activeLayer.features,
-      activeLayer.ramp
-    );
+    const { sizeScale, colorScale } = scales;
+
     return activeLayer
       .features
       .map(feature => {

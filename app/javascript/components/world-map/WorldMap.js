@@ -9,34 +9,13 @@ import {
 import Select from 'react-select';
 import { geoCylindricalEqualArea } from 'd3-geo-projection';
 import reducer, { initialState } from './world-map.reducer';
-import { useMarkers } from './world-map.hooks';
+import { useMarkers, useScale, useCombinedLayer } from './world-map.hooks';
 import MapBubble from './MapBubble';
 import MinusIcon from 'images/cclow/icons/minus.svg';
 import PlusIcon from 'images/cclow/icons/plus.svg';
 
 const geoUrl = 'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json';
 const PetersGall = geoCylindricalEqualArea().parallel(45);
-
-function combineLayers(selectedContext, selectedContent) {
-  if (!selectedContext || !selectedContent) return null;
-
-  const features = selectedContext.values.map(cx => {
-    const contentValue = selectedContent.values.find(cxv => cxv.geography_iso === cx.geography_iso);
-
-    if (!contentValue) return null;
-
-    return {
-      iso: cx.geography_iso,
-      contentValue: contentValue.value,
-      contextValue: cx.value
-    };
-  }).filter(x => x);
-
-  return {
-    ramp: 'emissions',
-    features
-  };
-}
 
 function WorldMap() {
   const getTooltip = (tooltipContent) => {
@@ -81,12 +60,12 @@ function WorldMap() {
   const selectedContextOption = contextOptions.find(o => o.value === state.selectedContextId);
   const selectedContentOption = contentOptions.find(o => o.value === state.selectedContentId);
 
-  const markers = useMarkers(
-    combineLayers(
-      context.find(c => c.id === state.selectedContextId),
-      content.find(c => c.id === state.selectedContentId)
-    )
+  const activeLayer = useCombinedLayer(
+    context.find(c => c.id === state.selectedContextId),
+    content.find(c => c.id === state.selectedContentId)
   );
+  const scales = useScale(activeLayer);
+  const markers = useMarkers(activeLayer, scales);
 
   useEffect(() => {
     fetch('/cclow/api/map_indicators')
