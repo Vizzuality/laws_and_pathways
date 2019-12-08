@@ -17,7 +17,7 @@
   </section>
   <% if @legislation.events.any? %>
     <section class="section is-medium">
-      <%= react_component("EventsTimeline", { events: @legislation.events }) %>
+      <%= react_component("EventsTimeline", { events: @legislation.events.order(:date) }) %>
     </section>
   <% end %>
   <hr>
