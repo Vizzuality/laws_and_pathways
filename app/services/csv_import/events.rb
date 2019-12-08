@@ -43,9 +43,13 @@ module CSVImport
         event_type: row[:event_type]&.downcase&.gsub(' ', '_'),
         title: (row[:title].presence || row[:event_type]),
         description: row[:description],
-        date: row[:date],
+        date: event_date(row),
         url: row[:url]
       }
+    end
+
+    def event_date(row)
+      CSVImport::DateUtils.safe_parse(row[:date], ['%d/%m/%Y', '%Y-%m-%d', '%Y']) if row[:date]
     end
   end
 end
