@@ -6,7 +6,13 @@ module CCLOW
 
       def index
         add_breadcrumb('Climate targets', request.path)
-        @climate_targets = @geography.targets
+        @ndc_targets = if @geography.eu_member?
+                         eu = ::Geography.where(iso: 'EUR').first
+                         eu.targets.published.where(source: 'NDC')
+                       else
+                         @geography.targets.published.where(source: 'NDC')
+                       end
+        @climate_targets = @geography.targets.published.where.not(source: 'NDC')
       end
 
       def show

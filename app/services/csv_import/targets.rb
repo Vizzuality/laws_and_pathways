@@ -50,6 +50,7 @@ module CSVImport
         single_year: (row[:single_year] == 'single year'),
         geography: geographies_names[row[:country]],
         sector: find_or_create_laws_sector(row[:sector]),
+        source: row[:source]&.downcase,
         visibility_status: row[:visibility_status]
       }
     end

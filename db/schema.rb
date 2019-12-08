@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_07_060117) do
+ActiveRecord::Schema.define(version: 2019_12_08_233512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -462,6 +462,7 @@ ActiveRecord::Schema.define(version: 2019_12_07_060117) do
     t.bigint "updated_by_id"
     t.datetime "discarded_at"
     t.bigint "sector_id"
+    t.string "source"
     t.index ["created_by_id"], name: "index_targets_on_created_by_id"
     t.index ["discarded_at"], name: "index_targets_on_discarded_at"
     t.index ["geography_id"], name: "index_targets_on_geography_id"
