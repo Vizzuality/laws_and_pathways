@@ -11,6 +11,7 @@ import { geoCylindricalEqualArea } from 'd3-geo-projection';
 import reducer, { initialState } from './world-map.reducer';
 import { useMarkers, useScale, useCombinedLayer } from './world-map.hooks';
 import MapBubble from './MapBubble';
+import MapLegend from './MapLegend';
 import MinusIcon from 'images/cclow/icons/minus.svg';
 import PlusIcon from 'images/cclow/icons/plus.svg';
 
@@ -76,78 +77,84 @@ function WorldMap() {
   }, []);
 
   return (
-    <div className="world-map__container">
-      <div className="world-map__controls">
-        <button type="button" onClick={zoomIn} className="button world-map__controls-zoom-in">
-          <img src={PlusIcon} alt="zoom-in" />
-        </button>
-        <button type="button" onClick={zoomOut} className="button world-map__controls-zoom-out">
-          <img src={MinusIcon} alt="zoom-out" />
-        </button>
-      </div>
-      <div className="world-map__selectors">
-        <div className="world-map__selector">
-          <label>Content</label>
-          <Select
-            options={contentOptions}
-            value={selectedContentOption}
-            onChange={setContentId}
-            isSearchable={false}
-            width="300px"
-          />
+    <React.Fragment>
+      <div className="world-map__container">
+        <div className="world-map__controls">
+          <button type="button" onClick={zoomIn} className="button world-map__controls-zoom-in">
+            <img src={PlusIcon} alt="zoom-in" />
+          </button>
+          <button type="button" onClick={zoomOut} className="button world-map__controls-zoom-out">
+            <img src={MinusIcon} alt="zoom-out" />
+          </button>
         </div>
-        <div className="world-map__selector">
-          <label>Context</label>
-          <Select
-            options={contextOptions}
-            value={selectedContextOption}
-            onChange={setContextId}
-            isSearchable={false}
-            width="300px"
-          />
+        <div className="world-map__selectors">
+          <div className="world-map__selector">
+            <label>Content</label>
+            <Select
+              options={contentOptions}
+              value={selectedContentOption}
+              onChange={setContentId}
+              isSearchable={false}
+              width="300px"
+            />
+          </div>
+          <div className="world-map__selector">
+            <label>Context</label>
+            <Select
+              options={contextOptions}
+              value={selectedContextOption}
+              onChange={setContextId}
+              isSearchable={false}
+              width="300px"
+            />
+          </div>
         </div>
-      </div>
-      <ComposableMap
-        projection={PetersGall}
-        style={{ width: '100%', height: 642 }}
-      >
-        <ZoomableGroup
-          zoom={state.zoom}
-          onZoomEnd={onZoomEnd}
-          className="world-map__zoomable-group"
+        <ComposableMap
+          projection={PetersGall}
+          style={{ width: '100%', height: 642 }}
         >
-          <Geographies geography={geoUrl} className="world-map__geographies">
-            {({ geographies }) => geographies.map(geo => (
-              <Geography
-                key={geo.rsmKey}
-                geography={geo}
-                className="world-map__geography"
+          <ZoomableGroup
+            zoom={state.zoom}
+            onZoomEnd={onZoomEnd}
+            className="world-map__zoomable-group"
+          >
+            <Geographies geography={geoUrl} className="world-map__geographies">
+              {({ geographies }) => geographies.map(geo => (
+                <Geography
+                  key={geo.rsmKey}
+                  geography={geo}
+                  className="world-map__geography"
+                />
+              ))}
+            </Geographies>
+            {(markers || []).map(marker => (
+
+              <MapBubble
+                {...marker}
+                key={marker.iso}
+                data-tip=""
+                data-event="click"
+                onMouseEnter={() => {
+                  setTooltipContent({
+                    country: 'Country',
+                    climateLawsPolicies: 'todo',
+                    emissions: 'todo',
+                    link: 'TODO link'
+                  });
+                }}
               />
             ))}
-          </Geographies>
-          {(markers || []).map(marker => (
+          </ZoomableGroup>
+        </ComposableMap>
 
-            <MapBubble
-              {...marker}
-              key={marker.iso}
-              data-tip=""
-              data-event="click"
-              onMouseEnter={() => {
-                setTooltipContent({
-                  country: 'Country',
-                  climateLawsPolicies: 'todo',
-                  emissions: 'todo',
-                  link: 'TODO link'
-                });
-              }}
-            />
-          ))}
-        </ZoomableGroup>
-      </ComposableMap>
-      <ReactTooltip globalEventOff="click" clickable class="world-map__tooltip">
-        {tooltipContent ? getTooltip(tooltipContent) : ''}
-      </ReactTooltip>
-    </div>
+        <ReactTooltip globalEventOff="click" clickable class="world-map__tooltip">
+          {tooltipContent ? getTooltip(tooltipContent) : ''}
+        </ReactTooltip>
+      </div>
+      {scales && (
+        <MapLegend scales={scales} />
+      )}
+    </React.Fragment>
   );
 }
 

@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { scaleDivergingSqrt, scaleQuantize } from 'd3-scale';
 import centroids from './centroids';
 
-const COLOR_RAMPS = {
+export const COLOR_RAMPS = {
   risk: [
     '#FCDE9C',
     '#FCBC81',
