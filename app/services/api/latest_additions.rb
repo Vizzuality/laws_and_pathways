@@ -12,7 +12,7 @@ module Api
 
     private
 
-    # rubocop:disable Metric/AbcSize
+    # rubocop:disable Metrics/AbcSize
     def serialize_litigations
       CCLOW::LitigationDecorator.decorate_collection(Litigation.published.last(@count)).map do |item|
         addition_type = if item.events.last&.event_type.present?
@@ -28,7 +28,7 @@ module Api
          link: item.link}
       end
     end
-    # rubocop:enable Metric/AbcSize
+    # rubocop:enable Metrics/AbcSize
 
     def serialize_legislations
       CCLOW::LegislationDecorator.decorate_collection(Legislation.published.last(@count)).map do |item|
