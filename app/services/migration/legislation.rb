@@ -64,7 +64,12 @@ module Migration
             if for_real
               puts 'Now we are really getting the file'
               filename = File.basename(URI.parse(source).path)
-              file = URI.open(source)
+              begin
+                file = URI.open(source)
+              rescue URI::InvalidURIError
+                puts "File for #{row['law_id']} and #{row['url']} not working"
+                next
+              end
               doc.file.attach(io: file, filename: filename.last)
             end
           else
