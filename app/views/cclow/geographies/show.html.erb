@@ -11,7 +11,7 @@
               This country is a member of the EU and <a href="#" class="highlight">so EU NDC data</a> is being displayed.
             </div>
           <div class="meta">For further information about the EU's NDC, legislation, and targets, please see the
-            <a href="#" class="highlight">EU profile.</a>
+            <%= link_to "EU profile", cclow_geography_path(Geography.where(iso: 'EUR').first), class: 'highlight' %>
           </div>
         </div>
         <ul class="documents-list">
@@ -19,13 +19,9 @@
             <span class="document-icon column is-1">
               <i class="fa fa-lg fa-link"></i>
             </span>
-            <a href="#" class="column is-11">First NDC submission (2016)</a>
-          </li>
-          <li class="columns">
-            <span class="document-icon column is-1">
-              <i class="fa fa-lg fa-link"></i>
-            </span>
-            <a href="#" class="column is-11">Second NDC submission (2020)</a>
+            <a href="https://www4.unfccc.int/sites/NDCStaging/pages/Party.aspx?party=<%=@geography.iso%>" class="column is-11">
+              INDC Submission
+            </a>
           </li>
         </ul>
       </div>
