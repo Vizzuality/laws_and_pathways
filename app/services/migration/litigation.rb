@@ -29,10 +29,10 @@ module Migration
             doc.type = 'uploaded'
             if for_real
               puts 'Now we are really getting the file'
-              filename = File.basename(URI.parse(source).path)
               begin
+                filename = File.basename(URI.parse(source).path)
                 file = URI.open(source)
-              rescue URI::InvalidURIError
+              rescue URI::InvalidURIError, OpenURI::HTTPError
                 puts "File for #{row['law_id']} and #{row['url']} not working"
                 next
               end
