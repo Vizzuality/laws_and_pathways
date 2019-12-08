@@ -11,7 +11,6 @@ namespace :reimport do
 
   desc 'Reimport CCLOW data - USE WITH CAUTION'
   task cclow: :environment do
-    Document.delete_all
     Legislation.delete_all
     Keyword.delete_all
     Framework.delete_all
@@ -24,5 +23,12 @@ namespace :reimport do
     Event.delete_all
 
     Seed::CCLOWData.call
+  end
+
+  desc 'Reimport CCLOW files data - USE WITH CAUTION'
+  task cclow_sources: :environment do
+    Document.delete_all
+
+    Seed::CCLOWData.call_sources_import
   end
 end
