@@ -80,11 +80,9 @@
           </div>
           <div class="value-block">
             <ul>
-              <li><a href="#">China</a></li>
-              <li><a href="#">United States</a></li>
-              <li><a href="#">European Union</a></li>
-              <li><a href="#">India</a></li>
-              <li><a href="#">Indonesia</a></li>
+              <% @featured_countries.each do |country| %>
+                <li><%= link_to country.name, cclow_geography_path(country) %></li>
+              <% end %>
             </ul>
           </div>
         </div>

@@ -83,6 +83,10 @@ $hero-head-height: 7.5rem;
         & > .icon__globe {
           background-image: image-url('icons/world.svg');
         }
+
+        & > .icon__globe {
+          background-image: image-url('icons/target.svg');
+        }
       }
     }
 
