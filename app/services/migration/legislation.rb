@@ -53,20 +53,17 @@ module Migration
             puts "Can't find law with this Id: #{row['law_id']}"
             next
           end
-          puts "Found--> #{l.title}"
           source = row['url']
-          puts "url to get the file from --> #{source}"
           doc = Document.new(name: row['title'],
                              last_verified_on: row['date'],
                              language: row['language'])
           if row['url'].include?('http://www.lse.ac.uk/GranthamInstitute/wp-content/uploads')
             doc.type = 'uploaded'
             if for_real
-              puts 'Now we are really getting the file'
               begin
                 filename = File.basename(URI.parse(source).path)
                 file = URI.open(source)
-              rescue URI::InvalidURIError, OpenURI::HTTPError
+              rescue URI::InvalidURIError, OpenURI::HTTPError, OpenSSL::SSL::SSLError
                 puts "File for #{row['law_id']} and #{row['url']} not working"
                 next
               end
