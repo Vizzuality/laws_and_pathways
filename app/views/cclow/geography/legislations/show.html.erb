@@ -10,24 +10,24 @@
       <span>Mitigation Framework</span>
       <span class="icon"><i class="fa fa-question"></i></span>
     </div>
-    <div>Passed in <%= @legislation.date_passed.year %></div>
+    <div>Passed in <%= @legislation.date_passed&.year %></div>
   </div>
   <section class="section is-medium">
     <%= @legislation.description&.html_safe %>
   </section>
-  <% if @legislation.events.present? %>
+  <% if @legislation.events.any? %>
     <section class="section is-medium">
-      <%= react_component("EventsTimeline", { events: legislation.events }) %>
+      <%= react_component("EventsTimeline", { events: @legislation.events }) %>
     </section>
   <% end %>
   <hr>
-  <% if @legislation.events.present? %>
+  <% if @legislation.documents.any? %>
     <section class="section is-medium">
       <h5>Documents</h5>
       <%= render 'documents_list', documents: @legislation.documents %>
     </section>
   <% end %>
-  <% if @legislation.targets.present? %>
+  <% if @legislation.targets.any? %>
     <section class="section is-medium">
       <%= render 'cclow/geography/legislations/climate_targets', targets: @legislation.targets %>
     </section>
@@ -37,7 +37,7 @@
     <%= render 'related_laws_list', legislations: Legislation.first(2) %>
   </section>
   <hr>
-  <% if @legislation.litigations.present? %>
+  <% if @legislation.litigations.any? %>
     <section>
       <h5>Related litigation cases</h5>
       <%= render 'releted_litigations_list', litigations: @legislation.litigations %>
