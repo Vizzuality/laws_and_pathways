@@ -13,6 +13,7 @@ ActiveAdmin.register Target do
                 events_attributes: permit_params_for(:events),
                 legislation_ids: []
 
+  filter :geography
   filter :ghg_target
   filter :sector
   filter :target_type,
