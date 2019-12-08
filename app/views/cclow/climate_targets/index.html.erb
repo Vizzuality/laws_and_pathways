@@ -18,8 +18,14 @@
         <ul class="content-list">
           <% @climate_targets.each do |target| %>
             <li>
-              <h5 class="title">Target</h5>
-              <div>
+              <h5 class="title"><%= highlight target.link, @query %></h5>
+              <div class="meta">
+                <div>
+                  <img src=<%= asset_path "flags/#{target.geography.iso}.svg"%> alt="">
+                  <%= target.geography.name %>
+                </div>
+              </div>
+              <div class="description">
                 <%= highlight target.description, @query %>
               </div>
               <div class="tags">

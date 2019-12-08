@@ -58,6 +58,7 @@ class Target < ApplicationRecord
   validates :single_year, inclusion: {in: [true, false]}
 
   def to_s
-    "Target #{id}"
+    parts = [geography.name, target_type&.humanize, year]
+    parts.compact.join(' - ')
   end
 end
