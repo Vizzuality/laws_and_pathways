@@ -17,7 +17,9 @@ module Seed
       TimedLogger.log('Fill in responses for laws') do
         Migration::Legislation.fill_responses
       end
-      # import source links
+      TimedLogger.log('Migrate source files') do
+        Migration::Legislation.migrate_source_files(seed_file('legislation-sources.csv'))
+      end
       # import instruments
       # import hazards
 
