@@ -1,4 +1,4 @@
-litigation_id,side type,side name,party type
+litigation_id,side type,name,party type
 7362,A,Friends of the Earth (Les Amis de la Terre),ngo
 7362,B,Total,corporation
 7361,A,R (McLennan),individual
@@ -48,7 +48,7 @@ litigation_id,side type,side name,party type
 7332,A,Save Lamu et al.,individual_ngo
 7332,B,National Environmental Management Authority,government
 7332,B,Amu Power Co. Ltd,corporation
-7331,A,Sandra Bitter,individual_corporation
+7331,A,Sandra Bitter,individual corporation
 7331,B,Bundesrepublik Deutschland,government
 7330,A,"Borealis AB, Kubikenborg Aluminum AB, Yara AB, SSAB EMEA AB, Lulekraft AB, Värmevärden i Nynäshamn AB, Cementa AB, Höganäs Sweden AB",corporation
 7330,B,Naturvårdsverket,government
@@ -129,7 +129,7 @@ litigation_id,side type,side name,party type
 7298,B,Minster of Environmental Affairs,government
 7297,A,Abrahams,individual
 7297,B,Commonwealth Bank of Australia,corporation
-7296,A,"Re Xstrata Coal Queensland Pty. Ltd., Ors.","corporation, corporations"
+7296,A,"Re Xstrata Coal Queensland Pty. Ltd., Ors.","corporation"
 7296,B,Environmental Protection Agency,government
 7296,B,Queensland Conservation Council Inc,ngo
 7296,B,Mackay Conservation Group Inc,ngo
@@ -149,7 +149,7 @@ litigation_id,side type,side name,party type
 7291,B,Hobsons Bay City Council,government
 7290,A,Pridel Investments Pty. Ltd,corporation
 7290,B,Coffs Harbour City Council,government
-7289,A,"G Owen, G Owen","individual, individual"
+7289,A,"G Owen, G Owen","individual"
 7289,B,Casey City Council,government
 7288,A,Royce Millar,individual
 7288,B,Department of Premier and Cabinet (General),government
@@ -176,9 +176,9 @@ litigation_id,side type,side name,party type
 7278,B,Kinder Morgan Canada Ltd.,corporation
 7277,A,EarthLife Africa Johannesburg,ngo
 7277,B,Minister of Environmental Affairs,government
-7276,A,Ralph Lauren 57,"corporation, individuals"
+7276,A,Ralph Lauren 57,"corporation individuals"
 7276,B,Byron Shire Council,government
-7275,A,Burgess,"individual, class"
+7275,A,Burgess,"individual"
 7275,B,Ontario Minister of Natural Resources and Forestry,government
 7273,A,Anti Aircraft Noise Society (ALFG) and others,
 7273,B,"Vienna Airport AG, Region of Lower Austria",
@@ -199,9 +199,7 @@ litigation_id,side type,side name,party type
 7262,A,Keiller,individual
 7262,B,Information Commissioner,government
 7257,A,"F̩d̩ration environnement durable, F̩d̩ration nationale des associations de sauvegarde des sites, Ligue urbaine et rurale, Soci̩t̩ pour la protection des paysages et l'esth̩tique de la France, Association de d̩fense de l'environnement et de la r̩gion d'Egreville, Vent de col̬re en Visandre, Vent de force 77, and Vent de v̩rit̩",ngo
-7257,B,n/a,n/a
 7254,A,National Legal Secretariat of the Presidency,government
-7254,B,n/a,n/a
 7253,A,Sa̼l Luciano Lliuya,individual
 7253,B,RWE AG,corporation
 7251,A,Greenpeace Nordic Association,ngo
@@ -393,7 +391,7 @@ litigation_id,side type,side name,party type
 7157,B,"Buller Coal Ltd, Solid Energy New Zealand Limited, Royal Forest and Bird Protection Society of New Zealand Incorporated",corporation
 7157,B,Solid Energy New Zealand Limited,corporation
 7157,B,Royal Forest and Bird Protection Society of New Zealand Incorporated,ngo
-7157,C,"West Coast Regional Council, Buller District Council","government, government"
+7157,C,"West Coast Regional Council, Buller District Council","government"
 7156,A,Unison Networks Ltd.,corporation
 7156,B,Hastings District Council,government
 7155,A,Sarah Thomson,individual
@@ -426,10 +424,10 @@ litigation_id,side type,side name,party type
 7141,A,Genesis Power Ltd.,corporation
 7141,A,The Energy Efficiency and Conservation Authority,government
 7141,B,Franklin District Council,government
-7140,A,"An Taisce, Friends of the Irish Environment Limited","individual, ngo"
-7140,B,An Bord Plean��la,government
+7140,A,"An Taisce, Friends of the Irish Environment Limited","individual_ngo"
+7140,B,An Bord Pleanála,government
 7140,B,Ireland and Attorney General,government
-7140,C,"Edenderry Power Limited, Bord Na M�_na Energy Limited, Bord Na M�_na Allen Peat Limited, Bord Na M�_na PLC, Minister for Environment, Community and Local Government, Ireland and Attorney General, Department of Arts Heritage and the Gaeltacht, Environmental Protection Agency and an Taisce","corporation, corporation, corporation, government, government, government, government"
+7140,C,"Edenderry Power Limited, Bord Na Móna Energy Limited, Bord Na Móna Allen Peat Limited, Bord Na Móna PLC, Minister for Environment, Community and Local Government, Ireland and Attorney General, Department of Arts Heritage and the Gaeltacht, Environmental Protection Agency and an Taisce","corporation"
 7139,A,Court of its Own Motions,government
 7139,A,Abhimanyu Rathor,individual
 7139,B,"State of Himachal Pradesh, State of H.P. & Ors",government
@@ -441,10 +439,8 @@ litigation_id,side type,side name,party type
 7136,A,Germanwatch e.V.,ngo
 7136,B,The Federal Republic of Germany,government
 7135,A,French Constitutional Council,government
-7135,B,n/a,n/a
 7134,A,French Constitutional Council,government
-7134,B,n/a,n/a
-7133,A,Soci̩t̩ Arcelor Atlantique et Lorraine et autres,"corporation, corporation"
+7133,A,Société Arcelor Atlantique et Lorraine et autres,"corporation"
 7133,B,European Court of Justice,government
 7132,A,Industrie de bois de Vielsalm & Cie,corporation
 7132,B,R̩gion wallonne,government
@@ -461,13 +457,12 @@ litigation_id,side type,side name,party type
 7126,A,United Kingdom,government
 7126,B,Commission of the European Communities,government
 7125,A,Advocate General Sharpton,government
-7125,B,n/a,n/a
 7124,A,Lafarge Cement S.A.,corporation
 7124,B,Commission of the European Communities,government
 7123,A,Iberdrola S.A.,corporation
 7123,A,Gas Natural SDG SA,corporation
 7123,B,European Commission,government
-7123,C,"Administraci�_n del Estado and Others, Endesa SA and Others, Tarragona Power SL, Bah�_a de Bizcaia Electricidad SL,  E.ON Generaci�_n SL and Others","government, corporation, corporation, corporation, corporation"
+7123,C,"Administración del Estado and Others, Endesa SA and Others, Tarragona Power SL, Bahía de Bizcaia Electricidad SL,  E.ON Generación SL and Others","corporation"
 7122,A,Grupa Ożarów S.A.,corporation
 7122,B,Commission of the European Communities,government
 7121,A,Green Network SpA,ngo
@@ -545,7 +540,7 @@ litigation_id,side type,side name,party type
 7089,B,The National Post,corporation
 7089,B,Gordon Fisher,individual
 7088,A,Daniel Turp,individual
-7088,B,"Minister of Justice, Attorney General of Canada","government, government"
+7088,B,"Minister of Justice, Attorney General of Canada","government"
 7087,A,Syncrude Canada Ltd.,corporation
 7087,B,The Attorney General of Canada,government
 7086,A,River District Energy Limited Partnership,corporation
@@ -580,8 +575,8 @@ litigation_id,side type,side name,party type
 7073,A,"Xstrata Coal Queensland Pty Ltd, ICRA Wandoan Pty Ltd, Sumisho Coal Australia Pty Ltd",corporation
 7073,A,ICRA Wandoan Pty Ltd,corporation
 7073,A,Sumisho Coal Australia Pty Ltd,corporation
-7073,B,"Friends of the Earth - Brisbane Co-Op Ltd, Barry Raymond Rich and Helen Maxine Rich","ngo, individual"
-7072,A,"Wildlife Preservation Society of Queensland, Whitsundry Branch Inc.","ngo, corporation"
+7073,B,"Friends of the Earth - Brisbane Co-Op Ltd, Barry Raymond Rich and Helen Maxine Rich","individual_ngo"
+7072,A,"Wildlife Preservation Society of Queensland, Whitsundry Branch Inc.","corporation_ngo"
 7072,B,Minister for the Environment & Heritage,government
 7071,A,West Gippsland Cathment Management Authority,government
 7071,B,East Gippsland Shire Council,government
@@ -729,7 +724,7 @@ litigation_id,side type,side name,party type
 7005,A,Able Lott Holding Pty Ltd,corporation
 7005,B,City of Fremantle,government
 7003,A,Peter Gray & Naomi Hodgson,individual
-7003,B,Macquarie Generation,"corporation, government"
+7003,B,Macquarie Generation,"corporation"
 7002,A,Peter Spencer,individual
 7002,B,Commonwealth of Australia,government
 7001,A,Charles & Howard Pty Ltd,corporation

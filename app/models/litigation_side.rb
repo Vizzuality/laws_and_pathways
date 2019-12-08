@@ -22,6 +22,13 @@ class LitigationSide < ApplicationRecord
     government
     corporation
     intervening_party
+    individual_ngo
+    individual_government
+    individual_corporation
+    corporation_individuals
+    tribal_government
+    corporation_ngo
+    intervening_party
     individual
     ngo
   ].freeze
