@@ -37,14 +37,14 @@
   &__tooltip-row {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
     margin-bottom: 8px;
   }
 
   &__tooltip-text {
     font-size: 12px;
     line-height: 15px;
-    max-width: 150px;
+    max-width: 200px;
     margin-right: 10px;
     color: $storm-gray;
   }
