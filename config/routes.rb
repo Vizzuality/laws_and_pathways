@@ -61,6 +61,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
   root to: 'tpi/home#index', constraints: { host: 'transitionpathwayinitiative.org' }
+  root to: 'admin/dashboard#index', constraints: { host: 'laws-pathways.vizzuality.com' }, as: nil
   root to: 'cclow/home#index', constraints: { host: 'climate-laws.org' }, as: nil
   root to: 'cclow/home#index', constraints: { host: 'localhost' }, as: nil
 end
