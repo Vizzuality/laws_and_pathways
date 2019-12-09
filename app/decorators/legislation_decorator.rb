@@ -4,6 +4,10 @@ class LegislationDecorator < Draper::Decorator
   LEGISLATION_TITLE_LENGTH = 100
   LITIGATION_TITLE_LENGTH = 120
 
+  def id
+    model.id
+  end
+
   def description
     model.description&.html_safe
   end

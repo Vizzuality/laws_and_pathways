@@ -1,6 +1,10 @@
 class LitigationDecorator < Draper::Decorator
   delegate_all
 
+  def id
+    model.id
+  end
+
   def title_link
     h.link_to model.title, h.admin_litigation_path(model)
   end

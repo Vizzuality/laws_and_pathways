@@ -3,7 +3,7 @@ module CCLOW
     extend ActiveSupport::Concern
 
     included do
-      before_action :set_search_attributes
+      before_action :set_search_attributes, :set_recent_additions_attributes
     end
 
     # rubocop:disable Metrics/AbcSize
@@ -28,9 +28,25 @@ module CCLOW
         %w[id geography_id target_scope_id created_at updated_at created_by_id updated_by_id discarded_at sector_id]
       @search_targets = Target.published
         .joins(:geography).select(:id, target_columns, 'geographies.name as geography_name')
-      @search_recent_date = 1.month.ago.strftime('%F')
       @query = params[:q]
     end
     # rubocop:enable Metrics/AbcSize
+
+        %w[id geography_id target_scope_id updated_at created_by_id updated_by_id discarded_at sector_id]
+      @search_targets = Target.joins(:geography).select(:id, target_columns, 'geographies.name as geography_name')
+
+      @query = params[:q]
+    end
+
+    def set_recent_additions_attributes
+      @search_recent_date = 1.month.ago.strftime('%F')
+      # @recent_laws = Legislation.passed.where('events.date >= ?', @search_recent_date)
+      # @recent_litigations = Litigation.started.where('events.date >= ?', @search_recent_date)
+
+      # TODO: Revisit this again - now the latest additions are hardcoded to be always 5.
+      # Look at the commented code above, we should filter by scopes
+      @recent_laws = ::Api::LatestAdditions.new(5).serialize_legislations
+      @recent_litigations = ::Api::LatestAdditions.new(5).serialize_litigations
+    end
   end
 end
