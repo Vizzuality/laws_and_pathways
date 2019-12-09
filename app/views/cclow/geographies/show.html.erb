@@ -27,7 +27,7 @@
       </div>
     </section>
   <% end %>
-  <% if @geography.events.published.any? %>
+  <% if @geography.events.any? %>
     <section class="section is-large">
       <% event_options = Geography::EVENT_TYPES.map{|type| {value: type, label: I18n.t("cclow.geography.event_types.#{type}")}} %>
       <%= react_component("EventsTimeline", { events: @geography.events.published, options: event_options, isFiltered: true }) %>
