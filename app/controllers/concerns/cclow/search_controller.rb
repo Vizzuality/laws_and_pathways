@@ -6,6 +6,7 @@ module CCLOW
       before_action :set_search_attributes, :set_recent_additions_attributes
     end
 
+    # rubocop:disable Metrics/AbcSize
     def set_search_attributes
       geography_columns = ::Geography.attribute_names -
         %w[created_at updated_at created_by_id updated_by_id discarded_at]
