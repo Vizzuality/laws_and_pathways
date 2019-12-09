@@ -1,6 +1,7 @@
 import React, { useReducer, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
+import cx from 'classnames';
 import {
   ComposableMap,
   ZoomableGroup,
@@ -162,7 +163,9 @@ function WorldMap({ zoomToGeographyIso }) {
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
-                  className="world-map__geography"
+                  className={cx(
+                    'world-map__geography', { 'world-map__geography--active': geo.properties.ISO_A3 === zoomToGeographyIso }
+                  )}
                 />
               ))}
             </Geographies>

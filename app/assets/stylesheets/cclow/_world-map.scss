@@ -69,6 +69,10 @@
     fill: $white;
     stroke: #C0C1CB;
     stroke-width: 0.5;
+
+    &--active {
+      stroke: $black;
+    }
   }
 
   &__map-bubble {
