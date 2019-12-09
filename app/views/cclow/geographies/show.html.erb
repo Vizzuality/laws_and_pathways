@@ -47,7 +47,11 @@
   <section class="section is-medium">
     <h5>Legislative process</h5>
     <div>
-      <%= @geography_overview.legislative_process&.html_safe %>
+      <% if @geography_overview.legislative_process.present? %>
+        <%= @geography_overview.legislative_process.html_safe %>
+      <% else %>
+        <p>No information currently - work in progress.</p>
+      <% end %>
       <!--<a href="#" class="highlight">Read more about Germany’s legislative process  >></a>-->
     </div>
   </section>
