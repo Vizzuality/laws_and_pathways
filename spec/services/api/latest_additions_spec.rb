@@ -10,7 +10,7 @@ RSpec.describe Api::LatestAdditions do
 
   describe 'latest_additions' do
     it 'latest additions have current count' do
-      expect(subject.count).to eq(2)
+      expect(subject.count).to eq(1)
     end
 
     it 'latest additions have current keys' do
