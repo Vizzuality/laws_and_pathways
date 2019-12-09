@@ -44,7 +44,7 @@
   </section>
   <% if @litigation.events.present? %>
     <section class="section is-medium">
-      <%= react_component("EventsTimeline", { events: @litigation.events }) %>
+      <%= react_component("EventsTimeline", { events: @litigation.events.order(:date) }) %>
     </section>
   <% end %>
   <hr>
