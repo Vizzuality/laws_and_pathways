@@ -4,7 +4,8 @@ module TPI
     before_action :fetch_sectors, only: [:index]
 
     def index
-      @publications_and_articles = Queries::TPI::NewsPublicationsQuery.new(filter_params).call
+      @publications_and_articles = Queries::TPI::NewsPublicationsQuery
+        .new(filter_params).call
     end
 
     def partial
