@@ -27,7 +27,7 @@ const CATEGORIES = {
   targets: 'Climate targets'
 };
 
-const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, recentDate }) => {
+const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, recentDate, recentLaws, recentLitigations }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const dropdownContainer = useRef(null);
@@ -35,6 +35,8 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
   const lastSearch = localStorage.getItem('lastSearch');
   const lastSearchCategory = localStorage.getItem('lastSearchCategory');
   const lastSearchLink = localStorage.getItem('lastSearchLink');
+
+  const recentlyAddedTargets = targets.filter(climateTarget => climateTarget.created_at >= recentDate);
 
   const handleInput = input => {
     setSearchValue(input);
@@ -138,9 +140,9 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
           <span>All Laws and policies</span>
           <span className="laws-dropdown__disclaimer">{lawsAndPolicies.length}</span>
         </a>
-        <a href={`/cclow/legislation_and_policies?fromDate=${recentDate}`} className="laws-dropdown__option">
+        <a href={`/cclow/legislation_and_policies?ids=${recentLaws.map(law => law.id).join(',')}`} className="laws-dropdown__option">
           <span>Most recent additions in Laws and policies</span>
-          <span className="laws-dropdown__disclaimer">todo</span>
+          <span className="laws-dropdown__disclaimer">{recentLaws && recentLaws.length}</span>
         </a>
       </div>
 
@@ -155,10 +157,10 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
           <span>All litigation entries</span>
           <span className="laws-dropdown__disclaimer">{litigations.length}</span>
         </a>
-        <div className="laws-dropdown__option">
-          <span>Most recent additions in Litigation {/* TODO: no "opened" date in Litigation Case */}</span>
-          <span className="laws-dropdown__disclaimer">todo</span>
-        </div>
+        <a href={`/cclow/litigation_cases?ids=${recentLitigations.map(lit => lit.id).join(',')}`} className="laws-dropdown__option">
+          <span>Most recent additions in Litigation</span>
+          <span className="laws-dropdown__disclaimer">{recentLitigations && recentLitigations.length}</span>
+        </a>
       </div>
 
       <div className="laws-dropdown__category">
@@ -173,8 +175,8 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
           <span className="laws-dropdown__disclaimer">{targets.length}</span>
         </a>
         <div className="laws-dropdown__option">
-          <span>Most recent additions in Climate targets {/* TODO: in what sense recent? set targets? what's the attribute to filter by? */}</span>
-          <span className="laws-dropdown__disclaimer">todo</span>
+          <span>Most recent additions in Climate targets</span>
+          <span className="laws-dropdown__disclaimer">{recentlyAddedTargets.length}</span>
         </div>
       </div>
     </>
@@ -311,7 +313,9 @@ LawsDropdown.propTypes = {
   lawsAndPolicies: PropTypes.array.isRequired,
   litigations: PropTypes.array.isRequired,
   targets: PropTypes.array.isRequired,
-  recentDate: PropTypes.string.isRequired
+  recentDate: PropTypes.string.isRequired,
+  recentLaws: PropTypes.array.isRequired,
+  recentLitigations: PropTypes.array.isRequired
 };
 
 export default LawsDropdown;

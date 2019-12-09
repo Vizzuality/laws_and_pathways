@@ -10,8 +10,6 @@ module Api
       (serialize_litigations + serialize_legislations).sort_by { |item| - (item[:date_passed] || 0) }
     end
 
-    private
-
     # rubocop:disable Metrics/AbcSize
     def serialize_litigations
       litigations = Litigation.published
@@ -22,6 +20,7 @@ module Api
         addition_type = item.events.last&.event_type&.humanize if item.events.last&.event_type.present?
 
         {kind: 'Litigation cases',
+         id: item.id,
          title: item.title,
          date_passed: item.started_event&.date&.year,
          iso: item.geography.iso,
@@ -40,6 +39,7 @@ module Api
         .last(@count)
       CCLOW::LegislationDecorator.decorate_collection(legislation).map do |item|
         {kind: 'Laws and policies',
+         id: item.id,
          title: item.title,
          date_passed: item.date_passed&.year,
          iso: item.geography.iso,
