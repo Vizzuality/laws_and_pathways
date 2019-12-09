@@ -52,7 +52,7 @@ class ClimateTargets extends Component {
                   {climate_targets.map((target, i) => (
                     <Fragment key={i}>
                       <li>
-                        <h5 className="title">{target.description}</h5>
+                        <h5 className="title" dangerouslySetInnerHTML={{__html: target.link}} />
                         <div className="meta" />
                       </li>
                     </Fragment>

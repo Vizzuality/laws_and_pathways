@@ -7,12 +7,13 @@ module CCLOW
       add_breadcrumb('Litigation cases', cclow_litigation_cases_path(@geography))
       if params[:ids]
         ids = params[:ids].split(',').map(&:to_i)
-        @litigations = CCLOW::LitigationDecorator.decorate_collection(Litigation.find(ids))
+        @litigations = Litigation.find(ids)
         add_breadcrumb('Search results', request.path)
       else
-        @litigations = CCLOW::LitigationDecorator.decorate_collection(Litigation.published)
+        @litigations = Litigation.published
       end
-      filter
+      @litigations = CCLOW::LitigationDecorator.decorate_collection(filter(@litigations))
+
       geography_options = {field_name: 'geography', options: ::Geography.all.map { |l| {value: l.id, label: l.name} }}
       region_options = {field_name: 'region', options: ::Geography::REGIONS.map { |l| {value: l, label: l} }}
 
@@ -31,13 +32,13 @@ module CCLOW
 
     private
 
-    def filter
-      if params[:region]
-        @litigations = @litigations.includes(:jurisdiction).where(geographies: {region: params[:region]})
+    def filter(litigations)
+      if params[:region].present?
+        litigations = litigations.includes(:geography).where(geographies: {region: params[:region]})
       end
-      return unless params[:geography]
+      return litigations unless params[:geography]
 
-      @litigations = @litigations.includes(:jurisdiction).where(geographies: {id: params[:geography]})
+      litigations.includes(:geography).where(geographies: {id: params[:geography]})
     end
   end
 end

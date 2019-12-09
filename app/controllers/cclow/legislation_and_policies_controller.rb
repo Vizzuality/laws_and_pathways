@@ -10,12 +10,12 @@ module CCLOW
           .decorate_collection(Legislation.published.where('updated_at >= ?', params[:fromDate]))
       elsif params[:ids]
         ids = params[:ids].split(',').map(&:to_i)
-        @legislations = CCLOW::LegislationDecorator.decorate_collection(Legislation.find(ids))
+        @legislations = Legislation.find(ids)
         add_breadcrumb('Search results', request.path)
       else
-        @legislations = CCLOW::LegislationDecorator.decorate_collection(Legislation.published)
+        @legislations = Legislation.published
       end
-      filter
+      @legislations = CCLOW::LegislationDecorator.decorate_collection(filter(@legislations))
       geography_options = {field_name: 'geography', options: ::Geography.all.map { |l| {value: l.id, label: l.name} }}
       region_options = {field_name: 'region', options: ::Geography::REGIONS.map { |l| {value: l, label: l} }}
 
@@ -34,13 +34,13 @@ module CCLOW
 
     private
 
-    def filter
-      if params[:region]
-        @legislations = @legislations.includes(:geography).where(geographies: {region: params[:region]})
+    def filter(legislations)
+      if params[:region].present?
+        legislations = legislations.includes(:geography).where(geographies: {region: params[:region]})
       end
-      return unless params[:geography]
+      return legislations unless params[:geography]
 
-      @legislations = @legislations.includes(:geography).where(geographies: {id: params[:geography]})
+      legislations.includes(:geography).where(geographies: {id: params[:geography]})
     end
   end
 end

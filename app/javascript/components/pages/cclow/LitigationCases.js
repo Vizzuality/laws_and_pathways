@@ -52,11 +52,9 @@ class LitigationCases extends Component {
                   {litigations.map((litigation, i) => (
                     <Fragment key={i}>
                       <li className="content-item">
-                        <h5 className="title">{litigation.title}</h5>
+                        <h5 className="title" dangerouslySetInnerHTML={{__html: litigation.link}} />
                         <div className="meta" />
-                        <div className="description">
-                          {litigation.summary }
-                        </div>
+                        <div className="description" dangerouslySetInnerHTML={{__html: litigation.summary}} />
                       </li>
                     </Fragment>
                   ))}

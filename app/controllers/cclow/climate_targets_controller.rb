@@ -12,8 +12,7 @@ module CCLOW
                          else
                            Target.published
                          end
-      @climate_targets = CCLOW::TargetDecorator.decorate_collection(@climate_targets)
-      filter
+      @climate_targets = CCLOW::TargetDecorator.decorate_collection(filter(@climate_targets))
       geography_options = {field_name: 'geography', options: ::Geography.all.map { |l| {value: l.id, label: l.name} }}
       region_options = {field_name: 'region', options: ::Geography::REGIONS.map { |l| {value: l, label: l} }}
 
@@ -32,13 +31,13 @@ module CCLOW
 
     private
 
-    def filter
+    def filter(climate_targets)
       if params[:region]
-        @climate_targets = @climate_targets.includes(:geography).where(geographies: {region: params[:region]})
+        climate_targets = climate_targets.includes(:geography).where(geographies: {region: params[:region]})
       end
-      return unless params[:geography]
+      return climate_targets unless params[:geography]
 
-      @climate_targets = @climate_targets.includes(:geography).where(geographies: {id: params[:geography]})
+      climate_targets.includes(:geography).where(geographies: {id: params[:geography]})
     end
   end
 end

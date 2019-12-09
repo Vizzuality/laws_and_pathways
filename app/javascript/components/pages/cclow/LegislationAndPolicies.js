@@ -55,8 +55,8 @@ class LegislationAndPolicies extends Component {
                 {legislations.map((legislation, i) => (
                   <Fragment key={i}>
                     <li className="content-item">
-                      <h5 className="title">{legislation.title}</h5>
-                      <div className="description">{legislation.description}</div>
+                      <h5 className="title" dangerouslySetInnerHTML={{__html: legislation.link}} />
+                      <div className="description" dangerouslySetInnerHTML={{__html: legislation.description}} />
                     </li>
                   </Fragment>
                 ))}
