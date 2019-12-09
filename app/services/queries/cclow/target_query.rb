@@ -2,19 +2,22 @@ module Queries
   module CCLOW
     class TargetQuery
       attr_accessor :q
+      attr_reader :scope
 
       def initialize(params)
         @q = params[:q]
       end
 
       def call(scope = Target.published)
+        @scope = scope
+
         scope
-          .merge(full_text_filter(scope))
+          .merge(full_text_filter)
       end
 
       private
 
-      def full_text_filter(scope)
+      def full_text_filter
         return scope unless q.present?
 
         scope.full_text_search(q)

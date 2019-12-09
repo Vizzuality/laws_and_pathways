@@ -101,7 +101,7 @@ const LawsDropdown = () => {
 
   // loading data
   useEffect(() => {
-    fetch('cclow/api/search_counts')
+    fetch('/cclow/api/search_counts')
       .then((r) => r.json())
       .then((data) => {
         setCounts(data);
@@ -109,7 +109,7 @@ const LawsDropdown = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`cclow/api/search?q=${encodeURIComponent(searchValue)}`)
+    fetch(`/cclow/api/search?q=${encodeURIComponent(searchValue)}`)
       .then((r) => r.json())
       .then((data) => {
         setResults(data);

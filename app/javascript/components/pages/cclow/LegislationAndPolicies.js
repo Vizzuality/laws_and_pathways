@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import qs from 'qs';
 import SearchFilter from '../../SearchFilter';
-
 
 class LegislationAndPolicies extends Component {
   constructor(props) {
@@ -18,9 +18,15 @@ class LegislationAndPolicies extends Component {
   }
 
   filterList = (filterParams) => {
-    let url = '/cclow/legislation_and_policies.json?';
-    url += $.param(filterParams);
-    fetch(url).then((response) => {
+    const params = qs.parse(window.location.search.slice(1));
+    const newParams = {
+      ...params,
+      ...filterParams
+    };
+
+    const newQs = qs.stringify(newParams, { arrayFormat: 'brackets' });
+
+    fetch(`/cclow/legislation_and_policies.json?${newQs}`).then((response) => {
       response.json().then((data) => {
         if (response.ok) {
           this.setState({legislations: data.legislations, count: data.count});
