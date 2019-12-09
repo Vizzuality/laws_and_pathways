@@ -2,7 +2,7 @@
   <h3 class="title"><%= @litigation.title %></h3>
   <div class="meta">
     <div>
-      <span>Passed in <%= @litigation.started_event&.date&.year %></span>
+      <span><%= @litigation.events.order(:date).last&.event_type&.humanize %></span>
       <span class="icon"><i class="fa fa-question"></i></span>
     </div>
     <div><span>Mitigation</span></div>
