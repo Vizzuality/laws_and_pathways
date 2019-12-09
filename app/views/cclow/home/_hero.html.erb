@@ -54,7 +54,7 @@
           </div>
           <div class="value-block">
             <div class="circle">
-              <%= Legislation.count %>
+              <%= link_to Legislation.published.count, cclow_legislation_and_policies_path %>
             </div>
           </div>
         </div>
@@ -67,7 +67,7 @@
           </div>
           <div class="value-block">
             <div class="circle">
-              <%= Litigation.count %>
+              <%= link_to Litigation.published.count, cclow_litigation_cases_path %>
             </div>
           </div>
         </div>
