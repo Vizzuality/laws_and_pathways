@@ -29,7 +29,7 @@
   <% end %>
   <% if @geography.events.any? %>
     <section class="section is-large">
-      <% event_options = Geography::EVENT_TYPES.map{|type| {value: type, label: I18n.t("cclow.geography.event_types.#{type}")}} %>
+      <% event_options = Geography::EVENT_TYPES.map{|type| {value: type, label: type.humanize}} %>
       <%= react_component("EventsTimeline", { events: @geography.events, options: event_options, isFiltered: true }) %>
     </section>
   <% end %>

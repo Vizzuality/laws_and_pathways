@@ -3,7 +3,7 @@
   <div class="meta">
     <div>
       <img src=<%= asset_path "icons/legislation_types/#{legislation_type}.svg"%> alt="">
-      <%= I18n.t("cclow.legislation_types.#{legislation_type}") %>
+      <%= legislation_type&.humanize %>
     </div>
     <% if date_passed %>
       <div>Passed in <%= date_passed&.year %></div>

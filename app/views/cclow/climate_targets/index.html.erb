@@ -25,7 +25,7 @@
                   <%= target.geography.name %>
                 </div>
                 <div>
-                  <% target_tags = [ target.sector&.name, I18n.t("cclow.target_types.#{target.target_type}")]
+                  <% target_tags = [target.sector&.name, target.target_type&.humanize]
                      target_tags << "Target year: #{target.year}" if target.year
                      target_tags << "Base year: #{target.base_year_period}" if target.base_year_period
                   %>

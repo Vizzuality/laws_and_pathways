@@ -7,7 +7,7 @@
           <span>Opened in <%= litigation.started_event.date&.year %></span>
         <% end %>
         <% if litigation.events.present? %>
-          <span><%= I18n.t("cclow.litigation.event_types.#{litigation.events.last.event_type}") %></span>
+          <span><%= litigation.events.last&.event_type.humanize %></span>
         <% end %>
       <p>
         <%= litigation.summary.html_safe %>
