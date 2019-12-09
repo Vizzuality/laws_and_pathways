@@ -1,7 +1,5 @@
 module CCLOW
   class ClimateTargetsController < CCLOWController
-    include SearchController
-
     # rubocop:disable Metrics/AbcSize
     def index
       add_breadcrumb('Climate Targets', cclow_climate_targets_path)

@@ -2,7 +2,6 @@ module CCLOW
   module Geography
     class ClimateTargetsController < CCLOWController
       include GeographyController
-      include SearchController
 
       def index
         add_breadcrumb('Climate targets', request.path)

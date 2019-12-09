@@ -1,7 +1,5 @@
 module CCLOW
   class LegislationAndPoliciesController < CCLOWController
-    include SearchController
-
     # rubocop:disable Metrics/AbcSize
     def index
       add_breadcrumb('Legislation and policies', cclow_legislation_and_policies_path(@geography))

@@ -1,7 +1,5 @@
 module CCLOW
   class LitigationCasesController < CCLOWController
-    include SearchController
-
     # rubocop:disable Metrics/AbcSize
     def index
       add_breadcrumb('Litigation cases', cclow_litigation_cases_path(@geography))
