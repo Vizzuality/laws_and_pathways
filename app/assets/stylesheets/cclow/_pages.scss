@@ -41,3 +41,36 @@
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
 }
+
+.section__map {
+  margin-top: 2rem;
+
+  .content {
+    font-size: 0.875rem;
+    color: $blue-dark;
+  }
+}
+
+.section__about {
+  .content {
+    text-align: center;
+    font-size: 1.125rem;
+    line-height: 1.875rem;
+    color: $grey-text;
+  }
+
+  .about__partners {
+    margin-top: 50px;
+
+    & > .column:first-child {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .logo {
+      &__gri {
+        height: 60px;
+      }
+    }
+  }
+}
