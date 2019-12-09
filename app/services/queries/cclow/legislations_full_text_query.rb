@@ -1,6 +1,6 @@
 module Queries
   module CCLOW
-    class LegislationsSearchQuery
+    class LegislationsFullTextQuery
       def initialize(query)
         @query = query
       end

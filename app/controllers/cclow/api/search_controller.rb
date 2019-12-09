@@ -4,16 +4,19 @@ module CCLOW
       RECENT_DATE = 1.month.ago
 
       def index
-        query = params[:query]
+        query = params[:q]
 
         render json: {
-          litigations: Queries::CCLOW::LitigationsSearchQuery.new(query).call,
-          legislations: Queries::CCLOW::LegislationsSearchQuery.new(query).call
+          litigationCount: Litigation.published.full_text_query(query).size,
+          legislationCount: Legislation.published.full_text_query(query).size,
+          targetCount: Target.published.size,
+          geographies: ::Geography.published.full_text_query(query).select(:id, :name, :slug, :geography_type, :iso)
         }
       end
 
       def counts
         render json: {
+          geographies: ::Geography.published.select(:id, :name, :slug, :geography_type, :iso).first(3),
           litigationCount: Litigation.published.size,
           legislationCount: Legislation.published.size,
           targetCount: Target.published.size,

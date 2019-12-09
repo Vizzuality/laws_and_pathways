@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 
-import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
-import Fuse from 'fuse.js';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import debounce from 'lodash/debounce';
 // import search from '../../assets/images/icons/search.svg';
 import searchAgain from '../../assets/images/icons/search-again.svg';
@@ -36,6 +35,7 @@ const LawsDropdown = () => {
   const lastSearchLink = localStorage.getItem('lastSearchLink');
 
   const [counts, setCounts] = useState({});
+  const [results, setResults] = useState({});
 
   const handleInput = input => {
     setSearchValue(input);
@@ -50,34 +50,14 @@ const LawsDropdown = () => {
     localStorage.setItem('lastSearchLink', link);
   };
 
-  const fuse = (opt, keys) => {
-    const config = {
-      shouldSort: true,
-      threshold: 0.3,
-      keys
-    };
-    const fuzzy = new Fuse(opt, config);
-    const searchResults = fuzzy.search(searchValue);
-    return searchResults;
-  };
-
   // SEARCH RESULTS for each category
-  const searchGeographiesResults = useMemo(
-    () => (searchValue ? fuse([], ['name', 'region', 'legislative_process']) : []), [searchValue]
-  );
-  const searchLawsResults = useMemo(
-    () => (searchValue ? fuse([], ['title', 'description', 'geography_name']) : []), [searchValue]
-  );
-  const searchLitigationsResults = useMemo(
-    () => (searchValue ? fuse([], ['title', 'summary', 'jurisdiction_name']) : []), [searchValue]
-  );
-  const searchTargetsResults = useMemo(
-    () => (searchValue ? fuse([], ['description', 'target_type', 'geography_name']) : []), [searchValue]
-  );
+  const searchGeographiesResults = results.geographies;
+  const searchLawsResults = results.legislationCount;
+  const searchLitigationsResults = results.litigationCount;
+  const searchTargetsResults = [];
   // end of search results
 
   const allSearchResults = [...searchGeographiesResults, ...searchLawsResults, ...searchLitigationsResults, ...searchTargetsResults];
-  const first3Geographies = [].slice(0, 3);
 
   const handleCloseDropdown = () => {
     setIsOpen(false);
@@ -103,11 +83,19 @@ const LawsDropdown = () => {
   // loading data
   useEffect(() => {
     fetch('cclow/api/search_counts')
-      .then((response) => response.json())
+      .then((r) => r.json())
       .then((data) => {
         setCounts(data);
       });
   }, []);
+
+  useEffect(() => {
+    fetch(`cclow/api/search?q=${encodeURIComponent(searchValue)}`)
+      .then((r) => r.json())
+      .then((data) => {
+        setResults(data);
+      });
+  }, [searchValue]);
 
   const renderAllOptions = (withLastSearch = true) => (
     <>
@@ -130,7 +118,7 @@ const LawsDropdown = () => {
           <span>Countries and territories</span>
         </div>
         {/* options */}
-        {first3Geographies.map(geography => (
+        {(counts.geographies || []).map(geography => (
           <a href={`/cclow/geographies/${geography.id}`} key={geography.slug} className="laws-dropdown__option">
             <span>{geography.name}</span>
             <span className="laws-dropdown__disclaimer">{GEOGRAPHY_TYPES[geography.geography_type]}</span>
@@ -246,54 +234,54 @@ const LawsDropdown = () => {
                   ))}
                 </div>
               )}
-              {!!searchLawsResults.length && (
+              {results.legislationCount !== undefined && (
                 <div className="laws-dropdown__category">
                   <div className="laws-dropdown__category-title">
                     <img className="laws-dropdown__category-icon" src={laws} />
                     <span>{CATEGORIES.laws}</span>
                   </div>
                   <a
-                    href={`/cclow/legislation_and_policies?ids=${searchLawsResults.map(l => l.id).join(',')}&q=${searchValue}`}
-                    onClick={() => setLastSearch(searchValue, CATEGORIES.laws, `/cclow/legislation_and_policies?ids=${searchLawsResults.map(l => l.id).join(',')}&q=${searchValue}`)}
+                    href={`/cclow/legislation_and_policies?q=${searchValue}`}
+                    onClick={() => setLastSearch(searchValue, CATEGORIES.laws, `/cclow/legislation_and_policies?q=${searchValue}`)}
                     className="laws-dropdown__option"
                   >
                     <span>Search&nbsp;</span>
                     <span className="laws-dropdown__option-in-bold">{searchValue}</span>&nbsp;in Laws and policies
-                    <span className="laws-dropdown__disclaimer">{searchLawsResults.length}</span>
+                    <span className="laws-dropdown__disclaimer">{results.legislationCount}</span>
                   </a>
                 </div>
               )}
-              {!!searchLitigationsResults.length && (
+              {results.litigationCount !== undefined && (
                 <div className="laws-dropdown__category">
                   <div className="laws-dropdown__category-title">
                     <img className="laws-dropdown__category-icon" src={legalScale} />
                     <span>{CATEGORIES.litigations}</span>
                   </div>
                   <a
-                    href={`/cclow/litigation_cases?ids=${searchLitigationsResults.map(l => l.id).join(',')}&q=${searchValue}`}
-                    onClick={() => setLastSearch(searchValue, CATEGORIES.litigations, `/cclow/litigation_cases?ids=${searchLitigationsResults.map(l => l.id).join(',')}&q=${searchValue}`)}
+                    href={`/cclow/litigation_cases?&q=${searchValue}`}
+                    onClick={() => setLastSearch(searchValue, CATEGORIES.litigations, `/cclow/litigation_cases?q=${searchValue}`)}
                     className="laws-dropdown__option"
                   >
                     <span>Search&nbsp;</span>
                     <span className="laws-dropdown__option-in-bold">{searchValue}</span>&nbsp;in Litigation
-                    <span className="laws-dropdown__disclaimer">{searchLitigationsResults.length}</span>
+                    <span className="laws-dropdown__disclaimer">{results.litigationCount}</span>
                   </a>
                 </div>
               )}
-              {!!searchTargetsResults.length && (
+              {results.targetCount !== undefined && (
                 <div className="laws-dropdown__category">
                   <div className="laws-dropdown__category-title">
                     <img className="laws-dropdown__category-icon" src={target} />
                     <span>{CATEGORIES.targets}</span>
                   </div>
                   <a
-                    href={`/cclow/climate_targets?ids=${searchTargetsResults.map(l => l.id).join(',')}`}
-                    onClick={() => setLastSearch(searchValue, CATEGORIES.targets, `/cclow/climate_targets?ids=${searchTargetsResults.map(l => l.id).join(',')}`)}
+                    href={`/cclow/climate_targets?q=${searchValue}`}
+                    onClick={() => setLastSearch(searchValue, CATEGORIES.targets, `/cclow/climate_targets?q=${searchValue}`)}
                     className="laws-dropdown__option"
                   >
                     <span>Search&nbsp;</span>
                     <span className="laws-dropdown__option-in-bold">{searchValue}</span>&nbsp;in Climate targets
-                    <span className="laws-dropdown__disclaimer">{searchTargetsResults.length}</span>
+                    <span className="laws-dropdown__disclaimer">{results.targetCount}</span>
                   </a>
                 </div>
               )}

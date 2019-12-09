@@ -61,6 +61,8 @@ class Geography < ApplicationRecord
 
   enum geography_type: array_to_enum_hash(GEOGRAPHY_TYPES)
 
+  scope :full_text_query, ->(query) { Queries::CCLOW::GeographiesFullTextQuery.new(query).call }
+
   tag_with :political_groups
 
   has_many :litigations
