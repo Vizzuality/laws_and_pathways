@@ -458,10 +458,14 @@ mark {
       color: $gun-powder;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      margin-bottom: 10px;
+    }
+    
+    &__tags {
+      display: flex;
     }
     
     &__tag:not(body) {
+      margin-top: 10px;
       border: none;
       border-radius: 0;
       margin-right: 12px;

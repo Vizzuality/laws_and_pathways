@@ -4,19 +4,29 @@
 <div class="sidebar__categories">
   <hr />
 
-  <div class="categories__container">
-    <p class="categories__title">Category 1</p>
+  <% if @sectors.count > 0 %>
+    <div class="categories__container">
+      <p class="categories__title">Sectors</p>
 
-    <span class="tag categories__tag">tag</span>
-    <span class="tag categories__tag">teg</span>
-  </div>
+      <div class="categories_tags">
+      <% @sectors.each do |sector| %>
+        <span class="tag categories__tag"><%= sector.name %></span>
+      <% end %>
+      </div>
+    </div>
+  <% end %>
 
-  <div class="categories__container">
-    <p class="categories__title">Category 2</p>
+  <% if @keywords.count > 0 %>
+    <div class="categories__container">
+      <p class="categories__title">Keywords</p>
 
-    <span class="tag categories__tag">lorem</span>
-    <span class="tag categories__tag">ipsum</span>
-  </div>
+      <div class="categories_tags">
+      <% @keywords.each do |keyword| %>
+        <span class="tag categories__tag"><%= keyword.name %></span>
+      <% end %>
+      </div>
+    </div>
+  <% end %>
 </div>
 <% end %>
 

@@ -20,6 +20,8 @@ module CCLOW
       def show
         @legislation = CCLOW::LegislationDecorator.new(::Legislation.find(params[:id]))
         add_breadcrumb(@legislation.title, request.path)
+        @sectors = @legislation.laws_sectors
+        @keywords = @legislation.keywords
       end
 
       private
