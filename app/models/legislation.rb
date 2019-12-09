@@ -79,6 +79,7 @@ class Legislation < ApplicationRecord
   scope :laws, -> { legislative }
   scope :policies, -> { executive }
   scope :passed, -> { joins(:events).where('events.event_type = ?', 'law_passed') }
+  scope :full_text_query, ->(query) { Queries::CCLOW::LegislationsSearchQuery.new(query).call }
 
   with_options allow_destroy: true, reject_if: :all_blank do
     accepts_nested_attributes_for :documents

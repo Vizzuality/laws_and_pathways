@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import Fuse from 'fuse.js';
 import debounce from 'lodash/debounce';
 // import search from '../../assets/images/icons/search.svg';
@@ -27,7 +26,7 @@ const CATEGORIES = {
   targets: 'Climate targets'
 };
 
-const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, recentDate, recentLaws, recentLitigations }) => {
+const LawsDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const dropdownContainer = useRef(null);
@@ -36,7 +35,7 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
   const lastSearchCategory = localStorage.getItem('lastSearchCategory');
   const lastSearchLink = localStorage.getItem('lastSearchLink');
 
-  const recentlyAddedTargets = targets.filter(climateTarget => climateTarget.created_at >= recentDate);
+  const [counts, setCounts] = useState({});
 
   const handleInput = input => {
     setSearchValue(input);
@@ -64,21 +63,21 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
 
   // SEARCH RESULTS for each category
   const searchGeographiesResults = useMemo(
-    () => (searchValue ? fuse(geographies, ['name', 'region', 'legislative_process']) : []), [searchValue]
+    () => (searchValue ? fuse([], ['name', 'region', 'legislative_process']) : []), [searchValue]
   );
   const searchLawsResults = useMemo(
-    () => (searchValue ? fuse(lawsAndPolicies, ['title', 'description', 'geography_name']) : []), [searchValue]
+    () => (searchValue ? fuse([], ['title', 'description', 'geography_name']) : []), [searchValue]
   );
   const searchLitigationsResults = useMemo(
-    () => (searchValue ? fuse(litigations, ['title', 'summary', 'jurisdiction_name']) : []), [searchValue]
+    () => (searchValue ? fuse([], ['title', 'summary', 'jurisdiction_name']) : []), [searchValue]
   );
   const searchTargetsResults = useMemo(
-    () => (searchValue ? fuse(targets, ['description', 'target_type', 'geography_name']) : []), [searchValue]
+    () => (searchValue ? fuse([], ['description', 'target_type', 'geography_name']) : []), [searchValue]
   );
   // end of search results
 
   const allSearchResults = [...searchGeographiesResults, ...searchLawsResults, ...searchLitigationsResults, ...searchTargetsResults];
-  const first3Geographies = geographies.slice(0, 3);
+  const first3Geographies = [].slice(0, 3);
 
   const handleCloseDropdown = () => {
     setIsOpen(false);
@@ -98,6 +97,16 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
     if (dropdownContainer.current && !dropdownContainer.current.contains(event.target)) {
       handleCloseDropdown();
     }
+  }, []);
+
+
+  // loading data
+  useEffect(() => {
+    fetch('cclow/api/search_counts')
+      .then((response) => response.json())
+      .then((data) => {
+        setCounts(data);
+      });
   }, []);
 
   const renderAllOptions = (withLastSearch = true) => (
@@ -138,11 +147,11 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
         {/* options */}
         <a href="/cclow/legislation_and_policies" className="laws-dropdown__option">
           <span>All Laws and policies</span>
-          <span className="laws-dropdown__disclaimer">{lawsAndPolicies.length}</span>
+          <span className="laws-dropdown__disclaimer">{counts.legislationCount}</span>
         </a>
-        <a href={`/cclow/legislation_and_policies?ids=${recentLaws.map(law => law.id).join(',')}`} className="laws-dropdown__option">
+        <a href="/cclow/legislation_and_policies?recent=true" className="laws-dropdown__option">
           <span>Most recent additions in Laws and policies</span>
-          <span className="laws-dropdown__disclaimer">{recentLaws && recentLaws.length}</span>
+          <span className="laws-dropdown__disclaimer">{counts.recentLegislationCount}</span>
         </a>
       </div>
 
@@ -155,11 +164,11 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
         {/* options */}
         <a href="/cclow/litigation_cases" className="laws-dropdown__option">
           <span>All litigation entries</span>
-          <span className="laws-dropdown__disclaimer">{litigations.length}</span>
+          <span className="laws-dropdown__disclaimer">{counts.litigationsCount}</span>
         </a>
-        <a href={`/cclow/litigation_cases?ids=${recentLitigations.map(lit => lit.id).join(',')}`} className="laws-dropdown__option">
+        <a href="/cclow/litigation_cases?recent=true" className="laws-dropdown__option">
           <span>Most recent additions in Litigation</span>
-          <span className="laws-dropdown__disclaimer">{recentLitigations && recentLitigations.length}</span>
+          <span className="laws-dropdown__disclaimer">{counts.recentLitigationsCount}</span>
         </a>
       </div>
 
@@ -172,12 +181,12 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
         {/* options */}
         <a href="/cclow/climate_targets" className="laws-dropdown__option">
           <span>All Climate targets</span>
-          <span className="laws-dropdown__disclaimer">{targets.length}</span>
+          <span className="laws-dropdown__disclaimer">{counts.targetsCount}</span>
         </a>
-        <div className="laws-dropdown__option">
+        <a href="/cclow/climate_targets?recent=true" className="laws-dropdown__option">
           <span>Most recent additions in Climate targets</span>
-          <span className="laws-dropdown__disclaimer">{recentlyAddedTargets.length}</span>
-        </div>
+          <span className="laws-dropdown__disclaimer">{counts.recentTargetsCount}</span>
+        </a>
       </div>
     </>
   );
@@ -306,16 +315,6 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
       )}
     </div>
   );
-};
-
-LawsDropdown.propTypes = {
-  geographies: PropTypes.array.isRequired,
-  lawsAndPolicies: PropTypes.array.isRequired,
-  litigations: PropTypes.array.isRequired,
-  targets: PropTypes.array.isRequired,
-  recentDate: PropTypes.string.isRequired,
-  recentLaws: PropTypes.array.isRequired,
-  recentLitigations: PropTypes.array.isRequired
 };
 
 export default LawsDropdown;

@@ -86,6 +86,7 @@ class Litigation < ApplicationRecord
   enum document_type: array_to_enum_hash(DOCUMENT_TYPES)
 
   scope :started, -> { joins(:events).where('events.event_type = ?', 'case_started') }
+  scope :full_text_query, ->(query) { Queries::CCLOW::LitigationsSearchQuery.new(query).call }
 
   tag_with :keywords
   tag_with :responses
