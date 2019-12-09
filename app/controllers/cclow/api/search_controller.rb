@@ -9,10 +9,10 @@ module CCLOW
         return render json: {} unless query.present?
 
         render json: {
-          litigationCount: Litigation.published.full_text_search(query).size,
-          legislationCount: Legislation.published.full_text_search(query).size,
-          targetCount: Target.published.full_text_search(query).size,
-          geographies: ::Geography.published.full_text_search(query).select(:id, :name, :slug, :geography_type, :iso)
+          litigationCount: Queries::CCLOW::LitigationQuery.new(params).call.size,
+          legislationCount: Queries::CCLOW::LegislationQuery.new(params).call.size,
+          targetCount: Queries::CCLOW::TargetQuery.new(params).call.size,
+          geographies: Queries::CCLOW::GeographyQuery.new(params).call.select(:id, :name, :slug, :geography_type, :iso)
         }
       end
 
