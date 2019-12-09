@@ -7,5 +7,11 @@ module CCLOW
 
       h.link_to(title, h.cclow_geography_policy_path(geography, model)) if policy?
     end
+
+    def as_json(*)
+      super.tap do |hash|
+        hash['link'] = link
+      end
+    end
   end
 end

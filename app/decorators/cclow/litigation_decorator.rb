@@ -9,5 +9,11 @@ module CCLOW
         title
       end
     end
+
+    def as_json(*)
+      super.tap do |hash|
+        hash['link'] = link
+      end
+    end
   end
 end
