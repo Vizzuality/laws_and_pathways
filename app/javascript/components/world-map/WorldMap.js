@@ -115,6 +115,16 @@ function WorldMap({ zoomToGeographyIso }) {
     onZoomEnd(null, { zoom: newZoom });
   };
 
+  const mapAndSortActiveGeography = (geographies) => {
+    if (!zoomToGeographyIso) return geographies;
+
+    return geographies
+      .map(geo => ({
+        active: geo.properties.ISO_A3 === zoomToGeographyIso,
+        ...geo
+      })).sort((a, b) => a.active - b.active);
+  };
+
   return (
     <React.Fragment>
       <div ref={mapContainer} className="world-map__container">
@@ -159,12 +169,12 @@ function WorldMap({ zoomToGeographyIso }) {
             className="world-map__zoomable-group"
           >
             <Geographies geography={geos} className="world-map__geographies">
-              {({ geographies }) => geographies.map(geo => (
+              {({ geographies }) => mapAndSortActiveGeography(geographies).map(geo => (
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
                   className={cx(
-                    'world-map__geography', { 'world-map__geography--active': geo.properties.ISO_A3 === zoomToGeographyIso }
+                    'world-map__geography', { 'world-map__geography--active': geo.active }
                   )}
                 />
               ))}
