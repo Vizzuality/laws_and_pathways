@@ -18,7 +18,8 @@
           <%= f.input :parent_id, as: :select, label: 'Parent Legislation',
             collection: Legislation.where(parent_id: nil).order(:title) %>
           <%= f.input :legislation_type, as: :select %>
-          <%= f.input :sector %>
+          <%= f.input :laws_sector_ids, label: 'Sectors', as: :select,
+            collection: LawsSector.order(:name), input_html: { multiple: true } %>
           <%= f.input :document_type_ids, label: 'Document', as: :tags,
             collection: DocumentType.order(Arel.sql('LOWER(name) ASC')) %>
           <%= f.input :instrument_ids, label: 'Instrument', as: :select,
@@ -29,7 +30,6 @@
             Arbre::Context.new do
               columns do
                 column { f.input :geography, collection: Geography.order(:name) }
-                column { f.input :date_passed }
                 column do
                   f.input :framework_ids, label: 'Frameworks', as: :tags,
                     collection: Framework.all

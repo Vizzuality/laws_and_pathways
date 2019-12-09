@@ -6,6 +6,6 @@ class PageDecorator < Draper::Decorator
   end
 
   def description
-    model.description.html_safe
+    model.description&.html_safe
   end
 end

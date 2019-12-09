@@ -11,10 +11,16 @@
           <div class="navbar-end">
             <div class="navbar-item">
               <div class="menu">
-                <a href="#about">About</a>
-                <a href="#methodology">Methodology</a>
-                <a href="#methodology">Publications</a>
-                <a href="#invitation">Invitation to contribute</a>
+                <% if @header_pages.any? %>
+                  <% @header_pages.each do |page| %>
+                    <a href="<%= page[:slug] %>"><%= page[:title] %></a>
+                  <% end %>
+                <% end %>
+                <% if @both.any? %>
+                  <% @both.each do |page| %>
+                    <a href="<%= page[:slug] %>"><%= page[:title] %></a>
+                  <% end %>
+                <% end %>
               </div>
             </div>
           </div>
@@ -31,13 +37,18 @@
         </div>
       </div>
 
-
-      <%= react_component("LawsDropdown", { geographies: @search_geographies, lawsAndPolicies: @search_laws_and_policies, litigations: @search_litigations, targets: @search_targets, recentDate: @search_recent_date }) %>
+      <%= react_component("LawsDropdown", {
+        geographies: @search_geographies,
+        lawsAndPolicies: @search_laws_and_policies,
+        litigations: @search_litigations,
+        targets: @search_targets,
+        recentDate: @search_recent_date
+      }) %>
       <div class="overview-section">
         <div>
           <div class="item-name-block">
             <div class="img-type-container">
-              icon
+              <span class="icon icon__paper">
             </div>
             <div>Climate laws and policies</div>
           </div>
@@ -50,7 +61,7 @@
         <div>
           <div class="item-name-block">
             <div class="img-type-container">
-              icon
+              <span class="icon icon__scale">
             </div>
             <div>Climate litigation cases</div>
           </div>
@@ -63,26 +74,24 @@
         <div>
           <div class="item-name-block">
             <div class="img-type-container">
-              icon
+              <span class="icon icon__white-flag">
             </div>
-            <div>Climate laws and policies</div>
+            <div>Featured country profiles</div>
           </div>
           <div class="value-block">
             <ul>
-              <li><a href="#">China</a></li>
-              <li><a href="#">United States</a></li>
-              <li><a href="#">European Union</a></li>
-              <li><a href="#">India</a></li>
-              <li><a href="#">Indonesia</a></li>
+              <% @featured_countries.each do |country| %>
+                <li><%= link_to country.name, cclow_geography_path(country) %></li>
+              <% end %>
             </ul>
           </div>
         </div>
         <div>
           <div class="item-name-block">
             <div class="img-type-container">
-              icon
+              <span class="icon icon__globe">
             </div>
-            <div>Climate laws and policies</div>
+            <div>Visualise data on the map</div>
           </div>
         </div>
       </div>

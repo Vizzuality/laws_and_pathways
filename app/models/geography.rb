@@ -30,9 +30,11 @@ class Geography < ApplicationRecord
   friendly_id :name, use: :slugged, routes: :default
 
   EVENT_TYPES = %w[
+    declaration_of_climate_emergency
     election
     government_change
     international_agreement
+    net_zero_pledge
   ].freeze
 
   GEOGRAPHY_TYPES = %w[
@@ -52,11 +54,16 @@ class Geography < ApplicationRecord
     'Latin America & Caribbean'
   ].freeze
 
+  EU_COUNTRIES = %w[
+    AUT BEL BGR CYP CZE DEU DNK ESP EST FIN FRA GBR GRC HRV HUN IRL ITA LTU
+    LUX LVA MLT NLD POL PRT ROU SVK SVN SWE
+  ].freeze
+
   enum geography_type: array_to_enum_hash(GEOGRAPHY_TYPES)
 
   tag_with :political_groups
 
-  has_many :litigations, foreign_key: 'jurisdiction_id'
+  has_many :litigations
   has_many :legislations
   has_many :targets
   has_many :events, as: :eventable, dependent: :destroy
@@ -73,5 +80,9 @@ class Geography < ApplicationRecord
     return unless national?
 
     "https://www4.unfccc.int/sites/NDCStaging/pages/Party.aspx?party=#{iso}"
+  end
+
+  def eu_member?
+    EU_COUNTRIES.include?(iso)
   end
 end

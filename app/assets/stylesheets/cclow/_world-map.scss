@@ -1,22 +1,104 @@
+@import "colors";
+@import "variables";
+
 .world-map {
   &__container {
     position: relative;
     width: 100%;
     height: 642px;
-    margin: 0 auto;
+    margin-top: 30px;
     overflow: hidden;
     background-color: $grey-light;
+    border: 1px solid $grey;
+  }
+
+  &__tooltip {
+    background: $white !important;
+    color: $storm-gray !important;
+    border: 1px solid $grey;
+
+    &:after {
+      display: none;
+    }
+  }
+
+  &__tooltip-container {
+    display: block;
+    padding: 20px 10px;
+  }
+
+  &__tooltip-title {
+    font-size: 16px;
+    line-height: 24px;
+    color: $blue-dark;
+    margin-bottom: 16px;
+  }
+
+  &__tooltip-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  &__tooltip-text {
+    font-size: 12px;
+    line-height: 15px;
+    max-width: 200px;
+    margin-right: 10px;
+    color: $storm-gray;
+  }
+
+  &__tooltip-number {
+    color: $blue-dark;
+    font-family: $family-sans-serif-bold;
+    margin-left: auto;
+  }
+
+  &__tooltip-link {
+    color: $red;
+    font-size: 12px;
+    font-family: $family-sans-serif-bold;
+    line-height: 15px;
+    margin-top: 20px;
+    cursor: pointer;
   }
 
   &__geography {
+    outline: none;
     fill: $white;
     stroke: #C0C1CB;
     stroke-width: 0.5;
+
+    &--active {
+      stroke: $black;
+    }
   }
 
   &__map-bubble {
     cursor: pointer;
     mix-blend-mode: multiply;
+  }
+
+  &__selectors {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    width: 700px;
+
+    display: flex;
+  }
+
+  &__selector {
+    flex: 1;
+
+    & + & {
+      margin-left: 30px;
+    }
+
+    label {
+      font-size: 12px;
+    }
   }
 
   &__controls {
@@ -30,10 +112,16 @@
   &__controls-zoom-in,
   &__controls-zoom-out {
     cursor: pointer;
-    display: inline-block;
     height: 40px;
     width: 40px;
     background-color: $white;
+
+    padding: 0;
+
+    img {
+      height: 24px;
+      width: 24px;
+    }
 
     &:active {
       background-color: darken($white, 7%);
@@ -42,5 +130,51 @@
 
   &__controls-zoom-in {
     border-bottom: 1px solid $grey;
+  }
+
+  &__legend {
+    border: 1px solid $grey;
+    border-top: none;
+    padding: 1.6rem 3rem;
+    font-size: $size-8;
+
+    .name {
+      font-family: $family-sans-serif-bold;
+      font-size: $size-7;
+      height: 2.85rem;
+    }
+
+    .columns {
+      margin: 0;
+    }
+
+    .img-describe {
+      align-items: flex-end;
+      color: $grey-text;
+      display: flex;
+      margin-bottom: 20px;
+      height: 80px;
+
+      &> * {
+        text-align: center;
+      }
+
+      .circle {
+        border-radius: 50%;
+        background-color: $border-cl;
+        margin: 0.5rem;
+      }
+
+      .rectangle {
+        height: 18px;
+        margin: 0.5rem;
+        width: 57px;
+      }
+    }
+  }
+
+  &__legend-scale {
+    padding: 0 1.5rem;
+    margin: 0;
   }
 }

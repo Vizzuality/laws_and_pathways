@@ -2,23 +2,33 @@
   <h3>Climate targets: Economy-wide</h3>
   <ul class="content-list">
     <li class="with-meta">
-      <div class="meta"><img class="flag" src=<%= asset_path "flags/#{@geography.iso}.svg"%> alt="">
-        This country is a member of the EU and so <span class="highlight"> EU NDC data </span> is being displayed.
-      </div>
+      <% if @geography.eu_member? %>
+        <div class="meta"><img class="flag" src=<%= asset_path "flags/EUR.svg"%> alt="">
+          This country is a member of the EU and so <span class="highlight"> EU NDC data </span> is being displayed.
+        </div>
+      <% end %>
       <div class="climate-targets-section ndc-content">
         <div class="nav">
           <h5>NDC content</h5>
-          <span class="counter"><%= @climate_targets.count %> <%= @climate_targets.count > 1 ? 'targets' : 'target' %></span>
+          <span class="counter"><%= pluralize(@ndc_targets.count, 'target') %></span>
         </div>
         <ul>
-          <% @climate_targets.each do |target| %>
+          <% @ndc_targets.each do |target| %>
             <li>
               <div>
-                <%= target.description.html_safe %>
+                <%= target.description&.html_safe %>
               </div>
-              <div class="tags">Economy Wide | <%= I18n.t("cclow.target_types.#{target.target_type}") %> | Target year: 2050 | Base year: 1990</div>
+              <div class="tags">
+                <%= target.sector&.name %>
+                | <%= I18n.t("cclow.target_types.#{target.target_type}") %>
+                | Target year: <%= target.year %>
+                | Base year: <%= target.base_year_period %></div>
               <div class="source">Source:
-                <div class="name">European Union NDC</div>
+                <div class="name">
+                  <a href="https://www4.unfccc.int/sites/NDCStaging/pages/Party.aspx?party=<%= @geography.iso %>">
+                    <%= @geography.name %>'s INDC
+                  </a>
+                </div>
               </div>
             </li>
           <% end %>
@@ -29,24 +39,29 @@
     <li>
       <div class="climate-targets-section">
         <div class="nav">
-          <h5>Climate targets in this law</h5>
-          <span class="counter"><%= @climate_targets.count %> <%= @climate_targets.count > 1 ? 'targets' : 'target' %></span>
+          <h5>National laws and policies</h5>
+          <span class="counter"><%= pluralize(@climate_targets.count, 'target') %></span>
         </div>
         <ul>
           <% @climate_targets.each do |target| %>
             <li>
               <div>
-                <%= target.description.html_safe %>
+                <%= target.description&.html_safe %>
               </div>
               <div class="tags">Economy Wide | <%= I18n.t("cclow.target_types.#{target.target_type}") %> | Target year: 2050 | Base year: 1990</div>
-              <div class="source">Source:
-                <% target.legislations.each do |legislation|%>
-                  <div class="name"><%= legislation.title %></div>
-                  <p class="meta">
+              <% if target.legislations.any? %>
+                <div class="source">Source:
+                  <% target.legislations.each do |legislation|%>
+                    <div class="name">
+                      <% path = legislation.policy? ? 'cclow_geography_policy_path' : 'cclow_geography_law_path' %>
+                      <%= link_to legislation.title, send(path, @geography, legislation) %>
+                    </div>
+                    <p class="meta">
                     <span><%= I18n.t("cclow.legislation_types.#{legislation.legislation_type}") %>  |  <%= legislation.date_passed.year %></span>
-                  </p>
-                <% end %>
-              </div>
+                    </p>
+                  <% end %>
+                </div>
+              <% end %>
             </li>
           <% end %>
         </ul>

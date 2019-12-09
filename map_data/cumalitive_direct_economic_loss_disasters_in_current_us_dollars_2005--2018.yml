@@ -1,0 +1,9 @@
+name: Cumulative direct economic loss attributed to disasters as current US dollars
+legend_description: >
+  The <b>colour</b> of the circle represents a cumulative direct economic loss in US dollars.
+  The darker the circle, the higher the loss.
+ramp: risk
+unit: USD
+creator:
+  name: United Nations Statistics Division, Development Data and Outreach Branch
+  url: https://unstats.un.org

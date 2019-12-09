@@ -51,13 +51,14 @@ namespace :static_pages do
     ]
 
     pages.each do |title|
-      next if page.find_by(slug: title.downcase, type: 'CCLOWPage')
+      next if Page.find_by(slug: title.downcase, type: 'CCLOWPage')
 
       puts "Creating CCLOW page: #{title}"
       Page.create(
         slug: title.downcase,
         title: title,
-        type: 'CCLOWPage'
+        type: 'CCLOWPage',
+        menu: 'header'
       )
     end
   end

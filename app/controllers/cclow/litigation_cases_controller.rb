@@ -10,7 +10,7 @@ module CCLOW
         @litigations = CCLOW::LitigationDecorator.decorate_collection(Litigation.find(ids))
         add_breadcrumb('Search results', request.path)
       else
-        @litigations = CCLOW::LitigationDecorator.decorate_collection(Litigation.all)
+        @litigations = CCLOW::LitigationDecorator.decorate_collection(Litigation.published)
       end
       filter
       geography_options = {field_name: 'geography', options: ::Geography.all.map { |l| {value: l.id, label: l.name} }}

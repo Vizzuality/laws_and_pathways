@@ -1,0 +1,733 @@
+litigation_id,side type,name,party type
+7362,A,Friends of the Earth (Les Amis de la Terre),ngo
+7362,B,Total,corporation
+7361,A,R (McLennan),individual
+7361,B,Medway Council,government
+7350,A,Mapuche Confederation of Neuqu̩n,ngo
+7350,B,"YPF, Total, Exxon, Pan American Energy,Pampa Energia, the Secretary of Territorial and Environmental Development, the Subsecretary of the Environment, the Provision Director of Environmental Situations and Special Residuals Management, and the Provincial Budget Director",corporation
+7350,B,Total,corporation
+7350,B,Exxon,corporation
+7350,B,Pan American Energy,corporation
+7350,B,Pampa Energia,corporation
+7350,B,"Subsecretary of the Environment, the Provision Director of Environmental Situations and Special Residuals Management, and the Provincial Budget Director",government
+7349,A,Crown Prosecution Service,
+7349,B,Roberts and others,individual
+7348,A,Crown Prosecution Service,government
+7348,B,Basto and others,individual
+7347,A,Notre Affaire à Tous,ngo
+7346,A,"Private Corporation for the Development of Aysen, et al",corporation
+7346,B,Environmental Evaluation Service of Chile,government
+7345,A,Gabriela Simonetti Grez and others,individual
+7345,B,Environmental Evaluation Service of Chile,government
+7344,A,Greenpeace Luxembourg,ngo
+7344,B,Schneider,government
+7343,A,ClientEarth,ngo
+7343,B,Polska Grupa Energetyczna,corporation
+7342,A,France,government
+7342,B,Delahalle & Goinvic,individual
+7341,A,Sixteen children,individual
+7341,B,"Argentina, Brazil, France, Germany and Turkey",government
+7340,A,Costa Rica,government
+7340,B,Nicaragua,government
+7339,A,Sheikh Asim Farooq,individual
+7339,B,Pakistan,government
+7338,A,Claire Stephenson,individual
+7338,B,Secretary of State for Housing and Communities and Local Government,government
+7337,A,Exxon Mobil,corporation
+7337,B,Germany,government
+7336,A,Maria Khan et al.,individual
+7336,B,Federation of Pakistan et al.,government
+7335,A,Saskatchewan,government
+7335,B,Canada,government
+7334,A,Michael Mann,
+7334,B,Timothy ('Tim') Ball,individual
+7334,B,"The Frontier Centre for Public Policy, Inc.",ngo
+7334,B,John Doe,individual
+7333,A,Macquarie Generation,corporation
+7333,B,Peter Gray and Naomi Hodgson,individual
+7332,A,Save Lamu et al.,individual_ngo
+7332,B,National Environmental Management Authority,government
+7332,B,Amu Power Co. Ltd,corporation
+7331,A,Sandra Bitter,individual corporation
+7331,B,Bundesrepublik Deutschland,government
+7330,A,"Borealis AB, Kubikenborg Aluminum AB, Yara AB, SSAB EMEA AB, Lulekraft AB, Värmevärden i Nynäshamn AB, Cementa AB, Höganäs Sweden AB",corporation
+7330,B,Naturvårdsverket,government
+7329,A,Elektriciteits Produktiemaatschappij Zuid-Nederland EPZ NV,corporation
+7329,B,Bestuur van de Nederlandse Emissieautoriteit,government
+7328,A,Schaefer Kalk GmbH & Co. KG,corporation
+7328,B,Bundesrepublik Deutschland,government
+7327,A,ArcelorMittal Rodange et Schifflange SA,corporation
+7327,B,State of the Grand Duchy of Luxembourg,government
+7326,A,PPC Power a.s.,corporation
+7326,B,Finan?n̩ riadite?stvo Slovenskej republiky and Da?ovä ̼rad pre vybran̩ da?ov̩ subjekty,government
+7355,A,INEOS K̦ln GmbH,corporation
+7355,B,Bundesrepublik Deutschland,government
+7352,A,Trinseo Deutschland Anlagengesellschaft mbH,corporation
+7352,B,Bundesrepublik Deutschland,government
+7344,A,Republic of Poland,government
+7344,B,European Parliament and Council of the European Union,government
+7344,C,"Kingdom of Denmark, Federal Republic of Germany, Kingdom of Spain, French Republic, Kingdom of Sweden, and European Commission",government
+7325,A,INEOS K̦ln GmbH,corporation
+7325,B,Bundesrepublik Deutschland,government
+7324,A,Milieudefensie et al.,individual_ngo
+7324,B,Royal Dutch Shell plc.,corporation
+7323,A,Torres Strait Islanders,individual
+7323,B,Australia,government
+7322,A,ClientEarth,ngo
+7322,B,Enea SA,corporation
+7321,A,Commune de Grande-Synthe,government
+7321,B,France,government
+7320,A,Friends of the Irish Environment,ngo
+7320,B,Ireland,government
+7319,A,ENvironnement JEUnesse,ngo
+7319,B,Canada,government
+7318,A,H. J. Banks & Co. Ltd,corporation
+7318,B,"Secretary of State for Housing, Communities, and Local Government",government
+7317,A,Friends of the Earth Germany and Association of Solar Supporters,ngo
+7317,B,Germany,government
+7316,A,"Fondation pour la Nature et l'Homme (FNH), Greenpeace France, Notre Affaire à Tous and Oxfam France",ngo
+7316,B,France,government
+7315,A,Family Farmers and Greenpeace Germany,individual_ngo
+7315,B,Germany,government
+7314,A,Gloucester Resources Limited,corporation
+7314,B,Minister for Planning,government
+7313,A,Biomass Plaintiffs,individual_ngo
+7313,B,European Union,government
+7312,A,Province of Ontario,government
+7312,B,Canada,government
+7312,C,"Governments of Saskatchewan, New Brunswick, and British Columbia",government
+7311,A,Greenpeace Canada,ngo
+7311,B,"Minister of the Environment, Conservation, and Parks; Lieutenant Governor in Council",government
+7310,A,Plan B Earth,ngo
+7310,B,Secretary of Transport,government
+7309,A,Mark McVeigh,individual
+7309,B,Retail Employees Superannuation Trust,corporation
+7308,A,Mataatua District Maori Council,individual_government
+7308,B,Government of New Zealand,government
+7307,A,Ridhima Pandey,individual
+7307,B,Union of India,government
+7307,C,Central Pollution Control Board,government
+7306,A,Greenpeace Indonesia and Others,ngo
+7306,B,Bali Provincial Governor,government
+7304,A,Youth Plaintiffs,individual
+7304,B,"Colombian Ministry of the Environment and other government entities, municipalities, and corporations",government
+7360,A,Armando Ferṛo Carvalho and Others,individual
+7360,B,The European Parliament and the Council,government
+7305,A,Colombia,government
+7305,B,Inter-American Court on Human Rights,
+7303,A,Plan B Earth,ngo
+7303,B,"The Secretary of State for Business, Energy, and Industrial Strategy",government
+7302,A,Friends of the Irish Environment CLG,ngo
+7302,B,Fingal County Council,government
+7301,A,Nisi Mbabazi,individual
+7301,B,"Attorney General of Uganda, National Environmental Management Authority",
+7300,A,Wildland Ltd.,ngo
+7300,B,Scottish Minister,government
+7299,A,groundWork,ngo
+7299,B,Minster of Environmental Affairs,government
+7298,A,groundWork,ngo
+7298,B,Minster of Environmental Affairs,government
+7297,A,Abrahams,individual
+7297,B,Commonwealth Bank of Australia,corporation
+7296,A,"Re Xstrata Coal Queensland Pty. Ltd., Ors.","corporation"
+7296,B,Environmental Protection Agency,government
+7296,B,Queensland Conservation Council Inc,ngo
+7296,B,Mackay Conservation Group Inc,ngo
+7295,A,"A. Thackeray, S. Garito & Ors.",individual
+7295,A,S. Garito & Ors.,individual
+7295,B,Shire Council of Gippsland,government
+7294,A,Synergy Wind Pty. Ltd.,corporation
+7294,B,Wellington Shire Council,government
+7293,A,Donald Stewart,individual
+7293,A,Jodie Honan,individual
+7293,B,Moyne Shire Council,government
+7292,A,Kathy Russel & Ors.,individual
+7292,B,Surface Coast Shire Council,government
+7291,A,C. Restall,individual
+7291,A,M. Fava,individual
+7291,A,E. Restall,individual
+7291,B,Hobsons Bay City Council,government
+7290,A,Pridel Investments Pty. Ltd,corporation
+7290,B,Coffs Harbour City Council,government
+7289,A,"G Owen, G Owen","individual"
+7289,B,Casey City Council,government
+7288,A,Royce Millar,individual
+7288,B,Department of Premier and Cabinet (General),government
+7287,A,Mr. Fetterplace,individual
+7287,B,Mornington Peninsula SC,government
+7286,A,Mr. Fetherston,individual
+7286,B,Wollongong City Council,government
+7285,A,B. D'Abate,individual
+7285,B,East Gippsland Shire Council & Ors.,government
+7284,A,Cadzow Enterprises Pty. Ltd,corporation
+7284,B,Port Phillip County Council,government
+7283,A,Adani Mining Pty. Ltd.,corporation
+7283,B,Land Services of Coast and Country Inc.,ngo
+7283,B,Australian Conservation Foundation,ngo
+7282,A,Coast and Country Association of Queensland,ngo
+7282,B,Smith,government
+7281,A,Arctic Athabaskan Council,tribal government
+7281,B,Canada,government
+7280,A,Marangopoulos Foundation for Human Rights,ngo
+7280,B,Greece,government
+7279,A,Global Legal Action on Climate Change,ngo
+7279,B,Philippine Government,government
+7278,A,Greenpeace Canada,ngo
+7278,B,Kinder Morgan Canada Ltd.,corporation
+7277,A,EarthLife Africa Johannesburg,ngo
+7277,B,Minister of Environmental Affairs,government
+7276,A,Ralph Lauren 57,"corporation individuals"
+7276,B,Byron Shire Council,government
+7275,A,Burgess,"individual"
+7275,B,Ontario Minister of Natural Resources and Forestry,government
+7273,A,Anti Aircraft Noise Society (ALFG) and others,
+7273,B,"Vienna Airport AG, Region of Lower Austria",
+7274,A,PUSH Sweden,ngo
+7274,A,Nature and Youth Sweden,ngo
+7274,A,others,individual
+7274,B,Government of Sweden,government
+7271,A,Hancock Coal Pty Ltd.,corporation
+7271,B,Kelly and Department of Environment and Heritage Protection (No. 4),government
+7267,A,Soci̩t̩ Arcelor Atlantique et Lorraine and Others,corporation
+7267,B,Parliament and Council (Environment and consumers).,government
+7269,A,United Kingdom of Great Britain and Northern Ireland,government
+7269,B,Commission of the European Communities,government
+7266,A,Secretary of State for Energy and Climate Change,government
+7266,B,Friends of the Earth & Ors.,ngo
+7264,A,Printz,corporation
+7264,B,Glenelg SC,government
+7262,A,Keiller,individual
+7262,B,Information Commissioner,government
+7257,A,"F̩d̩ration environnement durable, F̩d̩ration nationale des associations de sauvegarde des sites, Ligue urbaine et rurale, Soci̩t̩ pour la protection des paysages et l'esth̩tique de la France, Association de d̩fense de l'environnement et de la r̩gion d'Egreville, Vent de col̬re en Visandre, Vent de force 77, and Vent de v̩rit̩",ngo
+7254,A,National Legal Secretariat of the Presidency,government
+7253,A,Sa̼l Luciano Lliuya,individual
+7253,B,RWE AG,corporation
+7251,A,Greenpeace Nordic Association,ngo
+7251,A,Nature and Youth Norway,ngo
+7251,B,Government of Norway represented by the Ministry of Petroleum and Energy,government
+7250,A,Tribunal at its own motion,government
+7250,B,Ministry of Environment & Forests,government
+7249,A,Shirish Barve,individual
+7249,B,Union of India,government
+7245,A,Vimal Bhai,individual
+7245,B,Ministry of Environment & Forests,government
+7244,A,Sarang Yadwadkar,individual
+7244,B,Pune Municipal Corporation,government
+7242,A,Punamchand,individual
+7242,B,Union of India,government
+7241,A,Wilfred J,individual
+7241,B,Ministry of Environment & Forests,government
+7240,A,Environment Support Group,ngo
+7240,B,Union of India,government
+7239,A,Jan Chetna,individual
+7239,B,Ministry of Environment & Forests,government
+7232,A,Public Prosecutor's Office,government
+7232,B,"United Airlines, TAAG Linhas A̩reas de Angola, Delta Airlines, Cia. Mexicana, Emirates Airlines, Aerolineas Argentinas, South African Airways",corporation
+7231,A,Chiaradia,individual
+7231,B,IBAMA - Environmental Federal Agency,government
+7230,A,Public Prosecutor's Office,government
+7230,B,Oliveira and others,individual
+7229,A,Public Prosecutor's Office,government
+7229,B,H Carlos Schneider S/A Com̩rcio e Ind̼stria and others,corporation
+7228,A,Maia Filho,individual
+7228,B,Environmental Federal Agency (IBAMA),government
+7227,A,Australian Conservation Foundation,ngo
+7227,B,Minister for the Environment,government
+7226,A,Yelland Wind Ltd.,corporation
+7226,B,West Devon BC,government
+7225,A,Wigan Metropolitan Borough Council,government
+7225,B,Secretary of State for the Environment,government
+7224,A,Veolia,corporation
+7224,B,Shropshire CC,government
+7223,A,Trump International Golf Club Scotland Limited,corporation
+7223,A,The Trump Organization LLC,corporation
+7223,B,The Scottish Ministers,government
+7222,A,Stuart Dimmock,individual
+7222,B,Secretary of State for Education and Skills,government
+7221,A,Sustainable Shetland,ngo
+7221,B,Scottish Minister,government
+7220,A,Solar Century Holdings Ltd,corporation
+7220,B,Secretary of State for Energy and Climate Change,government
+7219,A,RWE Npower Renewables,corporation
+7219,B,East Lindsey DC,government
+7218,A,Rockware Glass Ltd,corporation
+7218,B,Chester City Council,government
+7217,A,Littlewood,government
+7217,B,Bassetlaw DC,government
+7216,A,Swiss International Airlines AG,corporation
+7216,B,Secretary of State for Energy and Climate Change,government
+7216,B,The Environment Agency,government
+7215,A,"People & Planet, PLATFORM",ngo
+7215,A,World Development Movement,ngo
+7215,A,PLATFORM,ngo
+7215,B,United Kingdom Treasury,government
+7214,A,The London Borough of Hillingdon & Ors,government
+7214,B,Secretary of State for Transport,government
+7213,A,Griffin,individual
+7213,B,Newham London Borough Council,government
+7212,A,William Corbett,individual
+7212,B,Conrwall Council,government
+7211,A,Richard Hackett Pugh,individual
+7211,B,Secretary of State for Communities and Local Government,government
+7211,C,Cornwall Council,intervening party
+7210,A,NorthCote Farms LTD,corporation
+7210,B,Secretary of State for Communities and Local Government,government
+7210,B,East Riding of Workshite Council,government
+7209,A,Newark & Sherwood Dsitrict Council,government
+7209,B,The Secretary of State for Communitied and local government,government
+7208,A,Macarthur,individual
+7208,B,Secretary of State for Communities and Local Government,government
+7207,A,Laughton Wind Farm,corporation
+7207,B,West Lindsey DC,government
+7206,A,Lark Energy Ltd,corporation
+7206,B,Secretary of State for Communities,government
+7205,A,KS SPV 35 Ltd,corporation
+7205,B,Monmouthshire County Council,government
+7204,A,Kingsnorth Coal,corporation
+7204,B,Greenpeace activist (six),individual
+7203,A,Jarrett,individual
+7203,B,Secretary of State for Communities and Local Government,government
+7202,A,Brian Quiin,individual
+7202,A,Michael Quinn,individual
+7202,B,Commissioner Fitzsimmons of the Planning Appeals Commission,government
+7201,A,Heathrow Airport Ltd,corporation
+7201,B,Joss Garman,individual
+7196,A,E.ON UK Development Ltd,corporation
+7196,B,King's Lynn Council,government
+7196,B,West Norfolk Council,government
+7200,A,Hertfordshire County Council,government
+7200,B,Secretary of State for Communities and Local Government,government
+7199,A,Greenpeace,ngo
+7199,B,Secretary of State for Trade and Industry,government
+7198,A,Grainger,corporation
+7198,B,T Nicholson,individual
+7197,A,Goldfinch (Projects) Limited,corporation
+7197,B,National Assembly for Wales,government
+7195,A,Deutsche Bank AG,corporation
+7195,B,Total Global Steel Ltd,corporation
+7194,A,City of Bradford Metropolitan Council,government
+7194,B,Woodhead and Sons Ltd.,corporation
+7193,A,City of Bradford Metropolitan Council,government
+7193,B,Gillson and Sons,corporation
+7192,A,City of Bradford Metropolitan Council,government
+7192,B,Feather,corporation
+7191,A,Chelveston Renewable Energy Ltd,corporation
+7191,B,Bedford BC,government
+7190,A,CF Partners (UK) LLP,corporation
+7190,B,Barclays Bank PLC,corporation
+7190,B,Bryggpipan AB (formerly known as Tricorona AB),corporation
+7189,A,Cemex UK Cement Ltd,corporation
+7189,B,Department of Environment Food and Rural Affairs,government
+7188,A,Castletown Estates Ltd,corporation
+7188,A,Carmarthenshire County Council,government
+7188,B,Welsh Ministers,government
+7187,A,Bradford,individual
+7187,B,West Devon BC,government
+7186,A,Bellis,corporation
+7186,B,Merthyr Tydfill CBC,government
+7184,A,"Carol Barbone, Brian Ross (on behalf of Stop Stansted Expansion)",ngo
+7184,B,"The Secretary of State for Transport, BAA Limited and Stansted Airport Limited, Uttlesford District Council and others",government
+7184,B,The Secretary of State for Communities and Local Government,government
+7184,B,BAA Limited and Stansted Airport Limited,corporation
+7184,B,Uttlesford District Council and others,government
+7185,A,Bard Campaign,ngo
+7185,B,Secretary of State for Communities and Local Government,government
+7183,A,Armstrong DLW GMBH,corporation
+7183,B,Winnington Networks,corporation
+7182,A,Allerdale BC,government
+7182,B,Cumbria Wind Farms Ltd,corporation
+7181,A,Regina,individual
+7181,B,Dosanjh,individual
+7180,A,Tate and Lyle,corporation
+7180,B,Secretary of State for Energy and Climate Change,government
+7179,A,Environment People Law,ngo
+7179,B,Ministry of Environmental Protection,government
+7178,A,Environment People Law,ngo
+7178,B,Cabinet of Ministers of Ukraine,government
+7178,B,National Agency of Environmental Investment,government
+7177,A,Urgenda Foundation,ngo
+7177,B,Kingdom of the Netherlands,government
+7176,A,Union of Swiss Senior Women for Climate Protection,ngo
+7176,B,Swiss Federal Parliament,government
+7175,A,"E.ON. Generación, S.L.",corporation
+7175,B,General Government Administration of Spain,government
+7174,A,"Segura, S.L.",corporation
+7174,B,Council of Ministers of Spain,government
+7173,A,"Cerámica General Casta̱os, S.A.",corporation
+7173,B,Council of Ministers of Spain,government
+7172,A,"Carles de Llierca, S.A.",corporation
+7172,B,Council of Ministers of Spain,government
+7171,A,"Ladri Bail̩n, S.L.",corporation
+7171,B,Council of Ministers of Spain,government
+7170,A,Macerba de Bail̩n S.L.,corporation
+7170,B,Council of Ministers of Spain,government
+7169,A,"Arcelor Espa̱a, S.A.  (previously known as Arcelaria Corporaci�_n Sider̼rgica, S.A.)",corporation
+7169,B,Council of Ministers of Spain,government
+7168,A,Electra de Viesgo Distribución S.L.,corporation
+7168,A,Viesgo Generaci�_n S.L.,corporation
+7168,B,Attorney General of Spain,government
+7167,A,Cerámica Dolores García Bazataqui S.L.,corporation
+7167,B,Council of Ministers of Spain,government
+7166,A,Cerámica Hermanos Fernández S.L,corporation
+7166,B,General Government Administration of Spain,government
+7165,A,"Minera Catalana Aragonesa, S.A.",corporation
+7165,B,General Government Administration of Spain,government
+7164,A,"Foraneto, S.L.",corporation
+7164,B,Council of Ministers of Spain,government
+7163,A,"Unión Fenosa Generación, S.A.",corporation
+7163,B,Council of Ministers of Spain,government
+7162,A,Greenpeace Southeast Asia,ngo
+7162,A,Philippine Rural Reconstruction Movement,ngo
+7162,B,Comission on Human Rights of the Philippines,government
+7161,A,Ashgar Leghari,individual
+7161,B,Federation of Pakistan,government
+7160,A,Rahab Ali,individual
+7160,B,Federation of Pakistan,government
+7158,A,Jonah Gbemre,individual
+7158,B,"Shell Petroleum Development Company Nigeria Ltd, Nigerian National Petroleum Corporation, Attorney General of the Federation",corporation
+7158,B,Nigerian National Petroleum Corporation,government
+7158,B,Attorney General of the Federation,government
+7157,A,West Coast ENT Inc.,corporation
+7157,B,"Buller Coal Ltd, Solid Energy New Zealand Limited, Royal Forest and Bird Protection Society of New Zealand Incorporated",corporation
+7157,B,Solid Energy New Zealand Limited,corporation
+7157,B,Royal Forest and Bird Protection Society of New Zealand Incorporated,ngo
+7157,C,"West Coast Regional Council, Buller District Council","government"
+7156,A,Unison Networks Ltd.,corporation
+7156,B,Hastings District Council,government
+7155,A,Sarah Thomson,individual
+7155,B,Minister for Climate Change Issues,government
+7154,A,Royal Forest and Bird Protection Society of New Zealand Incorporated,ngo
+7154,B,Buller Coal Limited,corporation
+7153,A,The Outstanding Landscape Protection Society Inc.,corporation
+7153,B,Hastings District Council,government
+7151,A,New Zealand Climate Science Education Trust,ngo
+7151,B,National Institute of Water and Atmospheric Research Limited,government
+7150,A,Motorimu Wind Farm Limited,corporation
+7150,B,"Palmerston North City Council, Horowhenua District Council",government
+7150,B,Horowhenua District Council,government
+7149,A,Meridian Energy Ltd,corporation
+7149,B,Wellington City Council,government
+7148,A,AD Tuvalu,individual
+7148,B,Department of Immigration and Protection,government
+7147,A,Imported Motor Vehicle Industry Association Incorporated,corporation
+7147,B,Minister of Transport,government
+7146,A,Greenpeace New Zealand,ngo
+7146,B,Northland Regional Council,government
+7145,A,Environmental Defence Society,ngo
+7145,B,Auckland Regional Council,government
+7144,A,Manioto Environmental Society Inc,ngo
+7144,B,Central Otago District Council,government
+7143,A,Ioane Teitiota,individual
+7143,B,"The Chief Executive of the Ministry of Business, Innovation and Employment",government
+7142,A,Genesis Power Ltd.,corporation
+7142,B,Greenpeace New Zealand Inc.,ngo
+7141,A,Genesis Power Ltd.,corporation
+7141,A,The Energy Efficiency and Conservation Authority,government
+7141,B,Franklin District Council,government
+7140,A,"An Taisce, Friends of the Irish Environment Limited","individual_ngo"
+7140,B,An Bord Pleanála,government
+7140,B,Ireland and Attorney General,government
+7140,C,"Edenderry Power Limited, Bord Na Móna Energy Limited, Bord Na Móna Allen Peat Limited, Bord Na Móna PLC, Minister for Environment, Community and Local Government, Ireland and Attorney General, Department of Arts Heritage and the Gaeltacht, Environmental Protection Agency and an Taisce","corporation"
+7139,A,Court of its Own Motions,government
+7139,A,Abhimanyu Rathor,individual
+7139,B,"State of Himachal Pradesh, State of H.P. & Ors",government
+7139,B,State of H.P. & Ors,government
+7137,A,Miersch,individual
+7137,A,Maxeiner,individual
+7137,B,Federal Ministry for Environment,government
+7136,A,Bund für Umwelt und Naturschutz Deutschland e.V.,ngo
+7136,A,Germanwatch e.V.,ngo
+7136,B,The Federal Republic of Germany,government
+7135,A,French Constitutional Council,government
+7134,A,French Constitutional Council,government
+7133,A,Société Arcelor Atlantique et Lorraine et autres,"corporation"
+7133,B,European Court of Justice,government
+7132,A,Industrie de bois de Vielsalm & Cie,corporation
+7132,B,R̩gion wallonne,government
+7131,A,soci̩t̩ arcelor atlantique et lorraine,corporation
+7131,B,Premier Minister,government
+7130,A,"ŠKO-ENERGO, s.r.o.",corporation
+7130,B,Czech Appellate Financial Directorate,government
+7129,A,Republic of Poland,government
+7129,B,European Commission,government
+7128,A,Republic of Poland,government
+7128,B,Commission of the European Communities,government
+7127,A,Republic of Estonia,government
+7127,B,Commission of the European Communities,government
+7126,A,United Kingdom,government
+7126,B,Commission of the European Communities,government
+7125,A,Advocate General Sharpton,government
+7124,A,Lafarge Cement S.A.,corporation
+7124,B,Commission of the European Communities,government
+7123,A,Iberdrola S.A.,corporation
+7123,A,Gas Natural SDG SA,corporation
+7123,B,European Commission,government
+7123,C,"Administración del Estado and Others, Endesa SA and Others, Tarragona Power SL, Bahía de Bizcaia Electricidad SL,  E.ON Generación SL and Others","corporation"
+7122,A,Grupa Ożarów S.A.,corporation
+7122,B,Commission of the European Communities,government
+7121,A,Green Network SpA,ngo
+7121,B,Italian Electric & Gas Authority,government
+7120,A,Gόrażdże Cement S.A.,corporation
+7120,B,Commission of the European Communities,government
+7119,A,Flachglas Torgau GmbH,corporation
+7119,B,Federal Republic of Germany,government
+7118,A,Fels-Werke GmbH,corporation
+7118,B,Commission of the European Communities,government
+7117,A,Federal Republic of Germany,government
+7117,B,Commission of the European Communities,government
+7116,A,European Commission,government
+7116,B,Council for the European Union,government
+7114,A,EnBW Energie Baden-Württemberg AG,corporation
+7114,B,Commission of the European Communities,government
+7115,A,Essent Belgium NV,corporation
+7115,B,Flemish Regulatory Authority for the Electricity and Gas,government
+7113,A,Dyckerhoff Polska sp. z o.o.,corporation
+7113,B,Commission of the European Communities,government
+7112,A,8 f̩vrier 2007 - Soci̩t̩ Arcelor Atlantique et Lorraine et autres,corporation
+7112,B,Commission of the European Communities,government
+7110,A,Commission of the European Communities,government
+7110,B,Finland,government
+7111,A,Commission of the European Communities,government
+7111,B,Italian Republic,government
+7108,A,Cementownia 'Odra' S.A.,corporation
+7108,B,Commission of the European Communities,government
+7109,A,Cemex Polska sp. z o.o.,corporation
+7109,B,Commission of the European Communities,government
+7107,A,Cementownia 'Odra' S.A.,corporation
+7107,B,Commission of the European Communities,government
+7106,A,Buzzi Unicem SpA,corporation
+7106,B,Commission of the European Communities,government
+7105,A,Bundesrepublik Deutschland,government
+7105,B,Nordzucker AG,corporation
+7104,A,BOT Elektrownia Be?chat�_w S.A.,corporation
+7104,B,Commission of the European Communities,government
+7103,A,Borealis Polyolefine GmbH,corporation
+7103,B,"Minister for Land, Forestry, Environment, and Water Management",government
+7102,A,Billerud Karlsborg AB,corporation
+7102,B,Swedish Environmental Protection Agency,government
+7101,A,Azienda Agro-Zootecnica Franchini Sarl,corporation
+7101,B,Regione Puglia,government
+7100,A,Arcelor SA,corporation
+7100,B,European Parliament,government
+7099,A,Ålands Vindkraft AB,corporation
+7099,B,Swedish Energy Agency,government
+7098,A,Air Transport Association of America,corporation
+7098,A,American Airlines Inc.,corporation
+7098,A,Continental Airlines Inc.,corporation
+7098,A,United Airlines Inc.,corporation
+7098,B,Secretary of State for Energy and Climate Change,government
+7097,A,Agrargenossenschaft Neuzelle eG,corporation
+7097,B,Head of Administrative Services of Oder-Spree rural district authority,government
+7096,A,Afton Chemical Limited,corporation
+7096,B,Secretary of State for Transport,government
+7095,A,U.S. Steel Košice,corporation
+7095,B,Commission of the European Communites,government
+7093,A,City of Lyon,government
+7093,B,French Deposits and Consignments Fund,government
+7092,A,European Commission,government
+7092,B,Council for the European Union,government
+7091,A,The Federal States of Micronesia,government
+7091,B,Czech Republic,government
+7090,A,"Cumbre Agraria, Campesina, Etnica y Popular",ngo
+7090,A,Alberto Castilla Salazar and other members of Cumbre Agraria,individual
+7090,A,Ana Jimena Bautista Revelo,individual
+7090,A,Viviana Tacha Gutierrez,individual
+7090,A,Adriana Patricia Fuentes Lopez,individual
+7090,B,Colombia,government
+7089,A,Andrew Weaver,individual
+7089,B,Terence Corcoran,individual
+7089,B,Peter Foster,individual
+7089,B,The National Post,corporation
+7089,B,Gordon Fisher,individual
+7088,A,Daniel Turp,individual
+7088,B,"Minister of Justice, Attorney General of Canada","government"
+7087,A,Syncrude Canada Ltd.,corporation
+7087,B,The Attorney General of Canada,government
+7086,A,River District Energy Limited Partnership,corporation
+7086,B,British Columbia Utilities Commission,government
+7085,A,FortisBC Energy Utilities,corporation
+7085,B,British Columbia Utilities Commission,government
+7084,A,Pembina Institute for Appropriate Development,ngo
+7084,A,Prairie Acid Rain Coalition,ngo
+7084,A,Sierra Club of Canada,ngo
+7084,B,Attorney General of Canada,government
+7084,B,Minister of Fisheries and Oceans,government
+7084,B,Minister of Environment,government
+7083,A,City of Brampton,government
+7083,B,Ontario Municipal Board,government
+7082,A,FortisBC Energy Utilities,corporation
+7082,B,British Columbia Utilities Commission,government
+7081,A,Friends of the Earth,ngo
+7081,B,The Governor in Council,government
+7081,B,The Minister of the Environment,government
+7080,A,Citizens of Riverdale Hospital,individual
+7080,B,Bridgepoint Health Services,ngo
+7078,A,Chicago Climate Exchange,corporation
+7078,B,Bourse de Montreal,corporation
+7077,A,Klimaatzaak,ngo
+7077,B,Federal Regional Government of Belgium,government
+7076,A,David Cooke,individual
+7076,B,Greater Geelong City Council,government
+7075,A,Alanvale Pty Ltd,corporation
+7075,B,Southern Rural Water Authority,government
+7074,A,Your Water You Say Inc.,ngo
+7074,B,"Minister for the Environment, Heritage and the Arts",government
+7073,A,"Xstrata Coal Queensland Pty Ltd, ICRA Wandoan Pty Ltd, Sumisho Coal Australia Pty Ltd",corporation
+7073,A,ICRA Wandoan Pty Ltd,corporation
+7073,A,Sumisho Coal Australia Pty Ltd,corporation
+7073,B,"Friends of the Earth - Brisbane Co-Op Ltd, Barry Raymond Rich and Helen Maxine Rich","individual_ngo"
+7072,A,"Wildlife Preservation Society of Queensland, Whitsundry Branch Inc.","corporation_ngo"
+7072,B,Minister for the Environment & Heritage,government
+7071,A,West Gippsland Cathment Management Authority,government
+7071,B,East Gippsland Shire Council,government
+7070,A,Robert Wade,individual
+7070,B,Warnambool City Council,government
+7069,A,W & B Cabinets,corporation
+7069,B,Casey City Council,government
+7068,A,Mr. Thornton,individual
+7068,B,Adelaide Hill Council,government
+7067,A,Terminals Pty Ltd,corporation
+7067,B,Greater Geelong City Council,government
+7066,A,John Tauschke,individual
+7066,B,East Gippsland Shire Council,government
+7065,A,Taralga Landscape Gaurdians Inc,corporation
+7065,B,Minister for Planning,government
+7064,A,Ms. Taip,individual
+7064,B,East Gippsland Shire Council,government
+7063,A,Suburban Blue Print Pty Ltd,corporation
+7063,B,Hobsons Bay City Council,government
+7060,A,SJ Connelly,individual
+7060,B,Byron Shire Council,government
+7062,A,Smith,individual
+7062,B,Pittwater Council,government
+7059,A,Ronchi L.,individual
+7059,A,Campbell J.,individual
+7059,B,Wellington Shire Council,government
+7058,A,Rivers SOS Inc,corporation
+7058,B,Minister of Planning,government
+7057,A,RES Southern Cross,corporation
+7057,B,Minister for Planning,government
+7056,A,Australian Conservation Foundation,ngo
+7056,B,Latrobe City Council,government
+7055,A,Rainbow Shores P/L,corporation
+7055,B,Gympie Regional Council,government
+7054,A,Queensland Conservation Council,government
+7054,B,Xstrata Coal,corporation
+7053,A,Phosphate Resources Ltd,corporation
+7053,B,The Commonwealth of Australia First Respondent,government
+7052,A,Sheila Watt Cloutier,individual
+7052,B,Inter-American Comission on Human Rights,government
+7051,A,"J Perry, Hepburn Shire Council Responsible Authority, Sustainability Victoria Referral Authority",individual
+7051,A,Hepburn Shire Council Responsible Authority,government
+7051,A,Sustainability Victoria Referral Authority,government
+7051,B,Hepburn Renewal Energy Association Inc.,corporation
+7050,A,Pepperwood Ridge Pty Ltd,corporation
+7050,B,Newcastle City Council,government
+7049,A,Mr John Paul,individual
+7049,B,Goulburn Murray Water Corporation,corporation
+7048,A,Owen,individual
+7048,B,Casey City Council,government
+7047,A,Salvatore and Albina Nucifora,individual
+7047,B,Valuer General,government
+7046,A,Northcape Properties,corporation
+7046,B,District Council of Yorke Peninsula,government
+7045,A,Newton and Anor,individual
+7045,B,Great Lakes Council,government
+7044,A,Deborah Myers,individual
+7044,B,South Gippsland Shire Council,government
+7042,A,Minister for Planning,government
+7042,B,Walker,individual
+7041,A,Inverloch Residents & Ratepayers Association,individual
+7041,A,South Gippsland Conservation Society,ngo
+7041,A,Ms J McCulloch and others,individual
+7041,B,Bass Coast Shire Council,government
+7040,A,Robert Lester,individual
+7040,B,Minister for Planning,government
+7039,A,Kennedy (on behalf of Sandon Point Aborigal Tent Embassy),ngo
+7039,B,Minister for Planning,government
+7038,A,Kala Developments Pty Ltd,corporation
+7038,B,Surface Coast Shire Council,government
+7037,A,Ison,individual
+7037,B,Richmond Valley Council,government
+7036,A,Ironstone Community Action Group Inc,ngo
+7036,B,NSW Minister for Planning,government
+7035,A,Hunter Community Environment Centre Inc,ngo
+7035,B,Minister for Planning and Delta Electricity,government
+7034,A,Ned Haughton,individual
+7034,B,Minister for Planning,government
+7032,A,Green Peace Asutralia Ltd,ngo
+7032,B,Redbank Power Company Pty Ltd,corporation
+7033,A,Ground Crew at Turramurra,corporation
+7033,B,Ku-ring-gai Council,government
+7031,A,Gray,individual
+7031,B,Minister for Planning,government
+7030,A,Gippsland Coastal Board,government
+7030,B,South Gippsland Shire Council,government
+7029,A,Environment Victoria Inc,corporation
+7029,B,Department of Primary Industries,government
+7028,A,Edmond Golf Pty Ltd,corporation
+7028,B,Frankston City Council,government
+7027,A,Dual Gas Pty Ltd & Ors,corporation
+7027,B,Environment Protection Authority,government
+7025,A,Director of Public Prosecutions,government
+7025,B,Fraser and O'Donnell,individual
+7026,A,Drake-Brockman,individual
+7026,B,Minister for Planning,government
+7024,A,David Kettle Consulting,corporation
+7024,B,Gosford City Council,government
+7023,A,Marie Agnes Doyle,individual
+7023,A,Cecilia Bridget Doyle,individual
+7023,A,Peter Daniel Doyle,individual
+7023,A,Gregory Charles Copley,individual
+7023,B,Logan City Council,government
+7022,A,Clean Energy Regulator,government
+7022,B,MT Solar Pty Ltd,corporation
+7022,B,Green Master Building Solutions Pty Ltd,corporation
+7022,B,Bo Liu,individual
+7022,B,Yongin Zhu,individual
+7022,B,Barry Eli Kibblewhite,individual
+7021,A,"Peter Carey, Jane Carey, Michael Nudelman, Karen Gunter",individual
+7021,A,Jane Carey,individual
+7021,A,Michael Nudelman,individual
+7021,A,Karen Gunter,individual
+7021,B,Murrindindi Shire Council,government
+7018,A,Byron Shire Council,government
+7018,B,Mr and Mrs Vaughan,individual
+7020,A,Campbell & Ors,corporation
+7020,B,Mornington Peninsula SC,government
+7017,A,Bulga Milbrodale Progress Association Inc,corporation
+7017,B,Minister for Planning and Infrastructure,government
+7017,B,Warkworth Mining Limited,corporation
+7016,A,"John Bock, PEMS Pty Ltd",individual
+7016,B,Moyne SC,government
+7015,A,Blue Wedges Inc,corporation
+7015,B,"Minister for Environmental, Heritage and the Arts",government
+7014,A,Bernhard Seifert,individual
+7014,B,Colac-Otway Shire Council,government
+7012,A,Australian Competition and Consumer Commission,government
+7012,B,Prime Carbon Pty Ltd,corporation
+7013,A,Australian Competition and Consumer Commission,government
+7013,B,V8 Supercars Australia Pty Ltd,corporation
+7011,A,Australian Competition and Consumer Commission,government
+7011,B,Goodyear Tyres,corporation
+7010,A,Australian Competition and Consumer Commission,government
+7010,B,GM Holden Ltd,corporation
+7009,A,Australian Competition and Consumer Commission,government
+7009,B,Global Green Plan Ltd,corporation
+7008,A,Australian Competition and Consumer Commission,government
+7008,B,De Longhi Australia Pty Ltd,corporation
+7006,A,Adrian Aldous,individual
+7006,B,Greater Taree City Council,government
+7006,B,Australian Equity Investment Pty Ltd.,corporation
+7007,A,Anvil Hill Project Watch Association,ngo
+7007,B,Minister for the Environment and Water Resources,government
+7005,A,Able Lott Holding Pty Ltd,corporation
+7005,B,City of Fremantle,government
+7003,A,Peter Gray & Naomi Hodgson,individual
+7003,B,Macquarie Generation,"corporation"
+7002,A,Peter Spencer,individual
+7002,B,Commonwealth of Australia,government
+7001,A,Charles & Howard Pty Ltd,corporation
+7001,B,Redland Shire Council,government
+7000,A,Hunter Community Environment Centre Inc.,ngo
+7000,B,Minister for Planning and Delta Electricity,government

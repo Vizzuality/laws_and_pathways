@@ -43,10 +43,11 @@ Rails.application.routes.draw do
 
   namespace :cclow do
     root to: 'home#index'
+    get '/sandbox', to: 'home#sandbox' if Rails.env.development?
 
     resources :geographies, only: [:show] do
-      resources :laws, controller: 'geography/legislations', only: [:show, :index], defaults: { scope: :laws }
-      resources :policies, controller: 'geography/legislations', only: [:show, :index], defaults: { scope: :policies }
+      resources :laws, controller: 'geography/legislations', only: [:show, :index], defaults: {scope: :laws}
+      resources :policies, controller: 'geography/legislations', only: [:show, :index], defaults: {scope: :policies}
       resources :litigation_cases, controller: 'geography/litigation_cases', only: [:show, :index]
       resources :climate_targets, controller: 'geography/climate_targets', only: [:show, :index]
     end
@@ -54,10 +55,18 @@ Rails.application.routes.draw do
     resources :climate_targets, only: :index
     resources :legislation_and_policies, only: :index
     resources :litigation_cases, only: :index
+
+    namespace :api do
+      resources :map_indicators, only: :index
+    end
   end
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
-  root to: 'tpi/home#index'
+  root to: 'tpi/home#index', constraints: { host: 'www.transitionpathwayinitiative.org' }, as: nil
+  root to: 'cclow/home#index', constraints: { host: 'climate-laws.org' }, as: nil
+  root to: 'admin/dashboard#index', constraints: { host: 'laws-pathways.vizzuality.com' }, as: nil
+  root to: 'admin/dashboard#index', constraints: { host: 'laws-pathways-staging.vizzuality.com' }, as: nil
+  root to: 'cclow/home#index', constraints: { host: 'localhost' }
 end

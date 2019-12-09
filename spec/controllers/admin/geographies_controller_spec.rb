@@ -125,7 +125,7 @@ RSpec.describe Admin::GeographiesController, type: :controller do
 
     context 'with valid params' do
       let!(:legislation) { create(:legislation, geography: geography) }
-      let!(:litigation) { create(:litigation, jurisdiction: geography) }
+      let!(:litigation) { create(:litigation, geography: geography) }
       let!(:event) { create(:geography_event, eventable: geography) }
 
       subject { delete :destroy, params: {id: geography.id} }
@@ -146,7 +146,7 @@ RSpec.describe Admin::GeographiesController, type: :controller do
         expect(Event.find_by_id(event.id)).to be_nil
       end
 
-      it 'shows discarded jurisdiction in all_discarded scope' do
+      it 'shows discarded geography in all_discarded scope' do
         expect(Geography.all_discarded.find(geography.id)).to_not be_nil
       end
 
@@ -154,8 +154,8 @@ RSpec.describe Admin::GeographiesController, type: :controller do
         expect(legislation.reload.geography).to be_nil
       end
 
-      it 'removes discarded jurisdiction from litigation' do
-        expect(litigation.reload.jurisdiction).to be_nil
+      it 'removes discarded geography from litigation' do
+        expect(litigation.reload.geography).to be_nil
       end
 
       it 'shows proper notice' do

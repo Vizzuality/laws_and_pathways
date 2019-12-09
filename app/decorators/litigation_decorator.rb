@@ -55,4 +55,13 @@ class LitigationDecorator < Draper::Decorator
       legislation.title.truncate(120)
     ].join.strip
   end
+
+  def laws_sector_links
+    model.laws_sectors.map do |laws_sector|
+      h.link_to laws_sector.name,
+                h.admin_laws_sector_path(laws_sector),
+                target: '_blank',
+                title: laws_sector.name
+    end
+  end
 end

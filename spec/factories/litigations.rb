@@ -7,7 +7,7 @@
 #  slug                      :string           not null
 #  citation_reference_number :string
 #  document_type             :string
-#  jurisdiction_id           :bigint
+#  geography_id              :bigint
 #  summary                   :text
 #  at_issue                  :text
 #  created_at                :datetime         not null
@@ -16,13 +16,14 @@
 #  created_by_id             :bigint
 #  updated_by_id             :bigint
 #  discarded_at              :datetime
-#  sector_id                 :bigint
+#  jurisdiction              :string
 #
 
 FactoryBot.define do
   factory :litigation do
-    association :jurisdiction, factory: :geography
-    association :sector, factory: :laws_sector
+    association :geography, factory: :geography
+    jurisdiction { 'Court in Country' }
+    laws_sectors { |a| [a.association(:laws_sector)] }
 
     association :created_by, factory: :admin_user
     association :updated_by, factory: :admin_user

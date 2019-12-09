@@ -1,0 +1,9 @@
+name: Cumalitive number of people iternally displaced due to weather hazards grouped by country
+legend_description: >
+  The <b>colour</b> of the circle represents a cumulative number of people displaced due to weather hazards.
+  The darker the circle, the more people have been displaced.
+ramp: risk
+unit: people
+creator:
+  url: http://www.internal-displacement.org
+  name: Global Internal Displacement Database (GIDD), Internal Displacement Monitoring Center (IDMC)

@@ -12,16 +12,17 @@
     <div class="tab-content">
       <div id="details">
         <%= f.inputs do %>
+          <%= f.input :geography, collection: Geography.order(:name) %>
+          <%= f.input :target_type, as: :select, collection: array_to_select_collection(Target::TYPES) %>
+          <%= f.input :source, as: :select, collection: array_to_select_collection(Target::SOURCES) %>
+          <%= f.input :description, as: :trix %>
+          <%= f.input :sector %>
           <%= f.input :ghg_target %>
           <%= f.input :single_year, hint: 'single or multi year target' %>
           <%= f.input :year %>
           <%= f.input :base_year_period %>
-          <%= f.input :target_type, as: :select, collection: array_to_select_collection(Target::TYPES) %>
-          <%= f.input :geography, collection: Geography.order(:name) %>
-          <%= f.input :sector %>
-          <%= f.input :target_scope %>
+          <%= f.input :scopes_string, label: 'Scopes', hint: t('hint.tag'), as: :tags, collection: Scope.pluck(:name) %>
           <%= f.input :legislation_ids, as: :selected_list, label: 'Connected Laws', fields: [:title], display_name: :title, order: 'title_asc' %>
-          <%= f.input :description, as: :trix %>
           <%= f.input :visibility_status, as: :select %>
         <% end %>
       </div>

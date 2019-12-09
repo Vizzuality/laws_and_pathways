@@ -4,8 +4,6 @@
 #
 #  id                :bigint           not null, primary key
 #  geography_id      :bigint
-#  sector_id         :bigint
-#  target_scope_id   :bigint
 #  ghg_target        :boolean          default(FALSE), not null
 #  single_year       :boolean          default(FALSE), not null
 #  description       :text
@@ -18,6 +16,7 @@
 #  created_by_id     :bigint
 #  updated_by_id     :bigint
 #  discarded_at      :datetime
+#  sector_id         :bigint
 #
 
 class Target < ApplicationRecord
@@ -25,6 +24,7 @@ class Target < ApplicationRecord
   include VisibilityStatus
   include DiscardableModel
   include PublicActivityTrackable
+  include Taggable
 
   TYPES = %w[
     base_year_target
@@ -34,6 +34,7 @@ class Target < ApplicationRecord
     intensity_target_and_trajectory_target
     no_document_submitted
     trajectory_target
+    not_applicable
   ].freeze
 
   EVENT_TYPES = %w[
@@ -42,11 +43,22 @@ class Target < ApplicationRecord
     met
   ].freeze
 
+  SOURCES = %w[
+    framework
+    law
+    ndc
+    plan
+    policy
+    strategy
+  ].freeze
+
+  tag_with :scopes
+
   enum target_type: array_to_enum_hash(TYPES)
+  enum source: array_to_enum_hash(SOURCES)
 
   belongs_to :geography
   belongs_to :sector, class_name: 'LawsSector', foreign_key: 'sector_id'
-  belongs_to :target_scope
   has_many :events, as: :eventable, dependent: :destroy
   has_and_belongs_to_many :legislations
 
@@ -56,6 +68,7 @@ class Target < ApplicationRecord
   validates :single_year, inclusion: {in: [true, false]}
 
   def to_s
-    "Target #{id}"
+    parts = [geography.name, target_type&.humanize, year]
+    parts.compact.join(' - ')
   end
 end

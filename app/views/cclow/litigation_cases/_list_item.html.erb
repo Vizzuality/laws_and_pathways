@@ -1,10 +1,12 @@
 <li class="content-item">
   <h5 class="title"><%= highlight litigation.link, @query %></h5>
   <div class="meta">
-    <div>
-      <img src=<%= asset_path "flags/#{litigation.jurisdiction.iso}.svg"%> alt="">
-      <%= litigation.jurisdiction.name %>
-    </div>
+    <% if litigation.geography %>
+      <div>
+        <img src=<%= asset_path "flags/#{litigation.geography.iso}.svg"%> alt="">
+        <%= litigation.geography.name %>
+      </div>
+    <% end %>
     <% if litigation.started_event.present? %>
       <div>Opened in <%= litigation.started_event.date&.year %></div>
     <% end %>
