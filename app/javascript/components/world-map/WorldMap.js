@@ -172,6 +172,7 @@ function WorldMap({ zoomToGeographyIso }) {
                 key={marker.iso}
                 data-tip=""
                 data-event="click"
+                currentZoom={zoom}
                 onMouseDown={() => {
                   setTooltipGeography(marker.iso);
                 }}
