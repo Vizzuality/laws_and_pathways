@@ -3,8 +3,11 @@ module CCLOW
     class TargetsController < CCLOWController
       def index
         geography = ::Geography.find_by(iso: params[:iso])
-
-        render json: targets_as_json(geography)
+        if geography
+          render json: targets_as_json(geography)
+        else
+          render json: {error: 'not-found'}.to_json, status: 404
+        end
       end
 
       private
@@ -14,9 +17,9 @@ module CCLOW
           {
             id: t.id,
             iso_code3: geography.iso,
-            doc_type: t.source.humanize,
+            doc_type: t.source&.humanize,
             type: t.target_type&.humanize,
-            scope: t.scopes.map(&:name).join(', '),
+            scope: t.scopes&.map(&:name)&.join(', '),
             sector: t.sector&.name,
             description: t.description,
             sources: t.legislations.map do |l|
