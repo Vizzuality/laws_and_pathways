@@ -71,24 +71,4 @@ class Target < ApplicationRecord
     parts = [geography.name, target_type&.humanize, year]
     parts.compact.join(' - ')
   end
-
-  def as_json(options)
-    path = options[:path]
-    {
-      id: id,
-      iso_code3: geography.iso,
-      doc_type: source,
-      type: target_type,
-      scope: scopes.map(&:name).join(', '),
-      sector: sector&.name,
-      description: description,
-      sources: legislations.map do |l|
-        {
-          id: l.id,
-          title: l.title,
-          link: "#{path}/cclow/geographies/#{geography.id}/#{l.route}/#{id}"
-        }
-      end
-    }
-  end
 end

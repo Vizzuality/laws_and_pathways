@@ -96,10 +96,6 @@ class Legislation < ApplicationRecord
     executive?
   end
 
-  def route
-    law? ? 'laws' : 'policies'
-  end
-
   def date_passed
     events.where(event_type: 'law_passed').first&.date
   end
