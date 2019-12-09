@@ -40,11 +40,10 @@ class LegislationAndPolicies extends Component {
           </div>
           <hr />
           <div className="columns">
-            <aside className="column is-one-quarter">
-              <ul className="sidebar">
-                <SearchFilter filterName="Regions and countries" params={filterOption} onChange={(event) => this.filterList(event)} />
-              </ul>
-            </aside>
+            <div className="column is-one-quarter filter-column">
+              <div className="search-by">Narrow this search by</div>
+              <SearchFilter filterName="Regions and countries" params={filterOption} onChange={(event) => this.filterList(event)} />
+            </div>
             <main className="column is-three-quarters" data-controller="content-list">
               <div className="columns pre-content">
                 <span className="column is-half">Showing {count} results</span>
