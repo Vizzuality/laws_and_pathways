@@ -435,3 +435,48 @@ mark {
   left: 10%;
   z-index: 35;
 }
+
+.sidebar__categories {
+  margin-top: 30px;
+
+  & > hr {
+    background-color: $grey-light;
+  }
+
+  .categories {
+    &__container {
+      margin-top: 30px;
+
+      &:first-child {
+        margin-top: 20px;
+      }
+    }
+
+    &__title {
+      font-size: 0.625rem;
+      line-height: 0.938rem;
+      color: $gun-powder;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+    
+    &__tags {
+      display: flex;
+    }
+    
+    &__tag:not(body) {
+      margin-top: 10px;
+      border: none;
+      border-radius: 0;
+      margin-right: 12px;
+      background-color: $grey-light;
+      color: $blue-dark;
+      font-size: 0.75rem;
+      line-height: 0.938rem;
+      
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
