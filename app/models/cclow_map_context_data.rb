@@ -11,11 +11,11 @@ class CCLOWMapContextData
     cumulative_direct_economic_loss_disaters_gdp: {
       file: 'cumalitive_direct_economic_loss_disasters_relative_to_gdp_percent_2005--2018',
       value_column: :cumalitive_direct_economic_loss_disasters_relative_to_gdp_percent
-    },
-    cumulative_weather_idp: {
-      file: 'cumalitive_weather_idp_per_country_2008--2018',
-      value_column: :tot_weather_idp
     }
+    # cumulative_weather_idp: {
+    #   file: 'cumalitive_weather_idp_per_country_2008--2018',
+    #   value_column: :tot_weather_idp
+    # }
   }.freeze
 
   class << self
@@ -33,7 +33,7 @@ class CCLOWMapContextData
         ).map do |row|
           {
             geography_iso: row[:iso3],
-            value: row[value_column]
+            value: row[value_column].to_f
           }
         end
 

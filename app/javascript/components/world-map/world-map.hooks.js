@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import { scaleLinear, scaleQuantize } from 'd3-scale';
+import { scaleLinear, scaleThreshold } from 'd3-scale';
+import { ckmeans } from 'simple-statistics';
 import centroids from './centroids';
 
 import { BUBBLE_MIN_RADIUS, BUBBLE_MAX_RADIUS, COLOR_RAMPS } from './constants';
@@ -17,15 +18,15 @@ export function useScale(layer) {
     const maxSize = Math.max(...allSizeValues) + 1;
     const minSize = Math.min(...allSizeValues);
 
-    const maxColor = Math.max(...allColorValues) + 1;
-    const minColor = Math.min(...allColorValues);
-
     const sizeScale = scaleLinear()
       .domain([minSize, maxSize])
       .range([BUBBLE_MIN_RADIUS, BUBBLE_MAX_RADIUS]);
 
-    const colorScale = scaleQuantize()
-      .domain([minColor, maxColor])
+    const byCkMeans = ckmeans(allColorValues, COLOR_RAMPS[layer.ramp].length);
+    const ckMeansThresholds = byCkMeans.map(bucket => bucket[bucket.length - 1]);
+
+    const colorScale = scaleThreshold()
+      .domain(ckMeansThresholds)
       .range(COLOR_RAMPS[layer.ramp]);
 
     return { sizeScale, colorScale };
@@ -36,17 +37,20 @@ export function useCombinedLayer(selectedContext, selectedContent) {
   return useMemo(() => {
     if (!selectedContext || !selectedContent) return null;
 
-    const features = selectedContext.values.map(cx => {
+    const features = [];
+
+    selectedContext.values.forEach(cx => {
       const contentValue = selectedContent.values.find(cxv => cxv.geography_iso === cx.geography_iso);
 
-      if (!contentValue) return null;
+      if (!contentValue) return;
+      if (features.find(f => f.iso === cx.geography_iso)) return;
 
-      return {
+      features.push({
         iso: cx.geography_iso,
         contentValue: contentValue.value,
         contextValue: cx.value
-      };
-    }).filter(x => x);
+      });
+    });
 
     return {
       ramp: selectedContext.ramp,
