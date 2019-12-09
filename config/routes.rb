@@ -58,6 +58,7 @@ Rails.application.routes.draw do
 
     namespace :api do
       resources :map_indicators, only: :index
+      get 'targets/:iso', to: 'targets#index'
     end
   end
 
