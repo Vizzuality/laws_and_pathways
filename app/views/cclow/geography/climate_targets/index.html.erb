@@ -57,7 +57,9 @@
                       <%= link_to legislation.title, send(path, @geography, legislation) %>
                     </div>
                     <p class="meta">
-                    <span><%= I18n.t("cclow.legislation_types.#{legislation.legislation_type}") %>  |  <%= legislation.date_passed.year %></span>
+                    <span>
+                      <% info = [I18n.t("cclow.legislation_types.#{legislation.legislation_type}"), legislation.date_passed&.year] %>
+                      <%= info.compact.join(' | ') %></span>
                     </p>
                   <% end %>
                 </div>
