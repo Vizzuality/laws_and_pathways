@@ -25,6 +25,7 @@ class Litigation < ApplicationRecord
   include VisibilityStatus
   include DiscardableModel
   include PublicActivityTrackable
+  include PgSearch::Model
   extend FriendlyId
 
   friendly_id :title, use: :slugged, routes: :default
@@ -86,7 +87,18 @@ class Litigation < ApplicationRecord
   enum document_type: array_to_enum_hash(DOCUMENT_TYPES)
 
   scope :started, -> { joins(:events).where('events.event_type = ?', 'case_started') }
-  scope :full_text_query, ->(query) { Queries::CCLOW::LitigationsFullTextQuery.new(query).call }
+
+  pg_search_scope :full_text_search,
+                  associated_against: {
+                    tags: [:name]
+                  },
+                  against: {
+                    title: 'A',
+                    summary: 'B'
+                  },
+                  using: {
+                    tsearch: {prefix: true}
+                  }
 
   tag_with :keywords
   tag_with :responses

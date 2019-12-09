@@ -24,6 +24,7 @@ class Legislation < ApplicationRecord
   include VisibilityStatus
   include DiscardableModel
   include PublicActivityTrackable
+  include PgSearch::Model
   extend FriendlyId
 
   friendly_id :title, use: :slugged, routes: :default
@@ -79,7 +80,18 @@ class Legislation < ApplicationRecord
   scope :laws, -> { legislative }
   scope :policies, -> { executive }
   scope :passed, -> { joins(:events).where('events.event_type = ?', 'law_passed') }
-  scope :full_text_query, ->(query) { Queries::CCLOW::LegislationsFullTextQuery.new(query).call }
+
+  pg_search_scope :full_text_search,
+                  associated_against: {
+                    tags: [:name]
+                  },
+                  against: {
+                    title: 'A',
+                    description: 'B'
+                  },
+                  using: {
+                    tsearch: {prefix: true}
+                  }
 
   with_options allow_destroy: true, reject_if: :all_blank do
     accepts_nested_attributes_for :documents
