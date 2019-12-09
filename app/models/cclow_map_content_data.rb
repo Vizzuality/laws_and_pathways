@@ -28,7 +28,7 @@ class CCLOWMapContentData
         TEXT
         creator: {
           name: 'Grantham Research Institute',
-          url: url.cclow_root_path
+          url: 'http://www.lse.ac.uk/granthamInstitute'
         },
         values: result
       }

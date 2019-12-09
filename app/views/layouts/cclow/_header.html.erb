@@ -11,8 +11,11 @@
   <div class="navbar">
     <div class="container">
       <div class="navbar-brand">
-        <%= link_to cclow_root_path do %>
-          <img src="<%= asset_path 'logo/CCLOW_logo.svg'%>" />
+        <%= link_to 'http://www.lse.ac.uk/' do %>
+          <img class="navbar-logo" src="<%= asset_path 'logo/LSE_logo.svg'%>" />
+        <% end %>
+        <%= link_to 'http://www.lse.ac.uk/granthamInstitute' do %>
+          <img src="<%= asset_path 'logo/RICCE_logo.svg'%>" />
         <% end %>
       </div>
       <div class="navbar-menu">
