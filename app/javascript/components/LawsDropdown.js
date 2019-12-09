@@ -51,13 +51,13 @@ const LawsDropdown = () => {
   };
 
   // SEARCH RESULTS for each category
-  const searchGeographiesResults = results.geographies;
+  const searchGeographiesResults = results.geographies || [];
   const searchLawsResults = results.legislationCount;
   const searchLitigationsResults = results.litigationCount;
   const searchTargetsResults = [];
   // end of search results
 
-  const allSearchResults = [...searchGeographiesResults, ...searchLawsResults, ...searchLitigationsResults, ...searchTargetsResults];
+  const allSearchResultsCount = searchGeographiesResults.length + searchLawsResults + searchLitigationsResults + searchTargetsResults;
 
   const handleCloseDropdown = () => {
     setIsOpen(false);
@@ -97,42 +97,38 @@ const LawsDropdown = () => {
       });
   }, [searchValue]);
 
+  function LawsDropdownCategory({ title, icon, children }) {
+    return (
+      <div className="laws-dropdown__category">
+        <div className="laws-dropdown__category-title">
+          <img className="laws-dropdown__category-icon" src={icon} />
+          <span>{title}</span>
+        </div>
+        {children}
+      </div>
+    );
+  }
+
   const renderAllOptions = (withLastSearch = true) => (
     <>
       {withLastSearch && lastSearch && (
-        <div className="laws-dropdown__category">
-          <div className="laws-dropdown__category-title">
-            <img className="laws-dropdown__category-icon" src={searchAgain} />
-            <span>Last search</span>
-          </div>
+        <LawsDropdownCategory title="Last search" icon={searchAgain}>
           <a href={lastSearchLink} className="laws-dropdown__option">
             <span className="laws-dropdown__option-in-bold">{lastSearch}</span>&nbsp;in {lastSearchCategory}
           </a>
-        </div>
+        </LawsDropdownCategory>
       )}
 
-      <div className="laws-dropdown__category">
-        {/* category title */}
-        <div className="laws-dropdown__category-title">
-          <img className="laws-dropdown__category-icon" src={countryFlag} />
-          <span>Countries and territories</span>
-        </div>
-        {/* options */}
+      <LawsDropdownCategory title="Countries and territories" icon={countryFlag}>
         {(counts.geographies || []).map(geography => (
           <a href={`/cclow/geographies/${geography.id}`} key={geography.slug} className="laws-dropdown__option">
             <span>{geography.name}</span>
             <span className="laws-dropdown__disclaimer">{GEOGRAPHY_TYPES[geography.geography_type]}</span>
           </a>
         ))}
-      </div>
+      </LawsDropdownCategory>
 
-      <div className="laws-dropdown__category">
-        {/* category title */}
-        <div className="laws-dropdown__category-title">
-          <img className="laws-dropdown__category-icon" src={laws} />
-          <span>Laws and policies</span>
-        </div>
-        {/* options */}
+      <LawsDropdownCategory title="Laws and policies" icon={laws}>
         <a href="/cclow/legislation_and_policies" className="laws-dropdown__option">
           <span>All Laws and policies</span>
           <span className="laws-dropdown__disclaimer">{counts.legislationCount}</span>
@@ -141,15 +137,9 @@ const LawsDropdown = () => {
           <span>Most recent additions in Laws and policies</span>
           <span className="laws-dropdown__disclaimer">{counts.recentLegislationCount}</span>
         </a>
-      </div>
+      </LawsDropdownCategory>
 
-      <div className="laws-dropdown__category">
-        {/* category title */}
-        <div className="laws-dropdown__category-title">
-          <img className="laws-dropdown__category-icon" src={legalScale} />
-          <span>Litigation cases</span>
-        </div>
-        {/* options */}
+      <LawsDropdownCategory title="Litigation cases" icon={legalScale}>
         <a href="/cclow/litigation_cases" className="laws-dropdown__option">
           <span>All litigation entries</span>
           <span className="laws-dropdown__disclaimer">{counts.litigationsCount}</span>
@@ -158,15 +148,9 @@ const LawsDropdown = () => {
           <span>Most recent additions in Litigation</span>
           <span className="laws-dropdown__disclaimer">{counts.recentLitigationsCount}</span>
         </a>
-      </div>
+      </LawsDropdownCategory>
 
-      <div className="laws-dropdown__category">
-        {/* category title */}
-        <div className="laws-dropdown__category-title">
-          <img className="laws-dropdown__category-icon" src={target} />
-          <span>Climate targets</span>
-        </div>
-        {/* options */}
+      <LawsDropdownCategory title="Climate targets" icon={target}>
         <a href="/cclow/climate_targets" className="laws-dropdown__option">
           <span>All Climate targets</span>
           <span className="laws-dropdown__disclaimer">{counts.targetsCount}</span>
@@ -175,7 +159,7 @@ const LawsDropdown = () => {
           <span>Most recent additions in Climate targets</span>
           <span className="laws-dropdown__disclaimer">{counts.recentTargetsCount}</span>
         </a>
-      </div>
+      </LawsDropdownCategory>
     </>
   );
 
@@ -216,11 +200,7 @@ const LawsDropdown = () => {
           {searchValue && (
             <>
               {!!searchGeographiesResults.length && (
-                <div className="laws-dropdown__category">
-                  <div className="laws-dropdown__category-title">
-                    <img className="laws-dropdown__category-icon" src={countryFlag} />
-                    <span>{CATEGORIES.countries}</span>
-                  </div>
+                <LawsDropdownCategory title={CATEGORIES.countries} icon={countryFlag}>
                   {searchGeographiesResults.map(geography => (
                     <a
                       href={`/cclow/geographies/${geography.id}`}
@@ -232,14 +212,10 @@ const LawsDropdown = () => {
                       <span className="laws-dropdown__disclaimer">{GEOGRAPHY_TYPES[geography.geography_type]}</span>
                     </a>
                   ))}
-                </div>
+                </LawsDropdownCategory>
               )}
               {results.legislationCount !== undefined && (
-                <div className="laws-dropdown__category">
-                  <div className="laws-dropdown__category-title">
-                    <img className="laws-dropdown__category-icon" src={laws} />
-                    <span>{CATEGORIES.laws}</span>
-                  </div>
+                <LawsDropdownCategory title={CATEGORIES.laws} icon={laws}>
                   <a
                     href={`/cclow/legislation_and_policies?q=${searchValue}`}
                     onClick={() => setLastSearch(searchValue, CATEGORIES.laws, `/cclow/legislation_and_policies?q=${searchValue}`)}
@@ -247,16 +223,12 @@ const LawsDropdown = () => {
                   >
                     <span>Search&nbsp;</span>
                     <span className="laws-dropdown__option-in-bold">{searchValue}</span>&nbsp;in Laws and policies
-                    <span className="laws-dropdown__disclaimer">{results.legislationCount}</span>
+                <span className="laws-dropdown__disclaimer">{results.legislationCount}</span>
                   </a>
-                </div>
+                </LawsDropdownCategory>
               )}
               {results.litigationCount !== undefined && (
-                <div className="laws-dropdown__category">
-                  <div className="laws-dropdown__category-title">
-                    <img className="laws-dropdown__category-icon" src={legalScale} />
-                    <span>{CATEGORIES.litigations}</span>
-                  </div>
+                <LawsDropdownCategory title={CATEGORIES.litigations} icon={legalScale}>
                   <a
                     href={`/cclow/litigation_cases?&q=${searchValue}`}
                     onClick={() => setLastSearch(searchValue, CATEGORIES.litigations, `/cclow/litigation_cases?q=${searchValue}`)}
@@ -264,16 +236,12 @@ const LawsDropdown = () => {
                   >
                     <span>Search&nbsp;</span>
                     <span className="laws-dropdown__option-in-bold">{searchValue}</span>&nbsp;in Litigation
-                    <span className="laws-dropdown__disclaimer">{results.litigationCount}</span>
+                <span className="laws-dropdown__disclaimer">{results.litigationCount}</span>
                   </a>
-                </div>
+                </LawsDropdownCategory>
               )}
               {results.targetCount !== undefined && (
-                <div className="laws-dropdown__category">
-                  <div className="laws-dropdown__category-title">
-                    <img className="laws-dropdown__category-icon" src={target} />
-                    <span>{CATEGORIES.targets}</span>
-                  </div>
+                <LawsDropdownCategory title={CATEGORIES.targets} icon={target}>
                   <a
                     href={`/cclow/climate_targets?q=${searchValue}`}
                     onClick={() => setLastSearch(searchValue, CATEGORIES.targets, `/cclow/climate_targets?q=${searchValue}`)}
@@ -281,19 +249,19 @@ const LawsDropdown = () => {
                   >
                     <span>Search&nbsp;</span>
                     <span className="laws-dropdown__option-in-bold">{searchValue}</span>&nbsp;in Climate targets
-                    <span className="laws-dropdown__disclaimer">{results.targetCount}</span>
+                <span className="laws-dropdown__disclaimer">{results.targetCount}</span>
                   </a>
-                </div>
+                </LawsDropdownCategory>
               )}
             </>
           )}
-          {searchValue && !allSearchResults.length && (
+          {searchValue && allSearchResultsCount === 0 && (
             <>
               <div className="laws-dropdown__category">
                 <div className="no-matches-text">
                   No matches for&nbsp;
                   <span className="laws-dropdown__option-in-bold">{searchValue}</span>,
-                  please try another term or browse the link below
+            please try another term or browse the link below
                 </div>
               </div>
               {renderAllOptions(false)}
