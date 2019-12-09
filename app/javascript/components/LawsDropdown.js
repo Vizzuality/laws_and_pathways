@@ -36,6 +36,10 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
   const lastSearchCategory = localStorage.getItem('lastSearchCategory');
   const lastSearchLink = localStorage.getItem('lastSearchLink');
 
+  const recentlyAddedLaws = lawsAndPolicies.filter(law => law.created_at >= recentDate);
+  const recentlyAddedLitigations = litigations.filter(litigation => litigation.created_at >= recentDate);
+  const recentlyAddedTargets = targets.filter(climateTarget => climateTarget.created_at >= recentDate);
+
   const handleInput = input => {
     setSearchValue(input);
   };
@@ -140,7 +144,7 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
         </a>
         <a href={`/cclow/legislation_and_policies?fromDate=${recentDate}`} className="laws-dropdown__option">
           <span>Most recent additions in Laws and policies</span>
-          <span className="laws-dropdown__disclaimer">todo</span>
+          <span className="laws-dropdown__disclaimer">{recentlyAddedLaws.length}</span>
         </a>
       </div>
 
@@ -156,8 +160,8 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
           <span className="laws-dropdown__disclaimer">{litigations.length}</span>
         </a>
         <div className="laws-dropdown__option">
-          <span>Most recent additions in Litigation {/* TODO: no "opened" date in Litigation Case */}</span>
-          <span className="laws-dropdown__disclaimer">todo</span>
+          <span>Most recent additions in Litigation</span>
+          <span className="laws-dropdown__disclaimer">{recentlyAddedLitigations.length}</span>
         </div>
       </div>
 
@@ -173,8 +177,8 @@ const LawsDropdown = ({ geographies, lawsAndPolicies, litigations, targets, rece
           <span className="laws-dropdown__disclaimer">{targets.length}</span>
         </a>
         <div className="laws-dropdown__option">
-          <span>Most recent additions in Climate targets {/* TODO: in what sense recent? set targets? what's the attribute to filter by? */}</span>
-          <span className="laws-dropdown__disclaimer">todo</span>
+          <span>Most recent additions in Climate targets</span>
+          <span className="laws-dropdown__disclaimer">{recentlyAddedTargets.length}</span>
         </div>
       </div>
     </>
