@@ -1,4 +1,25 @@
 <% content_for :page_title, "Climate Laws - #{@geography.name} - #{@litigation.title}" %>
+
+<% content_for :sidebar do %>
+<div class="sidebar__categories">
+  <hr />
+
+  <div class="categories__container">
+    <p class="categories__title">Category 1</p>
+
+    <span class="tag categories__tag">tag</span>
+    <span class="tag categories__tag">teg</span>
+  </div>
+
+  <div class="categories__container">
+    <p class="categories__title">Category 2</p>
+
+    <span class="tag categories__tag">lorem</span>
+    <span class="tag categories__tag">ipsum</span>
+  </div>
+</div>
+<% end %>
+
 <div class="content-show">
   <h3 class="title"><%= @litigation.title %></h3>
   <div class="meta">
