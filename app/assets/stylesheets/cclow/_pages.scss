@@ -62,6 +62,11 @@
   .about__partners {
     margin-top: 50px;
 
+    & > .column:first-child {
+      display: flex;
+      justify-content: flex-end;
+    }
+
     .logo {
       &__gri {
         height: 60px;
