@@ -6,7 +6,7 @@ module CCLOW
 
       def index
         add_breadcrumb('Litigation cases', request.path)
-        @litigations = @geography.litigations
+        @litigations = @geography.litigations.published
       end
 
       def show

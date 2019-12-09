@@ -50,22 +50,32 @@ module CSVImport
         single_year: (row[:single_year] == 'single year'),
         geography: geographies_names[row[:country]],
         sector: find_or_create_laws_sector(row[:sector]),
+        source: row[:source]&.downcase,
         visibility_status: row[:visibility_status]
       }
     end
 
+    # rubocop:disable Metrics/PerceivedComplexity
+    # rubocop:disable Metrics/CyclomaticComplexity
     def connect_laws(documents)
       return [] unless documents
 
       laws = []
       documents.split(';').each do |doc|
         contents = doc.split('|')
-        next unless contents.size == 3 && contents[1].to_i != 0
+        id = if contents.size == 3 && contents[1].to_i != 0
+               contents[1].to_i
+             elsif contents.size == 1 && contents[0].to_i != 0
+               contents[0].to_i
+             end
+        next unless id
 
-        find_it = Legislation.find(contents[1])
+        find_it = Legislation.find(id)
         laws << find_it
       end
       laws
     end
+    # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/CyclomaticComplexity
   end
 end

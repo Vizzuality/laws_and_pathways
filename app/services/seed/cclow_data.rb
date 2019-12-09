@@ -6,6 +6,17 @@ module Seed
 
     class << self
       delegate :call, to: :instance
+      delegate :call_sources_import, to: :instance
+    end
+
+    def call_sources_import
+      TimedLogger.log('Migrate source files') do
+        Migration::Legislation.migrate_source_files(seed_file('legislation-sources.csv'))
+      end
+
+      TimedLogger.log('Migrate litigations source files') do
+        Migration::Litigation.migrate_source_files(seed_file('litigation-sources.csv'))
+      end
     end
 
     def call
@@ -13,22 +24,19 @@ module Seed
       TimedLogger.log('Import legislation') do
         CSVImport::Legislations.new(seed_file('legislation.csv'), override_id: true).call
       end
-      # update responses from data
       TimedLogger.log('Fill in responses for laws') do
         Migration::Legislation.fill_responses
       end
-      # import source links
       # import instruments
       # import hazards
-
-      ### /Laws ###
 
       ### import Litigations ###
       TimedLogger.log('Import Litigations') do
         CSVImport::Litigations.new(seed_file('litigations.csv'), override_id: true).call
       end
-      # litigation sides
-      # sources links
+      TimedLogger.log('Import Litigations Sides') do
+        CSVImport::LitigationSides.new(seed_file('litigations-sides.csv')).call
+      end
       ### /Litigations
 
       ### import targets ###

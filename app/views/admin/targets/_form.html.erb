@@ -14,6 +14,7 @@
         <%= f.inputs do %>
           <%= f.input :geography, collection: Geography.order(:name) %>
           <%= f.input :target_type, as: :select, collection: array_to_select_collection(Target::TYPES) %>
+          <%= f.input :source, as: :select, collection: array_to_select_collection(Target::SOURCES) %>
           <%= f.input :description, as: :trix %>
           <%= f.input :sector %>
           <%= f.input :ghg_target %>

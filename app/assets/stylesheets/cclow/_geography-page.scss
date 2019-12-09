@@ -275,6 +275,32 @@ $count-description-lines: 2;
       right: 0;
       height: 48px;
       width: 48px;
+
+      & > .icon {
+        margin: 10px;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      & > .icon__paper {
+        background-image: image-url('icons/laws.svg');
+      }
+
+      & > .icon__scale {
+        background-image: image-url('icons/legal-scale.svg');
+      }
+
+      & > .icon__white-flag {
+        background-image: image-url('icons/country-flag.svg');
+      }
+
+      & > .icon__target {
+        background-image: image-url('icons/target.svg');
+      }
+
+      & > .icon__official-building {
+        background-image: image-url('icons/official-building.svg');
+      }
     }
 
     .properties-container {

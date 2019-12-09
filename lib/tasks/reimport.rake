@@ -24,4 +24,11 @@ namespace :reimport do
 
     Seed::CCLOWData.call
   end
+
+  desc 'Reimport CCLOW files data - USE WITH CAUTION'
+  task cclow_sources: :environment do
+    Document.delete_all
+
+    Seed::CCLOWData.call_sources_import
+  end
 end

@@ -43,9 +43,19 @@ class Target < ApplicationRecord
     met
   ].freeze
 
+  SOURCES = %w[
+    framework
+    law
+    ndc
+    plan
+    policy
+    strategy
+  ].freeze
+
   tag_with :scopes
 
   enum target_type: array_to_enum_hash(TYPES)
+  enum source: array_to_enum_hash(SOURCES)
 
   belongs_to :geography
   belongs_to :sector, class_name: 'LawsSector', foreign_key: 'sector_id'
@@ -58,6 +68,7 @@ class Target < ApplicationRecord
   validates :single_year, inclusion: {in: [true, false]}
 
   def to_s
-    "Target #{id}"
+    parts = [geography.name, target_type&.humanize, year]
+    parts.compact.join(' - ')
   end
 end

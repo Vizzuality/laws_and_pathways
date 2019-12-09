@@ -96,6 +96,6 @@ class Legislation < ApplicationRecord
   end
 
   def date_passed
-    nil # ToDo
+    events.where(event_type: 'law_passed').first&.date
   end
 end
