@@ -11,7 +11,17 @@ function MapLegend({ content, context, scales }) {
   if (!context) return null;
 
   const colors = COLOR_RAMPS[context.ramp];
-  const displayContextValue = (color, index) => formatNumber(Math.round(scales.colorScale.invertExtent(color)[index]));
+  const displayContextValue = (color, index) => {
+    const value = Math.round(scales.colorScale.invertExtent(color)[index]);
+
+    if (context.id === 'cumulative_direct_economic_loss_disaters_absolute') {
+      return new Intl.NumberFormat(
+        'en-US', { style: 'currency', currency: 'USD', notation: 'compact', compactDisplay: 'short' }
+      ).format(value);
+    }
+
+    return formatNumber(value);
+  };
   const renderDataSource = (creator) => (
     <a href={creator.url} className="link" target="_blank" rel="noopener noreferrer">{creator.name}</a>
   );
