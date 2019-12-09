@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import qs from 'qs';
 import SearchFilter from '../../SearchFilter';
-
 
 class ClimateTargets extends Component {
   constructor(props) {
@@ -18,9 +18,15 @@ class ClimateTargets extends Component {
   }
 
   filterList = (filterParams) => {
-    let url = '/cclow/climate_targets.json?';
-    url += $.param(filterParams);
-    fetch(url).then((response) => {
+    const params = qs.parse(window.location.search.slice(1));
+    const newParams = {
+      ...params,
+      ...filterParams
+    };
+
+    const newQs = qs.stringify(newParams, { arrayFormat: 'brackets' });
+
+    fetch(`/cclow/climate_targets.json?${newQs}`).then((response) => {
       response.json().then((data) => {
         if (response.ok) {
           this.setState({climate_targets: data.climate_targets, count: data.count});

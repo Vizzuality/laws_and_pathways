@@ -230,20 +230,20 @@ const LawsDropdown = () => {
                   >
                     <span>Search&nbsp;</span>
                     <span className="laws-dropdown__option-in-bold">{searchValue}</span>&nbsp;in Laws and policies
-                <span className="laws-dropdown__disclaimer">{results.legislationCount}</span>
+                    <span className="laws-dropdown__disclaimer">{results.legislationCount}</span>
                   </a>
                 </LawsDropdownCategory>
               )}
               {results.litigationCount !== undefined && (
                 <LawsDropdownCategory title={CATEGORIES.litigations} icon={legalScale}>
                   <a
-                    href={`/cclow/litigation_cases?&q=${searchValue}`}
+                    href={`/cclow/litigation_cases?q=${searchValue}`}
                     onClick={() => setLastSearch(searchValue, CATEGORIES.litigations, `/cclow/litigation_cases?q=${searchValue}`)}
                     className="laws-dropdown__option"
                   >
                     <span>Search&nbsp;</span>
                     <span className="laws-dropdown__option-in-bold">{searchValue}</span>&nbsp;in Litigation
-                <span className="laws-dropdown__disclaimer">{results.litigationCount}</span>
+                    <span className="laws-dropdown__disclaimer">{results.litigationCount}</span>
                   </a>
                 </LawsDropdownCategory>
               )}
@@ -256,7 +256,7 @@ const LawsDropdown = () => {
                   >
                     <span>Search&nbsp;</span>
                     <span className="laws-dropdown__option-in-bold">{searchValue}</span>&nbsp;in Climate targets
-                <span className="laws-dropdown__disclaimer">{results.targetCount}</span>
+                    <span className="laws-dropdown__disclaimer">{results.targetCount}</span>
                   </a>
                 </LawsDropdownCategory>
               )}

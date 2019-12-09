@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import qs from 'qs';
 import SearchFilter from '../../SearchFilter';
 
 
@@ -18,9 +19,15 @@ class LitigationCases extends Component {
   }
 
   filterList = (filterParams) => {
-    let url = '/cclow/litigation_cases.json?';
-    url += $.param(filterParams);
-    fetch(url).then((response) => {
+    const params = qs.parse(window.location.search.slice(1));
+    const newParams = {
+      ...params,
+      ...filterParams
+    };
+
+    const newQs = qs.stringify(newParams, { arrayFormat: 'brackets' });
+
+    fetch(`/cclow/litigation_cases.json?${newQs}`).then((response) => {
       response.json().then((data) => {
         if (response.ok) {
           this.setState({litigations: data.litigations, count: data.count});

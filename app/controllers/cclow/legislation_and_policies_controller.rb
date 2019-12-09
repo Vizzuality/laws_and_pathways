@@ -8,7 +8,10 @@ module CCLOW
       @legislations = CCLOW::LegislationDecorator.decorate_collection(
         Queries::CCLOW::LegislationQuery.new(params).call
       )
-      geography_options = {field_name: 'geography', options: ::Geography.all.map { |l| {value: l.id, label: l.name} }}
+      geography_options = {
+        field_name: 'geography',
+        options: ::Geography.published.map { |l| {value: l.id, label: l.name} }
+      }
       region_options = {field_name: 'region', options: ::Geography::REGIONS.map { |l| {value: l, label: l} }}
 
       respond_to do |format|
