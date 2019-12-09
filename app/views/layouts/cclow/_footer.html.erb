@@ -11,7 +11,7 @@
             <% end %>
           <% end %>
           <% if @footer_pages.any? %>
-            <% @header_pages.each do |page| %>
+            <% @footer_pages.each do |page| %>
               <li><a href="<%= page[:slug] %>"><%= page[:title] %></a></li>
             <% end %>
           <% end %>
