@@ -39,7 +39,7 @@
     <li>
       <div class="climate-targets-section">
         <div class="nav">
-          <h5>Climate targets in this law</h5>
+          <h5>National laws and policies</h5>
           <span class="counter"><%= pluralize(@climate_targets.count, 'target') %></span>
         </div>
         <ul>
@@ -49,14 +49,16 @@
                 <%= target.description&.html_safe %>
               </div>
               <div class="tags">Economy Wide | <%= I18n.t("cclow.target_types.#{target.target_type}") %> | Target year: 2050 | Base year: 1990</div>
-              <div class="source">Source:
-                <% target.legislations.each do |legislation|%>
-                  <div class="name"><%= legislation.title %></div>
-                  <p class="meta">
+              <% if target.legislations.any? %>
+                <div class="source">Source:
+                  <% target.legislations.each do |legislation|%>
+                    <div class="name"><%= legislation.title %></div>
+                    <p class="meta">
                     <span><%= I18n.t("cclow.legislation_types.#{legislation.legislation_type}") %>  |  <%= legislation.date_passed.year %></span>
-                  </p>
-                <% end %>
-              </div>
+                    </p>
+                  <% end %>
+                </div>
+              <% end %>
             </li>
           <% end %>
         </ul>
