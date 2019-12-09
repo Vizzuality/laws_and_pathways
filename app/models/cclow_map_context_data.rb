@@ -33,7 +33,7 @@ class CCLOWMapContextData
         ).map do |row|
           {
             geography_iso: row[:iso3],
-            value: row[value_column]
+            value: row[value_column].to_f
           }
         end
 
