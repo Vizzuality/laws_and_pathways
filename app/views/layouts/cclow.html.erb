@@ -9,7 +9,7 @@
     <%= javascript_pack_tag 'cclow' %>
   </head>
   <body>
-    <% if current_page?(cclow_root_path) %>
+    <% if controller_name == 'home' && action_name == 'index'  %>
       <%= render "cclow/home/hero" %>
     <% else %>
       <%= render "layouts/cclow/header" %>
