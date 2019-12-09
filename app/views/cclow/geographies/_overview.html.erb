@@ -1,7 +1,7 @@
-<% list = [{caption: 'Laws', count: geography_overview.number_of_laws, img: 'paper'},
-           {caption: 'Policies', count: geography_overview.number_of_policies, img: 'official-building'},
-           {caption: 'Litigation cases', count: geography_overview.number_of_litigation_cases, img: 'scale'},
-           {caption: 'Climate targets', count: geography_overview.number_of_targets, img: 'target'}] %>
+<% list = [{caption: 'Laws', count: geography_overview.number_of_laws, img: 'paper', link: cclow_geography_laws_path(geography)},
+           {caption: 'Policies', count: geography_overview.number_of_policies, img: 'official-building', link: cclow_geography_policies_path(geography)},
+           {caption: 'Litigation cases', count: geography_overview.number_of_litigation_cases, img: 'scale', link: cclow_geography_litigation_cases_path(geography)},
+           {caption: 'Climate targets', count: geography_overview.number_of_targets, img: 'target', link: cclow_geography_climate_targets_path(geography)}] %>
 <% properties = [{caption: 'Region', value: geography.region, question: false},
                  {caption: 'Rank as emitter', question: true},
                  {caption: 'Paris Agreement ratification status', question: false},
@@ -17,7 +17,11 @@
           <div><%= item[:caption] %></div>
           <div class="indicator-value">
             <div class="value-container">
-              <%= item[:count] %>
+              <% if item[:count] > 0 %>
+                <%= link_to item[:count], item[:link] %>
+              <% else %>
+                <%= item[:count] %>
+              <% end %>
             </div>
             <div class="item-name-block">
               <div class="img-type-container">
