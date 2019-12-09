@@ -6,7 +6,6 @@ module CCLOW
       before_action :set_search_attributes, :set_recent_additions_attributes
     end
 
-    # rubocop:disable Metrics/AbcSize
     def set_search_attributes
       geography_columns = ::Geography.attribute_names -
         %w[created_at updated_at created_by_id updated_by_id discarded_at]
@@ -28,13 +27,6 @@ module CCLOW
         %w[id geography_id target_scope_id created_at updated_at created_by_id updated_by_id discarded_at sector_id]
       @search_targets = Target.published
         .joins(:geography).select(:id, target_columns, 'geographies.name as geography_name')
-      @query = params[:q]
-    end
-    # rubocop:enable Metrics/AbcSize
-
-        %w[id geography_id target_scope_id updated_at created_by_id updated_by_id discarded_at sector_id]
-      @search_targets = Target.joins(:geography).select(:id, target_columns, 'geographies.name as geography_name')
-
       @query = params[:q]
     end
 
