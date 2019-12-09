@@ -55,6 +55,10 @@ Rails.application.routes.draw do
     resources :climate_targets, only: :index
     resources :legislation_and_policies, only: :index
     resources :litigation_cases, only: :index
+
+    namespace :api do
+      resources :map_indicators, only: :index
+    end
   end
 
   devise_for :admin_users, ActiveAdmin::Devise.config

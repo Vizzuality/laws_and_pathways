@@ -39,7 +39,7 @@
     <div class="topic-details">
       The Climate Change Laws of the World map helps understand our database information in context by showing climate laws, policies, and litigation cases in relation to key climate-related indicators.
       <section class="section is-medium">
-        <%= render 'map' %>
+        <%= react_component("world-map/WorldMap", zoomToGeographyIso: @geography.iso) %>
       </section>
     </div>
   </section>

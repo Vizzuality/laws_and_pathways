@@ -1,0 +1,9 @@
+name: Carbon dioxide emissions from the use of fossil fuel and the manufacture of cement (MtCO2e)
+legend_description: >
+  The <b>colour</b> of the circle represents Carbon dioxide emissions from the use of fossil fuel and the manufacture of cement (MtCO2e).
+  The darker the circle, the higher the emissions.
+ramp: emissions
+unit: MtCO2e
+creator:
+  url: https://ourworldindata.org
+  name: Our World In Data - Global Change Data Lab, Oxford University

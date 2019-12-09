@@ -10,7 +10,7 @@ module Seed
     end
 
     def call_sources_import
-     TimedLogger.log('Migrate source files') do
+      TimedLogger.log('Migrate source files') do
         Migration::Legislation.migrate_source_files(seed_file('legislation-sources.csv'))
       end
 

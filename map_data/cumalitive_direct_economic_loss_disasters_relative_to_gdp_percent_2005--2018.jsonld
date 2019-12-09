@@ -1,0 +1,23 @@
+{
+  "@context": "http://schema.org",
+  "type": "Dataset",
+  "temporalCoverage": "2005/2018",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "keywords": ["United Nations Statistics Division", "SDG", "1.5.2", "GDP", "Disaster", "Cumulative"],
+  "isBasedOn": "https://unstats.un.org/sdgs/indicators/database/",
+  "isAccessibleForFree": true,
+  "creator": {
+    "type": "Organization",
+    "contactPoint": {
+      "type": "ContactPoint",
+      "faxNumber": "+1 (212) 963 9851",
+      "email": "statistics@un.org",
+      "contactType": "customer service"
+    },
+    "url": "https://unstats.un.org",
+    "name": "United Nations Statistics Division, Development Data and Outreach Branch"
+  },
+  "sameAs": "https://unstats.un.org/sdgs/metadata/files/Metadata-01-05-02.pdf",
+  "name": "Cumulative direct economic loss attributed to disasters relative to global GDP (%)",
+  "description": "This dataset measures the cumalitive ratio of direct economic loss attributed to disasters in relation to global GDP grouped per country between 2005 and 2018. Direct economic loss is the monetary value of total or partial destruction of physical assets existing in the affected area. Direct economic loss is nearly equivalent to physical damage. Examples of physical assets that are the basis for calculating direct economic loss include homes, schools, hospitals, commercial and governmental buildings, transport, energy, telecommunications infrastructures and other infrastructure; business assets and industrial plants; production such as crops, livestock and production infrastructure. They may also encompass environmental assets and cultural heritage.Direct economic losses usually happen during the event or within the first few hours after the event and are often assessed soon after the event to estimate recovery cost and claim insurance payments. These are tangible and relatively easy to measure. The original time series data from the United Nations Statistics Division, Development Data and Outreach Branch SDG 1.5.2 between 2005 and 2018 were summed per country."
+}

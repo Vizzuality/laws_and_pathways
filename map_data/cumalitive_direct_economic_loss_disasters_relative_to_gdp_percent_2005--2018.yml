@@ -1,0 +1,9 @@
+name: Cumulative direct economic loss attributed to disasters relative to global GDP (%)
+ramp: risk
+legend_description: >
+  The <b>colour</b> of the circle represents a cumulative direct economic loss relative to global GDP.
+  The darker the circle, the higher the loss.
+unit: '%'
+creator:
+  url: https://unstats.un.org
+  name: United Nations Statistics Division, Development Data and Outreach Branch
