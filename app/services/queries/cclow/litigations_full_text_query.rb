@@ -14,7 +14,7 @@ module Queries
       private
 
       def litigation_ids
-        Litigation.find_by_sql([full_text_sql, @query]).pluck(:id)
+        Litigation.find_by_sql([full_text_sql, @query + ':*']).pluck(:id)
       end
 
       def full_text_sql

@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
 // import search from '../../assets/images/icons/search.svg';
 import searchAgain from '../../assets/images/icons/search-again.svg';
@@ -25,6 +26,24 @@ const CATEGORIES = {
   targets: 'Climate targets'
 };
 
+function LawsDropdownCategory({ title, icon, children }) {
+  return (
+    <div className="laws-dropdown__category">
+      <div className="laws-dropdown__category-title">
+        <img className="laws-dropdown__category-icon" src={icon} />
+        <span>{title}</span>
+      </div>
+      {children}
+    </div>
+  );
+}
+
+LawsDropdownCategory.propTypes = {
+  title: PropTypes.string.isRequired,
+  icon: PropTypes.object.isRequired,
+  children: PropTypes.any.isRequired
+};
+
 const LawsDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -41,7 +60,7 @@ const LawsDropdown = () => {
     setSearchValue(input);
   };
 
-  const delaySettingInput = useCallback(debounce(value => handleInput(value), 400));
+  const delaySettingInput = useCallback(debounce(value => handleInput(value), 300));
   const handleInputThrottled = e => delaySettingInput(e.target.value);
 
   const setLastSearch = (s, category, link) => {
@@ -96,18 +115,6 @@ const LawsDropdown = () => {
         setResults(data);
       });
   }, [searchValue]);
-
-  function LawsDropdownCategory({ title, icon, children }) {
-    return (
-      <div className="laws-dropdown__category">
-        <div className="laws-dropdown__category-title">
-          <img className="laws-dropdown__category-icon" src={icon} />
-          <span>{title}</span>
-        </div>
-        {children}
-      </div>
-    );
-  }
 
   const renderAllOptions = (withLastSearch = true) => (
     <>

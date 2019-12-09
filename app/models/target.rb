@@ -62,6 +62,8 @@ class Target < ApplicationRecord
   has_many :events, as: :eventable, dependent: :destroy
   has_and_belongs_to_many :legislations
 
+  scope :full_text_query, ->(query) { Queries::CCLOW::TargetsFullTextQuery.new(query).call }
+
   accepts_nested_attributes_for :events, allow_destroy: true, reject_if: :all_blank
 
   validates :ghg_target, inclusion: {in: [true, false]}

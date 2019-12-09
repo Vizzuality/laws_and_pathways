@@ -6,10 +6,12 @@ module CCLOW
       def index
         query = params[:q]
 
+        return render json: {} unless query.present?
+
         render json: {
           litigationCount: Litigation.published.full_text_query(query).size,
           legislationCount: Legislation.published.full_text_query(query).size,
-          targetCount: Target.published.size,
+          targetCount: Target.published.full_text_query(query).size,
           geographies: ::Geography.published.full_text_query(query).select(:id, :name, :slug, :geography_type, :iso)
         }
       end

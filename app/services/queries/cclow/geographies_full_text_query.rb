@@ -14,7 +14,7 @@ module Queries
       private
 
       def geography_ids
-        Geography.find_by_sql([full_text_sql, @query]).pluck(:id)
+        Geography.find_by_sql([full_text_sql, {query: @query + ':*'}])
       end
 
       def full_text_sql
@@ -23,15 +23,15 @@ module Queries
           FROM (
             SELECT
               g.id as gid,
-  		        to_tsvector(g.name) ||
-  		        to_tsvector(g.legislative_process) ||
-              to_tsvector(g.region) ||
-  		        to_tsvector(coalesce((string_agg(tag.name, ' ')), '')) as document
+  		        setweight(to_tsvector(g.name), 'A') ||
+              setweight(to_tsvector(g.region), 'B') ||
+              setweight(to_tsvector(coalesce((string_agg(tag.name, ' ')), '')), 'C') ||
+  		        setweight(to_tsvector(g.legislative_process), 'D') as document
             FROM geographies g
               LEFT JOIN taggings tg ON tg.taggable_id = g.id AND tg.taggable_type = 'Geography'
               LEFT JOIN tags tag on tag.id = tg.tag_id
             GROUP BY g.id) g_search
-          WHERE g_search.document @@ to_tsquery(?)
+          WHERE g_search.document @@ to_tsquery(:query)
         SQL
       end
     end
