@@ -14,7 +14,8 @@ module Api
 
     # rubocop:disable Metrics/AbcSize
     def serialize_litigations
-      CCLOW::LitigationDecorator.decorate_collection(Litigation.published.last(@count)).map do |item|
+      litigations = Litigation.published.order(:created_at).last(@count)
+      CCLOW::LitigationDecorator.decorate_collection(litigations).map do |item|
         addition_type = item.events.last&.event_type&.humanize if item.events.last&.event_type.present?
 
         {kind: 'Litigation cases',
@@ -30,10 +31,11 @@ module Api
     # rubocop:enable Metrics/AbcSize
 
     def serialize_legislations
-      CCLOW::LegislationDecorator.decorate_collection(Legislation.published.last(@count)).map do |item|
+      legislation = Legislation.published.order(:created_at).last(@count)
+      CCLOW::LegislationDecorator.decorate_collection(legislation).map do |item|
         {kind: 'Laws and policies',
          title: item.title,
-         date_passed: item.updated_at&.year,
+         date_passed: item.date_passed&.year,
          iso: item.geography.iso,
          addition_type: I18n.t("cclow.legislation_types.#{item.legislation_type}"),
          jurisdiction: item.geography,
