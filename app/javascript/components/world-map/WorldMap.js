@@ -1,4 +1,5 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 import {
   ComposableMap,
@@ -7,7 +8,9 @@ import {
   Geographies
 } from 'react-simple-maps';
 import Select from 'react-select';
+import { geoPath } from 'd3-geo';
 import { geoCylindricalEqualArea } from 'd3-geo-projection';
+import { feature } from 'topojson-client';
 import reducer, { initialState } from './world-map.reducer';
 import { useMarkers, useScale, useCombinedLayer } from './world-map.hooks';
 
@@ -21,25 +24,32 @@ import PlusIcon from 'images/cclow/icons/plus.svg';
 const geoUrl = 'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json';
 const PetersGall = geoCylindricalEqualArea().parallel(45);
 
-function WorldMap() {
+function WorldMap({ zoomToGeographyIso }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
     data,
+    center,
+    geos,
     selectedContentId,
     selectedContextId,
     tooltipGeography,
     zoom
   } = state;
 
+  const mapContainer = useRef(null);
+
   const zoomIn = () => dispatch({ type: 'zoomIn' });
   const zoomOut = () => dispatch({ type: 'zoomOut' });
   const onZoomEnd = (e, position) => dispatch({ type: 'zoomEnd', payload: position });
 
   const setData = (d) => dispatch({ type: 'setData', payload: d });
+  const setGeos = (newGeos) => dispatch({ type: 'setGeos', payload: newGeos });
 
   const context = (data || {}).context || [];
   const content = (data || {}).content || [];
   const geographiesDB = (data || {}).geographies || [];
+
+  const setCenter = newCenter => dispatch({ type: 'setCenter', payload: newCenter });
 
   // tooltip
   const setTooltipGeography = iso => dispatch({ type: 'setTooltipGeography', payload: geographiesDB.find(g => g.iso === iso) });
@@ -72,9 +82,41 @@ function WorldMap() {
       });
   }, []);
 
+  useEffect(() => {
+    fetch(geoUrl)
+      .then((response) => response.json())
+      .then((json) => {
+        setGeos(json);
+
+        if (zoomToGeographyIso) {
+          const feats = feature(
+            json,
+            json.objects[Object.keys(json.objects)[0]]
+          ).features;
+
+          const geoFeature = feats.find(g => g.properties.ISO_A3 === zoomToGeographyIso);
+          if (geoFeature) zoomToGeography(geoFeature);
+        }
+      });
+  }, []);
+
+  const zoomToGeography = (geo) => {
+    const path = geoPath().projection(PetersGall);
+    const newCenter = PetersGall.invert(path.centroid(geo));
+
+    // calculate zoom level
+    const bounds = path.bounds(geo);
+    const dx = bounds[1][0] - bounds[0][0];
+    const dy = bounds[1][1] - bounds[0][1];
+    const newZoom = 0.9 / Math.max(dx / mapContainer.current.clientWidth, dy / 642);
+
+    setCenter(newCenter);
+    onZoomEnd(null, { zoom: newZoom });
+  };
+
   return (
     <React.Fragment>
-      <div className="world-map__container">
+      <div ref={mapContainer} className="world-map__container">
         <div className="world-map__controls">
           <button type="button" onClick={zoomIn} className="button world-map__controls-zoom-in">
             <img src={PlusIcon} alt="zoom-in" />
@@ -111,10 +153,11 @@ function WorldMap() {
         >
           <ZoomableGroup
             zoom={zoom}
+            center={center}
             onZoomEnd={onZoomEnd}
             className="world-map__zoomable-group"
           >
-            <Geographies geography={geoUrl} className="world-map__geographies">
+            <Geographies geography={geos} className="world-map__geographies">
               {({ geographies }) => geographies.map(geo => (
                 <Geography
                   key={geo.rsmKey}
@@ -153,5 +196,13 @@ function WorldMap() {
     </React.Fragment>
   );
 }
+
+WorldMap.defaultProps = {
+  zoomToGeographyIso: ''
+};
+
+WorldMap.propTypes = {
+  zoomToGeographyIso: PropTypes.string
+};
 
 export default WorldMap;

@@ -5,6 +5,8 @@ const MAX_ZOOM = 12;
 
 export const initialState = {
   zoom: 1,
+  center: [0, 0],
+  geos: [],
   data: {},
   selectedContextId: undefined,
   selectedContentId: undefined,
@@ -31,6 +33,12 @@ export default function worldMapReducer(state, action) {
       const selectedContentId = get(action.payload, 'content[0].id');
 
       return { ...state, selectedContextId, selectedContentId, data: action.payload };
+    }
+    case 'setGeos': {
+      return { ...state, geos: action.payload };
+    }
+    case 'setCenter': {
+      return { ...state, center: action.payload };
     }
     case 'setContextId': {
       return { ...state, selectedContextId: action.payload };

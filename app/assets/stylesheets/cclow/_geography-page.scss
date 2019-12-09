@@ -1,6 +1,5 @@
 @import 'variables';
 @import 'events_timeline';
-@import 'map';
 
 $count-description-lines: 2;
 
@@ -361,6 +360,14 @@ $count-description-lines: 2;
 
       .search-text {
         color: $blue-dark;
+      }
+    }
+  }
+
+  .world-map__legend {
+    .img-describe {
+      .rectangle {
+        width: 40px;
       }
     }
   }
