@@ -52,7 +52,10 @@
               <% if target.legislations.any? %>
                 <div class="source">Source:
                   <% target.legislations.each do |legislation|%>
-                    <div class="name"><%= legislation.title %></div>
+                    <div class="name">
+                      <% path = legislation.policy? ? 'cclow_geography_policy_path' : 'cclow_geography_law_path' %>
+                      <%= link_to legislation.title, send(path, @geography, legislation) %>
+                    </div>
                     <p class="meta">
                     <span><%= I18n.t("cclow.legislation_types.#{legislation.legislation_type}") %>  |  <%= legislation.date_passed.year %></span>
                     </p>
