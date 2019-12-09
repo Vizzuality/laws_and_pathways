@@ -37,17 +37,20 @@ export function useCombinedLayer(selectedContext, selectedContent) {
   return useMemo(() => {
     if (!selectedContext || !selectedContent) return null;
 
-    const features = selectedContext.values.map(cx => {
+    const features = [];
+
+    selectedContext.values.forEach(cx => {
       const contentValue = selectedContent.values.find(cxv => cxv.geography_iso === cx.geography_iso);
 
-      if (!contentValue) return null;
+      if (!contentValue) return;
+      if (features.find(f => f.iso === cx.geography_iso)) return;
 
-      return {
+      features.push({
         iso: cx.geography_iso,
         contentValue: contentValue.value,
         contextValue: cx.value
-      };
-    }).filter(x => x);
+      });
+    });
 
     return {
       ramp: selectedContext.ramp,
