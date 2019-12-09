@@ -15,9 +15,8 @@ module Api
     # rubocop:disable Metrics/AbcSize
     def serialize_litigations
       CCLOW::LitigationDecorator.decorate_collection(Litigation.published.last(@count)).map do |item|
-        addition_type = if item.events.last&.event_type.present?
-                          I18n.t("cclow.litigation.event_types.#{item.events.last&.event_type}")
-                        end
+        addition_type = item.events.last&.event_type&.humanize if item.events.last&.event_type.present?
+
         {kind: 'Litigation cases',
          title: item.title,
          date_passed: item.started_event&.date&.year,
