@@ -5,6 +5,28 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <% title = 'Climate Change Laws of the World' %>
+    <% description = "Climate change Laws of the World and Climate Change Litigation of the World build on several years of data collection by both the Grantham Research Institute and the Sabin Center, including the collaboration of Grantham Institute with GLOBE International on a series of Climate Legislation Studies."%>
+    <% img_src = image_url('cclow.png', skip_pipeline: true) %>
+
+    <meta itemprop="name" content="<%= title %>">
+    <meta itemprop="description" content="<%= description %>">
+    <meta name="description" content="<%= description %>">
+    <meta name="keywords" content="climate change,legislation,laws,policies,litigation cases">
+    <meta name="author" content="Vizzuality">
+    <meta property="og:title" content="<%= title %>">
+    <meta property="og:description" content="<%= description %>">
+    <meta property="og:image" content="<%= img_src %>">
+    <meta property="og:url" content="<%= request.original_url %>">
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:site" content="@GRI_LSE"/>
+    <meta name="twitter:title" content="<%= title %>"/>
+    <meta name="twitter:creator" content="@GRI_LSE"/>
+    <meta name="twitter:description" content="<%= description %>"/>
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:image" content="<%= img_src %>"/>
+
     <%= stylesheet_link_tag 'cclow' %>
     <%= javascript_pack_tag 'cclow' %>
   </head>
