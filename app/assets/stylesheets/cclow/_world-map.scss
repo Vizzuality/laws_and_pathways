@@ -157,6 +157,7 @@
 
       &> * {
         text-align: center;
+        flex: 1;
       }
 
       .circle {
@@ -168,7 +169,6 @@
       .rectangle {
         height: 18px;
         margin: 0.5rem;
-        width: 57px;
       }
     }
   }
