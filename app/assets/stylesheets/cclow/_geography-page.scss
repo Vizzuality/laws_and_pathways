@@ -407,6 +407,25 @@ $count-description-lines: 2;
       margin-bottom: 1.5rem;
     }
   }
+
+  .tags {
+    border-bottom: solid 1px $grey-light;
+    padding-bottom: 1rem;
+
+    .tag {
+      font-size: $size-8;
+      height: 30px;
+      margin-right: 1rem;
+
+      .delete {
+        background-color: inherit;
+
+        &:after, &:before {
+          background-color: $blue-dark;
+        }
+      }
+    }
+  }
 }
 
 mark {

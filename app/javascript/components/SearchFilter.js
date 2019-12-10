@@ -1,38 +1,50 @@
-import React, { useState, useEffect, useCallback, useRef, Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
 import search from '../../assets/images/icons/search.svg';
 import minus from '../../assets/images/icons/dark-minus.svg';
 import plus from '../../assets/images/icons/dark-plus.svg';
 
 
-const SearchFilter = ({filterName, params, onChange}) => {
-  const [isShowOptions, setShowOptions] = useState(false);
-  const [selectedList, setSelectedList] = useState({});
-  const [searchValue, setSearchValue] = useState('');
-  const optionsContainer = useRef(null);
-  let selectedCount = 0;
-  Object.values(selectedList).forEach(list => { selectedCount += list.length; });
+class SearchFilter extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isShowOptions: false,
+      selectedList: {},
+      searchValue: ''
+    };
 
-  const listBlocks = [];
-  for (let i = 0; i < params.length; i += 1) {
-    listBlocks[i] = Object.assign({}, params[i]);
-    if (searchValue) {
-      listBlocks[i].options = listBlocks[i].options.concat().filter(item => item.label.toLowerCase().includes(searchValue.toLowerCase()));
-    }
+    this.optionsContainer = React.createRef();
   }
 
-  const handleCloseOptions = () => {
-    setSearchValue('');
-    setShowOptions(false);
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', this.handleClickOutside);
+    };
+  }
+
+  setShowOptions = value => this.setState({isShowOptions: value});
+
+  setSelectedList = value => this.setState({selectedList: value});
+
+  setSearchValue = value => this.setState({searchValue: value});
+
+  handleCloseOptions = () => {
+    this.setSearchValue('');
+    this.setShowOptions(false);
   };
 
-  const handleClickOutside = useCallback((event) => {
-    if (optionsContainer.current && !optionsContainer.current.contains(event.target)) {
-      handleCloseOptions();
+  handleClickOutside = (event) => {
+    if (this.optionsContainer.current && !this.optionsContainer.current.contains(event.target)) {
+      this.handleCloseOptions();
     }
-  }, []);
+  };
 
-  const handleCheckItem = (blockName, value) => {
+  handleCheckItem = (blockName, value) => {
+    const {selectedList} = this.state;
+    const {onChange} = this.props;
     const blocks = Object.assign({}, selectedList);
     if ((blocks[blockName] || []).includes(value)) {
       blocks[blockName] = blocks[blockName].filter(item => item !== value);
@@ -42,22 +54,14 @@ const SearchFilter = ({filterName, params, onChange}) => {
       blocks[blockName].push(value);
     }
     onChange(blocks);
-    setSelectedList(blocks);
+    this.setSelectedList(blocks);
   };
 
-  const handleSearchInput = e => setSearchValue(e.target.value);
-  const itemIsSelected = (fieldName, value) => selectedList[fieldName] && selectedList[fieldName].includes(value);
+  handleSearchInput = e => this.setSearchValue(e.target.value);
 
+  itemIsSelected = (fieldName, value) => this.state.selectedList[fieldName] && this.state.selectedList[fieldName].includes(value);
 
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  const renderBlockList = (block, index) => {
+  renderBlockList = (block, index) => {
     const {options, field_name: fieldName} = block;
     if ((options || []).length === 0) return null;
     return (
@@ -65,10 +69,10 @@ const SearchFilter = ({filterName, params, onChange}) => {
         { index !== 0 && <hr /> }
         <ul>
           {options.map(option => (
-            <li key={option.value} onClick={() => handleCheckItem(fieldName, option.value)}>
-              <input type="checkbox" hidden checked={itemIsSelected(fieldName, option.value) || false} onChange={() => {}} />
-              <div className={`${itemIsSelected(fieldName, option.value) ? 'checked' : 'unchecked'} select-checkbox`}>
-                {itemIsSelected(fieldName, option.value) && <i className="fa fa-check" />}
+            <li key={option.value} onClick={() => this.handleCheckItem(fieldName, option.value)}>
+              <input type="checkbox" hidden checked={this.itemIsSelected(fieldName, option.value) || false} onChange={() => {}} />
+              <div className={`${this.itemIsSelected(fieldName, option.value) ? 'checked' : 'unchecked'} select-checkbox`}>
+                {this.itemIsSelected(fieldName, option.value) && <i className="fa fa-check" />}
               </div>
               <label>{option.label}</label>
             </li>
@@ -78,39 +82,58 @@ const SearchFilter = ({filterName, params, onChange}) => {
     );
   };
 
-  const renderOptions = () => (
-    <div className="options-container" ref={optionsContainer}>
-      <div className="select-field" onClick={handleCloseOptions}>
-        <span>{filterName}</span><span className="toggle-indicator"><img src={minus} alt="" /></span>
-      </div>
-      <div>
-        <div className="search-input-container">
-          <input id="search-input" type="text" onChange={handleSearchInput} />
-          <label htmlFor="search-input">
-            <img src={search} />
-          </label>
+  renderOptions = () => {
+    const {searchValue} = this.state;
+    const {filterName, params} = this.props;
+    const listBlocks = [];
+    for (let i = 0; i < params.length; i += 1) {
+      listBlocks[i] = Object.assign({}, params[i]);
+      if (searchValue) {
+        listBlocks[i].options = listBlocks[i]
+          .options.concat().filter(item => item.label.toLowerCase().includes(searchValue.toLowerCase()));
+      }
+    }
+    return (
+      <div className="options-container" ref={this.optionsContainer}>
+        <div className="select-field" onClick={this.handleCloseOptions}>
+          <span>{filterName}</span><span className="toggle-indicator"><img src={minus} alt="" /></span>
         </div>
-        <div className="options-list">
-          {listBlocks.map((blockList, i) => renderBlockList(blockList, i))}
-        </div>
-      </div>
-    </div>
-  );
-
-  return (
-    <Fragment>
-      <div className="filter-container">
-        <div className="control-field" onClick={() => setShowOptions(true)}>
-          <div className="select-field">
-            <span>{filterName}</span><span className="toggle-indicator"><img src={plus} alt="" /></span>
+        <div>
+          <div className="search-input-container">
+            <input id="search-input" type="text" onChange={this.handleSearchInput} />
+            <label htmlFor="search-input">
+              <img src={search} />
+            </label>
           </div>
-          {selectedCount !== 0 && <div className="selected-count">{selectedCount} selected</div>}
+          <div className="options-list">
+            {listBlocks.map((blockList, i) => this.renderBlockList(blockList, i))}
+          </div>
         </div>
-        { isShowOptions && renderOptions()}
       </div>
-    </Fragment>
-  );
-};
+    );
+  };
+
+  render() {
+    const {selectedList, isShowOptions} = this.state;
+    const {filterName} = this.props;
+    let selectedCount = 0;
+    Object.values(selectedList).forEach(list => { selectedCount += list.length; });
+
+    return (
+      <Fragment>
+        <div className="filter-container">
+          <div className="control-field" onClick={() => this.setShowOptions(true)}>
+            <div className="select-field">
+              <span>{filterName}</span><span className="toggle-indicator"><img src={plus} alt="" /></span>
+            </div>
+            {selectedCount !== 0 && <div className="selected-count">{selectedCount} selected</div>}
+          </div>
+          { isShowOptions && this.renderOptions()}
+        </div>
+      </Fragment>
+    );
+  }
+}
 
 SearchFilter.defaultProps = {
   onChange: () => {}
