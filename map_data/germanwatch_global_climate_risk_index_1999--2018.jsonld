@@ -1,0 +1,22 @@
+{
+  "@context": "http://schema.org",
+  "type": "Dataset",
+  "temporalCoverage": "1999/2018",
+  "license": "unknown",
+  "keywords": ["Climate", "Risk", "CRI", "Disaster", "Germanwatch"],
+  "isBasedOn": "https://www.germanwatch.org/sites/germanwatch.org/files/20-2-01e%20Global%20Climate%20Risk%20Index%202020_14.pdf",
+  "isAccessibleForFree": true,
+  "creator": {
+    "type": "Organization",
+    "contactPoint": {
+      "type": "ContactPoint",
+      "email": "info@germanwatch.org",
+      "contactType": "General enquires"
+    },
+    "url": "https://www.germanwatch.org",
+    "name": "Germanwatch e.V."
+  },
+  "sameAs": "https://www.germanwatch.org/sites/germanwatch.org/files/20-2-01e%20Global%20Climate%20Risk%20Index%202020_14.pdf",
+  "name": "Global Climate Risk Index",
+  "description": "This dataset shows the Global Climate Risk Index (CRI) 2020, which analyses to what extent countries and regions have been affected by impacts of weather-related loss events (storms, floods, heat waves etc.). The most recent data available from 1999 to 2018 — were taken into account. The Climate Risk Index indicates a level of exposure and vulnerability to extreme events, which countries should understand as warnings in order to be prepared for more frequent and/or more severe  events  in  the  future.  Not  being  mentioned  in  the  CRI  does  not  mean  there  are  no  impacts  occurring  in  these  countries.  Due  to  the  limitations  of  the  available  data4,  particularly  long-term  comparative data, including socio-economic data, some very small countries, such as certain small island states, are not included in this analysis. Moreover, the data only reflects the direct impacts (direct losses and fatalities) of extreme weather events, whereas, indirect impacts (e.g. as a result of droughts and food scarcity) are not captured. The results of this index must be viewed against the background of data availability and quality as well as the underlying methodology for their collec-tion. Data quality and coverage may vary from country to country as well as within countries. This has led to an underrepresentation of, for example, African countries when it comes to heatwaves. Finally, the index does not include the total number of affected people (in addition to the fatalities), since the comparability of such data is very limited. "
+}
