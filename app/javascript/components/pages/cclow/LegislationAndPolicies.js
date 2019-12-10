@@ -13,11 +13,15 @@ class LegislationAndPolicies extends Component {
 
     this.state = {
       legislations,
-      count
+      count,
+      activeGeoFilter: {}
     };
+
+    this.geoFilter = React.createRef();
   }
 
   filterList = (filterParams) => {
+    this.setState({activeGeoFilter: filterParams});
     let url = '/cclow/legislation_and_policies.json?';
     url += $.param(filterParams);
     fetch(url).then((response) => {
@@ -27,6 +31,24 @@ class LegislationAndPolicies extends Component {
         }
       });
     });
+  };
+
+  renderTags = () => {
+    const {activeGeoFilter} = this.state;
+    const {filter_option: filterOption} = this.props;
+    if (Object.keys(activeGeoFilter).length === 0) return null;
+    return (
+      <div className="tags">
+        {Object.keys(activeGeoFilter).map((keyBlock) => (
+          activeGeoFilter[keyBlock].map((key, i) => (
+            <span key={`tag_${i}`} className="tag">
+              {filterOption.filter(item => item.field_name === keyBlock)[0].options.filter(l => l.value === key)[0].label}
+              <button type="button" onClick={() => this.geoFilter.current.handleCheckItem(keyBlock, key)} className="delete" />
+            </span>
+          ))
+        ))}
+      </div>
+    );
   };
 
   render() {
@@ -42,7 +64,12 @@ class LegislationAndPolicies extends Component {
           <div className="columns">
             <div className="column is-one-quarter filter-column">
               <div className="search-by">Narrow this search by</div>
-              <SearchFilter filterName="Regions and countries" params={filterOption} onChange={(event) => this.filterList(event)} />
+              <SearchFilter
+                ref={this.geoFilter}
+                filterName="Regions and countries"
+                params={filterOption}
+                onChange={(event) => this.filterList(event)}
+              />
             </div>
             <main className="column is-three-quarters" data-controller="content-list">
               <div className="columns pre-content">
@@ -51,6 +78,7 @@ class LegislationAndPolicies extends Component {
                   <a className="download-link" href="#">Download results (CSV in .zip)</a>
                 </span>
               </div>
+              {this.renderTags()}
               <ul className="content-list">
                 {legislations.map((legislation, i) => (
                   <Fragment key={i}>
