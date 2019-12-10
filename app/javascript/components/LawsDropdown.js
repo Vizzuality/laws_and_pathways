@@ -73,10 +73,11 @@ const LawsDropdown = () => {
   const searchGeographiesResults = results.geographies || [];
   const searchLawsResults = results.legislationCount;
   const searchLitigationsResults = results.litigationCount;
-  const searchTargetsResults = [];
+  const searchTargetsResults = results.targetCount;
   // end of search results
 
   const allSearchResultsCount = searchGeographiesResults.length + searchLawsResults + searchLitigationsResults + searchTargetsResults;
+  const noMatches = allSearchResultsCount === 0;
 
   const handleCloseDropdown = () => {
     setIsOpen(false);
@@ -221,7 +222,7 @@ const LawsDropdown = () => {
                   ))}
                 </LawsDropdownCategory>
               )}
-              {results.legislationCount !== undefined && (
+              {!!results.legislationCount && (
                 <LawsDropdownCategory title={CATEGORIES.laws} icon={laws}>
                   <a
                     href={`/cclow/legislation_and_policies?q=${searchValue}`}
@@ -234,7 +235,7 @@ const LawsDropdown = () => {
                   </a>
                 </LawsDropdownCategory>
               )}
-              {results.litigationCount !== undefined && (
+              {!!results.litigationCount && (
                 <LawsDropdownCategory title={CATEGORIES.litigations} icon={legalScale}>
                   <a
                     href={`/cclow/litigation_cases?q=${searchValue}`}
@@ -247,7 +248,7 @@ const LawsDropdown = () => {
                   </a>
                 </LawsDropdownCategory>
               )}
-              {results.targetCount !== undefined && (
+              {!!results.targetCount && (
                 <LawsDropdownCategory title={CATEGORIES.targets} icon={target}>
                   <a
                     href={`/cclow/climate_targets?q=${searchValue}`}
@@ -262,7 +263,7 @@ const LawsDropdown = () => {
               )}
             </>
           )}
-          {searchValue && allSearchResultsCount === 0 && (
+          {searchValue && noMatches && (
             <>
               <div className="laws-dropdown__category">
                 <div className="no-matches-text">
