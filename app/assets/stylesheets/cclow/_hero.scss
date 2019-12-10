@@ -6,6 +6,10 @@ $hero-head-height: 7.5rem;
 .hero {
   background-color: $blue-dark;
   position: relative;
+  background-image: image-url('cclow/hero_background@2x.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
 
   .title {
     color: $red;
