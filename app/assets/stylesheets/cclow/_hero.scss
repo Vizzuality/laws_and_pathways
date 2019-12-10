@@ -91,6 +91,11 @@ $hero-head-height: 7.5rem;
         & > .icon__globe {
           background-image: image-url('icons/target.svg');
         }
+
+        .icon__world-map {
+          width: 200px;
+          height: auto;
+        }
       }
     }
 
