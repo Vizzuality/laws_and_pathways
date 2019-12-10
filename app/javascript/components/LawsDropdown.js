@@ -60,7 +60,7 @@ const LawsDropdown = () => {
     setSearchValue(input);
   };
 
-  const delaySettingInput = useCallback(debounce(value => handleInput(value), 300));
+  const delaySettingInput = useCallback(debounce(value => handleInput(value), 200));
   const handleInputThrottled = e => delaySettingInput(e.target.value);
 
   const setLastSearch = (s, category, link) => {
@@ -101,6 +101,8 @@ const LawsDropdown = () => {
 
 
   // loading data
+
+  // just for initial load
   useEffect(() => {
     fetch('/cclow/api/search_counts')
       .then((r) => r.json())
@@ -109,7 +111,10 @@ const LawsDropdown = () => {
       });
   }, []);
 
+  // searching
   useEffect(() => {
+    if (!searchValue) return;
+
     fetch(`/cclow/api/search?q=${encodeURIComponent(searchValue)}`)
       .then((r) => r.json())
       .then((data) => {
