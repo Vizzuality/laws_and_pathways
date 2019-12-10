@@ -1,11 +1,10 @@
 module Queries
   module CCLOW
     class GeographyQuery
-      attr_accessor :q
-      attr_reader :scope
+      attr_reader :scope, :params
 
       def initialize(params)
-        @q = params[:q]
+        @params = params
       end
 
       def call(scope = Geography.published)
@@ -18,9 +17,9 @@ module Queries
       private
 
       def full_text_filter
-        return scope unless q.present?
+        return scope unless params[:q].present?
 
-        scope.full_text_search(q)
+        scope.full_text_search(params[:q])
       end
     end
   end

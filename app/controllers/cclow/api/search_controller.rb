@@ -1,8 +1,6 @@
 module CCLOW
   module Api
     class SearchController < CCLOWController
-      RECENT_DATE = 1.month.ago
-
       def index
         query = params[:q]
 
@@ -22,9 +20,9 @@ module CCLOW
           litigationCount: Litigation.published.size,
           legislationCount: Legislation.published.size,
           targetCount: Target.published.size,
-          recentLitigationCount: Litigation.published.recent(RECENT_DATE).size,
-          recentLegislationCount: Legislation.published.recent(RECENT_DATE).size,
-          recentTargetCount: Target.published.where('created_at > ?', RECENT_DATE).size
+          recentLitigationCount: Litigation.published.recent.size,
+          recentLegislationCount: Legislation.published.recent.size,
+          recentTargetCount: Target.published.recent.size
         }
       end
     end

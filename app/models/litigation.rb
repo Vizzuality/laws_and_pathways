@@ -88,7 +88,7 @@ class Litigation < ApplicationRecord
   enum document_type: array_to_enum_hash(DOCUMENT_TYPES)
 
   scope :started, -> { joins(:events).where(events: {event_type: EVENT_STARTED_TYPES}) }
-  scope :recent, ->(date) { started.where('events.date > ?', date) }
+  scope :recent, ->(date = 1.month.ago) { started.where('events.date > ?', date) }
 
   pg_search_scope :full_text_search,
                   associated_against: {

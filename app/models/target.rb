@@ -63,6 +63,11 @@ class Target < ApplicationRecord
   has_many :events, as: :eventable, dependent: :destroy
   has_and_belongs_to_many :legislations
 
+  scope :recent, ->(date = 1.month.ago) {
+    joins(:events)
+      .where('events.date > ?', date)
+      .where(events: {event_type: %w[set updated]})
+  }
   pg_search_scope :full_text_search,
                   associated_against: {
                     tags: [:name]

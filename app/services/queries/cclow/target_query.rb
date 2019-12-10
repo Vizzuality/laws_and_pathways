@@ -1,12 +1,10 @@
 module Queries
   module CCLOW
     class TargetQuery
-      attr_accessor :q, :region
-      attr_reader :scope
+      attr_reader :scope, :params
 
       def initialize(params)
-        @q = params[:q]
-        @region = params[:region]
+        @params = params
       end
 
       def call(scope = Target.published)
@@ -15,20 +13,27 @@ module Queries
         scope
           .merge(full_text_filter)
           .merge(filter_by_region)
+          .merge(filter_recent)
       end
 
       private
 
       def full_text_filter
-        return scope unless q.present?
+        return scope unless params[:q].present?
 
-        scope.full_text_search(q)
+        scope.full_text_search(params[:q])
       end
 
       def filter_by_region
-        return scope unless region.present?
+        return scope unless params[:region].present?
 
-        scope.includes(:geography).where(geographies: {region: region})
+        scope.includes(:geography).where(geographies: {region: params[:region]})
+      end
+
+      def filter_recent
+        return scope unless params[:recent].present?
+
+        scope.recent
       end
     end
   end

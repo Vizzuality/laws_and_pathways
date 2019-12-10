@@ -80,7 +80,7 @@ class Legislation < ApplicationRecord
   scope :laws, -> { legislative }
   scope :policies, -> { executive }
   scope :passed, -> { joins(:events).where(events: {event_type: 'law_passed'}) }
-  scope :recent, ->(date) { passed.where('events.date > ?', date) }
+  scope :recent, ->(date = 1.month.ago) { passed.where('events.date > ?', date) }
 
   pg_search_scope :full_text_search,
                   associated_against: {
