@@ -31,7 +31,7 @@ function MapLegend({ content, context, scales }) {
       <div className="columns">
         <div className="column is-half world-map__legend-scale">
           <div className="name">{content.name}</div>
-          <div className="img-describe">
+          <div className="world-map__legend-scale-buckets world-map__legend-scale-buckets--content">
             {BUBBLE_LEGEND_RADIUSES.map((radius) => (
               <div>
                 <div className="circle" style={{width: radius * 2, height: radius * 2}} />
@@ -46,13 +46,13 @@ function MapLegend({ content, context, scales }) {
         </div>
         <div className="column is-half world-map__legend-scale">
           <div className="name">{context.name}</div>
-          <div className="img-describe">
+          <div className="world-map__legend-scale-buckets world-map__legend-scale-buckets--context">
             {colors.map((color, i) => (
               <div>
                 <div className="rectangle" style={{backgroundColor: color}} />&nbsp;
 
-                {(i === 0) && `<${displayContextValue(color, 1)}`}
-                {(i === colors.length - 1) && `>${displayContextValue(color, 0)}`}
+              {(i === 0) && `<${displayContextValue(color, 1)}`}
+              {(i === colors.length - 1) && `>${displayContextValue(color, 0)}`}
               </div>
             ))}
           </div>
