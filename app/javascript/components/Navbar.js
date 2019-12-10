@@ -67,26 +67,11 @@ SearchComponent.propTypes = {
   closeSearchMode: PropTypes.func.isRequired
 };
 
-const splitter = (key = '') => {
-  const chunks = key.split('/');
-  return chunks.length === 1 ? chunks.shift() : chunks.pop();
-};
 
-const checkActivePage = (current = {}, active = {}) => Object.values(current).find(
-  currentKey => Object.values(active).find(
-    activeKey => splitter(currentKey) === splitter(activeKey)
-  )
-);
-
-const NavbarComponent = ({ items, openSearchMode, active }) => {
+const NavbarComponent = ({ items, openSearchMode }) => {
   const [tpi, publications, about, newsletter, login, search] = items;
   const [isOpen, setIsOpen] = useState(false);
-
-  const currentActive = items.find(item => checkActivePage({
-    controller: item.controller,
-    action: item.action
-  }, active));
-  const controller = splitter(currentActive.controller);
+  const {pathname} = window.location;
 
   return (
     <div className="navbar" role="navigation" aria-label="main navigation">
@@ -116,7 +101,7 @@ const NavbarComponent = ({ items, openSearchMode, active }) => {
             <div className="navbar-item has-dropdown is-hoverable">
               <a
                 className={classnames('navbar-link', 'is-arrowless', {
-                  'is-active': controller === tpi.controller
+                  'is-active': pathname.includes(tpi.path)
                 })}
               >
                 {tpi.entry}
@@ -141,20 +126,16 @@ const NavbarComponent = ({ items, openSearchMode, active }) => {
             <a
               href={publications.path}
               className={classnames('navbar-item', {
-                'is-active': controller === publications.controller
+                'is-active': pathname.includes(publications.path)
               })}
             >
               {publications.entry}
             </a>
 
-            <div
-              className={classnames('navbar-item', 'has-dropdown', 'is-hoverable', {
-                'is-active': controller === about.controller
-              })}
-            >
+            <div className="navbar-item has-dropdown">
               <a
                 className={classnames('navbar-link', 'is-arrowless', {
-                  'is-active': controller === about.controller
+                  'is-active': pathname.includes(about.path)
                 })}
               >
                 {about.entry}
@@ -176,12 +157,17 @@ const NavbarComponent = ({ items, openSearchMode, active }) => {
             <a
               href={newsletter.path}
               className={classnames('navbar-item', {
-                'is-active': controller === newsletter.controller
+                'is-active': pathname.includes(newsletter.path)
               })}
             >
               {newsletter.entry}
             </a>
-            <a className="navbar-item" href={login.path}>
+            <a
+              href={login.path}
+              className={classnames('navbar-item', {
+                'is-active': pathname.includes(login.path)
+              })}
+            >
               {login.entry}
             </a>
             <a
@@ -201,10 +187,8 @@ const NavbarComponent = ({ items, openSearchMode, active }) => {
 NavbarComponent.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
-      controller: PropTypes.string,
-      action: PropTypes.string,
       entry: PropTypes.string.isRequired,
-      path: PropTypes.string,
+      path: PropTypes.string.isRequired,
       content: PropTypes.arrayOf(
         PropTypes.shape({
           title: PropTypes.string.isRequired,
@@ -215,11 +199,7 @@ NavbarComponent.propTypes = {
       className: PropTypes.string
     })
   ).isRequired,
-  openSearchMode: PropTypes.func.isRequired,
-  active: PropTypes.shape({
-    controller: PropTypes.string.isRequired,
-    action: PropTypes.string.isRequired
-  }).isRequired
+  openSearchMode: PropTypes.func.isRequired
 };
 
 const Navbar = ({ items, controls, active }) => {
@@ -252,8 +232,7 @@ Navbar.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   controls: PropTypes.shape({
     search: PropTypes.object.isRequired
-  }).isRequired,
-  active: PropTypes.object.isRequired
+  }).isRequired
 };
 
 export default Navbar;

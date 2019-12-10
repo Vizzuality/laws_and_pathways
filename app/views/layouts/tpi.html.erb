@@ -32,17 +32,17 @@
   </head>
   <body>
     <section class="tpi__banner is-hidden-touch">
-      <%= render "layouts/banner" %>
+      <%= render "layouts/tpi/banner" %>
     </section>
 
     <section class="tpi__navbar">
-      <%= render "layouts/header" %>
+      <%= render "layouts/tpi/header" %>
     </section>
 
     <%= yield %>
 
     <footer>
-      <%= render "layouts/footer" %>
+      <%= render "layouts/tpi/footer" %>
     </footer>
     <% if Rails.env.production? %>
       <!-- Global site tag (gtag.js) - Google Analytics -->
