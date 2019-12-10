@@ -57,4 +57,4 @@ TODO.md
 
 # R project files
 .Rproj.user
-.Rproj
+*.Rproj
