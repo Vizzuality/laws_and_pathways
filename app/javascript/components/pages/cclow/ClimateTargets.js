@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import qs from 'qs';
 import SearchFilter from '../../SearchFilter';
 
+function getQueryFilters() {
+  return qs.parse(window.location.search.slice(1));
+}
+
 class ClimateTargets extends Component {
   constructor(props) {
     super(props);
@@ -18,13 +22,12 @@ class ClimateTargets extends Component {
   }
 
   filterList = (filterParams) => {
-    const params = qs.parse(window.location.search.slice(1));
-    const newParams = {
-      ...params,
+    const params = {
+      ...getQueryFilters,
       ...filterParams
     };
 
-    const newQs = qs.stringify(newParams, { arrayFormat: 'brackets' });
+    const newQs = qs.stringify(params, { arrayFormat: 'brackets' });
 
     fetch(`/cclow/climate_targets.json?${newQs}`).then((response) => {
       response.json().then((data) => {
@@ -35,6 +38,22 @@ class ClimateTargets extends Component {
     });
   };
 
+  renderPageTitle() {
+    const qFilters = getQueryFilters();
+
+    const filterText = qFilters.q || (qFilters.recent && 'recent additions');
+
+    if (filterText) {
+      return (
+        <h5>
+          Search results: <strong>{filterText}</strong> in Climate Targets
+        </h5>
+      );
+    }
+
+    return (<h5>All Climate Targets</h5>);
+  }
+
   render() {
     const {climate_targets, count} = this.state;
     const {filter_option: filterOption} = this.props;
@@ -42,7 +61,7 @@ class ClimateTargets extends Component {
       <Fragment>
         <div className="cclow-geography-page">
           <div className="container">
-            <h5>All Climate Targets</h5>
+            {this.renderPageTitle()}
             <hr />
             <div className="columns">
               <div className="column is-one-quarter filter-column">

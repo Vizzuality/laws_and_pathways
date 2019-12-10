@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import qs from 'qs';
 import SearchFilter from '../../SearchFilter';
 
+function getQueryFilters() {
+  return qs.parse(window.location.search.slice(1));
+}
+
 class LegislationAndPolicies extends Component {
   constructor(props) {
     super(props);
@@ -18,13 +22,12 @@ class LegislationAndPolicies extends Component {
   }
 
   filterList = (filterParams) => {
-    const params = qs.parse(window.location.search.slice(1));
-    const newParams = {
-      ...params,
+    const params = {
+      ...getQueryFilters,
       ...filterParams
     };
 
-    const newQs = qs.stringify(newParams, { arrayFormat: 'brackets' });
+    const newQs = qs.stringify(params, { arrayFormat: 'brackets' });
 
     fetch(`/cclow/legislation_and_policies.json?${newQs}`).then((response) => {
       response.json().then((data) => {
@@ -35,14 +38,31 @@ class LegislationAndPolicies extends Component {
     });
   };
 
+  renderPageTitle() {
+    const qFilters = getQueryFilters();
+
+    const filterText = qFilters.q || (qFilters.recent && 'recent additions');
+
+    if (filterText) {
+      return (
+        <h5>
+         Search results: <strong>{filterText}</strong> in Legislation and policies
+        </h5>
+      );
+    }
+
+    return (<h5>All Legislation and policies</h5>);
+  }
+
   render() {
     const {legislations, count} = this.state;
     const {filter_option: filterOption} = this.props;
+
     return (
       <Fragment>
         <div className="cclow-geography-page">
           <div className="title-page">
-            <h5>All Legislation and policies</h5>
+            {this.renderPageTitle()}
           </div>
           <hr />
           <div className="columns">

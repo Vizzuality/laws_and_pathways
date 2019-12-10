@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import qs from 'qs';
 import SearchFilter from '../../SearchFilter';
 
+function getQueryFilters() {
+  return qs.parse(window.location.search.slice(1));
+}
 
 class LitigationCases extends Component {
   constructor(props) {
@@ -19,13 +22,12 @@ class LitigationCases extends Component {
   }
 
   filterList = (filterParams) => {
-    const params = qs.parse(window.location.search.slice(1));
-    const newParams = {
-      ...params,
+    const params = {
+      ...getQueryFilters,
       ...filterParams
     };
 
-    const newQs = qs.stringify(newParams, { arrayFormat: 'brackets' });
+    const newQs = qs.stringify(params, { arrayFormat: 'brackets' });
 
     fetch(`/cclow/litigation_cases.json?${newQs}`).then((response) => {
       response.json().then((data) => {
@@ -36,6 +38,22 @@ class LitigationCases extends Component {
     });
   };
 
+  renderPageTitle() {
+    const qFilters = getQueryFilters();
+
+    const filterText = qFilters.q || (qFilters.recent && 'recent additions');
+
+    if (filterText) {
+      return (
+        <h5>
+          Search results: <strong>{filterText}</strong> in Litigation Cases
+        </h5>
+      );
+    }
+
+    return (<h5>All Litigation Cases</h5>);
+  }
+
   render() {
     const {litigations, count} = this.state;
     const {filter_option: filterOption} = this.props;
@@ -43,7 +61,7 @@ class LitigationCases extends Component {
       <Fragment>
         <div className="cclow-geography-page">
           <div className="container">
-            <h5>All Litigation cases</h5>
+            {this.renderPageTitle()}
             <hr />
             <div className="columns">
               <div className="column is-one-quarter filter-column">
