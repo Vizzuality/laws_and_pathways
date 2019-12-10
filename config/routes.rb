@@ -60,6 +60,7 @@ Rails.application.routes.draw do
       resources :map_indicators, only: :index
       get :search, to: 'search#index'
       get :search_counts, to: 'search#counts'
+      get 'targets/:iso', to: 'targets#index'
     end
   end
 
@@ -67,7 +68,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
   root to: 'tpi/home#index', constraints: { host: 'www.transitionpathwayinitiative.org' }, as: nil
-  root to: 'cclow/home#index', constraints: { host: 'climate-laws.org' }, as: nil
+  root to: 'cclow/home#index', constraints: { host: ['www.climate-laws.org', 'climate-laws.org'] }, as: nil
   root to: 'admin/dashboard#index', constraints: { host: 'laws-pathways.vizzuality.com' }, as: nil
   root to: 'admin/dashboard#index', constraints: { host: 'laws-pathways-staging.vizzuality.com' }, as: nil
   root to: 'cclow/home#index', constraints: { host: 'localhost' }
