@@ -22,8 +22,8 @@ module CCLOW
           litigationCount: Litigation.published.size,
           legislationCount: Legislation.published.size,
           targetCount: Target.published.size,
-          recentLitigationCount: Litigation.published.where('created_at > ?', RECENT_DATE).size,
-          recentLegislationCount: Legislation.published.where('created_at > ?', RECENT_DATE).size,
+          recentLitigationCount: Litigation.published.recent(RECENT_DATE).size,
+          recentLegislationCount: Legislation.published.recent(RECENT_DATE).size,
           recentTargetCount: Target.published.where('created_at > ?', RECENT_DATE).size
         }
       end

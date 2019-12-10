@@ -149,22 +149,22 @@ const LawsDropdown = () => {
       <LawsDropdownCategory title="Litigation cases" icon={legalScale}>
         <a href="/cclow/litigation_cases" className="laws-dropdown__option">
           <span>All litigation entries</span>
-          <span className="laws-dropdown__disclaimer">{counts.litigationsCount}</span>
+          <span className="laws-dropdown__disclaimer">{counts.litigationCount}</span>
         </a>
         <a href="/cclow/litigation_cases?recent=true" className="laws-dropdown__option">
           <span>Most recent additions in Litigation</span>
-          <span className="laws-dropdown__disclaimer">{counts.recentLitigationsCount}</span>
+          <span className="laws-dropdown__disclaimer">{counts.recentLitigationCount}</span>
         </a>
       </LawsDropdownCategory>
 
       <LawsDropdownCategory title="Climate targets" icon={target}>
         <a href="/cclow/climate_targets" className="laws-dropdown__option">
           <span>All Climate targets</span>
-          <span className="laws-dropdown__disclaimer">{counts.targetsCount}</span>
+          <span className="laws-dropdown__disclaimer">{counts.targetCount}</span>
         </a>
         <a href="/cclow/climate_targets?recent=true" className="laws-dropdown__option">
           <span>Most recent additions in Climate targets</span>
-          <span className="laws-dropdown__disclaimer">{counts.recentTargetsCount}</span>
+          <span className="laws-dropdown__disclaimer">{counts.recentTargetCount}</span>
         </a>
       </LawsDropdownCategory>
     </>
