@@ -45,13 +45,13 @@ class LitigationCases extends Component {
 
     if (filterText) {
       return (
-        <h5>
+        <h5 className="search-title">
           Search results: <strong>{filterText}</strong> in Litigation Cases
         </h5>
       );
     }
 
-    return (<h5>All Litigation Cases</h5>);
+    return (<h5 className="search-title">All Litigation Cases</h5>);
   }
 
   render() {

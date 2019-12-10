@@ -45,13 +45,13 @@ class LegislationAndPolicies extends Component {
 
     if (filterText) {
       return (
-        <h5>
-         Search results: <strong>{filterText}</strong> in Legislation and policies
+        <h5 className="search-title">
+          Search results: <strong>{filterText}</strong> in Legislation and policies
         </h5>
       );
     }
 
-    return (<h5>All Legislation and policies</h5>);
+    return (<h5 className="search-title">All Legislation and policies</h5>);
   }
 
   render() {

@@ -45,13 +45,13 @@ class ClimateTargets extends Component {
 
     if (filterText) {
       return (
-        <h5>
+        <h5 className="search-title">
           Search results: <strong>{filterText}</strong> in Climate Targets
         </h5>
       );
     }
 
-    return (<h5>All Climate Targets</h5>);
+    return (<h5 className="search-title">All Climate Targets</h5>);
   }
 
   render() {
