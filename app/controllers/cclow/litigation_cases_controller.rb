@@ -2,8 +2,9 @@ module CCLOW
   class LitigationCasesController < CCLOWController
     # rubocop:disable Metrics/AbcSize
     def index
+      add_breadcrumb('Climate Change Laws of the World', cclow_root_path)
       add_breadcrumb('Litigation cases', cclow_litigation_cases_path(@geography))
-      add_breadcrumb('Search results', request.path) if params[:q].present?
+      add_breadcrumb('Search results', request.path) if params[:q].present? || params[:recent].present?
 
       @litigations = CCLOW::LitigationDecorator.decorate_collection(
         Queries::CCLOW::LitigationQuery.new(params).call

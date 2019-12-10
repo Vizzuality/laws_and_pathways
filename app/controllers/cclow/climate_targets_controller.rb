@@ -2,8 +2,9 @@ module CCLOW
   class ClimateTargetsController < CCLOWController
     # rubocop:disable Metrics/AbcSize
     def index
+      add_breadcrumb('Climate Change Laws of the World', cclow_root_path)
       add_breadcrumb('Climate Targets', cclow_climate_targets_path)
-      add_breadcrumb('Search results', request.path) if params[:q].present?
+      add_breadcrumb('Search results', request.path) if params[:q].present? || params[:recent].present?
 
       @climate_targets = CCLOW::TargetDecorator.decorate_collection(
         Queries::CCLOW::TargetQuery.new(params).call
