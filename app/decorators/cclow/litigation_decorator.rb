@@ -13,6 +13,9 @@ module CCLOW
     def as_json(*)
       super.tap do |hash|
         hash['link'] = link
+        hash['geography'] = model.geography
+        hash['opened_in'] = model.started_event&.date&.year
+        hash['event_type'] = model.started_event&.event_type
       end
     end
   end

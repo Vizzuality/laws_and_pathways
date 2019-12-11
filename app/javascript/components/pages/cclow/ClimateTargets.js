@@ -81,7 +81,14 @@ class ClimateTargets extends Component {
                     <Fragment key={i}>
                       <li>
                         <h5 className="title" dangerouslySetInnerHTML={{__html: target.link}} />
-                        <div className="meta" />
+                        <div className="meta">
+                          <div>
+                            <img src={`../../../../assets/flags/${target.geography.iso}.svg`} alt="" />
+                            {target.geography.name}
+                          </div>
+                          <div>{target.target_tags && target.target_tags.join(' | ')}</div>
+                        </div>
+
                       </li>
                     </Fragment>
                   ))}

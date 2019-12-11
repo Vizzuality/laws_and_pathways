@@ -83,7 +83,13 @@ class LitigationCases extends Component {
                     <Fragment key={i}>
                       <li className="content-item">
                         <h5 className="title" dangerouslySetInnerHTML={{__html: litigation.link}} />
-                        <div className="meta" />
+                        <div className="meta">
+                          <div>
+                            <img src={`../../../../assets/flags/${litigation.geography.iso}.svg`} alt="" />
+                            {litigation.geography.name}
+                          </div>
+                          {litigation.opened_in && <div>Opened in {litigation.opened_in}</div>}
+                        </div>
                         <div className="description" dangerouslySetInnerHTML={{__html: litigation.summary}} />
                       </li>
                     </Fragment>
