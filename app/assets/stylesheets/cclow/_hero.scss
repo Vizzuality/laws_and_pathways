@@ -203,16 +203,15 @@ $logos-container-padding: 1.5rem;
         & > .icon__globe {
           background-image: image-url('icons/target.svg');
         }
-
-        .icon__world-map {
-          width: 200px;
-          height: auto;
-        }
       }
     }
 
     .value-block {
       margin-top: 1.25rem;
+
+      .icon__world-map {
+        height: 110px;
+      }
 
       ul li {
         margin-bottom: 10px;
