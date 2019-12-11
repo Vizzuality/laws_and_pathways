@@ -1,9 +1,12 @@
 @import "colors";
 @import "variables";
+@import "bulma/sass/utilities/all";
 
 $side-padding: 54px;
 $space-between-options: 8px;
 $space-between-categories: 34px;
+$icon-size: 24px;
+$icon-margin-right: 24px;
 
 .laws-dropdown__container {
   width: 100%;
@@ -30,13 +33,23 @@ $space-between-categories: 34px;
   color: $blue-dark;
   font-size: 14px;
   font-family: $family-sans-serif;
-  padding: 20px 30px;
+  padding: 20px;
+
+  @include desktop {
+    padding: 20px 30px;
+  }
+  
+  &[placeholder] {
+    text-overflow: ellipsis;
+    width: calc(100% - #{$icon-size + $icon-margin-right});
+    padding-right: unset;
+  }
 }
 
 .icon {
   font-size: 24px !important;
   font-family: $family-sans-serif;
-  margin-right: 1.5rem;
+  margin-right: $icon-margin-right;
   color: $blue-dark;
 }
 

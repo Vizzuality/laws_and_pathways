@@ -1,11 +1,15 @@
 @import "colors";
 @import "variables";
+@import "bulma/sass/utilities/all";
 
 $search-field-height: 3.75rem;
 
 .header {
   position: relative;
-  height: $navbar-height + $search-field-height / 2;
+
+  @include desktop {
+    height: $navbar-height + $search-field-height / 2;
+  }
 
   .navbar {
     &> .container {
@@ -62,7 +66,18 @@ $search-field-height: 3.75rem;
 
 .footer {
   font-size: $size-7;
-  margin-top: 6rem;
+  margin-top: 50px;
+  padding-top: 52px !important;
+
+  & > div {
+    padding: 0 18px 0 18px !important;
+  }
+
+  @include desktop {
+    margin-top: 110px;
+    padding: unset;
+    padding-top: 70px !important;
+  }
 
   .section-name {
     color: $grey-text;
@@ -73,7 +88,36 @@ $search-field-height: 3.75rem;
   }
 
   .footer-content {
-    margin-top: 2.5rem;
+    margin: 0;
+    margin-top: 48px;
+    display: grid;
+    grid-row-gap: 70px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "navigation granthamResearchInstitute"
+      "contact contact"
+      "follow follow";
+
+    @include desktop {
+      display: flex;
+    }
+
+    .column {
+      padding: 0;
+    }
+  }
+
+  .section__contact {
+    grid-area: contact;
+  }
+
+  .section__follow {
+    grid-area: follow;
+    margin-bottom: 36px;
+
+    @include desktop {
+      margin-bottom: 0;
+    }
   }
 
   .footer-chart {

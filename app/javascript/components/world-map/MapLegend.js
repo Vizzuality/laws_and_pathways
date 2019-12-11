@@ -31,7 +31,7 @@ function MapLegend({ content, context, scales }) {
       <div className="columns">
         <div className="column is-half world-map__legend-scale">
           <div className="name">{content.name}</div>
-          <div className="world-map__legend-scale-buckets world-map__legend-scale-buckets--content">
+          <div className="world-map__legend-scale-buckets world-map__legend-scale-buckets--content bubbles__legend">
             {BUBBLE_LEGEND_RADIUSES.map((radius) => (
               <div>
                 <div className="circle" style={{width: radius * 2, height: radius * 2}} />
@@ -39,7 +39,7 @@ function MapLegend({ content, context, scales }) {
               </div>
             ))}
           </div>
-          <div>
+          <div className="legend__description">
             <span dangerouslySetInnerHTML={{__html: content.legend_description}} />
             {renderDataSource(content.creator)}
           </div>
