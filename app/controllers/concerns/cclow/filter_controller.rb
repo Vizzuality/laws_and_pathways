@@ -8,6 +8,11 @@ module CCLOW
       [region_options, geography_options]
     end
 
+    def tags_options(taggable_type)
+      tags = Tag.all.includes(:taggings).where(taggings: {taggable_type: taggable_type})
+      [{field_name: 'tags', options: tags.map { |l| {value: l.id, label: l.name} }}]
+    end
+
     def filter_params
       params.permit(:fromDate, :ids, region: [], geography: [])
     end

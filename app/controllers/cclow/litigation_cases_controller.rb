@@ -11,7 +11,8 @@ module CCLOW
       respond_to do |format|
         format.html do
           render component: 'pages/cclow/LitigationCases', props: {
-            filter_option: region_geography_options,
+            geo_filter_options: region_geography_options,
+            tags_filter_options: tags_options('Litigation'),
             litigations: @litigations.first(10),
             count: @litigations.count
           }, prerender: false

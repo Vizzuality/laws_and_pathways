@@ -88,7 +88,6 @@ class ClimateTargets extends Component {
                           </div>
                           <div>{target.target_tags && target.target_tags.join(' | ')}</div>
                         </div>
-
                       </li>
                     </Fragment>
                   ))}

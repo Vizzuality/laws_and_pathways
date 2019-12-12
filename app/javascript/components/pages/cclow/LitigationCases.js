@@ -14,16 +14,25 @@ class LitigationCases extends Component {
     this.state = {
       litigations,
       count,
-      activeGeoFilter: {}
+      activeGeoFilter: {},
+      activeTagFilter: {}
     };
 
     this.geoFilter = React.createRef();
+    this.tagsFilter = React.createRef();
   }
 
-  filterList = (filterParams) => {
-    this.setState({activeGeoFilter: filterParams});
+  filterList = (activeFilterName, filterParams) => {
+    const {activeGeoFilter, activeTagFilter} = this.state;
+    const filterList = {activeGeoFilter, activeTagFilter};
+    const params = {};
+
+    this.setState({[activeFilterName]: filterParams});
+    filterList[activeFilterName] = filterParams;
+    Object.assign(params, Object.values(filterList));
+
     let url = '/cclow/litigation_cases.json?';
-    url += $.param(filterParams);
+    url += $.param(params);
     fetch(url).then((response) => {
       response.json().then((data) => {
         if (response.ok) {
@@ -36,26 +45,32 @@ class LitigationCases extends Component {
   };
 
   renderTags = () => {
-    const {activeGeoFilter} = this.state;
-    const {filter_option: filterOption} = this.props;
-    if (Object.keys(activeGeoFilter).length === 0) return null;
+    const {activeGeoFilter, activeTagFilter} = this.state;
+    const {geo_filter_options: geoFilterOptions, tags_filter_options: tagsFilterOptions} = this.props;
     return (
       <div className="tags">
-        {Object.keys(activeGeoFilter).map((keyBlock) => (
-          activeGeoFilter[keyBlock].map((key, i) => (
-            <span key={`tag_${i}`} className="tag">
-              {filterOption.filter(item => item.field_name === keyBlock)[0].options.filter(l => l.value === key)[0].label}
-              <button type="button" onClick={() => this.geoFilter.current.handleCheckItem(keyBlock, key)} className="delete" />
-            </span>
-          ))
-        ))}
+        {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
+        {this.renderTagsGroup(activeTagFilter, tagsFilterOptions, 'tagsFilter')}
       </div>
     );
   };
 
+  renderTagsGroup = (activeTags, options, filterEl) => (
+    <Fragment>
+      {Object.keys(activeTags).map((keyBlock) => (
+        activeTags[keyBlock].map((key, i) => (
+          <span key={`tag_${keyBlock}_${i}`} className="tag">
+            {options.filter(item => item.field_name === keyBlock)[0].options.filter(l => l.value === key)[0].label}
+            <button type="button" onClick={() => this[filterEl].current.handleCheckItem(keyBlock, key)} className="delete" />
+          </span>
+        ))
+      ))}
+    </Fragment>
+  );
+
   render() {
     const {litigations, count} = this.state;
-    const {filter_option: filterOption} = this.props;
+    const {geo_filter_options: geoFilterOptions, tags_filter_options: tagsFilterOptions} = this.props;
     return (
       <Fragment>
         <div className="cclow-geography-page">
@@ -68,8 +83,14 @@ class LitigationCases extends Component {
                 <SearchFilter
                   ref={this.geoFilter}
                   filterName="Regions and countries"
-                  params={filterOption}
-                  onChange={(event) => this.filterList(event)}
+                  params={geoFilterOptions}
+                  onChange={(event) => this.filterList('activeGeoFilter', event)}
+                />
+                <SearchFilter
+                  ref={this.tagsFilter}
+                  filterName="Tags"
+                  params={tagsFilterOptions}
+                  onChange={(event) => this.filterList('activeTagFilter', event)}
                 />
               </div>
               <main className="column is-three-quarters" data-controller="content-list">
@@ -110,13 +131,15 @@ class LitigationCases extends Component {
 
 LitigationCases.defaultProps = {
   count: 0,
-  filter_option: []
+  geo_filter_options: [],
+  tags_filter_options: []
 };
 
 LitigationCases.propTypes = {
   litigations: PropTypes.array.isRequired,
   count: PropTypes.number,
-  filter_option: PropTypes.array
+  geo_filter_options: PropTypes.array,
+  tags_filter_options: PropTypes.array
 };
 
 export default LitigationCases;
