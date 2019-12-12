@@ -1,3 +1,4 @@
+<% content_for :page_title, "Climate Laws - #{@geography.name} - Climate Targets" %>
 <div class="container">
   <h3>Climate targets: Economy-wide</h3>
   <ul class="content-list">
@@ -19,10 +20,12 @@
                 <%= target.description&.html_safe %>
               </div>
               <div class="tags">
-                <%= target.sector&.name %>
-                | <%= I18n.t("cclow.target_types.#{target.target_type}") %>
-                | Target year: <%= target.year %>
-                | Base year: <%= target.base_year_period %></div>
+                <% target_tags = [target.sector&.name, target.target_type&.humanize]
+                   target_tags << "Target year: #{target.year}" if target.year
+                   target_tags << "Base year: #{target.base_year_period}" if target.base_year_period
+                %>
+                <%= target_tags.compact.join(' | ') %>
+              </div>
               <div class="source">Source:
                 <div class="name">
                   <a href="https://www4.unfccc.int/sites/NDCStaging/pages/Party.aspx?party=<%= @geography.iso %>">
@@ -48,7 +51,13 @@
               <div>
                 <%= target.description&.html_safe %>
               </div>
-              <div class="tags">Economy Wide | <%= I18n.t("cclow.target_types.#{target.target_type}") %> | Target year: 2050 | Base year: 1990</div>
+              <div class="tags">
+                <% target_tags = [target.sector&.name, target.target_type&.humanize]
+                   target_tags << "Target year: #{target.year}" if target.year
+                   target_tags << "Base year: #{target.base_year_period}" if target.base_year_period
+                %>
+                <%= target_tags.compact.join(' | ') %>
+              </div>
               <% if target.legislations.any? %>
                 <div class="source">Source:
                   <% target.legislations.each do |legislation|%>
@@ -57,7 +66,9 @@
                       <%= link_to legislation.title, send(path, @geography, legislation) %>
                     </div>
                     <p class="meta">
-                    <span><%= I18n.t("cclow.legislation_types.#{legislation.legislation_type}") %>  |  <%= legislation.date_passed.year %></span>
+                    <span>
+                      <% info = [legislation.legislation_type&.humanize, legislation.date_passed&.year] %>
+                      <%= info.compact.join(' | ') %></span>
                     </p>
                   <% end %>
                 </div>

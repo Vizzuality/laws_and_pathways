@@ -78,6 +78,7 @@ class Legislation < ApplicationRecord
 
   scope :laws, -> { legislative }
   scope :policies, -> { executive }
+  scope :passed, -> { joins(:events).where('events.event_type = ?', 'law_passed') }
 
   with_options allow_destroy: true, reject_if: :all_blank do
     accepts_nested_attributes_for :documents

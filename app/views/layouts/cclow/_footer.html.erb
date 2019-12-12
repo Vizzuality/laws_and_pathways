@@ -11,7 +11,7 @@
             <% end %>
           <% end %>
           <% if @footer_pages.any? %>
-            <% @header_pages.each do |page| %>
+            <% @footer_pages.each do |page| %>
               <li><a href="<%= page[:slug] %>"><%= page[:title] %></a></li>
             <% end %>
           <% end %>
@@ -20,36 +20,124 @@
       <div class="column is-one-quarter">
         <div class="section-name">Grantham Research Institute</div>
         <ul>
-          <li><a href="#">Publications</a></li>
-          <li><a href="#">News and commentaries</a></li>
-          <li><a href="#">Research topics</a></li>
-          <li><a href="#">Events</a></li>
-          <li><a href="#">People</a></li>
-          <li><a href="#">Mailing list</a></li>
+          <li>
+            <a
+              href="http://www.lse.ac.uk/GranthamInstitute/publications/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Publications
+            </a>
+          </li>
+          <li>
+            <a
+              href="http://www.lse.ac.uk/GranthamInstitute/news-and-commentary/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              News and commentaries
+            </a>
+          </li>
+          <li>
+            <a
+              href="http://www.lse.ac.uk/GranthamInstitute/research/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Research topics
+            </a>
+          </li>
+          <li>
+            <a
+              href="http://www.lse.ac.uk/GranthamInstitute/events/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Events
+            </a>
+          </li>
+          <li>
+            <a
+              href="http://www.lse.ac.uk/GranthamInstitute/profile-type/00-staff/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              People
+            </a>
+          </li>
+          <li>
+            <a
+              href="http://www.lse.ac.uk/GranthamInstitute/mailing-list/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Mailing list
+            </a>
+          </li>
         </ul>
       </div>
-      <div class="column is-one-quarter">
+      <div class="column is-one-quarter section__contact">
         <div class="section-name">Contact</div>
         <ul>
-          <li>Email: <a href="#">gri.cclw@lse.ac.uk</a></li>
+          <li>Email: <a href="mailto:gri.cgl@lse.ac.uk">gri.cgl@lse.ac.uk</a></li>
           <li>Tel: +44 (0)20 7107 5027</li>
-          <li><a href="#">Full address information</a></li>
+          <li>
+            <a
+              href="http://www.lse.ac.uk/GranthamInstitute/contact/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Full address information
+            </a>
+          </li>
         </ul>
       </div>
-      <div class="column is-one-quarter">
+      <div class="column is-one-quarter section__follow">
         <div class="section-name">Follow us</div>
         <ul class="social-links">
-          <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-          <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
-          <li><a href="#"><i class="fa fa-youtube"></i></a></li>
-          <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+          <li>
+            <a
+              href="https://twitter.com/GRI_LSE"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.facebook.com/granthamLSE"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa fa-facebook-f"></i>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.youtube.com/user/GranthamResearch"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa fa-youtube"></i>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.linkedin.com/company/grantham-research-institute-lse/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa fa-linkedin"></i>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
   </div>
   <div class="footer-chart">
     <div class="container">
-      <div class="copyright">Copyright © LSE 2019</div>
+      <div class="copyright">Copyright © LSE <%= Time.now.year %></div>
     </div>
   </div>
 </footer>

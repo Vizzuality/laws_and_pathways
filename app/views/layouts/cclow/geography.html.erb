@@ -24,6 +24,8 @@
             <li><%= active_link_to "#{link[:label]} (#{link[:count]})", link[:path], active: :exclusive %></li>
           <% end %>
         </ul>
+
+        <%= yield :sidebar %>
       </aside>
       <main class="column is-three-quarters">
         <%= yield %>

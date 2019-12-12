@@ -1,3 +1,5 @@
+<% content_for :page_title, "Climate Laws - #{@geography.name}" %>
+
 <div class="content-show overview-page">
   <h3>Overview and context</h3>
   <%= render 'cclow/geographies/overview', geography_overview: @geography_overview, geography: @geography %>
@@ -29,8 +31,8 @@
   <% end %>
   <% if @geography.events.any? %>
     <section class="section is-large">
-      <% event_options = Geography::EVENT_TYPES.map{|type| {value: type, label: I18n.t("cclow.geography.event_types.#{type}")}} %>
-      <%= react_component("EventsTimeline", { events: @geography.events.published, options: event_options, isFiltered: true }) %>
+      <% event_options = Geography::EVENT_TYPES.map{|type| {value: type, label: type.humanize}} %>
+      <%= react_component("EventsTimeline", { events: @geography.all_events, options: event_options, isFiltered: true }) %>
     </section>
   <% end %>
   <hr>
@@ -38,15 +40,20 @@
     <h5>Visualise data on the map</h5>
     <div class="topic-details">
       The Climate Change Laws of the World map helps understand our database information in context by showing climate laws, policies, and litigation cases in relation to key climate-related indicators.
-      <section class="section is-medium">
-        <%= react_component("world-map/WorldMap", zoomToGeographyIso: @geography.iso) %>
-      </section>
+
     </div>
+    <section class="section is-medium">
+      <%= react_component("world-map/WorldMap", zoomToGeographyIso: @geography.iso) %>
+    </section>
   </section>
   <section class="section is-medium">
     <h5>Legislative process</h5>
     <div>
-      <%= @geography_overview.legislative_process&.html_safe %>
+      <% if @geography_overview.legislative_process.present? %>
+        <%= @geography_overview.legislative_process.html_safe %>
+      <% else %>
+        <p>No information currently - work in progress.</p>
+      <% end %>
       <!--<a href="#" class="highlight">Read more about Germany’s legislative process  >></a>-->
     </div>
   </section>

@@ -54,3 +54,7 @@ TODO.md
 
 # libreoffice lock files
 *.~lock.*
+
+# R project files
+.Rproj.user
+*.Rproj

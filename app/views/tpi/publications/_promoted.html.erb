@@ -19,7 +19,8 @@
           <div class="content__title-wrapper">
             <div class="content__title">
               <% if publication.is_a?(Publication) %>
-                <%= link_to publication.title, rails_blob_path(publication.file, disposition: 'attachment'), class: 'link is-strong' %>
+                <%= link_to publication.title, tpi_publication_path(id: publication.id, type: publication.class.name, format: 'pdf'),
+                    target: '_blank', class: 'link is-strong' %>
               <% else %>
                 <%= link_to publication.title, tpi_publication_path(id: publication.id, type: publication.class.name), class: "link is-strong" %>
               <% end %>

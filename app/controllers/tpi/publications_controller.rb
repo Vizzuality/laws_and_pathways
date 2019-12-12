@@ -4,7 +4,8 @@ module TPI
     before_action :fetch_sectors, only: [:index]
 
     def index
-      @publications_and_articles = Queries::TPI::NewsPublicationsQuery.new(filter_params).call
+      @publications_and_articles = Queries::TPI::NewsPublicationsQuery
+        .new(filter_params).call
     end
 
     def partial
@@ -15,6 +16,10 @@ module TPI
 
     def show
       @publication = params[:type].eql?('NewsArticle') ? NewsArticle.find(params[:id]) : Publication.find(params[:id])
+      respond_to do |format|
+        format.html
+        format.pdf { redirect_to rails_blob_url(@publication.file, disposition: 'preview') }
+      end
       redirect_to '' unless @publication
     end
 

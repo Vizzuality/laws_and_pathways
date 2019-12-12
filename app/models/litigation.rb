@@ -85,6 +85,8 @@ class Litigation < ApplicationRecord
 
   enum document_type: array_to_enum_hash(DOCUMENT_TYPES)
 
+  scope :started, -> { joins(:events).where('events.event_type = ?', 'case_started') }
+
   tag_with :keywords
   tag_with :responses
 
@@ -105,6 +107,8 @@ class Litigation < ApplicationRecord
   validates_presence_of :title, :slug, :document_type
 
   def started_event
-    events.find_by(event_type: 'case_started')
+    events.where(event_type: %w[case_filed case_opened case_started])
+      .order(:date)
+      .first
   end
 end

@@ -5,14 +5,19 @@
       lawsAndPolicies: @search_laws_and_policies,
       litigations: @search_litigations,
       targets: @search_targets,
-      recentDate: @search_recent_date
+      recentDate: @search_recent_date,
+      recentLaws: @recent_laws,
+      recentLitigations: @recent_litigations
     }) %>
   </div>
   <div class="navbar">
     <div class="container">
       <div class="navbar-brand">
-        <%= link_to cclow_root_path do %>
-          <img src="<%= asset_path 'logo/CCLOW_logo.svg'%>" />
+        <%= link_to 'http://www.lse.ac.uk/' do %>
+          <img class="navbar-logo" src="<%= asset_path 'logo/LSE_logo.svg'%>" />
+        <% end %>
+        <%= link_to 'http://www.lse.ac.uk/granthamInstitute' do %>
+          <img src="<%= asset_path 'logo/RICCE_logo.svg'%>" />
         <% end %>
       </div>
       <div class="navbar-menu">
@@ -32,7 +37,7 @@
                 <% end %>
               </div>
               <div class="title">
-                Climate Change Laws of the World
+                <%= link_to "Climate Change Laws of the World", cclow_root_path %>
               </div>
             </div>
           </div>

@@ -28,7 +28,7 @@ class CCLOWMapContentData
         TEXT
         creator: {
           name: 'Grantham Research Institute',
-          url: url.cclow_root_path
+          url: 'http://www.lse.ac.uk/granthamInstitute'
         },
         values: result
       }
@@ -49,7 +49,7 @@ class CCLOWMapContentData
 
       {
         id: :number_of_climate_lawsuits,
-        name: 'Number of Climate Lawsuits',
+        name: 'Number of Litigation Cases',
         legend_description: <<-TEXT,
         The <b>size</b> of the circle represents the number of climate lawsuits. The larger the circle, the higher the number of climate lawsuits.
         TEXT

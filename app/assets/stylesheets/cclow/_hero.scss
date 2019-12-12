@@ -1,27 +1,69 @@
 @import "variables";
 @import "colors";
+@import "bulma/sass/utilities/all";
 
 $hero-head-height: 7.5rem;
+$logos-container-padding: 1.5rem;
 
 .hero {
   background-color: $blue-dark;
   position: relative;
+  background-image: image-url('cclow/hero_background@2x.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
 
-  .title {
+  .hero__title {
     color: $red;
+    width: 75%;
+    font-size: $m-h1-font-size;
+    font-family: $family-sans-serif-bold;
+    margin-bottom: 12px;
+
+    @include desktop {
+      width: auto;
+      font-size: $h1-font-size;
+      margin-bottom: 28px;
+    }
   }
 
   .hero-head {
+    padding: $logos-container-padding $logos-container-padding 0 $logos-container-padding;
+
+    @include desktop {
+      padding: unset;
+    }
+
     .navbar {
-      min-height: $hero-head-height;
+      min-height: unset;
+
+      @include desktop {
+        min-height: $hero-head-height;
+      }
 
       .brand {
         display: flex;
         align-items: flex-end;
+
+        img {
+          height: 56px;
+
+          &:first-child {
+            margin-right: 25px;
+          }
+
+          @include desktop {
+            height: auto;
+          }
+        }
       }
 
       .container {
-        min-height: $hero-head-height;
+        min-height: unset;
+
+        @include desktop {
+          min-height: $hero-head-height;
+        }
       }
 
       .navbar-item {
@@ -31,36 +73,110 @@ $hero-head-height: 7.5rem;
   }
 
   .hero-body {
+    padding: 14px;
     padding-bottom: 5rem;
     padding-top: 0;
-    margin: 4.5rem 0 0;
+    margin-top: 25px;
     color: $white;
 
+    .columns {
+      margin-bottom: unset;
+    }
+
+    @include desktop {
+      margin: 4.5rem 0 0;
+    }
+
+    .hero__p-container {
+      margin-bottom: 24px;
+      padding-bottom: unset;
+
+      @include desktop {
+        margin-bottom: 54px;
+      }
+    }
+
     p {
-      font-size: $size-5;
+      font-size: $m-p-font-size;
+      
+      @include desktop {
+        font-size: $size-5;
+      }
     }
   }
 
   .overview-section {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "lawsAndPolicies climateLitigation"
+      "featuredCountryProfiles featuredCountryProfiles";
+    grid-row-gap: 42px;
+    margin-top: 50px;
     padding: 0 1.6rem;
+
+    @include desktop {
+      grid-template-areas: unset;
+      grid-template-columns: repeat(4, 1fr);
+      grid-row-gap: 0;
+      margin-top: 82px;
+    }
+
+    .section__cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .with-map {
+      display: none;
+
+      @include desktop {
+        display: block;
+      }
+    }
+
+    .country-profiles-section {
+      grid-area: featuredCountryProfiles;
+      align-items: flex-start;
+
+      @include desktop {
+        grid-area: unset;
+        align-items: center;
+      }
+
+      .value-block {
+        margin-left: 36px;
+
+        @include desktop {
+          margin-left: unset;
+        }
+      }
+    }
 
     .item-name-block {
       align-items: center;
       display: flex;
       font-size: $size-7;
+      text-align: center;
+
+      @include desktop {
+        text-align: left;
+      }
 
       .img-type-container {
+        display: none;
         align-items: center;
         border-radius: 50%;
         background-color: $white;
-        display: flex;
         height: 48px;
         justify-content: center;
         margin-right: 12px;
         width: 48px;
+
+        @include desktop {
+          display: flex;
+        }
 
         & > .icon {
           margin: 0;
@@ -93,8 +209,22 @@ $hero-head-height: 7.5rem;
     .value-block {
       margin-top: 1.25rem;
 
-      ul {
-        margin-left: 48px;
+      .icon__world-map {
+        height: 110px;
+      }
+
+      ul li {
+        margin-bottom: 10px;
+
+        a {
+          font-size: 16px;
+          color: $white;
+          font-family: $family-sans-serif-bold;
+
+          @include desktop {
+            font-size: 14px;
+          }
+        }
       }
 
       a {
@@ -117,12 +247,26 @@ $hero-head-height: 7.5rem;
         height: 130px;
         justify-content: center;
         width: 130px;
+
+        a:hover {
+          text-decoration: underline;
+          color: $white;
+          font-size: $size-2;
+          font-family: $family-sans-serif-bold;
+        }
+
+        a, a:visited, a:active {
+          color: $white;
+          text-decoration: none;
+          font-size: $size-2;
+          font-family: $family-sans-serif-bold;
+        }
       }
     }
   }
 
   .arrow-btn {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     color: $white;
@@ -138,6 +282,10 @@ $hero-head-height: 7.5rem;
     right: 0;
     margin-left: auto;
     margin-right: auto;
+
+    @include desktop {
+      display: flex;
+    }
   }
 
   .search-field {

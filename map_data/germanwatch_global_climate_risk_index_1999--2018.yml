@@ -1,0 +1,9 @@
+name: Global climate risk index 1999/2018 (CRI, no units)
+legend_description: |-
+  The <b>colour</b> of the circle represents the global climate risk index (CRI, no units).
+  The darker the circle, the higher the level of exposure and vulnerability to extreme weather events.
+ramp: emissions
+unit: '-'
+creator:
+  url: https://www.germanwatch.org
+  name: Germanwatch e.V.

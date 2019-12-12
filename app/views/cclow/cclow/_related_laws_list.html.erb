@@ -9,7 +9,7 @@
       </h5>
       <p class="meta">
         <span>Passed in <%= legislation.date_passed.year %></span>
-        <span><%= I18n.t("cclow.legislation_types.#{legislation.legislation_type}") %></span>
+        <span><%= legislation.legislation_type.humanize %></span>
       </p>
       <p>
         <%= legislation.description.html_safe %>

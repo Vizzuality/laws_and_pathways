@@ -85,4 +85,17 @@ class Geography < ApplicationRecord
   def eu_member?
     EU_COUNTRIES.include?(iso)
   end
+
+  def all_events
+    laws_events = Event.where(eventable_type: 'Legislation')
+      .joins('INNER JOIN legislations ON legislations.id = events.eventable_id')
+      .where('legislations.geography_id = ?', id)
+
+    litigations_events = Event.where(eventable_type: 'Litigation')
+      .joins('INNER JOIN litigations ON litigations.id = events.eventable_id')
+      .where('litigations.geography_id = ?', id)
+
+    Event.from("(#{laws_events.to_sql} UNION #{litigations_events.to_sql} UNION #{events.to_sql}) AS events")
+      .order(date: :asc)
+  end
 end

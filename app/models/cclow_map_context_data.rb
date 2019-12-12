@@ -6,16 +6,17 @@ class CCLOWMapContextData
     },
     cumulative_direct_economic_loss_disaters_absolute: {
       file: 'cumalitive_direct_economic_loss_disasters_in_current_us_dollars_2005--2018',
-      value_column: :cumalitive_direct_economic_loss_disasters_in_current_us_dollars
+      value_column: :cumalitive_direct_economic_loss_disasters_in_current_us_dollars,
+      parse_value: ->(value) { value.to_f.round(2) }
     },
     cumulative_direct_economic_loss_disaters_gdp: {
       file: 'cumalitive_direct_economic_loss_disasters_relative_to_gdp_percent_2005--2018',
       value_column: :cumalitive_direct_economic_loss_disasters_relative_to_gdp_percent
-    },
-    cumulative_weather_idp: {
-      file: 'cumalitive_weather_idp_per_country_2008--2018',
-      value_column: :tot_weather_idp
     }
+    # cumulative_weather_idp: {
+    #   file: 'cumalitive_weather_idp_per_country_2008--2018',
+    #   value_column: :tot_weather_idp
+    # }
   }.freeze
 
   class << self
@@ -24,6 +25,7 @@ class CCLOWMapContextData
         csv_file = File.read(Rails.root.join('map_data', "#{dataset[:file]}.csv"))
         metadata_file = File.read(Rails.root.join('map_data', "#{dataset[:file]}.yml"))
         value_column = dataset[:value_column]
+        parse_value = dataset[:parse_value] || ->(value) { value.to_f }
 
         data = CSV.parse(
           csv_file,
@@ -33,7 +35,7 @@ class CCLOWMapContextData
         ).map do |row|
           {
             geography_iso: row[:iso3],
-            value: row[value_column]
+            value: parse_value.call(row[value_column])
           }
         end
 

@@ -7,7 +7,7 @@
     </div>
     <div>
       <img class="flag" src=<%= asset_path "icons/legislation_types/#{legislation.legislation_type}.svg"%> alt="">
-      <%= I18n.t("cclow.legislation_types.#{legislation.legislation_type}") %>
+      <%= legislation.legislation_type&.humanize %>
     </div>
     <div>Passed in <%= legislation.date_passed&.year %></div>
   </div>

@@ -1,5 +1,6 @@
 @import "variables";
 @import "colors";
+@import "bulma/sass/utilities/all";
 
 .pages__title {
   margin-top: 40px;
@@ -40,4 +41,79 @@
   grid-column-gap: 50px;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
+}
+
+.section__map {
+  margin-top: 2rem;
+  padding-bottom: 0;
+  padding-top: 0;
+  margin-bottom: 52px;
+
+  @include desktop {
+    margin-bottom: 74px;
+  }
+
+  .content {
+    font-size: 0.875rem;
+    line-height: 24px;
+    color: $blue-dark;
+    width: 100%;
+    margin-bottom: 10px;
+
+    @include desktop {
+      width: 75%;
+      margin-bottom: 26px;
+    }
+  }
+
+  .title {
+    margin-bottom: 18px;
+  }
+}
+
+.section__about {
+  padding-top: 0 !important;
+  padding-bottom: 0;
+
+  @include desktop {
+    
+  }
+
+  .content {
+    text-align: center;
+    font-size: 1.125rem;
+    line-height: 1.875rem;
+    color: $grey-text;
+  }
+
+  .about__partners {
+    margin-top: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & > div {
+      margin-bottom: 52px;
+    }
+
+    @include desktop {
+      margin-top: 56px;
+      flex-direction: row;
+
+      & > div {
+        margin-bottom: 0;
+      }
+    }
+
+    & > .column:first-child {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .logo {
+      &__gri {
+        height: 60px;
+      }
+    }
+  }
 }

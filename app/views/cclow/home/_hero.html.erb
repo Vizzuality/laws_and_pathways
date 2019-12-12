@@ -3,8 +3,11 @@
     <div class="navbar">
       <div class="container">
         <div class="brand">
-          <%= link_to cclow_root_path do %>
-            <img src="<%= asset_path 'logo/CCLOW_logo.svg'%>" />
+          <%= link_to 'http://www.lse.ac.uk/' do %>
+            <img class="navbar-logo" src="<%= asset_path 'logo/LSE_logo.svg'%>" />
+          <% end %>
+          <%= link_to 'http://www.lse.ac.uk/granthamInstitute' do %>
+            <img src="<%= asset_path 'logo/RICCE_logo.svg'%>" />
           <% end %>
         </div>
         <div class="navbar-menu">
@@ -30,9 +33,9 @@
   </div>
   <div class="hero-body">
     <div class="container">
-      <h2 class="title">Climate Change Laws of the World</h2>
+      <h1 class="hero__title">Climate Change Laws of the World</h1>
       <div class="columns">
-        <div class="column is-two-thirds">
+        <div class="column is-two-thirds hero__p-container">
           <p>Use our database to search and browse climate laws, policies and litigation cases across all countries.</p>
         </div>
       </div>
@@ -42,10 +45,12 @@
         lawsAndPolicies: @search_laws_and_policies,
         litigations: @search_litigations,
         targets: @search_targets,
-        recentDate: @search_recent_date
+        recentDate: @search_recent_date,
+        recentLaws: @recent_laws,
+        recentLitigations: @recent_litigations
       }) %>
       <div class="overview-section">
-        <div>
+        <div class="section__cell">
           <div class="item-name-block">
             <div class="img-type-container">
               <span class="icon icon__paper">
@@ -54,11 +59,11 @@
           </div>
           <div class="value-block">
             <div class="circle">
-              <%= Legislation.count %>
+              <%= link_to Legislation.published.count, cclow_legislation_and_policies_path %>
             </div>
           </div>
         </div>
-        <div>
+        <div class="section__cell">
           <div class="item-name-block">
             <div class="img-type-container">
               <span class="icon icon__scale">
@@ -67,11 +72,11 @@
           </div>
           <div class="value-block">
             <div class="circle">
-              <%= Litigation.count %>
+              <%= link_to Litigation.published.count, cclow_litigation_cases_path %>
             </div>
           </div>
         </div>
-        <div>
+        <div class="section__cell country-profiles-section">
           <div class="item-name-block">
             <div class="img-type-container">
               <span class="icon icon__white-flag">
@@ -86,18 +91,24 @@
             </ul>
           </div>
         </div>
-        <div>
+        <div class="section__cell with-map">
           <div class="item-name-block">
             <div class="img-type-container">
               <span class="icon icon__globe">
             </div>
             <div>Visualise data on the map</div>
           </div>
+
+          <div class="value-block">
+            <a href="#map-section">
+              <img class="icon__world-map" src="<%= asset_path 'cclow/countries@2x.png' %>">
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="arrow-btn">
+  <a href="#map-section" class="arrow-btn">
     <i class="fa fa-angle-down fa-2x"></i>
-  </div>
+  </a>
 </section>

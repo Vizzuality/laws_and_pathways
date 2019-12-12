@@ -7,7 +7,7 @@ module Queries
       attr_accessor :tags, :sectors
 
       def call
-        (publications + news).uniq.sort_by(&:publication_date)
+        (publications + news).uniq.sort_by(&:publication_date).reverse!
       end
 
       private

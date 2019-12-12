@@ -1,3 +1,19 @@
+@import "variables";
+
+$m-h1-font-size: 1.5rem; // 24px
+$h1-font-size: 2.25rem; // 36px
+
+$m-p-font-size: 1rem; // 16px
+
+$size-2: 2.25rem;
+$size-3: 1.75rem;
+$size-4: 1.5rem;
+$size-5: 1.25rem; // 20px
+$size-6: 1rem;
+$size-7: 0.875rem;
+$size-8: 0.75rem;
+$size-9: 0.5rem;
+
 @font-face {
   font-family: "BrownTT Regular";
   src: font-url("BrownTT-Regular.ttf") format("truetype");
@@ -9,11 +25,20 @@
 }
 
 h1 {
-  @extend .is-size-1;
+  font-size: $m-h1-font-size;
+  font-family: $family-sans-serif-bold;
+
+  @include desktop {
+    font-size: $h1-font-size;
+  }
 }
 
 h2 {
-  @extend .is-size-2;
+  font-size: 24px;
+
+  @include desktop {
+    font-size: 40px;
+  }
 }
 
 h3 {

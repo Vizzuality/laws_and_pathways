@@ -26,8 +26,8 @@ module UploaderHelpers
   end
 
   def scopes
-    @scopes ||= Hash.new do |hash, scope|
-      hash[keyword] = Scope.find_or_initialize_by(name: scope.titleize)
+    @scopes ||= Hash.new do |hash, keyword|
+      hash[keyword] = Scope.find_or_initialize_by(name: keyword.titleize)
     end
   end
 

@@ -1,0 +1,10 @@
+name: Percentage of global cumulative carbon dioxide emissions from the use of fossil
+  fuel and the manufacture of cement (%)
+legend_description: |-
+  The <b>colour</b> of the circle represents percentatge of global carbon dioxide emissions from the use of fossil fuel and the manufacture of cement (%).
+  The darker the circle, the higher the emissions.
+ramp: emissions
+unit: '%'
+creator:
+  url: https://ourworldindata.org
+  name: Our World In Data - Global Change Data Lab, Oxford University

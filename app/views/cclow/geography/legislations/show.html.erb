@@ -1,14 +1,46 @@
+<% content_for :page_title, "Climate Laws - #{@geography.name} - #{@legislation.title}" %>
+
+<% content_for :sidebar do %>
+<div class="sidebar__categories">
+  <hr />
+
+  <% if @sectors.count > 0 %>
+    <div class="categories__container">
+      <p class="categories__title">Sectors</p>
+
+      <div class="categories_tags">
+      <% @sectors.each do |sector| %>
+        <span class="tag categories__tag"><%= sector.name %></span>
+      <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @keywords.count > 0 %>
+    <div class="categories__container">
+      <p class="categories__title">Keywords</p>
+
+      <div class="categories_tags">
+      <% @keywords.each do |keyword| %>
+        <span class="tag categories__tag"><%= keyword.name %></span>
+      <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<% end %>
+
 <div class="content-show">
   <h3 class="title"><%= @legislation.title %></h3>
   <div class="meta">
-    <div><%= I18n.t("cclow.legislation_types.#{@legislation.legislation_type}") %></div>
+    <div><%= @legislation.legislation_type&.humanize %></div>
     <div>
       <span>Action plan</span>
-      <span class="icon"><i class="fa fa-question"></i></span>
+      <!--<span class="icon"><i class="fa fa-question"></i></span>-->
     </div>
     <div>
       <span>Mitigation Framework</span>
-      <span class="icon"><i class="fa fa-question"></i></span>
+      <!--<span class="icon"><i class="fa fa-question"></i></span>-->
     </div>
     <div>Passed in <%= @legislation.date_passed&.year %></div>
   </div>

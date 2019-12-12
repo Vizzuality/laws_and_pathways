@@ -1,3 +1,5 @@
+<% content_for :page_title, 'Climate Laws - Litigation cases' %>
+
 <% geography_options = {field_name: 'geography', options: Geography.all.map { |l| {value: l.id, label: l.name }}} %>
 <% region_options = {field_name: 'region', options: Geography::REGIONS.map { |l| {value: l, label: l }}} %>
 
@@ -17,7 +19,7 @@
       <main class="column is-three-quarters" data-controller="content-list">
         <div class="columns pre-content">
           <span class="column is-half">Showing <%= @litigations.count %> results</span>
-          <a class="column is-half download-link" href="#">Download results (CSV in .zip)</a>
+          <!--a class="column is-half download-link" href="#">Download results (CSV in .zip)</a-->
         </div>
         <ul class="content-list">
           <% @litigations.each do   |l| %>
