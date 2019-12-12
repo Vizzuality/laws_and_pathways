@@ -160,7 +160,7 @@ function WorldMap({ zoomToGeographyIso }) {
         </div>
         <ComposableMap
           projection={PetersGall}
-          style={{ width: '100%', height: 642 }}
+          className="world-map__composable-map"
         >
           <ZoomableGroup
             zoom={zoom}
