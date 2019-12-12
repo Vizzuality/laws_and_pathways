@@ -16,6 +16,10 @@ module TPI
 
     def show
       @publication = params[:type].eql?('NewsArticle') ? NewsArticle.find(params[:id]) : Publication.find(params[:id])
+      respond_to do |format|
+        format.html
+        format.pdf { redirect_to rails_blob_url(@publication.file, disposition: 'preview') }
+      end
       redirect_to '' unless @publication
     end
 
