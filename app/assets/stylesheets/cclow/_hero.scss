@@ -110,16 +110,17 @@ $logos-container-padding: 1.5rem;
     grid-template-columns: repeat(2, 1fr);
     grid-template-areas:
       "lawsAndPolicies climateLitigation"
+      "spacer spacer"
       "featuredCountryProfiles featuredCountryProfiles";
-    grid-row-gap: 42px;
+    grid-row-gap: 36px;
     margin-top: 50px;
-    padding: 0 1.6rem;
 
     @include desktop {
       grid-template-areas: unset;
       grid-template-columns: repeat(4, 1fr);
       grid-row-gap: 0;
       margin-top: 82px;
+      padding: 0 1.6rem;
     }
 
     .section__cell {
@@ -133,6 +134,18 @@ $logos-container-padding: 1.5rem;
 
       @include desktop {
         display: block;
+      }
+    }
+
+    .spacer {
+      height: 1px;
+      width: 100%;
+      background-color: $grey-text;
+      grid-area: spacer;
+
+      @include desktop {
+        display: none;
+        grid-area: unset;
       }
     }
 

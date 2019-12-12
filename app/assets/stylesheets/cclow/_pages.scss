@@ -43,13 +43,18 @@
   align-items: center;
 }
 
-.section__map {
-  margin-top: 2rem;
+.latest_additions__container {
   padding-bottom: 0;
-  padding-top: 0;
+}
+
+.section__map {
+  margin-top: 44px;
+  padding-bottom: 0;
+  padding-top: 0 !important;
   margin-bottom: 52px;
 
   @include desktop {
+    margin-top: 68px;
     margin-bottom: 74px;
   }
 
