@@ -47,6 +47,7 @@ class LitigationCases extends Component {
   renderTags = () => {
     const {activeGeoFilter, activeTagFilter} = this.state;
     const {geo_filter_options: geoFilterOptions, tags_filter_options: tagsFilterOptions} = this.props;
+    if (Object.keys(activeGeoFilter).length === 0 && Object.keys(activeTagFilter).length === 0) return null;
     return (
       <div className="tags">
         {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
