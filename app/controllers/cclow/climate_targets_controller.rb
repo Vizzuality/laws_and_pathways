@@ -1,25 +1,22 @@
 module CCLOW
   class ClimateTargetsController < CCLOWController
-    include SearchController
+    include FilterController
 
     # rubocop:disable Metrics/AbcSize
     def index
+      add_breadcrumb('Climate Change Laws of the World', cclow_root_path)
       add_breadcrumb('Climate Targets', cclow_climate_targets_path)
-      @climate_targets = if params[:ids]
-                           ids = params[:ids].split(',').map(&:to_i)
-                           add_breadcrumb('Search results', request.path)
-                           Target.find(ids)
-                         else
-                           Target.published
-                         end
-      @climate_targets = CCLOW::TargetDecorator.decorate_collection(filter(@climate_targets))
-      geography_options = {field_name: 'geography', options: ::Geography.all.map { |l| {value: l.id, label: l.name} }}
-      region_options = {field_name: 'region', options: ::Geography::REGIONS.map { |l| {value: l, label: l} }}
+      add_breadcrumb('Search results', request.path) if params[:q].present? || params[:recent].present?
+
+      @climate_targets = CCLOW::TargetDecorator.decorate_collection(
+        Queries::CCLOW::TargetQuery.new(filter_params).call
+      )
 
       respond_to do |format|
         format.html do
           render component: 'pages/cclow/ClimateTargets', props: {
-            filter_option: [region_options, geography_options],
+            geo_filter_options: region_geography_options,
+            tags_filter_options: tags_options('Target'),
             climate_targets: @climate_targets.first(10),
             count: @climate_targets.count
           }, prerender: false
@@ -28,16 +25,5 @@ module CCLOW
       end
     end
     # rubocop:enable Metrics/AbcSize
-
-    private
-
-    def filter(climate_targets)
-      if params[:region]
-        climate_targets = climate_targets.includes(:geography).where(geographies: {region: params[:region]})
-      end
-      return climate_targets unless params[:geography]
-
-      climate_targets.includes(:geography).where(geographies: {id: params[:geography]})
-    end
   end
 end

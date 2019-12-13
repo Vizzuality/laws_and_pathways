@@ -11,6 +11,10 @@ module CCLOW
     def as_json(*)
       super.tap do |hash|
         hash['link'] = link
+        hash['geography'] = model.geography
+        hash['date_passed'] = model.date_passed
+        hash['legislation_type'] = model.legislation_type
+        hash['legislation_type_humanize'] = model.legislation_type.humanize
       end
     end
   end

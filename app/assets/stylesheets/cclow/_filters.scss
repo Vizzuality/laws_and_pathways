@@ -105,4 +105,8 @@ $shadow-cl: rgba(46,49,82,0.05);
       }
     }
   }
+
+  &:not(:first-child) {
+    margin-top: 1rem;
+  }
 }

@@ -30,6 +30,7 @@ gem 'discard'
 gem 'public_activity'
 gem 'friendly_id'
 gem 'language_list'
+gem 'pg_search'
 
 gem 'simplecov', require: false, group: :test
 gem 'dotenv-rails'

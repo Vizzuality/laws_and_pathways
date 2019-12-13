@@ -2,7 +2,6 @@ module CCLOW
   module Geography
     class LegislationsController < CCLOWController
       include GeographyController
-      include SearchController
 
       before_action :set_common_breadcrumb
 

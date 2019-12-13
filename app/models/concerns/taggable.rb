@@ -26,6 +26,7 @@ module Taggable
 
   included do
     has_many :taggings, as: :taggable
+    has_many :tags, through: :taggings
   end
 
   class_methods do
