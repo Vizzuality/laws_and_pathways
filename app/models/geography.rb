@@ -25,6 +25,7 @@ class Geography < ApplicationRecord
   include VisibilityStatus
   include DiscardableModel
   include PublicActivityTrackable
+  include PgSearch::Model
   extend FriendlyId
 
   friendly_id :name, use: :slugged, routes: :default
@@ -60,6 +61,17 @@ class Geography < ApplicationRecord
   ].freeze
 
   enum geography_type: array_to_enum_hash(GEOGRAPHY_TYPES)
+
+  pg_search_scope :full_text_search,
+                  associated_against: {tags: [:name]},
+                  against: {
+                    name: 'A',
+                    region: 'B',
+                    legislative_process: 'C'
+                  },
+                  using: {
+                    tsearch: {prefix: true}
+                  }
 
   tag_with :political_groups
 

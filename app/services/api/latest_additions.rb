@@ -7,11 +7,13 @@ module Api
     end
 
     def call
-      (serialize_litigations + serialize_legislations).sort_by { |item| - (item[:date_passed] || 0) }
+      (litigations + legislations).sort_by { |item| - (item[:date_passed] || 0) }
     end
 
+    private
+
     # rubocop:disable Metrics/AbcSize
-    def serialize_litigations
+    def litigations
       litigations = Litigation.published
         .joins(:events)
         .order('events.date ASC, litigations.created_at ASC')
@@ -32,7 +34,7 @@ module Api
     end
     # rubocop:enable Metrics/AbcSize
 
-    def serialize_legislations
+    def legislations
       legislation = Legislation.published
         .joins(:events)
         .order('events.date ASC, legislations.created_at ASC')

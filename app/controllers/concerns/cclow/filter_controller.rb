@@ -14,7 +14,7 @@ module CCLOW
     end
 
     def filter_params
-      params.permit(:fromDate, :ids, region: [], geography: [])
+      params.permit(:fromDate, :recent, :ids, region: [], geography: [], tags: [])
     end
   end
 end

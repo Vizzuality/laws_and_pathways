@@ -24,6 +24,7 @@ class Target < ApplicationRecord
   include VisibilityStatus
   include DiscardableModel
   include PublicActivityTrackable
+  include PgSearch::Model
   include Taggable
 
   TYPES = %w[
@@ -61,6 +62,23 @@ class Target < ApplicationRecord
   belongs_to :sector, class_name: 'LawsSector', foreign_key: 'sector_id'
   has_many :events, as: :eventable, dependent: :destroy
   has_and_belongs_to_many :legislations
+
+  scope :recent, ->(date = 1.month.ago) {
+    joins(:events)
+      .where('events.date > ?', date)
+      .where(events: {event_type: %w[set updated]})
+  }
+  pg_search_scope :full_text_search,
+                  associated_against: {
+                    tags: [:name]
+                  },
+                  against: {
+                    target_type: 'A',
+                    description: 'B'
+                  },
+                  using: {
+                    tsearch: {prefix: true}
+                  }
 
   accepts_nested_attributes_for :events, allow_destroy: true, reject_if: :all_blank
 

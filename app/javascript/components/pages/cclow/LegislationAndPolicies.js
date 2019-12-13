@@ -1,7 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import qs from 'qs';
 import SearchFilter from '../../SearchFilter';
 
+function getQueryFilters() {
+  return qs.parse(window.location.search.slice(1));
+}
 
 class LegislationAndPolicies extends Component {
   constructor(props) {
@@ -25,15 +29,14 @@ class LegislationAndPolicies extends Component {
   filterList = (activeFilterName, filterParams) => {
     const {activeGeoFilter, activeTagFilter} = this.state;
     const filterList = {activeGeoFilter, activeTagFilter};
-    const params = {};
+    const params = {...getQueryFilters};
 
     this.setState({[activeFilterName]: filterParams});
     filterList[activeFilterName] = filterParams;
-    Object.assign(params, Object.values(filterList));
+    Object.assign(params, ...Object.values(filterList));
+    const newQs = qs.stringify(params, { arrayFormat: 'brackets' });
 
-    let url = '/cclow/legislation_and_policies.json?';
-    url += $.param(params);
-    fetch(url).then((response) => {
+    fetch(`/cclow/legislation_and_policies.json?${newQs}`).then((response) => {
       response.json().then((data) => {
         if (response.ok) {
           this.setState({legislations: data.legislations, count: data.count});
@@ -41,6 +44,22 @@ class LegislationAndPolicies extends Component {
       });
     });
   };
+
+  renderPageTitle() {
+    const qFilters = getQueryFilters();
+
+    const filterText = qFilters.q || (qFilters.recent && 'recent additions');
+
+    if (filterText) {
+      return (
+        <h5 className="search-title">
+          Search results: <strong>{filterText}</strong> in Legislation and policies
+        </h5>
+      );
+    }
+
+    return (<h5 className="search-title">All Legislation and policies</h5>);
+  }
 
   renderTags = () => {
     const {activeGeoFilter, activeTagFilter} = this.state;
@@ -74,7 +93,7 @@ class LegislationAndPolicies extends Component {
       <Fragment>
         <div className="cclow-geography-page">
           <div className="title-page">
-            <h5>All Legislation and policies</h5>
+            {this.renderPageTitle()}
           </div>
           <hr />
           <div className="columns">
@@ -107,10 +126,14 @@ class LegislationAndPolicies extends Component {
                     <li className="content-item">
                       <h5 className="title" dangerouslySetInnerHTML={{__html: legislation.link}} />
                       <div className="meta">
-                        <div>
-                          <img src={`../../../../assets/flags/${legislation.geography.iso}.svg`} alt="" />
-                          {legislation.geography.name}
-                        </div>
+                        {legislation.geography && (
+                          <Fragment>
+                            <div>
+                              <img src={`../../../../assets/flags/${legislation.geography.iso}.svg`} alt="" />
+                              {legislation.geography.name}
+                            </div>
+                          </Fragment>
+                        )}
                         <div>
                           <img src={`../../../../assets/icons/legislation_types/${legislation.legislation_type}.svg`} alt="" />
                           {legislation.legislation_type_humanize}

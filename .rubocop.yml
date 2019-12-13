@@ -31,6 +31,9 @@ Style/BracesAroundHashParameters:
 Style/SymbolArray:
   EnforcedStyle: brackets
 
+Style/Lambda:
+  Enabled: false
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 

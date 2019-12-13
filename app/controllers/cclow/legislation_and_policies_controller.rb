@@ -1,13 +1,17 @@
 module CCLOW
   class LegislationAndPoliciesController < CCLOWController
-    include SearchController
     include FilterController
 
+    # rubocop:disable Metrics/AbcSize
     def index
-      add_breadcrumb('Litigation cases', cclow_legislation_and_policies_path(@geography))
-      add_breadcrumb('Search results', request.path) if params[:ids].present?
-      @legislations = ::Api::Filters.new('Legislation', filter_params).call.published
-      @legislations = CCLOW::LegislationDecorator.decorate_collection(@legislations)
+      add_breadcrumb('Climate Change Laws of the World', cclow_root_path)
+      add_breadcrumb('Legislation and policies', cclow_legislation_and_policies_path(@geography))
+      add_breadcrumb('Search results', request.path) if params[:q].present? || params[:recent].present?
+
+      @legislations = CCLOW::LegislationDecorator.decorate_collection(
+        Queries::CCLOW::LegislationQuery.new(filter_params).call
+      )
+
       respond_to do |format|
         format.html do
           render component: 'pages/cclow/LegislationAndPolicies', props: {
@@ -20,5 +24,6 @@ module CCLOW
         format.json { render json: {legislations: @legislations.last(10), count: @legislations.count} }
       end
     end
+    # rubocop:enable Metrics/AbcSize
   end
 end

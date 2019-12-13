@@ -25,6 +25,7 @@ class Litigation < ApplicationRecord
   include VisibilityStatus
   include DiscardableModel
   include PublicActivityTrackable
+  include PgSearch::Model
   extend FriendlyId
 
   friendly_id :title, use: :slugged, routes: :default
@@ -82,10 +83,24 @@ class Litigation < ApplicationRecord
     tax_abolished
     withdrawn
   ].freeze
+  EVENT_STARTED_TYPES = %w[case_filed case_opened case_started].freeze
 
   enum document_type: array_to_enum_hash(DOCUMENT_TYPES)
 
-  scope :started, -> { joins(:events).where('events.event_type = ?', 'case_started') }
+  scope :started, -> { joins(:events).where(events: {event_type: EVENT_STARTED_TYPES}) }
+  scope :recent, ->(date = 1.month.ago) { started.where('events.date > ?', date) }
+
+  pg_search_scope :full_text_search,
+                  associated_against: {
+                    tags: [:name]
+                  },
+                  against: {
+                    title: 'A',
+                    summary: 'B'
+                  },
+                  using: {
+                    tsearch: {prefix: true}
+                  }
 
   tag_with :keywords
   tag_with :responses
@@ -107,7 +122,8 @@ class Litigation < ApplicationRecord
   validates_presence_of :title, :slug, :document_type
 
   def started_event
-    events.where(event_type: %w[case_filed case_opened case_started])
+    events
+      .where(event_type: EVENT_STARTED_TYPES)
       .order(:date)
       .first
   end

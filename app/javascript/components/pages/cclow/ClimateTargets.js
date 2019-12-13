@@ -1,7 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import qs from 'qs';
 import SearchFilter from '../../SearchFilter';
 
+function getQueryFilters() {
+  return qs.parse(window.location.search.slice(1));
+}
 
 class ClimateTargets extends Component {
   constructor(props) {
@@ -25,15 +29,14 @@ class ClimateTargets extends Component {
   filterList = (activeFilterName, filterParams) => {
     const {activeGeoFilter, activeTagFilter} = this.state;
     const filterList = {activeGeoFilter, activeTagFilter};
-    const params = {};
+    const params = {...getQueryFilters};
 
     this.setState({[activeFilterName]: filterParams});
     filterList[activeFilterName] = filterParams;
-    Object.assign(params, Object.values(filterList));
+    Object.assign(params, ...Object.values(filterList));
+    const newQs = qs.stringify(params, { arrayFormat: 'brackets' });
 
-    let url = '/cclow/climate_targets.json?';
-    url += $.param(filterParams);
-    fetch(url).then((response) => {
+    fetch(`/cclow/climate_targets.json?${newQs}`).then((response) => {
       response.json().then((data) => {
         if (response.ok) {
           this.setState({climate_targets: data.climate_targets, count: data.count});
@@ -41,6 +44,22 @@ class ClimateTargets extends Component {
       });
     });
   };
+
+  renderPageTitle() {
+    const qFilters = getQueryFilters();
+
+    const filterText = qFilters.q || (qFilters.recent && 'recent additions');
+
+    if (filterText) {
+      return (
+        <h5 className="search-title">
+          Search results: <strong>{filterText}</strong> in Climate Targets
+        </h5>
+      );
+    }
+
+    return (<h5 className="search-title">All Climate Targets</h5>);
+  }
 
   renderTags = () => {
     const {activeGeoFilter, activeTagFilter} = this.state;
@@ -74,7 +93,7 @@ class ClimateTargets extends Component {
       <Fragment>
         <div className="cclow-geography-page">
           <div className="container">
-            <h5>All Climate Targets</h5>
+            {this.renderPageTitle()}
             <hr />
             <div className="columns">
               <div className="column is-one-quarter filter-column">
@@ -104,10 +123,14 @@ class ClimateTargets extends Component {
                       <li>
                         <h5 className="title" dangerouslySetInnerHTML={{__html: target.link}} />
                         <div className="meta">
-                          <div>
-                            <img src={`../../../../assets/flags/${target.geography.iso}.svg`} alt="" />
-                            {target.geography.name}
-                          </div>
+                          {target.geography && (
+                            <Fragment>
+                              <div>
+                                <img src={`../../../../assets/flags/${target.geography.iso}.svg`} alt="" />
+                                {target.geography.name}
+                              </div>
+                            </Fragment>
+                          )}
                           <div>{target.target_tags && target.target_tags.join(' | ')}</div>
                         </div>
                       </li>
