@@ -13,6 +13,7 @@ module Queries
         scope
           .merge(full_text_filter)
           .merge(filter_by_region)
+          .merge(filter_by_geography)
           .merge(filter_by_tags)
           .merge(filter_recent)
       end
@@ -29,6 +30,12 @@ module Queries
         return scope unless params[:region].present?
 
         scope.includes(:geography).where(geographies: {region: params[:region]})
+      end
+
+      def filter_by_geography
+        return scope unless params[:geography].present?
+
+        scope.where(geography_id: params[:geography])
       end
 
       def filter_by_tags
