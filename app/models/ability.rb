@@ -3,70 +3,74 @@
 class Ability
   include CanCan::Ability
 
+  TPI_RESOURCES = [
+    Company, MQ::Assessment, CP::Assessment, TPISector, TPIPage,
+    NewsArticle, Testimonial, Publication
+  ].freeze
+  LAWS_RESOURCES = [
+    Legislation, Litigation, Target, ExternalLegislation, LawsSector,
+    CCLOWPage, Instrument, InstrumentType, Governance, GovernanceType
+  ].freeze
+
+  PUBLISHABLE_RESOURCES = [Company, Geography, Legislation, Litigation, Target].freeze
+
   def initialize(user)
     @user = user
 
-    if @user.present?
-      send(@user.role.to_sym)
-    else # guest
-      can :read, :all
+    can :read, :all
+
+    send(@user.role.to_sym) if @user.present?
+  end
+
+  def super_user
+    can :manage, :all
+  end
+
+  def editor_tpi
+    editor_abilities_for TPI_RESOURCES
+  end
+
+  def editor_laws
+    editor_abilities_for LAWS_RESOURCES
+  end
+
+  def publisher_tpi
+    publisher_abilities_for TPI_RESOURCES
+  end
+
+  def publisher_laws
+    publisher_abilities_for LAWS_RESOURCES
+  end
+
+  private
+
+  def editor_abilities_for(resources)
+    # Can add/edit new content to their area (Laws/TPI)
+    resources.each do |resource|
+      can :create, resource
+      can :update, resource
+    end
+
+    # Can archive any content from their area
+    (resources & PUBLISHABLE_RESOURCES).each do |resource|
+      can :archive, resource
     end
   end
 
-  # SuperUser: can manage all pieces of content, including users;
-  def super_user
-    can :manage, :all
-    can :read, :all
-  end
+  def publisher_abilities_for(resources)
+    # Can manage all pieces of content related to their area (Laws/TPI)
+    resources.each { |resource| can :manage, resource }
 
-  # EditorTPI:
-  #     can add new content to their area;
-  #     can't publish or unpublish any pieces of content;
-  #     can edit any content on their area (even if it's published);
-  #     can view all the content on the site;
-  #     can archive any content;
-  #     can't delete content;
-  def editor_tpi
-    can :edit, Company
-    can :read, Company
-    can :create, Company
-    can :update, Company
-  end
+    # Can manage tags
+    can :manage, Tag
 
-  # EditorLaws:
-  #     can add new content to their area;
-  #     can't publish or unpublish any pieces of content;
-  #     can edit any content on their area (even if it's published);
-  #     can view all the content on the site;
-  #     can archive any content;
-  #     can't delete content;
-  def editor_laws
-    can :read, :all
-    can :manage, :all
-  end
+    # Can add new Publishers or Editors to their area
+    can :create, AdminUser
 
-  # PublisherTPI:
-  #     Can manage all pieces of content related to their area "TPI" or "Laws" table.
-  #     Can manage tags;
-  #     Can add new Publishers or Editors to their area.
-  #     Can publish all content types on their area;
-  #     Can archive any content;
-  #     Can delete all content;
-  def publisher_tpi
-    can :publish, :all
-    can :read, :all
-    can :manage, :all
-  end
-
-  # PublisherLaws:
-  #     Can manage all pieces of content related to their area "TPI" or "Laws" table.
-  #     Can manage tags;
-  #     Can add new Publishers or Editors to their area.
-  #     Can publish all content types on their area;
-  #     Can archive any content;
-  #     Can delete all content;
-  def publisher_laws
-    can :read, :all
-    can :manage, :all
+    # Can publish all content types from their area
+    (resources & PUBLISHABLE_RESOURCES).each do |resource|
+      can :publish, resource
+      can :archive, resource
+    end
   end
 end
