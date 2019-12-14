@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe Admin::AdminUsersController, type: :controller do
   let(:admin) { create(:admin_user) }
   let(:valid_attributes) { attributes_for(:admin_user) }
-  let(:invalid_attributes) { valid_attributes.merge(email: nil) }
 
   before { sign_in admin }
 
@@ -39,17 +38,17 @@ RSpec.describe Admin::AdminUsersController, type: :controller do
         expect { subject }.to change(AdminUser, :count).by(1)
       end
 
-      it 'redirects to the created AdminUser' do
+      it 'redirects to the created record' do
         expect(subject).to redirect_to(admin_admin_user_path(AdminUser.order(:created_at).last))
       end
     end
 
-    context 'with invalid params' do
-      subject { post :create, params: {admin_user: invalid_attributes} }
+    context 'without an email' do
+      subject { post :create, params: {admin_user: valid_attributes.merge(email: nil)} }
 
       it { is_expected.to be_successful }
 
-      it 'invalid_attributes do not create a AdminUser' do
+      it 'does not create an AdminUser' do
         expect { subject }.not_to change(AdminUser, :count)
       end
     end
