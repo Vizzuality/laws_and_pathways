@@ -42,6 +42,10 @@ class Ability
     publisher_abilities_for LAWS_RESOURCES
   end
 
+  def publishable_resources_within(resources)
+    resources & PUBLISHABLE_RESOURCES
+  end
+
   private
 
   def editor_abilities_for(resources)
@@ -52,7 +56,7 @@ class Ability
     end
 
     # Can archive any content from their area
-    (resources & PUBLISHABLE_RESOURCES).each do |resource|
+    publishable_resources_within(resources).each do |resource|
       can :archive, resource
     end
   end
@@ -68,9 +72,9 @@ class Ability
     can :create, AdminUser
 
     # Can publish all content types from their area
-    (resources & PUBLISHABLE_RESOURCES).each do |resource|
-      can :publish, resource
+    publishable_resources_within(resources).each do |resource|
       can :archive, resource
+      can :publish, resource
     end
   end
 end
