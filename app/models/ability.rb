@@ -49,29 +49,22 @@ class Ability
   private
 
   def editor_abilities_for(resources)
-    # Can add/edit new content to their area (Laws/TPI)
     resources.each do |resource|
       can :create, resource
       can :update, resource
     end
 
-    # Can archive any content from their area
     publishable_resources_within(resources).each do |resource|
       can :archive, resource
     end
   end
 
   def publisher_abilities_for(resources)
-    # Can manage all pieces of content related to their area (Laws/TPI)
     resources.each { |resource| can :manage, resource }
 
-    # Can manage tags
     can :manage, Tag
-
-    # Can add new Publishers or Editors to their area
     can :create, AdminUser
 
-    # Can publish all content types from their area
     publishable_resources_within(resources).each do |resource|
       can :archive, resource
       can :publish, resource
