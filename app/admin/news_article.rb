@@ -82,9 +82,5 @@ ActiveAdmin.register NewsArticle do
     def apply_filtering(chain)
       super(chain).distinct
     end
-
-    def csv_format?
-      request[:format] == 'csv'
-    end
   end
 end
