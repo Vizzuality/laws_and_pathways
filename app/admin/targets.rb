@@ -4,7 +4,7 @@ ActiveAdmin.register Target do
   decorate_with TargetDecorator
 
   publishable_scopes
-  publishable_sidebar only: :show
+  publishable_resource_sidebar
 
   permit_params :description, :sector_id, :geography_id, :single_year,
                 :year, :base_year_period, :ghg_target, :target_type,

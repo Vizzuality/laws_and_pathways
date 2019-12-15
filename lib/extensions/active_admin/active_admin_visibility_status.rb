@@ -9,8 +9,8 @@ module ActiveAdminVisibilityStatus
     end
   end
 
-  def publishable_sidebar(*args)
-    sidebar 'Publishing Status', *args do
+  def publishable_resource_sidebar
+    sidebar 'Publishing Status', only: :show, if: -> { can? :publish, resource.model } do
       attributes_table do
         tag_row :visibility_status, interactive: true
       end

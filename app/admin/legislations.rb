@@ -46,7 +46,7 @@ ActiveAdmin.register Legislation do
     actions
   end
 
-  publishable_sidebar only: :show
+  publishable_resource_sidebar
 
   data_export_sidebar 'Laws', documents: true, events: true
 

@@ -4,7 +4,7 @@ ActiveAdmin.register Litigation do
   decorate_with LitigationDecorator
 
   publishable_scopes
-  publishable_sidebar only: :show
+  publishable_resource_sidebar
 
   permit_params :title, :geography_id, :document_type, :jurisdiction,
                 :visibility_status, :summary, :at_issue,
