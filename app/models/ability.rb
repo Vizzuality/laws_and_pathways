@@ -7,12 +7,15 @@ class Ability
     Company, MQ::Assessment, CP::Assessment, TPISector, TPIPage,
     NewsArticle, Testimonial, Publication
   ].freeze
+
   LAWS_RESOURCES = [
     Legislation, Litigation, Target, ExternalLegislation, LawsSector,
     CCLOWPage, Instrument, InstrumentType, Governance, GovernanceType
   ].freeze
 
-  PUBLISHABLE_RESOURCES = [Company, Geography, Legislation, Litigation, Target].freeze
+  PUBLISHABLE_RESOURCES = [
+    Company, Geography, Legislation, Litigation, Target
+  ].freeze
 
   def initialize(user)
     @user = user
@@ -51,10 +54,14 @@ class Ability
   def editor_abilities_for(resources)
     resources.each do |resource|
       can :create, resource
-      can :update, resource
+      can :update, resource # TODO: creating works fine, but there are no 'edit' links (they should be visible)
     end
 
     publishable_resources_within(resources).each do |resource|
+      # TODO
+      # - archiving doesn't work now for some reason (no error in UI)
+      # - archiving is only available via bulk action now (no publication sidebar)
+      #   should be probably added to actions menu
       can :archive, resource
     end
   end
