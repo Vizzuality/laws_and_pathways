@@ -129,13 +129,13 @@ class LegislationAndPolicies extends Component {
                         {legislation.geography && (
                           <Fragment>
                             <div>
-                              <img src={`../../../../assets/flags/${legislation.geography.iso}.svg`} alt="" />
+                              <img src={`/images/flags/${legislation.geography.iso}.svg`} alt="" />
                               {legislation.geography.name}
                             </div>
                           </Fragment>
                         )}
                         <div>
-                          <img src={`../../../../assets/icons/legislation_types/${legislation.legislation_type}.svg`} alt="" />
+                          <img src={`/icons/legislation_types/${legislation.legislation_type}.svg`} alt="" />
                           {legislation.legislation_type_humanize}
                         </div>
                         {legislation.date_passed && <div>{new Date(legislation.date_passed).getFullYear()}</div>}
