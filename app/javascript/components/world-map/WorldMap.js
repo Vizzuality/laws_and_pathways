@@ -8,12 +8,13 @@ import {
   Geography,
   Geographies
 } from 'react-simple-maps';
-import Select from 'react-select';
+import Select, { components } from 'react-select';
 import { geoPath } from 'd3-geo';
 import { geoCylindricalEqualArea } from 'd3-geo-projection';
 import { feature } from 'topojson-client';
 import reducer, { initialState } from './world-map.reducer';
 import { useMarkers, useScale, useCombinedLayer } from './world-map.hooks';
+import chevronIconBlack from '../../../assets/images/icon_chevron_dark/chevron_down_black-1.svg';
 
 import MapBubble from './MapBubble';
 import MapLegend from './MapLegend';
@@ -58,6 +59,42 @@ function WorldMap({ zoomToGeographyIso }) {
   // react-select
   const setContentId = selectedOption => dispatch({ type: 'setContentId', payload: selectedOption.value });
   const setContextId = selectedOption => dispatch({ type: 'setContextId', payload: selectedOption.value });
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      border: '1px solid',
+      boxShadow: '1px solid #2E3152',
+      borderRadius: 0
+    }),
+    indicatorSeparator: () => ({
+      display: 'none'
+    }),
+    menu: (provided) => ({
+      ...provided,
+      margin: 0,
+      borderRadius: 0
+    })
+  };
+
+  const selectThemeColor = '#2E3152';
+
+  const customTheme = theme => ({
+    ...theme,
+    borderRadius: 0,
+    colors: {
+      ...theme.colors,
+      primary: selectThemeColor,
+      primary25: 'white',
+      primary50: 'white',
+      primary75: selectThemeColor
+    }
+  });
+
+  const DropdownIndicator = (props) => (
+    <components.DropdownIndicator {...props}>
+      <img src={chevronIconBlack} />
+    </components.DropdownIndicator>
+  );
 
   const contextOptions = context.map(c => ({ value: c.id, label: c.name }));
   const contentOptions = content.map(c => ({ value: c.id, label: c.name }));
@@ -144,6 +181,9 @@ function WorldMap({ zoomToGeographyIso }) {
               value={selectedContentOption}
               onChange={setContentId}
               isSearchable={false}
+              styles={customStyles}
+              components={{ DropdownIndicator }}
+              theme={customTheme}
               width="300px"
             />
           </div>
@@ -154,6 +194,9 @@ function WorldMap({ zoomToGeographyIso }) {
               value={selectedContextOption}
               onChange={setContextId}
               isSearchable={false}
+              styles={customStyles}
+              components={{ DropdownIndicator }}
+              theme={customTheme}
               width="300px"
             />
           </div>
