@@ -146,7 +146,7 @@ $m-map-height: 400px;
     height: 40px;
     width: 40px;
     background-color: $white;
-
+    border: 1px solid $grey !important;
     padding: 0;
 
     img {
@@ -160,7 +160,7 @@ $m-map-height: 400px;
   }
 
   &__controls-zoom-in {
-    border-bottom: 1px solid $grey;
+    border-bottom: none !important;
   }
 
   &__legend {
