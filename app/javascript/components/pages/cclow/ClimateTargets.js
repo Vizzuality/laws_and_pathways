@@ -126,7 +126,7 @@ class ClimateTargets extends Component {
                           {target.geography && (
                             <Fragment>
                               <div>
-                                <img src={`../../../../assets/flags/${target.geography.iso}.svg`} alt="" />
+                                <img src={`/images/flags/${target.geography.iso}.svg`} alt="" />
                                 {target.geography.name}
                               </div>
                             </Fragment>
