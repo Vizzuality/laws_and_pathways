@@ -9,7 +9,6 @@ services:
   - postgres
 before_install:
   - gem update --system
-  - gem install bundler
   - sudo apt-get update
   - sudo apt-get --yes remove postgresql\*
   - sudo apt-get install -y postgresql-11 postgresql-client-11
