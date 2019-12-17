@@ -161,7 +161,7 @@ class LitigationCases extends Component {
                           {litigation.geography && (
                             <Fragment>
                               <div>
-                                <img src={`../../../../assets/flags/${litigation.geography.iso}.svg`} alt="" />
+                                <img src={`/images/flags/${litigation.geography.iso}.svg`} alt="" />
                                 {litigation.geography.name}
                               </div>
                               {litigation.opened_in && <div>Opened in {litigation.opened_in}</div>}

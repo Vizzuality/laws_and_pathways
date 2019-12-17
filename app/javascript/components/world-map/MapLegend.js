@@ -51,8 +51,8 @@ function MapLegend({ content, context, scales }) {
               <div>
                 <div className="rectangle" style={{backgroundColor: color}} />&nbsp;
 
-              {(i === 0) && `<${displayContextValue(color, 1)}`}
-              {(i === colors.length - 1) && `>${displayContextValue(color, 0)}`}
+                {(i === 0) && `<${displayContextValue(color, 1)}`}
+                {(i === colors.length - 1) && `>${displayContextValue(color, 0)}`}
               </div>
             ))}
           </div>

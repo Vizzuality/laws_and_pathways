@@ -12,12 +12,11 @@
 #  updated_by_id     :bigint
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
-#  sector_id         :bigint
 #
 
 FactoryBot.define do
   factory :publication do
-    association :sector, factory: :tpi_sector
+    tpi_sectors { |a| [a.association(:tpi_sector)] }
 
     title { 'MyString' }
     short_description { 'MyText' }

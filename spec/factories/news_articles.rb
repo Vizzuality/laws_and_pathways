@@ -11,13 +11,13 @@
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  article_type     :string
-#  sector_id        :bigint
 #
 
 FactoryBot.define do
   factory :news_article do
     title { 'MyString' }
     content { 'MyText' }
+    tpi_sectors { |a| [a.association(:tpi_sector)] }
     publication_date { '2019-11-29' }
     image { fixture_file_upload(Rails.root.join('spec', 'support', 'fixtures', 'files', 'test.jpg'), 'jpg') }
 
