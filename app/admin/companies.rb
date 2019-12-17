@@ -180,8 +180,10 @@ ActiveAdmin.register Company do
 
       f.input :ca100
 
-      f.input :latest_information
-      f.input :historical_comments
+      f.input :latest_information,
+              hint: 'Information displayed on the company page of TPI'
+      f.input :historical_comments,
+              hint: 'Name changes, or other historical information, not displayed on the public interface'
     end
 
     f.actions
