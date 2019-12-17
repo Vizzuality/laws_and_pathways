@@ -38,8 +38,8 @@ module TPI
     end
 
     def fetch_sectors
-      @sectors = (Publication.joins(:sector).select('tpi_sectors.name as sector_name').map(&:sector_name) +
-       NewsArticle.joins(:sector).select('tpi_sectors.name as sector_name').map(&:sector_name)).uniq
+      @sectors = (Publication.joins(:tpi_sectors).select('tpi_sectors.name as sector_name').map(&:sector_name) +
+       NewsArticle.joins(:tpi_sectors).select('tpi_sectors.name as sector_name').map(&:sector_name)).uniq
     end
   end
 end

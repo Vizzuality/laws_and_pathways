@@ -8,7 +8,7 @@ ActiveAdmin.register Publication do
 
   permit_params :title, :short_description, :publication_date,
                 :file, :image, :created_by_id, :updated_by_id,
-                :sector_id, :keywords_string
+                :keywords_string, tpi_sector_ids: []
 
   filter :title
   filter :short_description
@@ -21,7 +21,7 @@ ActiveAdmin.register Publication do
           row :title
           row :short_description
           row :publication_date
-          row :sector
+          list_row 'Sectors', :tpi_sector_links
           row 'Keywords', &:keywords_string
           row :image do |t|
             image_tag(url_for(t.image)) if t.image.present?
@@ -55,7 +55,8 @@ ActiveAdmin.register Publication do
       f.input :title
       f.input :short_description, as: :text
       f.input :publication_date
-      f.input :sector
+      f.input :tpi_sector_ids, label: 'Sectors', as: :select,
+                               collection: TPISector.order(:name), input_html: {multiple: true}
       f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags, collection: Keyword.pluck(:name)
       f.input :file, as: :file
       f.input :image, as: :file
@@ -68,7 +69,7 @@ ActiveAdmin.register Publication do
     include DiscardableController
 
     def scoped_collection
-      super
+      super.includes(:tpi_sectors)
     end
 
     def apply_filtering(chain)

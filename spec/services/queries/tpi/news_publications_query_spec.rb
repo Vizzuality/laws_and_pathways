@@ -23,8 +23,8 @@ RSpec.describe Queries::TPI::NewsPublicationsQuery do
       ]
     )
   }
-  let!(:publication_1) { create(:publication, sector: sector_1, keywords: [keyword_1]) }
-  let!(:publication_2) { create(:publication, sector: sector_2) }
+  let!(:publication_1) { create(:publication, tpi_sectors: [sector_1], keywords: [keyword_1]) }
+  let!(:publication_2) { create(:publication, tpi_sectors: [sector_2]) }
 
   subject { described_class }
 

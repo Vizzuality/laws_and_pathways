@@ -36,7 +36,7 @@ module Queries
       def filter_by_sectors(scope)
         return scope if sectors.blank?
 
-        scope.joins(:sector).where('tpi_sectors.name IN (?)', sectors.split(', '))
+        scope.joins(:tpi_sectors).where('tpi_sectors.name IN (?)', sectors.split(', '))
       end
     end
   end
