@@ -22,19 +22,18 @@
 <section class="section tpi-home__hero is-secondary">
   <div class="container tpi-hero__body">
     <div class="columns">
-      <div class="column is-half section-separator">
+      <%= link_to '/tpi/investors', class: "column is-half section-separator section-clickable" do %>
         <h4 class="section-title">How investors can use the TPI</h4>
 
         <p class="section-description">
           The TPI is designed to support investors. Find out how they can use its findings.
         </p>
         <div class="subsection-button__container">
-          <button class="section-button"><%= image_tag "icons/plus.svg" %></button>
-          <a href="tpi/investors" class="button__title">TPI for investors</a>
+          <button class="section-button"></button>
+          <span class="button__title">TPI for investors</span>
         </div>
-      </div>
-
-      <div class="column is-half right-column">
+      <% end %>
+      <%= link_to '/tpi/supporters', class: "column is-half right-column section-clickable" do %>
         <h4 class="section-title">Supporters</h4>
 
         <p class="section-description">
@@ -42,10 +41,10 @@
         </p>
 
         <div class="subsection-button__container">
-          <button class="section-button"><%= image_tag "icons/plus.svg" %></button>
-          <a href="/tpi/supporters" class="button__title">Who supports the TPI?</a>
+          <button class="section-button"></button>
+          <span class="button__title">Who supports the TPI?</span>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
 </section>

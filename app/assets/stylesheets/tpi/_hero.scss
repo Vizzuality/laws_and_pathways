@@ -80,12 +80,29 @@
   }
 }
 
+.section-clickable {
+  &:hover {
+    .subsection-button__container {
+      .section-button {
+        background-color: $yellow;
+        background-image: image-url('icons/plus-blue.svg');
+      }
+
+      .button__title {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
 .section-title {
   margin-bottom: 20px;
+  color: $white;
 }
 
 .section-description {
   margin-bottom: 20px;
+  color: $white;
 
   @media #{$tablet-portrait} {
     margin-bottom: 64px;
@@ -104,6 +121,9 @@
   justify-content: center;
   align-items: center;
   margin-right: 10px;
+  background-image: image-url('icons/plus.svg');
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .subsection-button__container {
