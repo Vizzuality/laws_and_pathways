@@ -8,6 +8,9 @@ const LatestInformation = ({ company }) => {
   const [expanded, setExpanded] = useState(false);
 
   const buttonText = expanded ? 'Read less' : 'Read more';
+  const textLength = company.latest_information.length;
+  const MAX_CHARACTERS_FOR_THREE_LINES = 270;
+  const showButton = textLength > MAX_CHARACTERS_FOR_THREE_LINES;
 
   return (
     <section className="container latest-information__wrapper">
@@ -18,10 +21,12 @@ const LatestInformation = ({ company }) => {
         >
           {company.latest_information}
         </p>
-        <button onClick={() => setExpanded(!expanded)} type="button" className="latest-information__button-container">
-          <img src={expanded ? minusIcon : plusIcon} className="latest-information__button" />
-          <span className="latest-information__button-text">{buttonText}</span>
-        </button>
+        {showButton && (
+          <button onClick={() => setExpanded(!expanded)} type="button" className="latest-information__button-container">
+            <img src={expanded ? minusIcon : plusIcon} className="latest-information__button" />
+            <span className="latest-information__button-text">{buttonText}</span>
+          </button>
+        )}
       </div>
     </section>
   );
