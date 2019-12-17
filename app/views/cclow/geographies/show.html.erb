@@ -3,32 +3,32 @@
 <div class="content-show overview-page">
   <h3>Overview and context</h3>
   <%= render 'cclow/geographies/overview', geography_overview: @geography_overview, geography: @geography %>
-  <% if @geography.eu_member? %>
-    <section class="section is-medium">
-      <div class="details">
-        <h5>Nationally Determined Contribution (UNFCCC website) </h5>
+  <section class="section is-medium">
+    <div class="details">
+      <h5>Nationally Determined Contribution (UNFCCC website) </h5>
+      <% if @geography.eu_member? %>
         <div class="topic-details">
           <div>
             <img class="flag" src=<%= asset_path "flags/EUR.svg"%> alt="">
-              This country is a member of the EU and <a href="#" class="highlight">so EU NDC data</a> is being displayed.
-            </div>
+            This country is a member of the EU and <a href="#" class="highlight">so EU NDC data</a> is being displayed.
+          </div>
           <div class="meta">For further information about the EU's NDC, legislation, and targets, please see the
             <%= link_to "EU profile", cclow_geography_path(Geography.where(iso: 'EUR').first), class: 'highlight' %>
           </div>
         </div>
-        <ul class="documents-list">
-          <li class="columns">
-            <span class="document-icon column is-1">
-              <i class="fa fa-lg fa-link"></i>
-            </span>
-            <a href="https://www4.unfccc.int/sites/NDCStaging/pages/Party.aspx?party=<%=@geography.iso%>" class="column is-11">
-              INDC Submission
-            </a>
-          </li>
-        </ul>
-      </div>
-    </section>
-  <% end %>
+      <% end %>
+      <ul class="documents-list">
+        <li class="columns">
+          <span class="document-icon column is-1">
+            <i class="fa fa-lg fa-link"></i>
+          </span>
+          <a href="https://www4.unfccc.int/sites/NDCStaging/pages/Party.aspx?party=<%=@geography.iso%>" class="column is-11">
+            visit UNFCCC NDCs registry for this country.
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
   <% if @geography.events.any? %>
     <section class="section is-large">
       <% event_options = Geography::EVENT_TYPES.map{|type| {value: type, label: type.humanize}} %>
