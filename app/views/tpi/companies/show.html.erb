@@ -162,9 +162,9 @@
     </section>
   <% end %>
   <% if @company.latest_information.present? %>
-    <div>
-      <h4>Latest information available on <%= @company.name %></h4>
-      <p><%= @company.latest_information %></p>
-    </div>
+    <section class="container">
+      <h4 class="latest-information__header">Latest information available on <%= @company.name %></h4>
+      <p class="latest-information__description"><%= @company.latest_information %></p>
+    </section>
   <% end %>
 </div>
