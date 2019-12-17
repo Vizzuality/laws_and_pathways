@@ -17,7 +17,7 @@
 
 FactoryBot.define do
   factory :publication do
-    association :sector, factory: :tpi_sector
+    tpi_sectors { |a| [a.association(:tpi_sector)] }
 
     title { 'MyString' }
     short_description { 'MyText' }

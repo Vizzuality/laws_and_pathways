@@ -8,10 +8,10 @@
         <% end %>
 
         <div class="publication__content">
-          <% if publication.keywords.any? %>
+          <% if publication.keywords.any? || publication.tpi_sectors.any? %>
             <div class="publication__tags">
-              <% publication.keywords.each do |tag| %>
-                <span class="tag"><%= tag.name %></span>
+              <% publication.tags_and_sectors.each do |tag| %>
+                <span class="tag"><%= tag %></span>
               <% end %>
             </div>
           <% end %>

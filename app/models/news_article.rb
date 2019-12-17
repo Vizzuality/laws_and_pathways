@@ -31,12 +31,16 @@ class NewsArticle < ApplicationRecord
 
   enum article_type: array_to_enum_hash(ARTICLE_TYPES)
 
-  belongs_to :sector, class_name: 'TPISector', foreign_key: 'sector_id', optional: true
+  has_and_belongs_to_many :tpi_sectors
 
   validates_presence_of :title, :content
 
   def self.search(query)
     where('title ilike ? OR content ilike ?',
           "%#{query}%", "%#{query}%")
+  end
+
+  def tags_and_sectors
+    (keywords.map(&:name) + tpi_sectors.map(&:name)).compact.uniq.sort
   end
 end

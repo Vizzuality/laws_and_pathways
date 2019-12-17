@@ -25,7 +25,7 @@ class Publication < ApplicationRecord
 
   tag_with :keywords
 
-  belongs_to :sector, class_name: 'TPISector', foreign_key: 'sector_id', optional: true
+  has_and_belongs_to_many :tpi_sectors
 
   validates :file, attached: true
   validates_presence_of :title, :short_description, :publication_date
@@ -33,5 +33,9 @@ class Publication < ApplicationRecord
   def self.search(query)
     where('title ilike ? OR short_description ilike ?',
           "%#{query}%", "%#{query}%")
+  end
+
+  def tags_and_sectors
+    (keywords.map(&:name) + tpi_sectors.map(&:name)).compact.uniq.sort
   end
 end
