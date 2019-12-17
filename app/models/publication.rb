@@ -12,7 +12,6 @@
 #  updated_by_id     :bigint
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
-#  sector_id         :bigint
 #
 
 class Publication < ApplicationRecord
