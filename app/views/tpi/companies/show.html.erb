@@ -162,9 +162,6 @@
     </section>
   <% end %>
   <% if @company.latest_information.present? %>
-    <section class="container">
-      <h4 class="latest-information__header">Latest information available on <%= @company.name %></h4>
-      <p class="latest-information__description"><%= @company.latest_information %></p>
-    </section>
+    <%= react_component("LatestInformation", { company: @company }) %>
   <% end %>
 </div>
