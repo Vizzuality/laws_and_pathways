@@ -67,8 +67,10 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
-  root to: 'tpi/home#index', constraints: { host: ['transitionpathwayinitiative.org', 'www.transitionpathwayinitiative.org'] }, as: nil
-  root to: 'cclow/home#index', constraints: { host: ['www.climate-laws.org', 'climate-laws.org'] }, as: nil
+  root to: 'tpi/home#index', constraints: lambda { |req| ['transitionpathwayinitiative.org', 'www.transitionpathwayinitiative.org'].include?(req.host) }, as: nil
+  # root to: 'tpi/home#index', constraints: { host: ['transitionpathwayinitiative.org', 'www.transitionpathwayinitiative.org'] }, as: nil
+  root to: 'cclow/home#index', constraints: lambda { |req| ['www.climate-laws.org', 'climate-laws.org'].include?(req.host) }, as: nil
+  # root to: 'cclow/home#index', constraints: { host: ['www.climate-laws.org', 'climate-laws.org'] }, as: nil
   root to: 'admin/dashboard#index', constraints: { host: 'laws-pathways.vizzuality.com' }, as: nil
   root to: 'admin/dashboard#index', constraints: { host: 'laws-pathways-staging.vizzuality.com' }, as: nil
   root to: 'cclow/home#index', constraints: { host: 'localhost' }
