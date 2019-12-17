@@ -89,4 +89,20 @@
         )%>
     </div>
   </section>
+
+  <% if @publications_and_articles.present? %>
+    <hr>
+
+    <section class="section tpi-sector__promoted-publications">
+      <div class="container">
+        <div class="promoted-publications__title">
+          <h4 class="promoted-publications__title-text">Publications and news</h4>
+
+          <a href="/tpi/publications" class="button is-secondary">View all publications and news</a>
+        </div>
+
+        <%= render "tpi/publications/promoted" %>
+      </div>
+    </section>
+  <% end %>
 </div>

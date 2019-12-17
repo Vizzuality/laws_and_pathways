@@ -17,11 +17,19 @@ class TPISector < ApplicationRecord
   has_many :companies, foreign_key: 'sector_id'
   has_many :cp_benchmarks, class_name: 'CP::Benchmark', foreign_key: 'sector_id'
 
+  has_and_belongs_to_many :publications
+  has_and_belongs_to_many :news_articles
+
   validates_presence_of :name, :slug
   validates_uniqueness_of :name, :slug
 
   def latest_released_benchmarks
     cp_benchmarks.group_by(&:release_date).max&.last || []
+  end
+
+  def publications_and_articles
+    (publications + news_articles)
+      .sort { |a, b| b.publication_date <=> a.publication_date }[0, 3]
   end
 
   # Returns sector CP benchmarks:

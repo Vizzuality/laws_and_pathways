@@ -14,6 +14,8 @@ module TPI
       @sector_companies = @companies.select { |c| c.sector_id == @sector.id }
 
       @companies_by_levels = ::Api::Charts::Sector.new(companies_scope(params)).companies_summaries_by_level
+
+      @publications_and_articles = @sector.publications_and_articles
     end
 
     # Chart data endpoints
