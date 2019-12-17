@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import SearchFilter from '../../SearchFilter';
+import TimeRangeFilter from '../../TimeRangeFilter';
 
 function getQueryFilters() {
   return qs.parse(window.location.search.slice(1));
@@ -19,16 +20,18 @@ class LegislationAndPolicies extends Component {
       legislations,
       count,
       activeGeoFilter: {},
-      activeTagFilter: {}
+      activeTagFilter: {},
+      activeTimeRangeFilter: {}
     };
 
     this.geoFilter = React.createRef();
     this.tagsFilter = React.createRef();
+    this.timeRangeFilter = React.createRef();
   }
 
   filterList = (activeFilterName, filterParams) => {
-    const {activeGeoFilter, activeTagFilter} = this.state;
-    const filterList = {activeGeoFilter, activeTagFilter};
+    const {activeGeoFilter, activeTagFilter, activeTimeRangeFilter} = this.state;
+    const filterList = {activeGeoFilter, activeTagFilter, activeTimeRangeFilter};
     const params = {...getQueryFilters};
 
     this.setState({[activeFilterName]: filterParams});
@@ -62,16 +65,44 @@ class LegislationAndPolicies extends Component {
   }
 
   renderTags = () => {
-    const {activeGeoFilter, activeTagFilter} = this.state;
+    const {activeGeoFilter, activeTagFilter, activeTimeRangeFilter} = this.state;
     const {geo_filter_options: geoFilterOptions, tags_filter_options: tagsFilterOptions} = this.props;
-    if (Object.keys(activeGeoFilter).length === 0 && Object.keys(activeTagFilter).length === 0) return null;
+    if (Object.keys(activeGeoFilter).length === 0
+      && Object.keys(activeTagFilter).length === 0
+      && Object.keys(activeTimeRangeFilter).length === 0) return null;
     return (
       <div className="tags">
         {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
         {this.renderTagsGroup(activeTagFilter, tagsFilterOptions, 'tagsFilter')}
+        {this.renderTimeRangeTags(activeTimeRangeFilter)}
       </div>
     );
   };
+
+  renderTimeRangeTags = (value) => (
+    <Fragment>
+      {value.from_date && (
+        <span key="tag-time-range-from" className="tag">
+          From {value.from_date}
+          <button
+            type="button"
+            onClick={() => this.timeRangeFilter.current.handelChange({from_date: null})}
+            className="delete"
+          />
+        </span>
+      )}
+      {value.to_date && (
+        <span key="tag-time-range-to" className="tag">
+          To {value.to_date}
+          <button
+            type="button"
+            onClick={() => this.timeRangeFilter.current.handelChange({to_date: null})}
+            className="delete"
+          />
+        </span>
+      )}
+    </Fragment>
+  );
 
   renderTagsGroup = (activeTags, options, filterEl) => (
     <Fragment>
@@ -104,6 +135,10 @@ class LegislationAndPolicies extends Component {
                 filterName="Regions and countries"
                 params={geoFilterOptions}
                 onChange={(event) => this.filterList('activeGeoFilter', event)}
+              />
+              <TimeRangeFilter
+                ref={this.timeRangeFilter}
+                onChange={(event) => this.filterList('activeTimeRangeFilter', event)}
               />
               <SearchFilter
                 ref={this.tagsFilter}

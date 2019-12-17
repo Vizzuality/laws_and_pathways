@@ -15,6 +15,7 @@ module Queries
           .merge(filter_by_region)
           .merge(filter_by_tags)
           .merge(filter_by_from_date)
+          .merge(filter_by_to_date)
           .merge(filter_recent)
       end
 
@@ -41,7 +42,13 @@ module Queries
       def filter_by_from_date
         return scope unless params[:from_date].present?
 
-        scope.where('updated_at >= ?', params[:from_date])
+        scope.where('updated_at >= ?', Date.new(params[:from_date].to_i, 1, 1))
+      end
+
+      def filter_by_to_date
+        return scope unless params[:from_date].present?
+
+        scope.where('updated_at >= ?', Date.new(params[:to_date].to_i, 12, 31))
       end
 
       def filter_recent

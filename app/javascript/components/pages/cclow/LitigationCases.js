@@ -65,22 +65,22 @@ class LitigationCases extends Component {
 
   renderTimeRangeTags = (value) => (
     <Fragment>
-      {value.fromDate && (
+      {value.from_date && (
         <span key="tag-time-range-from" className="tag">
-          From {value.fromDate}
+          From {value.from_date}
           <button
             type="button"
-            onClick={() => this.timeRangeFilter.current.handelChange({fromDate: null})}
+            onClick={() => this.timeRangeFilter.current.handelChange({from_date: null})}
             className="delete"
           />
         </span>
       )}
-      {value.toDate && (
+      {value.to_date && (
         <span key="tag-time-range-to" className="tag">
-          To {value.toDate}
+          To {value.to_date}
           <button
             type="button"
-            onClick={() => this.timeRangeFilter.current.handelChange({toDate: null})}
+            onClick={() => this.timeRangeFilter.current.handelChange({to_date: null})}
             className="delete"
           />
         </span>

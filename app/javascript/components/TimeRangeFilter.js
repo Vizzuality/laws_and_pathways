@@ -40,8 +40,8 @@ class TimeRangeFilter extends Component {
     super(props);
     this.state = {
       isShowOptions: false,
-      fromDate: null,
-      toDate: null,
+      from_date: null,
+      to_date: null,
       defFromDate: minDate,
       defToDate: maxDate
     };
@@ -71,20 +71,20 @@ class TimeRangeFilter extends Component {
 
   handelChange = (value) => {
     const {onChange} = this.props;
-    const {fromDate, toDate} = this.state;
+    const {from_date, to_date} = this.state;
     const result = {...value};
     Object.keys(result).forEach((key) => (result[key] == null) && delete result[key]);
-    if (fromDate && !Object.keys(value).includes('fromDate')) Object.assign(result, {fromDate});
-    if (toDate && !Object.keys(value).includes('toDate')) Object.assign(result, {toDate});
+    if (from_date && !Object.keys(value).includes('from_date')) Object.assign(result, {from_date});
+    if (to_date && !Object.keys(value).includes('to_date')) Object.assign(result, {to_date});
     onChange(result);
     this.setState(value);
   };
 
   renderOptions = () => {
     const {filterName, minDate, maxDate} = this.props;
-    const {fromDate, toDate, defFromDate, defToDate} = this.state;
-    const currentToDate = toDate || defToDate;
-    const currentFromDate = fromDate || defFromDate;
+    const {from_date, to_date, defFromDate, defToDate} = this.state;
+    const currentToDate = to_date || defToDate;
+    const currentFromDate = from_date || defFromDate;
     return (
       <div className="options-container" ref={this.optionsContainer}>
         <div className="select-field" onClick={this.handleCloseOptions}>
@@ -106,9 +106,9 @@ class TimeRangeFilter extends Component {
                 { backgroundColor: redColor, border: 'none', height: '12px', width: '12px', marginTop: '-4px' },
                 { backgroundColor: redColor, border: 'none', height: '18px', width: '18px', marginTop: '-7px' }
               ]}
-              value={[fromDate || defFromDate, toDate || defToDate]}
-              onChange={(e) => this.setState({fromDate: e[0], toDate: e[1]})}
-              onAfterChange={(e) => this.handelChange({fromDate: e[0], toDate: e[1]})}
+              value={[from_date || defFromDate, to_date || defToDate]}
+              onChange={(e) => this.setState({from_date: e[0], to_date: e[1]})}
+              onAfterChange={(e) => this.handelChange({from_date: e[0], to_date: e[1]})}
               railStyle={{ backgroundColor: greyColor, maxHeight: '2px', marginTop: '1px' }}
               activeDotStyle={{border: 'none'}}
             />
@@ -127,8 +127,8 @@ class TimeRangeFilter extends Component {
               }
               styles={customStyles}
               isSearchable={false}
-              value={{label: fromDate || defFromDate, value: fromDate || defFromDate}}
-              onChange={(e) => this.handelChange({fromDate: e.value})}
+              value={{label: from_date || defFromDate, value: from_date || defFromDate}}
+              onChange={(e) => this.handelChange({from_date: e.value})}
               components={{IndicatorSeparator: () => null}}
             />
           </div>
@@ -141,8 +141,8 @@ class TimeRangeFilter extends Component {
               }
               styles={customStyles}
               isSearchable={false}
-              value={{label: toDate || defToDate, value: toDate || defToDate}}
-              onChange={(e) => this.handelChange({toDate: e.value})}
+              value={{label: to_date || defToDate, value: to_date || defToDate}}
+              onChange={(e) => this.handelChange({to_date: e.value})}
               components={{IndicatorSeparator: () => null}}
             />
           </div>
@@ -152,11 +152,11 @@ class TimeRangeFilter extends Component {
   };
 
   render() {
-    const {isShowOptions, fromDate, toDate} = this.state;
+    const {isShowOptions, from_date, to_date} = this.state;
     const {filterName} = this.props;
     let selectedCount = 0;
-    if (fromDate) selectedCount += 1;
-    if (toDate) selectedCount += 1;
+    if (from_date) selectedCount += 1;
+    if (to_date) selectedCount += 1;
 
     return (
       <Fragment>
