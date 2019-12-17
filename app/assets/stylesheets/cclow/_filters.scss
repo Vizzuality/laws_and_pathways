@@ -1,10 +1,14 @@
 @import "colors";
 @import "variables";
+@import "typography";
 
 $padding: 10px 15px;
 $checkbox-width: 24px;
 $unchecked-checkbox-cl: #9698a8;
 $shadow-cl: rgba(46,49,82,0.05);
+$time-slider-caption-width: 40px;
+$time-slider-left-handel-width: 12px;
+$time-slider-right-handel-width: 18px;
 
 .filter-container {
   color: $blue-dark;
@@ -108,5 +112,51 @@ $shadow-cl: rgba(46,49,82,0.05);
 
   &:not(:first-child) {
     margin-top: 1rem;
+  }
+
+  .time-range-options {
+    padding: 0 5px;
+    margin-bottom: 10px;
+  }
+
+  .slider-range-container {
+    padding-top: 2rem;
+
+    .time-range-handle {
+      color: $red;
+      font-size: $size-7;
+      font-family: $family-sans-serif-bold;
+      position: absolute;
+      left: -50%;
+      text-align: center;
+      width: $time-slider-caption-width;
+
+      &.handel-0 {
+        top: -25px;
+        left: -($time-slider-caption-width / 2 - $time-slider-left-handel-width / 2);
+      }
+
+      &.handel-1 {
+        top: -22px;
+        left: -($time-slider-caption-width / 2 - $time-slider-right-handel-width / 2);
+      }
+    }
+
+    .values-row {
+      color: $grey-text;
+      display: flex;
+      font-size: $size-7;
+      justify-content: space-between;
+    }
+  }
+
+  .filter-item {
+    margin-top: 1rem;
+
+    .caption {
+      color: $grey-text;
+      font-size: $size-7;
+      margin-bottom: 0.4rem;
+    }
   }
 }
