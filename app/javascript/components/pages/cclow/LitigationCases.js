@@ -78,7 +78,7 @@ class LitigationCases extends Component {
           From {value.from_date}
           <button
             type="button"
-            onClick={() => this.timeRangeFilter.current.handelChange({from_date: null})}
+            onClick={() => this.timeRangeFilter.current.handleChange({from_date: null})}
             className="delete"
           />
         </span>
@@ -88,7 +88,7 @@ class LitigationCases extends Component {
           To {value.to_date}
           <button
             type="button"
-            onClick={() => this.timeRangeFilter.current.handelChange({to_date: null})}
+            onClick={() => this.timeRangeFilter.current.handleChange({to_date: null})}
             className="delete"
           />
         </span>

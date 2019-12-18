@@ -54,7 +54,7 @@ module Queries
       end
 
       def filter_by_to_date
-        return scope unless params[:from_date].present?
+        return scope unless params[:to_date].present?
 
         scope.where('updated_at >= ?', Date.new(params[:to_date].to_i, 12, 31))
       end

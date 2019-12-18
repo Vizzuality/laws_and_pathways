@@ -7,8 +7,8 @@ $checkbox-width: 24px;
 $unchecked-checkbox-cl: #9698a8;
 $shadow-cl: rgba(46,49,82,0.05);
 $time-slider-caption-width: 40px;
-$time-slider-left-handel-width: 12px;
-$time-slider-right-handel-width: 18px;
+$time-slider-left-handle-width: 12px;
+$time-slider-right-handle-width: 18px;
 
 .filter-container {
   color: $blue-dark;
@@ -131,14 +131,14 @@ $time-slider-right-handel-width: 18px;
       text-align: center;
       width: $time-slider-caption-width;
 
-      &.handel-0 {
+      &.handle-0 {
         top: -25px;
-        left: -($time-slider-caption-width / 2 - $time-slider-left-handel-width / 2);
+        left: -($time-slider-caption-width / 2 - $time-slider-left-handle-width / 2);
       }
 
-      &.handel-1 {
+      &.handle-1 {
         top: -22px;
-        left: -($time-slider-caption-width / 2 - $time-slider-right-handel-width / 2);
+        left: -($time-slider-caption-width / 2 - $time-slider-right-handle-width / 2);
       }
     }
 

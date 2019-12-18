@@ -69,7 +69,7 @@ class TimeRangeFilter extends Component {
     }
   };
 
-  handelChange = (value) => {
+  handleChange = (value) => {
     const {onChange} = this.props;
     const {from_date, to_date} = this.state;
     const result = {...value};
@@ -99,7 +99,7 @@ class TimeRangeFilter extends Component {
               trackStyle={[{ backgroundColor: redColor }]}
               handle={(handleProps) => (
                 <Handle {...handleProps} key={handleProps.index} dragging={handleProps.dragging.toString()}>
-                  <div className={`time-range-handle handel-${handleProps.index}`}>{handleProps.value}</div>
+                  <div className={`time-range-handle handle-${handleProps.index}`}>{handleProps.value}</div>
                 </Handle>
               )}
               handleStyle={[
@@ -108,7 +108,7 @@ class TimeRangeFilter extends Component {
               ]}
               value={[from_date || defFromDate, to_date || defToDate]}
               onChange={(e) => this.setState({from_date: e[0], to_date: e[1]})}
-              onAfterChange={(e) => this.handelChange({from_date: e[0], to_date: e[1]})}
+              onAfterChange={(e) => this.handleChange({from_date: e[0], to_date: e[1]})}
               railStyle={{ backgroundColor: greyColor, maxHeight: '2px', marginTop: '1px' }}
               activeDotStyle={{border: 'none'}}
             />
@@ -128,7 +128,7 @@ class TimeRangeFilter extends Component {
               styles={customStyles}
               isSearchable={false}
               value={{label: from_date || defFromDate, value: from_date || defFromDate}}
-              onChange={(e) => this.handelChange({from_date: e.value})}
+              onChange={(e) => this.handleChange({from_date: e.value})}
               components={{IndicatorSeparator: () => null}}
             />
           </div>
@@ -142,7 +142,7 @@ class TimeRangeFilter extends Component {
               styles={customStyles}
               isSearchable={false}
               value={{label: to_date || defToDate, value: to_date || defToDate}}
-              onChange={(e) => this.handelChange({to_date: e.value})}
+              onChange={(e) => this.handleChange({to_date: e.value})}
               components={{IndicatorSeparator: () => null}}
             />
           </div>
