@@ -10,7 +10,7 @@ module TPI
       @company_presenter = ::Api::Presenters::Company.new(@company)
 
       @sectors = TPISector.select(:id, :name, :slug).order(:name)
-      @companies = Company.joins(:sector).select(:id, :name, :slug, 'tpi_sectors.name as sector_name')
+      @companies = Company.published.joins(:sector).select(:id, :name, :slug, 'tpi_sectors.name as sector_name')
     end
 
     def mq_assessment; end
@@ -48,7 +48,7 @@ module TPI
     private
 
     def fetch_company
-      @company = Company.friendly.find(params[:id])
+      @company = Company.published.friendly.find(params[:id])
     end
 
     def fetch_cp_assessment

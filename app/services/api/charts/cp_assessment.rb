@@ -117,6 +117,7 @@ module Api
       def sector_all_emissions
         @sector_all_emissions ||= company.sector
           .companies
+          .published
           .includes(:cp_assessments)
           .flat_map do |c|
             c.cp_assessments

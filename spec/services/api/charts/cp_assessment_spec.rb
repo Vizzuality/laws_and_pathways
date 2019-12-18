@@ -4,10 +4,10 @@ RSpec.describe Api::Charts::CPAssessment do
   describe '.emissions_data' do
     let(:sector_a) { create(:tpi_sector, name: 'Sector A') }
     let(:sector_b) { create(:tpi_sector, name: 'Sector B') }
-    let(:company_sector_a_1) { create(:company, sector: sector_a) }
-    let(:company_sector_a_2) { create(:company, sector: sector_a) }
+    let(:company_sector_a_1) { create(:company, :published, sector: sector_a) }
+    let(:company_sector_a_2) { create(:company, :published, sector: sector_a) }
 
-    let(:company_sector_b_1) { create(:company, sector: sector_b) }
+    let(:company_sector_b_1) { create(:company, :published, sector: sector_b) }
 
     context 'when CP assessment is not nil' do
       before do

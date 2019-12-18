@@ -19,7 +19,7 @@ module TPI
 
       timestamp = Time.now.strftime('%d%m%Y')
 
-      render zip: mq_assessments_files.merge(
+      render zip: (mq_assessments_files || {}).merge(
         "CP_Assessments_#{timestamp}.csv" => CSVExport::User::CPAssessments.new(cp_assessments).call,
         "Sector_Benchmarks_#{timestamp}.csv" => CSVExport::User::CPBenchmarks.new(cp_benchmarks).call
       ).compact, filename: "#{filename} - #{timestamp}"
