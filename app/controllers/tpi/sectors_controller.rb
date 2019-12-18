@@ -109,9 +109,9 @@ module TPI
 
     def companies_scope(params)
       if params[:id]
-        TPISector.friendly.find(params[:id]).companies
+        TPISector.friendly.find(params[:id]).companies.published
       else
-        Company
+        Company.published
       end
     end
   end
