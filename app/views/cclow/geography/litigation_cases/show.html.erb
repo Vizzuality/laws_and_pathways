@@ -34,10 +34,17 @@
   <h3 class="title"><%= @litigation.title %></h3>
   <div class="meta">
     <div>
-      <span><%= @litigation.events.order(:date).last&.event_type&.humanize %></span>
-      <span class="icon"><i class="fa fa-question"></i></span>
+      <span>
+        <% last_event = @litigation.events.order(:date).last %>
+        <%= last_event.event_type&.humanize %>
+        -
+        <%= last_event.date&.strftime('%B %Y') %>
+      </span>
+      <!--span class="icon"><i class="fa fa-question"></i></span-->
     </div>
-    <div><span>Mitigation</span></div>
+    <% if @litigation.responses.any? %>
+      <div><span><%= @litigation.responses.map(&:name).join(" ") %></span></div>
+    <% end %>
   </div>
   <section class="section is-medium">
     <%= render 'cclow/geography/litigation_cases/details_card', litigation: @litigation %>
