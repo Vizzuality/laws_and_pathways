@@ -17,6 +17,7 @@ module Queries
           .merge(filter_by_tags)
           .merge(filter_by_from_date)
           .merge(filter_by_to_date)
+          .merge(filter_by_type)
           .merge(filter_recent)
       end
 
@@ -56,6 +57,12 @@ module Queries
         return scope unless params[:from_date].present?
 
         scope.where('updated_at >= ?', Date.new(params[:to_date].to_i, 12, 31))
+      end
+
+      def filter_by_type
+        return scope unless params[:type].present?
+
+        scope.where(legislation_type: params[:type])
       end
 
       def filter_recent

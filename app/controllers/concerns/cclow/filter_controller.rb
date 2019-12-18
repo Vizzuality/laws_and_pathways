@@ -13,8 +13,23 @@ module CCLOW
       [{field_name: 'tags', options: tags.map { |l| {value: l.id, label: l.name} }}]
     end
 
+    def litigation_statuses_options
+      statuses = Litigation::EVENT_TYPES.map { |l| {value: l, label: l.humanize} }
+      [{field_name: 'status', options: statuses}]
+    end
+
+    def legislation_types_options
+      types = Legislation::LEGISLATION_TYPES.map { |l| {value: l, label: l.humanize} }
+      [{field_name: 'type', options: types}]
+    end
+
+    def target_types_options
+      types = Target::TYPES.map { |l| {value: l, label: l.humanize} }
+      [{field_name: 'type', options: types}]
+    end
+
     def filter_params
-      params.permit(:q, :from_date, :to_date, :recent, :ids, region: [], geography: [], tags: [])
+      params.permit(:q, :from_date, :to_date, :recent, :ids, region: [], geography: [], status: [], type: [], tags: [])
     end
   end
 end

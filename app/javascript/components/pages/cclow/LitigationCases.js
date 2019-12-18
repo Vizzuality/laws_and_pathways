@@ -21,17 +21,19 @@ class LitigationCases extends Component {
       count,
       activeGeoFilter: {},
       activeTagFilter: {},
-      activeTimeRangeFilter: {}
+      activeTimeRangeFilter: {},
+      activeStatusesFilter: {}
     };
 
     this.geoFilter = React.createRef();
     this.tagsFilter = React.createRef();
     this.timeRangeFilter = React.createRef();
+    this.statusFilter = React.createRef();
   }
 
   filterList = (activeFilterName, filterParams) => {
-    const {activeGeoFilter, activeTagFilter, activeTimeRangeFilter} = this.state;
-    const filterList = {activeGeoFilter, activeTagFilter, activeTimeRangeFilter};
+    const {activeGeoFilter, activeTagFilter, activeTimeRangeFilter, activeStatusesFilter} = this.state;
+    const filterList = {activeGeoFilter, activeTagFilter, activeTimeRangeFilter, activeStatusesFilter};
     const params = {...getQueryFilters};
 
     this.setState({[activeFilterName]: filterParams});
@@ -49,15 +51,21 @@ class LitigationCases extends Component {
   };
 
   renderTags = () => {
-    const {activeGeoFilter, activeTagFilter, activeTimeRangeFilter} = this.state;
-    const {geo_filter_options: geoFilterOptions, tags_filter_options: tagsFilterOptions} = this.props;
+    const {activeGeoFilter, activeTagFilter, activeTimeRangeFilter, activeStatusesFilter} = this.state;
+    const {
+      geo_filter_options: geoFilterOptions,
+      tags_filter_options: tagsFilterOptions,
+      statuses_filter_options: statusesFilterOptions
+    } = this.props;
     if (Object.keys(activeGeoFilter).length === 0
       && Object.keys(activeTagFilter).length === 0
+      && Object.keys(activeStatusesFilter).length === 0
       && Object.keys(activeTimeRangeFilter).length === 0) return null;
     return (
       <div className="tags">
         {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
         {this.renderTagsGroup(activeTagFilter, tagsFilterOptions, 'tagsFilter')}
+        {this.renderTagsGroup(activeStatusesFilter, statusesFilterOptions, 'statusFilter')}
         {this.renderTimeRangeTags(activeTimeRangeFilter)}
       </div>
     );
@@ -114,12 +122,16 @@ class LitigationCases extends Component {
       );
     }
 
-    return (<h5 className="search-title">All Litigation Cases</h5>);
+    return (<h5>All Litigation Cases</h5>);
   }
 
   render() {
     const {litigations, count} = this.state;
-    const {geo_filter_options: geoFilterOptions, tags_filter_options: tagsFilterOptions} = this.props;
+    const {
+      geo_filter_options: geoFilterOptions,
+      tags_filter_options: tagsFilterOptions,
+      statuses_filter_options: statusesFilterOptions
+    } = this.props;
     return (
       <Fragment>
         <div className="cclow-geography-page">
@@ -138,6 +150,12 @@ class LitigationCases extends Component {
                 <TimeRangeFilter
                   ref={this.timeRangeFilter}
                   onChange={(event) => this.filterList('activeTimeRangeFilter', event)}
+                />
+                <SearchFilter
+                  ref={this.statusFilter}
+                  filterName="Status"
+                  params={statusesFilterOptions}
+                  onChange={(event) => this.filterList('activeStatusesFilter', event)}
                 />
                 <SearchFilter
                   ref={this.tagsFilter}
@@ -189,14 +207,16 @@ class LitigationCases extends Component {
 LitigationCases.defaultProps = {
   count: 0,
   geo_filter_options: [],
-  tags_filter_options: []
+  tags_filter_options: [],
+  statuses_filter_options: []
 };
 
 LitigationCases.propTypes = {
   litigations: PropTypes.array.isRequired,
   count: PropTypes.number,
   geo_filter_options: PropTypes.array,
-  tags_filter_options: PropTypes.array
+  tags_filter_options: PropTypes.array,
+  statuses_filter_options: PropTypes.array
 };
 
 export default LitigationCases;

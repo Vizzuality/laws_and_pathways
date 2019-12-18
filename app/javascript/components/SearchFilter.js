@@ -84,7 +84,7 @@ class SearchFilter extends Component {
 
   renderOptions = () => {
     const {searchValue} = this.state;
-    const {filterName, params} = this.props;
+    const {filterName, params, isSearchable} = this.props;
     const listBlocks = [];
     for (let i = 0; i < params.length; i += 1) {
       listBlocks[i] = Object.assign({}, params[i]);
@@ -99,12 +99,14 @@ class SearchFilter extends Component {
           <span>{filterName}</span><span className="toggle-indicator"><img src={minus} alt="" /></span>
         </div>
         <div>
-          <div className="search-input-container">
-            <input id="search-input" type="text" onChange={this.handleSearchInput} />
-            <label htmlFor="search-input">
-              <img src={search} />
-            </label>
-          </div>
+          {isSearchable && (
+            <div className="search-input-container">
+              <input id="search-input" type="text" onChange={this.handleSearchInput} />
+              <label htmlFor="search-input">
+                <img src={search} />
+              </label>
+            </div>
+          )}
           <div className="options-list">
             {listBlocks.map((blockList, i) => this.renderBlockList(blockList, i))}
           </div>
@@ -136,13 +138,15 @@ class SearchFilter extends Component {
 }
 
 SearchFilter.defaultProps = {
-  onChange: () => {}
+  onChange: () => {},
+  isSearchable: true
 };
 
 SearchFilter.propTypes = {
   filterName: PropTypes.string.isRequired,
   params: PropTypes.array.isRequired,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  isSearchable: PropTypes.bool
 };
 
 export default SearchFilter;
