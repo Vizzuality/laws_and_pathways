@@ -35,10 +35,12 @@
             <p>
               <small>Number of assessments: <%= @company.mq_assessments.size %></small>
             </p>
-            <%= render 'mq_level', level: @company.mq_level, status: @company.mq_status %>
-            <p>
-              <%= t("tpi.company.level_description.#{@company.mq_level.to_i}") %></h3>
-            </p>
+            <% if @company.mq_assessments.any? %>
+              <%= render 'mq_level', level: @company.mq_level, status: @company.mq_status %>
+              <p>
+                <%= t("tpi.company.level_description.#{@company.mq_level.to_i}") %></h3>
+              </p>
+            <% end %>
           </div>
         </a>
       </div>
@@ -107,35 +109,37 @@
     </div>
   </section>
 
-  <section id="management-quality" class="management-quality container">
-    <div class="management-quality__header">
-      <h4>
-        Management Quality: <%= @company.name %> <%= react_component("BaseTooltip", { content: t('.tooltips.mq_header') }) %>
-      </h4>
+  <% if @company.mq_assessments.any? %>
+    <section id="management-quality" class="management-quality container">
+      <div class="management-quality__header">
+        <h4>
+          Management Quality: <%= @company.name %> <%= react_component("BaseTooltip", { content: t('.tooltips.mq_header') }) %>
+        </h4>
 
-      <div>
-        Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.mq_assessment_date') }) %>
-        <%= select_tag :mq_assessment_id,
-                       options_from_collection_for_select(@company.mq_assessments, "id", "assessment_date", @mq_assessment.id),
-                       class: 'input',
-                       data: {
-                         remote: true,
-                         url: mq_assessment_tpi_company_path(@company)
-                       }
-        %>
+        <div>
+          Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.mq_assessment_date') }) %>
+          <%= select_tag :mq_assessment_id,
+               options_from_collection_for_select(@company.mq_assessments, "id", "assessment_date", @mq_assessment.id),
+             class: 'input',
+             data: {
+               remote: true,
+               url: mq_assessment_tpi_company_path(@company)
+             }
+          %>
+        </div>
       </div>
-    </div>
 
-    <p>
-      Assessment of <%= @company.name %> according to the management of its greenhouse gas emissions and of risks and opportunities related to the low-carbon transition.
-    </p>
+      <p>
+        Assessment of <%= @company.name %> according to the management of its greenhouse gas emissions and of risks and opportunities related to the low-carbon transition.
+      </p>
 
-    <div id="mq-assessment" class="management-quality__content">
-      <%= render partial: 'mq_assessment', locals: { assessment: @mq_assessment } %>
-    </div>
-  </section>
+      <div id="mq-assessment" class="management-quality__content">
+        <%= render partial: 'mq_assessment', locals: { assessment: @mq_assessment } %>
+      </div>
+    </section>
+  <% end %>
 
-  <% unless @company.cp_assessments.empty? %>
+  <% if @company.cp_assessments.any? %>
     <section id="carbon-performance" class="carbon-performance container">
       <div class="management-quality__header">
         <h4>
