@@ -50,13 +50,17 @@ module Queries
       def filter_by_from_date
         return scope unless params[:from_date].present?
 
-        scope.where('updated_at >= ?', Date.new(params[:from_date].to_i, 1, 1))
+        event_ids = Event.where(eventable_type: 'Legislation').group('eventable_id').maximum(:id).values
+        scope.joins(:events)
+          .where('events.date >= (?) AND events.id in (?)', Date.new(params[:from_date].to_i, 1, 1), event_ids)
       end
 
       def filter_by_to_date
         return scope unless params[:to_date].present?
 
-        scope.where('updated_at >= ?', Date.new(params[:to_date].to_i, 12, 31))
+        event_ids = Event.where(eventable_type: 'Legislation').group('eventable_id').maximum(:id).values
+        scope.joins(:events)
+          .where('events.date <= (?) AND events.id in (?)', Date.new(params[:to_date].to_i, 12, 31), event_ids)
       end
 
       def filter_by_type
