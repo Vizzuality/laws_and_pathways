@@ -42,11 +42,12 @@ class LegislationAndPolicies extends Component {
   };
 
   fetchData() {
-    const {activeGeoFilter, activeTagFilter, activeTimeRangeFilter, offset} = this.state;
+    const {activeGeoFilter, activeTagFilter, activeTypesFilter, activeTimeRangeFilter, offset} = this.state;
     const params = {
       ...getQueryFilters(),
       ...activeGeoFilter,
       ...activeTagFilter,
+      ...activeTypesFilter,
       ...activeTimeRangeFilter,
       offset
     };

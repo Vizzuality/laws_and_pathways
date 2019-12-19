@@ -42,11 +42,12 @@ class ClimateTargets extends Component {
   };
 
   fetchData() {
-    const {activeGeoFilter, activeTagFilter, offset} = this.state;
+    const {activeGeoFilter, activeTypesFilter, activeTagFilter, offset} = this.state;
     const params = {
       ...getQueryFilters(),
       ...activeGeoFilter,
       ...activeTagFilter,
+      ...activeTypesFilter,
       offset
     };
 
