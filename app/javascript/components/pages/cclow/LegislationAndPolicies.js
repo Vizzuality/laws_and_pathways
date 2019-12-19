@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import qs from 'qs';
 import SearchFilter from '../../SearchFilter';
 import TimeRangeFilter from '../../TimeRangeFilter';
+import ExecutiveSVG from 'images/icons/legislation_types/executive.svg';
+import LegislativeSVG from 'images/icons/legislation_types/legislative.svg';
 
 function getQueryFilters() {
   return qs.parse(window.location.search.slice(1));
@@ -209,7 +211,7 @@ class LegislationAndPolicies extends Component {
                           </Fragment>
                         )}
                         <div>
-                          <img src={`/icons/legislation_types/${legislation.legislation_type}.svg`} alt="" />
+                          <img src={legislation.legislation_type === 'executive' ? ExecutiveSVG : LegislativeSVG} alt={legislation.legislation_type} />
                           {legislation.legislation_type_humanize}
                         </div>
                         {legislation.date_passed && <div>{new Date(legislation.date_passed).getFullYear()}</div>}
