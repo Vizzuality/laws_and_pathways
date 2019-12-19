@@ -19,6 +19,7 @@ class LitigationCases extends Component {
     this.state = {
       litigations,
       count,
+      offset: 0,
       activeGeoFilter: {},
       activeTagFilter: {},
       activeTimeRangeFilter: {},
@@ -31,24 +32,42 @@ class LitigationCases extends Component {
     this.statusFilter = React.createRef();
   }
 
-  filterList = (activeFilterName, filterParams) => {
-    const {activeGeoFilter, activeTagFilter, activeTimeRangeFilter, activeStatusesFilter} = this.state;
-    const filterList = {activeGeoFilter, activeTagFilter, activeTimeRangeFilter, activeStatusesFilter};
-    const params = {...getQueryFilters};
+  handleLoadMore = () => {
+    const { litigations } = this.state;
+    this.setState({ offset: litigations.length }, this.fetchData.bind(this));
+  }
 
-    this.setState({[activeFilterName]: filterParams});
-    filterList[activeFilterName] = filterParams;
-    Object.assign(params, ...Object.values(filterList));
+  filterList = (activeFilterName, filterParams) => {
+    this.setState({[activeFilterName]: filterParams, offset: 0}, this.fetchData.bind(this));
+  };
+
+  fetchData() {
+    const {activeGeoFilter, activeTagFilter, activeTimeRangeFilter, activeStatusesFilter, offset} = this.state;
+    const params = {
+      ...getQueryFilters(),
+      ...activeGeoFilter,
+      ...activeTagFilter,
+      ...activeTimeRangeFilter,
+      ...activeStatusesFilter,
+      offset
+    };
+
     const newQs = qs.stringify(params, { arrayFormat: 'brackets' });
 
     fetch(`/cclow/litigation_cases.json?${newQs}`).then((response) => {
       response.json().then((data) => {
         if (response.ok) {
-          this.setState({litigations: data.litigations, count: data.count});
+          if (offset > 0) {
+            this.setState(({ litigations }) => ({
+              litigations: litigations.concat(data.litigations)
+            }));
+          } else {
+            this.setState({litigations: data.litigations, count: data.count});
+          }
         }
       });
     });
-  };
+  }
 
   renderTags = () => {
     const {activeGeoFilter, activeTagFilter, activeTimeRangeFilter, activeStatusesFilter} = this.state;
@@ -132,6 +151,7 @@ class LitigationCases extends Component {
       tags_filter_options: tagsFilterOptions,
       statuses_filter_options: statusesFilterOptions
     } = this.props;
+    const hasMore = litigations.length < count;
     return (
       <Fragment>
         <div className="cclow-geography-page">
@@ -164,7 +184,7 @@ class LitigationCases extends Component {
                   onChange={(event) => this.filterList('activeTagFilter', event)}
                 />
               </div>
-              <main className="column is-three-quarters" data-controller="content-list">
+              <main className="column is-three-quarters">
                 <div className="columns pre-content">
                   <span className="column is-half">Showing {count} results</span>
                   <a className="column is-half download-link" href="#">Download results (CSV in .zip)</a>
@@ -191,9 +211,13 @@ class LitigationCases extends Component {
                     </Fragment>
                   ))}
                 </ul>
-                <div className="column is-offset-5">
-                  <button type="button" className="button is-primary load-more-btn">Load 10 more entries</button>
-                </div>
+                {hasMore && (
+                  <div className="column is-offset-5">
+                    <button type="button" className="button is-primary load-more-btn" onClick={this.handleLoadMore}>
+                      Load 10 more entries
+                    </button>
+                  </div>
+                )}
               </main>
             </div>
           </div>

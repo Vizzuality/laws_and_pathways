@@ -8,9 +8,7 @@ module CCLOW
       add_breadcrumb('Legislation and policies', cclow_legislation_and_policies_path(@geography))
       add_breadcrumb('Search results', request.path) if params[:q].present? || params[:recent].present?
 
-      @legislations = CCLOW::LegislationDecorator.decorate_collection(
-        Queries::CCLOW::LegislationQuery.new(filter_params).call
-      )
+      @legislations = Queries::CCLOW::LegislationQuery.new(filter_params).call
 
       respond_to do |format|
         format.html do
@@ -18,11 +16,18 @@ module CCLOW
             geo_filter_options: region_geography_options,
             tags_filter_options: tags_options('Legislation'),
             types_filter_options: legislation_types_options,
-            legislations: @legislations.first(10),
+            legislations: CCLOW::LegislationDecorator.decorate_collection(@legislations.first(10)),
             count: @legislations.count
           }, prerender: false
         end
-        format.json { render json: {legislations: @legislations.last(10), count: @legislations.count} }
+        format.json do
+          render json: {
+            legislations: CCLOW::LegislationDecorator.decorate_collection(
+              @legislations.offset(params[:offset] || 0).take(10)
+            ),
+            count: @legislations.count
+          }
+        end
       end
     end
     # rubocop:enable Metrics/AbcSize

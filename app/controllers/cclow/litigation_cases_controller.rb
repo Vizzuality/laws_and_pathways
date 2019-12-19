@@ -8,9 +8,7 @@ module CCLOW
       add_breadcrumb('Litigation cases', cclow_litigation_cases_path(@geography))
       add_breadcrumb('Search results', request.path) if params[:q].present? || params[:recent].present?
 
-      @litigations = CCLOW::LitigationDecorator.decorate_collection(
-        Queries::CCLOW::LitigationQuery.new(filter_params).call
-      )
+      @litigations = Queries::CCLOW::LitigationQuery.new(filter_params).call
 
       respond_to do |format|
         format.html do
@@ -18,11 +16,18 @@ module CCLOW
             geo_filter_options: region_geography_options,
             tags_filter_options: tags_options('Litigation'),
             statuses_filter_options: litigation_statuses_options,
-            litigations: @litigations.first(10),
+            litigations: CCLOW::LitigationDecorator.decorate_collection(@litigations.first(10)),
             count: @litigations.count
           }, prerender: false
         end
-        format.json { render json: {litigations: @litigations.last(10), count: @litigations.count} }
+        format.json do
+          render json: {
+            litigations: CCLOW::LitigationDecorator.decorate_collection(
+              @litigations.offset(params[:offset] || 0).take(10)
+            ),
+            count: @litigations.count
+          }
+        end
       end
     end
     # rubocop:enable Metrics/AbcSize

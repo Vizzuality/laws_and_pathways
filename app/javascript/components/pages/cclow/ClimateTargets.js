@@ -19,6 +19,7 @@ class ClimateTargets extends Component {
     this.state = {
       climate_targets,
       count,
+      offset: 0,
       activeGeoFilter: {},
       activeTagFilter: {},
       activeTimeRangeFilter: {},
@@ -31,24 +32,40 @@ class ClimateTargets extends Component {
     this.typesFilter = React.createRef();
   }
 
-  filterList = (activeFilterName, filterParams) => {
-    const {activeGeoFilter, activeTagFilter} = this.state;
-    const filterList = {activeGeoFilter, activeTagFilter};
-    const params = {...getQueryFilters};
+  handleLoadMore = () => {
+    const { climate_targets } = this.state;
+    this.setState({ offset: climate_targets.length }, this.fetchData.bind(this));
+  }
 
-    this.setState({[activeFilterName]: filterParams});
-    filterList[activeFilterName] = filterParams;
-    Object.assign(params, ...Object.values(filterList));
+  filterList = (activeFilterName, filterParams) => {
+    this.setState({[activeFilterName]: filterParams, offset: 0}, this.fetchData.bind(this));
+  };
+
+  fetchData() {
+    const {activeGeoFilter, activeTagFilter, offset} = this.state;
+    const params = {
+      ...getQueryFilters(),
+      ...activeGeoFilter,
+      ...activeTagFilter,
+      offset
+    };
+
     const newQs = qs.stringify(params, { arrayFormat: 'brackets' });
 
     fetch(`/cclow/climate_targets.json?${newQs}`).then((response) => {
       response.json().then((data) => {
         if (response.ok) {
-          this.setState({climate_targets: data.climate_targets, count: data.count});
+          if (offset > 0) {
+            this.setState(({ climate_targets }) => ({
+              climate_targets: climate_targets.concat(data.climate_targets)
+            }));
+          } else {
+            this.setState({climate_targets: data.climate_targets, count: data.count});
+          }
         }
       });
     });
-  };
+  }
 
   renderPageTitle() {
     const qFilters = getQueryFilters();
@@ -132,6 +149,7 @@ class ClimateTargets extends Component {
       tags_filter_options: tagsFilterOptions,
       types_filter_options: typesFilterOptions
     } = this.props;
+    const hasMore = climate_targets.length < count;
     return (
       <Fragment>
         <div className="cclow-geography-page">
@@ -164,7 +182,7 @@ class ClimateTargets extends Component {
                   onChange={(event) => this.filterList('activeTagFilter', event)}
                 />
               </div>
-              <main className="column is-three-quarters" data-controller="content-list">
+              <main className="column is-three-quarters">
                 <div className="columns pre-content">
                   <span className="column is-half">Showing {count} results</span>
                   <a className="column is-half download-link" href="#">Download results (CSV in .zip)</a>
@@ -190,9 +208,13 @@ class ClimateTargets extends Component {
                     </Fragment>
                   ))}
                 </ul>
-                <div className="column is-offset-5">
-                  <button type="button" className="button is-primary load-more-btn">Load 10 more entries</button>
-                </div>
+                {hasMore && (
+                  <div className="column is-offset-5">
+                    <button type="button" className="button is-primary load-more-btn" onClick={this.handleLoadMore}>
+                      Load 10 more entries
+                    </button>
+                  </div>
+                )}
               </main>
             </div>
           </div>

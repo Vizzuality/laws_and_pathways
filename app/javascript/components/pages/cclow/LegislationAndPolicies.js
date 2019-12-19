@@ -19,6 +19,7 @@ class LegislationAndPolicies extends Component {
     this.state = {
       legislations,
       count,
+      offset: 0,
       activeGeoFilter: {},
       activeTagFilter: {},
       activeTimeRangeFilter: {},
@@ -31,24 +32,41 @@ class LegislationAndPolicies extends Component {
     this.typesFilter = React.createRef();
   }
 
-  filterList = (activeFilterName, filterParams) => {
-    const {activeGeoFilter, activeTagFilter, activeTimeRangeFilter} = this.state;
-    const filterList = {activeGeoFilter, activeTagFilter, activeTimeRangeFilter};
-    const params = {...getQueryFilters};
+  handleLoadMore = () => {
+    const { legislations } = this.state;
+    this.setState({ offset: legislations.length }, this.fetchData.bind(this));
+  }
 
-    this.setState({[activeFilterName]: filterParams});
-    filterList[activeFilterName] = filterParams;
-    Object.assign(params, ...Object.values(filterList));
+  filterList = (activeFilterName, filterParams) => {
+    this.setState({[activeFilterName]: filterParams, offset: 0}, this.fetchData.bind(this));
+  };
+
+  fetchData() {
+    const {activeGeoFilter, activeTagFilter, activeTimeRangeFilter, offset} = this.state;
+    const params = {
+      ...getQueryFilters(),
+      ...activeGeoFilter,
+      ...activeTagFilter,
+      ...activeTimeRangeFilter,
+      offset
+    };
+
     const newQs = qs.stringify(params, { arrayFormat: 'brackets' });
 
     fetch(`/cclow/legislation_and_policies.json?${newQs}`).then((response) => {
       response.json().then((data) => {
         if (response.ok) {
-          this.setState({legislations: data.legislations, count: data.count});
+          if (offset > 0) {
+            this.setState(({ legislations }) => ({
+              legislations: legislations.concat(data.legislations)
+            }));
+          } else {
+            this.setState({legislations: data.legislations, count: data.count});
+          }
         }
       });
     });
-  };
+  }
 
   renderPageTitle() {
     const qFilters = getQueryFilters();
@@ -132,6 +150,7 @@ class LegislationAndPolicies extends Component {
       tags_filter_options: tagsFilterOptions,
       types_filter_options: typesFilterOptions
     } = this.props;
+    const hasMore = legislations.length < count;
     return (
       <Fragment>
         <div className="cclow-geography-page">
@@ -166,7 +185,7 @@ class LegislationAndPolicies extends Component {
                 onChange={(event) => this.filterList('activeTagFilter', event)}
               />
             </div>
-            <main className="column is-three-quarters" data-controller="content-list">
+            <main className="column is-three-quarters">
               <div className="columns pre-content">
                 <span className="column is-half">Showing {count} results</span>
                 <span className="column is-half download-link">
@@ -199,9 +218,13 @@ class LegislationAndPolicies extends Component {
                   </Fragment>
                 ))}
               </ul>
-              <div className="column is-offset-5">
-                <button type="button" className="button is-primary load-more-btn">Load 10 more entries</button>
-              </div>
+              {hasMore && (
+                <div className="column is-offset-5">
+                  <button type="button" className="button is-primary load-more-btn" onClick={this.handleLoadMore}>
+                    Load 10 more entries
+                  </button>
+                </div>
+              )}
             </main>
           </div>
         </div>
