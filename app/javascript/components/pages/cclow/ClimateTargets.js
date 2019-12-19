@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import SearchFilter from '../../SearchFilter';
-import TimeRangeFilter from '../../TimeRangeFilter';
+/* import TimeRangeFilter from '../../TimeRangeFilter'; */
 
 function getQueryFilters() {
   return qs.parse(window.location.search.slice(1));
@@ -167,10 +167,10 @@ class ClimateTargets extends Component {
                   params={geoFilterOptions}
                   onChange={(event) => this.filterList('activeGeoFilter', event)}
                 />
-                <TimeRangeFilter
-                  ref={this.timeRangeFilter}
-                  onChange={(event) => this.filterList('activeTimeRangeFilter', event)}
-                />
+                {/* <TimeRangeFilter
+                    ref={this.timeRangeFilter}
+                    onChange={(event) => this.filterList('activeTimeRangeFilter', event)}
+                    /> */}
                 <SearchFilter
                   ref={this.typesFilter}
                   filterName="Types"
