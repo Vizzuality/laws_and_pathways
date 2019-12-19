@@ -52,8 +52,9 @@ module Queries
 
         event_ids =
           Event.where(eventable_type: 'Litigation').group('eventable_id', :id).having('MAX(date) >= date').map(&:id)
+
         scope.joins(:events)
-          .where('events.date >= (?) AND events.id in (?)', Date.new(params[:from_date].to_i, 1, 1), event_ids)
+          .where('events.date >= (?) AND events.id in (?)', Date.new(params[:from_date].to_i, 1, 1), event_ids).distinct
       end
 
       def filter_by_to_date
@@ -70,7 +71,7 @@ module Queries
 
         event_ids =
           Event.where(eventable_type: 'Litigation').group('eventable_id', :id).having('MAX(date) >= date').map(&:id)
-        scope.joins(:events).where(events: {id: event_ids, event_type: params[:status]})
+        scope.joins(:events).where(events: {id: event_ids, event_type: params[:status]}).distinct
       end
 
       def filter_recent
