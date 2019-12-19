@@ -26,7 +26,7 @@ module Queries
       def full_text_filter
         return scope unless params[:q].present?
 
-        scope.full_text_search(params[:q])
+        scope.where(id: scope.full_text_search(params[:q]).pluck(:id))
       end
 
       def filter_by_region
