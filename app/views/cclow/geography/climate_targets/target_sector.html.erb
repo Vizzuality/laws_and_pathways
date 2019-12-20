@@ -1,0 +1,44 @@
+<div class="cclow-geography-page">
+  <div class="container">
+    <% if @query.present? %>
+      <h5 class="search-title">Search results: <span class="search-text"><%= @query %></span> in Climate Targets</h5>
+    <% else %>
+      <h5>All Climate Targets</h5>
+    <% end %>
+    <hr>
+    <div class="columns">
+      <div class="column is-one-quarter">
+        FILTERS
+      </div>
+      <main class="column is-three-quarters" data-controller="content-list">
+        <div class="columns pre-content">
+          <span class="column is-half">Showing <%= @climate_targets.count %> results</span>
+          <!--a class="column is-half download-link" href="#">Download results (CSV in .zip)</a-->
+        </div>
+        <ul class="content-list">
+          <% @climate_targets.each do |target| %>
+            <li>
+              <h5 class="title"><%= highlight target.link, @query %></h5>
+              <div class="meta">
+                <div>
+                  <img src=<%= asset_path "flags/#{target.geography.iso}.svg"%> alt="">
+                  <%= target.geography.name %>
+                </div>
+                <div>
+                  <% target_tags = [target.sector&.name, target.target_type&.humanize]
+                     target_tags << "Target year: #{target.year}" if target.year
+                     target_tags << "Base year: #{target.base_year_period}" if target.base_year_period
+                  %>
+                  <%= target_tags.compact.join(' | ') %>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+        <div class="column is-offset-5">
+          <button class="button is-primary load-more-btn">Load 10 more entries</button>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>

@@ -87,6 +87,70 @@ $count-description-lines: 2;
     }
 
     margin-bottom: 5rem;
+
+    .sectors-list {
+      .column-name {
+        color: $blue-dark;
+        font-family: $family-sans-serif-bold;
+        font-size: $size-6;
+        flex-direction: column;
+
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+
+      .item {
+        color: $grey-text;
+        cursor: default;
+        font-size: $size-6;
+        min-height: 4.3rem;
+
+        &.active {
+          color: $red;
+          cursor: pointer;
+          font-family: $family-sans-serif-bold;
+        }
+
+        &:hover {
+          background-color: $grey-light;
+
+          .sector-name {
+            text-decoration: underline;
+          }
+        }
+
+        .value {
+          justify-content: center;
+        }
+
+        &> * {
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      .current-circle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: $red;
+        color: $white;
+        height: 50px;
+        width: 50px;
+        font-size: $size-4;
+        text-align: center;
+        font-family: $family-sans-serif-bold;
+      }
+
+      .empty-circle {
+        border-radius: 50%;
+        background-color: $grey;
+        height: 30px;
+        width: 30px;
+      }
+    }
   }
 
   .content-show {
