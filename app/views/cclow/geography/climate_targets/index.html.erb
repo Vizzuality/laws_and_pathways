@@ -1,22 +1,5 @@
 <% content_for :page_title, "Climate Laws - #{@geography.name} - Climate Targets" %>
 
-<%
-  counts = Target.joins(:sector).where(geography: @geography).group('laws_sectors.name', :source).count
-  list = {}
-
-  counts.each do |key, value|
-    sector_name = key[0]
-    source_name = key[1]
-    next unless ['law', 'policy', 'ndc'].include?(source_name)
-    if list[sector_name].present?
-      list[sector_name][source_name] = value
-    else
-      list[sector_name] = {}
-      list[sector_name][source_name] = value
-    end
-  end
-%>
-
 <div class="container">
   <h3>Climate targets</h3>
   <ul class="content-list">
@@ -36,8 +19,8 @@
         </div>
       </div>
 
-      <% list.each do |sector, targets| %>
-        <a href="#" class="columns item active">
+      <% @list.each do |sector, targets| %>
+        <a href="<%= "/cclow/geographies/#{@geography.id}/climate_targets/#{sector}" %>" class="columns item active">
           <div class="column is-one-thirds sector-name"><%= sector %></div>
           <div class="column is-one-thirds value">
             <% if targets['ndc'].present? %>
@@ -60,7 +43,7 @@
         </a>
       <% end %>
 
-      <% (LawsSector.select(:name).map(&:name) - list.keys).each do |sector| %>
+      <% (LawsSector.select(:name).map(&:name) - @list.keys).each do |sector| %>
         <a href="javascript:void(0);" class="columns item">
           <div class="column is-one-thirds sector-name"><%= sector %></div>
           <div class="column is-one-thirds value"><div class="empty-circle"></div></div>

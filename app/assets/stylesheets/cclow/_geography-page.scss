@@ -215,6 +215,8 @@ $count-description-lines: 2;
 
     li {
       border-bottom: solid 1px $grey;
+      border-left: solid 1px $grey;
+      border-right: solid 1px $grey;
       margin: 0;
       padding: 2.5rem;
     }
@@ -233,6 +235,10 @@ $count-description-lines: 2;
         font-size: $size-6;
         font-family: $family-sans-serif-bold;
         margin: 0.3rem 0;
+
+        a {
+          color: $red;
+        }
       }
     }
 
@@ -484,7 +490,7 @@ $count-description-lines: 2;
     }
   }
 
-  .tags {
+  .filter-tags {
     border-bottom: solid 1px $grey-light;
     padding-bottom: 1rem;
 

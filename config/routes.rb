@@ -49,7 +49,8 @@ Rails.application.routes.draw do
       resources :laws, controller: 'geography/legislations', only: [:show, :index], defaults: {scope: :laws}
       resources :policies, controller: 'geography/legislations', only: [:show, :index], defaults: {scope: :policies}
       resources :litigation_cases, controller: 'geography/litigation_cases', only: [:show, :index]
-      resources :climate_targets, controller: 'geography/climate_targets', only: [:show, :index]
+      resources :climate_targets, controller: 'geography/climate_targets', only: [:index]
+      get 'climate_targets/:law_sector', to: 'geography/climate_targets#laws_sector'
     end
 
     resources :climate_targets, only: :index
