@@ -51,6 +51,8 @@ class Company < ApplicationRecord
   validates_presence_of :name, :slug, :isin, :market_cap_group
   validates_uniqueness_of :slug, :name
 
+  scope :active, -> { where(is_active: true) }
+
   def to_s
     name
   end

@@ -51,7 +51,7 @@ module TPI
     end
 
     def user_download_all
-      companies_ids = Company.published.select(:id).where(sector_id: @sectors.pluck(:id))
+      companies_ids = Company.published.active.select(:id).where(sector_id: @sectors.pluck(:id))
       mq_assessments = MQ::Assessment
         .where(company_id: companies_ids)
         .joins(:company)
@@ -71,7 +71,7 @@ module TPI
     end
 
     def user_download
-      companies_ids = @sector.companies.published.select(:id)
+      companies_ids = @sector.companies.published.active.select(:id)
       mq_assessments = MQ::Assessment
         .where(company_id: companies_ids)
         .joins(:company)
@@ -103,6 +103,7 @@ module TPI
     def fetch_companies
       @companies = Company
         .published
+        .active
         .joins(:sector)
         .select(:id, :name, :slug, :sector_id, 'tpi_sectors.name as sector_name')
     end
@@ -112,7 +113,7 @@ module TPI
         TPISector.friendly.find(params[:id]).companies.published
       else
         Company.published
-      end
+      end.active
     end
   end
 end

@@ -11,7 +11,7 @@ ActiveAdmin.register Company do
 
   permit_params :name, :isin, :sector_id, :geography_id, :headquarters_geography_id,
                 :ca100, :market_cap_group, :visibility_status, :sedol,
-                :latest_information, :historical_comments
+                :latest_information, :historical_comments, :is_active
 
   filter :isin_contains, label: 'ISIN'
   filter :name_contains, label: 'Name'
@@ -49,6 +49,7 @@ ActiveAdmin.register Company do
           row 'Management Quality Level', &:mq_level_tag
           row :latest_information
           row :historical_comments
+          row :is_active
           row :created_at
           row :updated_at
         end
@@ -130,6 +131,7 @@ ActiveAdmin.register Company do
     column :level, &:mq_level_tag
     column :geography
     column :headquarters_geography
+    column :is_active
     tag_column :visibility_status
 
     actions
@@ -148,6 +150,7 @@ ActiveAdmin.register Company do
     column(:headquarters_geography) { |c| c.headquarters_geography.name }
     column :latest_information
     column :ca100
+    column :is_active
     column :visibility_status
   end
 
@@ -177,6 +180,8 @@ ActiveAdmin.register Company do
           f.input :visibility_status, as: :select
         end
       end
+
+      f.input :is_active
 
       f.input :ca100
 
