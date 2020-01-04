@@ -18,6 +18,8 @@ class Ability
   ].freeze
 
   def initialize(user)
+    alias_action :read, :create, :update, :destroy, to: :crud
+
     @user = user
 
     can :read, :all
@@ -67,7 +69,7 @@ class Ability
   end
 
   def publisher_abilities_for(resources)
-    resources.each { |resource| can :manage, resource }
+    resources.each { |resource| can :crud, resource }
 
     can :manage, Tag
     can :create, AdminUser
