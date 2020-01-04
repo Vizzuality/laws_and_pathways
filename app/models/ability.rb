@@ -19,12 +19,15 @@ class Ability
 
   def initialize(user)
     alias_action :read, :create, :update, :destroy, to: :crud
+    alias_action :read, :update, to: :modify
 
     @user = user
 
     can :read, :all
 
     send(@user.role.to_sym) if @user.present?
+
+    can :modify, AdminUser, id: user.id
   end
 
   def super_user
@@ -72,7 +75,7 @@ class Ability
     resources.each { |resource| can :crud, resource }
 
     can :manage, Tag
-    can :create, AdminUser
+    can :create, AdminUser # TODO: add restriction of what user roles can publisher add
 
     publishable_resources_within(resources).each do |resource|
       can :archive, resource
