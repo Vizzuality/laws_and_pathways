@@ -53,6 +53,7 @@ group :development, :test do
   gem 'rspec-collection_matchers'
   gem 'rspec-rails', '~> 3.8'
   gem 'timecop'
+  gem 'pry'
 end
 
 group :development do
