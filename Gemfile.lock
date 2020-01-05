@@ -166,6 +166,7 @@ GEM
       activemodel-serializers-xml (>= 1.0)
       activesupport (>= 5.0)
       request_store (>= 1.0)
+    draper-cancancan (1.1.1)
     erubi (1.9.0)
     execjs (2.7.0)
     factory_bot (5.1.1)
@@ -500,6 +501,7 @@ DEPENDENCIES
   discard
   dotenv-rails
   draper
+  draper-cancancan
   factory_bot_rails
   font-awesome-rails
   friendly_id

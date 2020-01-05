@@ -20,6 +20,7 @@ gem 'activeadmin'
 gem 'activeadmin_addons'
 gem 'devise', '>= 4.7.1'
 gem 'cancancan'
+gem 'draper-cancancan'
 gem 'draper'
 
 gem 'octokit', '~> 4.15.0'

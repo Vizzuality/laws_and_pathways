@@ -3,6 +3,10 @@
 class Ability
   include CanCan::Ability
 
+  # Workaround for checking abilities on Draper decorators
+  # See https://github.com/activeadmin/activeadmin/issues/5443
+  prepend Draper::CanCanCan
+
   TPI_RESOURCES = [
     Company, MQ::Assessment, CP::Assessment, TPISector, TPIPage,
     NewsArticle, Testimonial, Publication
@@ -19,15 +23,17 @@ class Ability
 
   def initialize(user)
     alias_action :read, :create, :update, :destroy, to: :crud
-    alias_action :read, :update, to: :modify
 
     @user = user
 
     can :read, :all
 
-    send(@user.role.to_sym) if @user.present?
+    return unless @user.present?
 
-    can :modify, AdminUser, id: user.id
+    send(@user.role.to_sym)
+
+    can :update, AdminUser, id: user.id
+    can :read, AdminUser, id: user.id
   end
 
   def super_user
