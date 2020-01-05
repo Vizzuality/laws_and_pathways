@@ -33,7 +33,6 @@ class Ability
     send(@user.role.to_sym)
 
     can :update, AdminUser, id: user.id
-    can :read, AdminUser, id: user.id
   end
 
   def super_user
