@@ -76,7 +76,7 @@ class Ability
     resources.each { |resource| can :crud, resource }
 
     can :manage, Tag
-    can :create, AdminUser # TODO: add restriction of what user roles can publisher add
+    can :create, AdminUser
 
     publishable_resources_within(resources).each do |resource|
       can :archive, resource
