@@ -116,12 +116,14 @@ ActiveAdmin.register Legislation do
     column :visibility_status
   end
 
-  batch_action :publish,
-               priority: 1,
-               if: proc { current_scope&.name != 'Published' } do |ids|
-    publish_command = ::Command::Batch::Publish.new(batch_action_collection, ids)
+  can_batch_publish = proc { can?(:publish, Legislation) && current_scope&.name != 'Published' }
+  can_batch_archive = proc { can?(:archive, Legislation) && current_scope&.name != 'Archived' }
+  can_batch_destroy = proc { can?(:destroy, Legislation) }
 
-    message = if publish_command.call
+  batch_action :publish, priority: 1, if: can_batch_publish do |ids|
+    publish_command = ::Command::Batch::Publish.new(scoped_collection, ids)
+
+    message = if publish_command.call.present?
                 {notice: "Successfully published #{ids.count} Laws"}
               else
                 {alert: 'Could not publish selected Laws'}
@@ -130,12 +132,10 @@ ActiveAdmin.register Legislation do
     redirect_to collection_path(scope: 'published'), message
   end
 
-  batch_action :archive,
-               priority: 1,
-               if: proc { current_scope&.name != 'Archived' } do |ids|
-    archive_command = ::Command::Batch::Archive.new(batch_action_collection, ids)
+  batch_action :archive, priority: 1, if: can_batch_archive do |ids|
+    archive_command = ::Command::Batch::Archive.new(scoped_collection, ids)
 
-    message = if archive_command.call
+    message = if archive_command.call.present?
                 {notice: "Successfully archived #{ids.count} Laws"}
               else
                 {alert: 'Could not archive selected Laws'}
@@ -144,10 +144,10 @@ ActiveAdmin.register Legislation do
     redirect_to collection_path(scope: 'archived'), message
   end
 
-  batch_action :destroy do |ids|
-    delete_command = Command::Batch::Delete.new(batch_action_collection, ids)
+  batch_action :destroy, if: can_batch_destroy do |ids|
+    delete_command = Command::Batch::Delete.new(scoped_collection, ids)
 
-    message = if delete_command.call
+    message = if delete_command.call.present?
                 {notice: "Successfully deleted #{ids.count} Laws"}
               else
                 {alert: 'Could not delete selected Laws'}
