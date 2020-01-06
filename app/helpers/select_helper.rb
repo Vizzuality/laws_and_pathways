@@ -1,4 +1,12 @@
 module SelectHelper
+  def current_user?(user)
+    current_admin_user.id == user.id
+  end
+
+  def allowed_user_roles_select_collection
+    array_to_select_collection(allowed_user_roles_to_select, :titleize)
+  end
+
   def array_to_select_collection(array, transform_func = :humanize)
     return unless array.respond_to?(:map)
 
@@ -9,12 +17,11 @@ module SelectHelper
     end
   end
 
-  def user_roles_select_collection
-    array_to_select_collection(current_user_roles_to_select, :titleize)
-  end
-
-  # returns roles which current user can set when creating/editing other users
-  def current_user_roles_to_select
+  # Returns roles which current user can set when creating/editing other users
+  # - super users can edit set any role to anyone
+  # - publishers can create publishers/editors from their area (LAWS/TPI)
+  #
+  def allowed_user_roles_to_select
     case current_admin_user.role
     when 'super_user'
       AdminUser::ROLES
@@ -22,6 +29,8 @@ module SelectHelper
       %w[publisher_laws editor_laws]
     when 'publisher_tpi'
       %w[publisher_tpi editor_tpi]
+    else
+      []
     end
   end
 
