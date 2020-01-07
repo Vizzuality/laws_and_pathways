@@ -62,7 +62,7 @@ module Api
       def emissions_data_from_sector_benchmarks
         company
           .sector
-          .latest_benchmarks_for_date(assessment.assessment_date)
+          .latest_benchmarks_for_date(assessment.publication_date)
           .sort_by(&:average_emission)
           .map.with_index do |benchmark, index|
             {
