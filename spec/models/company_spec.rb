@@ -102,15 +102,15 @@ RSpec.describe Company, type: :model do
     end
     let(:company_assessments) do
       [
-        create(:cp_assessment, assessment_date: '2012-05-01'),
-        create(:cp_assessment, assessment_date: '2013-05-01'),
-        create(:cp_assessment, assessment_date: '2018-05-01') # <- last assessment date
+        create(:cp_assessment, assessment_date: '2012-05-01', publication_date: '2012-05-01'),
+        create(:cp_assessment, assessment_date: '2013-05-01', publication_date: '2013-05-01'),
+        create(:cp_assessment, assessment_date: '2018-05-01', publication_date: '2018-05-01') # <- last assessment date
       ]
     end
     let(:older_company_assessments) do
       [
-        create(:cp_assessment, assessment_date: '2011-05-01'),
-        create(:cp_assessment, assessment_date: '2012-05-01')
+        create(:cp_assessment, assessment_date: '2011-05-01', publication_date: '2011-05-01'),
+        create(:cp_assessment, assessment_date: '2012-05-01', publication_date: '2012-05-01')
       ]
     end
 

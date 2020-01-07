@@ -41,8 +41,8 @@ class TPISector < ApplicationRecord
   #
   # @example Company has assessment:
   # - benchmarks available for 04.2017 and 05.2018
-  # - if assessment date is 06.2018 - we take benchmarks from 05.2018
-  # - if assessment date is 06.2017 - we take benchmarks from 04.2017
+  # - if assessment publication date is 06.2018 - we take benchmarks from 05.2018
+  # - if assessment publication date is 06.2017 - we take benchmarks from 04.2017
   def latest_benchmarks_for_date(date)
     return latest_released_benchmarks unless date
 
@@ -50,7 +50,7 @@ class TPISector < ApplicationRecord
 
     last_release_date_before_given_date =
       sector_benchmarks_dates
-        .select { |d| d < date }
+        .select { |d| d <= date }
         .last
 
     release_date =
