@@ -126,7 +126,7 @@ class Geography < ApplicationRecord
         sector: sector.name,
         ndc_targets_count: eu_member? ? eu_ndc_targets_count : targets.select { |t| t.source.eql?('ndc') }.count,
         law_targets_count: targets.select { |t| t.source.eql?('law') }.count,
-        policy_targets_count: targets.select { |t| t.source.eql('policy') }.count
+        policy_targets_count: targets.select { |t| t.source.eql?('policy') }.count
       }
     end
   end

@@ -16,7 +16,6 @@ module CCLOW
       end
 
       def laws_sector
-        add_breadcrumb('Climate targets', request.path)
         @sector = LawsSector.find_by(name: params[:law_sector])
         @ndc_targets = if @geography.eu_member?
                          eu = ::Geography.where(iso: 'EUR').first
@@ -28,6 +27,7 @@ module CCLOW
 
         @climate_targets = @geography.targets.published.where(sector: @sector).where.not(source: 'ndc')
         @climate_targets = CCLOW::TargetDecorator.decorate_collection(@climate_targets)
+        add_breadcrumbs
         render 'cclow/geography/climate_targets/target_sector'
       end
 
@@ -35,6 +35,11 @@ module CCLOW
 
       def targets_list_by_sector
         @geography.object.laws_per_sector
+      end
+
+      def add_breadcrumbs
+        add_breadcrumb('Climate targets', cclow_geography_climate_targets_path(@geography))
+        add_breadcrumb(@sector.name, request.path)
       end
     end
   end
