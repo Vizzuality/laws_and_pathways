@@ -15,26 +15,26 @@
         <div class="column is-one-thirds"></div>
         <div class="column is-one-thirds column-name">Targets in NDC content</div>
         <div class="column is-one-thirds column-name">
-          <span>Targets in national</span><span>laws and policies</span>
+          <span class="column-title">Targets in national laws and policies</span>
         </div>
       </div>
 
-      <% @list.each do |sector, targets| %>
-        <a href="<%= "/cclow/geographies/#{@geography.id}/climate_targets/#{sector}" %>" class="columns item active">
-          <div class="column is-one-thirds sector-name"><%= sector %></div>
+      <% @list.each do |data| %>
+        <a href="<%= "/cclow/geographies/#{@geography.id}/climate_targets/#{data[:sector]}" %>" class="columns item active">
+          <div class="column is-one-thirds sector-name"><%= data[:sector] %></div>
           <div class="column is-one-thirds value">
-            <% if targets['ndc'].present? %>
+            <% if !data[:ndc_targets_count].zero? %>
               <div class="current-circle">
-                <%= targets['ndc'] %>
+                <%= data[:ndc_targets_count] %>
               </div>
             <% else %>
               <div class="empty-circle"></div>
             <% end %>
           </div>
           <div class="column is-one-thirds value">
-            <% if (targets['law'] || 0) + (targets['policy'] || 0) %>
+            <% if data[:law_targets_count] + data[:policy_targets_count] %>
               <div class="current-circle">
-                <%= (targets['law'] || 0) + (targets['policy'] || 0)%>
+                <%= data[:law_targets_count] + data[:policy_targets_count] %>
               </div>
             <% else %>
               <div class="empty-circle"></div>
@@ -43,7 +43,7 @@
         </a>
       <% end %>
 
-      <% (LawsSector.select(:name).map(&:name) - @list.keys).each do |sector| %>
+      <% @sectors_without_targets.each do |sector| %>
         <a href="javascript:void(0);" class="columns item">
           <div class="column is-one-thirds sector-name"><%= sector %></div>
           <div class="column is-one-thirds value"><div class="empty-circle"></div></div>

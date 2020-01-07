@@ -6,6 +6,7 @@ module CCLOW
       def index
         add_breadcrumb('Climate targets', request.path)
         @list = targets_list_by_sector
+        @sectors_without_targets = LawsSector.where.not('name IN (?)', @list.pluck(:sector)).pluck(:name).sort
       end
 
       def show
@@ -33,17 +34,7 @@ module CCLOW
       private
 
       def targets_list_by_sector
-        counts = Target.joins(:sector).where(geography: @geography).group('laws_sectors.name', :source).count
-        list = {}
-        counts.each do |key, value|
-          sector_name = key[0]
-          source_name = key[1]
-          next unless %w(law policy ndc).include?(source_name)
-
-          list[sector_name] = {} unless list[sector_name].present?
-          list[sector_name][source_name] = value
-        end
-        list
+        @geography.object.laws_per_sector
       end
     end
   end
