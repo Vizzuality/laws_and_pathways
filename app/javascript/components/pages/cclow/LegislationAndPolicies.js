@@ -84,7 +84,7 @@ class LegislationAndPolicies extends Component {
       );
     }
 
-    return (<h5>All Legislation and policies</h5>);
+    return (<h5>All laws and policies</h5>);
   }
 
   renderTags = () => {
