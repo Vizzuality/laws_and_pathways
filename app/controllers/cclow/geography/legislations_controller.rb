@@ -21,6 +21,7 @@ module CCLOW
         add_breadcrumb(@legislation.title, request.path)
         @sectors = @legislation.laws_sectors.order(:name)
         @keywords = @legislation.keywords.order(:name)
+        @responses = @legislation.responses.order(:name)
       end
 
       private

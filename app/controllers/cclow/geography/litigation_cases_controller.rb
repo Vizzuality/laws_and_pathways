@@ -15,6 +15,7 @@ module CCLOW
         add_breadcrumb(@litigation.title, request.path)
         @sectors = @litigation.laws_sectors.order(:name)
         @keywords = @litigation.keywords.order(:name)
+        @responses = @litigation.responses.order(:name)
       end
     end
   end
