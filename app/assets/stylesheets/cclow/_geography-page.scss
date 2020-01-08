@@ -203,6 +203,12 @@ $count-description-lines: 2;
   .climate-targets-section {
     margin-bottom: 3rem;
 
+    .climate-targets__content {
+      border: 1px solid $border-cl;
+      border-bottom: none;
+      border-top: none;
+    }
+
     h5 {
       margin-bottom: 0.875rem;
     }
@@ -220,9 +226,7 @@ $count-description-lines: 2;
     }
 
     li {
-      border-bottom: solid 1px $grey;
-      border-left: solid 1px $grey;
-      border-right: solid 1px $grey;
+      border-bottom: solid 1px $border-cl;
       margin: 0;
       padding: 2.5rem;
     }
@@ -499,7 +503,9 @@ $count-description-lines: 2;
   .filter-tags {
     border-bottom: solid 1px $grey-light;
     padding-bottom: 1rem;
+  }
 
+  .tags {
     .tag {
       font-size: $size-8;
       height: 30px;
