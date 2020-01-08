@@ -12,8 +12,8 @@ module CCLOW
       super.tap do |hash|
         hash['link'] = link
         hash['geography'] = model.geography
-        hash['date_passed'] = model.events.order(:date).first&.date&.strftime('%Y')
-        hash['last_change'] = model.events.count > 1 ? model.events.order(:date).last&.date&.strftime('%B, %Y') : nil
+        hash['date_passed'] = model.first_event&.date&.strftime('%Y')
+        hash['last_change'] = model.last_event&.date&.strftime('%B, %Y')
         hash['legislation_type'] = model.legislation_type
         hash['legislation_type_humanize'] = model.legislation_type.humanize
       end

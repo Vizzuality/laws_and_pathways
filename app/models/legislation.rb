@@ -113,4 +113,12 @@ class Legislation < ApplicationRecord
   def date_passed
     events.where(event_type: 'law_passed').first&.date
   end
+
+  def first_event
+    events.order(:date).first
+  end
+
+  def last_event
+    events.order(:date).offset(1).last
+  end
 end

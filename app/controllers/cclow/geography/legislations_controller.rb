@@ -12,6 +12,7 @@ module CCLOW
                           @geography.legislations.policies
                         end
         @legislations = @legislations.published
+          .includes(:events)
           .joins(:events).order('events.date DESC')
         @legislations = CCLOW::LegislationDecorator.decorate_collection(@legislations)
       end

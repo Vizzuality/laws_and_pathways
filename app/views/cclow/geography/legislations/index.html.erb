@@ -4,10 +4,7 @@
     <h3><%= params[:scope] == :laws ? 'Laws' : 'Policies' %></h3>
     <ul class="content-list">
       <% @legislations.uniq.each do |l| %>
-        <%= render 'cclow/geography/legislations/list_item', title: l.link,
-                   description: l.description,
-                   legislation_type: l.legislation_type,
-                   date_passed: l.date_passed %>
+        <%= render 'cclow/geography/legislations/list_item', legislation: l %>
       <% end %>
     </ul>
   </div>
