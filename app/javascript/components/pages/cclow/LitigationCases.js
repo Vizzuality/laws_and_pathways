@@ -203,6 +203,7 @@ class LitigationCases extends Component {
                                 {litigation.geography.name}
                               </div>
                               {litigation.opened_in && <div>Opened in {litigation.opened_in}</div>}
+                              {litigation.last_development_in && <div>Last development in {litigation.last_development_in}</div>}
                             </Fragment>
                           )}
                         </div>
