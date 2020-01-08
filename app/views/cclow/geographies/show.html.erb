@@ -3,7 +3,7 @@
 <div class="content-show overview-page">
   <h3>Overview and context</h3>
   <%= render 'cclow/geographies/overview', geography_overview: @geography_overview, geography: @geography %>
-  <% if @geography.events.any? %>
+  <% if @geography.all_events.any? %>
     <section class="section is-large">
       <% event_options = Geography::EVENT_TYPES.map{|type| {value: type, label: type.humanize}} %>
       <%= react_component("EventsTimeline", { events: @geography.all_events, options: event_options, isFiltered: true }) %>
