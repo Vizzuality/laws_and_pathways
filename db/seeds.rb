@@ -8,6 +8,26 @@ if Rails.env.development? && !AdminUser.find_by(email: 'admin@example.com')
     password: 'password', password_confirmation: 'password',
     role: 'super_user'
   )
+  AdminUser.create!(
+    email: 'publisher_laws@example.com',
+    password: 'password', password_confirmation: 'password',
+    role: 'publisher_laws'
+  )
+  AdminUser.create!(
+    email: 'publisher_tpi@example.com',
+    password: 'password', password_confirmation: 'password',
+    role: 'publisher_tpi'
+  )
+  AdminUser.create!(
+    email: 'editor_laws@example.com',
+    password: 'password', password_confirmation: 'password',
+    role: 'editor_laws'
+  )
+  AdminUser.create!(
+    email: 'editor_tpi@example.com',
+    password: 'password', password_confirmation: 'password',
+    role: 'editor_tpi'
+  )
 end
 
 # instruments: Instrument Type & Instrument
