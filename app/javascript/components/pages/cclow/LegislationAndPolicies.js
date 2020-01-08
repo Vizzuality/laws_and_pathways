@@ -214,7 +214,8 @@ class LegislationAndPolicies extends Component {
                           <img src={legislation.legislation_type === 'executive' ? ExecutiveSVG : LegislativeSVG} alt={legislation.legislation_type} />
                           {legislation.legislation_type_humanize}
                         </div>
-                        {legislation.date_passed && <div>{new Date(legislation.date_passed).getFullYear()}</div>}
+                        {legislation.date_passed && <div>{legislation.date_passed}</div>}
+                        {legislation.last_change && <div>Last change in {legislation.last_change}</div>}
                       </div>
                       <div className="description" dangerouslySetInnerHTML={{__html: legislation.description}} />
                     </li>
