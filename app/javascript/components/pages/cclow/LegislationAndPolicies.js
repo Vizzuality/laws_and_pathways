@@ -99,7 +99,7 @@ class LegislationAndPolicies extends Component {
       && Object.keys(activeTypesFilter).length === 0
       && Object.keys(activeTimeRangeFilter).length === 0) return null;
     return (
-      <div className="tags">
+      <div className="filter-tags">
         {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
         {this.renderTagsGroup(activeTagFilter, tagsFilterOptions, 'tagsFilter')}
         {this.renderTagsGroup(activeTypesFilter, typesFilterOptions, 'typesFilter')}

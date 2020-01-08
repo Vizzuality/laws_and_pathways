@@ -110,4 +110,25 @@ class Geography < ApplicationRecord
     Event.from("(#{laws_events.to_sql} UNION #{litigations_events.to_sql} UNION #{events.to_sql}) AS events")
       .order(date: :asc)
   end
+
+  def self.eu_ndc_targets
+    eu = Geography.find_by(iso: 'EUR')
+    eu.targets.published.where(source: 'ndc')
+  end
+
+  def laws_per_sector
+    targets.group_by(&:sector).map do |sector, targets|
+      {
+        sector: sector.name,
+        ndc_targets_count:
+          if eu_member?
+            Geography.eu_ndc_targets.select { |target| target.sector.eql?(sector) }.count
+          else
+            targets.select { |t| t.source.eql?('ndc') }.count
+          end,
+        law_targets_count: targets.select { |t| t.source.eql?('law') }.count,
+        policy_targets_count: targets.select { |t| t.source.eql?('policy') }.count
+      }
+    end
+  end
 end
