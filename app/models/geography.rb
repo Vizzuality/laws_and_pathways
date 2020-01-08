@@ -119,7 +119,7 @@ class Geography < ApplicationRecord
   def laws_per_sector
     targets.group_by(&:sector).map do |sector, targets|
       {
-        sector: sector.name,
+        sector: sector&.name,
         ndc_targets_count:
           if eu_member?
             Geography.eu_ndc_targets.select { |target| target.sector.eql?(sector) }.count
