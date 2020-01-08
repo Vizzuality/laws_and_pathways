@@ -5,7 +5,8 @@ module CCLOW
 
       def index
         add_breadcrumb('Litigation cases', request.path)
-        @litigations = @geography.litigations.published
+        @litigations = @geography.litigations.published.includes(:events)
+        @litigations = CCLOW::LitigationDecorator.decorate_collection(@litigations)
       end
 
       def show

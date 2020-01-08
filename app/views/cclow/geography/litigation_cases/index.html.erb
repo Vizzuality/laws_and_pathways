@@ -3,12 +3,7 @@
   <h3>Litigation cases</h3>
   <ul class="content-list">
     <% @litigations.each do   |l| %>
-      <%= render 'cclow/geography/litigation_cases/list_item',
-                 title: link_to(l.title, cclow_geography_litigation_case_path(l.geography, l)),
-                 description: l.summary,
-                 date_passed: l.started_event&.date,
-                 event_type: l.events.last&.event_type
-      %>
+      <%= render 'cclow/geography/litigation_cases/list_item', litigation: l %>
     <% end %>
   </ul>
 </div>
