@@ -104,6 +104,12 @@ $count-description-lines: 2;
         max-width: 150px;
       }
 
+      a.item:hover {
+        .sector-name {
+          text-decoration: underline;
+        }
+      }
+
       .item {
         color: $grey-text;
         cursor: default;
@@ -118,10 +124,6 @@ $count-description-lines: 2;
 
         &:hover {
           background-color: $grey-light;
-
-          .sector-name {
-            text-decoration: underline;
-          }
         }
 
         .value {
