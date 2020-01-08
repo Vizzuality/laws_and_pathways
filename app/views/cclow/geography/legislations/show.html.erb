@@ -33,7 +33,10 @@
 <div class="content-show">
   <h3 class="title"><%= @legislation.title %></h3>
   <div class="meta">
-    <div><%= @legislation.legislation_type&.humanize %></div>
+    <div>
+      <img src=<%= asset_path "icons/legislation_types/#{@legislation.legislation_type}.svg"%> alt="">
+      <%= @legislation.legislation_type&.humanize %>
+    </div>
     <div>
       <span>Action plan</span>
       <!--<span class="icon"><i class="fa fa-question"></i></span>-->
