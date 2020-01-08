@@ -18,8 +18,7 @@ module CCLOW
       def laws_sector
         @sector = LawsSector.find_by(name: params[:law_sector])
         @ndc_targets = if @geography.eu_member?
-                         eu = ::Geography.where(iso: 'EUR').first
-                         eu.targets.published.where(source: 'ndc', sector: @sector)
+                         eu_sector_ndc_targets
                        else
                          @geography.targets.published.where(source: 'ndc', sector: @sector)
                        end
@@ -35,6 +34,10 @@ module CCLOW
 
       def targets_list_by_sector
         @geography.object.laws_per_sector
+      end
+
+      def eu_sector_ndc_targets
+        ::Geography.eu_ndc_targets.select { |target| target.sector.eql?(@sector) }
       end
 
       def add_breadcrumbs

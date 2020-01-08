@@ -111,20 +111,21 @@ class Geography < ApplicationRecord
       .order(date: :asc)
   end
 
-  def eu_ndc_targets_count
-    targets_counts = Geography
-      .where(iso: Geography::EU_COUNTRIES)
-      .joins(:targets)
-      .uniq
-      .map { |geography| geography.targets.ndc.count }
-    targets_counts.reduce(:+)
+  def self.eu_ndc_targets
+    eu = Geography.find_by(iso: 'EUR')
+    eu.targets.published.where(source: 'ndc')
   end
 
   def laws_per_sector
     targets.group_by(&:sector).map do |sector, targets|
       {
         sector: sector.name,
-        ndc_targets_count: eu_member? ? eu_ndc_targets_count : targets.select { |t| t.source.eql?('ndc') }.count,
+        ndc_targets_count:
+          if eu_member?
+            Geography.eu_ndc_targets.select { |target| target.sector.eql?(sector) }.count
+          else
+            targets.select { |t| t.source.eql?('ndc') }.count
+          end,
         law_targets_count: targets.select { |t| t.source.eql?('law') }.count,
         policy_targets_count: targets.select { |t| t.source.eql?('policy') }.count
       }
