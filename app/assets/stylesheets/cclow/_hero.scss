@@ -98,7 +98,7 @@ $logos-container-padding: 1.5rem;
 
     p {
       font-size: $m-p-font-size;
-      
+
       @include desktop {
         font-size: $size-5;
       }
@@ -215,6 +215,13 @@ $logos-container-padding: 1.5rem;
 
         & > .icon__globe {
           background-image: image-url('icons/target.svg');
+        }
+      }
+      div a {
+        color: $white;
+
+        &:hover {
+          text-decoration: underline;
         }
       }
     }

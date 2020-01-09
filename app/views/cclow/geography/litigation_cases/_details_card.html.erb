@@ -3,17 +3,21 @@
     <b>Jurisdiction: </b> <%= litigation.jurisdiction %>
   </p>
   <br>
-  <p>
-    <b>Principle law(s): </b> <%= litigation.legislations.map(&:title).join(',') %>
-  </p>
-  <br>
+  <% if litigation.legislations.any? %>
+    <p>
+      <b>Principle law(s): </b> <%= litigation.legislations.map(&:title).join(',') %>
+    </p>
+    <br>
+  <% end %>
   <% litigation.litigation_sides.each do |side| %>
     <p>
       <b>Side <%=side.side_type.upcase %>: </b> <%= side.name %>
     </p>
     <br>
   <% end %>
-  <p>
-    <b>Core objectives:</b><%= litigation.at_issue.html_safe %>
-  </p>
+  <% if litigation.at_issue.present? %>
+    <p>
+      <b>Core objectives:</b><%= litigation.at_issue.html_safe %>
+    </p>
+  <% end %>
 </div>

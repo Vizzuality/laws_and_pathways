@@ -1,15 +1,18 @@
 <li>
-  <h5 class="title"><%= title %></h5>
+  <h5 class="title"><%= legislation.link %></h5>
   <div class="meta">
     <div>
-      <img src=<%= asset_path "icons/legislation_types/#{legislation_type}.svg"%> alt="">
-      <%= legislation_type&.humanize %>
+      <img src=<%= asset_path "icons/legislation_types/#{legislation.legislation_type}.svg"%> alt="">
+      <%= legislation.legislation_type&.humanize %>
     </div>
-    <% if date_passed %>
-      <div>Passed in <%= date_passed&.year %></div>
+
+    <div><%= legislation.first_event&.date&.year %></div>
+
+    <% if legislation.last_event %>
+      <div>Last change in <%= legislation.last_event&.date&.strftime('%B, %Y') %></div>
     <% end %>
   </div>
   <div class="description">
-    <%= description&.html_safe %>
+    <%= legislation.description&.html_safe %>
   </div>
 </li>
