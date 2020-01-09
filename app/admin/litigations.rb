@@ -61,8 +61,8 @@ ActiveAdmin.register Litigation do
     column :id
     column :title
     column :document_type
-    column(:geography_iso) { |l| l.geography.iso }
-    column(:geography) { |l| l.geography.name }
+    column(:geography_iso) { |l| l.geography&.iso }
+    column(:geography) { |l| l.geography&.name }
     column :jurisdiction
     column :citation_reference_number
     column :summary
