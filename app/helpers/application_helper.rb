@@ -16,4 +16,22 @@ module ApplicationHelper
       end
     end
   end
+
+  def active_menu_page?(**args)
+    unless args.nil?
+      has_pages = false
+      has_path = false
+
+      has_pages = args[:pages].any? { |page| current_page?(page[:slug]) } unless args[:pages].nil?
+
+      has_path = current_page?(args[:path]) unless args[:path].nil?
+
+      return has_pages || has_path
+    end
+
+    current_page?(
+      controller: params[:controller],
+      action: params[:action]
+    )
+  end
 end

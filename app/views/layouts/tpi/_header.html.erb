@@ -4,28 +4,45 @@
       entry: 'TPI tool',
       path: tpi_sectors_path,
       content: @tpi_tool_pages,
+      active: active_menu_page?(path: tpi_sectors_path, pages: @tpi_tool_pages)
     },
     {
       entry: 'Publications and news',
-      path: url_for(controller: 'publications', only_path: true)
+      path: url_for(controller: 'publications', only_path: true),
+      active: active_menu_page?(
+        path: url_for(controller: 'publications', only_path: true)
+      )
     },
     {
       entry: 'About',
       content: @about_pages,
-      path: url_for(controller: 'home', action: 'about', only_path: true)
+      path: url_for(controller: 'home', action: 'about', only_path: true),
+      active: active_menu_page?(
+        path: url_for(controller: 'home', action: 'about', only_path: true),
+        pages: @about_pages
+      )
     },
     {
       entry: 'Newsletter',
-      path: tpi_newsletter_path
+      path: tpi_newsletter_path,
+      active: active_menu_page?(
+        path: tpi_newsletter_path
+      )
     },
     {
       entry: 'Login / Register',
-      path: tpi_register_path
+      path: tpi_register_path,
+      active: active_menu_page?(
+        path: tpi_register_path
+      )
     },
     {
       entry: 'Search',
       hasIcon: true,
-      path: url_for(controller: 'search', only_path: true)
+      path: url_for(controller: 'search', only_path: true),
+      active: active_menu_page?(
+        path: url_for(controller: 'search', only_path: true)
+      )
     },
   ],
   controls: {

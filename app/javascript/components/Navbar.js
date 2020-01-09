@@ -71,7 +71,6 @@ SearchComponent.propTypes = {
 const NavbarComponent = ({ items, openSearchMode }) => {
   const [tpi, publications, about, newsletter, login, search] = items;
   const [isOpen, setIsOpen] = useState(false);
-  const {pathname} = window.location;
 
   return (
     <div className="navbar" role="navigation" aria-label="main navigation">
@@ -101,7 +100,7 @@ const NavbarComponent = ({ items, openSearchMode }) => {
             <div className="navbar-item has-dropdown is-hoverable">
               <a
                 className={classnames('navbar-link', 'is-arrowless', {
-                  'is-active': pathname.includes(tpi.path)
+                  'is-active': tpi.active
                 })}
               >
                 {tpi.entry}
@@ -115,8 +114,12 @@ const NavbarComponent = ({ items, openSearchMode }) => {
                   </a>
                 )}
                 {tpi.content && (
-                  tpi.content.map(({ slug, title }) => (
-                    <a href={slug} className="navbar-item">
+                  tpi.content.map(({ slug, title }, i) => (
+                    <a
+                      key={`${title}-${i}`}
+                      href={slug}
+                      className="navbar-item"
+                    >
                       {title}
                     </a>
                   )))}
@@ -126,16 +129,16 @@ const NavbarComponent = ({ items, openSearchMode }) => {
             <a
               href={publications.path}
               className={classnames('navbar-item', {
-                'is-active': pathname.includes(publications.path)
+                'is-active': publications.active
               })}
             >
               {publications.entry}
             </a>
 
-            <div className="navbar-item has-dropdown">
+            <div className="navbar-item has-dropdown is-hoverable">
               <a
                 className={classnames('navbar-link', 'is-arrowless', {
-                  'is-active': pathname.includes(about.path)
+                  'is-active': about.active
                 })}
               >
                 {about.entry}
@@ -144,8 +147,12 @@ const NavbarComponent = ({ items, openSearchMode }) => {
 
               <div className="navbar-dropdown">
                 {about.content && (
-                  about.content.map(({ slug, title }) => (
-                    <a href={slug} className="navbar-item">
+                  about.content.map(({ slug, title }, i) => (
+                    <a
+                      key={`${title}-${i}`}
+                      href={slug}
+                      className="navbar-item"
+                    >
                       {title}
                     </a>
                   )))}
@@ -157,7 +164,7 @@ const NavbarComponent = ({ items, openSearchMode }) => {
             <a
               href={newsletter.path}
               className={classnames('navbar-item', {
-                'is-active': pathname.includes(newsletter.path)
+                'is-active': newsletter.active
               })}
             >
               {newsletter.entry}
@@ -165,7 +172,7 @@ const NavbarComponent = ({ items, openSearchMode }) => {
             <a
               href={login.path}
               className={classnames('navbar-item', {
-                'is-active': pathname.includes(login.path)
+                'is-active': login.active
               })}
             >
               {login.entry}
@@ -195,6 +202,7 @@ NavbarComponent.propTypes = {
           slug: PropTypes.string.isRequired
         })
       ),
+      active: PropTypes.bool.isRequired,
       hasIcon: PropTypes.bool,
       className: PropTypes.string
     })
