@@ -98,7 +98,7 @@ class Geography < ApplicationRecord
     EU_COUNTRIES.include?(iso)
   end
 
-  def all_events
+  def self_and_related_events
     laws_events = Event.where(eventable_type: 'Legislation')
       .joins('INNER JOIN legislations ON legislations.id = events.eventable_id')
       .where('legislations.geography_id = ?', id)
