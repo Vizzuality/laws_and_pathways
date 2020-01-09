@@ -6,7 +6,6 @@ $arrow-btn-width: 48px;
   display: flex;
   position: relative;
   overflow: hidden;
-  margin-left: $arrow-btn-width;
   width: calc(100% - #{$arrow-btn-width * 2});
 
   .timeline {
@@ -19,18 +18,29 @@ $arrow-btn-width: 48px;
     text-align: center;
     width: 275px;
 
-    &:last-child {
-      .point {
-        &:after {
-          border: none;
+    &-multiple-events {
+      &:last-child {
+        .point {
+          &:after {
+            border: none;
+          }
         }
       }
-    }
+  
+      &:first-child {
+        text-align: left;
+        width: 145px;
 
-    &:first-child {
-      .point {
-        &:before {
-          border: none;
+        .point {
+          margin: unset;
+
+          &:before {
+            border: none;
+          }
+        }
+  
+        .event-title {
+          justify-content: flex-start;
         }
       }
     }
