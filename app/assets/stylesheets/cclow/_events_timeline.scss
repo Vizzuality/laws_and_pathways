@@ -18,7 +18,9 @@ $arrow-btn-width: 48px;
     position: relative;
     text-align: center;
     width: 275px;
+  }
 
+  .time-point-multiple-events {
     &:last-child {
       .point {
         &:after {
