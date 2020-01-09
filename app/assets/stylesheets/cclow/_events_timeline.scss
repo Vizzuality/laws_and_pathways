@@ -19,6 +19,13 @@ $arrow-btn-width: 48px;
     width: 275px;
   }
 
+  .time-point.time-point-multiple-events {
+    &:first-child {
+      text-align: left;
+      width: 145px;
+    }
+  }
+
   .time-point-multiple-events {
     &:last-child {
       .point {
@@ -33,6 +40,14 @@ $arrow-btn-width: 48px;
         &:before {
           border: none;
         }
+      }
+
+      .event-title {
+        justify-content: flex-start;
+      }
+
+      .point {
+        margin: unset;
       }
     }
   }
