@@ -11,6 +11,10 @@ $slide-padding: 10px;
     margin: 0 -$slide-padding;
   }
 
+  .slick-disabled {
+    display: none !important;
+  }
+
   .slick-arrow {
     margin: auto 0;
     position: absolute;
