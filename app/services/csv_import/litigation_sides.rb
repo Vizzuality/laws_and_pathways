@@ -24,7 +24,7 @@ module CSVImport
 
     def prepare_litigation_side(row)
       find_record_by(:id, row) ||
-        LitigationSide.find_or_initialize_by(
+        LitigationSide.new(
           litigation_id: row[:litigation_id],
           connected_entity_id: row[:connected_entity_id],
           connected_entity_type: row[:connected_entity_type],
