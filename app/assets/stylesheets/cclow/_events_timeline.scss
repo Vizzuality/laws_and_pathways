@@ -32,6 +32,8 @@ $arrow-btn-width: 48px;
         width: 145px;
 
         .point {
+          margin: unset;
+
           &:before {
             border: none;
           }
@@ -39,10 +41,6 @@ $arrow-btn-width: 48px;
   
         .event-title {
           justify-content: flex-start;
-        }
-  
-        .point {
-          margin: unset;
         }
       }
     }
