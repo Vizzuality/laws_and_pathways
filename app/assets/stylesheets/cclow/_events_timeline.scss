@@ -6,7 +6,6 @@ $arrow-btn-width: 48px;
   display: flex;
   position: relative;
   overflow: hidden;
-  margin-left: $arrow-btn-width;
   width: calc(100% - #{$arrow-btn-width * 2});
 
   .timeline {
