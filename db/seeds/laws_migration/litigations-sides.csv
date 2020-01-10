@@ -48,7 +48,7 @@ litigation_id,side type,name,party type
 7332,A,Save Lamu et al.,individual_ngo
 7332,B,National Environmental Management Authority,government
 7332,B,Amu Power Co. Ltd,corporation
-7331,A,Sandra Bitter,individual corporation
+7331,A,Sandra Bitter,individual_corporation
 7331,B,Bundesrepublik Deutschland,government
 7330,A,"Borealis AB, Kubikenborg Aluminum AB, Yara AB, SSAB EMEA AB, Lulekraft AB, Värmevärden i Nynäshamn AB, Cementa AB, Höganäs Sweden AB",corporation
 7330,B,Naturvårdsverket,government
@@ -166,7 +166,7 @@ litigation_id,side type,name,party type
 7283,B,Australian Conservation Foundation,ngo
 7282,A,Coast and Country Association of Queensland,ngo
 7282,B,Smith,government
-7281,A,Arctic Athabaskan Council,tribal government
+7281,A,Arctic Athabaskan Council,tribal_government
 7281,B,Canada,government
 7280,A,Marangopoulos Foundation for Human Rights,ngo
 7280,B,Greece,government
@@ -176,7 +176,7 @@ litigation_id,side type,name,party type
 7278,B,Kinder Morgan Canada Ltd.,corporation
 7277,A,EarthLife Africa Johannesburg,ngo
 7277,B,Minister of Environmental Affairs,government
-7276,A,Ralph Lauren 57,"corporation individuals"
+7276,A,Ralph Lauren 57,corporation_individuals
 7276,B,Byron Shire Council,government
 7275,A,Burgess,"individual"
 7275,B,Ontario Minister of Natural Resources and Forestry,government
@@ -269,7 +269,7 @@ litigation_id,side type,name,party type
 7212,B,Conrwall Council,government
 7211,A,Richard Hackett Pugh,individual
 7211,B,Secretary of State for Communities and Local Government,government
-7211,C,Cornwall Council,intervening party
+7211,C,Cornwall Council,intervening_party
 7210,A,NorthCote Farms LTD,corporation
 7210,B,Secretary of State for Communities and Local Government,government
 7210,B,East Riding of Workshite Council,government
