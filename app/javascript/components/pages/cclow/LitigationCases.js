@@ -99,12 +99,12 @@ class LitigationCases extends Component {
       litigation_side_types_options: litigationSideTypesOptions,
       litigation_party_types_options: litigationPartyTypesOptions
     } = this.props;
-    if (Object.keys(activeGeoFilter).length === 0
-      && Object.keys(activeTagFilter).length === 0
-      && Object.keys(activeStatusesFilter).length === 0
-      && Object.keys(activeTimeRangeFilter).length === 0
-      && Object.keys(activeSideTypesFilter).length === 0
-      && Object.keys(activePartyTypesFilter).length === 0) return null;
+    if (!Object.keys(activeGeoFilter).length
+      && !Object.keys(activeTagFilter).length
+      && !Object.keys(activeStatusesFilter).length
+      && !Object.keys(activeTimeRangeFilter).length
+      && !Object.keys(activeSideTypesFilter).length
+      && !Object.keys(activePartyTypesFilter).length) return null;
     return (
       <div className="filter-tags">
         {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
