@@ -4,26 +4,38 @@
       entry: 'TPI tool',
       path: tpi_sectors_path,
       content: @tpi_tool_pages,
+      active: active_menu_page?([
+        tpi_sectors_path,
+        { controller: 'tpi/sectors', action: 'show' },
+        { controller: 'tpi/companies', action: 'show' },
+        *@tpi_tool_pages_paths
+      ])
     },
     {
       entry: 'Publications and news',
-      path: '/tpi/publications',
+      path: tpi_publications_path,
+      active: active_menu_page?(tpi_publications_path)
     },
     {
       entry: 'About',
       content: @about_pages,
+      active: active_menu_page?(@about_pages_paths)
     },
     {
       entry: 'Newsletter',
       path: tpi_newsletter_path,
+      active: active_menu_page?(tpi_newsletter_path)
     },
     {
       entry: 'Login / Register',
       path: tpi_register_path,
+      active: active_menu_page?(tpi_register_path)
     },
     {
       entry: 'Search',
       hasIcon: true,
+      path: tpi_search_path,
+      active: active_menu_page?(tpi_search_path)
     },
   ],
   controls: {

@@ -16,4 +16,12 @@ module ApplicationHelper
       end
     end
   end
+
+  def active_menu_page?(pages)
+    Array.wrap(pages).any? do |page|
+      current_page?(page)
+    rescue ActionController::UrlGenerationError
+      false
+    end
+  end
 end

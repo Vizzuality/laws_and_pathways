@@ -10,7 +10,7 @@ const BaseTooltip = ({ trigger, content }) => {
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
       >
-        {trigger || (<span className="base-tooltip__default-trigger">?</span>)}
+        {trigger}
       </span>
       {isOpen && (
         <div className="base-tooltip__content">
@@ -22,8 +22,14 @@ const BaseTooltip = ({ trigger, content }) => {
 };
 
 BaseTooltip.propTypes = {
-  trigger: PropTypes.any.isRequired,
+  trigger: PropTypes.any,
   content: PropTypes.any.isRequired
+};
+
+BaseTooltip.defaultProps = {
+  trigger: (
+    <span className="base-tooltip__default-trigger">?</span>
+  )
 };
 
 export default BaseTooltip;
