@@ -18,8 +18,6 @@ module TPI
         .sort { |a, b| b.publication_date <=> a.publication_date }[0, 3]
     end
 
-    def about; end
-
     def sandbox; end
 
     def newsletter; end

@@ -8,17 +8,15 @@
     },
     {
       entry: 'Publications and news',
-      path: url_for(controller: 'publications', only_path: true),
+      path: tpi_publications_path,
       active: active_menu_page?(
-        path: url_for(controller: 'publications', only_path: true)
+        path: tpi_publications_path
       )
     },
     {
       entry: 'About',
       content: @about_pages,
-      path: url_for(controller: 'home', action: 'about', only_path: true),
       active: active_menu_page?(
-        path: url_for(controller: 'home', action: 'about', only_path: true),
         pages: @about_pages
       )
     },
@@ -39,9 +37,9 @@
     {
       entry: 'Search',
       hasIcon: true,
-      path: url_for(controller: 'search', only_path: true),
+      path: tpi_search_path,
       active: active_menu_page?(
-        path: url_for(controller: 'search', only_path: true)
+        path: tpi_search_path
       )
     },
   ],
