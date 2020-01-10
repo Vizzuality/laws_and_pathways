@@ -7,6 +7,7 @@ module Seed
     class << self
       delegate :call, to: :instance
       delegate :call_sources_import, to: :instance
+      delegate :import_litigation_sides, to: :instance
     end
 
     def call_sources_import
@@ -34,9 +35,9 @@ module Seed
       TimedLogger.log('Import Litigations') do
         CSVImport::Litigations.new(seed_file('litigations.csv'), override_id: true).call
       end
-      TimedLogger.log('Import Litigations Sides') do
-        CSVImport::LitigationSides.new(seed_file('litigations-sides.csv')).call
-      end
+
+      import_litigation_sides
+
       ### /Litigations
 
       ### import targets ###
@@ -48,6 +49,12 @@ module Seed
       ### import events ###
       TimedLogger.log('Import events') do
         CSVImport::Events.new(seed_file('events.csv'), override_id: true).call
+      end
+    end
+
+    def import_litigation_sides
+      TimedLogger.log('Import Litigations Sides') do
+        CSVImport::LitigationSides.new(seed_file('litigations-sides.csv')).call
       end
     end
 

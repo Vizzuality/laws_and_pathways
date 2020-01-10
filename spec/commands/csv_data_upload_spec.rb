@@ -115,12 +115,6 @@ describe 'CSVDataUpload (integration)' do
       litigation_sides_csv,
       new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1
     )
-    # subsequent import should not create or update any record
-    expect_data_upload_results(
-      LitigationSide,
-      litigation_sides_csv,
-      new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0
-    )
 
     updated_side.reload
     created_side = litigation1.litigation_sides.first
