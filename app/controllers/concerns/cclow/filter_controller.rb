@@ -28,8 +28,20 @@ module CCLOW
       [{field_name: 'type', options: types}]
     end
 
+    def litigation_side_types_options
+      side_types = LitigationSide::SIDE_TYPES.map { |t| {value: t, label: t.humanize} }
+      [{field_name: 'side_type', options: side_types}]
+    end
+
+    def litigation_party_types_options
+      party_types = LitigationSide::PARTY_TYPES.map { |t| {value: t, label: t.humanize} }
+      [{field_name: 'party_type', options: party_types}]
+    end
+
     def filter_params
-      params.permit(:q, :from_date, :to_date, :recent, :ids, region: [], geography: [], status: [], type: [], tags: [])
+      params.permit(:q, :from_date,
+                    :to_date, :recent, :ids, region: [], geography: [],
+                                             status: [], type: [], tags: [], party_type: [], side_type: [])
     end
   end
 end

@@ -23,13 +23,17 @@ class LitigationCases extends Component {
       activeGeoFilter: {},
       activeTagFilter: {},
       activeTimeRangeFilter: {},
-      activeStatusesFilter: {}
+      activeStatusesFilter: {},
+      activeSideTypesFilter: {},
+      activePartyTypesFilter: {}
     };
 
     this.geoFilter = React.createRef();
     this.tagsFilter = React.createRef();
     this.timeRangeFilter = React.createRef();
     this.statusFilter = React.createRef();
+    this.sideTypeFilter = React.createRef();
+    this.partyTypeFilter = React.createRef();
   }
 
   handleLoadMore = () => {
@@ -42,13 +46,23 @@ class LitigationCases extends Component {
   };
 
   fetchData() {
-    const {activeGeoFilter, activeTagFilter, activeTimeRangeFilter, activeStatusesFilter, offset} = this.state;
+    const {
+      activeGeoFilter,
+      activeTagFilter,
+      activeTimeRangeFilter,
+      activeStatusesFilter,
+      activePartyTypesFilter,
+      activeSideTypesFilter,
+      offset
+    } = this.state;
     const params = {
       ...getQueryFilters(),
       ...activeGeoFilter,
       ...activeTagFilter,
       ...activeTimeRangeFilter,
       ...activeStatusesFilter,
+      ...activeSideTypesFilter,
+      ...activePartyTypesFilter,
       offset
     };
 
@@ -70,21 +84,34 @@ class LitigationCases extends Component {
   }
 
   renderTags = () => {
-    const {activeGeoFilter, activeTagFilter, activeTimeRangeFilter, activeStatusesFilter} = this.state;
+    const {
+      activeGeoFilter,
+      activeTagFilter,
+      activeTimeRangeFilter,
+      activeStatusesFilter,
+      activeSideTypesFilter,
+      activePartyTypesFilter
+    } = this.state;
     const {
       geo_filter_options: geoFilterOptions,
       tags_filter_options: tagsFilterOptions,
-      statuses_filter_options: statusesFilterOptions
+      statuses_filter_options: statusesFilterOptions,
+      litigation_side_types_options: litigationSideTypesOptions,
+      litigation_party_types_options: litigationPartyTypesOptions
     } = this.props;
     if (Object.keys(activeGeoFilter).length === 0
       && Object.keys(activeTagFilter).length === 0
       && Object.keys(activeStatusesFilter).length === 0
-      && Object.keys(activeTimeRangeFilter).length === 0) return null;
+      && Object.keys(activeTimeRangeFilter).length === 0
+      && Object.keys(activeSideTypesFilter).length === 0
+      && Object.keys(activePartyTypesFilter).length === 0) return null;
     return (
       <div className="filter-tags">
         {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
         {this.renderTagsGroup(activeTagFilter, tagsFilterOptions, 'tagsFilter')}
         {this.renderTagsGroup(activeStatusesFilter, statusesFilterOptions, 'statusFilter')}
+        {this.renderTagsGroup(activeSideTypesFilter, litigationSideTypesOptions, 'sideTypeFilter')}
+        {this.renderTagsGroup(activePartyTypesFilter, litigationPartyTypesOptions, 'partyTypeFilter')}
         {this.renderTimeRangeTags(activeTimeRangeFilter)}
       </div>
     );
@@ -149,7 +176,9 @@ class LitigationCases extends Component {
     const {
       geo_filter_options: geoFilterOptions,
       tags_filter_options: tagsFilterOptions,
-      statuses_filter_options: statusesFilterOptions
+      statuses_filter_options: statusesFilterOptions,
+      litigation_side_types_options: litigationSideTypesOptions,
+      litigation_party_types_options: litigationPartyTypesOptions
     } = this.props;
     const hasMore = litigations.length < count;
     return (
@@ -182,6 +211,18 @@ class LitigationCases extends Component {
                   filterName="Tags"
                   params={tagsFilterOptions}
                   onChange={(event) => this.filterList('activeTagFilter', event)}
+                />
+                <SearchFilter
+                  ref={this.sideTypeFilter}
+                  filterName="Side types"
+                  params={litigationSideTypesOptions}
+                  onChange={(event) => this.filterList('activeSideTypesFilter', event)}
+                />
+                <SearchFilter
+                  ref={this.partyTypeFilter}
+                  filterName="Party types"
+                  params={litigationPartyTypesOptions}
+                  onChange={(event) => this.filterList('activePartyTypesFilter', event)}
                 />
               </div>
               <main className="column is-three-quarters">
@@ -233,7 +274,9 @@ LitigationCases.defaultProps = {
   count: 0,
   geo_filter_options: [],
   tags_filter_options: [],
-  statuses_filter_options: []
+  statuses_filter_options: [],
+  litigation_side_types_options: [],
+  litigation_party_types_options: []
 };
 
 LitigationCases.propTypes = {
@@ -241,7 +284,9 @@ LitigationCases.propTypes = {
   count: PropTypes.number,
   geo_filter_options: PropTypes.array,
   tags_filter_options: PropTypes.array,
-  statuses_filter_options: PropTypes.array
+  statuses_filter_options: PropTypes.array,
+  litigation_party_types_options: PropTypes.array,
+  litigation_side_types_options: PropTypes.array
 };
 
 export default LitigationCases;

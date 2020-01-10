@@ -16,6 +16,8 @@ module CCLOW
             geo_filter_options: region_geography_options,
             tags_filter_options: tags_options('Litigation'),
             statuses_filter_options: litigation_statuses_options,
+            litigation_side_types_options: litigation_side_types_options,
+            litigation_party_types_options: litigation_party_types_options,
             litigations: CCLOW::LitigationDecorator.decorate_collection(@litigations.first(10)),
             count: @litigations.count
           }, prerender: false
