@@ -38,9 +38,14 @@ module CCLOW
       [{field_name: 'party_type', options: party_types}]
     end
 
+    def litigation_jurisdictions_options
+      jurisdiction_types = Litigation.pluck(:jurisdiction).uniq.map { |j| {value: j, label: j.humanize} }
+      [{field_name: 'jurisdiction', options: jurisdiction_types}]
+    end
+
     def filter_params
       params.permit(:q, :from_date,
-                    :to_date, :recent, :ids, region: [], geography: [],
+                    :to_date, :recent, :ids, region: [], geography: [], jurisdiction: [],
                                              status: [], type: [], tags: [], party_type: [], side_type: [])
     end
   end

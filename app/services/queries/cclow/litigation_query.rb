@@ -20,6 +20,7 @@ module Queries
           .merge(filter_by_to_status)
           .merge(filter_by_litigation_side_type)
           .merge(filter_by_litigation_party_type)
+          .merge(filter_by_jurisdiction)
           .merge(filter_recent)
       end
 
@@ -88,6 +89,12 @@ module Queries
 
         scope.includes(:litigation_sides)
           .where(litigation_sides: {party_type: params[:party_type]})
+      end
+
+      def filter_by_jurisdiction
+        return scope unless params[:jurisdiction].present?
+
+        scope.where(jurisdiction: params[:jurisdiction])
       end
 
       def filter_recent

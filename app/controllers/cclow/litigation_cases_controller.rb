@@ -2,7 +2,7 @@ module CCLOW
   class LitigationCasesController < CCLOWController
     include FilterController
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def index
       add_breadcrumb('Climate Change Laws of the World', cclow_root_path)
       add_breadcrumb('Litigation cases', cclow_litigation_cases_path(@geography))
@@ -18,6 +18,7 @@ module CCLOW
             statuses_filter_options: litigation_statuses_options,
             litigation_side_types_options: litigation_side_types_options,
             litigation_party_types_options: litigation_party_types_options,
+            litigation_jurisdictions_options: litigation_jurisdictions_options,
             litigations: CCLOW::LitigationDecorator.decorate_collection(@litigations.first(10)),
             count: @litigations.count
           }, prerender: false
@@ -32,6 +33,6 @@ module CCLOW
         end
       end
     end
-    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
   end
 end

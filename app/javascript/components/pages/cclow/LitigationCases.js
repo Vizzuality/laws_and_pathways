@@ -26,7 +26,8 @@ class LitigationCases extends Component {
       activeTimeRangeFilter: {},
       activeStatusesFilter: {},
       activeSideTypesFilter: {},
-      activePartyTypesFilter: {}
+      activePartyTypesFilter: {},
+      activeJurisdictionsFilter: {}
     };
 
     this.geoFilter = React.createRef();
@@ -35,6 +36,7 @@ class LitigationCases extends Component {
     this.statusFilter = React.createRef();
     this.sideTypeFilter = React.createRef();
     this.partyTypeFilter = React.createRef();
+    this.jurisdictionFilter = React.createRef();
   }
 
   handleLoadMore = () => {
@@ -54,6 +56,7 @@ class LitigationCases extends Component {
       activeStatusesFilter,
       activePartyTypesFilter,
       activeSideTypesFilter,
+      activeJurisdictionsFilter,
       offset
     } = this.state;
     const params = {
@@ -64,6 +67,7 @@ class LitigationCases extends Component {
       ...activeStatusesFilter,
       ...activeSideTypesFilter,
       ...activePartyTypesFilter,
+      ...activeJurisdictionsFilter,
       offset
     };
 
@@ -91,14 +95,16 @@ class LitigationCases extends Component {
       activeTimeRangeFilter,
       activeStatusesFilter,
       activeSideTypesFilter,
-      activePartyTypesFilter
+      activePartyTypesFilter,
+      activeJurisdictionsFilter
     } = this.state;
     const {
       geo_filter_options: geoFilterOptions,
       tags_filter_options: tagsFilterOptions,
       statuses_filter_options: statusesFilterOptions,
       litigation_side_types_options: litigationSideTypesOptions,
-      litigation_party_types_options: litigationPartyTypesOptions
+      litigation_party_types_options: litigationPartyTypesOptions,
+      litigation_jurisdictions_options: litigationJurisdictionsOptions
     } = this.props;
     if (!Object.keys(activeGeoFilter).length
       && !Object.keys(activeTagFilter).length
@@ -113,6 +119,7 @@ class LitigationCases extends Component {
         {this.renderTagsGroup(activeStatusesFilter, statusesFilterOptions, 'statusFilter')}
         {this.renderTagsGroup(activeSideTypesFilter, litigationSideTypesOptions, 'sideTypeFilter')}
         {this.renderTagsGroup(activePartyTypesFilter, litigationPartyTypesOptions, 'partyTypeFilter')}
+        {this.renderTagsGroup(activeJurisdictionsFilter, litigationJurisdictionsOptions, 'jurisdictionFilter')}
         {this.renderTimeRangeTags(activeTimeRangeFilter)}
       </div>
     );
@@ -176,7 +183,8 @@ class LitigationCases extends Component {
     const { isMoreSearchOptionsVisible } = this.state;
     const {
       litigation_side_types_options: litigationSideTypesOptions,
-      litigation_party_types_options: litigationPartyTypesOptions
+      litigation_party_types_options: litigationPartyTypesOptions,
+      litigation_jurisdictions_options: litigationJurisdictionsOptions
     } = this.props;
 
     return (
@@ -203,6 +211,12 @@ class LitigationCases extends Component {
               filterName="Party types"
               params={litigationPartyTypesOptions}
               onChange={(event) => this.filterList('activePartyTypesFilter', event)}
+            />
+            <SearchFilter
+              ref={this.jurisdictionFilter}
+              filterName="Jurisdiction"
+              params={litigationJurisdictionsOptions}
+              onChange={(event) => this.filterList('activeJurisdictionsFilter', event)}
             />
             <button
               type="button"
@@ -309,7 +323,8 @@ LitigationCases.defaultProps = {
   tags_filter_options: [],
   statuses_filter_options: [],
   litigation_side_types_options: [],
-  litigation_party_types_options: []
+  litigation_party_types_options: [],
+  litigation_jurisdictions_options: []
 };
 
 LitigationCases.propTypes = {
@@ -319,7 +334,8 @@ LitigationCases.propTypes = {
   tags_filter_options: PropTypes.array,
   statuses_filter_options: PropTypes.array,
   litigation_party_types_options: PropTypes.array,
-  litigation_side_types_options: PropTypes.array
+  litigation_side_types_options: PropTypes.array,
+  litigation_jurisdictions_options: PropTypes.array
 };
 
 export default LitigationCases;
