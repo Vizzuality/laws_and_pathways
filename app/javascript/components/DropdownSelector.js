@@ -189,7 +189,7 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
             <div className="dropdown-selector__options-wrapper">
               {isFilterBySector && (
                 <div className="dropdown-selector__options">
-                  {(options.length > 0 && options.map((option, i) => (
+                  {(options.length && options.map((option, i) => (
                     <div
                       onClick={() => handleOptionClick(option)}
                       className="dropdown-selector__option"
@@ -197,14 +197,14 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
                     >
                       {option.name}
                     </div>
-                  ))) || (searchValue.length > 0 && options.length === 0 && (
+                  ))) || (searchValue.length && options.length && (
                     <div>No results found.</div>
                   ))}
                 </div>
               )}
               {isFilterByCompany && (
                 <div className="dropdown-selector__options">
-                  {(options.length > 0 && Object.keys(companiesBySector).map((sector, i) => (
+                  {(options.length && Object.keys(companiesBySector).map((sector, i) => (
                     <Fragment key={`filter-companies-fragment-${i}`}>
                       <div
                         key={`${sector}-${i}`}
@@ -222,7 +222,7 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
                         </div>
                       ))}
                     </Fragment>
-                  ))) || (searchValue.length > 0 && options.length === 0 && (
+                  ))) || (searchValue.length && options.length && (
                     <div>No results found.</div>
                   ))
                 }

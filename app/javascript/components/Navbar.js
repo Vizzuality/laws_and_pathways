@@ -195,7 +195,7 @@ NavbarComponent.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
       entry: PropTypes.string.isRequired,
-      path: PropTypes.string.isRequired,
+      path: PropTypes.string,
       content: PropTypes.arrayOf(
         PropTypes.shape({
           title: PropTypes.string.isRequired,
