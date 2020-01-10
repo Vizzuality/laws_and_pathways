@@ -20,6 +20,7 @@ class LitigationCases extends Component {
       litigations,
       count,
       offset: 0,
+      isMoreSearchOptionsVisible: false,
       activeGeoFilter: {},
       activeTagFilter: {},
       activeTimeRangeFilter: {},
@@ -171,14 +172,57 @@ class LitigationCases extends Component {
     return (<h5>All Litigation Cases</h5>);
   }
 
+  renderMoreOptions() {
+    const { isMoreSearchOptionsVisible } = this.state;
+    const {
+      litigation_side_types_options: litigationSideTypesOptions,
+      litigation_party_types_options: litigationPartyTypesOptions
+    } = this.props;
+
+    return (
+      <>
+        {!isMoreSearchOptionsVisible && (
+          <button
+            type="button"
+            onClick={() => this.setState({isMoreSearchOptionsVisible: true})}
+            className="more-options"
+          >
+            + Show more search options
+          </button>
+        )}
+        {isMoreSearchOptionsVisible && (
+          <>
+            <SearchFilter
+              ref={this.sideTypeFilter}
+              filterName="Side types"
+              params={litigationSideTypesOptions}
+              onChange={(event) => this.filterList('activeSideTypesFilter', event)}
+            />
+            <SearchFilter
+              ref={this.partyTypeFilter}
+              filterName="Party types"
+              params={litigationPartyTypesOptions}
+              onChange={(event) => this.filterList('activePartyTypesFilter', event)}
+            />
+            <button
+              type="button"
+              onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
+              className="more-options"
+            >
+              - Show less search options
+            </button>
+          </>
+        )}
+      </>
+    );
+  }
+
   render() {
     const {litigations, count} = this.state;
     const {
       geo_filter_options: geoFilterOptions,
       tags_filter_options: tagsFilterOptions,
-      statuses_filter_options: statusesFilterOptions,
-      litigation_side_types_options: litigationSideTypesOptions,
-      litigation_party_types_options: litigationPartyTypesOptions
+      statuses_filter_options: statusesFilterOptions
     } = this.props;
     const hasMore = litigations.length < count;
     return (
@@ -212,18 +256,7 @@ class LitigationCases extends Component {
                   params={tagsFilterOptions}
                   onChange={(event) => this.filterList('activeTagFilter', event)}
                 />
-                <SearchFilter
-                  ref={this.sideTypeFilter}
-                  filterName="Side types"
-                  params={litigationSideTypesOptions}
-                  onChange={(event) => this.filterList('activeSideTypesFilter', event)}
-                />
-                <SearchFilter
-                  ref={this.partyTypeFilter}
-                  filterName="Party types"
-                  params={litigationPartyTypesOptions}
-                  onChange={(event) => this.filterList('activePartyTypesFilter', event)}
-                />
+                {this.renderMoreOptions()}
               </div>
               <main className="column is-three-quarters">
                 <div className="columns pre-content">

@@ -498,6 +498,16 @@ $count-description-lines: 2;
       font-size: $size-7;
       margin-bottom: 1.5rem;
     }
+
+    .more-options {
+      color: $red;
+      font-size: $size-7;
+      font-family: $family-sans-serif;
+      font-weight: normal; // overriding button's style
+      cursor: pointer;
+      margin-top: 25px;
+      border: none;
+    }
   }
 
   .filter-tags {
