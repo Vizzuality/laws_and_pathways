@@ -20,7 +20,7 @@
           <%= f.input :federal_details, wrapper_html: {data: {controller: 'dependent-input', depends_on: 'federal'}} %>
           <%= f.input :legislative_process, as: :trix %>
           <%= f.input :political_group_ids, label: 'Political Groups', as: :tags, collection: PoliticalGroup.all %>
-          <%= f.input :visibility_status, as: :select %>
+          <%= f.input :visibility_status, visibility_status_select_options %>
         <% end %>
       </div>
 

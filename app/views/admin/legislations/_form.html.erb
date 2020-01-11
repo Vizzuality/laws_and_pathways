@@ -27,6 +27,7 @@
           <%= f.input :governance_ids, label: 'Governance', as: :select,
             collection: Governance.ordered_with_parent.to_select, input_html: { multiple: true } %>
           <%=
+            status_select_options = visibility_status_select_options
             Arbre::Context.new do
               columns do
                 column { f.input :geography, collection: Geography.order(:name) }
@@ -35,7 +36,7 @@
                     collection: Framework.all
                 end
                 column do
-                  f.input :visibility_status, as: :select
+                  f.input :visibility_status, status_select_options
                 end
               end
             end

@@ -26,7 +26,7 @@
           <%= f.input :at_issue, as: :trix %>
           <%= f.input :legislation_ids, as: :selected_list, label: 'Connected Laws', fields: [:title], display_name: :title, order: 'title_asc' %>
           <%= f.input :external_legislation_ids, as: :selected_list, label: 'Connected External Laws', fields: [:name], display_name: :name, order: 'name_asc' %>
-          <%= f.input :visibility_status, as: :select %>
+          <%= f.input :visibility_status, visibility_status_select_options %>
           <%= f.input :keywords_string, as: :tags, label: 'Keywords', hint: t('hint.tag'), collection: Keyword.pluck(:name) %>
           <%= f.input :responses_string, as: :tags, label: 'Responses (e.g. adaptation or mitigation)', hint: t('hint.tag'), collection: Response.pluck(:name) %>
         <% end %>

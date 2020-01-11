@@ -174,7 +174,7 @@ ActiveAdmin.register Company do
         column { f.input :geography }
         column { f.input :headquarters_geography }
         column do
-          f.input :visibility_status, as: :select
+          f.input :visibility_status, visibility_status_select_options
         end
       end
 
