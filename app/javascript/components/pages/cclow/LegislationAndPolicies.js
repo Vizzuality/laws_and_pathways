@@ -211,7 +211,10 @@ class LegislationAndPolicies extends Component {
                           </Fragment>
                         )}
                         <div>
-                          <img src={legislation.legislation_type === 'executive' ? ExecutiveSVG : LegislativeSVG} alt={legislation.legislation_type} />
+                          <img
+                            src={legislation.legislation_type === 'executive' ? ExecutiveSVG : LegislativeSVG}
+                            alt={legislation.legislation_type}
+                          />
                           {legislation.legislation_type_humanize}
                         </div>
                         {legislation.date_passed && <div>{legislation.date_passed}</div>}

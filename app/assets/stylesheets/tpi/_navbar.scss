@@ -1,10 +1,11 @@
 @import "sizes";
 @import "colors";
+@import "variables";
 
 .tpi__navbar {
-
   // EDGE workaround: Fix the hovering navbar dropdowns issue: https://github.com/jgthms/bulma/issues/2503
-  @include desktop {
+  // maybe it's best to use from($desktop) since we use widescreen
+  @include from($desktop) {
     .navbar-item {
       &.is-hoverable:hover {
           .navbar-dropdown {
@@ -14,7 +15,11 @@
     }
   }
 
-  .navbar {    
+  .navbar {
+    @include until($desktop) {
+      background-color: $white;
+    }
+
     &__search {
       background: $white;
       border: none;
@@ -54,9 +59,61 @@
       }
     }
   }
+
   .header-nav {
     width: 100%;
     background-color: $dark;
+  }
+
+  .navbar-brand {
+    justify-content: flex-end;
+
+    .navbar-item {
+      @include until($desktop) {
+        color: $dark;
+        padding-right: 0;
+  
+        &:hover, &.is-hovered,
+        &:active, &.is-actived,
+        &:focus, &.is-focused {
+          color: $grey-dark;
+        }
+
+        &:first-child {
+          padding: 0;
+          padding-left: 15px;
+          flex: 1;
+          justify-self: flex-start;
+
+          &:hover, &.is-hovered,
+          &:active, &.is-actived,
+          &:focus, &.is-focused {
+            color: $white;
+            background-color: $white;
+          }
+
+          & > img {
+            height: 45px;
+            max-height: 45px;
+            width: 115px;
+          }
+        }
+      }
+    }
+    
+    .navbar-burger {
+      color: $dark;
+      margin-left: 0;
+  
+      &:hover, &.is-hovered,
+      &:active, &.is-actived,
+      &:focus, &.is-focused {
+        background-color: $white;
+      }
+    }
+  }
+
+  .navbar-menu {
   }
 
   .navbar-item {
@@ -68,11 +125,13 @@
       }
 
       &__chevron-down {
-        margin-left: 5px;
-        background-image: image-url('icons/white-chevron-down.svg');
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 50%;
+        @include from($desktop) {
+          margin-left: 5px;
+          background-image: image-url('icons/white-chevron-down.svg');
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: 50%;
+        }
       }
     }
   }
