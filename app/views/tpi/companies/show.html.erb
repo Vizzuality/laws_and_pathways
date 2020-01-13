@@ -74,7 +74,7 @@
         <div class="summary-box">
           <div class="columns">
             <div class="column">
-              <%= render 'company_property', name: 'Country' do %>
+              <%= render 'company_property', name: 'Geography', tooltip: t('.tooltips.geography') do %>
                 <%= @company.geography.name %>
               <% end %>
             </div>
