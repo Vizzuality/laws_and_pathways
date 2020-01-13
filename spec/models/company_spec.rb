@@ -67,7 +67,7 @@ RSpec.describe Company, type: :model do
                          create(:cp_assessment, assessment_date: '2018-05-01')
                        ])
 
-      expect(company.latest_cp_assessment.assessment_date.to_s).to eq('2019-05-01')
+      expect(company.latest_cp_assessment.assessment_date.to_s).to eq('01/05/2019')
     end
   end
 
@@ -80,7 +80,7 @@ RSpec.describe Company, type: :model do
                          create(:mq_assessment, assessment_date: '2018-05-01')
                        ])
 
-      expect(company.latest_mq_assessment.assessment_date.to_s).to eq('2019-05-01')
+      expect(company.latest_mq_assessment.assessment_date.to_s).to eq('01/05/2019')
     end
   end
 
