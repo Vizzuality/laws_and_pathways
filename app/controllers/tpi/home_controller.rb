@@ -9,7 +9,7 @@ module TPI
         }
       end
 
-      @partners_logos = TPIPage.find_by(slug: 'research-funding-partners')&.contents&.map { |c| c.images }&.flatten
+      @partners_logos = TPIPage.find_by(slug: 'research-funding-partners')&.contents&.flat_map(&:images)
 
       publications = Publication.order(publication_date: :desc).limit(3)
       news = NewsArticle.order(publication_date: :desc).limit(3)
