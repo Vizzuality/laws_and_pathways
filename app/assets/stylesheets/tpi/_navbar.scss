@@ -113,11 +113,15 @@
     .navbar-burger {
       color: $dark;
       margin-left: 0;
-  
+      
       &:hover, &.is-hovered,
       &:active, &.is-actived,
       &:focus, &.is-focused {
         background-color: $white;
+      }
+
+      & > span {
+        height: 2px;
       }
     }
   }
