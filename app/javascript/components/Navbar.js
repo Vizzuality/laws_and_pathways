@@ -85,7 +85,7 @@ const NavbarComponent = ({ items, openSearchMode }) => {
             <img src={Logo} alt="TPI Tool" />
           </a>
           <a
-            className="navbar-item"
+            className="navbar-item menu"
             data-target="HeaderMenu"
             onClick={() => setIsOpen(!isOpen)}
           >
