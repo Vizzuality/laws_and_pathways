@@ -9,15 +9,15 @@
     </p>
     <br>
   <% end %>
-  <% litigation.litigation_sides.each do |side| %>
+  <% @litigation_sides.each do |side| %>
     <p>
-      <b>Side <%=side.side_type.upcase %>: </b> <%= side.name %>
+      <b>Side <%=side.side_type.upcase %>: </b> <%= side.name %> (<%= side.party_type.humanize %>)
     </p>
     <br>
   <% end %>
   <% if litigation.at_issue.present? %>
     <p>
-      <b>Core objectives:</b><%= litigation.at_issue.html_safe %>
+      <b>Core objectives: </b><%= litigation.at_issue.html_safe %>
     </p>
   <% end %>
 </div>
