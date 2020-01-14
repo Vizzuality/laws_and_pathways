@@ -6,3 +6,5 @@ Time::DATE_FORMATS[:year_month] = '%Y-%m'
 
 Date::DATE_FORMATS[:date_short] = '%d %b %Y'
 Time::DATE_FORMATS[:date_short] = '%d %b %Y'
+
+Date::DATE_FORMATS[:default] = '%d/%m/%Y'
