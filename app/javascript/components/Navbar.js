@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
+import Logo from '../../assets/images/logo/TPI_logo.svg';
+
 const ESCAPE_KEY = 27;
 const ENTER_KEY = 13;
 
@@ -76,7 +78,17 @@ const NavbarComponent = ({ items, openSearchMode }) => {
     <div className="navbar" role="navigation" aria-label="main navigation">
       <div className="container">
         <div className="navbar-brand is-hidden-desktop">
-          <a className="navbar-item" href="#">
+          <a
+            href={tpi.path}
+            className="navbar-item logo"
+          >
+            <img src={Logo} alt="TPI Tool" />
+          </a>
+          <a
+            className="navbar-item menu"
+            data-target="HeaderMenu"
+            onClick={() => setIsOpen(!isOpen)}
+          >
             MENU
           </a>
           <a
@@ -178,7 +190,7 @@ const NavbarComponent = ({ items, openSearchMode }) => {
               {login.entry}
             </a>
             <a
-              className="navbar-item"
+              className="navbar-item is-hidden-touch"
               aria-label={search.entry}
               onClick={openSearchMode}
             >

@@ -2,28 +2,44 @@
 
 .tpi__banner {
   .banner {
-    height: 140px;
+    height: 130px;
     display: flex;
     align-items: center;
 
     .column {
       align-items: flex-end;
     }
-
-    .partners__container {
-      .content {
-        display: flex;
-        justify-content: flex-end;
-        color: $grey-dark;
-      }
+    
+    .partners__title {
+      display: flex;
+      justify-content: flex-end;
+      font-size: $size-7;
+      color: $grey-dark;
+      line-height: 0.938rem;
+      margin-bottom: 20px;
     }
 
     .partners {
-      align-items: flex-end;
+      align-items: center;
       justify-content: space-between;
 
-      .banner__partner {
-        max-height: 40px;
+      &__partner-1 {
+        height: 40px;
+      }
+
+      &__partner-2 {
+        width: 114px;
+        max-height: 30px;
+      }
+
+      &__partner-3 {
+        width: 95px;
+        max-height: 34px;
+      }
+
+      &__partner-4 {
+        width: 108px;
+        max-height: 21px;
       }
 
       .column {

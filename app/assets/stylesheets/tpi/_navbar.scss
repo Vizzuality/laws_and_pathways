@@ -1,20 +1,25 @@
 @import "sizes";
 @import "colors";
+@import "variables";
 
 .tpi__navbar {
-
   // EDGE workaround: Fix the hovering navbar dropdowns issue: https://github.com/jgthms/bulma/issues/2503
-  @include desktop {
+  // maybe it's best to use from($desktop) since we use widescreen
+  @include from($desktop) {
     .navbar-item {
       &.is-hoverable:hover {
-          .navbar-dropdown {
-              display: block;
-          }
+        .navbar-dropdown {
+          display: block;
+        }
       }
     }
   }
 
-  .navbar {    
+  .navbar {
+    @include until($desktop) {
+      background-color: $white;
+    }
+
     &__search {
       background: $white;
       border: none;
@@ -54,12 +59,103 @@
       }
     }
   }
+
   .header-nav {
     width: 100%;
     background-color: $dark;
   }
 
+  .navbar-brand {
+    justify-content: flex-end;
+
+    // mobile menu is kind of mirrored from bulma's
+    .navbar-item {
+      @include until($desktop) {
+        color: $dark;
+        padding-right: 0;
+        padding-top: 0.938rem;
+        padding-bottom: 0.938rem;
+  
+        &:hover, &.is-hovered,
+        &:active, &.is-actived,
+        &:focus, &.is-focused {
+          color: $grey-dark;
+        }
+
+        &:first-child {
+          padding: 0;
+          padding-left: 0.938rem;
+          flex: 1;
+          justify-self: flex-start;
+
+          &:hover, &.is-hovered,
+          &:active, &.is-actived,
+          &:focus, &.is-focused {
+            color: $white;
+            background-color: $white;
+          }
+
+          & > img {
+            height: 45px;
+            max-height: 45px;
+            width: 115px;
+          }
+        }
+
+        &.menu {
+          line-height: 0.938rem;
+          letter-spacing: 1px;
+          font-size: 0.875rem;
+        }
+      }
+    }
+    
+    .navbar-burger {
+      color: $dark;
+      margin-left: 0;
+      
+      &:hover, &.is-hovered,
+      &:active, &.is-actived,
+      &:focus, &.is-focused {
+        background-color: $white;
+      }
+
+      & > span {
+        height: 2px;
+      }
+    }
+  }
+
+  .navbar-menu {
+    @include until($desktop) {
+      padding: 17px 0;
+
+      .navbar-item:not(.has-dropdown),
+      .navbar-link {
+        padding-left: 1.563rem;
+      }
+
+      .navbar-item.has-dropdown {
+        .navbar-item {
+          padding-left: 3.125rem;
+        }
+  
+        .navbar-link {
+          padding-top: 0.938rem;
+          padding-bottom: 0.938rem;
+        }
+      }
+    }
+  }
+
   .navbar-item {
+    @include until($desktop) {
+      &:not(.has-dropdown) {
+        padding-top: 0.938rem;
+        padding-bottom: 0.938rem;
+      }
+    }
+
     .icon {
       &__search {
         background-image: image-url('icon_search/search.svg');
@@ -68,22 +164,39 @@
       }
 
       &__chevron-down {
-        margin-left: 5px;
-        background-image: image-url('icons/white-chevron-down.svg');
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 50%;
+        @include from($desktop) {
+          margin-left: 5px;
+          background-image: image-url('icons/white-chevron-down.svg');
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: 50%;
+        }
       }
     }
   }
 
   .navbar-dropdown {
-    width: 300px;
+    @include from($desktop) {
+      width: 300px;
+    }
 
-    > .navbar-item {
+    @include until($desktop) {
+      padding: 0;
+    }
+
+    > a.navbar-item,
+    > a.navbar-item:focus,
+    > a.navbar-item:hover,
+    > a.navbar-item.is-active:active {
       font-size: $size-6;
-      padding-top: 10px;
-      padding-bottom: 10px;
+      padding-top: 0.625rem;
+      padding-bottom: 0.625rem;
+      
+      @include until($desktop) {
+        color: $blue;
+        padding-top: 0.938rem;
+        padding-bottom: 0.938rem;
+      }
     }
   }
 }
