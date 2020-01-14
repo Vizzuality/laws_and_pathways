@@ -9,6 +9,7 @@ module CCLOW
         @litigations = CCLOW::LitigationDecorator.decorate_collection(@litigations)
       end
 
+      # rubocop:disable Metrics/AbcSize
       def show
         @litigation = Litigation.find(params[:id])
         @legislations = CCLOW::LegislationDecorator.decorate_collection(@litigation.legislations)
@@ -17,7 +18,13 @@ module CCLOW
         @sectors = @litigation.laws_sectors.order(:name)
         @keywords = @litigation.keywords.order(:name)
         @responses = @litigation.responses.order(:name)
+        @jurisdiction = @litigation.jurisdiction
+        @party_types = @litigation.litigation_sides&.pluck(:party_type)
+        @sides_a = @litigation.litigation_sides.where(litigation_sides: {side_type: 'a'}).pluck(:name)
+        @sides_b = @litigation.litigation_sides.where(litigation_sides: {side_type: 'b'}).pluck(:name)
+        @sides_c = @litigation.litigation_sides.where(litigation_sides: {side_type: 'c'}).pluck(:name)
       end
+      # rubocop:enable Metrics/AbcSize
     end
   end
 end

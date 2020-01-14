@@ -39,8 +39,66 @@
       </div>
     </div>
   <% end %>
+
+  <% if @jurisdiction.present? %>
+    <div class="categories__container">
+      <p class="categories__title">Jurisdiction</p>
+
+      <div class="categories_tags">
+        <span class="tag categories__tag"><%= @jurisdiction %></span>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @party_types.count > 0 %>
+    <div class="categories__container">
+      <p class="categories__title">Party types</p>
+
+      <div class="categories_tags">
+      <% @party_types.each do |party_type| %>
+        <span class="tag categories__tag"><%= party_type %></span>
+      <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @sides_a.count > 0 %>
+    <div class="categories__container">
+      <p class="categories__title">Side A</p>
+
+      <div class="categories_tags">
+      <% @sides_a.each do |side_a| %>
+        <span class="tag categories__tag"><%= side_a %></span>
+      <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @sides_b.count > 0 %>
+    <div class="categories__container">
+      <p class="categories__title">Side B</p>
+
+      <div class="categories_tags">
+      <% @sides_b.each do |side_b| %>
+        <span class="tag categories__tag"><%= side_b %></span>
+      <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @sides_c.count > 0 %>
+    <div class="categories__container">
+      <p class="categories__title">Side C</p>
+
+      <div class="categories_tags">
+      <% @sides_c.each do |side_c| %>
+        <span class="tag categories__tag"><%= side_c %></span>
+      <% end %>
+      </div>
+    </div>
+  <% end %>
 </div>
-<% end %>
+<% end %> 
 
 <div class="content-show">
   <h3 class="title"><%= @litigation.title %></h3>
