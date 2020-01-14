@@ -1,5 +1,6 @@
 module Queries
   module CCLOW
+    # rubocop:disable Metrics/ClassLength
     class LitigationQuery
       attr_reader :scope, :params
 
@@ -18,7 +19,7 @@ module Queries
           .merge(filter_by_from_date)
           .merge(filter_by_to_date)
           .merge(filter_by_to_status)
-          .merge(filter_by_litigation_side_type)
+          .merge(filter_by_litigation_sides)
           .merge(filter_by_litigation_party_type)
           .merge(filter_by_jurisdiction)
           .merge(filter_recent)
@@ -77,11 +78,106 @@ module Queries
         scope.joins(:events).where(events: {id: event_ids, event_type: params[:status]}).distinct
       end
 
-      def filter_by_litigation_side_type
-        return scope unless params[:side_type].present?
+      # rubocop:disable Metrics/CyclomaticComplexity
+      def filter_by_litigation_sides
+        case [params[:side_a].present?, params[:side_b].present?, params[:side_c].present?]
+        when [true, false, false]
+          filter_by_litigation_side_a
+        when [false, true, false]
+          filter_by_litigation_side_b
+        when [false, false, true]
+          filter_by_litigation_side_c
+        when [true, true, false]
+          filter_by_litigation_side_a_b
+        when [true, true, true]
+          filter_by_litigation_side_a_b_c
+        when [false, true, true]
+          filter_by_litigation_side_b_c
+        when [true, false, true]
+          filter_by_litigation_side_a_c
+        else
+          scope
+        end
+      end
+      # rubocop:enable Metrics/CyclomaticComplexity
+
+      def filter_by_litigation_side_a
+        return scope unless params[:side_a].present?
 
         scope.includes(:litigation_sides)
-          .where(litigation_sides: {side_type: params[:side_type]})
+          .where(litigation_sides: {side_type: 'a', name: params[:side_a]})
+      end
+
+      def filter_by_litigation_side_b
+        return scope unless params[:side_b].present?
+
+        scope.includes(:litigation_sides)
+          .where(litigation_sides: {side_type: 'b', name: params[:side_b]})
+      end
+
+      def filter_by_litigation_side_c
+        return scope unless params[:side_c].present?
+
+        scope.includes(:litigation_sides)
+          .where(litigation_sides: {side_type: 'c', name: params[:side_c]})
+      end
+
+      def filter_by_litigation_side_a_b
+        return scope unless params[:side_a].present? && params[:side_b].present?
+
+        sql = "
+          SELECT side_a.litigation_id
+          FROM litigation_sides side_a, litigation_sides side_b
+          WHERE side_a.side_type = 'a' AND side_a.name IN (#{params[:side_a].map { |a| "'#{a}'" }.join(', ')})
+          AND side_b.side_type = 'b' AND side_b.name IN (#{params[:side_b].map { |b| "'#{b}'" }.join(', ')})
+          AND side_a.litigation_id = side_b.litigation_id;
+        "
+
+        litigation_resources(sql)
+      end
+
+      def filter_by_litigation_side_a_b_c
+        return scope unless params[:side_a].present? && params[:side_b].present? && params[:side_c].present?
+
+        sql = "
+          SELECT side_a.litigation_id
+          FROM litigation_sides side_a, litigation_sides side_b, litigation_sides side_c
+          WHERE side_a.side_type = 'a' AND side_a.name IN (#{params[:side_a].map { |a| "'#{a}'" }.join(', ')})
+          AND side_b.side_type = 'b' AND side_b.name IN (#{params[:side_b].map { |b| "'#{b}'" }.join(', ')})
+          AND side_c.side_type = 'c' AND side_c.name IN (#{params[:side_c].map { |c| "'#{c}'" }.join(', ')})
+          AND side_a.litigation_id = side_b.litigation_id
+          AND side_a.litigation_id = side_c.litigation_id;
+        "
+
+        litigation_resources(sql)
+      end
+
+      def filter_by_litigation_side_b_c
+        return scope unless params[:side_b].present? && params[:side_c].present?
+
+        sql = "
+          SELECT side_b.litigation_id
+          FROM litigation_sides side_b, litigation_sides side_c
+          WHERE side_b.side_type = 'b' AND side_b.name IN (#{params[:side_b].map { |b| "'#{b}'" }.join(', ')})
+          AND side_c.side_type = 'c' AND side_c.name IN (#{params[:side_c].map { |c| "'#{c}'" }.join(', ')})
+          AND side_b.litigation_id = side_c.litigation_id;
+        "
+
+        litigation_resources(sql)
+      end
+
+      def filter_by_litigation_side_a_c
+        return scope unless params[:side_a].present? && params[:side_c].present?
+
+        sql = "
+          SELECT side_a.litigation_id
+          FROM litigation_sides side_a, litigation_sides side_c
+          WHERE side_a.side_type = 'a' AND side_a.name IN (#{params[:side_a].map { |a| "'#{a}'" }.join(', ')})
+          AND side_c.side_type = 'c' AND side_c.name IN (#{params[:side_c].map { |c| "'#{c}'" }.join(', ')})
+          AND side_a.litigation_id = side_c.litigation_id;
+        "
+
+        litigation_resources(sql)
       end
 
       def filter_by_litigation_party_type
@@ -102,6 +198,12 @@ module Queries
 
         scope.recent
       end
+
+      def litigation_resources(sql)
+        ids = ActiveRecord::Base.connection.execute(sql).map { |row| row['litigation_id'] }
+        Litigation.where(id: ids)
+      end
     end
+    # rubocop:enable Metrics/ClassLength
   end
 end

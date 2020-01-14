@@ -25,7 +25,9 @@ class LitigationCases extends Component {
       activeTagFilter: {},
       activeTimeRangeFilter: {},
       activeStatusesFilter: {},
-      activeSideTypesFilter: {},
+      activeSideAFilter: {},
+      activeSideBFilter: {},
+      activeSideCFilter: {},
       activePartyTypesFilter: {},
       activeJurisdictionsFilter: {}
     };
@@ -34,7 +36,9 @@ class LitigationCases extends Component {
     this.tagsFilter = React.createRef();
     this.timeRangeFilter = React.createRef();
     this.statusFilter = React.createRef();
-    this.sideTypeFilter = React.createRef();
+    this.sideAFilter = React.createRef();
+    this.sideBFilter = React.createRef();
+    this.sideCFilter = React.createRef();
     this.partyTypeFilter = React.createRef();
     this.jurisdictionFilter = React.createRef();
   }
@@ -55,7 +59,9 @@ class LitigationCases extends Component {
       activeTimeRangeFilter,
       activeStatusesFilter,
       activePartyTypesFilter,
-      activeSideTypesFilter,
+      activeSideAFilter,
+      activeSideBFilter,
+      activeSideCFilter,
       activeJurisdictionsFilter,
       offset
     } = this.state;
@@ -65,7 +71,9 @@ class LitigationCases extends Component {
       ...activeTagFilter,
       ...activeTimeRangeFilter,
       ...activeStatusesFilter,
-      ...activeSideTypesFilter,
+      ...activeSideAFilter,
+      ...activeSideBFilter,
+      ...activeSideCFilter,
       ...activePartyTypesFilter,
       ...activeJurisdictionsFilter,
       offset
@@ -94,7 +102,9 @@ class LitigationCases extends Component {
       activeTagFilter,
       activeTimeRangeFilter,
       activeStatusesFilter,
-      activeSideTypesFilter,
+      activeSideAFilter,
+      activeSideBFilter,
+      activeSideCFilter,
       activePartyTypesFilter,
       activeJurisdictionsFilter
     } = this.state;
@@ -102,7 +112,9 @@ class LitigationCases extends Component {
       geo_filter_options: geoFilterOptions,
       tags_filter_options: tagsFilterOptions,
       statuses_filter_options: statusesFilterOptions,
-      litigation_side_types_options: litigationSideTypesOptions,
+      litigation_side_a_names_options: litigationSideAOptions,
+      litigation_side_b_names_options: litigationSideBOptions,
+      litigation_side_c_names_options: litigationSideCOptions,
       litigation_party_types_options: litigationPartyTypesOptions,
       litigation_jurisdictions_options: litigationJurisdictionsOptions
     } = this.props;
@@ -110,14 +122,18 @@ class LitigationCases extends Component {
       && !Object.keys(activeTagFilter).length
       && !Object.keys(activeStatusesFilter).length
       && !Object.keys(activeTimeRangeFilter).length
-      && !Object.keys(activeSideTypesFilter).length
+      && !Object.keys(activeSideAFilter).length
+      && !Object.keys(activeSideBFilter).length
+      && !Object.keys(activeSideCFilter).length
       && !Object.keys(activePartyTypesFilter).length) return null;
     return (
       <div className="filter-tags">
         {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
         {this.renderTagsGroup(activeTagFilter, tagsFilterOptions, 'tagsFilter')}
         {this.renderTagsGroup(activeStatusesFilter, statusesFilterOptions, 'statusFilter')}
-        {this.renderTagsGroup(activeSideTypesFilter, litigationSideTypesOptions, 'sideTypeFilter')}
+        {this.renderTagsGroup(activeSideAFilter, litigationSideAOptions, 'sideAFilter')}
+        {this.renderTagsGroup(activeSideBFilter, litigationSideBOptions, 'sideBFilter')}
+        {this.renderTagsGroup(activeSideCFilter, litigationSideCOptions, 'sideCFilter')}
         {this.renderTagsGroup(activePartyTypesFilter, litigationPartyTypesOptions, 'partyTypeFilter')}
         {this.renderTagsGroup(activeJurisdictionsFilter, litigationJurisdictionsOptions, 'jurisdictionFilter')}
         {this.renderTimeRangeTags(activeTimeRangeFilter)}
@@ -182,9 +198,11 @@ class LitigationCases extends Component {
   renderMoreOptions() {
     const { isMoreSearchOptionsVisible } = this.state;
     const {
-      litigation_side_types_options: litigationSideTypesOptions,
       litigation_party_types_options: litigationPartyTypesOptions,
-      litigation_jurisdictions_options: litigationJurisdictionsOptions
+      litigation_jurisdictions_options: litigationJurisdictionsOptions,
+      litigation_side_a_names_options: litigationSideAOptions,
+      litigation_side_b_names_options: litigationSideBOptions,
+      litigation_side_c_names_options: litigationSideCOptions
     } = this.props;
 
     return (
@@ -201,10 +219,22 @@ class LitigationCases extends Component {
         {isMoreSearchOptionsVisible && (
           <>
             <SearchFilter
-              ref={this.sideTypeFilter}
-              filterName="Side types"
-              params={litigationSideTypesOptions}
-              onChange={(event) => this.filterList('activeSideTypesFilter', event)}
+              ref={this.sideAFilter}
+              filterName="Side A"
+              params={litigationSideAOptions}
+              onChange={(event) => this.filterList('activeSideAFilter', event)}
+            />
+            <SearchFilter
+              ref={this.sideBFilter}
+              filterName="Side B"
+              params={litigationSideBOptions}
+              onChange={(event) => this.filterList('activeSideBFilter', event)}
+            />
+            <SearchFilter
+              ref={this.sideCFilter}
+              filterName="Side C"
+              params={litigationSideCOptions}
+              onChange={(event) => this.filterList('activeSideCFilter', event)}
             />
             <SearchFilter
               ref={this.partyTypeFilter}
@@ -322,7 +352,9 @@ LitigationCases.defaultProps = {
   geo_filter_options: [],
   tags_filter_options: [],
   statuses_filter_options: [],
-  litigation_side_types_options: [],
+  litigation_side_a_names_options: [],
+  litigation_side_b_names_options: [],
+  litigation_side_c_names_options: [],
   litigation_party_types_options: [],
   litigation_jurisdictions_options: []
 };
@@ -334,7 +366,9 @@ LitigationCases.propTypes = {
   tags_filter_options: PropTypes.array,
   statuses_filter_options: PropTypes.array,
   litigation_party_types_options: PropTypes.array,
-  litigation_side_types_options: PropTypes.array,
+  litigation_side_a_names_options: PropTypes.array,
+  litigation_side_b_names_options: PropTypes.array,
+  litigation_side_c_names_options: PropTypes.array,
   litigation_jurisdictions_options: PropTypes.array
 };
 

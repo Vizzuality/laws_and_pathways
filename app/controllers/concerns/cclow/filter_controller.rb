@@ -28,9 +28,19 @@ module CCLOW
       [{field_name: 'type', options: types}]
     end
 
-    def litigation_side_types_options
-      side_types = LitigationSide::SIDE_TYPES.map { |t| {value: t, label: t.humanize} }
-      [{field_name: 'side_type', options: side_types}]
+    def litigation_side_a_names_options
+      side_a = LitigationSide.where(side_type: 'a').pluck(:name).uniq.map { |n| {value: n, label: n.humanize} }
+      [{field_name: 'side_a', options: side_a}]
+    end
+
+    def litigation_side_b_names_options
+      side_b = LitigationSide.where(side_type: 'b').pluck(:name).uniq.map { |n| {value: n, label: n.humanize} }
+      [{field_name: 'side_b', options: side_b}]
+    end
+
+    def litigation_side_c_names_options
+      side_c = LitigationSide.where(side_type: 'c').pluck(:name).uniq.map { |n| {value: n, label: n.humanize} }
+      [{field_name: 'side_c', options: side_c}]
     end
 
     def litigation_party_types_options
@@ -46,7 +56,8 @@ module CCLOW
     def filter_params
       params.permit(:q, :from_date,
                     :to_date, :recent, :ids, region: [], geography: [], jurisdiction: [],
-                                             status: [], type: [], tags: [], party_type: [], side_type: [])
+                                             status: [], type: [], tags: [], party_type: [],
+                                             side_a: [], side_b: [], side_c: [])
     end
   end
 end
