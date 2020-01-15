@@ -111,11 +111,6 @@ module Queries
 
         scope.recent
       end
-
-      def litigation_resources(sql)
-        ids = ActiveRecord::Base.connection.execute(sql).map { |row| row['litigation_id'] }
-        scope.where(id: ids)
-      end
     end
   end
 end
