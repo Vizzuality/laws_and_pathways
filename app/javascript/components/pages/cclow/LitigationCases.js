@@ -43,16 +43,7 @@ class LitigationCases extends Component {
     this.jurisdictionFilter = React.createRef();
   }
 
-  handleLoadMore = () => {
-    const { litigations } = this.state;
-    this.setState({ offset: litigations.length }, this.fetchData.bind(this));
-  }
-
-  filterList = (activeFilterName, filterParams) => {
-    this.setState({[activeFilterName]: filterParams, offset: 0}, this.fetchData.bind(this));
-  };
-
-  fetchData() {
+  getQueryString(extraParams = {}) {
     const {
       activeGeoFilter,
       activeTagFilter,
@@ -62,8 +53,7 @@ class LitigationCases extends Component {
       activeSideAFilter,
       activeSideBFilter,
       activeSideCFilter,
-      activeJurisdictionsFilter,
-      offset
+      activeJurisdictionsFilter
     } = this.state;
     const params = {
       ...getQueryFilters(),
@@ -76,10 +66,24 @@ class LitigationCases extends Component {
       ...activeSideCFilter,
       ...activePartyTypesFilter,
       ...activeJurisdictionsFilter,
-      offset
+      ...extraParams
     };
 
-    const newQs = qs.stringify(params, { arrayFormat: 'brackets' });
+    return qs.stringify(params, { arrayFormat: 'brackets' });
+  }
+
+  handleLoadMore = () => {
+    const { litigations } = this.state;
+    this.setState({ offset: litigations.length }, this.fetchData.bind(this));
+  }
+
+  filterList = (activeFilterName, filterParams) => {
+    this.setState({[activeFilterName]: filterParams, offset: 0}, this.fetchData.bind(this));
+  };
+
+  fetchData() {
+    const { offset } = this.state;
+    const newQs = this.getQueryString({ offset });
 
     fetch(`/cclow/litigation_cases.json?${newQs}`).then((response) => {
       response.json().then((data) => {
@@ -269,6 +273,7 @@ class LitigationCases extends Component {
       statuses_filter_options: statusesFilterOptions
     } = this.props;
     const hasMore = litigations.length < count;
+    const downloadResultsLink = `/cclow/litigation_cases.csv?${this.getQueryString()}`;
     return (
       <Fragment>
         <div className="cclow-geography-page">
@@ -305,7 +310,9 @@ class LitigationCases extends Component {
               <main className="column is-three-quarters">
                 <div className="columns pre-content">
                   <span className="column is-half">Showing {count} results</span>
-                  <a className="column is-half download-link" href="#">Download results (CSV in .zip)</a>
+                  <span className="column is-half download-link">
+                    <a className="download-link" href={downloadResultsLink}>Download results (.csv)</a>
+                  </span>
                 </div>
                 {this.renderTags()}
                 <ul className="content-list">

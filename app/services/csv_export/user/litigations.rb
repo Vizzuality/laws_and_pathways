@@ -12,7 +12,7 @@ module CSVExport
 
         headers = ['Title', 'Document Type', 'Geography', 'Geography ISO',
                    'Jurisdiction', 'Citation Reference Number', 'Summary',
-                   'Responses', 'Keywords', 'At issue', 'Connected Laws and Policies']
+                   'Responses', 'Keywords', 'At issue', 'Connected Laws and Policies', 'Events']
 
         CSV.generate do |csv|
           csv << headers
@@ -29,7 +29,8 @@ module CSVExport
               litigation.responses_string,
               litigation.keywords_string,
               litigation.at_issue,
-              format_connected_laws(litigation)
+              format_connected_laws(litigation),
+              format_events(litigation.events)
             ]
           end
         end
