@@ -34,6 +34,21 @@ class LegislationAndPolicies extends Component {
     this.typesFilter = React.createRef();
   }
 
+  getQueryString(extraParams = {}) {
+    const {activeGeoFilter, activeTagFilter, activeTypesFilter, activeTimeRangeFilter} = this.state;
+
+    const params = {
+      ...getQueryFilters(),
+      ...activeGeoFilter,
+      ...activeTagFilter,
+      ...activeTypesFilter,
+      ...activeTimeRangeFilter,
+      ...extraParams
+    };
+
+    return qs.stringify(params, { arrayFormat: 'brackets' });
+  }
+
   handleLoadMore = () => {
     const { legislations } = this.state;
     this.setState({ offset: legislations.length }, this.fetchData.bind(this));
@@ -44,17 +59,8 @@ class LegislationAndPolicies extends Component {
   };
 
   fetchData() {
-    const {activeGeoFilter, activeTagFilter, activeTypesFilter, activeTimeRangeFilter, offset} = this.state;
-    const params = {
-      ...getQueryFilters(),
-      ...activeGeoFilter,
-      ...activeTagFilter,
-      ...activeTypesFilter,
-      ...activeTimeRangeFilter,
-      offset
-    };
-
-    const newQs = qs.stringify(params, { arrayFormat: 'brackets' });
+    const { offset } = this.state;
+    const newQs = this.getQueryString({ offset });
 
     fetch(`/cclow/legislation_and_policies.json?${newQs}`).then((response) => {
       response.json().then((data) => {
@@ -154,6 +160,8 @@ class LegislationAndPolicies extends Component {
       types_filter_options: typesFilterOptions
     } = this.props;
     const hasMore = legislations.length < count;
+    const downloadResultsLink = `/cclow/legislation_and_policies.csv?${this.getQueryString()}`;
+
     return (
       <Fragment>
         <div className="cclow-geography-page">
@@ -192,7 +200,7 @@ class LegislationAndPolicies extends Component {
               <div className="columns pre-content">
                 <span className="column is-half">Showing {count} results</span>
                 <span className="column is-half download-link">
-                  <a className="download-link" href="#">Download results (CSV in .zip)</a>
+                  <a className="download-link" href={downloadResultsLink}>Download results (.csv)</a>
                 </span>
               </div>
               {this.renderTags()}
