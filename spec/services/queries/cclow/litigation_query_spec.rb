@@ -26,6 +26,9 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
   }
   let!(:litigation4) { create(:published_litigation) }
 
+  # It shouldn't show, so total is 4 not 5 at max!
+  let!(:unpublished_litigation) { create(:litigation, visibility_status: 'draft') }
+
   subject { described_class }
 
   describe 'call' do

@@ -114,7 +114,7 @@ module Queries
 
       def litigation_resources(sql)
         ids = ActiveRecord::Base.connection.execute(sql).map { |row| row['litigation_id'] }
-        Litigation.where(id: ids)
+        scope.where(id: ids)
       end
     end
   end
