@@ -17,6 +17,7 @@ module CCLOW
         @sectors = @litigation.laws_sectors.order(:name)
         @keywords = @litigation.keywords.order(:name)
         @responses = @litigation.responses.order(:name)
+        @litigation_sides = @litigation.litigation_sides.map { |ls| CCLOW::LitigationSideDecorator.decorate(ls) }
       end
     end
   end

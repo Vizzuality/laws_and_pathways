@@ -10,7 +10,9 @@
 
       <div class="categories_tags">
         <% @responses.each do |response| %>
-          <span class="tag categories__tag"><%= response.name %></span>
+          <div class="tag__container">
+            <span class="tag categories__tag"><%= response.name %></span>
+          </div>
         <% end %>
       </div>
     </div>
@@ -40,7 +42,7 @@
     </div>
   <% end %>
 </div>
-<% end %>
+<% end %> 
 
 <div class="content-show">
   <h3 class="title"><%= @litigation.title %></h3>
