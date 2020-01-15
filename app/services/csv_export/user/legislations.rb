@@ -2,7 +2,7 @@ module CSVExport
   module User
     class Legislations
       def initialize(legislations)
-        @legislations = legislations.includes(:tags)
+        @legislations = legislations
       end
 
       def call
@@ -10,7 +10,7 @@ module CSVExport
 
         headers = ['Title', 'Description', 'Type', 'Parent', 'Geography', 'Geography Code',
                    'Frameworks', 'Responses', 'Document Types', 'Keywords', 'Natural Hazards',
-                   'Events', 'Documents']
+                   'Events']
 
         CSV.generate do |csv|
           csv << headers
@@ -28,7 +28,8 @@ module CSVExport
               legislation.document_types_string,
               legislation.keywords_string,
               legislation.natural_hazards_string,
-              format_events(legislation.events.order(:date))
+              # use sort_by instead of order to use cached by 'includes' events
+              format_events(legislation.events.sort_by(&:date))
             ].flatten
           end
         end
