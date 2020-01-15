@@ -1,6 +1,8 @@
 module CSVExport
   module User
     class Legislations
+      include Helpers
+
       def initialize(legislations)
         @legislations = legislations
       end
@@ -28,25 +30,10 @@ module CSVExport
               legislation.document_types_string,
               legislation.keywords_string,
               legislation.natural_hazards_string,
-              # use sort_by instead of order to use cached by 'includes' events
-              format_events(legislation.events.sort_by(&:date))
-            ].flatten
+              format_events(legislation.events)
+            ]
           end
         end
-      end
-
-      private
-
-      def format_events(events)
-        return unless events.any?
-
-        events.map do |event|
-          event
-            .slice(:date, :title, :description, :url)
-            .values
-            .compact
-            .join(' | ')
-        end.join(' ; ')
       end
     end
   end
