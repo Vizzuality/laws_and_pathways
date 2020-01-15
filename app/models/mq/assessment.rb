@@ -24,6 +24,7 @@ module MQ
 
     scope :latest_first, -> { order(assessment_date: :desc) }
     scope :all_publication_dates, -> { distinct.order(publication_date: :desc).pluck(:publication_date) }
+    scope :all_methodology_versions, -> { distinct.order(methodology_version: :asc).pluck(:methodology_version) }
 
     validates :level, inclusion: {in: LEVELS}
     validates_presence_of :assessment_date, :publication_date, :level
