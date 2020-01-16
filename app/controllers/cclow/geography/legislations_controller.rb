@@ -23,6 +23,7 @@ module CCLOW
         @sectors = @legislation.laws_sectors.order(:name)
         @keywords = @legislation.keywords.order(:name)
         @responses = @legislation.responses.order(:name)
+        @legislation_events = @legislation.events_with_eventable_title
       end
 
       private

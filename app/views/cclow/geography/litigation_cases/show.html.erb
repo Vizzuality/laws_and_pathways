@@ -49,9 +49,9 @@
   <section class="section is-medium">
     <%= render 'cclow/geography/litigation_cases/details_card', litigation: @litigation %>
   </section>
-  <% if @litigation.events.present? %>
+  <% if @litigation_events.present? %>
     <section class="section is-medium">
-      <%= react_component("EventsTimeline", { events: @litigation.events.order(:date) }) %>
+      <%= react_component("EventsTimeline", { events: @litigation_events.order(:date) }) %>
     </section>
   <% end %>
   <hr>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
+import ReactTooltip from 'react-tooltip';
 import cx from 'classnames';
 import Testimonials from './Testimonials';
 import MultiSelect from './MultiSelect';
@@ -43,6 +44,7 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
   const [currentTypes, setCurrentTypes] = useState(false);
   const [isShowRightBtn, setIsShowRightBtn] = useState(true);
   const [isShowLeftBtn, setIsShowLeftBtn] = useState(true);
+  const [tooltip, setTooltip] = useState(null);
   const eventsContainerEl = React.createRef();
   useEffect(() => checkButtons());
 
@@ -96,7 +98,7 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
             {currentEvents.map((event) => (
               <div key={event.title} className={cx('time-point', { 'time-point-multiple-events': currentEvents.length > 1 })}>
                 <div className="event-title">{ event.title }</div>
-                <div className="point" />
+                <div className="point" data-tip onMouseEnter={() => setTooltip(event.eventable_title)} />
                 <div className="date">{ format(new Date(event.date), 'MMMM Y') }</div>
               </div>
             ))}
@@ -108,6 +110,11 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
           </div>
         )}
       </div>
+      {tooltip && (
+        <ReactTooltip class="cclow-tooltip">
+          {tooltip}
+        </ReactTooltip>
+      )}
     </div>
   );
 };
