@@ -18,6 +18,7 @@
 #  sedol                     :string
 #  latest_information        :text
 #  historical_comments       :text
+#  active                    :boolean          default(TRUE)
 #
 
 class Company < ApplicationRecord
@@ -51,7 +52,8 @@ class Company < ApplicationRecord
   validates_presence_of :name, :slug, :isin, :market_cap_group
   validates_uniqueness_of :slug, :name
 
-  scope :active, -> { where(is_active: true) }
+  scope :active, -> { where(active: true) }
+  scope :published_active, -> { where(active: true, visibility_status: 'published') }
 
   def to_s
     name

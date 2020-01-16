@@ -71,7 +71,7 @@ module TPI
     end
 
     def user_download
-      companies_ids = @sector.companies.published.active.select(:id)
+      companies_ids = @sector.companies.published_active.select(:id)
       mq_assessments = MQ::Assessment
         .where(company_id: companies_ids)
         .joins(:company)
@@ -110,10 +110,10 @@ module TPI
 
     def companies_scope(params)
       if params[:id]
-        TPISector.friendly.find(params[:id]).companies.published
+        TPISector.friendly.find(params[:id]).companies.published_active
       else
-        Company.published
-      end.active
+        Company.published_active
+      end
     end
   end
 end
