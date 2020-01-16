@@ -32,6 +32,20 @@ class ClimateTargets extends Component {
     this.typesFilter = React.createRef();
   }
 
+  getQueryString(extraParams = {}) {
+    const {activeGeoFilter, activeTypesFilter, activeTimeRangeFilter, activeTagFilter} = this.state;
+    const params = {
+      ...getQueryFilters(),
+      ...activeTimeRangeFilter,
+      ...activeGeoFilter,
+      ...activeTagFilter,
+      ...activeTypesFilter,
+      ...extraParams
+    };
+
+    return qs.stringify(params, { arrayFormat: 'brackets' });
+  }
+
   handleLoadMore = () => {
     const { climate_targets } = this.state;
     this.setState({ offset: climate_targets.length }, this.fetchData.bind(this));
@@ -42,17 +56,8 @@ class ClimateTargets extends Component {
   };
 
   fetchData() {
-    const {activeGeoFilter, activeTypesFilter, activeTimeRangeFilter, activeTagFilter, offset} = this.state;
-    const params = {
-      ...getQueryFilters(),
-      ...activeTimeRangeFilter,
-      ...activeGeoFilter,
-      ...activeTagFilter,
-      ...activeTypesFilter,
-      offset
-    };
-
-    const newQs = qs.stringify(params, { arrayFormat: 'brackets' });
+    const { offset } = this.state;
+    const newQs = this.getQueryString({ offset });
 
     fetch(`/cclow/climate_targets.json?${newQs}`).then((response) => {
       response.json().then((data) => {
@@ -152,6 +157,8 @@ class ClimateTargets extends Component {
       types_filter_options: typesFilterOptions
     } = this.props;
     const hasMore = climate_targets.length < count;
+    const downloadResultsLink = `/cclow/climate_targets.csv?${this.getQueryString()}`;
+
     return (
       <Fragment>
         <div className="cclow-geography-page">
@@ -187,7 +194,9 @@ class ClimateTargets extends Component {
               <main className="column is-three-quarters">
                 <div className="columns pre-content">
                   <span className="column is-half">Showing {count} results</span>
-                  <a className="column is-half download-link" href="#">Download results (CSV in .zip)</a>
+                  <span className="column is-half download-link">
+                    <a className="download-link" href={downloadResultsLink}>Download results (.csv)</a>
+                  </span>
                 </div>
                 {this.renderTags()}
                 <ul className="content-list">

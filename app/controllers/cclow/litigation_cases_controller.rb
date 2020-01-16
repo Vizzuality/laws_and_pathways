@@ -2,7 +2,8 @@ module CCLOW
   class LitigationCasesController < CCLOWController
     include FilterController
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
     def index
       add_breadcrumb('Climate Change Laws of the World', cclow_root_path)
       add_breadcrumb('Litigation cases', cclow_litigation_cases_path(@geography))
@@ -33,8 +34,19 @@ module CCLOW
             count: @litigations.count
           }
         end
+        format.csv do
+          timestamp = Time.now.strftime('%d%m%Y')
+          litigations = @litigations.includes(
+            :geography, :responses, :keywords,
+            :events, :legislations, :external_legislations
+          )
+
+          render csv: CSVExport::User::Litigations.new(litigations).call,
+                 filename: "litigation_cases_#{timestamp}"
+        end
       end
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
   end
 end
