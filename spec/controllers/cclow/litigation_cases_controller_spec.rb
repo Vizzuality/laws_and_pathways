@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe CCLOW::ClimateTargetsController, type: :controller do
+RSpec.describe CCLOW::LitigationCasesController, type: :controller do
   before do
-    create(:target, :published, description: 'Super Litigation')
-    create(:target, :published, description: 'Example description')
-    create(:target, :published, description: 'Example')
-    create(:target, :draft, description: 'This one is unpublished example')
+    create(:litigation, :published, title: 'Super Litigation')
+    create(:litigation, :published, summary: 'Example description')
+    create(:litigation, :published, title: 'Example')
+    create(:litigation, :draft, title: 'This one is unpublished', summary: 'Example')
   end
 
   describe 'GET index' do
@@ -14,9 +14,9 @@ RSpec.describe CCLOW::ClimateTargetsController, type: :controller do
 
       it { is_expected.to be_successful }
 
-      it('should return all published targets') do
+      it('should return all published litigations') do
         subject
-        expect(assigns(:climate_targets).size).to eq(3)
+        expect(assigns(:litigations).size).to eq(3)
       end
 
       it 'responds to csv' do
@@ -32,9 +32,9 @@ RSpec.describe CCLOW::ClimateTargetsController, type: :controller do
 
       it { is_expected.to be_successful }
 
-      it('should return no targets') do
+      it('should return no litigations') do
         subject
-        expect(assigns(:climate_targets).size).to eq(0)
+        expect(assigns(:litigations).size).to eq(0)
       end
 
       it 'responds to csv' do
@@ -49,9 +49,9 @@ RSpec.describe CCLOW::ClimateTargetsController, type: :controller do
 
       it { is_expected.to be_successful }
 
-      it 'should return targets' do
+      it 'should return litigations' do
         subject
-        expect(assigns(:climate_targets).size).to eq(2)
+        expect(assigns(:litigations).size).to eq(2)
       end
 
       it 'responds to csv' do
