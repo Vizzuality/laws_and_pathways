@@ -75,6 +75,10 @@ $count-description-lines: 2;
         overflow: hidden;
         -webkit-line-clamp: $count-description-lines;
         -webkit-box-orient: vertical;
+
+        a {
+          color: $red;
+        }
       }
     }
 
