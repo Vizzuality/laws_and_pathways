@@ -4,14 +4,28 @@
 <div class="sidebar__categories">
   <hr />
 
+  <% if @responses.count > 0 %>
+    <div class="categories__container">
+      <p class="categories__title">Responses</p>
+
+      <div class="categories_tags">
+        <% @responses.each do |response| %>
+          <div class="tag__container">
+            <span class="tag categories__tag"><%= response.name %></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
   <% if @sectors.count > 0 %>
     <div class="categories__container">
       <p class="categories__title">Sectors</p>
 
       <div class="categories_tags">
-      <% @sectors.each do |sector| %>
-        <span class="tag categories__tag"><%= sector.name %></span>
-      <% end %>
+        <% @sectors.each do |sector| %>
+          <span class="tag categories__tag"><%= sector.name %></span>
+        <% end %>
       </div>
     </div>
   <% end %>
@@ -28,24 +42,10 @@
     </div>
   <% end %>
 </div>
-<% end %>
+<% end %> 
 
 <div class="content-show">
   <h3 class="title"><%= @litigation.title %></h3>
-  <div class="meta">
-    <div>
-      <span>
-        <% last_event = @litigation.events.order(:date).last %>
-        <%= last_event.event_type&.humanize %>
-        -
-        <%= last_event.date&.strftime('%B %Y') %>
-      </span>
-      <!--span class="icon"><i class="fa fa-question"></i></span-->
-    </div>
-    <% if @litigation.responses.any? %>
-      <div><span><%= @litigation.responses.map(&:name).join(" ") %></span></div>
-    <% end %>
-  </div>
   <section class="section is-medium">
     <%= render 'cclow/geography/litigation_cases/details_card', litigation: @litigation %>
   </section>
@@ -56,6 +56,7 @@
   <% end %>
   <hr>
   <section class="section is-medium">
+    <h5>Summary</h5>
     <%= @litigation.summary&.html_safe %>
   </section>
   <% if @litigation.documents.present? %>

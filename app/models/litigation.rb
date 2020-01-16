@@ -127,4 +127,10 @@ class Litigation < ApplicationRecord
       .order(:date)
       .first
   end
+
+  def last_non_starting_event
+    events.where.not(event_type: EVENT_STARTED_TYPES)
+      .order(:date)
+      .last
+  end
 end

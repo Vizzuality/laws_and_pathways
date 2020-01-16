@@ -9,7 +9,7 @@ module TPI
         }
       end
 
-      @partners_logos = TPIPage.find_by(slug: 'supporters')&.contents&.find_by(content_type: 'partners')&.images
+      @partners_logos = TPIPage.find_by(slug: 'research-funding-partners')&.contents&.flat_map(&:images)
 
       publications = Publication.order(publication_date: :desc).limit(3)
       news = NewsArticle.order(publication_date: :desc).limit(3)
@@ -17,8 +17,6 @@ module TPI
       @publications_and_articles = (publications + news)
         .sort { |a, b| b.publication_date <=> a.publication_date }[0, 3]
     end
-
-    def about; end
 
     def sandbox; end
 

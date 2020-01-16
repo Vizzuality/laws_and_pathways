@@ -31,4 +31,11 @@ namespace :reimport do
 
     Seed::CCLOWData.call_sources_import
   end
+
+  desc 'Reimport CCLOW LitigationSides'
+  task cclow_litigation_sides: :environment do
+    LitigationSide.delete_all
+
+    Seed::CCLOWData.import_litigation_sides
+  end
 end

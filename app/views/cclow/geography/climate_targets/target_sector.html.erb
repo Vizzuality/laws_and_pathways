@@ -1,0 +1,86 @@
+<% content_for :page_title, "Climate Laws - #{@geography.name} - Climate Targets" %>
+<div class="container">
+  <h3>Climate targets: <%= @sector.name %></h3>
+  <ul class="content-list">
+    <li class="with-meta">
+      <% if @geography.eu_member? %>
+        <div class="meta"><img class="flag" src=<%= asset_path "flags/EUR.svg"%> alt="">
+          This country is a member of the EU and so <span class="highlight"> EU NDC data </span> is being displayed.
+        </div>
+      <% end %>
+      <div class="climate-targets-section ndc-content">
+        <div class="nav">
+          <h5>NDC content</h5>
+          <span class="counter"><%= pluralize(@ndc_targets.count, 'target') %></span>
+        </div>
+        <ul>
+          <% @ndc_targets.each do |target| %>
+            <li>
+              <div>
+                <%= target.description&.html_safe %>
+              </div>
+              <div class="tags">
+                <% target_tags = [target.sector&.name, target.target_type&.humanize]
+                   target_tags << "Target year: #{target.year}" if target.year
+                   target_tags << "Base year: #{target.base_year_period}" if target.base_year_period
+                %>
+                <%= target_tags.compact.join(' | ') %>
+              </div>
+              <div class="source">Source:
+                <div class="name">
+                  <a href="https://www4.unfccc.int/sites/NDCStaging/pages/Party.aspx?party=<%= @geography.iso %>">
+                    <%= @geography.name %>'s INDC
+                  </a>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </li>
+
+    <li>
+      <div class="climate-targets-section">
+        <div class="nav">
+          <h5>National laws and policies</h5>
+          <span class="counter"><%= pluralize(@climate_targets.count, 'target') %></span>
+        </div>
+        <ul>
+          <% @climate_targets.each do |target| %>
+            <li>
+              <div>
+                <%= target.description&.html_safe %>
+              </div>
+              <div class="tags">
+                <% target_tags = [target.sector&.name, target.target_type&.humanize]
+                   target_tags << "Target year: #{target.year}" if target.year
+                   target_tags << "Base year: #{target.base_year_period}" if target.base_year_period
+                %>
+                <%= target_tags.compact.join(' | ') %>
+              </div>
+              <% if target.legislations.any? %>
+                <div class="source">Source:
+                  <% target.legislations.each do |legislation|%>
+                    <div class="name">
+                      <% path = legislation.policy? ? 'cclow_geography_policy_path' : 'cclow_geography_law_path' %>
+                      <%= link_to legislation.title, send(path, @geography, legislation) %>
+                    </div>
+                    <p class="meta">
+                    <span>
+                      <% info = [legislation.legislation_type&.humanize, legislation.date_passed&.year] %>
+                      <%= info.compact.join(' | ') %></span>
+                    </p>
+                  <% end %>
+                </div>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </li>
+  </ul>
+  <div class="ndc-hint">
+    <span>For further analysis of the NDC, see <%= @geography.name %> country profile on</span>
+    <img src=<%= asset_path "cclow/climate_watch.png"%> alt="">
+  </div>
+</div>

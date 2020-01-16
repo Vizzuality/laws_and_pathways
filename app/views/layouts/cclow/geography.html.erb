@@ -21,7 +21,7 @@
         <ul class="sidebar">
           <li><%= active_link_to 'Overview and context', cclow_geography_path(@geography), active: :exclusive %></li>
           <% sidebar_links.each do |link| %>
-            <li><%= active_link_to "#{link[:label]} (#{link[:count]})", link[:path], active: :exclusive %></li>
+            <li><%= active_link_to "#{link[:label]} (#{link[:count]})", link[:path], active: :inclusive %></li>
           <% end %>
         </ul>
 

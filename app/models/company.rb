@@ -62,7 +62,7 @@ class Company < ApplicationRecord
   end
 
   def latest_sector_benchmarks_before_last_assessment
-    sector.latest_benchmarks_for_date(latest_cp_assessment&.assessment_date)
+    sector.latest_benchmarks_for_date(latest_cp_assessment&.publication_date)
   end
 
   def isin_array

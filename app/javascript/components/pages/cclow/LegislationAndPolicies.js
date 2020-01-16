@@ -84,7 +84,7 @@ class LegislationAndPolicies extends Component {
       );
     }
 
-    return (<h5>All Legislation and policies</h5>);
+    return (<h5>All laws and policies</h5>);
   }
 
   renderTags = () => {
@@ -99,7 +99,7 @@ class LegislationAndPolicies extends Component {
       && Object.keys(activeTypesFilter).length === 0
       && Object.keys(activeTimeRangeFilter).length === 0) return null;
     return (
-      <div className="tags">
+      <div className="filter-tags">
         {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
         {this.renderTagsGroup(activeTagFilter, tagsFilterOptions, 'tagsFilter')}
         {this.renderTagsGroup(activeTypesFilter, typesFilterOptions, 'typesFilter')}
@@ -211,10 +211,14 @@ class LegislationAndPolicies extends Component {
                           </Fragment>
                         )}
                         <div>
-                          <img src={legislation.legislation_type === 'executive' ? ExecutiveSVG : LegislativeSVG} alt={legislation.legislation_type} />
+                          <img
+                            src={legislation.legislation_type === 'executive' ? ExecutiveSVG : LegislativeSVG}
+                            alt={legislation.legislation_type}
+                          />
                           {legislation.legislation_type_humanize}
                         </div>
-                        {legislation.date_passed && <div>{new Date(legislation.date_passed).getFullYear()}</div>}
+                        {legislation.date_passed && <div>{legislation.date_passed}</div>}
+                        {legislation.last_change && <div>Last change in {legislation.last_change}</div>}
                       </div>
                       <div className="description" dangerouslySetInnerHTML={{__html: legislation.description}} />
                     </li>

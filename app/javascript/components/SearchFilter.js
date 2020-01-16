@@ -1,9 +1,9 @@
 import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
+import sortBy from 'lodash/sortBy';
 import search from '../../assets/images/icons/search.svg';
 import minus from '../../assets/images/icons/dark-minus.svg';
 import plus from '../../assets/images/icons/dark-plus.svg';
-
 
 class SearchFilter extends Component {
   constructor(props) {
@@ -61,6 +61,31 @@ class SearchFilter extends Component {
 
   itemIsSelected = (fieldName, value) => this.state.selectedList[fieldName] && this.state.selectedList[fieldName].includes(value);
 
+  renderBlocksList = (blocks) => {
+    const options = blocks.map((o) => {
+      const optionsWithFieldName = o.options.map((el) => ({ ...el, fieldName: o.field_name }));
+      return optionsWithFieldName;
+    });
+
+    const sortedOptions = sortBy(options.flat(), 'label');
+
+    return (
+      <Fragment>
+        <ul>
+          {sortedOptions.map(option => (
+            <li key={option.value} onClick={() => this.handleCheckItem(option.fieldName, option.value)}>
+              <input type="checkbox" hidden checked={this.itemIsSelected(option.fieldName, option.value) || false} onChange={() => {}} />
+              <div className={`${this.itemIsSelected(option.fieldName, option.value) ? 'checked' : 'unchecked'} select-checkbox`}>
+                {this.itemIsSelected(option.fieldName, option.value) && <i className="fa fa-check" />}
+              </div>
+              <label>{option.label}</label>
+            </li>
+          ))}
+        </ul>
+      </Fragment>
+    );
+  }
+
   renderBlockList = (block, index) => {
     const {options, field_name: fieldName} = block;
     if ((options || []).length === 0) return null;
@@ -108,7 +133,11 @@ class SearchFilter extends Component {
             </div>
           )}
           <div className="options-list">
-            {listBlocks.map((blockList, i) => this.renderBlockList(blockList, i))}
+            {listBlocks.length > 1 ? (
+              this.renderBlocksList(listBlocks)
+            ) : (
+              listBlocks.map((blockList, i) => this.renderBlockList(blockList, i))
+            )}
           </div>
         </div>
       </div>

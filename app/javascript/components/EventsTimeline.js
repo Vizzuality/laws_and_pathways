@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
+import cx from 'classnames';
 import Testimonials from './Testimonials';
 import MultiSelect from './MultiSelect';
 
@@ -93,7 +94,7 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
         <div ref={eventsContainerEl} onScroll={checkButtons} className="events-container">
           <div className="timeline">
             {currentEvents.map((event) => (
-              <div key={event.title} className="time-point">
+              <div key={event.title} className={cx('time-point', { 'time-point-multiple-events': currentEvents.length > 1 })}>
                 <div className="event-title">{ event.title }</div>
                 <div className="point" />
                 <div className="date">{ format(new Date(event.date), 'MMMM Y') }</div>
