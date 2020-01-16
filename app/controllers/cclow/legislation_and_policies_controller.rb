@@ -31,11 +31,11 @@ module CCLOW
         end
         format.csv do
           timestamp = Time.now.strftime('%d%m%Y')
-          legislations = @legislations.includes(
+          legislations = Legislation.includes(
             :frameworks, :document_types, :keywords,
             :natural_hazards, :responses,
             :parent, :geography, :events
-          )
+          ).where(id: @legislations.pluck(:id))
 
           render csv: CSVExport::User::Legislations.new(legislations).call,
                  filename: "laws_and_policies_#{timestamp}"
