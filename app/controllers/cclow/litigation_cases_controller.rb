@@ -36,10 +36,12 @@ module CCLOW
         end
         format.csv do
           timestamp = Time.now.strftime('%d%m%Y')
-          litigations = @litigations.includes(
-            :geography, :responses, :keywords,
-            :events, :legislations, :external_legislations
-          )
+          litigations = Litigation
+            .where(id: @litigations.pluck(:id))
+            .includes(
+              :geography, :responses, :keywords,
+              :events, :legislations, :external_legislations
+            )
 
           render csv: CSVExport::User::Litigations.new(litigations).call,
                  filename: "litigation_cases_#{timestamp}"
