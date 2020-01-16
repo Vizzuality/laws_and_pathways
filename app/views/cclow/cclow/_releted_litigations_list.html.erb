@@ -1,7 +1,9 @@
 <ul class="content-list">
   <% litigations.each do |litigation| %>
     <li>
-      <h5 class="title"><%= litigation.title %></h5>
+      <h5 class="title">
+        <%= link_to litigation.title, cclow_geography_litigation_case_path(litigation.geography, litigation) %>
+      </h5>
       <p class="meta">
         <% if litigation.started_event.present? %>
           <span>Opened in <%= litigation.started_event.date&.year %></span>

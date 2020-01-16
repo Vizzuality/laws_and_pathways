@@ -5,14 +5,14 @@
         This law implements <%= legislation.geography.name %> legislation
       </div>
       <h5 class="title">
-        <a href="#">An example of a EU directive (Directive 2008/98/EC)</a>
+        <%= link_to legislation.title, cclow_geography_law_path(legislation.geography, legislation) %>
       </h5>
       <p class="meta">
-        <span>Passed in <%= legislation.date_passed.year %></span>
-        <span><%= legislation.legislation_type.humanize %></span>
+        <span>Passed in <%= legislation.date_passed&.year %></span>
+        <span><%= legislation.legislation_type&.humanize %></span>
       </p>
       <p>
-        <%= legislation.description.html_safe %>
+        <%= legislation.description&.html_safe %>
       </p>
     </li>
   <% end %>
