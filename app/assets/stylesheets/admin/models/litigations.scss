@@ -23,3 +23,14 @@ form.litigation {
     width: 70%;
   }
 }
+
+#index_table_litigations {
+  td {
+    &.col-id {
+      min-width: 65px;
+    }
+    &.col-title {
+      min-width: 150px;
+    }
+  }
+}

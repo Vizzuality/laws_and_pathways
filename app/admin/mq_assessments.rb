@@ -10,6 +10,9 @@ ActiveAdmin.register MQ::Assessment do
   permit_params :assessment_date, :publication_date, :company_id, :notes, :level
 
   filter :assessment_date
+  filter :methodology_version,
+         as: :select,
+         collection: proc { MQ::Assessment.all_methodology_versions }
   filter :publication_date, as: :select, collection: proc { MQ::Assessment.all_publication_dates }
   filter :company
   filter :company_sector_id, as: :select, collection: proc { TPISector.all }
@@ -17,15 +20,16 @@ ActiveAdmin.register MQ::Assessment do
 
   sidebar 'Export / Import', if: -> { collection.any? }, only: :index do
     ul do
-      publication_date_selected = request.query_parameters.dig(:q, :publication_date_eq)
+      date_and_methodology = [request.query_parameters.dig(:q, :publication_date_eq),
+                              request.query_parameters.dig(:q, :methodology_version_eq)].compact
 
       li do
-        if publication_date_selected
-          link_to "Download MQ Assessments (#{publication_date_selected})",
+        if date_and_methodology.present?
+          link_to "Download MQ Assessments (#{date_and_methodology.join(',')})",
                   params: request.query_parameters.except(:commit, :format),
                   format: 'csv'
         else
-          para 'Please filter by publication date to be able to download CSV file'
+          para 'Please filter by publication date or methodology version to be able to download CSV file'
         end
       end
 

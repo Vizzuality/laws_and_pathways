@@ -16,6 +16,7 @@ ActiveAdmin.register Legislation do
                 framework_ids: [], document_type_ids: [], instrument_ids: [],
                 governance_ids: [], laws_sector_ids: []
 
+  filter :id_equals, label: 'ID'
   filter :title_contains, label: 'Title'
   filter :description_contains, label: 'Description'
   filter :legislation_type,
@@ -34,13 +35,12 @@ ActiveAdmin.register Legislation do
 
   index title: 'Laws and Policies' do
     selectable_column
+    column :id
     column :title, &:title_summary_link
     column :geography
     column :legislation_type
     column :document_types
-    column 'Parent Legislation', &:parent
-    column :created_by
-    column :updated_by
+    column :frameworks
     tag_column :visibility_status
 
     actions
