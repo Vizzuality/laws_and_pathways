@@ -8,7 +8,7 @@
     <div class="categories__container">
       <p class="categories__title">Responses</p>
 
-      <div class="categories_tags">
+      <div class="categories__tags">
         <% @responses.each do |response| %>
           <div class="tag__container">
             <span class="tag categories__tag"><%= response.name %></span>
@@ -22,7 +22,7 @@
     <div class="categories__container">
       <p class="categories__title">Sectors</p>
 
-      <div class="categories_tags">
+      <div class="categories__tags">
         <% @sectors.each do |sector| %>
           <span class="tag categories__tag"><%= sector.name %></span>
         <% end %>
@@ -34,7 +34,7 @@
     <div class="categories__container">
       <p class="categories__title">Keywords</p>
 
-      <div class="categories_tags">
+      <div class="categories__tags">
       <% @keywords.each do |keyword| %>
         <span class="tag categories__tag"><%= keyword.name %></span>
       <% end %>
