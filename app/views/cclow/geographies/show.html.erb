@@ -6,7 +6,7 @@
   <% if @geography_events.any? %>
     <section class="section is-large">
       <% event_options = Geography::EVENT_TYPES.map{|type| {value: type, label: type.humanize}} %>
-      <%= react_component("EventsTimeline", { events: @geography_events, options: event_options, isFiltered: true }) %>
+      <%= react_component("EventsTimeline", { events: @geography_events_with_links, options: event_options, isFiltered: true }) %>
     </section>
   <% end %>
   <hr>

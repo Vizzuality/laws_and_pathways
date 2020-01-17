@@ -95,10 +95,10 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
         )}
         <div ref={eventsContainerEl} onScroll={checkButtons} className="events-container">
           <div className="timeline">
-            {currentEvents.map((event) => (
-              <div key={event.title} className={cx('time-point', { 'time-point-multiple-events': currentEvents.length > 1 })}>
-                <div className="event-title">{ event.title }</div>
-                <div className="point" data-tip onMouseEnter={() => setTooltip(event.eventable_title)} />
+            {currentEvents.map((event, i) => (
+              <div key={`${event.title}-${i}`} className={cx('time-point', { 'time-point-multiple-events': currentEvents.length > 1 })}>
+                <div className="event-title">{event.title}</div>
+                <div className="point" data-tip onClick={() => window.open(event.link, '_self')} onMouseEnter={() => setTooltip(event.eventable_title)} />
                 <div className="date">{ format(new Date(event.date), 'MMMM Y') }</div>
               </div>
             ))}
