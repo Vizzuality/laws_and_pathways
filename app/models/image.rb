@@ -5,6 +5,7 @@
 #  id         :bigint           not null, primary key
 #  link       :string
 #  content_id :bigint           not null
+#  name       :string
 #
 
 class Image < ApplicationRecord
