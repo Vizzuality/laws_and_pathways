@@ -11,7 +11,7 @@
 
     permit_params :title, :slug, :description, :menu,
                   contents_attributes: [:id, :title, :content_type, :text, :_destroy,
-                                        images_attributes: [:id, :link, :logo, :_destroy]],
+                                        images_attributes: [:id, :link, :logo, :name, :_destroy]],
                   content_ids: []
 
     filter :title

@@ -4,9 +4,11 @@
   <% if is_new_record %>
     <%= form.input :logo, as: :file %>
     <%= form.input :link %>
+    <%= form.input :name %>
   <% else %>
     <%= image_tag form.object.logo, style: 'height: 100px; width: 100px;' %>
     <%= form.input :link %>
+    <%= form.input :name %>
   <% end %>
 
   <li class="input">

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_10_103445) do
+ActiveRecord::Schema.define(version: 2020_01_17_095143) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 2020_01_10_103445) do
     t.string "sedol"
     t.text "latest_information"
     t.text "historical_comments"
+    t.boolean "active", default: true
     t.index ["discarded_at"], name: "index_companies_on_discarded_at"
     t.index ["geography_id"], name: "index_companies_on_geography_id"
     t.index ["headquarters_geography_id"], name: "index_companies_on_headquarters_geography_id"
@@ -247,6 +248,7 @@ ActiveRecord::Schema.define(version: 2020_01_10_103445) do
   create_table "images", force: :cascade do |t|
     t.string "link"
     t.bigint "content_id", null: false
+    t.string "name"
     t.index ["content_id"], name: "index_images_on_content_id"
   end
 
