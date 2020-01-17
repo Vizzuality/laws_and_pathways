@@ -100,7 +100,6 @@ ActiveRecord::Schema.define(version: 2020_01_17_122856) do
     t.string "sedol"
     t.text "latest_information"
     t.text "historical_comments"
-    t.boolean "active", default: true
     t.index ["discarded_at"], name: "index_companies_on_discarded_at"
     t.index ["geography_id"], name: "index_companies_on_geography_id"
     t.index ["headquarters_geography_id"], name: "index_companies_on_headquarters_geography_id"
@@ -249,8 +248,8 @@ ActiveRecord::Schema.define(version: 2020_01_17_122856) do
     t.string "link"
     t.bigint "content_id", null: false
     t.string "name"
-    t.datetime "created_at", default: "2020-01-17 12:41:04", null: false
-    t.datetime "updated_at", default: "2020-01-17 12:41:04", null: false
+    t.datetime "created_at", default: "2020-01-17 12:59:01", null: false
+    t.datetime "updated_at", default: "2020-01-17 12:59:01", null: false
     t.index ["content_id"], name: "index_images_on_content_id"
   end
 
