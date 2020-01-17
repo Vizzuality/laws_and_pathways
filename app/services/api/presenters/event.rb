@@ -1,16 +1,18 @@
 module Api
   module Presenters
     class Event
-      attr_reader :event
+      attr_reader :event, :timeline_type
 
-      def self.call(event)
-        new(event).call
+      def self.call(event, timeline_type)
+        new(event, timeline_type).call
       end
 
-      def initialize(event)
+      def initialize(event, timeline_type)
         @event = event
+        @timeline_type = timeline_type
       end
 
+      # rubocop:disable Metrics/AbcSize
       def call
         {
           id: event.id,
@@ -20,10 +22,11 @@ module Api
           event_type: event.event_type,
           date: event.date,
           description: event.description,
-          eventable_title: event.eventable_title,
+          eventable_title: timeline_type.eql?(:geography) ? event.eventable_title : event.description || event.title,
           link: link(event.eventable_type, event.eventable_id)
         }
       end
+      # rubocop:enable Metrics/AbcSize
 
       private
 

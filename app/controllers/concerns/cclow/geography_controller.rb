@@ -22,7 +22,7 @@ module CCLOW
 
       @geography_events = @geography.self_and_related_events
       @geography_events_with_links = @geography_events.map do |e|
-        ::Api::Presenters::Event.call(e)
+        ::Api::Presenters::Event.call(e, :geography)
       end
     end
 
