@@ -45,4 +45,11 @@ RSpec.describe Legislation, type: :model do
       subject.legislation_type = 'WRONG'
     }.to raise_error(ArgumentError)
   end
+
+  it 'should update slug when editing title' do
+    legislation = create(:legislation, title: 'Some title')
+    expect(legislation.slug).to eq('some-title')
+    legislation.update!(title: 'New title')
+    expect(legislation.slug).to eq('new-title')
+  end
 end

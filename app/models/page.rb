@@ -15,7 +15,7 @@
 class Page < ApplicationRecord
   extend FriendlyId
 
-  friendly_id :title, use: :slugged, routes: :default
+  friendly_id :title, use: [:slugged, :history], routes: :default
 
   has_many :contents, dependent: :destroy
   has_many :images, through: :contents
@@ -27,6 +27,10 @@ class Page < ApplicationRecord
   end
 
   after_commit :reload_routes, only: [:create, :update, :destroy]
+
+  def should_generate_new_friendly_id?
+    title_changed? || super
+  end
 
   def reload_routes
     DynamicRouter.reload

@@ -88,6 +88,10 @@ class Geography < ApplicationRecord
   validates :federal, inclusion: {in: [true, false]}
   validates :region, inclusion: {in: REGIONS}
 
+  def should_generate_new_friendly_id?
+    name_changed? || super
+  end
+
   def indc_url
     return unless national?
 
