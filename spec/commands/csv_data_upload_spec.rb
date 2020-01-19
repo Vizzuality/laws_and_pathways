@@ -11,13 +11,22 @@ describe 'CSVDataUpload (integration)' do
   let(:mq_assessments_csv) { fixture_file('mq_assessments.csv') }
   let(:geographies_csv) { fixture_file('geographies.csv') }
 
-  let!(:countries) do
+  let(:countries) do
     [
       create(:geography, iso: 'POL', name: 'Poland'),
       create(:geography, iso: 'GBR', name: 'United Kingdom'),
       create(:geography, iso: 'JPN', name: 'Japan'),
       create(:geography, iso: 'USA', name: 'United States')
     ]
+  end
+
+  let(:current_user_role) { 'publisher_tpi' }
+  let(:current_user) { build(:admin_user, role: current_user_role) }
+
+  before do
+    ::Current.admin_user = current_user
+
+    countries
   end
 
   describe 'errors handling' do
@@ -33,6 +42,33 @@ describe 'CSVDataUpload (integration)' do
 
       expect(command.call).to eq(false)
       expect(command.errors.to_a).to include('File is not attached')
+    end
+
+    describe 'authorization errors' do
+      # Editor should't publish resources
+      let(:current_user_role) { 'editor_tpi' }
+
+      let(:legislations_to_publish_csv) { fixture_file('legislations_to_publish.csv') }
+
+      it 'does not import CSV files with Legislation data' do
+        # 2nd record (ID=20) should fail with auth error
+        csv_content = <<-CSV
+          Id,Law,Legislation type,Title,Date passed,Description,Geography,Geography iso,Sector,Frameworks,Document types,Keywords,Natural hazards,Visibility status
+          10,101,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,"keyword1,keyword2",tsunami,draft
+          20,102,legislative,Climate Law,15 Jan 2015,Desc,Poland,POL,Waste,"Mitigation",Law,"keyword1","flooding",published
+          30,103,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,"keyword1,keyword2",tsunami,pending
+        CSV
+
+        command = expect_data_upload_results(
+          Legislation,
+          fixture_file('legislations.csv', content: csv_content),
+          {new_records: 1, not_changed_records: 0, rows: 3, updated_records: 1},
+          false
+        )
+
+        expect(command.errors.messages[:base])
+          .to eq(['Error on row 2: You are not authorized to perform action \'publish\' on Legislation.'])
+      end
     end
   end
 
@@ -291,15 +327,18 @@ describe 'CSVDataUpload (integration)' do
     expect(geography.federal_details).to be
   end
 
-  def expect_data_upload_results(uploaded_resource_klass, csv, expected_details)
+  def expect_data_upload_results(uploaded_resource_klass, csv, expected_details, expected_sucess = true)
     uploader_name = uploaded_resource_klass.name.tr('::', '').pluralize
     command = Command::CSVDataUpload.new(uploader: uploader_name, file: csv)
 
     expect do
       expect(command).to be_valid
-      expect(command.call).to eq(true)
+      expect(command.call).to eq(expected_sucess),
+                              "Expected import command to #{expected_sucess ? 'succeed' : 'fail'}, but it did not"
       expect(command.details.symbolize_keys).to eq(expected_details)
     end.to change(uploaded_resource_klass, :count).by(expected_details[:new_records])
+
+    command
   end
 
   def fixture_file(filename, content: nil)

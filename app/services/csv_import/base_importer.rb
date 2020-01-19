@@ -52,6 +52,14 @@ module CSVImport
 
     protected
 
+    def check_permissions_for_row(row)
+      return true unless current_user
+
+      # restrictions:
+      # - editors can't publish
+      raise_unauthorize_error(:publish) if current_user_is_editor? && row[:visibility_status] == 'published'
+    end
+
     def header_converters
       [:symbol]
     end
@@ -100,17 +108,19 @@ module CSVImport
 
     def import_each_csv_row(csv)
       csv.each.with_index(2) do |row, row_index|
-        with_logging(row_index) do
+        handle_row_errors(row_index) do
           yield row
         end
       end
     end
 
-    def with_logging(row_index)
+    def handle_row_errors(row_index)
       yield
     rescue ActiveRecord::RecordInvalid => e
       handle_row_error(row_index, e, "for data: #{e.record.attributes}")
     rescue ActiveRecord::RecordNotFound, ArgumentError => e
+      handle_row_error(row_index, e)
+    rescue CanCan::AccessDenied => e
       handle_row_error(row_index, e)
     end
 
@@ -125,13 +135,29 @@ module CSVImport
     end
 
     def handle_row_error(row_index, exception, context_message = nil)
-      readable_error_message = "Error on row #{row_index}: #{exception.message}."
+      readable_error_message = "Error on row #{row_index - 1}: #{exception.message}."
 
       # log error with more details
       warn "[#{self.class.name}] #{readable_error_message} #{context_message}"
 
       # add import error
       errors.add(:base, :invalid_row, message: readable_error_message, row: row_index)
+    end
+
+    def current_user_is_editor?
+      current_user.role.to_s[/editor/]
+    end
+
+    def current_user
+      ::Current.admin_user
+    end
+
+    def raise_unauthorize_error(action)
+      raise CanCan::AccessDenied.new(
+        "You are not authorized to perform action '#{action}' on #{resource_klass}",
+        action,
+        resource_klass
+      )
     end
   end
 end
