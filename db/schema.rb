@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_19_224043) do
+ActiveRecord::Schema.define(version: 2020_01_20_130555) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,25 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "activities", force: :cascade do |t|
+    t.string "trackable_type"
+    t.bigint "trackable_id"
+    t.string "owner_type"
+    t.bigint "owner_id"
+    t.string "key"
+    t.text "parameters"
+    t.string "recipient_type"
+    t.bigint "recipient_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
+    t.index ["owner_type", "owner_id"], name: "index_activities_on_owner_type_and_owner_id"
+    t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
+    t.index ["recipient_type", "recipient_id"], name: "index_activities_on_recipient_type_and_recipient_id"
+    t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
+    t.index ["trackable_type", "trackable_id"], name: "index_activities_on_trackable_type_and_trackable_id"
+  end
+
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -60,6 +79,7 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
+    t.string "role"
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
@@ -71,19 +91,31 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
     t.string "name", null: false
     t.string "slug", null: false
     t.string "isin", null: false
-    t.string "size"
+    t.string "market_cap_group"
     t.boolean "ca100", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "visibility_status", default: "draft"
     t.datetime "discarded_at"
+    t.string "sedol"
+    t.text "latest_information"
+    t.text "historical_comments"
     t.index ["discarded_at"], name: "index_companies_on_discarded_at"
     t.index ["geography_id"], name: "index_companies_on_geography_id"
     t.index ["headquarters_geography_id"], name: "index_companies_on_headquarters_geography_id"
-    t.index ["isin"], name: "index_companies_on_isin", unique: true
+    t.index ["market_cap_group"], name: "index_companies_on_market_cap_group"
     t.index ["sector_id"], name: "index_companies_on_sector_id"
-    t.index ["size"], name: "index_companies_on_size"
     t.index ["slug"], name: "index_companies_on_slug", unique: true
+  end
+
+  create_table "contents", force: :cascade do |t|
+    t.string "title"
+    t.text "text"
+    t.bigint "page_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "content_type"
+    t.index ["page_id"], name: "index_contents_on_page_id"
   end
 
   create_table "cp_assessments", force: :cascade do |t|
@@ -96,6 +128,7 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
     t.datetime "updated_at", null: false
     t.datetime "discarded_at"
     t.integer "last_reported_year"
+    t.string "cp_alignment"
     t.index ["company_id"], name: "index_cp_assessments_on_company_id"
     t.index ["discarded_at"], name: "index_cp_assessments_on_discarded_at"
   end
@@ -211,6 +244,15 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
     t.index ["legislation_id"], name: "index_governances_legislations_on_legislation_id"
   end
 
+  create_table "images", force: :cascade do |t|
+    t.string "link"
+    t.bigint "content_id", null: false
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["content_id"], name: "index_images_on_content_id"
+  end
+
   create_table "instrument_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -245,6 +287,20 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
     t.index ["parent_id"], name: "index_laws_sectors_on_parent_id"
   end
 
+  create_table "laws_sectors_legislations", id: false, force: :cascade do |t|
+    t.bigint "legislation_id", null: false
+    t.bigint "laws_sector_id", null: false
+    t.index ["laws_sector_id"], name: "index_laws_sectors_legislations_on_laws_sector_id"
+    t.index ["legislation_id"], name: "index_laws_sectors_legislations_on_legislation_id"
+  end
+
+  create_table "laws_sectors_litigations", id: false, force: :cascade do |t|
+    t.bigint "litigation_id", null: false
+    t.bigint "laws_sector_id", null: false
+    t.index ["laws_sector_id"], name: "index_laws_sectors_litigations_on_laws_sector_id"
+    t.index ["litigation_id"], name: "index_laws_sectors_litigations_on_litigation_id"
+  end
+
   create_table "legislations", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -253,17 +309,16 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
     t.bigint "geography_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.date "date_passed"
     t.string "visibility_status", default: "draft"
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
     t.datetime "discarded_at"
     t.string "legislation_type", null: false
-    t.bigint "sector_id"
+    t.bigint "parent_id"
     t.index ["created_by_id"], name: "index_legislations_on_created_by_id"
     t.index ["discarded_at"], name: "index_legislations_on_discarded_at"
     t.index ["geography_id"], name: "index_legislations_on_geography_id"
-    t.index ["sector_id"], name: "index_legislations_on_sector_id"
+    t.index ["parent_id"], name: "index_legislations_on_parent_id"
     t.index ["slug"], name: "index_legislations_on_slug", unique: true
     t.index ["updated_by_id"], name: "index_legislations_on_updated_by_id"
   end
@@ -295,6 +350,7 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
     t.datetime "discarded_at"
     t.index ["connected_entity_type", "connected_entity_id"], name: "index_litigation_sides_connected_entity"
     t.index ["discarded_at"], name: "index_litigation_sides_on_discarded_at"
+    t.index ["litigation_id", "side_type", "name"], name: "index_litigation_sides_on_litigation_id_and_side_type_and_name", unique: true
     t.index ["litigation_id"], name: "index_litigation_sides_on_litigation_id"
   end
 
@@ -303,21 +359,20 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
     t.string "slug", null: false
     t.string "citation_reference_number"
     t.string "document_type"
-    t.bigint "jurisdiction_id"
+    t.bigint "geography_id"
     t.text "summary"
-    t.text "core_objective"
+    t.text "at_issue"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "visibility_status", default: "draft"
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
     t.datetime "discarded_at"
-    t.bigint "sector_id"
+    t.string "jurisdiction"
     t.index ["created_by_id"], name: "index_litigations_on_created_by_id"
     t.index ["discarded_at"], name: "index_litigations_on_discarded_at"
     t.index ["document_type"], name: "index_litigations_on_document_type"
-    t.index ["jurisdiction_id"], name: "index_litigations_on_jurisdiction_id"
-    t.index ["sector_id"], name: "index_litigations_on_sector_id"
+    t.index ["geography_id"], name: "index_litigations_on_geography_id"
     t.index ["slug"], name: "index_litigations_on_slug", unique: true
     t.index ["updated_by_id"], name: "index_litigations_on_updated_by_id"
   end
@@ -332,13 +387,60 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "discarded_at"
+    t.integer "methodology_version"
     t.index ["company_id"], name: "index_mq_assessments_on_company_id"
     t.index ["discarded_at"], name: "index_mq_assessments_on_discarded_at"
   end
 
+  create_table "news_articles", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.date "publication_date"
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "article_type"
+    t.index ["created_by_id"], name: "index_news_articles_on_created_by_id"
+    t.index ["updated_by_id"], name: "index_news_articles_on_updated_by_id"
+  end
+
+  create_table "news_articles_tpi_sectors", id: false, force: :cascade do |t|
+    t.bigint "news_article_id", null: false
+    t.bigint "tpi_sector_id", null: false
+    t.index ["news_article_id"], name: "index_news_articles_tpi_sectors_on_news_article_id"
+    t.index ["tpi_sector_id"], name: "index_news_articles_tpi_sectors_on_tpi_sector_id"
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "slug"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "menu"
+    t.string "type"
+  end
+
   create_table "publications", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "title"
+    t.text "short_description"
+    t.bigint "file"
+    t.bigint "image"
+    t.date "publication_date"
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_by_id"], name: "index_publications_on_created_by_id"
+    t.index ["updated_by_id"], name: "index_publications_on_updated_by_id"
+  end
+
+  create_table "publications_tpi_sectors", id: false, force: :cascade do |t|
+    t.bigint "publication_id", null: false
+    t.bigint "tpi_sector_id", null: false
+    t.index ["publication_id"], name: "index_publications_tpi_sectors_on_publication_id"
+    t.index ["tpi_sector_id"], name: "index_publications_tpi_sectors_on_tpi_sector_id"
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -359,17 +461,8 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
     t.index ["name", "type"], name: "index_tags_on_name_and_type", unique: true
   end
 
-  create_table "target_scopes", force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "discarded_at"
-    t.index ["discarded_at"], name: "index_target_scopes_on_discarded_at"
-  end
-
   create_table "targets", force: :cascade do |t|
     t.bigint "geography_id"
-    t.bigint "target_scope_id"
     t.boolean "ghg_target", default: false, null: false
     t.boolean "single_year", default: false, null: false
     t.text "description"
@@ -383,12 +476,20 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
     t.bigint "updated_by_id"
     t.datetime "discarded_at"
     t.bigint "sector_id"
+    t.string "source"
     t.index ["created_by_id"], name: "index_targets_on_created_by_id"
     t.index ["discarded_at"], name: "index_targets_on_discarded_at"
     t.index ["geography_id"], name: "index_targets_on_geography_id"
     t.index ["sector_id"], name: "index_targets_on_sector_id"
-    t.index ["target_scope_id"], name: "index_targets_on_target_scope_id"
     t.index ["updated_by_id"], name: "index_targets_on_updated_by_id"
+  end
+
+  create_table "testimonials", force: :cascade do |t|
+    t.string "quote"
+    t.string "author"
+    t.string "role"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "tpi_sectors", force: :cascade do |t|
@@ -405,6 +506,7 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
   add_foreign_key "companies", "geographies"
   add_foreign_key "companies", "geographies", column: "headquarters_geography_id"
   add_foreign_key "companies", "tpi_sectors", column: "sector_id"
+  add_foreign_key "contents", "pages"
   add_foreign_key "cp_assessments", "companies", on_delete: :cascade
   add_foreign_key "cp_benchmarks", "tpi_sectors", column: "sector_id", on_delete: :cascade
   add_foreign_key "data_uploads", "admin_users", column: "uploaded_by_id"
@@ -412,24 +514,27 @@ ActiveRecord::Schema.define(version: 2019_11_19_224043) do
   add_foreign_key "geographies", "admin_users", column: "created_by_id"
   add_foreign_key "geographies", "admin_users", column: "updated_by_id"
   add_foreign_key "governances", "governance_types"
+  add_foreign_key "images", "contents"
   add_foreign_key "instruments", "instrument_types"
   add_foreign_key "laws_sectors", "laws_sectors", column: "parent_id"
   add_foreign_key "legislations", "admin_users", column: "created_by_id"
   add_foreign_key "legislations", "admin_users", column: "updated_by_id"
   add_foreign_key "legislations", "geographies"
-  add_foreign_key "legislations", "laws_sectors", column: "sector_id"
+  add_foreign_key "legislations", "legislations", column: "parent_id"
   add_foreign_key "legislations_targets", "legislations", on_delete: :cascade
   add_foreign_key "legislations_targets", "targets", on_delete: :cascade
   add_foreign_key "litigation_sides", "litigations", on_delete: :cascade
   add_foreign_key "litigations", "admin_users", column: "created_by_id"
   add_foreign_key "litigations", "admin_users", column: "updated_by_id"
-  add_foreign_key "litigations", "geographies", column: "jurisdiction_id", on_delete: :cascade
-  add_foreign_key "litigations", "laws_sectors", column: "sector_id"
+  add_foreign_key "litigations", "geographies", on_delete: :cascade
   add_foreign_key "mq_assessments", "companies", on_delete: :cascade
+  add_foreign_key "news_articles", "admin_users", column: "created_by_id"
+  add_foreign_key "news_articles", "admin_users", column: "updated_by_id"
+  add_foreign_key "publications", "admin_users", column: "created_by_id"
+  add_foreign_key "publications", "admin_users", column: "updated_by_id"
   add_foreign_key "taggings", "tags", on_delete: :cascade
   add_foreign_key "targets", "admin_users", column: "created_by_id"
   add_foreign_key "targets", "admin_users", column: "updated_by_id"
   add_foreign_key "targets", "geographies"
   add_foreign_key "targets", "laws_sectors", column: "sector_id"
-  add_foreign_key "targets", "target_scopes"
 end
