@@ -10,6 +10,7 @@ import {
 } from 'react-simple-maps';
 import Select, { components } from 'react-select';
 import { geoPath, geoEqualEarth } from 'd3-geo';
+import orderBy from 'lodash/orderBy';
 import { feature } from 'topojson-client';
 import reducer, { initialState } from './world-map.reducer';
 import { useMarkers, useScale, useCombinedLayer } from './world-map.hooks';
@@ -109,7 +110,7 @@ function WorldMap({ zoomToGeographyIso }) {
     selectedContent
   );
   const scales = useScale(activeLayer);
-  const markers = useMarkers(activeLayer, scales);
+  const markers = orderBy(useMarkers(activeLayer, scales), 'weight');
 
   useEffect(() => {
     fetch('/cclow/api/map_indicators')

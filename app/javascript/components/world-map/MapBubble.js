@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Marker } from 'react-simple-maps';
 
 function MapBubble(props) {
-  const { weight, color, opacity, onMouseDown, currentZoom, ...markerProps } = props;
+  const { weight, color, onMouseDown, currentZoom, ...markerProps } = props;
   const [clicked, setClicked] = useState(false);
 
   const bubble = useRef(null);
@@ -34,8 +34,7 @@ function MapBubble(props) {
         ref={bubble}
         r={weight}
         fill={color}
-        fillOpacity={opacity}
-        strokeWidth={clicked ? '2' : '0'}
+        strokeWidth={clicked ? '2' : '0.5'}
         stroke="#2E3152"
         className="world-map__map-bubble"
         transform={`scale(${newScale})`}
