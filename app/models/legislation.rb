@@ -110,6 +110,12 @@ class Legislation < ApplicationRecord
     executive?
   end
 
+  def events_with_eventable_title
+    events
+      .joins('INNER JOIN legislations ON legislations.id = events.eventable_id')
+      .select('events.*, legislations.title as eventable_title')
+  end
+
   def date_passed
     events.where(event_type: 'law_passed').first&.date
   end

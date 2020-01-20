@@ -133,4 +133,10 @@ class Litigation < ApplicationRecord
       .order(:date)
       .last
   end
+
+  def events_with_eventable_title
+    events
+      .joins('INNER JOIN litigations ON litigations.id = events.eventable_id')
+      .select('events.*, litigations.title as eventable_title')
+  end
 end

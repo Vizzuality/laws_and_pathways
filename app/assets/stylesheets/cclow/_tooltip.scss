@@ -1,0 +1,18 @@
+@import 'colors';
+@import 'variables';
+
+.cclow-tooltip {
+  background: $white !important;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1), 0 0 20px 0 rgba(46,49,82,0.05);
+  color: $storm-gray !important;
+  opacity: 1 !important;
+  border: 1px solid $grey;
+  padding: 10px;
+  font-size: 12px;
+  line-height: 18px;
+  max-width: 200px;
+
+  &:after {
+    display: none;
+  }
+}
