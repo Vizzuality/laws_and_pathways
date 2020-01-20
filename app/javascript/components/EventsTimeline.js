@@ -47,6 +47,11 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
   const [tooltip, setTooltip] = useState(null);
   const eventsContainerEl = React.createRef();
   useEffect(() => checkButtons());
+  useEffect(() => {
+    if (isShowRightBtn) {
+      eventsContainerEl.current.scrollBy({left: events.length * eventSliderMoveBy});
+    }
+  }, []);
 
   let currentEvents = events.concat();
   if (isFiltered && (currentTypes || []).length !== 0) {
