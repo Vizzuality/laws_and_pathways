@@ -88,6 +88,11 @@ $m-map-container-height: 400px;
     &--active {
       stroke: $black;
     }
+
+    &--highlighted {
+      stroke: $black;
+      stroke-width: 2;
+    }
   }
 
   &__map-bubble {

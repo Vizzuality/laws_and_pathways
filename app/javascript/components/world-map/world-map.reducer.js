@@ -10,7 +10,8 @@ export const initialState = {
   data: {},
   selectedContextId: undefined,
   selectedContentId: undefined,
-  tooltipGeography: undefined
+  tooltipGeography: undefined,
+  countryHighlighted: ''
 };
 
 export default function worldMapReducer(state, action) {
@@ -48,6 +49,9 @@ export default function worldMapReducer(state, action) {
     }
     case 'setTooltipGeography': {
       return { ...state, tooltipGeography: action.payload };
+    }
+    case 'setCountryHighlighted': {
+      return { ...state, countryHighlighted: action.payload };
     }
     default:
       return state;

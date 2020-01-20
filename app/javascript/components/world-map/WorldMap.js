@@ -35,7 +35,8 @@ function WorldMap({ zoomToGeographyIso }) {
     selectedContentId,
     selectedContextId,
     tooltipGeography,
-    zoom
+    zoom,
+    countryHighlighted
   } = state;
 
   const mapContainer = useRef(null);
@@ -46,6 +47,7 @@ function WorldMap({ zoomToGeographyIso }) {
 
   const setData = (d) => dispatch({ type: 'setData', payload: d });
   const setGeos = (newGeos) => dispatch({ type: 'setGeos', payload: newGeos });
+  const setCountryHighlighted = (iso) => dispatch({ type: 'setCountryHighlighted', payload: iso });
 
   const context = (data || {}).context || [];
   const content = (data || {}).content || [];
@@ -162,6 +164,16 @@ function WorldMap({ zoomToGeographyIso }) {
       })).sort((a, b) => a.active - b.active);
   };
 
+  const unclickMarker = () => {
+    setCountryHighlighted('');
+    setTooltipGeography('');
+  };
+
+  const highlightCountryAndShowTooltip = (iso) => {
+    setCountryHighlighted(iso);
+    setTooltipGeography(iso);
+  };
+
   return (
     <React.Fragment>
       <div ref={mapContainer} className="world-map__container">
@@ -220,10 +232,18 @@ function WorldMap({ zoomToGeographyIso }) {
                   data-event="click"
                   onMouseDown={() => {
                     const { ISO_A3: iso } = geo.properties;
-                    setTooltipGeography(iso);
+                    if (countryHighlighted === iso) {
+                      unclickMarker();
+                    } else {
+                      highlightCountryAndShowTooltip(iso);
+                    }
                   }}
                   className={cx(
-                    'world-map__geography', { 'world-map__geography--active': geo.active }
+                    'world-map__geography',
+                    {
+                      'world-map__geography--active': geo.active,
+                      'world-map__geography--highlighted': geo.properties.ISO_A3 === countryHighlighted
+                    }
                   )}
                 />
               ))}
@@ -232,11 +252,16 @@ function WorldMap({ zoomToGeographyIso }) {
               <MapBubble
                 {...marker}
                 key={marker.iso}
+                clicked={countryHighlighted === marker.iso}
                 data-tip=""
                 data-event="click"
                 currentZoom={zoom}
                 onMouseDown={() => {
-                  setTooltipGeography(marker.iso);
+                  if (countryHighlighted === marker.iso) {
+                    unclickMarker();
+                  } else {
+                    highlightCountryAndShowTooltip(marker.iso);
+                  }
                 }}
               />
             ))}
