@@ -3,21 +3,22 @@
 @import "variables";
 @import "bulma/sass/utilities/all";
 
-$map-height: 640px;
-$m-map-height: 400px;
+$map-container-height: 420px;
+$map-height: 500px; // hide antarctica
+$m-map-container-height: 400px;
 
 .world-map {
   &__container {
     position: relative;
     width: 100%;
-    height: $m-map-height;
+    height: $m-map-container-height;
     margin-top: 30px;
     overflow: hidden;
     background-color: $grey-light;
     border: 1px solid $grey;
 
     @include desktop {
-      height: $map-height;
+      height: $map-container-height;
     }
   }
 
@@ -32,12 +33,8 @@ $m-map-height: 400px;
   }
 
   &__composable-map {
-    height: $m-map-height;
+    height: $map-height;
     width: 100%;
-
-    @include desktop {
-      height: $map-height;
-    }
   }
 
   &__tooltip-container {
@@ -166,7 +163,7 @@ $m-map-height: 400px;
   &__legend {
     border: 1px solid $grey;
     border-top: none;
-    padding: 42px 16px 16px 16px;
+    padding: 26px 16px 16px 16px;
     font-size: $size-8;
 
 
