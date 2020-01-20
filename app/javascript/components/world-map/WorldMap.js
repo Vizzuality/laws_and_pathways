@@ -216,6 +216,12 @@ function WorldMap({ zoomToGeographyIso }) {
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
+                  data-tip=""
+                  data-event="click"
+                  onMouseDown={() => {
+                    const { ISO_A3: iso } = geo.properties;
+                    setTooltipGeography(iso);
+                  }}
                   className={cx(
                     'world-map__geography', { 'world-map__geography--active': geo.active }
                   )}
