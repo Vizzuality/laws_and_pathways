@@ -26,7 +26,7 @@ module CSVExport
         CSV.generate do |csv|
           csv << headers
 
-          @companies.each do |company|
+          @companies.sort_by(&:name).each do |company|
             mq_assessment = @latest_mq_assessments_hash[company.id]
             cp_assessment = @latest_cp_assessments_hash[company.id]
 
@@ -51,10 +51,10 @@ module CSVExport
               cp_assessment&.cp_alignment,
               cp_assessment&.last_reported_year,
               company.sector.cp_unit,
-              cp_assessment&.assumptions,
               year_headers.map do |year|
                 cp_assessment&.emissions.try(:[], year)
-              end
+              end,
+              cp_assessment&.assumptions
             ].flatten
           end
         end
