@@ -580,14 +580,14 @@ mark {
     }
 
     &__tags {
-      display: flex;
+      line-height: 36px;
     }
 
     &__tag:not(body) {
       margin-top: 10px;
       border: none;
       border-radius: 0;
-      margin-right: 12px;
+      margin-right: 6px;
       background-color: $grey-light;
       color: $blue-dark;
       font-size: 0.75rem;

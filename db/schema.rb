@@ -259,8 +259,8 @@ ActiveRecord::Schema.define(version: 2020_01_20_172400) do
     t.string "link"
     t.bigint "content_id", null: false
     t.string "name"
-    t.datetime "created_at", default: "2020-01-17 12:59:01", null: false
-    t.datetime "updated_at", default: "2020-01-17 12:59:01", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["content_id"], name: "index_images_on_content_id"
   end
 
