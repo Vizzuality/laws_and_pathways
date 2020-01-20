@@ -1,7 +1,7 @@
 module Api
   module Presenters
     class Event
-      attr_reader :event, :timeline_type
+      attr_reader :event, :timeline_type, :eventable
 
       def self.call(event, timeline_type)
         new(event, timeline_type).call
@@ -9,10 +9,10 @@ module Api
 
       def initialize(event, timeline_type)
         @event = event
+        @eventable = event.eventable
         @timeline_type = timeline_type
       end
 
-      # rubocop:disable Metrics/AbcSize
       def call
         {
           id: event.id,
@@ -23,31 +23,29 @@ module Api
           date: event.date,
           description: event.description,
           eventable_title: timeline_type.eql?(:geography) ? event.eventable_title : event.description || event.title,
-          link: link(event.eventable_type, event.eventable_id)
+          link: link
         }
       end
-      # rubocop:enable Metrics/AbcSize
 
       private
 
-      def link(eventable_type, eventable_id)
-        if eventable_type.eql?('Legislation')
-          legislation_route(Legislation.find(eventable_id)&.geography_id, Legislation.find(eventable_id))
-        elsif eventable_type.eql?('Litigation')
+      def link
+        if eventable.is_a?(Legislation)
+          legislation_route
+        elsif eventable.is_a?(Litigation)
           url.cclow_geography_litigation_case_path(
-            Litigation.find(eventable_id)&.geography_id,
-            Litigation.find(eventable_id)
+            eventable&.geography_id, eventable
           )
-        elsif eventable_type.eql?('Geography')
-          url.cclow_geography_path(eventable_id)
+        elsif eventable.is_a?(Geography)
+          url.cclow_geography_path(eventable)
         end
       end
 
-      def legislation_route(geography, legislation)
-        if legislation.law?
-          url.cclow_geography_law_path(geography, legislation)
+      def legislation_route
+        if eventable.law?
+          url.cclow_geography_law_path(eventable&.geography_id, eventable)
         else
-          url.cclow_geography_policy_path(geography, legislation)
+          url.cclow_geography_policy_path(eventable&.geography_id, eventable)
         end
       end
 

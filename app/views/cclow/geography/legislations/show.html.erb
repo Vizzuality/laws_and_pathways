@@ -62,7 +62,7 @@
   <section class="section is-medium">
     <%= @legislation.description&.html_safe %>
   </section>
-  <% if @legislation_events.any? %>
+  <% if @legislation_events_with_links.any? %>
     <section class="section is-medium">
       <%= react_component("EventsTimeline", { events: @legislation_events_with_links }) %>
     </section>
