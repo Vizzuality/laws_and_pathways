@@ -15,7 +15,7 @@
 class Page < ApplicationRecord
   extend FriendlyId
 
-  friendly_id :title, use: [:slugged, :history], routes: :default
+  friendly_id :title, use: :slugged, routes: :default
 
   has_many :contents, dependent: :destroy
   has_many :images, through: :contents
