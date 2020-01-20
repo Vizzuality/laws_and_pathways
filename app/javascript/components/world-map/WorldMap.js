@@ -9,8 +9,7 @@ import {
   Geographies
 } from 'react-simple-maps';
 import Select, { components } from 'react-select';
-import { geoPath } from 'd3-geo';
-import { geoCylindricalEqualArea } from 'd3-geo-projection';
+import { geoPath, geoEqualEarth } from 'd3-geo';
 import { feature } from 'topojson-client';
 import reducer, { initialState } from './world-map.reducer';
 import { useMarkers, useScale, useCombinedLayer } from './world-map.hooks';
@@ -24,7 +23,7 @@ import MinusIcon from 'images/cclow/icons/minus.svg';
 import PlusIcon from 'images/cclow/icons/plus.svg';
 
 const geoUrl = 'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json';
-const PetersGall = geoCylindricalEqualArea().parallel(45);
+const projection = geoEqualEarth();
 
 function WorldMap({ zoomToGeographyIso }) {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -139,8 +138,8 @@ function WorldMap({ zoomToGeographyIso }) {
   }, []);
 
   const zoomToGeography = (geo) => {
-    const path = geoPath().projection(PetersGall);
-    const newCenter = PetersGall.invert(path.centroid(geo));
+    const path = geoPath().projection(projection);
+    const newCenter = projection.invert(path.centroid(geo));
 
     // calculate zoom level
     const bounds = path.bounds(geo);
@@ -202,7 +201,7 @@ function WorldMap({ zoomToGeographyIso }) {
           </div>
         </div>
         <ComposableMap
-          projection={PetersGall}
+          projection={projection}
           className="world-map__composable-map"
         >
           <ZoomableGroup

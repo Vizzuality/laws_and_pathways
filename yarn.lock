@@ -2813,7 +2813,7 @@ d3-geo-projection@^2.7.1:
     d3-geo "^1.10.0"
     resolve "^1.1.10"
 
-d3-geo@^1.10.0, d3-geo@^1.11.6:
+d3-geo@^1.10.0, d3-geo@^1.11.6, d3-geo@^1.11.9:
   version "1.11.9"
   resolved "https://registry.yarnpkg.com/d3-geo/-/d3-geo-1.11.9.tgz#77eaed14ba62fc2c0aef55cd2943849c866f7ae6"
   integrity sha512-9edcH6J3s/Aa3KJITWqFJbyB/8q3mMlA9Fi7z6yy+FAYMnRaxmC7jBhUnsINxVWD14GmqX3DK8uk7nV6/Ekt4A==
