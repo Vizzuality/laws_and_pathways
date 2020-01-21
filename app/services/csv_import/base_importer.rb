@@ -52,14 +52,6 @@ module CSVImport
 
     protected
 
-    def check_permissions_for_row(row)
-      return true unless current_user
-
-      # restrictions:
-      # - editors can't publish
-      raise_unauthorize_error(:publish) if current_user_is_editor? && row[:visibility_status] == 'published'
-    end
-
     def header_converters
       [:symbol]
     end
@@ -142,22 +134,6 @@ module CSVImport
 
       # add import error
       errors.add(:base, :invalid_row, message: readable_error_message, row: row_index)
-    end
-
-    def current_user_is_editor?
-      current_user.role.to_s[/editor/]
-    end
-
-    def current_user
-      ::Current.admin_user
-    end
-
-    def raise_unauthorize_error(action)
-      raise CanCan::AccessDenied.new(
-        "You are not authorized to perform action '#{action}' on #{resource_klass}",
-        action,
-        resource_klass
-      )
     end
   end
 end

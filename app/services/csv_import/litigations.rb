@@ -8,8 +8,6 @@ module CSVImport
           puts "skipping #{row[:id]}"
           next
         end
-        # check_permissions_for_row(row)
-
         litigation = prepare_litigation(row)
         litigation.assign_attributes(litigation_attributes(row))
 
