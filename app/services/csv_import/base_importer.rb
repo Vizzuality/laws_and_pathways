@@ -5,6 +5,8 @@ module CSVImport
     attr_reader :file, :import_results
     attr_accessor :override_id
 
+    validate :check_if_current_user_authorized
+
     # @param file [File]
     # @param options [Hash]
     # @option override_id [Boolean] override automatic ids and make use of id in the import data
@@ -18,6 +20,8 @@ module CSVImport
 
       reset_import_results
       import_results[:rows] = csv.count
+
+      return false unless valid?
 
       ActiveRecord::Base.transaction(requires_new: true) do
         import
@@ -64,6 +68,17 @@ module CSVImport
     end
 
     private
+
+    def check_if_current_user_authorized
+      return unless current_user.present?
+      return if current_user.can?(:create, resource_klass) && current_user.can?(:update, resource_klass)
+
+      errors.add(:base, "User not authorized to import #{resource_klass}")
+    end
+
+    def current_user
+      ::Current.admin_user
+    end
 
     def reset_id_seq
       table_name = resource_klass.table_name

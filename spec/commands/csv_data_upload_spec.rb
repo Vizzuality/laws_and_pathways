@@ -46,29 +46,49 @@ describe 'CSVDataUpload (integration)' do
     end
 
     describe 'authorization errors' do
-      # Editor should't publish resources
-      let(:current_user_role) { 'editor_tpi' }
-
-      let(:legislations_to_publish_csv) { fixture_file('legislations_to_publish.csv') }
-
-      it 'does not import CSV files with Legislation data' do
-        # 2nd record (ID=20) should fail with auth error
-        csv_content = <<-CSV
+      let(:csv_content) do
+        <<-CSV
           Id,Law,Legislation type,Title,Date passed,Description,Geography,Geography iso,Sector,Frameworks,Document types,Keywords,Natural hazards,Visibility status
           10,101,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,"keyword1,keyword2",tsunami,draft
           20,102,legislative,Climate Law,15 Jan 2015,Desc,Poland,POL,Waste,"Mitigation",Law,"keyword1","flooding",published
           30,103,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,"keyword1,keyword2",tsunami,pending
         CSV
+      end
 
-        command = expect_data_upload_results(
-          Legislation,
-          fixture_file('legislations.csv', content: csv_content),
-          {new_records: 1, not_changed_records: 0, rows: 3, updated_records: 1},
-          false
-        )
+      context 'when user cannot import' do
+        # Editor should't publish resources
+        let(:current_user_role) { 'editor_tpi' }
 
-        expect(command.errors.messages[:base])
-          .to eq(['Error on row 2: Validation failed: You are not authorized to publish/unpublish this Entity.'])
+        it 'does not import anything from CSV file with Legislation data' do
+          # 2nd record (ID=20) should fail with auth error
+          command = expect_data_upload_results(
+            Legislation,
+            fixture_file('legislations.csv', content: csv_content),
+            {new_records: 0, not_changed_records: 0, rows: 3, updated_records: 0},
+            false
+          )
+
+          expect(command.errors.messages[:base])
+            .to eq(['User not authorized to import Legislation'])
+        end
+      end
+
+      context 'when user cannot publish through import' do
+        # Editor should't publish resources
+        let(:current_user_role) { 'editor_laws' }
+
+        it 'does not import one row from CSV files with Legislation data' do
+          # 2nd record (ID=20) should fail with auth error
+          command = expect_data_upload_results(
+            Legislation,
+            fixture_file('legislations.csv', content: csv_content),
+            {new_records: 1, not_changed_records: 0, rows: 3, updated_records: 1},
+            false
+          )
+
+          expect(command.errors.messages[:base])
+            .to eq(['Error on row 2: Validation failed: You are not authorized to publish/unpublish this Entity.'])
+        end
       end
     end
   end
