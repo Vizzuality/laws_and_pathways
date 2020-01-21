@@ -134,11 +134,36 @@ $m-map-container-height: 400px;
     right: 20px;
     height: 80px;
     width: 40px;
+  }
 
-    @include desktop {
-      top: 20px;
-      right: 20px;
+  &__eu-aggregation-button-container {
+    position: absolute;
+    top: 32px;
+    right: 20px;
+    padding: 8px 14px;
+    background-color: $athens-gray;
+    color: $dark;
+    font-size: 12px;
+    cursor: pointer;
+
+    .select-checkbox.checked {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 0;
     }
+  }
+
+  &__eu-aggregation-button {
+    outline: none;
+    border: none;
+    font-family: $family-sans-serif;
+    font-weight: normal;
+    background-color: $athens-gray;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    cursor: pointer;
   }
 
   &__controls-zoom-in,

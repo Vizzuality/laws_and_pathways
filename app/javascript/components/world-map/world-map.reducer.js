@@ -7,11 +7,13 @@ export const initialState = {
   zoom: 1,
   center: [0, 0],
   geos: [],
+  geosWithEU: [],
   data: {},
   selectedContextId: undefined,
   selectedContentId: undefined,
   tooltipGeography: undefined,
-  countryHighlighted: ''
+  countryHighlighted: '',
+  isEUAggregated: false
 };
 
 export default function worldMapReducer(state, action) {
@@ -52,6 +54,12 @@ export default function worldMapReducer(state, action) {
     }
     case 'setCountryHighlighted': {
       return { ...state, countryHighlighted: action.payload };
+    }
+    case 'setGeosWithEU': {
+      return { ...state, geosWithEU: action.payload };
+    }
+    case 'setIsEUAggregated': {
+      return { ...state, isEUAggregated: action.payload };
     }
     default:
       return state;

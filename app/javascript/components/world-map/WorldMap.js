@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useRef } from 'react';
+import React, { useReducer, useMemo, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 import cx from 'classnames';
@@ -11,7 +11,7 @@ import {
 import Select, { components } from 'react-select';
 import { geoPath, geoEqualEarth } from 'd3-geo';
 import orderBy from 'lodash/orderBy';
-import { feature } from 'topojson-client';
+import { feature, mergeArcs } from 'topojson-client';
 import reducer, { initialState } from './world-map.reducer';
 import { useMarkers, useScale, useCombinedLayer } from './world-map.hooks';
 import chevronIconBlack from '../../../assets/images/icon_chevron_dark/chevron_down_black-1.svg';
@@ -19,6 +19,7 @@ import chevronIconBlack from '../../../assets/images/icon_chevron_dark/chevron_d
 import MapBubble from './MapBubble';
 import MapLegend from './MapLegend';
 import MapTooltip from './MapTooltip';
+import { EU_COUNTRIES } from './constants';
 
 import MinusIcon from 'images/cclow/icons/minus.svg';
 import PlusIcon from 'images/cclow/icons/plus.svg';
@@ -32,11 +33,13 @@ function WorldMap({ zoomToGeographyIso }) {
     data,
     center,
     geos,
+    geosWithEU,
     selectedContentId,
     selectedContextId,
     tooltipGeography,
     zoom,
-    countryHighlighted
+    countryHighlighted,
+    isEUAggregated
   } = state;
 
   const mapContainer = useRef(null);
@@ -47,7 +50,9 @@ function WorldMap({ zoomToGeographyIso }) {
 
   const setData = (d) => dispatch({ type: 'setData', payload: d });
   const setGeos = (newGeos) => dispatch({ type: 'setGeos', payload: newGeos });
+  const setGeosWithEU = (newGeo) => dispatch({ type: 'setGeosWithEU', payload: newGeo });
   const setCountryHighlighted = (iso) => dispatch({ type: 'setCountryHighlighted', payload: iso });
+  const toggleIsEUAggregated = () => dispatch({ type: 'setIsEUAggregated', payload: !isEUAggregated });
 
   const context = (data || {}).context || [];
   const content = (data || {}).content || [];
@@ -109,10 +114,32 @@ function WorldMap({ zoomToGeographyIso }) {
 
   const activeLayer = useCombinedLayer(
     selectedContext,
-    selectedContent
+    selectedContent,
+    isEUAggregated
   );
   const scales = useScale(activeLayer);
-  const markers = orderBy(useMarkers(activeLayer, scales), 'weight');
+  const markers = orderBy(useMarkers(activeLayer, scales, isEUAggregated), 'weight');
+
+  const correctGeos = useMemo(() => (isEUAggregated ? geosWithEU : geos),
+    [isEUAggregated, geosWithEU, geos]);
+
+  const setGeosWithEuropeanUnionBorders = (json) => {
+    const geosWithEu = JSON.parse(JSON.stringify(json));
+    const europeanUnionGeo = mergeArcs(
+      geosWithEu,
+      geosWithEu.objects.ne_110m_admin_0_countries.geometries.filter(g => EU_COUNTRIES.includes(g.properties.ISO_A3))
+    );
+    const euGeoWithProperties = {
+      ...europeanUnionGeo,
+      properties: {
+        ISO_A3: 'EUR',
+        NAME: 'European Union'
+      }
+    };
+    geosWithEu.objects.ne_110m_admin_0_countries.geometries.push(euGeoWithProperties);
+
+    setGeosWithEU(geosWithEu);
+  };
 
   useEffect(() => {
     fetch('/cclow/api/map_indicators')
@@ -127,6 +154,7 @@ function WorldMap({ zoomToGeographyIso }) {
       .then((response) => response.json())
       .then((json) => {
         setGeos(json);
+        setGeosWithEuropeanUnionBorders(json);
 
         if (zoomToGeographyIso) {
           const feats = feature(
@@ -185,6 +213,14 @@ function WorldMap({ zoomToGeographyIso }) {
             <img src={MinusIcon} alt="zoom-out" />
           </button>
         </div>
+        <div className="world-map__eu-aggregation-button-container">
+          <button type="button" onClick={toggleIsEUAggregated} className="world-map__eu-aggregation-button">
+            <input type="checkbox" hidden checked={isEUAggregated} onChange={() => {}} />
+            {isEUAggregated && <div className="checked select-checkbox"><i className="fa fa-check" /></div>}
+            {!isEUAggregated && <div className="unchecked select-checkbox" />}
+            Show EU aggregated data
+          </button>
+        </div>
         <div className="world-map__selectors">
           <div className="world-map__selector">
             <label>Content</label>
@@ -223,7 +259,7 @@ function WorldMap({ zoomToGeographyIso }) {
             onZoomEnd={onZoomEnd}
             className="world-map__zoomable-group"
           >
-            <Geographies geography={geos} className="world-map__geographies">
+            <Geographies geography={correctGeos} className="world-map__geographies">
               {({ geographies }) => mapAndSortActiveGeography(geographies).map(geo => (
                 <Geography
                   key={geo.rsmKey}

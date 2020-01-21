@@ -23,3 +23,34 @@ export const BUBBLE_MIN_RADIUS = 4;
 export const BUBBLE_MAX_RADIUS = 24;
 
 export const BUBBLE_LEGEND_RADIUSES = [4, 8, 16, 24];
+
+export const EU_COUNTRIES = [
+  'AUT',
+  'BEL',
+  'BGR',
+  'CYP',
+  'CZE',
+  'DEU',
+  'DNK',
+  'ESP',
+  'EST',
+  'FIN',
+  'FRA',
+  'GBR',
+  'GRC',
+  'HRV',
+  'HUN',
+  'IRL',
+  'ITA',
+  'LTU',
+  'LUX',
+  'LVA',
+  'MLT',
+  'NLD',
+  'POL',
+  'PRT',
+  'ROU',
+  'SVK',
+  'SVN',
+  'SWE'
+];
