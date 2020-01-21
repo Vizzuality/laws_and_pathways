@@ -52,20 +52,6 @@ export function useCombinedLayer(selectedContext, selectedContent, isEUAggregate
       });
     });
 
-    if (isEUAggregated) {
-      const contentValues = features.filter((f) => EU_COUNTRIES.includes(f.iso)).map((f) => f.contentValue);
-      const aggregatedContentValue = contentValues.reduce((acc, curr) => acc + curr, 0);
-
-      const contextValues = features.filter((f) => EU_COUNTRIES.includes(f.iso)).map((f) => f.contextValue);
-      const aggregatedContextValue = contextValues.reduce((acc, curr) => acc + curr, 0);
-
-      features.push({
-        iso: 'EUR',
-        contentValue: aggregatedContentValue,
-        contextValue: aggregatedContextValue
-      });
-    }
-
     return {
       ramp: selectedContext.ramp,
       features
@@ -82,7 +68,7 @@ export function useMarkers(activeLayer, scales, isEUAggregated = false) {
     const features = activeLayer
       .features
       .map(feature => {
-        if (isEUAggregated && EU_COUNTRIES.includes(feature.iso)) return null;
+        if ((isEUAggregated && EU_COUNTRIES.includes(feature.iso)) || (!isEUAggregated && feature.iso === 'EUR')) return null;
         const coordinates = centroids[feature.iso];
 
         if (!coordinates) return null;
@@ -97,5 +83,5 @@ export function useMarkers(activeLayer, scales, isEUAggregated = false) {
       .filter(x => x);
 
     return features;
-  }, [activeLayer, isEUAggregated]);
+  }, [activeLayer, scales, isEUAggregated]);
 }
