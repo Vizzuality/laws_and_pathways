@@ -68,7 +68,7 @@ describe 'CSVDataUpload (integration)' do
         )
 
         expect(command.errors.messages[:base])
-          .to eq(['Error on row 2: You are not authorized to publish/unpublish this Legislation.'])
+          .to eq(['Error on row 2: Validation failed: You are not authorized to publish/unpublish this Entity.'])
       end
     end
   end

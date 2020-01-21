@@ -11,19 +11,16 @@ module VisibilityStatus
     validates_presence_of :visibility_status
     validates :visibility_status, inclusion: {in: VISIBILITY}
 
-    before_save :authorize_publication!, if: -> { publishing? || unpublishing? }
+    validate :user_can_publish, if: -> { publishing? || unpublishing? }
   end
 
-  def authorize_publication!
+  def user_can_publish
     # skipping for all places where user is not defined
     # TODO: not a great way to do this I know
     return unless ::Current.admin_user.present?
+    return if ::Current.admin_user.can?(:publish, self)
 
-    ::Current.admin_user.authorize!(
-      :publish,
-      self,
-      message: "You are not authorized to publish/unpublish this #{self.class.name}"
-    )
+    errors.add(:base, 'You are not authorized to publish/unpublish this Entity')
   end
 
   def publishing?
