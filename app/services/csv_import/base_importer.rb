@@ -112,8 +112,6 @@ module CSVImport
       handle_row_error(row_index, e, "for data: #{e.record.attributes}")
     rescue ActiveRecord::RecordNotFound, ArgumentError => e
       handle_row_error(row_index, e)
-    rescue CanCan::AccessDenied => e
-      handle_row_error(row_index, e)
     end
 
     def update_import_results(was_new_record, any_changes)
