@@ -19,6 +19,11 @@ module CCLOW
 
     def set_geography
       @geography = GeographyDecorator.decorate(::Geography.find(params[:geography_id] || params[:id]))
+
+      @geography_events = @geography.self_and_related_events
+      @geography_events_with_links = @geography_events.map do |e|
+        ::Api::Presenters::Event.call(e, :geography)
+      end
     end
 
     def set_geography_overview
