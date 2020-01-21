@@ -5,7 +5,7 @@
   <%= render 'cclow/geographies/overview', geography_overview: @geography_overview, geography: @geography %>
   <% if @geography_events.any? %>
     <section class="section is-large">
-      <% event_options = Geography::EVENT_TYPES.map{|type| {value: type, label: type.humanize}} %>
+      <% event_options = @geography_events_with_links.map{|o| {value: o[:event_type], label: o[:event_type].humanize}}.uniq.sort{ |a, b| a[:value] <=> b[:value] } %>
       <%= react_component("EventsTimeline", { events: @geography_events_with_links, options: event_options, isFiltered: true }) %>
     </section>
   <% end %>
