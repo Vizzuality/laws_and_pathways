@@ -10,7 +10,7 @@
     menu priority: 6, parent: (page_class == 'TPIPage' ? 'TPI' : 'Laws')
 
     permit_params :title, :slug, :description, :menu,
-                  contents_attributes: [:id, :title, :content_type, :text, :_destroy,
+                  contents_attributes: [:id, :title, :content_type, :text, :_destroy, :youtube_link, :youtube_image,
                                         images_attributes: [:id, :link, :logo, :name, :_destroy]],
                   content_ids: []
 
@@ -46,6 +46,14 @@
                 column :title
                 column :content_type
                 column :text
+                column :youtube_link do |content|
+                  div do
+                    content.youtube_image
+                  end
+                  div do
+                    content.youtube_link
+                  end
+                end
                 column :images do |content|
                   if content.images.any?
                     span do

@@ -4,6 +4,7 @@
   <%= form.input :title %>
   <%= form.input :content_type %>
   <%= form.input :text, as: :trix %>
+  <%= form.input :youtube_link %>
   <%= form.inputs 'Images' do %>
     <%= render 'admin/pages/image', form: form %>
   <% end %>
