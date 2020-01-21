@@ -26,7 +26,7 @@ class Company < ApplicationRecord
   include PublicActivityTrackable
   extend FriendlyId
 
-  friendly_id :name, use: :slugged, routes: :default
+  friendly_id :name, use: [:slugged, :history], routes: :default
 
   MARKET_CAP_GROUPS = %w[small medium large].freeze
 
@@ -50,6 +50,10 @@ class Company < ApplicationRecord
   validates :ca100, inclusion: {in: [true, false]}
   validates_presence_of :name, :slug, :isin, :market_cap_group
   validates_uniqueness_of :slug, :name
+
+  def should_generate_new_friendly_id?
+    name_changed? || super
+  end
 
   def to_s
     name

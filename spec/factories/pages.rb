@@ -14,9 +14,17 @@
 
 FactoryBot.define do
   factory :page do
-    title { 'MyString' }
+    sequence(:title) { |n| 'title -' + ('AA'..'ZZ').to_a[n] }
     description { 'MyText' }
-    slug { 'MyString' }
-    type { 'TPIPage' }
+
+    factory :tpi_page do
+      menu { TPIPage::MENU_HEADERS.sample }
+      type { 'TPIPage' }
+    end
+
+    factory :cclow_page do
+      menu { CCLOWPage::MENU_HEADERS.sample }
+      type { 'CCLOWPage' }
+    end
   end
 end

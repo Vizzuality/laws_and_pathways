@@ -12,7 +12,7 @@
 
 class TPISector < ApplicationRecord
   extend FriendlyId
-  friendly_id :name, use: :slugged, routes: :default
+  friendly_id :name, use: [:slugged, :history], routes: :default
 
   has_many :companies, foreign_key: 'sector_id'
   has_many :cp_benchmarks, class_name: 'CP::Benchmark', foreign_key: 'sector_id'
@@ -22,6 +22,10 @@ class TPISector < ApplicationRecord
 
   validates_presence_of :name, :slug
   validates_uniqueness_of :name, :slug
+
+  def should_generate_new_friendly_id?
+    name_changed? || super
+  end
 
   def latest_released_benchmarks
     cp_benchmarks.group_by(&:release_date).max&.last || []

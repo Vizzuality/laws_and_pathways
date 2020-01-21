@@ -27,6 +27,13 @@ RSpec.describe TPISector, type: :model do
     expect(build(:tpi_sector, name: 'Airlines')).to have(1).errors_on(:name)
   end
 
+  it 'should update slug when editing name' do
+    sector = create(:tpi_sector, name: 'Some name')
+    expect(sector.slug).to eq('some-name')
+    sector.update!(name: 'New name')
+    expect(sector.slug).to eq('new-name')
+  end
+
   describe '#latest_benchmarks_for_date' do
     let(:sector) { create(:tpi_sector) }
     let!(:first_benchmark) {

@@ -102,6 +102,10 @@ class Legislation < ApplicationRecord
   validates_presence_of :title, :slug
   validates_uniqueness_of :slug
 
+  def should_generate_new_friendly_id?
+    title_changed? || super
+  end
+
   def law?
     legislative?
   end

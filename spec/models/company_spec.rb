@@ -58,6 +58,13 @@ RSpec.describe Company, type: :model do
     expect(subject).to have(2).errors_on(:visibility_status)
   end
 
+  it 'should update slug when editing name' do
+    company = create(:company, name: 'Some name')
+    expect(company.slug).to eq('some-name')
+    company.update!(name: 'New name')
+    expect(company.slug).to eq('new-name')
+  end
+
   describe '#latest_cp_assessment' do
     it 'returns last CP assessments with most recent assessment date' do
       company = create(:company, cp_assessments: [

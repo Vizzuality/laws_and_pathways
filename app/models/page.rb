@@ -28,6 +28,10 @@ class Page < ApplicationRecord
 
   after_commit :reload_routes, only: [:create, :update, :destroy]
 
+  def should_generate_new_friendly_id?
+    title_changed? || super
+  end
+
   def reload_routes
     DynamicRouter.reload
   end

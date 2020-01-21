@@ -121,6 +121,10 @@ class Litigation < ApplicationRecord
 
   validates_presence_of :title, :slug, :document_type
 
+  def should_generate_new_friendly_id?
+    title_changed? || super
+  end
+
   def started_event
     events
       .where(event_type: EVENT_STARTED_TYPES)

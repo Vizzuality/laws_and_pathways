@@ -3,6 +3,7 @@ module TPI
     include UserDownload
 
     before_action :fetch_company
+    before_action :redirect_if_numeric_or_historic_slug, only: [:show]
     before_action :fetch_cp_assessment, only: [:show, :cp_assessment, :emissions_chart_data]
     before_action :fetch_mq_assessment, only: [:show, :mq_assessment, :assessments_levels_chart_data]
 
@@ -49,6 +50,10 @@ module TPI
 
     def fetch_company
       @company = Company.published.friendly.find(params[:id])
+    end
+
+    def redirect_if_numeric_or_historic_slug
+      redirect_to tpi_company_path(@company.slug), status: :moved_permanently if params[:id] != @company.slug
     end
 
     def fetch_cp_assessment

@@ -51,4 +51,11 @@ RSpec.describe Geography, type: :model do
     subject.visibility_status = nil
     expect(subject).to have(2).errors_on(:visibility_status)
   end
+
+  it 'should update slug when editing title' do
+    geography = create(:geography, name: 'Some name')
+    expect(geography.slug).to eq('some-name')
+    geography.update!(name: 'New name')
+    expect(geography.slug).to eq('new-name')
+  end
 end
