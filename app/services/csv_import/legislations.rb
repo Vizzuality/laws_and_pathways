@@ -9,7 +9,7 @@ module CSVImport
           puts "skipping #{row[:id]}"
           next
         end
-        check_permissions_for_row(row)
+        # check_permissions_for_row(row)
 
         legislation = prepare_legislation(row)
         legislation.frameworks = parse_tags(row[:frameworks], frameworks)

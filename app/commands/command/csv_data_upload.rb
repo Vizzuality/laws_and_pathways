@@ -35,6 +35,10 @@ module Command
       false
     end
 
+    def full_error_messages
+      errors.full_messages.join(', ')
+    end
+
     private
 
     def importer_name

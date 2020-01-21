@@ -8,7 +8,7 @@ module CSVImport
           puts "skipping #{row[:id]}"
           next
         end
-        check_permissions_for_row(row)
+        # check_permissions_for_row(row)
 
         target = prepare_target(row)
 

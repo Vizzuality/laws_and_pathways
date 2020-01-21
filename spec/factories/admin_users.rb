@@ -20,7 +20,13 @@ FactoryBot.define do
     sequence(:email) { |n| "admin#{n}#{rand(99_999)}@example.com" }
     first_name { 'Bobby' }
     last_name { 'Example' }
-    role { AdminUser::ROLES.first }
+    role { 'super_user' }
     password { 'secret' }
+
+    AdminUser::ROLES.each do |role|
+      trait role.to_sym do
+        role { role }
+      end
+    end
   end
 end

@@ -22,6 +22,8 @@
 
 FactoryBot.define do
   factory :target do
+    draft
+
     association :geography
     association :sector, factory: :laws_sector
     association :created_by, factory: :admin_user
@@ -32,6 +34,5 @@ FactoryBot.define do
     ghg_target { false }
     single_year { true }
     target_type { 'base_year_target' }
-    visibility_status { Litigation::VISIBILITY.first }
   end
 end

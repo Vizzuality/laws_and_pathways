@@ -4,7 +4,7 @@ module CSVImport
 
     def import
       import_each_csv_row(csv) do |row|
-        check_permissions_for_row(row)
+        # check_permissions_for_row(row)
 
         geography = prepare_geography(row)
         geography.political_groups = parse_tags(row[:political_groups], political_groups)

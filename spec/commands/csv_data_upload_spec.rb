@@ -10,7 +10,8 @@ describe 'CSVDataUpload (integration)' do
   let(:cp_assessments_csv) { fixture_file('cp_assessments.csv') }
   let(:mq_assessments_csv) { fixture_file('mq_assessments.csv') }
   let(:geographies_csv) { fixture_file('geographies.csv') }
-
+  let(:current_user_role) { 'super_user' }
+  let(:current_user) { build(:admin_user, role: current_user_role) }
   let(:countries) do
     [
       create(:geography, iso: 'POL', name: 'Poland'),
@@ -20,13 +21,13 @@ describe 'CSVDataUpload (integration)' do
     ]
   end
 
-  let(:current_user_role) { 'publisher_tpi' }
-  let(:current_user) { build(:admin_user, role: current_user_role) }
-
   before do
-    ::Current.admin_user = current_user
-
     countries
+    ::Current.admin_user = current_user
+  end
+
+  after do
+    ::Current.admin_user = nil
   end
 
   describe 'errors handling' do
@@ -67,7 +68,7 @@ describe 'CSVDataUpload (integration)' do
         )
 
         expect(command.errors.messages[:base])
-          .to eq(['Error on row 2: You are not authorized to perform action \'publish\' on Legislation.'])
+          .to eq(['Error on row 2: You are not authorized to publish/unpublish this Legislation.'])
       end
     end
   end
@@ -333,8 +334,13 @@ describe 'CSVDataUpload (integration)' do
 
     expect do
       expect(command).to be_valid
-      expect(command.call).to eq(expected_sucess),
-                              "Expected import command to #{expected_sucess ? 'succeed' : 'fail'}, but it did not"
+      expect(command.call).to(
+        eq(expected_sucess),
+        %(
+          Expected import command to #{expected_sucess ? 'succeed' : 'fail'}, but it did not.
+          error message: #{command.full_error_messages}
+        )
+      )
       expect(command.details.symbolize_keys).to eq(expected_details)
     end.to change(uploaded_resource_klass, :count).by(expected_details[:new_records])
 
