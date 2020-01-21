@@ -12,7 +12,22 @@ module VisibilityStatus
     validates :visibility_status, inclusion: {in: VISIBILITY}
 
     validate :user_can_publish, if: -> { publishing? || unpublishing? }
+    validate :user_can_archive, if: -> { archiving? }
   end
+
+  def archiving?
+    archived? && visibility_status_changed?
+  end
+
+  def publishing?
+    published? && visibility_status_changed?
+  end
+
+  def unpublishing?
+    visibility_status_was == 'published' && visibility_status_changed?
+  end
+
+  private
 
   def user_can_publish
     # skipping for all places where user is not defined
@@ -23,11 +38,10 @@ module VisibilityStatus
     errors.add(:base, 'You are not authorized to publish/unpublish this Entity')
   end
 
-  def publishing?
-    published? && visibility_status_changed?
-  end
+  def user_can_archive
+    return unless ::Current.admin_user.present?
+    return if ::Current.admin_user.can?(:archive, self)
 
-  def unpublishing?
-    visibility_status_was == 'published' && visibility_status_changed?
+    errors.add(:base, 'You are not authorized to archive this Entity')
   end
 end
