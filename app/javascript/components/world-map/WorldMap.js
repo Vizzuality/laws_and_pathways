@@ -39,10 +39,13 @@ function WorldMap({ zoomToGeographyIso }) {
     tooltipGeography,
     zoom,
     countryHighlighted,
-    isEUAggregated
+    isEUAggregated,
+    isDragging
   } = state;
 
   const mapContainer = useRef(null);
+
+  const isLeftBtnPressed = (e) => e.button === 0;
 
   const zoomIn = () => dispatch({ type: 'zoomIn' });
   const zoomOut = () => dispatch({ type: 'zoomOut' });
@@ -52,6 +55,7 @@ function WorldMap({ zoomToGeographyIso }) {
   const setGeos = (newGeos) => dispatch({ type: 'setGeos', payload: newGeos });
   const setGeosWithEU = (newGeo) => dispatch({ type: 'setGeosWithEU', payload: newGeo });
   const setCountryHighlighted = (iso) => dispatch({ type: 'setCountryHighlighted', payload: iso });
+  const setDragging = (newVal) => dispatch({ type: 'setDragging', payload: newVal });
   const toggleIsEUAggregated = () => dispatch({ type: 'setIsEUAggregated', payload: !isEUAggregated });
 
   const context = (data || {}).context || [];
@@ -268,13 +272,18 @@ function WorldMap({ zoomToGeographyIso }) {
                   geography={geo}
                   data-tip=""
                   data-event="click"
-                  onMouseDown={() => {
-                    const { ISO_A3: iso } = geo.properties;
-                    if (countryHighlighted === iso) {
-                      unclickCountry();
-                    } else if (hasMarker(iso)) {
-                      highlightCountryAndShowTooltip(iso);
+                  onMouseDown={() => { setDragging(false); }}
+                  onMouseMove={() => { setDragging(true); }}
+                  onMouseUp={e => {
+                    if (!isDragging && isLeftBtnPressed(e)) {
+                      const { ISO_A3: iso } = geo.properties;
+                      if (countryHighlighted === iso) {
+                        unclickCountry();
+                      } else if (hasMarker(iso)) {
+                        highlightCountryAndShowTooltip(iso);
+                      }
                     }
+                    setDragging(false);
                   }}
                   className={cx(
                     'world-map__geography',
@@ -294,12 +303,17 @@ function WorldMap({ zoomToGeographyIso }) {
                 data-tip=""
                 data-event="click"
                 currentZoom={zoom}
-                onMouseDown={() => {
-                  if (countryHighlighted === marker.iso) {
-                    unclickCountry();
-                  } else {
-                    highlightCountryAndShowTooltip(marker.iso);
+                onMouseDown={() => { setDragging(false); }}
+                onMouseMove={() => { setDragging(true); }}
+                onMouseUp={e => {
+                  if (!isDragging && isLeftBtnPressed(e)) {
+                    if (countryHighlighted === marker.iso) {
+                      unclickCountry();
+                    } else {
+                      highlightCountryAndShowTooltip(marker.iso);
+                    }
                   }
+                  setDragging(false);
                 }}
               />
             ))}

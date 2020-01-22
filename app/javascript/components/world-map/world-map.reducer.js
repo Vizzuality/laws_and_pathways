@@ -13,7 +13,8 @@ export const initialState = {
   selectedContentId: undefined,
   tooltipGeography: undefined,
   countryHighlighted: '',
-  isEUAggregated: false
+  isEUAggregated: false,
+  isDragging: false
 };
 
 export default function worldMapReducer(state, action) {
@@ -60,6 +61,9 @@ export default function worldMapReducer(state, action) {
     }
     case 'setIsEUAggregated': {
       return { ...state, isEUAggregated: action.payload };
+    }
+    case 'setDragging': {
+      return { ...state, isDragging: action.payload };
     }
     default:
       return state;
