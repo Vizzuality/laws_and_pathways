@@ -123,6 +123,8 @@ function WorldMap({ zoomToGeographyIso }) {
   const correctGeos = useMemo(() => (isEUAggregated ? geosWithEU : geos),
     [isEUAggregated, geosWithEU, geos]);
 
+  const hasMarker = (iso) => markers.some((m) => m.iso === iso);
+
   const setGeosWithEuropeanUnionBorders = (json) => {
     const geosWithEu = JSON.parse(JSON.stringify(json));
     const europeanUnionGeo = mergeArcs(
@@ -192,7 +194,7 @@ function WorldMap({ zoomToGeographyIso }) {
       })).sort((a, b) => a.active - b.active);
   };
 
-  const unclickMarker = () => {
+  const unclickCountry = () => {
     setCountryHighlighted('');
     setTooltipGeography('');
   };
@@ -269,8 +271,8 @@ function WorldMap({ zoomToGeographyIso }) {
                   onMouseDown={() => {
                     const { ISO_A3: iso } = geo.properties;
                     if (countryHighlighted === iso) {
-                      unclickMarker();
-                    } else {
+                      unclickCountry();
+                    } else if (hasMarker(iso)) {
                       highlightCountryAndShowTooltip(iso);
                     }
                   }}
@@ -294,7 +296,7 @@ function WorldMap({ zoomToGeographyIso }) {
                 currentZoom={zoom}
                 onMouseDown={() => {
                   if (countryHighlighted === marker.iso) {
-                    unclickMarker();
+                    unclickCountry();
                   } else {
                     highlightCountryAndShowTooltip(marker.iso);
                   }
