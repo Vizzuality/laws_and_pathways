@@ -2,6 +2,8 @@ module MQ
   class Question
     include ActiveModel::Model
 
+    ANSWERS = ['Yes', 'No', 'Not applicable'].freeze
+
     attr_accessor :level, :question, :answer, :number
 
     def key

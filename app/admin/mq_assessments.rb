@@ -7,7 +7,8 @@ ActiveAdmin.register MQ::Assessment do
 
   actions :all, except: [:new, :create]
 
-  permit_params :assessment_date, :publication_date, :company_id, :notes, :level
+  permit_params :assessment_date, :publication_date, :company_id, :notes, :level,
+                questions_attributes: [:answer]
 
   filter :assessment_date
   filter :methodology_version,
