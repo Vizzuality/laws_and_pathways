@@ -67,6 +67,17 @@ module MQ
       super
     end
 
+    # for semantic_fields_for
+    def questions_attributes=(attributes)
+      return if attributes.empty?
+
+      values = attributes.is_a?(Hash) ? attributes.values : attributes
+
+      self.questions = self[:questions].each_with_index.map do |q_hash, index|
+        q_hash.merge(answer: values[index]['answer'])
+      end
+    end
+
     def find_answer_by_key(key)
       questions.find { |q| q.key == key }.answer
     end

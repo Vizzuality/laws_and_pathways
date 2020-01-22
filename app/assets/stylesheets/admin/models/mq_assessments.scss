@@ -1,0 +1,16 @@
+.questions_table {
+  .select2-selection__clear {
+    display: none; // hide clear selection workaround
+  }
+
+  li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 170px;
+  }
+
+  td {
+    padding: 8px 4px;
+  }
+}

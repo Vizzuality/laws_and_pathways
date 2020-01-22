@@ -63,4 +63,65 @@ RSpec.describe Admin::MQAssessmentsController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH update' do
+    let!(:assessment_to_update) do
+      create(:mq_assessment,
+             company: company,
+             assessment_date: '2012-01-01',
+             publication_date: '2012-03-03',
+             level: '2',
+             notes: 'Old notes',
+             questions: [
+               {level: '0', question: 'Question 1', answer: 'Yes'},
+               {level: '1', question: 'Question 2', answer: 'No'},
+               {level: '1', question: 'Question 3', answer: 'No'},
+               {level: '2', question: 'Question 4', answer: 'Yes'}
+             ])
+    end
+
+    context 'with valid params' do
+      let(:valid_update_params) do
+        {
+          assessment_date: '2019-01-01',
+          publication_date: '2019-03-03',
+          level: '3',
+          notes: 'Some new notes',
+          questions_attributes: [
+            {answer: 'Yes'},
+            {answer: 'Not applicable'},
+            {answer: 'Yes'},
+            {answer: 'No'}
+          ]
+        }
+      end
+
+      subject { patch :update, params: {id: assessment_to_update.id, mq_assessment: valid_update_params} }
+
+      it 'does not create another record' do
+        expect { subject }.not_to change(MQ::Assessment, :count)
+      end
+
+      it 'updates existing Assessment' do
+        subject
+
+        assessment_to_update.reload
+
+        expect(assessment_to_update.level).to eq('3')
+        expect(assessment_to_update.assessment_date).to eq(Date.parse('2019-01-01'))
+        expect(assessment_to_update.publication_date).to eq(Date.parse('2019-03-03'))
+        expect(assessment_to_update.notes).to eq('Some new notes')
+        expect(assessment_to_update.read_attribute(:questions)).to contain_exactly(
+          {level: '0', question: 'Question 1', answer: 'Yes'}.with_indifferent_access,
+          {level: '1', question: 'Question 2', answer: 'Not applicable'}.with_indifferent_access,
+          {level: '1', question: 'Question 3', answer: 'Yes'}.with_indifferent_access,
+          {level: '2', question: 'Question 4', answer: 'No'}.with_indifferent_access
+        )
+      end
+
+      it 'redirects to the updated Assessment' do
+        expect(subject).to redirect_to(admin_mq_assessment_path(assessment_to_update))
+      end
+    end
+  end
 end
