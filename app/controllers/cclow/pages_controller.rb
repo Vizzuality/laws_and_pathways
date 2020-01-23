@@ -1,7 +1,7 @@
 module CCLOW
   class PagesController < CCLOWController
     def show
-      @page = PageDecorator.decorate(CCLOWPage.find(params[:id]))
+      @page = CCLOWPage.find(params[:id])
 
       @breadcrumb = [
         Site::Breadcrumb.new('Home', cclow_root_path),
