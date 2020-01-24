@@ -10,6 +10,8 @@ $arrow-btn-width: 48px;
 
   .timeline {
     display: flex;
+    align-items: center;
+    min-height: 150px;
     position: relative;
   }
 
@@ -53,6 +55,7 @@ $arrow-btn-width: 48px;
     margin: auto;
     width: 12px;
     position: relative;
+    cursor: pointer;
 
     &:before {
       content: "";
@@ -150,7 +153,7 @@ $arrow-btn-width: 48px;
     position: absolute;
     z-index: 1;
     border-radius: 50%;
-    top: 50px;
+    top: calc(50% - #{$arrow-btn-width / 2});
     cursor: pointer;
     display: flex;
     align-items: center;

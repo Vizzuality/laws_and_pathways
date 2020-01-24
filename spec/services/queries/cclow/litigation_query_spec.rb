@@ -8,26 +8,26 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
   let(:side_c2) { create(:litigation_side, name: 'Side C', side_type: 'c') }
 
   let!(:litigation1) {
-    litigation = create(:published_litigation)
+    litigation = create(:litigation, :published)
     litigation.litigation_sides << side_a1
     litigation.litigation_sides << side_b1
     litigation.litigation_sides << side_c1
     litigation
   }
   let!(:litigation2) {
-    litigation = create(:published_litigation)
+    litigation = create(:litigation, :published)
     litigation.litigation_sides << side_a2
     litigation
   }
   let!(:litigation3) {
-    litigation = create(:published_litigation)
+    litigation = create(:litigation, :published)
     litigation.litigation_sides << side_c2
     litigation
   }
-  let!(:litigation4) { create(:published_litigation) }
+  let!(:litigation4) { create(:litigation, :published) }
 
   # It shouldn't show, so total is 4 not 5 at max!
-  let!(:unpublished_litigation) { create(:litigation, visibility_status: 'draft') }
+  let!(:unpublished_litigation) { create(:litigation, :draft) }
 
   subject { described_class }
 

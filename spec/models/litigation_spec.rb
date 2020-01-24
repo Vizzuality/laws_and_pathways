@@ -40,4 +40,11 @@ RSpec.describe Litigation, type: :model do
     subject.visibility_status = nil
     expect(subject).to have(2).errors_on(:visibility_status)
   end
+
+  it 'should update slug when editing title' do
+    litigation = create(:litigation, title: 'Some title')
+    expect(litigation.slug).to eq('some-title')
+    litigation.update!(title: 'New title')
+    expect(litigation.slug).to eq('new-title')
+  end
 end

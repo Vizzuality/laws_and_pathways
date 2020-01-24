@@ -35,10 +35,6 @@ FactoryBot.define do
     at_issue { 'At issue Lorem ipsumumum' }
     visibility_status { Litigation::VISIBILITY.first }
 
-    factory :published_litigation do
-      visibility_status { 'published' }
-    end
-
     trait :with_sides do
       after(:create) do |l|
         create :litigation_side, litigation: l, side_type: 'a'

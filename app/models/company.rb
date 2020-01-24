@@ -27,7 +27,7 @@ class Company < ApplicationRecord
   include PublicActivityTrackable
   extend FriendlyId
 
-  friendly_id :name, use: :slugged, routes: :default
+  friendly_id :name, use: [:slugged, :history], routes: :default
 
   MARKET_CAP_GROUPS = %w[small medium large].freeze
 
@@ -54,6 +54,10 @@ class Company < ApplicationRecord
 
   scope :active, -> { where(active: true) }
   scope :published_active, -> { where(active: true, visibility_status: 'published') }
+
+  def should_generate_new_friendly_id?
+    name_changed? || super
+  end
 
   def to_s
     name

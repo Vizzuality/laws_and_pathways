@@ -9,6 +9,36 @@
     <%= f.input :notes %>
   <% end %>
 
+  <% unless f.object.new_record? %>
+    <div class="panel">
+      <h3>Questions</h3>
+      <div class="panel-contents padding-20">
+        <table class="questions_table">
+          <thead>
+            <th>Nr.</th>
+            <th>Question</th>
+            <th>Answer</th>
+          </thead>
+          <tbody>
+            <%= f.semantic_fields_for :questions do |fq| %>
+              <tr>
+                <td>
+                  <%= fq.object.key %>
+                </td>
+                <td>
+                  <%= fq.object.question %>
+                </td>
+                <td>
+                  <%= fq.input :answer, label: false, as: :select, collection: MQ::Question::ANSWERS %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% end %>
+
   <%= f.actions do %>
     <%= f.action :submit %>
     <%= f.action :cancel, :wrapper_html => { :class => 'cancel' } %>

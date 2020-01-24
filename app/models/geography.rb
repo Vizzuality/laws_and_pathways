@@ -88,6 +88,10 @@ class Geography < ApplicationRecord
   validates :federal, inclusion: {in: [true, false]}
   validates :region, inclusion: {in: REGIONS}
 
+  def should_generate_new_friendly_id?
+    name_changed? || super
+  end
+
   def indc_url
     return unless national?
 
@@ -98,16 +102,30 @@ class Geography < ApplicationRecord
     EU_COUNTRIES.include?(iso)
   end
 
+  def events_with_eventable_title
+    events
+      .joins('INNER JOIN geographies ON geographies.id = events.eventable_id')
+      .select('events.*, geographies.name as eventable_title')
+  end
+
   def self_and_related_events
     laws_events = Event.where(eventable_type: 'Legislation')
       .joins('INNER JOIN legislations ON legislations.id = events.eventable_id')
+      .select('events.*, legislations.title as eventable_title')
       .where('legislations.geography_id = ?', id)
 
     litigations_events = Event.where(eventable_type: 'Litigation')
       .joins('INNER JOIN litigations ON litigations.id = events.eventable_id')
+      .select('events.*, litigations.title as eventable_title')
       .where('litigations.geography_id = ?', id)
 
-    Event.from("(#{laws_events.to_sql} UNION #{litigations_events.to_sql} UNION #{events.to_sql}) AS events")
+    Event
+      .from(
+        "(#{laws_events.to_sql}
+        UNION #{litigations_events.to_sql}
+        UNION #{events_with_eventable_title.to_sql})
+        AS events"
+      )
       .order(date: :asc)
   end
 

@@ -102,12 +102,22 @@ class Legislation < ApplicationRecord
   validates_presence_of :title, :slug
   validates_uniqueness_of :slug
 
+  def should_generate_new_friendly_id?
+    title_changed? || super
+  end
+
   def law?
     legislative?
   end
 
   def policy?
     executive?
+  end
+
+  def events_with_eventable_title
+    events
+      .joins('INNER JOIN legislations ON legislations.id = events.eventable_id')
+      .select('events.*, legislations.title as eventable_title')
   end
 
   def date_passed

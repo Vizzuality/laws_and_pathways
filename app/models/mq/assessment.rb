@@ -24,6 +24,7 @@ module MQ
 
     scope :latest_first, -> { order(assessment_date: :desc) }
     scope :all_publication_dates, -> { distinct.order(publication_date: :desc).pluck(:publication_date) }
+    scope :all_methodology_versions, -> { distinct.order(methodology_version: :asc).pluck(:methodology_version) }
 
     validates :level, inclusion: {in: LEVELS}
     validates_presence_of :assessment_date, :publication_date, :level
@@ -64,6 +65,17 @@ module MQ
     def questions=(value)
       @questions = nil
       super
+    end
+
+    # for semantic_fields_for
+    def questions_attributes=(attributes)
+      return if attributes.empty?
+
+      values = attributes.is_a?(Hash) ? attributes.values : attributes
+
+      self.questions = self[:questions].each_with_index.map do |q_hash, index|
+        q_hash.merge(answer: values[index]['answer'])
+      end
     end
 
     def find_answer_by_key(key)

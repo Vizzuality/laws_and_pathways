@@ -16,7 +16,9 @@ ActiveAdmin.register Litigation do
                 legislation_ids: [], external_legislation_ids: [],
                 laws_sector_ids: []
 
+  filter :id_equals, label: 'ID'
   filter :title_contains
+  filter :citation_reference_number_contains, label: 'Citation Reference Number'
   filter :summary_contains
   filter :geography
   filter :responses,
@@ -46,12 +48,10 @@ ActiveAdmin.register Litigation do
 
   index do
     selectable_column
+    column :id
     column :title, class: 'max-width-300', &:title_link
     column :geography
     column :document_type
-    column :citation_reference_number
-    column :created_by
-    column :updated_by
     tag_column :visibility_status
 
     actions

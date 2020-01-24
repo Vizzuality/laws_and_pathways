@@ -121,6 +121,10 @@ class Litigation < ApplicationRecord
 
   validates_presence_of :title, :slug, :document_type
 
+  def should_generate_new_friendly_id?
+    title_changed? || super
+  end
+
   def started_event
     events
       .where(event_type: EVENT_STARTED_TYPES)
@@ -132,5 +136,11 @@ class Litigation < ApplicationRecord
     events.where.not(event_type: EVENT_STARTED_TYPES)
       .order(:date)
       .last
+  end
+
+  def events_with_eventable_title
+    events
+      .joins('INNER JOIN litigations ON litigations.id = events.eventable_id')
+      .select('events.*, litigations.title as eventable_title')
   end
 end

@@ -5,6 +5,7 @@ module TPI
     before_action :fetch_companies, only: [:show, :index]
     before_action :fetch_sectors, only: [:show, :index, :user_download_all]
     before_action :fetch_sector, only: [:show, :user_download]
+    before_action :redirect_if_numeric_or_historic_slug, only: [:show]
 
     def index
       @companies_by_sectors = ::Api::Charts::Sector.new(companies_scope(params)).companies_market_cap_by_sector
@@ -94,6 +95,10 @@ module TPI
 
     def fetch_sector
       @sector = TPISector.friendly.find(params[:id])
+    end
+
+    def redirect_if_numeric_or_historic_slug
+      redirect_to tpi_sector_path(@sector.slug), status: :moved_permanently if params[:id] != @sector.slug
     end
 
     def fetch_sectors

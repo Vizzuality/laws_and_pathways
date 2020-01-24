@@ -10,7 +10,7 @@
       <div class="pages__description"><%= content.text.html_safe %></div>
       <% if content.images.any? %>
         <div class="pages__content-logos">
-          <% content.images.each do |image| %>
+          <% content.images.order(:name).each do |image| %>
             <%= link_to(image_tag(image.logo), image.link) %>
           <% end %>
         </div>
