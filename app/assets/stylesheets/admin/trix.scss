@@ -1,3 +1,17 @@
+$button-cl: #00689f;
+
 .trix-button--icon-video::before {
   background-image: url('icon_youtube/youtube_gray.svg');
+}
+
+trix-toolbar {
+  .trix-dialog {
+    &--video {
+      max-width: 600px;
+    }
+
+    input[type="button"] {
+      background-color: $button-cl;
+    }
+  }
 }

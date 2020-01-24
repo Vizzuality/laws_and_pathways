@@ -3,11 +3,7 @@
 <%= content_tag :div, class: 'nested-fields', data: { controller: 'content', new_record: is_new_record } do %>
   <%= form.input :title %>
   <%= form.input :content_type %>
-  <li class="input">
-    <label class="label">Text</label>
-    <textarea id="content-trix-editor" hidden name="cclow_page[contents_attributes][0][text]"><%= form.object.text %></textarea>
-    <trix-editor input="content-trix-editor" data-controller="embed-trix"></trix-editor>
-  </li>
+  <%= form.input :text, as: :trix, embed_youtube: true %>
   <%= form.inputs 'Images' do %>
     <%= render 'admin/pages/image', form: form %>
   <% end %>

@@ -16,7 +16,7 @@ export default class extends Controller {
           <div class="trix-button-group">
             <input type="button" class="trix-button trix-button--dialog" value="Insert" 
               data-trix-method="setAttribute" data-trix-dialog-submit--video>
-            <input type="button" class="trix-button trix-button--dialog" value="Cancel" data-trix-method="removeAttribute"
+            <input type="button" class="trix-button trix-button--dialog" value="Cancel" data-trix-method="removeAttribute">
           </div>
         </div>
       </div>`;
