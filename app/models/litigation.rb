@@ -119,7 +119,7 @@ class Litigation < ApplicationRecord
     accepts_nested_attributes_for :events
   end
 
-  validates_presence_of :title, :slug, :document_type
+  validates_presence_of :title, :slug, :document_type, :geography
 
   def should_generate_new_friendly_id?
     title_changed? || super
