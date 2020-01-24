@@ -7,7 +7,7 @@ ActiveAdmin.register Company do
   config.batch_actions = false
 
   publishable_scopes
-  publishable_sidebar only: :show
+  publishable_resource_sidebar
 
   permit_params :name, :isin, :sector_id, :geography_id, :headquarters_geography_id,
                 :ca100, :market_cap_group, :visibility_status, :sedol,

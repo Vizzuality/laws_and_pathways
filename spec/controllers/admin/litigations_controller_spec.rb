@@ -134,10 +134,10 @@ RSpec.describe Admin::LitigationsController, type: :controller do
   end
 
   describe 'PATCH update' do
-    let!(:litigation_to_update) { create(:litigation, :with_sides) }
+    let!(:litigation_to_update) { create(:litigation, :draft, :with_sides) }
 
     context 'with valid params' do
-      let(:valid_update_params) { {title: 'title was updated'} }
+      let(:valid_update_params) { {title: 'title was updated', visibility_status: 'published'} }
 
       subject { patch :update, params: {id: litigation_to_update.id, litigation: valid_update_params} }
 
@@ -147,17 +147,48 @@ RSpec.describe Admin::LitigationsController, type: :controller do
 
       it 'updates existing Litigation' do
         expect { subject }.to change { litigation_to_update.reload.title }.to('title was updated')
+          .and change { litigation_to_update.visibility_status }.to('published')
       end
 
-      it 'creates "edited" activity' do
+      it 'creates "edited" activity when editing' do
+        patch :update, params: {id: litigation_to_update.id, litigation: valid_update_params.delete(:visibility_status)}
+
+        activity = PublicActivity::Activity.last
+
+        expect(activity.owner).to eq(admin)
+        expect(activity.trackable_id).to eq(litigation_to_update.id)
+        expect(activity.key).to eq('litigation.edited')
+      end
+
+      it 'creates "published" activity when publishing' do
         expect { subject }.to change(PublicActivity::Activity, :count).by(1)
 
-        expect(PublicActivity::Activity.last.trackable_id).to eq(litigation_to_update.id)
-        expect(PublicActivity::Activity.last.key).to eq('litigation.edited')
+        activity = PublicActivity::Activity.last
+
+        expect(activity.owner).to eq(admin)
+        expect(activity.trackable_id).to eq(litigation_to_update.id)
+        expect(activity.key).to eq('litigation.published')
       end
 
       it 'redirects to the updated Litigation' do
         expect(subject).to redirect_to(admin_litigation_path(litigation_to_update))
+      end
+
+      context 'as editor' do
+        let(:editor) { create(:admin_user, :editor_laws) }
+
+        before(:each) { sign_in editor }
+
+        it 'cannot publish' do
+          expect { subject }.not_to change(litigation_to_update, :visibility_status)
+        end
+
+        it 'cannot unpublish' do
+          published_litigation = create(:litigation, :published)
+          expect {
+            patch :update, params: {id: published_litigation.id, litigation: {visibility_status: 'draft'}}
+          }.not_to change(published_litigation, :visibility_status)
+        end
       end
     end
   end

@@ -20,6 +20,7 @@ gem 'activeadmin'
 gem 'activeadmin_addons'
 gem 'devise', '>= 4.7.1'
 gem 'cancancan'
+gem 'draper-cancancan'
 gem 'draper'
 
 gem 'octokit', '~> 4.15.0'
@@ -52,6 +53,7 @@ group :development, :test do
   gem 'rspec-collection_matchers'
   gem 'rspec-rails', '~> 3.8'
   gem 'timecop'
+  gem 'pry'
 end
 
 group :development do

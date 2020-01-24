@@ -4,7 +4,7 @@ ActiveAdmin.register Litigation do
   decorate_with LitigationDecorator
 
   publishable_scopes
-  publishable_sidebar only: :show
+  publishable_resource_sidebar
 
   permit_params :title, :geography_id, :document_type, :jurisdiction,
                 :visibility_status, :summary, :at_issue,
@@ -118,12 +118,14 @@ ActiveAdmin.register Litigation do
 
   form partial: 'form'
 
-  batch_action :publish,
-               priority: 1,
-               if: proc { current_scope&.name != 'Published' } do |ids|
-    publish_command = ::Command::Batch::Publish.new(batch_action_collection, ids)
+  can_batch_publish = proc { can?(:publish, Litigation) && current_scope&.name != 'Published' }
+  can_batch_archive = proc { can?(:archive, Litigation) && current_scope&.name != 'Archived' }
+  can_batch_destroy = proc { can?(:destroy, Litigation) }
 
-    message = if publish_command.call
+  batch_action :publish, priority: 1, if: can_batch_publish do |ids|
+    publish_command = ::Command::Batch::Publish.new(scoped_collection, ids)
+
+    message = if publish_command.call.present?
                 {notice: "Successfully published #{ids.count} Litigations"}
               else
                 {alert: 'Could not publish selected Litigations'}
@@ -132,12 +134,10 @@ ActiveAdmin.register Litigation do
     redirect_to collection_path(scope: 'published'), message
   end
 
-  batch_action :archive,
-               priority: 1,
-               if: proc { current_scope&.name != 'Archived' } do |ids|
-    archive_command = ::Command::Batch::Archive.new(batch_action_collection, ids)
+  batch_action :archive, priority: 1, if: can_batch_archive do |ids|
+    archive_command = ::Command::Batch::Archive.new(scoped_collection, ids)
 
-    message = if archive_command.call
+    message = if archive_command.call.present?
                 {notice: "Successfully archived #{ids.count} Litigations"}
               else
                 {alert: 'Could not archive selected Litigations'}
@@ -146,10 +146,10 @@ ActiveAdmin.register Litigation do
     redirect_to collection_path(scope: 'archived'), message
   end
 
-  batch_action :destroy do |ids|
-    delete_command = Command::Batch::Delete.new(batch_action_collection, ids)
+  batch_action :destroy, if: can_batch_destroy do |ids|
+    delete_command = Command::Batch::Delete.new(scoped_collection, ids)
 
-    message = if delete_command.call
+    message = if delete_command.call.present?
                 {notice: "Successfully deleted #{ids.count} Litigations"}
               else
                 {alert: 'Could not delete selected Litigations'}

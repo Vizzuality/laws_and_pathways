@@ -9,7 +9,6 @@ module CSVImport
           puts "skipping #{row[:id]}"
           next
         end
-
         legislation = prepare_legislation(row)
         legislation.frameworks = parse_tags(row[:frameworks], frameworks)
         legislation.document_types = parse_tags(row[:document_types], document_types)

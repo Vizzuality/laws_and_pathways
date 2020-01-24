@@ -21,12 +21,13 @@
 
 FactoryBot.define do
   factory :geography do
+    draft
+
     sequence(:name) { |n| "name-#{('AA'..'ZZ').to_a[n]}" }
     sequence(:iso) { |n| ('AAA'..'ZZZ').to_a[n] }
 
     geography_type { 'national' }
     region { Geography::REGIONS.sample }
-    visibility_status { Litigation::VISIBILITY.sample }
     federal { false }
 
     association :created_by, factory: :admin_user

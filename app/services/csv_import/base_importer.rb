@@ -5,6 +5,8 @@ module CSVImport
     attr_reader :file, :import_results
     attr_accessor :override_id
 
+    validate :check_if_current_user_authorized
+
     # @param file [File]
     # @param options [Hash]
     # @option override_id [Boolean] override automatic ids and make use of id in the import data
@@ -18,6 +20,8 @@ module CSVImport
 
       reset_import_results
       import_results[:rows] = csv.count
+
+      return false unless valid?
 
       ActiveRecord::Base.transaction(requires_new: true) do
         import
@@ -65,6 +69,17 @@ module CSVImport
 
     private
 
+    def check_if_current_user_authorized
+      return unless current_user.present?
+      return if current_user.can?(:create, resource_klass) && current_user.can?(:update, resource_klass)
+
+      errors.add(:base, "User not authorized to import #{resource_klass}")
+    end
+
+    def current_user
+      ::Current.admin_user
+    end
+
     def reset_id_seq
       table_name = resource_klass.table_name
       seq_name = "#{table_name}_id_seq"
@@ -100,13 +115,13 @@ module CSVImport
 
     def import_each_csv_row(csv)
       csv.each.with_index(2) do |row, row_index|
-        with_logging(row_index) do
+        handle_row_errors(row_index) do
           yield row
         end
       end
     end
 
-    def with_logging(row_index)
+    def handle_row_errors(row_index)
       yield
     rescue ActiveRecord::RecordInvalid => e
       handle_row_error(row_index, e, "for data: #{e.record.attributes}")
@@ -125,7 +140,7 @@ module CSVImport
     end
 
     def handle_row_error(row_index, exception, context_message = nil)
-      readable_error_message = "Error on row #{row_index}: #{exception.message}."
+      readable_error_message = "Error on row #{row_index - 1}: #{exception.message}."
 
       # log error with more details
       warn "[#{self.class.name}] #{readable_error_message} #{context_message}"

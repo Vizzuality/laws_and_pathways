@@ -136,6 +136,7 @@ GEM
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
     chartkick (3.3.0)
+    coderay (1.1.2)
     concurrent-ruby (1.1.5)
     connection_pool (2.2.2)
     countries (3.0.0)
@@ -166,6 +167,7 @@ GEM
       activemodel-serializers-xml (>= 1.0)
       activesupport (>= 5.0)
       request_store (>= 1.0)
+    draper-cancancan (1.1.1)
     erubi (1.9.0)
     execjs (2.7.0)
     factory_bot (5.1.1)
@@ -287,6 +289,9 @@ GEM
       activesupport (>= 4.2)
     polyamorous (2.3.0)
       activerecord (>= 5.0)
+    pry (0.12.2)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
     public_activity (1.6.4)
       actionpack (>= 3.0.0)
       activerecord (>= 3.0)
@@ -500,6 +505,7 @@ DEPENDENCIES
   discard
   dotenv-rails
   draper
+  draper-cancancan
   factory_bot_rails
   font-awesome-rails
   friendly_id
@@ -510,6 +516,7 @@ DEPENDENCIES
   octokit (~> 4.15.0)
   pg (>= 0.18, < 2.0)
   pg_search
+  pry
   public_activity
   puma (~> 4.3)
   rails (~> 6.0.1)
