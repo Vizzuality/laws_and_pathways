@@ -4,8 +4,6 @@ module CSVImport
 
     def import
       import_each_csv_row(csv) do |row|
-        check_permissions_for_row(row)
-
         company = prepare_company(row)
         company.assign_attributes(company_attributes(row))
 

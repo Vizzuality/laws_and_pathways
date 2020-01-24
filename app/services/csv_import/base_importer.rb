@@ -5,6 +5,8 @@ module CSVImport
     attr_reader :file, :import_results
     attr_accessor :override_id
 
+    validate :check_if_current_user_authorized
+
     # @param file [File]
     # @param options [Hash]
     # @option override_id [Boolean] override automatic ids and make use of id in the import data
@@ -18,6 +20,8 @@ module CSVImport
 
       reset_import_results
       import_results[:rows] = csv.count
+
+      return false unless valid?
 
       ActiveRecord::Base.transaction(requires_new: true) do
         import
@@ -52,14 +56,6 @@ module CSVImport
 
     protected
 
-    def check_permissions_for_row(row)
-      return true unless current_user
-
-      # restrictions:
-      # - editors can't publish
-      raise_unauthorize_error(:publish) if current_user_is_editor? && row[:visibility_status] == 'published'
-    end
-
     def header_converters
       [:symbol]
     end
@@ -72,6 +68,17 @@ module CSVImport
     end
 
     private
+
+    def check_if_current_user_authorized
+      return unless current_user.present?
+      return if current_user.can?(:create, resource_klass) && current_user.can?(:update, resource_klass)
+
+      errors.add(:base, "User not authorized to import #{resource_klass}")
+    end
+
+    def current_user
+      ::Current.admin_user
+    end
 
     def reset_id_seq
       table_name = resource_klass.table_name
@@ -120,8 +127,6 @@ module CSVImport
       handle_row_error(row_index, e, "for data: #{e.record.attributes}")
     rescue ActiveRecord::RecordNotFound, ArgumentError => e
       handle_row_error(row_index, e)
-    rescue CanCan::AccessDenied => e
-      handle_row_error(row_index, e)
     end
 
     def update_import_results(was_new_record, any_changes)
@@ -142,22 +147,6 @@ module CSVImport
 
       # add import error
       errors.add(:base, :invalid_row, message: readable_error_message, row: row_index)
-    end
-
-    def current_user_is_editor?
-      current_user.role.to_s[/editor/]
-    end
-
-    def current_user
-      ::Current.admin_user
-    end
-
-    def raise_unauthorize_error(action)
-      raise CanCan::AccessDenied.new(
-        "You are not authorized to perform action '#{action}' on #{resource_klass}",
-        action,
-        resource_klass
-      )
     end
   end
 end

@@ -10,7 +10,8 @@ describe 'CSVDataUpload (integration)' do
   let(:cp_assessments_csv) { fixture_file('cp_assessments.csv') }
   let(:mq_assessments_csv) { fixture_file('mq_assessments.csv') }
   let(:geographies_csv) { fixture_file('geographies.csv') }
-
+  let(:current_user_role) { 'super_user' }
+  let(:current_user) { build(:admin_user, role: current_user_role) }
   let(:countries) do
     [
       create(:geography, iso: 'POL', name: 'Poland'),
@@ -20,13 +21,13 @@ describe 'CSVDataUpload (integration)' do
     ]
   end
 
-  let(:current_user_role) { 'publisher_tpi' }
-  let(:current_user) { build(:admin_user, role: current_user_role) }
-
   before do
-    ::Current.admin_user = current_user
-
     countries
+    ::Current.admin_user = current_user
+  end
+
+  after do
+    ::Current.admin_user = nil
   end
 
   describe 'errors handling' do
@@ -45,29 +46,49 @@ describe 'CSVDataUpload (integration)' do
     end
 
     describe 'authorization errors' do
-      # Editor should't publish resources
-      let(:current_user_role) { 'editor_tpi' }
-
-      let(:legislations_to_publish_csv) { fixture_file('legislations_to_publish.csv') }
-
-      it 'does not import CSV files with Legislation data' do
-        # 2nd record (ID=20) should fail with auth error
-        csv_content = <<-CSV
+      let(:csv_content) do
+        <<-CSV
           Id,Law,Legislation type,Title,Date passed,Description,Geography,Geography iso,Sector,Frameworks,Document types,Keywords,Natural hazards,Visibility status
           10,101,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,"keyword1,keyword2",tsunami,draft
           20,102,legislative,Climate Law,15 Jan 2015,Desc,Poland,POL,Waste,"Mitigation",Law,"keyword1","flooding",published
           30,103,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,"keyword1,keyword2",tsunami,pending
         CSV
+      end
 
-        command = expect_data_upload_results(
-          Legislation,
-          fixture_file('legislations.csv', content: csv_content),
-          {new_records: 1, not_changed_records: 0, rows: 3, updated_records: 1},
-          false
-        )
+      context 'when user cannot import' do
+        # Editor should't publish resources
+        let(:current_user_role) { 'editor_tpi' }
 
-        expect(command.errors.messages[:base])
-          .to eq(['Error on row 2: You are not authorized to perform action \'publish\' on Legislation.'])
+        it 'does not import anything from CSV file with Legislation data' do
+          # 2nd record (ID=20) should fail with auth error
+          command = expect_data_upload_results(
+            Legislation,
+            fixture_file('legislations.csv', content: csv_content),
+            {new_records: 0, not_changed_records: 0, rows: 3, updated_records: 0},
+            false
+          )
+
+          expect(command.errors.messages[:base])
+            .to eq(['User not authorized to import Legislation'])
+        end
+      end
+
+      context 'when user cannot publish through import' do
+        # Editor should't publish resources
+        let(:current_user_role) { 'editor_laws' }
+
+        it 'does not import one row from CSV files with Legislation data' do
+          # 2nd record (ID=20) should fail with auth error
+          command = expect_data_upload_results(
+            Legislation,
+            fixture_file('legislations.csv', content: csv_content),
+            {new_records: 1, not_changed_records: 0, rows: 3, updated_records: 1},
+            false
+          )
+
+          expect(command.errors.messages[:base])
+            .to eq(['Error on row 2: Validation failed: You are not authorized to publish/unpublish this Entity.'])
+        end
       end
     end
   end
@@ -333,8 +354,13 @@ describe 'CSVDataUpload (integration)' do
 
     expect do
       expect(command).to be_valid
-      expect(command.call).to eq(expected_sucess),
-                              "Expected import command to #{expected_sucess ? 'succeed' : 'fail'}, but it did not"
+      expect(command.call).to(
+        eq(expected_sucess),
+        %(
+          Expected import command to #{expected_sucess ? 'succeed' : 'fail'}, but it did not.
+          error message: #{command.full_error_messages}
+        )
+      )
       expect(command.details.symbolize_keys).to eq(expected_details)
     end.to change(uploaded_resource_klass, :count).by(expected_details[:new_records])
 

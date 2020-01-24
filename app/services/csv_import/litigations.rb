@@ -2,15 +2,12 @@ module CSVImport
   class Litigations < BaseImporter
     include UploaderHelpers
 
-    # rubocop:disable Metrics/AbcSize
     def import
       import_each_csv_row(csv) do |row|
         if override_id && Litigation.where(id: row[:id]).any?
           puts "skipping #{row[:id]}"
           next
         end
-        check_permissions_for_row(row)
-
         litigation = prepare_litigation(row)
         litigation.assign_attributes(litigation_attributes(row))
 
@@ -25,7 +22,6 @@ module CSVImport
         update_import_results(was_new_record, any_changes)
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     private
 

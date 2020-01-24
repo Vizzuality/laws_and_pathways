@@ -7,14 +7,6 @@ module SelectHelper
     current_admin_user.role.to_s[/editor/]
   end
 
-  def visibility_status_select_options
-    if current_user_is_editor?
-      {as: :select, input_html: {readonly: true, disabled: true}}
-    else
-      {as: :select}
-    end
-  end
-
   def allowed_user_roles_select_collection
     array_to_select_collection(allowed_user_roles_to_select, :titleize)
   end
