@@ -1,6 +1,7 @@
 <% content_for :page_title, "Climate Laws - #{@geography.name} - Litigation cases" %>
 <div class="container">
   <h3>Litigation cases</h3>
+
   <% if @litigations.any? %>
     <ul class="content-list">
       <% @litigations.each do |l| %>
@@ -9,14 +10,19 @@
     </ul>
   <% elsif @geography.iso == 'USA' %>
     <p>
-      The dataset does not include the United States – To access information
-      about climate change litigation in the US, please
+      For all US climate litigation cases, please
       <a href="http://climatecasechart.com/us-climate-change-litigation/" target="_blank" rel="noopener noreferrer">
-        click here to go to the Sabin Center / Arnold & Porter Kaye Scholer database</a>.
+        click here to go to the Sabin Center / Arnold & Porter Kaye Scholer database
+      </a>. This will take you to a different website and will open in a new window.
       <br />
-      This will take you to a different website and will open in a new window.
+      Summaries for a selection of US cases will be added here shortly.
     </p>
   <% else %>
-    <p>No litigation cases available for <%= @geography.name %>.</p>
+    <p>
+      Currently there are no litigation cases available for <%= @geography.name %>.
+      <br />
+      If you are aware of climate litigation cases and would like us to add them,
+      please <a href="mailto:gri.cgl@lse.ac.uk">contact us</a>.
+    </p>
   <% end %>
 </div>
