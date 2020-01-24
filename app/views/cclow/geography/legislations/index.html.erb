@@ -2,10 +2,14 @@
 <div class="geography-laws">
   <div class="container">
     <h3><%= params[:scope] == :laws ? 'Laws' : 'Policies' %></h3>
-    <ul class="content-list">
-      <% @legislations.uniq.each do |l| %>
-        <%= render 'cclow/geography/legislations/list_item', legislation: l %>
-      <% end %>
-    </ul>
+    <% if @legislations.any? %>
+      <ul class="content-list">
+        <% @legislations.uniq.each do |l| %>
+          <%= render 'cclow/geography/legislations/list_item', legislation: l %>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No data available for <%= @geography.name %>.</p>
+    <% end %>
   </div>
 </div>
