@@ -3,15 +3,17 @@
   "private": true,
   "scripts": {
     "start": "run-p -r rails:server js:server",
+    "lint": "run-p lint:rails lint:js",
     "lint:fix": "run-p lint:rails:fix lint:js:fix",
-    "lint:rails:fix": "yarn rails:lint -a",
+    "lint:js": "eslint app/javascript --ext js --ext jsx",
     "lint:js:fix": "yarn js:lint --fix",
+    "lint:rails": "bundle exec rubocop",
+    "lint:rails:fix": "yarn rails:lint -a",
+    "test": "run-p test:rails test:sast lint:rails",
+    "test:rails": "bundle exec rspec",
+    "test:sast": "bundle exec brakeman",
     "js:server": "yarn install && ./bin/webpack-dev-server",
-    "js:lint": "eslint app/javascript --ext js --ext jsx",
-    "test": "run-p rails:test rails:lint",
-    "rails:server": "bundle exec rails s",
-    "rails:test": "bundle exec rspec",
-    "rails:lint": "bundle exec rubocop"
+    "rails:server": "bundle exec rails s"
   },
   "dependencies": {
     "@babel/preset-react": "^7.7.0",
