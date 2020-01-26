@@ -9,11 +9,12 @@
     "lint:js:fix": "yarn js:lint --fix",
     "lint:rails": "bundle exec rubocop",
     "lint:rails:fix": "yarn rails:lint -a",
-    "test": "run-p test:rails test:sast lint:rails",
+    "test": "run-p test:rails test:sast lint:rails rails:bundle-audit",
     "test:rails": "bundle exec rspec",
     "test:sast": "bundle exec brakeman",
     "js:server": "yarn install && ./bin/webpack-dev-server",
-    "rails:server": "bundle exec rails s"
+    "rails:server": "bundle exec rails s",
+    "rails:bundle-audit": "bundle exec bundle-audit check --update"
   },
   "dependencies": {
     "@babel/preset-react": "^7.7.0",

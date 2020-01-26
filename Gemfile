@@ -59,6 +59,7 @@ end
 group :development do
   gem 'annotate'
   gem 'brakeman', require: false
+  gem 'bundler-audit', require: false
   gem 'bullet'
   gem 'capistrano', '~> 3.11', require: false
   gem 'capistrano-bundler'
