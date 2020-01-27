@@ -3,16 +3,18 @@ module CSVImport
     include ActiveModel::Model
 
     attr_reader :file, :import_results
-    attr_accessor :override_id
+    attr_accessor :override_id, :rollback_on_error
 
     validate :check_if_current_user_authorized
 
     # @param file [File]
     # @param options [Hash]
-    # @option override_id [Boolean] override automatic ids and make use of id in the import data
+    # @option override_id [Boolean] override automatic ids and make use of id in the import data, default: false
+    # @option rollback_on_error [Boolean] when true it rollbacks all changes when any row is not valid, default: false
     def initialize(file, options = {})
       @file = file
-      @override_id = options[:override_id] if options[:override_id]
+      @override_id = options.fetch(:override_id, false)
+      @rollback_on_error = options.fetch(:rollback_on_error, false)
     end
 
     def call
@@ -26,7 +28,8 @@ module CSVImport
       ActiveRecord::Base.transaction(requires_new: true) do
         import
         reset_id_seq if override_id
-        # raise ActiveRecord::Rollback if errors.any?
+
+        rollback if rollback_on_error && errors.any?
       end
 
       errors.empty?
@@ -68,6 +71,14 @@ module CSVImport
     end
 
     private
+
+    def rollback
+      import_results[:new_records] = 0
+      import_results[:updated_records] = 0
+      import_results[:not_changed_records] = 0
+
+      raise ActiveRecord::Rollback
+    end
 
     def check_if_current_user_authorized
       return unless current_user.present?
