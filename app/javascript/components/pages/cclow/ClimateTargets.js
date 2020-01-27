@@ -207,10 +207,10 @@ class ClimateTargets extends Component {
                         <div className="meta">
                           {target.geography && (
                             <Fragment>
-                              <div>
+                              <a href={target.geography_path}>
                                 <img src={`/images/flags/${target.geography.iso}.svg`} alt="" />
                                 {target.geography.name}
-                              </div>
+                              </a>
                             </Fragment>
                           )}
                           <div>{target.target_tags && target.target_tags.join(' | ')}</div>

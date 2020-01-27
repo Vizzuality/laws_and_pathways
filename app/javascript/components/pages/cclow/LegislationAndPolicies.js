@@ -212,10 +212,10 @@ class LegislationAndPolicies extends Component {
                       <div className="meta">
                         {legislation.geography && (
                           <Fragment>
-                            <div>
+                            <a href={legislation.geography_path}>
                               <img src={`/images/flags/${legislation.geography.iso}.svg`} alt="" />
                               {legislation.geography.name}
-                            </div>
+                            </a>
                           </Fragment>
                         )}
                         <div>

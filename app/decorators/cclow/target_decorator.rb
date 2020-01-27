@@ -13,11 +13,18 @@ module CCLOW
       target_tags.compact
     end
 
+    def geography_path
+      return nil if geography.nil?
+
+      h.cclow_geography_path(geography)
+    end
+
     def as_json(*)
       super.tap do |hash|
         hash['link'] = link
         hash['geography'] = model.geography
         hash['target_tags'] = target_tags
+        hash['geography_path'] = geography_path
       end
     end
   end
