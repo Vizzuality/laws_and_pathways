@@ -1,0 +1,21 @@
+{
+  "@context": "http://schema.org",
+  "type": "Dataset",
+  "temporalCoverage": "2016",
+  "license": "http://creativecommons.org/licenses/by/4.0/",
+  "keywords": ["Carbon dioxide", "Fossil fuel", "Emissions", "Land-Use change and forestry"],
+  "isAccessibleForFree": true,
+  "creator": {
+    "type": "Organization",
+    "contactPoint": {
+      "type": "ContactPoint",
+      "email": "jfriedrich@wri.org",
+      "contactType": "Dataset enquiries"
+    },
+    "url": "http://cait.wri.org/historical/",
+    "name": "World Resources Institute"
+  },
+  "sameAs": "https://www.climatewatchdata.org/ghg-emissions",
+  "name": "CAIT Country Greenhouse Gas Emissions Data (2016)",
+  "description": "This dataset shows total green house gas emissions from the use of coal, oil and gas (combustion and industrial processes), the process of gas flaring and the manufacture of cement, land-use changes, and forestry for the year 2016 grouped by country. As of December 2019, CAIT Historical Emission data contains sector-level greenhouse gas (GHG) emissions data for 185 countries and the European Union (EU) for the period 1990-2016, including emissions of the six major GHGs from most major sources and sinks. See http://cait.wri.org/docs/CAIT2.0_CountryGHG_Methods.pdf for details regarding data source and methodology. Cautions: CAIT data are derived from several sources. Any use of the Land-Use Change and Forestry or Agriculture indicator should be cited as FAO 2019, FAOSTAT Emissions Database. Any use of CO2 emissions from fuel combustion data should be cited as CO2 Emissions from Fuel Combustion, OECD/IEA, 2018."
+}
