@@ -53,7 +53,6 @@ class Company < ApplicationRecord
   validates_uniqueness_of :slug, :name
 
   scope :active, -> { where(active: true) }
-  scope :published_active, -> { where(active: true, visibility_status: 'published') }
 
   def should_generate_new_friendly_id?
     name_changed? || super

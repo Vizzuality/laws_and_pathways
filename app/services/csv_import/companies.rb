@@ -49,7 +49,8 @@ module CSVImport
         sedol: row[:sedol],
         latest_information: row[:latest_information],
         historical_comments: row[:historical_comments],
-        visibility_status: row[:visibility_status]
+        visibility_status: row[:visibility_status],
+        active: row[:active] || true
       }
     end
   end
