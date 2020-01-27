@@ -8,6 +8,12 @@ module CCLOW
       h.link_to(title, h.cclow_geography_policy_path(geography, model)) if policy?
     end
 
+    def geography_path
+      return nil if geography.nil?
+
+      h.cclow_geography_path(geography)
+    end
+
     def as_json(*)
       super.tap do |hash|
         hash['link'] = link
@@ -16,6 +22,7 @@ module CCLOW
         hash['last_change'] = model.last_event&.date&.strftime('%B, %Y')
         hash['legislation_type'] = model.legislation_type
         hash['legislation_type_humanize'] = model.legislation_type.humanize
+        hash['geography_path'] = geography_path
       end
     end
   end

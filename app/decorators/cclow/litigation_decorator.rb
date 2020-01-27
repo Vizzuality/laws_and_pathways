@@ -10,6 +10,12 @@ module CCLOW
       end
     end
 
+    def geography_path
+      return nil if geography.nil?
+
+      h.cclow_geography_path(geography)
+    end
+
     def as_json(*)
       super.tap do |hash|
         hash['link'] = link
@@ -17,6 +23,7 @@ module CCLOW
         hash['opened_in'] = model.started_event&.date&.year
         hash['last_development_in'] = model.last_non_starting_event&.date&.strftime('%B, %Y')
         hash['event_type'] = model.started_event&.event_type
+        hash['geography_path'] = geography_path
       end
     end
   end
