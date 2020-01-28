@@ -16,7 +16,7 @@ class TPISector < ApplicationRecord
 
   has_many :companies, foreign_key: 'sector_id'
   has_many :cp_benchmarks, class_name: 'CP::Benchmark', foreign_key: 'sector_id'
-  has_many :cp_units, class_name: 'CP::Unit', foreign_key: 'sector_id'
+  has_many :cp_units, class_name: 'CP::Unit', foreign_key: 'sector_id', inverse_of: :sector
 
   has_and_belongs_to_many :publications
   has_and_belongs_to_many :news_articles
@@ -31,7 +31,7 @@ class TPISector < ApplicationRecord
   end
 
   def latest_cp_unit
-    cp_units.order(:valid_since).last
+    cp_units.order('valid_since DESC NULLS LAST').first
   end
 
   def latest_released_benchmarks

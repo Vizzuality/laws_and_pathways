@@ -5,7 +5,7 @@ ActiveAdmin.register TPISector do
 
   menu priority: 5, parent: 'TPI'
 
-  permit_params :name, cp_units_attributes: [:unit, :valid_since, :_destroy]
+  permit_params :name, cp_units_attributes: [:id, :unit, :valid_since, :_destroy]
 
   filter :name_contains
 

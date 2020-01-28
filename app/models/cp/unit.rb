@@ -1,4 +1,4 @@
-class CP::Unit < ActiveRecord::Base
+class CP::Unit < ApplicationRecord
   belongs_to :sector, class_name: 'TPISector', foreign_key: 'sector_id'
 
   validates_presence_of :unit

@@ -6,6 +6,6 @@ class TPISectorDecorator < Draper::Decorator
   end
 
   def cp_units_list
-    model.cp_units.order(:valid_since).map(&:to_s)
+    model.cp_units.order('valid_since DESC NULLS LAST').map(&:to_s)
   end
 end
