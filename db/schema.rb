@@ -116,7 +116,6 @@ ActiveRecord::Schema.define(version: 2020_01_20_172400) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "content_type"
-    t.string "youtube_link"
     t.index ["page_id"], name: "index_contents_on_page_id"
   end
 
