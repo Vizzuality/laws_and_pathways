@@ -21,11 +21,17 @@ class TPISector < ApplicationRecord
   has_and_belongs_to_many :publications
   has_and_belongs_to_many :news_articles
 
+  accepts_nested_attributes_for :cp_units, allow_destroy: true, reject_if: :all_blank
+
   validates_presence_of :name, :slug
   validates_uniqueness_of :name, :slug
 
   def should_generate_new_friendly_id?
     name_changed? || super
+  end
+
+  def latest_cp_unit
+    cp_units.order(:valid_since).last
   end
 
   def latest_released_benchmarks

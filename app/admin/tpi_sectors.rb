@@ -1,17 +1,17 @@
 ActiveAdmin.register TPISector do
   config.batch_actions = false
 
+  decorate_with TPISectorDecorator
+
   menu priority: 5, parent: 'TPI'
 
-  permit_params :name, :cp_unit
+  permit_params :name, cp_units_attributes: [:unit, :valid_since, :_destroy]
 
   filter :name_contains
 
   index do
-    column :name do |sector|
-      link_to sector.name, admin_tpi_sector_path(sector)
-    end
-    column 'Carbon Performance Unit', &:cp_unit
+    column :name, &:name_link
+    column 'Carbon Performance Unit', &:latest_cp_unit
     column :slug
     actions
   end
@@ -22,7 +22,7 @@ ActiveAdmin.register TPISector do
         attributes_table do
           row :id
           row :name
-          row 'Carbon Performance Unit', &:cp_unit
+          list_row 'Carbon Performance Unit', &:cp_units_list
           row :slug
           row :created_at
           row :updated_at
@@ -59,14 +59,5 @@ ActiveAdmin.register TPISector do
     active_admin_comments
   end
 
-  form html: {'data-controller' => 'check-modified'} do |f|
-    f.semantic_errors(*f.object.errors.keys)
-
-    f.inputs do
-      f.input :name
-      f.input :cp_unit, label: 'Carbon Performance Unit'
-    end
-
-    f.actions
-  end
+  form partial: 'form'
 end
