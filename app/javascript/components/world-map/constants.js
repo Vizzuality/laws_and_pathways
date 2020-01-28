@@ -54,3 +54,5 @@ export const EU_COUNTRIES = [
   'SVN',
   'SWE'
 ];
+
+export const EU_ISO = 'EUR';

@@ -3,7 +3,7 @@ import { scaleLinear, scaleThreshold } from 'd3-scale';
 import { ckmeans } from 'simple-statistics';
 import centroids from './centroids';
 
-import { BUBBLE_MIN_RADIUS, BUBBLE_MAX_RADIUS, COLOR_RAMPS, EU_COUNTRIES } from './constants';
+import { BUBBLE_MIN_RADIUS, BUBBLE_MAX_RADIUS, COLOR_RAMPS, EU_COUNTRIES, EU_ISO } from './constants';
 
 export function useScale(layer) {
   return useMemo(() => {
@@ -68,7 +68,7 @@ export function useMarkers(activeLayer, scales, isEUAggregated = false) {
     const features = activeLayer
       .features
       .map(feature => {
-        if ((isEUAggregated && EU_COUNTRIES.includes(feature.iso)) || (!isEUAggregated && feature.iso === 'EUR')) return null;
+        if ((isEUAggregated && EU_COUNTRIES.includes(feature.iso)) || (!isEUAggregated && feature.iso === EU_ISO)) return null;
         const coordinates = centroids[feature.iso];
 
         if (!coordinates) return null;

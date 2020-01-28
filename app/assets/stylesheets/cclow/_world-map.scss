@@ -94,6 +94,10 @@ $m-map-container-height: 400px;
       stroke: $black;
       stroke-width: 2;
     }
+
+    &--hidden {
+      visibility: hidden;
+    }
   }
 
   &__map-bubble {

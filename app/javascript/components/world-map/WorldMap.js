@@ -1,4 +1,4 @@
-import React, { useReducer, useMemo, useEffect, useRef } from 'react';
+import React, { useReducer, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 import cx from 'classnames';
@@ -18,8 +18,8 @@ import chevronIconBlack from '../../../assets/images/icon_chevron_dark/chevron_d
 
 import MapBubble from './MapBubble';
 import MapLegend from './MapLegend';
-import MapTooltip from './MapTooltip';
-import { EU_COUNTRIES } from './constants';
+import ReactMapTooltip from './ReactMapTooltip';
+import { EU_COUNTRIES, EU_ISO } from './constants';
 
 import MinusIcon from 'images/cclow/icons/minus.svg';
 import PlusIcon from 'images/cclow/icons/plus.svg';
@@ -33,10 +33,8 @@ function WorldMap({ zoomToGeographyIso }) {
     data,
     center,
     geos,
-    geosWithEU,
     selectedContentId,
     selectedContextId,
-    tooltipGeography,
     zoom,
     countryHighlighted,
     isEUAggregated,
@@ -53,8 +51,12 @@ function WorldMap({ zoomToGeographyIso }) {
 
   const setData = (d) => dispatch({ type: 'setData', payload: d });
   const setGeos = (newGeos) => dispatch({ type: 'setGeos', payload: newGeos });
-  const setGeosWithEU = (newGeo) => dispatch({ type: 'setGeosWithEU', payload: newGeo });
-  const setCountryHighlighted = (iso) => dispatch({ type: 'setCountryHighlighted', payload: iso });
+  const setCountryHighlighted = (iso) => dispatch(
+    {
+      type: 'setCountryHighlighted',
+      payload: iso
+    }
+  );
   const setDragging = (newVal) => dispatch({ type: 'setDragging', payload: newVal });
   const toggleIsEUAggregated = () => dispatch({ type: 'setIsEUAggregated', payload: !isEUAggregated });
 
@@ -63,9 +65,6 @@ function WorldMap({ zoomToGeographyIso }) {
   const geographiesDB = (data || {}).geographies || [];
 
   const setCenter = newCenter => dispatch({ type: 'setCenter', payload: newCenter });
-
-  // tooltip
-  const setTooltipGeography = iso => dispatch({ type: 'setTooltipGeography', payload: geographiesDB.find(g => g.iso === iso) });
 
   // react-select
   const setContentId = selectedOption => dispatch({ type: 'setContentId', payload: selectedOption.value });
@@ -124,10 +123,15 @@ function WorldMap({ zoomToGeographyIso }) {
   const scales = useScale(activeLayer);
   const markers = orderBy(useMarkers(activeLayer, scales, isEUAggregated), 'weight');
 
-  const correctGeos = useMemo(() => (isEUAggregated ? geosWithEU : geos),
-    [isEUAggregated, geosWithEU, geos]);
+  const mapAndSortActiveGeography = (geographies) => {
+    if (!zoomToGeographyIso && !countryHighlighted) return geographies;
 
-  const hasMarker = (iso) => markers.some((m) => m.iso === iso);
+    return geographies
+      .map(geo => ({
+        active: geo.properties.ISO_A3 === zoomToGeographyIso || geo.properties.ISO_A3 === countryHighlighted,
+        ...geo
+      })).sort((a, b) => a.active - b.active);
+  };
 
   const setGeosWithEuropeanUnionBorders = (json) => {
     const geosWithEu = JSON.parse(JSON.stringify(json));
@@ -138,13 +142,13 @@ function WorldMap({ zoomToGeographyIso }) {
     const euGeoWithProperties = {
       ...europeanUnionGeo,
       properties: {
-        ISO_A3: 'EUR',
+        ISO_A3: EU_ISO,
         NAME: 'European Union'
       }
     };
     geosWithEu.objects.ne_110m_admin_0_countries.geometries.push(euGeoWithProperties);
 
-    setGeosWithEU(geosWithEu);
+    setGeos(geosWithEu);
   };
 
   useEffect(() => {
@@ -152,14 +156,25 @@ function WorldMap({ zoomToGeographyIso }) {
       .then((response) => response.json())
       .then((json) => {
         setData(json);
-      });
+      })
+      .then(() => ReactTooltip.rebuild()); // rebind react tooltip once data is fetched (data has tooltip content)
   }, []);
+
+  useEffect(() => {
+    ReactTooltip.rebuild();
+  }, [isEUAggregated]);
+
+  useEffect(() => {
+    const foundinDOM = document.getElementById(countryHighlighted);
+    if (foundinDOM && countryHighlighted) {
+      ReactTooltip.show(foundinDOM);
+    }
+  }, [countryHighlighted]);
 
   useEffect(() => {
     fetch(geoUrl)
       .then((response) => response.json())
       .then((json) => {
-        setGeos(json);
         setGeosWithEuropeanUnionBorders(json);
 
         if (zoomToGeographyIso) {
@@ -188,25 +203,35 @@ function WorldMap({ zoomToGeographyIso }) {
     onZoomEnd(null, { zoom: newZoom });
   };
 
-  const mapAndSortActiveGeography = (geographies) => {
-    if (!zoomToGeographyIso) return geographies;
-
-    return geographies
-      .map(geo => ({
-        active: geo.properties.ISO_A3 === zoomToGeographyIso,
-        ...geo
-      })).sort((a, b) => a.active - b.active);
-  };
-
   const unclickCountry = () => {
     setCountryHighlighted('');
-    setTooltipGeography('');
   };
 
-  const highlightCountryAndShowTooltip = (iso) => {
-    setCountryHighlighted(iso);
-    setTooltipGeography(iso);
+  const hasMarker = (iso) => markers.some((m) => m.iso === iso);
+  const bubble = (target) => target.className.baseVal.includes('world-map__map-bubble');
+  const countryWithBubble = (target) => target.className.baseVal
+    .includes('rsm-geography world-map__geography') && hasMarker(target.id.split('-')[1]);
+
+  const container = useMemo(() => (
+    document.getElementById(`geo-${countryHighlighted}`)
+      || document.getElementById(countryHighlighted) // || - some bubbles don't have corresponding geographies
+  ), [countryHighlighted]);
+
+  const handleClickOutside = (event) => {
+    if (!container.contains(event.target)
+      && !bubble(event.target)
+      && !countryWithBubble(event.target)) unclickCountry();
   };
+
+  useEffect(() => {
+    if (container && countryHighlighted) {
+      document.addEventListener('mouseup', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mouseup', handleClickOutside);
+    };
+  });
 
   return (
     <React.Fragment>
@@ -265,43 +290,51 @@ function WorldMap({ zoomToGeographyIso }) {
             onZoomEnd={onZoomEnd}
             className="world-map__zoomable-group"
           >
-            <Geographies geography={correctGeos} className="world-map__geographies">
-              {({ geographies }) => mapAndSortActiveGeography(geographies).map(geo => (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  data-tip=""
-                  data-event="click"
-                  onMouseDown={() => { setDragging(false); }}
-                  onMouseMove={() => { setDragging(true); }}
-                  onMouseUp={e => {
-                    if (!isDragging && isLeftBtnPressed(e)) {
-                      const { ISO_A3: iso } = geo.properties;
-                      if (countryHighlighted === iso) {
-                        unclickCountry();
-                      } else if (hasMarker(iso)) {
-                        highlightCountryAndShowTooltip(iso);
-                      }
-                    }
-                    setDragging(false);
-                  }}
-                  className={cx(
-                    'world-map__geography',
-                    {
-                      'world-map__geography--active': geo.active,
-                      'world-map__geography--highlighted': geo.properties.ISO_A3 === countryHighlighted
-                    }
-                  )}
-                />
-              ))}
+            <Geographies geography={geos} className="world-map__geographies">
+              {({ geographies }) => (mapAndSortActiveGeography(geographies) || []).map(geo => {
+                if (geo) {
+                  return (
+                    <Geography
+                      key={geo.rsmKey}
+                      data-tip=""
+                      data-for="geographyTooltip"
+                      id={`geo-${geo.properties.ISO_A3}`}
+                      onMouseDown={() => { setDragging(false); }}
+                      onMouseMove={() => { setDragging(true); }}
+                      onMouseUp={e => {
+                        if (!isDragging && isLeftBtnPressed(e)) {
+                          const { ISO_A3: iso } = geo.properties;
+                          if (countryHighlighted === iso) {
+                            unclickCountry();
+                          } else if (hasMarker(iso)) {
+                            setCountryHighlighted(iso);
+                          }
+                        }
+                        setDragging(false);
+                      }}
+                      geography={geo}
+                      className={cx(
+                        'world-map__geography',
+                        {
+                          'world-map__geography--active': geo.active,
+                          'world-map__geography--highlighted': geo.properties.ISO_A3 === countryHighlighted,
+                          'world-map__geography--hidden': !isEUAggregated && geo.properties.ISO_A3 === EU_ISO
+                        }
+                      )}
+                    />
+                  );
+                }
+                return null;
+              })}
             </Geographies>
             {(markers || []).map(marker => (
               <MapBubble
                 {...marker}
                 key={marker.iso}
+                id={marker.iso}
                 clicked={countryHighlighted === marker.iso}
                 data-tip=""
-                data-event="click"
+                data-for="geographyTooltip"
                 currentZoom={zoom}
                 onMouseDown={() => { setDragging(false); }}
                 onMouseMove={() => { setDragging(true); }}
@@ -310,7 +343,7 @@ function WorldMap({ zoomToGeographyIso }) {
                     if (countryHighlighted === marker.iso) {
                       unclickCountry();
                     } else {
-                      highlightCountryAndShowTooltip(marker.iso);
+                      setCountryHighlighted(marker.iso);
                     }
                   }
                   setDragging(false);
@@ -319,16 +352,25 @@ function WorldMap({ zoomToGeographyIso }) {
             ))}
           </ZoomableGroup>
         </ComposableMap>
-
-        {tooltipGeography && (
-          <ReactTooltip globalEventOff="click" clickable class="world-map__tooltip">
-            <MapTooltip
-              content={selectedContent}
-              context={selectedContext}
-              geography={tooltipGeography}
-            />
-          </ReactTooltip>
-        )}
+        <ReactTooltip
+          id="geographyTooltip"
+          event="click"
+          clickable
+          class="world-map__tooltip"
+          getContent={() => {
+            if (countryHighlighted) {
+              return (
+                <ReactMapTooltip
+                  content={selectedContent}
+                  context={selectedContext}
+                  iso={countryHighlighted}
+                  geographiesDB={geographiesDB}
+                />
+              );
+            }
+            return null;
+          }}
+        />
       </div>
       {scales && (
         <MapLegend content={selectedContent} context={selectedContext} scales={scales} />

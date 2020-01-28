@@ -56,9 +56,6 @@ export default function worldMapReducer(state, action) {
     case 'setCountryHighlighted': {
       return { ...state, countryHighlighted: action.payload };
     }
-    case 'setGeosWithEU': {
-      return { ...state, geosWithEU: action.payload };
-    }
     case 'setIsEUAggregated': {
       return { ...state, isEUAggregated: action.payload };
     }
