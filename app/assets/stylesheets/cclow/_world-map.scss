@@ -113,7 +113,6 @@ $m-map-container-height: 400px;
 
     @include desktop {
       flex-direction: row;
-      width: 700px;
       left: 20px;
     }
   }
@@ -125,6 +124,10 @@ $m-map-container-height: 400px;
       @include desktop {
         margin-left: 30px;
       }
+    }
+
+    @include desktop {
+      max-width: 300px;
     }
 
     label {
@@ -141,14 +144,13 @@ $m-map-container-height: 400px;
   }
 
   &__eu-aggregation-button-container {
-    position: absolute;
-    top: 32px;
-    right: 20px;
     padding: 8px 14px;
     background-color: $athens-gray;
     color: $dark;
     font-size: 12px;
     cursor: pointer;
+    margin-top: auto;
+    margin-left: auto;
 
     .select-checkbox.checked {
       display: flex;
