@@ -9,7 +9,7 @@ module CCLOW
       add_breadcrumb('Laws and policies', cclow_legislation_and_policies_path(@geography))
       add_breadcrumb('Search results', request.path) if params[:q].present? || params[:recent].present?
 
-      @legislations = Queries::CCLOW::LegislationQuery.new(filter_params).call
+      @legislations = order_by_event_date(Queries::CCLOW::LegislationQuery.new(filter_params).call)
 
       respond_to do |format|
         format.html do
@@ -41,6 +41,12 @@ module CCLOW
                  filename: "laws_and_policies_#{timestamp}"
         end
       end
+    end
+
+    private
+
+    def order_by_event_date(legislations)
+      legislations.includes(:events).joins(:events).order('events.date DESC')
     end
     # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/MethodLength
