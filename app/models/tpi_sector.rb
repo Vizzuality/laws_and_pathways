@@ -16,6 +16,7 @@ class TPISector < ApplicationRecord
 
   has_many :companies, foreign_key: 'sector_id'
   has_many :cp_benchmarks, class_name: 'CP::Benchmark', foreign_key: 'sector_id'
+  has_many :cp_units, class_name: 'CP::Unit', foreign_key: 'sector_id'
 
   has_and_belongs_to_many :publications
   has_and_belongs_to_many :news_articles
