@@ -18,7 +18,7 @@ import chevronIconBlack from '../../../assets/images/icon_chevron_dark/chevron_d
 
 import MapBubble from './MapBubble';
 import MapLegend from './MapLegend';
-import ReactMapTooltip from './ReactMapTooltip';
+import MapTooltip from './MapTooltip';
 import { EU_COUNTRIES, EU_ISO } from './constants';
 
 import MinusIcon from 'images/cclow/icons/minus.svg';
@@ -360,7 +360,7 @@ function WorldMap({ zoomToGeographyIso }) {
           getContent={() => {
             if (countryHighlighted) {
               return (
-                <ReactMapTooltip
+                <MapTooltip
                   content={selectedContent}
                   context={selectedContext}
                   iso={countryHighlighted}
