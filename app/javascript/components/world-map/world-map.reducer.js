@@ -5,7 +5,7 @@ const MAX_ZOOM = 12;
 
 export const initialState = {
   zoom: 1,
-  center: [0, 0],
+  center: [0, 5],
   geos: [],
   geosWithEU: [],
   data: {},
