@@ -1,5 +1,6 @@
 ActiveAdmin.register TPISector do
   config.batch_actions = false
+  config.sort_order = :name_asc
 
   decorate_with TPISectorDecorator
 
