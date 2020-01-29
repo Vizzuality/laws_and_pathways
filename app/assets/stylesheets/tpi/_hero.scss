@@ -1,78 +1,148 @@
 @import "colors";
 @import "typography";
 
+$home-background: image-url("homepage/homepage-bg.jpg");
+
 .tpi-home__hero {
   color: $white;
   position: relative;
-  overflow: hidden;
-  min-height: 500px;
   display: flex;
-  align-items: center;
+  overflow: hidden;
 
   &.is-primary {
+    padding: 0;
     background: $blue-dark;
-  }
 
-  .hero__body {
-    .hero__content {
-      align-items: center;
+    @include from($tablet) {
+      min-height: 500px;
+    }
+    
+    @include mobile {
+      height: 340px;
+      max-height: 340px;
 
-      .title {
-        color: $white;
+      & > .container > .columns {
+        z-index: 1;
+        position: relative;
+      }
+    }
+
+    .mobile-background {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background-image: $home-background;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      opacity: .2;
+      filter: grayscale(100%);
+      z-index: 0;
+    }
+
+    .left-size {
+      @include mobile {
+        margin: 26px 15px 43px;
       }
 
-      .description {
-        line-height: $size-4;
-        display: flex;
-        justify-content: center;
-        width: 60%;
+      @include from($tablet) {
+        margin: 80px 0;
+      }
 
-        @media #{$tablet-portrait} {
-          justify-content: left;
-          width: 100%;
+      @include tablet {
+        margin-left: 20px;
+      }
+    }
+
+    .title {
+      color: $white;
+    }
+
+    .description {
+      display: flex;
+      justify-content: center;
+      line-height: $size-4;
+
+      @media #{$tablet-portrait} {
+        justify-content: left;
+        width: 100%;
+      }
+    }
+
+    .button__container {
+      display: flex;
+      justify-content: center;
+
+      @include mobile {
+        margin-top: 20px;
+      }
+
+      @include from($tablet) {
+        margin-top: 50px;
+        justify-content: left;
+      }
+
+      .button__hero {
+        @extend .is-medium, .is-fullwidth;
+
+        height: 3.125rem;
+        width: 100%;
+
+        @include from($tablet) {
+          height: 5rem;
+          width: 280px;
+          max-width: 280px;
+          margin: 0;
         }
-      }
-    }
-  }
 
-  .button__container {
-    display: flex;
-    margin-top: 50px;
-    justify-content: center;
-
-    @media #{$tablet-portrait} {
-      justify-content: left;
-    }
-
-    .button__hero {
-      @extend .is-medium;
-
-      height: 5rem;
-      background-color: $blue-darker;
-
-      &:focus, &.is-focused {
-
-        $padding: calc(4.125rem - #{$button-border-width});
-        padding-left: $padding;
-        padding-right: $padding;
+        background-color: $blue-darker;
       }
     }
   }
 
   .hero__splash {
-    position: absolute;
-    top: 0;
-    left: 45%;
-  }
+    & > .background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: $home-background;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      overflow: hidden;
 
+      &::after {
+        position: absolute;
+        top: 0;
+        left: -300px;
+        right: 0;
+        bottom: 0;
+        content: " ";
+        height: 40%;
+        background-image: image-url("homepage/homepage_pattern.svg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position-x: 0;
+        background-position-y: -300px;
+      }
+    }
+  }
 
   &.is-secondary {
     background: $blue;
     background-image: image-url('hero_background_dark.svg');
-    background-position: -50px -100px;
+    background-position: -60px -60px;
     background-repeat: no-repeat;
     background-size: contain;
 
+    @include from($tablet) {
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
 
     .button__icon {
       background: $blue-darker;
@@ -81,6 +151,11 @@
 }
 
 .section-clickable {
+  margin: 20px 0 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
   &:hover {
     .subsection-button__container {
       .section-button {
@@ -93,6 +168,11 @@
       }
     }
   }
+
+  .subsection-content__container {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .section-title {
@@ -103,10 +183,6 @@
 .section-description {
   margin-bottom: 20px;
   color: $white;
-
-  @media #{$tablet-portrait} {
-    margin-bottom: 64px;
-  }  
 }
 
 .section-button {
@@ -130,12 +206,7 @@
   display: flex;
   align-items: center;
   color: $white;
-  position: unset;
-
-  @media #{$tablet-portrait} {
-    position: absolute;
-    bottom: 0;
-  }
+  bottom: 20px;
 }
 
 .button__title {
@@ -144,13 +215,25 @@
   color: $white;
 }
 
-.section-separator {
-  border-right: none;
-  margin-bottom: 30px;
+.separator {
+  opacity: 0.5;
 
-  @media #{$tablet-portrait} {
-    border-right: 1px solid rgba($white, 0.5);
-    margin-bottom: 0;
+  @include from($tablet) {
+    width: 1px;
+    height: 100%;
+    border-left: 1px solid $white;
+  }
+
+  @include mobile {
+    width: 85%;
+    height: 2px;
+    border-top: 1px solid $white;
+  }
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
@@ -162,59 +245,14 @@
   }  
 }
 
-.first-tpi-section {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-height: 950px;
-  background-color: $blue-ribbon;
-  color: $white;
-  overflow: hidden;
-  min-height: 500px;
-
-  &.is-primary {
-    background: $blue-dark;
-  }
-
-  .button__hero {
-    @extend .is-medium;
-  
-    height: 5rem;
-    width: 280px;
-    background-color: $blue-darker;
-  }
-
-  .title {
-    color: $white;
-  }
-
-  .description {
-    line-height: $size-4;
-    margin-bottom: 50px;
-    display: flex;
-    justify-content: center;
-
-    width: 60%;
-
-    @media #{$tablet-portrait} {
-      justify-content: left;
-      width: 100%;
-    }
-  }
-
-  @media #{$tablet-portrait} {
-    flex-direction: row;
-  }
-}
-
 .column-left {
   flex: 50%;
   margin-bottom: 70px;
+  margin-top: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
 
   @media #{$tablet-portrait} {
     margin-bottom: 0;

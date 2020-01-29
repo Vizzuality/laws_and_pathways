@@ -40,3 +40,9 @@
 html {
   scroll-behavior: smooth;
 }
+
+body {
+  @include mobile {
+    overflow-x: hidden;
+  }
+}
