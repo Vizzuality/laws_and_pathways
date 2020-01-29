@@ -3,7 +3,15 @@ require 'rails_helper'
 RSpec.describe Admin::TPISectorsController, type: :controller do
   let(:admin) { create(:admin_user) }
   let!(:sector) { create(:tpi_sector, :with_benchmarks) }
-  let(:valid_attributes) { attributes_for(:tpi_sector) }
+  let(:valid_attributes) {
+    attributes_for(
+      :tpi_sector,
+      cp_units_attributes: [
+        attributes_for(:cp_unit),
+        attributes_for(:cp_unit, valid_since: 3.days.ago)
+      ]
+    )
+  }
   let(:invalid_attributes) { valid_attributes.merge(name: nil) }
   let(:page) { Capybara::Node::Simple.new(response.body) }
 
@@ -58,6 +66,10 @@ RSpec.describe Admin::TPISectorsController, type: :controller do
 
       it 'creates a new Sector' do
         expect { subject }.to change(TPISector, :count).by(1)
+      end
+
+      it 'creates a new CP::Units' do
+        expect { subject }.to change(CP::Unit, :count).by(2)
       end
 
       it 'redirects to the created Sector' do

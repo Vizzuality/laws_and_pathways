@@ -17,7 +17,7 @@ module CSVExport
               benchmark.sector.name,
               benchmark.scenario,
               benchmark.release_date,
-              benchmark.sector.cp_unit,
+              benchmark.unit,
               year_columns.map do |year|
                 benchmark.emissions[year]
               end

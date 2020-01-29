@@ -34,7 +34,7 @@ module CSVExport
               assessment.assessment_date,
               assessment.cp_alignment,
               assessment.last_reported_year,
-              assessment.company.sector.cp_unit,
+              assessment.unit,
               assessment.assumptions,
               year_columns.map do |year|
                 assessment.emissions[year]
