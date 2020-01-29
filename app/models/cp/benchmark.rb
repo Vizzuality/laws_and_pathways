@@ -21,5 +21,9 @@ module CP
     scope :by_release_date, -> { order(:release_date) }
 
     validates_presence_of :release_date, :scenario
+
+    def unit
+      sector.cp_unit_valid_for_date(release_date)&.unit
+    end
   end
 end

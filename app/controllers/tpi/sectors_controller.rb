@@ -62,7 +62,7 @@ module TPI
         .where(company_id: companies_ids)
         .joins(:company)
         .order('companies.name ASC, assessment_date DESC')
-        .includes(company: [:sector, :geography])
+        .includes(company: [:geography, sector: [:cp_units]])
 
       send_tpi_user_file(
         mq_assessments: mq_assessments,
@@ -82,7 +82,7 @@ module TPI
         .where(company_id: companies_ids)
         .joins(:company)
         .order('companies.name ASC, assessment_date DESC')
-        .includes(company: [:sector, :geography])
+        .includes(company: [:geography, sector: [:cp_units]])
 
       send_tpi_user_file(
         mq_assessments: mq_assessments,
