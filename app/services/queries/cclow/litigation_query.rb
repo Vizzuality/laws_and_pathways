@@ -19,6 +19,7 @@ module Queries
           .merge(filter_by_to_date)
           .merge(filter_by_to_status)
           .merge(filter_by_litigation_sides)
+          .merge(filter_by_litigation_side_party_types)
           .merge(filter_by_litigation_party_type)
           .merge(filter_by_jurisdiction)
           .merge(filter_recent)
@@ -75,6 +76,22 @@ module Queries
         event_ids =
           Event.where(eventable_type: 'Litigation').group('eventable_id', :id).having('MAX(date) >= date').map(&:id)
         scope.joins(:events).where(events: {id: event_ids, event_type: params[:status]}).distinct
+      end
+
+      def filter_by_litigation_side_party_types
+        sql = ''
+
+        [:a_party_type, :b_party_type, :c_party_type].each do |side_type|
+          next unless params[side_type].present?
+
+          sql += <<-SQL
+            INNER JOIN litigation_sides AS #{side_type}
+            ON #{side_type}.litigation_id = litigations.id AND #{side_type}.side_type = '#{side_type.to_s.split('_')[0]}'
+            AND #{side_type}.party_type IN (#{params[side_type].map { |party_type| "'#{party_type}'" }.join(', ')})
+          SQL
+        end
+
+        sql.present? ? scope.joins(sql) : scope
       end
 
       def filter_by_litigation_sides
