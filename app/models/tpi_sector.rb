@@ -30,6 +30,14 @@ class TPISector < ApplicationRecord
     name_changed? || super
   end
 
+  def cp_unit_valid_for_date(date)
+    return latest_cp_unit unless date
+
+    cp_units
+      .select { |u| u.valid_since.nil? || u.valid_since <= date }
+      .max_by { |u| u.valid_since || Date.new(1900, 1, 1) }
+  end
+
   def latest_cp_unit
     cp_units.order('valid_since DESC NULLS LAST').first
   end
