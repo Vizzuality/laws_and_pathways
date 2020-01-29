@@ -251,19 +251,19 @@ class LitigationCases extends Component {
           <>
             <SearchFilter
               ref={this.sideAFilter}
-              filterName="Side A"
+              filterName="Side A name"
               params={litigationSideAOptions}
               onChange={(event) => this.filterList('activeSideAFilter', event)}
             />
             <SearchFilter
               ref={this.sideBFilter}
-              filterName="Side B"
+              filterName="Side B name"
               params={litigationSideBOptions}
               onChange={(event) => this.filterList('activeSideBFilter', event)}
             />
             <SearchFilter
               ref={this.sideCFilter}
-              filterName="Side C"
+              filterName="Side C name"
               params={litigationSideCOptions}
               onChange={(event) => this.filterList('activeSideCFilter', event)}
             />
