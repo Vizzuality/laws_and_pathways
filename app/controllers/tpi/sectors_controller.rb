@@ -108,9 +108,9 @@ module TPI
     def fetch_companies
       @companies = Company
         .published
-        .active
         .joins(:sector)
-        .select(:id, :name, :slug, :sector_id, 'tpi_sectors.name as sector_name')
+        .select(:id, :name, :slug, :sector_id, 'tpi_sectors.name as sector_name', :active)
+      @companies = TPI::CompanyDecorator.decorate_collection(@companies)
     end
 
     def companies_scope(params)

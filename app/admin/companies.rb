@@ -27,6 +27,7 @@ ActiveAdmin.register Company do
   sidebar 'Details', only: :show do
     attributes_table do
       row :company, &:name
+      row :active, &:active
       row :level, &:mq_level_tag
       row :updated_at
     end
@@ -39,6 +40,7 @@ ActiveAdmin.register Company do
           row :id
           row :name
           row :slug
+          row :active
           row :sector
           row :isin, &:isin_as_tags
           row :sedol
@@ -49,7 +51,6 @@ ActiveAdmin.register Company do
           row 'Management Quality Level', &:mq_level_tag
           row :latest_information
           row :historical_comments
-          row :active
           row :created_at
           row :updated_at
         end
