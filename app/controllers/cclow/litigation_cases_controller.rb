@@ -23,7 +23,9 @@ module CCLOW
             litigation_party_types_options: litigation_party_types_options,
             litigation_jurisdictions_options: litigation_jurisdictions_options,
             litigations: CCLOW::LitigationDecorator.decorate_collection(@litigations.first(10)),
-            count: @litigations.count
+            count: @litigations.count,
+            current_user: @current_user,
+            link: admin_litigations_path
           }, prerender: false
         end
         format.json do

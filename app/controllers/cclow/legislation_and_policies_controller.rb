@@ -18,7 +18,9 @@ module CCLOW
             tags_filter_options: tags_options('Legislation'),
             types_filter_options: legislation_types_options,
             legislations: CCLOW::LegislationDecorator.decorate_collection(@legislations.first(10)),
-            count: @legislations.count
+            count: @legislations.count,
+            current_user: @current_user,
+            link: admin_legislations_path
           }, prerender: false
         end
         format.json do

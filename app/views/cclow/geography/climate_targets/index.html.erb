@@ -1,5 +1,9 @@
 <% content_for :page_title, "Climate Laws - #{@geography.name} - Climate Targets" %>
 
+<% content_for :manage_data_button do %>
+  <%= render 'cclow/cclow/manage_data', link: admin_targets_path('q[geography_id_eq]': @geography) %>
+<% end %>
+
 <div class="container">
   <h3>Climate targets</h3>
   <ul class="content-list">

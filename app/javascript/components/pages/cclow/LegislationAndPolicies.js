@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import qs from 'qs';
 import SearchFilter from '../../SearchFilter';
 import TimeRangeFilter from '../../TimeRangeFilter';
+import ManageDataButton from '../../ManageDataButton';
 import ExecutiveSVG from 'images/icons/legislation_types/executive.svg';
 import LegislativeSVG from 'images/icons/legislation_types/legislative.svg';
 
@@ -157,7 +158,9 @@ class LegislationAndPolicies extends Component {
     const {
       geo_filter_options: geoFilterOptions,
       tags_filter_options: tagsFilterOptions,
-      types_filter_options: typesFilterOptions
+      types_filter_options: typesFilterOptions,
+      current_user: currentUser,
+      link
     } = this.props;
     const hasMore = legislations.length < count;
     const downloadResultsLink = `/cclow/legislation_and_policies.csv?${this.getQueryString()}`;
@@ -167,6 +170,7 @@ class LegislationAndPolicies extends Component {
         <div className="cclow-geography-page">
           <div className="title-page">
             {this.renderPageTitle()}
+            {currentUser && <ManageDataButton link={link} />}
           </div>
           <hr />
           <div className="columns">
@@ -258,6 +262,8 @@ LegislationAndPolicies.defaultProps = {
 
 LegislationAndPolicies.propTypes = {
   legislations: PropTypes.array.isRequired,
+  current_user: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
   count: PropTypes.number,
   geo_filter_options: PropTypes.array,
   tags_filter_options: PropTypes.array,

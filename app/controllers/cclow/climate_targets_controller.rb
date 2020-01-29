@@ -18,7 +18,9 @@ module CCLOW
             tags_filter_options: tags_options('Target'),
             types_filter_options: target_types_options,
             climate_targets: CCLOW::TargetDecorator.decorate_collection(@climate_targets.first(10)),
-            count: @climate_targets.count
+            count: @climate_targets.count,
+            current_user: @current_user,
+            link: admin_targets_path
           }, prerender: false
         end
         format.json do
