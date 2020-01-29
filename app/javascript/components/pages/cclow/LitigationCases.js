@@ -250,34 +250,16 @@ class LitigationCases extends Component {
         {isMoreSearchOptionsVisible && (
           <>
             <SearchFilter
-              ref={this.sideAFilter}
-              filterName="Side A name"
-              params={litigationSideAOptions}
-              onChange={(event) => this.filterList('activeSideAFilter', event)}
-            />
-            <SearchFilter
-              ref={this.sideBFilter}
-              filterName="Side B name"
-              params={litigationSideBOptions}
-              onChange={(event) => this.filterList('activeSideBFilter', event)}
-            />
-            <SearchFilter
-              ref={this.sideCFilter}
-              filterName="Side C name"
-              params={litigationSideCOptions}
-              onChange={(event) => this.filterList('activeSideCFilter', event)}
+              ref={this.jurisdictionFilter}
+              filterName="Jurisdiction"
+              params={litigationJurisdictionsOptions}
+              onChange={(event) => this.filterList('activeJurisdictionsFilter', event)}
             />
             <SearchFilter
               ref={this.partyTypeFilter}
               filterName="Party types"
               params={litigationPartyTypesOptions}
               onChange={(event) => this.filterList('activePartyTypesFilter', event)}
-            />
-            <SearchFilter
-              ref={this.jurisdictionFilter}
-              filterName="Jurisdiction"
-              params={litigationJurisdictionsOptions}
-              onChange={(event) => this.filterList('activeJurisdictionsFilter', event)}
             />
             <SearchFilter
               ref={this.sideAPartyTypeFilter}
@@ -296,6 +278,24 @@ class LitigationCases extends Component {
               filterName="Side C Type"
               params={litigationSideCPartyTypeOptions}
               onChange={(event) => this.filterList('activeSideCPartyTypesFilter', event)}
+            />
+            <SearchFilter
+              ref={this.sideAFilter}
+              filterName="Side A name"
+              params={litigationSideAOptions}
+              onChange={(event) => this.filterList('activeSideAFilter', event)}
+            />
+            <SearchFilter
+              ref={this.sideBFilter}
+              filterName="Side B name"
+              params={litigationSideBOptions}
+              onChange={(event) => this.filterList('activeSideBFilter', event)}
+            />
+            <SearchFilter
+              ref={this.sideCFilter}
+              filterName="Side C name"
+              params={litigationSideCOptions}
+              onChange={(event) => this.filterList('activeSideCFilter', event)}
             />
             <button
               type="button"
