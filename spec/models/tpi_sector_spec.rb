@@ -34,6 +34,28 @@ RSpec.describe TPISector, type: :model do
     expect(sector.slug).to eq('new-name')
   end
 
+  describe '#cp_unit_valid_for_date' do
+    let(:sector) { create(:tpi_sector) }
+    let(:sector2) { create(:tpi_sector) }
+    let!(:first_unit) { create(:cp_unit, sector: sector, unit: 'first', valid_since: nil) }
+    let!(:second_unit) { create(:cp_unit, sector: sector, unit: 'second', valid_since: 5.months.ago) }
+    let!(:third_unit) { create(:cp_unit, sector: sector, unit: 'third', valid_since: 3.months.ago) }
+
+    it 'should return valid date based on date' do
+      expect(sector.cp_unit_valid_for_date(10.months.ago)).to eq(first_unit)
+      expect(sector.cp_unit_valid_for_date(4.months.ago)).to eq(second_unit)
+      expect(sector.cp_unit_valid_for_date(2.months.ago)).to eq(third_unit)
+    end
+
+    it 'should return latest if date not provided' do
+      expect(sector.cp_unit_valid_for_date(nil)).to eq(third_unit)
+    end
+
+    it 'should return nil if no units' do
+      expect(sector2.cp_unit_valid_for_date(10.months.ago)).to be_nil
+    end
+  end
+
   describe '#latest_benchmarks_for_date' do
     let(:sector) { create(:tpi_sector) }
     let!(:first_benchmark) {

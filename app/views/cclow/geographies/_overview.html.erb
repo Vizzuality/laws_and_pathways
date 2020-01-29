@@ -17,11 +17,7 @@
           <div><%= item[:caption] %></div>
           <div class="indicator-value">
             <div class="value-container">
-              <% if item[:count] > 0 %>
-                <%= link_to item[:count], item[:link] %>
-              <% else %>
-                <%= item[:count] %>
-              <% end %>
+              <%= link_to item[:count], item[:link] %>
             </div>
             <div class="item-name-block">
               <div class="img-type-container">

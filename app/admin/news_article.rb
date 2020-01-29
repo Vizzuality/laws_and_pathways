@@ -61,7 +61,7 @@ ActiveAdmin.register NewsArticle do
     f.inputs do
       f.input :title
       f.input :article_type, as: :select, collection: array_to_select_collection(NewsArticle::ARTICLE_TYPES)
-      f.input :content, as: :trix
+      f.input :content, as: :trix, embed_youtube: true
       f.input :publication_date
       f.input :tpi_sector_ids, label: 'Sectors', as: :select,
                                collection: TPISector.order(:name), input_html: {multiple: true}
@@ -81,10 +81,6 @@ ActiveAdmin.register NewsArticle do
 
     def apply_filtering(chain)
       super(chain).distinct
-    end
-
-    def csv_format?
-      request[:format] == 'csv'
     end
   end
 end

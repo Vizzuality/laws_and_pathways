@@ -5,12 +5,16 @@ const MAX_ZOOM = 12;
 
 export const initialState = {
   zoom: 1,
-  center: [0, 0],
+  center: [0, 5],
   geos: [],
+  geosWithEU: [],
   data: {},
   selectedContextId: undefined,
   selectedContentId: undefined,
-  tooltipGeography: undefined
+  tooltipGeography: undefined,
+  countryHighlighted: '',
+  isEUAggregated: false,
+  isDragging: false
 };
 
 export default function worldMapReducer(state, action) {
@@ -48,6 +52,15 @@ export default function worldMapReducer(state, action) {
     }
     case 'setTooltipGeography': {
       return { ...state, tooltipGeography: action.payload };
+    }
+    case 'setCountryHighlighted': {
+      return { ...state, countryHighlighted: action.payload };
+    }
+    case 'setIsEUAggregated': {
+      return { ...state, isEUAggregated: action.payload };
+    }
+    case 'setDragging': {
+      return { ...state, isDragging: action.payload };
     }
     default:
       return state;

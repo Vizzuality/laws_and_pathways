@@ -7,7 +7,7 @@ ActiveAdmin.register Geography do
   decorate_with GeographyDecorator
 
   publishable_scopes
-  publishable_sidebar only: :show
+  publishable_resource_sidebar
 
   permit_params :name, :iso, :region, :federal, :federal_details,
                 :legislative_process, :geography_type,

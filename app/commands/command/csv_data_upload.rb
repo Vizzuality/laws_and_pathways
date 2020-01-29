@@ -35,6 +35,10 @@ module Command
       false
     end
 
+    def full_error_messages
+      errors.full_messages.join(', ')
+    end
+
     private
 
     def importer_name
@@ -50,7 +54,7 @@ module Command
     end
 
     def import_service
-      @import_service ||= CSVImport.const_get(importer_name).new(uploaded_csv_file)
+      @import_service ||= CSVImport.const_get(importer_name).new(uploaded_csv_file, rollback_on_error: true)
     rescue NameError
       raise "Can't find 'CSVImport::#{importer_name}' importer service class!"
     end

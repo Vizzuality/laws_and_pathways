@@ -21,6 +21,8 @@
 
 FactoryBot.define do
   factory :litigation do
+    draft
+
     association :geography, factory: :geography
     jurisdiction { 'Court in Country' }
     laws_sectors { |a| [a.association(:laws_sector)] }
@@ -33,7 +35,6 @@ FactoryBot.define do
     citation_reference_number { 'SFKD777FDK77' }
     summary { 'Summary Lorem ipsum dolor dalej nie pamietam' }
     at_issue { 'At issue Lorem ipsumumum' }
-    visibility_status { Litigation::VISIBILITY.first }
 
     trait :with_sides do
       after(:create) do |l|

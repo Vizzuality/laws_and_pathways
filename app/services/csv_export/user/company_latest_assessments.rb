@@ -50,7 +50,7 @@ module CSVExport
               cp_assessment&.assessment_date,
               cp_assessment&.cp_alignment,
               cp_assessment&.last_reported_year,
-              company.sector.cp_unit,
+              cp_assessment&.unit,
               year_headers.map do |year|
                 cp_assessment&.emissions.try(:[], year)
               end,

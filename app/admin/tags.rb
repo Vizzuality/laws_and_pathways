@@ -15,9 +15,14 @@
     filter :name_contains, label: 'Name'
 
     index do
-      id_column
-      column :name do |tag|
-        link_to tag.name, resource_path(tag)
+      if can?(:update, Tag)
+        id_column
+        column :name do |tag|
+          link_to tag.name, resource_path(tag)
+        end
+      else
+        column :id
+        column :name
       end
       column :created_at
       column :updated_at

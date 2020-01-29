@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_20_172400) do
+ActiveRecord::Schema.define(version: 2020_01_28_123316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 2020_01_20_172400) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "content_type"
+    t.string "youtube_link"
     t.index ["page_id"], name: "index_contents_on_page_id"
   end
 
@@ -142,6 +143,15 @@ ActiveRecord::Schema.define(version: 2020_01_20_172400) do
     t.jsonb "emissions"
     t.string "scenario"
     t.index ["sector_id"], name: "index_cp_benchmarks_on_sector_id"
+  end
+
+  create_table "cp_units", force: :cascade do |t|
+    t.bigint "sector_id"
+    t.date "valid_since"
+    t.text "unit", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["sector_id"], name: "index_cp_units_on_sector_id"
   end
 
   create_table "data_uploads", force: :cascade do |t|
@@ -509,7 +519,6 @@ ActiveRecord::Schema.define(version: 2020_01_20_172400) do
     t.string "slug", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "cp_unit"
     t.index ["name"], name: "index_tpi_sectors_on_name", unique: true
     t.index ["slug"], name: "index_tpi_sectors_on_slug", unique: true
   end
@@ -521,6 +530,7 @@ ActiveRecord::Schema.define(version: 2020_01_20_172400) do
   add_foreign_key "contents", "pages"
   add_foreign_key "cp_assessments", "companies", on_delete: :cascade
   add_foreign_key "cp_benchmarks", "tpi_sectors", column: "sector_id", on_delete: :cascade
+  add_foreign_key "cp_units", "tpi_sectors", column: "sector_id", on_delete: :cascade
   add_foreign_key "data_uploads", "admin_users", column: "uploaded_by_id"
   add_foreign_key "external_legislations", "geographies"
   add_foreign_key "geographies", "admin_users", column: "created_by_id"

@@ -23,6 +23,8 @@
 
 FactoryBot.define do
   factory :company do
+    draft
+
     association :geography
     association :headquarters_geography, factory: :geography
     association :sector, factory: :tpi_sector
@@ -33,7 +35,6 @@ FactoryBot.define do
     ca100 { true }
     active { true }
     market_cap_group { Company::MARKET_CAP_GROUPS.sample }
-    visibility_status { Company::VISIBILITY.sample }
 
     latest_information { 'My information' }
     historical_comments { 'I changed my name last week' }

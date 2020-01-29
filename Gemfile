@@ -20,6 +20,7 @@ gem 'activeadmin'
 gem 'activeadmin_addons'
 gem 'devise', '>= 4.7.1'
 gem 'cancancan'
+gem 'draper-cancancan'
 gem 'draper'
 
 gem 'octokit', '~> 4.15.0'
@@ -52,25 +53,28 @@ group :development, :test do
   gem 'rspec-collection_matchers'
   gem 'rspec-rails', '~> 3.8'
   gem 'timecop'
+  gem 'pry'
 end
 
 group :development do
-  gem 'countries' # just to generate country flags using rake task flags:generate
   gem 'annotate'
+  gem 'brakeman', require: false
+  gem 'bundler-audit', require: false
   gem 'bullet'
-  gem 'web-console', '>= 3.3.0'
+  gem 'capistrano', '~> 3.11', require: false
+  gem 'capistrano-bundler'
+  gem 'capistrano-nvm'
+  gem 'capistrano-passenger'
+  gem 'capistrano-rails', '~> 1.4', require: false
+  gem 'capistrano-rvm'
+  gem 'capistrano-yarn'
+  gem 'countries' # just to generate country flags using rake task flags:generate
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'rubocop'
   gem 'rubocop-performance'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'capistrano', '~> 3.11', require: false
-  gem 'capistrano-rails', '~> 1.4', require: false
-  gem 'capistrano-bundler'
-  gem 'capistrano-rvm'
-  gem 'capistrano-passenger'
-  gem 'capistrano-yarn'
-  gem 'capistrano-nvm'
+  gem 'web-console', '>= 3.3.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -20,10 +20,11 @@
 
 FactoryBot.define do
   factory :legislation do
+    draft
+
     sequence(:title) { |n| "Legislation #{n} Title" }
     description { 'Test Legislation Description' }
     sequence(:law_id)
-    visibility_status { Legislation::VISIBILITY.first }
     legislation_type { 'executive' }
     discarded_at { nil }
 

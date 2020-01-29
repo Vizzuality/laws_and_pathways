@@ -3,7 +3,7 @@
 <%= content_tag :div, class: 'nested-fields', data: { controller: 'content', new_record: is_new_record } do %>
   <%= form.input :title %>
   <%= form.input :content_type %>
-  <%= form.input :text, as: :trix %>
+  <%= form.input :text, as: :trix, embed_youtube: true %>
   <%= form.inputs 'Images' do %>
     <%= render 'admin/pages/image', form: form %>
   <% end %>

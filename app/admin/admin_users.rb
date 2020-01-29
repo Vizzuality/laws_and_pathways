@@ -49,9 +49,14 @@ ActiveAdmin.register AdminUser do
           f.input :email
           f.input :first_name
           f.input :last_name
-          f.input :role,
-                  as: :select,
-                  collection: array_to_select_collection(AdminUser::ROLES, :titleize)
+          if current_user?(object)
+            f.input :role,
+                    input_html: {readonly: true, disabled: true, value: object.role.titleize}
+          else
+            f.input :role,
+                    as: :select,
+                    collection: allowed_user_roles_select_collection
+          end
 
           if f.object.new_record?
             f.input :password

@@ -28,6 +28,12 @@ class AdminUser < ApplicationRecord
   validates_presence_of :role
   validates :role, inclusion: {in: ROLES}
 
+  delegate :authorize!, :can?, :cannot?, to: :ability
+
+  def ability
+    @ability ||= Ability.new(self)
+  end
+
   def gravatar_url(size = 50)
     gravatar_id = Digest::MD5.hexdigest(email.downcase)
     "https://secure.gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"

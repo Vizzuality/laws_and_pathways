@@ -52,27 +52,22 @@ module TPI
     end
 
     def user_download_all
-      companies_ids = Company.published.active.select(:id).where(sector_id: @sectors.pluck(:id))
-      mq_assessments = MQ::Assessment
-        .where(company_id: companies_ids)
-        .joins(:company)
-        .order('companies.name ASC, assessment_date DESC')
-        .includes(company: [:sector, :geography, :mq_assessments])
-      cp_assessments = CP::Assessment
-        .where(company_id: companies_ids)
-        .joins(:company)
-        .order('companies.name ASC, assessment_date DESC')
-        .includes(company: [:sector, :geography])
-
-      send_tpi_user_file(
-        mq_assessments: mq_assessments,
-        cp_assessments: cp_assessments,
-        filename: 'TPI sector data - All sectors'
+      send_user_download_file(
+        Company.published.select(:id).where(sector_id: @sectors.pluck(:id)),
+        'TPI sector data - All sectors'
       )
     end
 
     def user_download
-      companies_ids = @sector.companies.published.active.select(:id)
+      send_user_download_file(
+        @sector.companies.published.select(:id),
+        "TPI sector data - #{@sector.name}"
+      )
+    end
+
+    private
+
+    def send_user_download_file(companies_ids, filename)
       mq_assessments = MQ::Assessment
         .where(company_id: companies_ids)
         .joins(:company)
@@ -82,16 +77,14 @@ module TPI
         .where(company_id: companies_ids)
         .joins(:company)
         .order('companies.name ASC, assessment_date DESC')
-        .includes(company: [:sector, :geography])
+        .includes(company: [:geography, sector: [:cp_units]])
 
       send_tpi_user_file(
         mq_assessments: mq_assessments,
         cp_assessments: cp_assessments,
-        filename: "TPI sector data - #{@sector.name}"
+        filename: filename
       )
     end
-
-    private
 
     def fetch_sector
       @sector = TPISector.friendly.find(params[:id])

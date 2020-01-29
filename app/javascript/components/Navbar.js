@@ -79,10 +79,10 @@ const NavbarComponent = ({ items, openSearchMode }) => {
       <div className="container">
         <div className="navbar-brand is-hidden-desktop">
           <a
-            href={tpi.path}
+            href="/tpi"
             className="navbar-item logo"
           >
-            <img src={Logo} alt="TPI Tool" />
+            <img src={Logo} alt="TPI logo" />
           </a>
           <a
             className="navbar-item menu"
