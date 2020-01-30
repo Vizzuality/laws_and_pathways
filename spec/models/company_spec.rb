@@ -18,6 +18,7 @@
 #  sedol                     :string
 #  latest_information        :text
 #  historical_comments       :text
+#  active                    :boolean          default(TRUE)
 #
 
 require 'rails_helper'

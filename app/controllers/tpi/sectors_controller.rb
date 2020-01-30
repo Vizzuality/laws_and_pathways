@@ -12,7 +12,7 @@ module TPI
     end
 
     def show
-      @sector_companies = @companies.select { |c| c.sector_id == @sector.id }
+      @sector_companies = @companies.active.select { |c| c.sector_id == @sector.id }
 
       @companies_by_levels = ::Api::Charts::Sector.new(companies_scope(params)).companies_summaries_by_level
 
@@ -102,14 +102,14 @@ module TPI
       @companies = Company
         .published
         .joins(:sector)
-        .select(:id, :name, :slug, :sector_id, 'tpi_sectors.name as sector_name')
+        .select(:id, :name, :slug, :sector_id, 'tpi_sectors.name as sector_name', :active)
     end
 
     def companies_scope(params)
       if params[:id]
-        TPISector.friendly.find(params[:id]).companies.published
+        TPISector.friendly.find(params[:id]).companies.published.active
       else
-        Company.published
+        Company.published.active
       end
     end
   end
