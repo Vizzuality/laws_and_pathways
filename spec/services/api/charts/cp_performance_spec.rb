@@ -5,6 +5,7 @@ RSpec.describe Api::Charts::CPPerformance do
   let!(:sector_autos) { create(:tpi_sector, name: 'Autos') }
   let!(:sector_airlines) { create(:tpi_sector, name: 'Airlines') }
   let!(:sector_steel) { create(:tpi_sector, name: 'Steel') }
+  let!(:sector_no_cp) { create(:tpi_sector, name: 'No CP') }
 
   describe 'cp_performance' do
     context 'sector has no cp assessments' do
@@ -125,19 +126,19 @@ RSpec.describe Api::Charts::CPPerformance do
         expect(subject.cp_performance_all_sectors_data).to contain_exactly(
           {
             name: 'Not Aligned',
-            data: [['Airlines', 1], ['Autos', 1]]
+            data: [['Airlines', 1], ['Autos', 1], ['Steel', 0]]
           },
           {
             name: 'Below 2 Degrees',
-            data: [['Autos', 2], ['Steel', 1]]
+            data: [['Airlines', 0], ['Autos', 2], ['Steel', 1]]
           },
           {
             name: '2 Degrees',
-            data: [['Steel', 1]]
+            data: [['Airlines', 0], ['Autos', 0], ['Steel', 1]]
           },
           {
             name: 'Paris Pledges',
-            data: [['Airlines', 2], ['Steel', 1]]
+            data: [['Airlines', 2], ['Autos', 0], ['Steel', 1]]
           }
         )
       end

@@ -77,6 +77,10 @@ $tpi-pie-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB;
     @import "highcharts/css/highcharts";
   }
 
+  svg {
+    font-family: $font-family-regular !important;
+  }
+
   &--cp-emissions {
     margin-top: 10px;
     justify-content: unset;
