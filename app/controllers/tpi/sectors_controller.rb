@@ -12,7 +12,7 @@ module TPI
     end
 
     def show
-      @sector_companies = @companies.select { |c| c.sector_id == @sector.id }
+      @sector_companies = @companies.where(active: true).select { |c| c.sector_id == @sector.id }
 
       @companies_by_levels = ::Api::Charts::Sector.new(companies_scope(params)).companies_summaries_by_level
 

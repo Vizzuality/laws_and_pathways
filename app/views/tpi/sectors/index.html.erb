@@ -39,7 +39,7 @@
             library: mq_sector_pie_chart_options
           ) %>
           <div class="chart-title">
-            <p class="companies-size"><%= @companies.size %></p>
+            <p class="companies-size"><%= @companies.where(active: true).size %></p>
             companies
           </div>
         </div>
