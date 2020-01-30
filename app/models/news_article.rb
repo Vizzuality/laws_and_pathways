@@ -32,7 +32,7 @@ class NewsArticle < ApplicationRecord
 
   has_and_belongs_to_many :tpi_sectors
 
-  validates_presence_of :title, :content
+  validates_presence_of :title, :content, :publication_date
 
   def self.search(query)
     where('title ilike ? OR content ilike ?',
