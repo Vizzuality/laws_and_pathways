@@ -12,7 +12,7 @@ module TPI
     end
 
     def show
-      @sector_companies = @companies.where(active: true).select { |c| c.sector_id == @sector.id }
+      @sector_companies = @companies.active.select { |c| c.sector_id == @sector.id }
 
       @companies_by_levels = ::Api::Charts::Sector.new(companies_scope(params)).companies_summaries_by_level
 
@@ -103,7 +103,6 @@ module TPI
         .published
         .joins(:sector)
         .select(:id, :name, :slug, :sector_id, 'tpi_sectors.name as sector_name', :active)
-      @companies = TPI::CompanyDecorator.decorate_collection(@companies)
     end
 
     def companies_scope(params)
