@@ -13,11 +13,11 @@ module Queries
       private
 
       def publications
-        filter_scope(Publication.all)
+        filter_scope(Publication.where.not(publication_date: nil))
       end
 
       def news
-        filter_scope(NewsArticle.all)
+        filter_scope(NewsArticle.where.not(publication_date: nil))
       end
 
       def filter_scope(scope)
