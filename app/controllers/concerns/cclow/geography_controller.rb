@@ -24,6 +24,9 @@ module CCLOW
       @geography_events_with_links = @geography_events.map do |e|
         ::Api::Presenters::Event.call(e, :geography)
       end
+
+      # @admin_panel_section_title = @geography.name
+      # @link = admin_geography_path(@geography)
     end
 
     def set_geography_overview

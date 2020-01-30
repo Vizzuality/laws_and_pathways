@@ -14,9 +14,6 @@
     <div class="title-page">
       <%= @geography.flag_image %>
       <h5><%= @geography.name %></h5>
-      <% if @current_user.present? %>
-        <%= yield :manage_data_button %>
-      <% end %>
     </div>
     <hr>
     <div class="columns">

@@ -32,7 +32,8 @@
     <%= javascript_pack_tag 'tpi' %>
   </head>
   <body>
-    <section class="tpi__banner is-hidden-touch">
+    <%= render "layouts/tpi/fixed-navbar" %>
+    <section class="tpi__banner is-hidden-touch <%= 'header__margin' if @current_user.present? %>">
       <%= render "layouts/tpi/banner" %>
     </section>
 

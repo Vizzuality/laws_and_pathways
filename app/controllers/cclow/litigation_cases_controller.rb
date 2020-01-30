@@ -10,6 +10,8 @@ module CCLOW
       add_breadcrumb('Search results', request.path) if params[:q].present? || params[:recent].present?
 
       @litigations = Queries::CCLOW::LitigationQuery.new(filter_params).call
+      @admin_panel_section_title = 'All Litigation Cases'
+      @link = admin_litigations_path
 
       respond_to do |format|
         format.html do
@@ -23,9 +25,7 @@ module CCLOW
             litigation_party_types_options: litigation_party_types_options,
             litigation_jurisdictions_options: litigation_jurisdictions_options,
             litigations: CCLOW::LitigationDecorator.decorate_collection(@litigations.first(10)),
-            count: @litigations.count,
-            current_user: @current_user,
-            link: admin_litigations_path
+            count: @litigations.count
           }, prerender: false
         end
         format.json do

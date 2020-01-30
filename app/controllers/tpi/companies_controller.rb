@@ -12,6 +12,9 @@ module TPI
 
       @sectors = TPISector.select(:id, :name, :slug).order(:name)
       @companies = Company.published.joins(:sector).select(:id, :name, :slug, 'tpi_sectors.name as sector_name')
+
+      @admin_panel_section_title = "Company #{@company.name}"
+      @link = admin_company_path(@company)
     end
 
     def mq_assessment; end

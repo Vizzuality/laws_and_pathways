@@ -1,4 +1,4 @@
-<header class="header">
+<header class="header <%= 'header__margin' if @current_user.present? %>">
   <div class="search-wrapper">
     <%= react_component("LawsDropdown", {
       recentDate: @search_recent_date,

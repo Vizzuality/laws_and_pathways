@@ -6,6 +6,9 @@ module TPI
     def index
       @publications_and_articles = Queries::TPI::NewsPublicationsQuery
         .new(filter_params).call
+
+      @admin_panel_section_title = 'Publications'
+      @link = admin_publications_path
     end
 
     def partial
@@ -20,6 +23,8 @@ module TPI
         format.html
         format.pdf { redirect_to rails_blob_url(@publication.file, disposition: 'preview') }
       end
+      @admin_panel_section_title = "Publication #{@publication.title}"
+      @link = admin_publication_path(@publication)
       redirect_to '' unless @publication
     end
 

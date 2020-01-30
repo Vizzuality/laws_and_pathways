@@ -1,9 +1,5 @@
 <% content_for :page_title, "Climate Laws - #{@geography.name}" %>
 
-<% content_for :manage_data_button do %>
-  <%= render 'cclow/cclow/manage_data', link: admin_geography_path(@geography) %>
-<% end %>
-
 <div class="content-show overview-page">
   <h3>Overview and context</h3>
   <%= render 'cclow/geographies/overview', geography_overview: @geography_overview, geography: @geography %>

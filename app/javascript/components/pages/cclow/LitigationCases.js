@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import qs from 'qs';
 import SearchFilter from '../../SearchFilter';
 import TimeRangeFilter from '../../TimeRangeFilter';
-import ManageDataButton from '../../ManageDataButton';
 
 function getQueryFilters() {
   return qs.parse(window.location.search.slice(1));
@@ -271,9 +270,7 @@ class LitigationCases extends Component {
     const {
       geo_filter_options: geoFilterOptions,
       tags_filter_options: tagsFilterOptions,
-      statuses_filter_options: statusesFilterOptions,
-      current_user: currentUser,
-      link
+      statuses_filter_options: statusesFilterOptions
     } = this.props;
     const hasMore = litigations.length < count;
     const downloadResultsLink = `/cclow/litigation_cases.csv?${this.getQueryString()}`;
@@ -283,7 +280,6 @@ class LitigationCases extends Component {
           <div className="container">
             <div className="flex-container">
               {this.renderPageTitle()}
-              {currentUser && <ManageDataButton link={link} />}
             </div>
             <hr />
             <div className="columns">
@@ -374,8 +370,6 @@ LitigationCases.defaultProps = {
 
 LitigationCases.propTypes = {
   litigations: PropTypes.array.isRequired,
-  current_user: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
   count: PropTypes.number,
   geo_filter_options: PropTypes.array,
   tags_filter_options: PropTypes.array,

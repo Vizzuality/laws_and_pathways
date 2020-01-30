@@ -9,6 +9,9 @@ module TPI
 
     def index
       @companies_by_sectors = ::Api::Charts::Sector.new(companies_scope(params)).companies_market_cap_by_sector
+
+      @admin_panel_section_title = 'Sectors'
+      @link = admin_tpi_sectors_path
     end
 
     def show
@@ -17,6 +20,9 @@ module TPI
       @companies_by_levels = ::Api::Charts::Sector.new(companies_scope(params)).companies_summaries_by_level
 
       @publications_and_articles = @sector.publications_and_articles
+
+      @admin_panel_section_title = "Sector #{@sector.name}"
+      @link = admin_tpi_sector_path(@sector)
     end
 
     # Chart data endpoints

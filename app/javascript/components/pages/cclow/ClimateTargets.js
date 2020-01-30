@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import SearchFilter from '../../SearchFilter';
-import ManageDataButton from '../../ManageDataButton';
 /* import TimeRangeFilter from '../../TimeRangeFilter'; */
 
 function getQueryFilters() {
@@ -155,9 +154,7 @@ class ClimateTargets extends Component {
     const {
       geo_filter_options: geoFilterOptions,
       tags_filter_options: tagsFilterOptions,
-      types_filter_options: typesFilterOptions,
-      current_user: currentUser,
-      link
+      types_filter_options: typesFilterOptions
     } = this.props;
     const hasMore = climate_targets.length < count;
     const downloadResultsLink = `/cclow/climate_targets.csv?${this.getQueryString()}`;
@@ -168,7 +165,6 @@ class ClimateTargets extends Component {
           <div className="container">
             <div className="flex-container">
               {this.renderPageTitle()}
-              {currentUser && <ManageDataButton link={link} />}
             </div>
             <hr />
             <div className="columns">
@@ -254,9 +250,7 @@ ClimateTargets.propTypes = {
   count: PropTypes.number,
   geo_filter_options: PropTypes.array,
   tags_filter_options: PropTypes.array,
-  types_filter_options: PropTypes.array,
-  current_user: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired
+  types_filter_options: PropTypes.array
 };
 
 export default ClimateTargets;

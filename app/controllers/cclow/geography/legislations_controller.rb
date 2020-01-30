@@ -15,6 +15,12 @@ module CCLOW
           .includes(:events)
           .joins(:events).order('events.date DESC')
         @legislations = CCLOW::LegislationDecorator.decorate_collection(@legislations)
+
+        @admin_panel_section_title = "Climate Laws and Policies - #{@geography.name}"
+        @link = admin_legislations_path(
+          'q[geography_id_eq]': @geography,
+          'q[legislation_type_eq]': params[:scope] == :laws ? 'legislative' : 'executive'
+        )
       end
 
       def show
@@ -26,6 +32,9 @@ module CCLOW
         legislation_events = @legislation.events.order(:date)
         @legislation_events_with_links = legislation_events.map do |e|
           ::Api::Presenters::Event.call(e, :legislation)
+
+          @admin_panel_section_title = "Climate Laws and Policies - #{@geography.name} - #{@legislation.title}"
+          @link = admin_legislation_path(@legislation)
         end
       end
 

@@ -10,6 +10,8 @@ module CCLOW
       add_breadcrumb('Search results', request.path) if params[:q].present? || params[:recent].present?
 
       @climate_targets = Queries::CCLOW::TargetQuery.new(filter_params).call
+      @admin_panel_section_title = 'Climate targets'
+      @link = admin_targets_path
 
       respond_to do |format|
         format.html do
@@ -18,9 +20,7 @@ module CCLOW
             tags_filter_options: tags_options('Target'),
             types_filter_options: target_types_options,
             climate_targets: CCLOW::TargetDecorator.decorate_collection(@climate_targets.first(10)),
-            count: @climate_targets.count,
-            current_user: @current_user,
-            link: admin_targets_path
+            count: @climate_targets.count
           }, prerender: false
         end
         format.json do

@@ -1,9 +1,5 @@
 <% content_for :page_title, "Climate Laws - #{@geography.name} - Litigation cases" %>
 
-<% content_for :manage_data_button do %>
-  <%= render 'cclow/cclow/manage_data', link: admin_litigations_path('q[geography_id_eq]': @geography) %>
-<% end %>
-
 <div class="container">
   <h3>Litigation cases</h3>
 

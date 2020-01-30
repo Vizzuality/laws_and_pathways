@@ -10,6 +10,8 @@ module CCLOW
       add_breadcrumb('Search results', request.path) if params[:q].present? || params[:recent].present?
 
       @legislations = Queries::CCLOW::LegislationQuery.new(filter_params).call
+      @admin_panel_section_title = 'All laws and policies'
+      @link = admin_legislations_path
 
       respond_to do |format|
         format.html do
@@ -18,9 +20,7 @@ module CCLOW
             tags_filter_options: tags_options('Legislation'),
             types_filter_options: legislation_types_options,
             legislations: CCLOW::LegislationDecorator.decorate_collection(@legislations.first(10)),
-            count: @legislations.count,
-            current_user: @current_user,
-            link: admin_legislations_path
+            count: @legislations.count
           }, prerender: false
         end
         format.json do
