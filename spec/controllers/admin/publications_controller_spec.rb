@@ -98,6 +98,24 @@ RSpec.describe Admin::PublicationsController, type: :controller do
     end
   end
 
+  describe 'DELETE destroy' do
+    let!(:publication_to_delete) { create(:publication) }
+
+    context 'with valid params' do
+      let(:id_to_delete) { publication_to_delete.id }
+
+      subject { delete :destroy, params: {id: publication_to_delete.id} }
+
+      it 'deletes Publication' do
+        # should disappear from default scope
+        expect { subject }.to change { Publication.count }.by(-1)
+        expect(Publication.find_by_id(id_to_delete)).to be_nil
+
+        expect(flash[:notice]).to match('Publication was successfully destroyed.')
+      end
+    end
+  end
+
   def last_publication_created
     Publication.order(:created_at).last
   end

@@ -6,6 +6,8 @@ class TrixInput < Formtastic::Inputs::StringInput
         class: 'trix-content'
       }
 
+      editor_tag_params['data-controller'] = 'embed-trix' if options[:embed_youtube]
+
       editor_tag = template.content_tag('trix-editor', '', editor_tag_params)
       hidden_field = builder.hidden_field(method, input_html_options)
 

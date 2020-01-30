@@ -11,7 +11,7 @@ module CCLOW
 
       # rubocop:disable Metrics/AbcSize
       def show
-        @litigation = Litigation.find(params[:id])
+        @litigation = @geography.litigations.find(params[:id])
         @legislations = CCLOW::LegislationDecorator.decorate_collection(@litigation.legislations)
         add_breadcrumb('Litigation cases', cclow_geography_litigation_cases_path(@geography))
         add_breadcrumb(@litigation.title, request.path)

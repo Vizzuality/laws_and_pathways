@@ -16,15 +16,30 @@ class TPISector < ApplicationRecord
 
   has_many :companies, foreign_key: 'sector_id'
   has_many :cp_benchmarks, class_name: 'CP::Benchmark', foreign_key: 'sector_id'
+  has_many :cp_units, class_name: 'CP::Unit', foreign_key: 'sector_id', inverse_of: :sector
 
   has_and_belongs_to_many :publications
   has_and_belongs_to_many :news_articles
+
+  accepts_nested_attributes_for :cp_units, allow_destroy: true, reject_if: :all_blank
 
   validates_presence_of :name, :slug
   validates_uniqueness_of :name, :slug
 
   def should_generate_new_friendly_id?
     name_changed? || super
+  end
+
+  def cp_unit_valid_for_date(date)
+    return latest_cp_unit unless date
+
+    cp_units
+      .select { |u| u.valid_since.nil? || u.valid_since <= date }
+      .max_by { |u| u.valid_since || Date.new(1900, 1, 1) }
+  end
+
+  def latest_cp_unit
+    cp_units.order('valid_since DESC NULLS LAST').first
   end
 
   def latest_released_benchmarks

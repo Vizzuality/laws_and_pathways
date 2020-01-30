@@ -19,7 +19,9 @@
     <div class="logos">
       <% @partners_logos.each do |image| %>
         <div class="image__container">
-          <%= link_to(image_tag(image.logo), image.link) %>
+          <%= link_to image.link do %>
+            <%= image_tag image.logo %>
+          <% end %>
         </div>
       <% end %>
     </div>

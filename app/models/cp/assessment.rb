@@ -29,5 +29,9 @@ module CP
     }
 
     validates_presence_of :publication_date
+
+    def unit
+      company.sector.cp_unit_valid_for_date(publication_date)&.unit
+    end
   end
 end

@@ -77,12 +77,12 @@ describe 'CSVDataUpload (integration)' do
         # Editor should't publish resources
         let(:current_user_role) { 'editor_laws' }
 
-        it 'does not import one row from CSV files with Legislation data' do
+        it 'does not at all if one row is not valid' do
           # 2nd record (ID=20) should fail with auth error
           command = expect_data_upload_results(
             Legislation,
             fixture_file('legislations.csv', content: csv_content),
-            {new_records: 1, not_changed_records: 0, rows: 3, updated_records: 1},
+            {new_records: 0, not_changed_records: 0, rows: 3, updated_records: 0},
             false
           )
 

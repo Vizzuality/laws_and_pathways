@@ -24,6 +24,8 @@ module Queries
         scope
           .merge(filter_by_tags(scope))
           .merge(filter_by_sectors(scope))
+          .where('publication_date <= NOW()')
+          .includes([:keywords, :tpi_sectors, :image_attachment])
           .order(publication_date: :desc)
       end
 

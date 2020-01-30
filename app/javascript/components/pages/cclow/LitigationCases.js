@@ -29,6 +29,9 @@ class LitigationCases extends Component {
       activeSideBFilter: {},
       activeSideCFilter: {},
       activePartyTypesFilter: {},
+      activeSideAPartyTypesFilter: {},
+      activeSideBPartyTypesFilter: {},
+      activeSideCPartyTypesFilter: {},
       activeJurisdictionsFilter: {}
     };
 
@@ -41,6 +44,9 @@ class LitigationCases extends Component {
     this.sideCFilter = React.createRef();
     this.partyTypeFilter = React.createRef();
     this.jurisdictionFilter = React.createRef();
+    this.sideAPartyTypeFilter = React.createRef();
+    this.sideBPartyTypeFilter = React.createRef();
+    this.sideCPartyTypeFilter = React.createRef();
   }
 
   getQueryString(extraParams = {}) {
@@ -53,7 +59,10 @@ class LitigationCases extends Component {
       activeSideAFilter,
       activeSideBFilter,
       activeSideCFilter,
-      activeJurisdictionsFilter
+      activeJurisdictionsFilter,
+      activeSideAPartyTypesFilter,
+      activeSideBPartyTypesFilter,
+      activeSideCPartyTypesFilter
     } = this.state;
     const params = {
       ...getQueryFilters(),
@@ -66,6 +75,9 @@ class LitigationCases extends Component {
       ...activeSideCFilter,
       ...activePartyTypesFilter,
       ...activeJurisdictionsFilter,
+      ...activeSideAPartyTypesFilter,
+      ...activeSideBPartyTypesFilter,
+      ...activeSideCPartyTypesFilter,
       ...extraParams
     };
 
@@ -110,7 +122,10 @@ class LitigationCases extends Component {
       activeSideBFilter,
       activeSideCFilter,
       activePartyTypesFilter,
-      activeJurisdictionsFilter
+      activeJurisdictionsFilter,
+      activeSideAPartyTypesFilter,
+      activeSideBPartyTypesFilter,
+      activeSideCPartyTypesFilter
     } = this.state;
     const {
       geo_filter_options: geoFilterOptions,
@@ -120,7 +135,10 @@ class LitigationCases extends Component {
       litigation_side_b_names_options: litigationSideBOptions,
       litigation_side_c_names_options: litigationSideCOptions,
       litigation_party_types_options: litigationPartyTypesOptions,
-      litigation_jurisdictions_options: litigationJurisdictionsOptions
+      litigation_jurisdictions_options: litigationJurisdictionsOptions,
+      litigation_side_a_party_type_options: litigationSideAPartyTypeOptions,
+      litigation_side_b_party_type_options: litigationSideBPartyTypeOptions,
+      litigation_side_c_party_type_options: litigationSideCPartyTypeOptions
     } = this.props;
     if (!Object.keys(activeGeoFilter).length
       && !Object.keys(activeTagFilter).length
@@ -129,6 +147,9 @@ class LitigationCases extends Component {
       && !Object.keys(activeSideAFilter).length
       && !Object.keys(activeSideBFilter).length
       && !Object.keys(activeSideCFilter).length
+      && !Object.keys(activeSideAPartyTypesFilter).length
+      && !Object.keys(activeSideBPartyTypesFilter).length
+      && !Object.keys(activeSideCPartyTypesFilter).length
       && !Object.keys(activePartyTypesFilter).length) return null;
     return (
       <div className="filter-tags">
@@ -140,6 +161,9 @@ class LitigationCases extends Component {
         {this.renderTagsGroup(activeSideCFilter, litigationSideCOptions, 'sideCFilter')}
         {this.renderTagsGroup(activePartyTypesFilter, litigationPartyTypesOptions, 'partyTypeFilter')}
         {this.renderTagsGroup(activeJurisdictionsFilter, litigationJurisdictionsOptions, 'jurisdictionFilter')}
+        {this.renderTagsGroup(activeSideAPartyTypesFilter, litigationSideAPartyTypeOptions, 'sideAPartyTypeFilter')}
+        {this.renderTagsGroup(activeSideBPartyTypesFilter, litigationSideBPartyTypeOptions, 'sideBPartyTypeFilter')}
+        {this.renderTagsGroup(activeSideCPartyTypesFilter, litigationSideCPartyTypeOptions, 'sideCPartyTypeFilter')}
         {this.renderTimeRangeTags(activeTimeRangeFilter)}
       </div>
     );
@@ -206,7 +230,10 @@ class LitigationCases extends Component {
       litigation_jurisdictions_options: litigationJurisdictionsOptions,
       litigation_side_a_names_options: litigationSideAOptions,
       litigation_side_b_names_options: litigationSideBOptions,
-      litigation_side_c_names_options: litigationSideCOptions
+      litigation_side_c_names_options: litigationSideCOptions,
+      litigation_side_a_party_type_options: litigationSideAPartyTypeOptions,
+      litigation_side_b_party_type_options: litigationSideBPartyTypeOptions,
+      litigation_side_c_party_type_options: litigationSideCPartyTypeOptions
     } = this.props;
 
     return (
@@ -223,22 +250,10 @@ class LitigationCases extends Component {
         {isMoreSearchOptionsVisible && (
           <>
             <SearchFilter
-              ref={this.sideAFilter}
-              filterName="Side A"
-              params={litigationSideAOptions}
-              onChange={(event) => this.filterList('activeSideAFilter', event)}
-            />
-            <SearchFilter
-              ref={this.sideBFilter}
-              filterName="Side B"
-              params={litigationSideBOptions}
-              onChange={(event) => this.filterList('activeSideBFilter', event)}
-            />
-            <SearchFilter
-              ref={this.sideCFilter}
-              filterName="Side C"
-              params={litigationSideCOptions}
-              onChange={(event) => this.filterList('activeSideCFilter', event)}
+              ref={this.jurisdictionFilter}
+              filterName="Jurisdiction"
+              params={litigationJurisdictionsOptions}
+              onChange={(event) => this.filterList('activeJurisdictionsFilter', event)}
             />
             <SearchFilter
               ref={this.partyTypeFilter}
@@ -247,10 +262,40 @@ class LitigationCases extends Component {
               onChange={(event) => this.filterList('activePartyTypesFilter', event)}
             />
             <SearchFilter
-              ref={this.jurisdictionFilter}
-              filterName="Jurisdiction"
-              params={litigationJurisdictionsOptions}
-              onChange={(event) => this.filterList('activeJurisdictionsFilter', event)}
+              ref={this.sideAPartyTypeFilter}
+              filterName="Side A Type"
+              params={litigationSideAPartyTypeOptions}
+              onChange={(event) => this.filterList('activeSideAPartyTypesFilter', event)}
+            />
+            <SearchFilter
+              ref={this.sideBPartyTypeFilter}
+              filterName="Side B Type"
+              params={litigationSideBPartyTypeOptions}
+              onChange={(event) => this.filterList('activeSideBPartyTypesFilter', event)}
+            />
+            <SearchFilter
+              ref={this.sideCPartyTypeFilter}
+              filterName="Side C Type"
+              params={litigationSideCPartyTypeOptions}
+              onChange={(event) => this.filterList('activeSideCPartyTypesFilter', event)}
+            />
+            <SearchFilter
+              ref={this.sideAFilter}
+              filterName="Side A name"
+              params={litigationSideAOptions}
+              onChange={(event) => this.filterList('activeSideAFilter', event)}
+            />
+            <SearchFilter
+              ref={this.sideBFilter}
+              filterName="Side B name"
+              params={litigationSideBOptions}
+              onChange={(event) => this.filterList('activeSideBFilter', event)}
+            />
+            <SearchFilter
+              ref={this.sideCFilter}
+              filterName="Side C name"
+              params={litigationSideCOptions}
+              onChange={(event) => this.filterList('activeSideCFilter', event)}
             />
             <button
               type="button"
@@ -323,10 +368,10 @@ class LitigationCases extends Component {
                         <div className="meta">
                           {litigation.geography && (
                             <Fragment>
-                              <div>
+                              <a href={litigation.geography_path}>
                                 <img src={`/images/flags/${litigation.geography.iso}.svg`} alt="" />
                                 {litigation.geography.name}
-                              </div>
+                              </a>
                               {litigation.opened_in && <div>Opened in {litigation.opened_in}</div>}
                               {litigation.last_development_in && <div>Last development in {litigation.last_development_in}</div>}
                             </Fragment>
@@ -363,6 +408,9 @@ LitigationCases.defaultProps = {
   litigation_side_b_names_options: [],
   litigation_side_c_names_options: [],
   litigation_party_types_options: [],
+  litigation_side_a_party_type_options: [],
+  litigation_side_b_party_type_options: [],
+  litigation_side_c_party_type_options: [],
   litigation_jurisdictions_options: []
 };
 
@@ -376,6 +424,9 @@ LitigationCases.propTypes = {
   litigation_side_a_names_options: PropTypes.array,
   litigation_side_b_names_options: PropTypes.array,
   litigation_side_c_names_options: PropTypes.array,
+  litigation_side_a_party_type_options: PropTypes.array,
+  litigation_side_b_party_type_options: PropTypes.array,
+  litigation_side_c_party_type_options: PropTypes.array,
   litigation_jurisdictions_options: PropTypes.array
 };
 
