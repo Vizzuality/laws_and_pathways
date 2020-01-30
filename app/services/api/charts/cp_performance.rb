@@ -2,6 +2,8 @@ module Api
   module Charts
     class CPPerformance
       # Calculate companies stats grouped by CP alignment in multiple series.
+      # Sort order is important, series should be ordered by CP alignment order
+      # data in series should be ordered by sectors cluster and then sector name
       #
       # @return [Array<Hash>] chart data
       # @example
@@ -34,7 +36,10 @@ module Api
         result = cp_alignment_data.map do |name, data|
           {
             name: name,
-            data: data.to_a.sort
+            data: data.sort_by do |sn, _v|
+              sector = all_sectors.find { |s| s.name == sn }
+              [sector.cluster, sector.name]
+            end.to_a
           }
         end
 

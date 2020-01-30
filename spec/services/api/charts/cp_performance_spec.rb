@@ -122,25 +122,22 @@ RSpec.describe Api::Charts::CPPerformance do
         )
       end
 
-      it 'returns chart data' do
-        expect(subject.cp_performance_all_sectors_data).to contain_exactly(
-          {
-            name: 'Not Aligned',
-            data: [['Airlines', 1], ['Autos', 1], ['Steel', 0]]
-          },
-          {
-            name: 'Below 2 Degrees',
-            data: [['Airlines', 0], ['Autos', 2], ['Steel', 1]]
-          },
-          {
-            name: '2 Degrees',
-            data: [['Airlines', 0], ['Autos', 0], ['Steel', 1]]
-          },
-          {
-            name: 'Paris Pledges',
-            data: [['Airlines', 2], ['Autos', 0], ['Steel', 1]]
-          }
-        )
+      it 'returns chart data properly sorted by alignment name and then sector cluster' do
+        result = subject.cp_performance_all_sectors_data
+
+        expect(result[0][:name]).to eq('Below 2 Degrees')
+        expect(result[0][:data]).to eq([['Steel', 1], ['Airlines', 0], ['Autos', 2]])
+
+        expect(result[1][:name]).to eq('2 Degrees')
+        expect(result[1][:data]).to eq([['Steel', 1], ['Airlines', 0], ['Autos', 0]])
+
+        expect(result[2][:name]).to eq('Paris Pledges')
+        expect(result[2][:data]).to eq([['Steel', 1], ['Airlines', 2], ['Autos', 0]])
+
+        expect(result[3][:name]).to eq('Not Aligned')
+        expect(result[3][:data]).to eq([['Steel', 0], ['Airlines', 1], ['Autos', 1]])
+
+        expect(result[4]).to be_nil
       end
     end
   end

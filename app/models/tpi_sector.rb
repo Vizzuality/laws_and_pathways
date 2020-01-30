@@ -14,6 +14,18 @@ class TPISector < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: [:slugged, :history], routes: :default
 
+  CLUSTER_MAP = {
+    'Aluminium' => 'Industrials and Materials',
+    'Cement' => 'Industrials and Materials',
+    'Steel' => 'Industrials and Materials',
+    'Paper' => 'Industrials and Materials',
+    'Electricity Utilities' => 'Energy',
+    'Oil & Gas' => 'Energy',
+    'Airlines' => 'Transport',
+    'Autos' => 'Transport',
+    'Shipping' => 'Transport'
+  }.freeze
+
   has_many :companies, foreign_key: 'sector_id'
   has_many :cp_benchmarks, class_name: 'CP::Benchmark', foreign_key: 'sector_id'
   has_many :cp_units, class_name: 'CP::Unit', foreign_key: 'sector_id', inverse_of: :sector
@@ -28,6 +40,10 @@ class TPISector < ApplicationRecord
 
   def should_generate_new_friendly_id?
     name_changed? || super
+  end
+
+  def cluster
+    CLUSTER_MAP[name] || 'Others'
   end
 
   def cp_unit_valid_for_date(date)
