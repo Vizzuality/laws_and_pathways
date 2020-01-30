@@ -112,6 +112,12 @@ $tpi-pie-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB;
     }
   }
 
+  &--cp-all-sectors {
+    div[data-react-class] {
+      width: 100%;
+    }
+  }
+
   &--mq-sector-pie-chart {
     @for $i from 1 through length($tpi-pie-chart-colors) {
       $color: nth($tpi-pie-chart-colors, $i);
