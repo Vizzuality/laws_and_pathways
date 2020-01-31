@@ -2,7 +2,11 @@
 
 <div class="sectors-index-page">
   <div class="dropdown-selector-sector-page-wrapper">
-    <%= react_component("DropdownSelector", { sectors: @sectors, companies: @companies, selectedOption: 'All sectors' }) %>
+    <%= react_component("DropdownSelector", {
+        sectors: @sectors,
+        companies: TPI::CompanyDecorator.decorate_collection(@companies),
+        selectedOption: 'All sectors'
+    }) %>
   </div>
 
 
@@ -39,7 +43,7 @@
             library: mq_sector_pie_chart_options
           ) %>
           <div class="chart-title">
-            <p class="companies-size"><%= @companies.size %></p>
+            <p class="companies-size"><%= @companies.active.size %></p>
             companies
           </div>
         </div>

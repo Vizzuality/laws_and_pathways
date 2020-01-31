@@ -18,6 +18,7 @@
 #  sedol                     :string
 #  latest_information        :text
 #  historical_comments       :text
+#  active                    :boolean          default(TRUE)
 #
 
 FactoryBot.define do
@@ -32,6 +33,7 @@ FactoryBot.define do
     isin { SecureRandom.uuid }
 
     ca100 { true }
+    active { true }
     market_cap_group { Company::MARKET_CAP_GROUPS.sample }
 
     latest_information { 'My information' }

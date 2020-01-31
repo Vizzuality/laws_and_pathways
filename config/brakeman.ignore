@@ -106,6 +106,37 @@
     {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
+      "fingerprint": "5eaef38c140ad1cb2e4ecc08755c940cc0df0f84ef77f58ac2efe6659dbae1a7",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/tpi/companies/show.html.erb",
+      "line": 93,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "TPI::CompanyDecorator.decorate(Company.published.friendly.find(params[:id])).isin_array.join(\"<br/>\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "TPI::CompaniesController",
+          "method": "show",
+          "line": 17,
+          "file": "app/controllers/tpi/companies_controller.rb",
+          "rendered": {
+            "name": "tpi/companies/show",
+            "file": "app/views/tpi/companies/show.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "tpi/companies/show"
+      },
+      "user_input": "Company.published.friendly",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
       "fingerprint": "6548f8f6a46c6972eeac7ab092bee1362fe3b2a70208caafdd2a3a244202a8b0",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
@@ -259,37 +290,6 @@
       "note": ""
     },
     {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 2,
-      "fingerprint": "bbd351d309083843fd17ae5d5391ac3ab99666edc7f3d050fbc2c8560303deed",
-      "check_name": "CrossSiteScripting",
-      "message": "Unescaped model attribute",
-      "file": "app/views/tpi/companies/show.html.erb",
-      "line": 93,
-      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "Company.published.friendly.find(params[:id]).isin_array.join(\"<br/>\")",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "TPI::CompaniesController",
-          "method": "show",
-          "line": 15,
-          "file": "app/controllers/tpi/companies_controller.rb",
-          "rendered": {
-            "name": "tpi/companies/show",
-            "file": "app/views/tpi/companies/show.html.erb"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "tpi/companies/show"
-      },
-      "user_input": null,
-      "confidence": "High",
-      "note": ""
-    },
-    {
       "warning_type": "Weak Hash",
       "warning_code": 90,
       "fingerprint": "e6f71a72258ad09ef86a513f86bd32b984da44f5e3707878d6323d551517e0df",
@@ -341,6 +341,6 @@
       "note": ""
     }
   ],
-  "updated": "2020-01-28 12:29:53 +0100",
+  "updated": "2020-01-30 12:42:31 +0300",
   "brakeman_version": "4.7.2"
 }

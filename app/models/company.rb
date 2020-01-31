@@ -18,6 +18,7 @@
 #  sedol                     :string
 #  latest_information        :text
 #  historical_comments       :text
+#  active                    :boolean          default(TRUE)
 #
 
 class Company < ApplicationRecord
@@ -50,6 +51,8 @@ class Company < ApplicationRecord
   validates :ca100, inclusion: {in: [true, false]}
   validates_presence_of :name, :slug, :isin, :market_cap_group
   validates_uniqueness_of :slug, :name
+
+  scope :active, -> { where(active: true) }
 
   def should_generate_new_friendly_id?
     name_changed? || super

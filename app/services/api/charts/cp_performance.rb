@@ -19,7 +19,7 @@ module Api
       #   ]
       # rubocop:disable Metrics/AbcSize
       def cp_performance_all_sectors_data
-        all_companies = Company.published.includes(:latest_cp_assessment, sector: [:cluster])
+        all_companies = Company.published.active.includes(:latest_cp_assessment, sector: [:cluster])
         all_sectors = all_companies.select { |c| c.cp_alignment.present? }.map(&:sector)
 
         cp_alignment_data = {}
