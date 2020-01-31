@@ -7,7 +7,7 @@ module TPI
     end
 
     def link
-      h.link_to model.name, h.tpi_sector_path(model)
+      h.link_to model.name, h.tpi_sector_path(model.slug)
     end
 
     def to_h
