@@ -34,12 +34,12 @@ function createSVGElement(element) {
   return document.createElementNS('http://www.w3.org/2000/svg', element);
 }
 
-function createSVGLineBelowElements(element1, element2, offset) {
+function createSVGLineBelowElements(element1, element2, barWidth, offset) {
   const y = parseFloat(element1.getAttribute('y'), 10) + offset;
   return createSVGLine(
-    element1.getAttribute('x'),
+    parseFloat(element1.getAttribute('x'), 10) - barWidth / 2,
     y,
-    element2.getAttribute('x'),
+    parseFloat(element2.getAttribute('x'), 10) + barWidth / 2,
     y
   );
 }
@@ -65,6 +65,8 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
 
           [...g.querySelectorAll('.generated')].forEach((el) => el.remove());
 
+          const barWidth = this.series[0] && this.series[0].barW; // workaround for having
+
           const textLabels = [...g.querySelectorAll('text')];
           const chartSectors = this.xAxis[0].categories;
           const usedSectors = sectors.filter(s => chartSectors.includes(s.name));
@@ -83,7 +85,7 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
 
             if (!firstLabel || !lastLabel) return;
 
-            const line = createSVGLineBelowElements(firstLabel, lastLabel, 20.5); // .5 offset to have 1px stroke-width
+            const line = createSVGLineBelowElements(firstLabel, lastLabel, barWidth, 20.5); // .5 offset to have 1px stroke-width
             const clusterElement = createSVGTextBetweenElements(firstLabel, lastLabel, cluster, 40);
 
             g.appendChild(line);
