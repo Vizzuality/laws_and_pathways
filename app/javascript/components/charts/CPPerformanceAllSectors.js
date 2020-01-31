@@ -79,9 +79,9 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
             const lastSector = cSectors[cSectors.length - 1].name;
 
             const firstLabel = textLabels[chartSectors.indexOf(firstSector)];
-            const lastLabel = textLabels[chartSectors.indexOf(lastSector)] || firstLabel;
+            const lastLabel = textLabels[chartSectors.indexOf(lastSector)];
 
-            if (!firstLabel) return;
+            if (!firstLabel || !lastLabel) return;
 
             const line = createSVGLineBelowElements(firstLabel, lastLabel, 20.5); // .5 offset to have 1px stroke-width
             const clusterElement = createSVGTextBetweenElements(firstLabel, lastLabel, cluster, 40);

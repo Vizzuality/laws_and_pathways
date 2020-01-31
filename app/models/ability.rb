@@ -8,7 +8,7 @@ class Ability
   prepend Draper::CanCanCan
 
   TPI_RESOURCES = [
-    Company, MQ::Assessment, CP::Assessment, TPISector, TPIPage,
+    Company, MQ::Assessment, CP::Assessment, TPISector, TPISectorCluster, TPIPage,
     NewsArticle, Testimonial, Publication
   ].freeze
 

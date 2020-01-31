@@ -95,7 +95,7 @@ module TPI
     end
 
     def fetch_sectors
-      @sectors = TPISector.select(:id, :name, :slug).order(:name)
+      @sectors = TPISector.all.includes(:cluster).order(:name)
     end
 
     def fetch_companies

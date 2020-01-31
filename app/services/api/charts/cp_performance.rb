@@ -17,8 +17,9 @@ module Api
       #       data: [ ['Coal Mining', 65], ['Steel', 26] ]
       #     }
       #   ]
+      # rubocop:disable Metrics/AbcSize
       def cp_performance_all_sectors_data
-        all_companies = Company.published.includes(:sector, :latest_cp_assessment)
+        all_companies = Company.published.includes(:latest_cp_assessment, sector: [:cluster])
         all_sectors = all_companies.select { |c| c.cp_alignment.present? }.map(&:sector)
 
         cp_alignment_data = {}
@@ -38,13 +39,14 @@ module Api
             name: name,
             data: data.sort_by do |sn, _v|
               sector = all_sectors.find { |s| s.name == sn }
-              [sector.cluster, sector.name]
+              [sector.cluster&.name, sector.name]
             end.to_a
           }
         end
 
         result.sort_by { |series| CP::Alignment::ORDER.index(series[:name].downcase) }
       end
+      # rubocop:enable Metrics/AbcSize
     end
   end
 end
