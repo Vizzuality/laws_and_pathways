@@ -103,11 +103,26 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
     plotOptions: {
       column: {
         stacking: 'percent',
+        borderWidth: 0,
         dataLabels: {
           enabled: true,
           formatter() {
             return this.y > 0 ? this.y : null;
           }
+        }
+      }
+    },
+    xAxis: {
+      labels: {
+        style: {
+          color: '#0A4BDC'
+        },
+        formatter() {
+          const sector = sectors.find(s => s.name === this.value);
+
+          if (!sector) return this.value;
+
+          return sector.link;
         }
       }
     },
@@ -130,7 +145,8 @@ CPPerformanceAllSectors.propTypes = {
   sectors: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      cluster: PropTypes.string.isRequired
+      link: PropTypes.string.isRequired,
+      cluster: PropTypes.string
     }).isRequired
   ).isRequired
 };

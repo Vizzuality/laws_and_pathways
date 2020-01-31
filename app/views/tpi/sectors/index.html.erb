@@ -57,7 +57,7 @@
     <div class="chart chart--cp-all-sectors">
       <%= react_component('charts/CPPerformanceAllSectors', {
         dataUrl: cp_performance_chart_data_tpi_sectors_path,
-        sectors: @sectors.map { |s| { name: s.name, cluster: s.cluster&.name } }
+        sectors: TPI::CPPerformanceSectorDecorator.decorate_collection(@sectors).map(&:to_h)
       }) %>
     </div>
   </section>
