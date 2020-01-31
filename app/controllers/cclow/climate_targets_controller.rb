@@ -10,8 +10,8 @@ module CCLOW
       add_breadcrumb('Search results', request.path) if params[:q].present? || params[:recent].present?
 
       @climate_targets = Queries::CCLOW::TargetQuery.new(filter_params).call
-      @admin_panel_section_title = 'Climate targets'
-      @link = admin_targets_path
+
+      fixed_navbar('Climate targets', admin_targets_path)
 
       respond_to do |format|
         format.html do

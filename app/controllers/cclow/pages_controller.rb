@@ -8,8 +8,7 @@ module CCLOW
         Site::Breadcrumb.new(@page.title, @page.slug_path)
       ]
 
-      @admin_panel_section_title = @page.title
-      @link = admin_cclow_page_path(@page)
+      fixed_navbar(@page.title, admin_cclow_page_path(@page))
 
       redirect_to '' unless @page
     end

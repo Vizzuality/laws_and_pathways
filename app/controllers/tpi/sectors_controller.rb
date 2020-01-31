@@ -10,8 +10,7 @@ module TPI
     def index
       @companies_by_sectors = ::Api::Charts::Sector.new(companies_scope(params)).companies_market_cap_by_sector
 
-      @admin_panel_section_title = 'Sectors'
-      @link = admin_tpi_sectors_path
+      fixed_navbar('Sectors', admin_tpi_sectors_path)
     end
 
     def show
@@ -21,8 +20,7 @@ module TPI
 
       @publications_and_articles = @sector.publications_and_articles
 
-      @admin_panel_section_title = "Sector #{@sector.name}"
-      @link = admin_tpi_sector_path(@sector)
+      fixed_navbar("Sector #{@sector.name}", admin_tpi_sector_path(@sector))
     end
 
     # Chart data endpoints

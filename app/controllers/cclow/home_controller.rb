@@ -5,8 +5,10 @@ module CCLOW
       @featured_countries = ::Geography.where(name: ['China', 'United States',
                                                      'European Union', 'India',
                                                      'Indonesia'])
-      @link = admin_root_path
-      @admin_panel_section_title = 'Dashboard'
+      fixed_navbar(
+        'Dashboard',
+        admin_root_path
+      )
     end
 
     def sandbox; end

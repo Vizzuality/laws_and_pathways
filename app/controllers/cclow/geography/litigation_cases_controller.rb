@@ -8,8 +8,10 @@ module CCLOW
         @litigations = @geography.litigations.published.includes(:events)
         @litigations = CCLOW::LitigationDecorator.decorate_collection(@litigations)
 
-        @admin_panel_section_title = "Litigation cases - #{@geography.name}"
-        @link = admin_litigations_path('q[geography_id_eq]': @geography)
+        fixed_navbar(
+          "Litigation cases - #{@geography.name}",
+          admin_litigations_path('q[geography_id_eq]': @geography)
+        )
       end
 
       # rubocop:disable Metrics/AbcSize
@@ -26,8 +28,10 @@ module CCLOW
         @litigation_events_with_links = @litigation_events.map do |e|
           ::Api::Presenters::Event.call(e, :litigation)
 
-          @admin_panel_section_title = "Litigation cases - #{@geography.name} - #{@litigation.title}"
-          @link = admin_litigation_path(@litigation)
+          fixed_navbar(
+            "Litigation cases - #{@geography.name} - #{@litigation.title}",
+            admin_litigation_path(@litigation)
+          )
         end
       end
       # rubocop:enable Metrics/AbcSize

@@ -17,8 +17,7 @@ module TPI
       @publications_and_articles = (publications + news)
         .sort { |a, b| b.publication_date <=> a.publication_date }[0, 3]
 
-      @admin_panel_section_title = 'Dashboard'
-      @link = admin_root_path
+      fixed_navbar('Dashboard', admin_root_path)
     end
 
     def sandbox; end

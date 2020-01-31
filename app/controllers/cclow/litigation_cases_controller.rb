@@ -10,8 +10,8 @@ module CCLOW
       add_breadcrumb('Search results', request.path) if params[:q].present? || params[:recent].present?
 
       @litigations = Queries::CCLOW::LitigationQuery.new(filter_params).call
-      @admin_panel_section_title = 'All Litigation Cases'
-      @link = admin_litigations_path
+
+      fixed_navbar('All Litigation Cases', admin_litigations_path)
 
       respond_to do |format|
         format.html do
