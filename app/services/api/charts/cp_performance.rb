@@ -39,7 +39,7 @@ module Api
             name: name,
             data: data.sort_by do |sn, _v|
               sector = all_sectors.find { |s| s.name == sn }
-              [sector.cluster&.name, sector.name]
+              [sector.cluster&.name || 'ZZZ', sector.name] # stupid way to sort null last
             end.to_a
           }
         end

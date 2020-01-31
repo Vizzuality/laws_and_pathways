@@ -70,7 +70,7 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
           const textLabels = [...g.querySelectorAll('text')];
           const chartSectors = this.xAxis[0].categories;
           const usedSectors = sectors.filter(s => chartSectors.includes(s.name));
-          const clusters = [...usedSectors.map(s => s.cluster)];
+          const clusters = [...usedSectors.map(s => s.cluster).filter(x => x)];
 
           clusters.forEach((cluster) => {
             const cSectors = sortBy(usedSectors.filter(s => s.cluster === cluster), 'name');
