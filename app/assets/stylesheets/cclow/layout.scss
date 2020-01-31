@@ -5,7 +5,7 @@
 $search-field-height: 3.75rem;
 
 .header__margin {
-  margin-top: 56px;
+  margin-top: var(--fixed-navbar-height);
 }
 
 .header {

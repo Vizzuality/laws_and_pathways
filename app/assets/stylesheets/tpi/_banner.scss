@@ -1,7 +1,7 @@
 @import "colors";
 
 .header__margin {
-  margin-top: 56px;
+  margin-top: var(--fixed-navbar-height);
 }
 
 .tpi__banner {

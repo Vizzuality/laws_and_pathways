@@ -15,7 +15,7 @@ $icon-size: 24px;
     width: 1356px;
     max-width: 80%;
     margin: 0 auto;
-    height: 56px;
+    height: var(--fixed-navbar-height);
     display: flex;
     justify-content: space-between;
     align-items: center;
