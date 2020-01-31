@@ -22,7 +22,8 @@ function createSVGText(x, y, innerText) {
   const text = createSVGElement('text');
   text.setAttribute('x', x);
   text.setAttribute('y', y);
-  text.setAttribute('style', 'fill:#666666;color:#666666;font-size:14px;');
+  text.setAttribute('opacity', 1);
+  text.setAttribute('style', 'fill:#666666;color:#666666;font-size:12px;');
   text.setAttribute('text-anchor', 'middle');
   text.setAttribute('class', 'generated');
   text.innerHTML = innerText;
@@ -82,7 +83,7 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
 
             if (!firstLabel) return;
 
-            const line = createSVGLineBelowElements(firstLabel, lastLabel, 20);
+            const line = createSVGLineBelowElements(firstLabel, lastLabel, 20.5); // .5 offset to have 1px stroke-width
             const clusterElement = createSVGTextBetweenElements(firstLabel, lastLabel, cluster, 40);
 
             g.appendChild(line);
