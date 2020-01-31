@@ -11,6 +11,8 @@ namespace :reimport do
 
   task tpi_sector_clusters: :environment do
     Seed::TPIData.import_sector_clusters
+
+    puts 'TPI Sector Clusters reimported'
   end
 
   desc 'Reimport CCLOW data - USE WITH CAUTION'
