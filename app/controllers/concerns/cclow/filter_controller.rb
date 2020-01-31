@@ -9,7 +9,7 @@ module CCLOW
     end
 
     def tags_options(taggable_type)
-      tags = Tag.all.includes(:taggings).where(taggings: {taggable_type: taggable_type})
+      tags = Keyword.all.includes(:taggings).where(taggings: {taggable_type: taggable_type})
       [{field_name: 'tags', options: tags.map { |l| {value: l.id, label: l.name} }.sort_by { |h| h[:label] }}]
     end
 
