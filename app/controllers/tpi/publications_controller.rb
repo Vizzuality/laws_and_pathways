@@ -29,7 +29,7 @@ module TPI
                            admin_publication_path(@publication)
                          end
 
-      fixed_navbar("Publication #{@publication.title}", admin_panel_path)
+      fixed_navbar("#{@publication.class.name.underscore.humanize} #{@publication.title}", admin_panel_path)
 
       redirect_to '' unless @publication
     end
