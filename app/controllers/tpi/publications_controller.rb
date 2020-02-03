@@ -23,11 +23,7 @@ module TPI
         format.pdf { redirect_to rails_blob_url(@publication.file, disposition: 'preview') }
       end
 
-      admin_panel_path = if params[:type].eql?('NewsArticle')
-                           admin_news_article_path(@publication)
-                         else
-                           admin_publication_path(@publication)
-                         end
+      admin_panel_path = polymorphic_path([:admin, @publication])
 
       fixed_navbar("#{@publication.class.name.underscore.humanize} #{@publication.title}", admin_panel_path)
 
