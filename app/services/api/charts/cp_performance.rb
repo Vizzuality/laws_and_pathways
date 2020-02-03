@@ -44,6 +44,8 @@ module Api
           }
         end
 
+        result = result.select { |t| CP::Alignment::ORDER.include?(t[:name].downcase) }
+
         result.sort_by { |series| CP::Alignment::ORDER.index(series[:name].downcase) }
       end
       # rubocop:enable Metrics/AbcSize
