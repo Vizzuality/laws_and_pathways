@@ -50,13 +50,18 @@
 
   <section class="section is-medium">
     <h5>Legislative process</h5>
+    <input id="legislative-process-toggle" class="legislative-process-toggle" type='checkbox' hidden>
     <div>
       <% if @geography_overview.legislative_process.present? %>
-        <%= @geography_overview.legislative_process.html_safe %>
+        <div class="legislative-process-preview">
+          <%= @geography_overview.legislative_process_preview %>
+        </div>
+        <div class="legislative-process">
+          <%= @geography_overview.legislative_process.html_safe %>
+        </div>
       <% else %>
         <p>No information currently - work in progress.</p>
       <% end %>
-      <!--<a href="#" class="highlight">Read more about Germany’s legislative process  >></a>-->
     </div>
   </section>
   <hr>
