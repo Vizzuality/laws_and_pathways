@@ -9,6 +9,12 @@ namespace :reimport do
     Seed::TPIData.call
   end
 
+  task tpi_sector_clusters: :environment do
+    Seed::TPIData.import_sector_clusters
+
+    puts 'TPI Sector Clusters reimported'
+  end
+
   desc 'Reimport CCLOW data - USE WITH CAUTION'
   task cclow: :environment do
     Legislation.delete_all

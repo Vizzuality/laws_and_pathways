@@ -25,6 +25,8 @@ class CCLOWMapContextData
   }.freeze
 
   class << self
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
     def all
       DATASETS.map do |key, dataset|
         csv_file = File.read(Rails.root.join('map_data', "#{dataset[:file]}.csv"))
@@ -33,17 +35,26 @@ class CCLOWMapContextData
 
         parse_value = dataset[:parse_value] || ->(value) { value.to_f }
 
-        data = CSV.parse(
+        parsed_data = CSV.parse(
           csv_file,
           headers: true,
           header_converters: :symbol,
           skip_blanks: true
-        ).map do |row|
+        )
+
+        data = parsed_data.map do |row|
           {
             geography_iso: row[:iso3],
             value: parse_value.call(row[value_column])
           }
         end
+
+        eu_countries_data = data.select do |el|
+          ::Geography::EU_COUNTRIES.include?(el[:geography_iso])
+        end
+
+        eu_aggregated_value = eu_countries_data.pluck(:value).reduce(:+)
+        data << {geography_iso: 'EUR', value: eu_aggregated_value}
 
         metadata = YAML.safe_load(metadata_file)
 
@@ -53,6 +64,8 @@ class CCLOWMapContextData
         }.merge(metadata)
       end
     end
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
 
     def check_data_integrity
       all_geographies = Geography.all

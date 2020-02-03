@@ -8,7 +8,7 @@ module TPI
       cp_benchmarks = CP::Benchmark
         .joins(:sector)
         .order('tpi_sectors.name ASC, release_date DESC')
-        .includes(:sector)
+        .includes(sector: [:cp_units])
 
       mq_assessments_files = mq_assessments_by_methodology.map do |methodology, assessments|
         {

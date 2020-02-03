@@ -32,6 +32,7 @@
     <%= javascript_pack_tag 'cclow' %>
   </head>
   <body>
+    <%= render "layouts/cclow/fixed-navbar" %>
     <% if controller_name == 'home' && action_name == 'index'  %>
       <%= render "cclow/home/hero" %>
     <% else %>

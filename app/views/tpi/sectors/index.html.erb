@@ -2,7 +2,11 @@
 
 <div class="sectors-index-page">
   <div class="dropdown-selector-sector-page-wrapper">
-    <%= react_component("DropdownSelector", { sectors: @sectors, companies: @companies, selectedOption: 'All sectors' }) %>
+    <%= react_component("DropdownSelector", {
+        sectors: @sectors,
+        companies: TPI::CompanyDecorator.decorate_collection(@companies),
+        selectedOption: 'All sectors'
+    }) %>
   </div>
 
 
@@ -39,7 +43,7 @@
             library: mq_sector_pie_chart_options
           ) %>
           <div class="chart-title">
-            <p class="companies-size"><%= @companies.size %></p>
+            <p class="companies-size"><%= @companies.active.size %></p>
             companies
           </div>
         </div>
@@ -55,13 +59,10 @@
     <p>CP alignment with the Paris agreement benchmarks by sector and cluster (number and % of companies). Please note that this information is not available for all sectors.</p>
 
     <div class="chart chart--cp-all-sectors">
-      <%= column_chart(
-        cp_performance_chart_data_tpi_sectors_path,
-        stacked: true,
-        width: '100%',
-        height: '600px',
-        library: cp_all_sectors_chart_options
-      ) %>
+      <%= react_component('charts/CPPerformanceAllSectors', {
+        dataUrl: cp_performance_chart_data_tpi_sectors_path,
+        sectors: TPI::CPPerformanceSectorDecorator.decorate_collection(@sectors).map(&:to_h)
+      }) %>
     </div>
   </section>
 </div>

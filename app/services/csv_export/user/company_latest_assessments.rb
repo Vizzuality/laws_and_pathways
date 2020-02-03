@@ -50,7 +50,7 @@ module CSVExport
               cp_assessment&.assessment_date,
               cp_assessment&.cp_alignment,
               cp_assessment&.last_reported_year,
-              company.sector.cp_unit,
+              cp_assessment&.unit,
               year_headers.map do |year|
                 cp_assessment&.emissions.try(:[], year)
               end,
@@ -63,7 +63,7 @@ module CSVExport
       private
 
       def get_latest_mq_assessments_hash(assessments)
-        latest_methodology = assessments.max_by(&:methodology_version).methodology_version
+        latest_methodology = assessments.max_by(&:methodology_version)&.methodology_version
 
         assessments.group_by(&:company_id).map do |company_id, grouped|
           [company_id, grouped.find { |a| a.methodology_version == latest_methodology }]

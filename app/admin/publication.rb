@@ -2,7 +2,7 @@ ActiveAdmin.register Publication do
   config.batch_actions = false
   config.sort_order = 'publication_date_desc'
 
-  menu parent: 'TPI', priority: 8
+  menu parent: 'TPI', priority: 9
 
   decorate_with PublicationDecorator
 
@@ -66,8 +66,6 @@ ActiveAdmin.register Publication do
   end
 
   controller do
-    include DiscardableController
-
     def scoped_collection
       super.includes(:tpi_sectors)
     end

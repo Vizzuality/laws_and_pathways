@@ -11,7 +11,14 @@ module TPI
       @company_presenter = ::Api::Presenters::Company.new(@company)
 
       @sectors = TPISector.select(:id, :name, :slug).order(:name)
-      @companies = Company.published.joins(:sector).select(:id, :name, :slug, 'tpi_sectors.name as sector_name')
+      @companies =
+        Company.published.joins(:sector).select(:id, :name, :slug, 'tpi_sectors.name as sector_name', :active)
+      @companies = TPI::CompanyDecorator.decorate_collection(@companies)
+
+      fixed_navbar(
+        "Company #{@company.name}",
+        admin_company_path(@company)
+      )
     end
 
     def mq_assessment; end
@@ -49,7 +56,7 @@ module TPI
     private
 
     def fetch_company
-      @company = Company.published.friendly.find(params[:id])
+      @company = TPI::CompanyDecorator.decorate(Company.published.friendly.find(params[:id]))
     end
 
     def redirect_if_numeric_or_historic_slug

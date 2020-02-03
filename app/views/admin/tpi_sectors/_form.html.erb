@@ -1,0 +1,31 @@
+<%= semantic_form_for [:admin, resource], builder: ActiveAdmin::FormBuilder, html: {'data-controller' => 'check-modified'} do |f| %>
+  <%= f.semantic_errors(*f.object.errors.keys) %>
+
+  <%= f.inputs do %>
+    <%= f.input :name %>
+    <%= f.input :cluster %>
+  <% end %>
+
+  <%= f.inputs 'Carbon Performance Units' do %>
+    <div class="nested-list" data-controller="nested-list">
+      <template>
+        <%= f.semantic_fields_for :cp_units, CP::Unit.new, child_index: 'NEW_RECORD' do |unit| %>
+          <%= render "cp_unit_fields", form: unit %>
+        <% end %>
+      </template>
+
+      <%= f.semantic_fields_for :cp_units do |unit| %>
+        <%= render "cp_unit_fields", form: unit %>
+      <% end %>
+
+      <div class="nested-list__actions" data-target="nested-list.links">
+        <%= button_tag "Add New Unit", type: 'button', class: 'button button--raised', data: { action: "click->nested-list#addRecord" } %>
+      </div>
+    </div>
+  <% end %>
+
+  <%= f.actions do %>
+    <%= f.action :submit %>
+    <%= f.action :cancel, :wrapper_html => { :class => 'cancel' } %>
+  <% end %>
+<% end %>

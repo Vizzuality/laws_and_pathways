@@ -2,7 +2,7 @@ class TargetDecorator < Draper::Decorator
   delegate_all
 
   def description
-    model.description.html_safe
+    model.description&.html_safe
   end
 
   def target_type

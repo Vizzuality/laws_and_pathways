@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_20_172400) do
+ActiveRecord::Schema.define(version: 2020_01_31_074036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 2020_01_20_172400) do
     t.string "sedol"
     t.text "latest_information"
     t.text "historical_comments"
+    t.boolean "active", default: true
     t.index ["discarded_at"], name: "index_companies_on_discarded_at"
     t.index ["geography_id"], name: "index_companies_on_geography_id"
     t.index ["headquarters_geography_id"], name: "index_companies_on_headquarters_geography_id"
@@ -141,6 +142,15 @@ ActiveRecord::Schema.define(version: 2020_01_20_172400) do
     t.jsonb "emissions"
     t.string "scenario"
     t.index ["sector_id"], name: "index_cp_benchmarks_on_sector_id"
+  end
+
+  create_table "cp_units", force: :cascade do |t|
+    t.bigint "sector_id"
+    t.date "valid_since"
+    t.text "unit", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["sector_id"], name: "index_cp_units_on_sector_id"
   end
 
   create_table "data_uploads", force: :cascade do |t|
@@ -503,12 +513,19 @@ ActiveRecord::Schema.define(version: 2020_01_20_172400) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "tpi_sector_clusters", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "tpi_sectors", force: :cascade do |t|
     t.string "name", null: false
     t.string "slug", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "cp_unit"
+    t.bigint "cluster_id"
+    t.index ["cluster_id"], name: "index_tpi_sectors_on_cluster_id"
     t.index ["name"], name: "index_tpi_sectors_on_name", unique: true
     t.index ["slug"], name: "index_tpi_sectors_on_slug", unique: true
   end
@@ -520,6 +537,7 @@ ActiveRecord::Schema.define(version: 2020_01_20_172400) do
   add_foreign_key "contents", "pages"
   add_foreign_key "cp_assessments", "companies", on_delete: :cascade
   add_foreign_key "cp_benchmarks", "tpi_sectors", column: "sector_id", on_delete: :cascade
+  add_foreign_key "cp_units", "tpi_sectors", column: "sector_id", on_delete: :cascade
   add_foreign_key "data_uploads", "admin_users", column: "uploaded_by_id"
   add_foreign_key "external_legislations", "geographies"
   add_foreign_key "geographies", "admin_users", column: "created_by_id"
@@ -548,4 +566,5 @@ ActiveRecord::Schema.define(version: 2020_01_20_172400) do
   add_foreign_key "targets", "admin_users", column: "updated_by_id"
   add_foreign_key "targets", "geographies"
   add_foreign_key "targets", "laws_sectors", column: "sector_id"
+  add_foreign_key "tpi_sectors", "tpi_sector_clusters", column: "cluster_id"
 end

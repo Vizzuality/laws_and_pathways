@@ -1,0 +1,63 @@
+@import "colors";
+
+$icon-size: 24px;
+
+.fixed-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-bottom: 1px solid #efefef;
+  z-index: 50;
+  background-color: $white;
+
+  &__container {
+    width: 1356px;
+    max-width: 80%;
+    margin: 0 auto;
+    height: var(--fixed-navbar-height);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__info {
+    font-size: 1rem;
+    color: $blue-dark;
+    display: flex;
+    align-items: center;
+  }
+
+  &__logout {
+    a {
+      color: $red;
+    }
+  }
+}
+
+.truncate {
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.manage-data {
+  &__button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 30px;
+  }
+
+  &__icon {
+    margin-right: 8px !important;
+    height: $icon-size;
+    width: $icon-size;
+  }
+
+  &__text {
+    color: $red;
+    font-size: 14px;
+  }
+}

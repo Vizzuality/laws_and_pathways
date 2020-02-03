@@ -6,6 +6,7 @@
 @import "tpi/sizes";
 @import "tpi/typography";
 @import "tpi/inputs";
+@import "common/youtube";
 
 @import "bulma/sass/utilities/all";
 @import "bulma/sass/base/all";
@@ -33,9 +34,14 @@
 @import "tpi/newsletter";
 @import "tpi/pages";
 @import "tpi/search";
+@import "tpi/fixed-navbar";
 
 @import "tpi/pages/*";
 
 html {
   scroll-behavior: smooth;
+}
+
+:root {
+  --fixed-navbar-height: 56px;
 }

@@ -8,14 +8,10 @@
 @import "cclow/world-map";
 @import "cclow/filters";
 @import "cclow/tooltip";
+@import "common/youtube";
+@import "cclow/fixed-navbar";
 
-@import "bulma/sass/utilities/all";
-@import "bulma/sass/base/all";
-@import "bulma/sass/elements/all";
-@import "bulma/sass/components/all";
-@import "bulma/sass/grid/all";
-@import "bulma/sass/layout/all";
-@import "bulma/sass/form/all";
+@import "bulma";
 
 @import "slick-carousel/slick/slick";
 @import "rc-slider/assets";
@@ -27,4 +23,8 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+:root {
+  --fixed-navbar-height: 56px;
 }

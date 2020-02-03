@@ -11,6 +11,8 @@ module CCLOW
 
       @litigations = Queries::CCLOW::LitigationQuery.new(filter_params).call
 
+      fixed_navbar('All Litigation Cases', admin_litigations_path)
+
       respond_to do |format|
         format.html do
           render component: 'pages/cclow/LitigationCases', props: {
@@ -22,6 +24,9 @@ module CCLOW
             litigation_side_c_names_options: litigation_side_c_names_options,
             litigation_party_types_options: litigation_party_types_options,
             litigation_jurisdictions_options: litigation_jurisdictions_options,
+            litigation_side_a_party_type_options: litigation_side_a_party_type_options,
+            litigation_side_b_party_type_options: litigation_side_b_party_type_options,
+            litigation_side_c_party_type_options: litigation_side_c_party_type_options,
             litigations: CCLOW::LitigationDecorator.decorate_collection(@litigations.first(10)),
             count: @litigations.count
           }, prerender: false

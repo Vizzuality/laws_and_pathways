@@ -163,7 +163,9 @@ class ClimateTargets extends Component {
       <Fragment>
         <div className="cclow-geography-page">
           <div className="container">
-            {this.renderPageTitle()}
+            <div className="flex-container">
+              {this.renderPageTitle()}
+            </div>
             <hr />
             <div className="columns">
               <div className="column is-one-quarter filter-column">

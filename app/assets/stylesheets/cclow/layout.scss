@@ -4,6 +4,10 @@
 
 $search-field-height: 3.75rem;
 
+.header__margin {
+  margin-top: var(--fixed-navbar-height);
+}
+
 .header {
   position: relative;
 

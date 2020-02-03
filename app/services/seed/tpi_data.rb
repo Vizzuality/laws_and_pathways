@@ -5,11 +5,12 @@ module Seed
     include Singleton
 
     class << self
-      delegate :call, to: :instance
+      delegate :call, :import_sector_clusters, to: :instance
     end
 
     def call
       import_sectors
+      import_sector_clusters
 
       # import companies
       TimedLogger.log('Import companies') do
@@ -31,6 +32,30 @@ module Seed
         CSVImport::MQAssessments.new(seed_file('mq-assessments-M1.csv')).call
         CSVImport::MQAssessments.new(seed_file('mq-assessments-M2.csv')).call
         CSVImport::MQAssessments.new(seed_file('mq-assessments-M3.csv')).call
+      end
+    end
+
+    def import_sector_clusters
+      cluster_map = {
+        'Aluminium' => 'Industrials and Materials',
+        'Cement' => 'Industrials and Materials',
+        'Steel' => 'Industrials and Materials',
+        'Paper' => 'Industrials and Materials',
+        'Electricity Utilities' => 'Energy',
+        'Oil & Gas' => 'Energy',
+        'Airlines' => 'Transport',
+        'Autos' => 'Transport',
+        'Shipping' => 'Transport'
+      }.freeze
+
+      cluster_map.each do |sector_name, cluster_name|
+        sector = TPISector.find_by(name: sector_name)
+
+        next unless sector.present?
+
+        sector.update(
+          cluster: TPISectorCluster.find_or_create_by!(name: cluster_name)
+        )
       end
     end
 
@@ -57,8 +82,10 @@ module Seed
         ['Services'],
         ['Steel', 'Carbon intensity (tonnes of CO2 per tonne of steel)']
       ].each do |sector_name, sector_cp_unit|
+        next unless sector_cp_unit.present?
+
         TPISector.find_or_create_by!(name: sector_name) do |sector|
-          sector.cp_unit = sector_cp_unit unless sector.cp_unit
+          sector.cp_units.build(unit: sector_cp_unit) unless sector.latest_cp_unit.present?
         end
       end
     end

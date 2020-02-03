@@ -6,6 +6,8 @@ module TPI
     def index
       @publications_and_articles = Queries::TPI::NewsPublicationsQuery
         .new(filter_params).call
+
+      fixed_navbar('Publications', admin_publications_path)
     end
 
     def partial
@@ -20,6 +22,11 @@ module TPI
         format.html
         format.pdf { redirect_to rails_blob_url(@publication.file, disposition: 'preview') }
       end
+
+      admin_panel_path = polymorphic_path([:admin, @publication])
+
+      fixed_navbar("#{@publication.class.name.underscore.humanize} #{@publication.title}", admin_panel_path)
+
       redirect_to '' unless @publication
     end
 

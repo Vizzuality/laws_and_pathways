@@ -2,6 +2,14 @@
 @import "colors";
 @import "variables";
 
+.tpi__navbar-margin {
+  margin-top: var(--fixed-navbar-height);
+
+  @include desktop {
+    margin-top: 0;
+  }
+}
+
 .tpi__navbar {
   // EDGE workaround: Fix the hovering navbar dropdowns issue: https://github.com/jgthms/bulma/issues/2503
   // maybe it's best to use from($desktop) since we use widescreen

@@ -50,7 +50,7 @@ ActiveAdmin.register CP::Assessment do
     year_columns = collection.flat_map(&:emissions_all_years).uniq.sort
 
     column :id
-    column(:company_id) { |a| a.company.id }
+    column('Company id') { |a| a.company.id }
     column(:company) { |a| a.company.name }
     column :assessment_date
     column :publication_date, &:publication_date_csv
