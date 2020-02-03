@@ -110,6 +110,10 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
           enabled: true,
           formatter() {
             return this.y > 0 ? this.y : null;
+          },
+          style: {
+            color: '#000000',
+            textOutline: '0px'
           }
         }
       }
