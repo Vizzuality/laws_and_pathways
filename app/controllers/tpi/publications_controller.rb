@@ -23,7 +23,13 @@ module TPI
         format.pdf { redirect_to rails_blob_url(@publication.file, disposition: 'preview') }
       end
 
-      fixed_navbar("Publication #{@publication.title}", admin_publication_path(@publication))
+      admin_panel_path = if params[:type].eql?('NewsArticle')
+                           admin_news_article_path(@publication)
+                         else
+                           admin_publication_path(@publication)
+                         end
+
+      fixed_navbar("Publication #{@publication.title}", admin_panel_path)
 
       redirect_to '' unless @publication
     end
