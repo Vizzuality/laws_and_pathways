@@ -66,8 +66,6 @@ ActiveAdmin.register Publication do
   end
 
   controller do
-    include DiscardableController
-
     def scoped_collection
       super.includes(:tpi_sectors)
     end

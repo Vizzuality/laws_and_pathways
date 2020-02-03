@@ -28,6 +28,27 @@ module CCLOW
       [{field_name: 'type', options: types.sort_by { |h| h[:label] }}]
     end
 
+    def litigation_side_a_party_type_options
+      side_a_party_types = LitigationSide.where(side_type: 'a').pluck(:party_type).uniq.compact.map do |n|
+        {value: n, label: n.humanize}
+      end
+      [{field_name: 'a_party_type', options: side_a_party_types.sort_by { |h| h[:label] }}]
+    end
+
+    def litigation_side_b_party_type_options
+      side_b_party_types = LitigationSide.where(side_type: 'b').pluck(:party_type).uniq.compact.map do |n|
+        {value: n, label: n.humanize}
+      end
+      [{field_name: 'b_party_type', options: side_b_party_types.sort_by { |h| h[:label] }}]
+    end
+
+    def litigation_side_c_party_type_options
+      side_c_party_types = LitigationSide.where(side_type: 'c').pluck(:party_type).uniq.compact.map do |n|
+        {value: n, label: n.humanize}
+      end
+      [{field_name: 'c_party_type', options: side_c_party_types.sort_by { |h| h[:label] }}]
+    end
+
     def litigation_side_a_names_options
       side_a = LitigationSide.where(side_type: 'a').pluck(:name).uniq.map { |n| {value: n, label: n.humanize} }
       [{field_name: 'side_a', options: side_a.sort_by { |h| h[:label] }}]
@@ -57,7 +78,8 @@ module CCLOW
       params.permit(:q, :from_date,
                     :to_date, :recent, :ids, region: [], geography: [], jurisdiction: [],
                                              status: [], type: [], tags: [], party_type: [],
-                                             side_a: [], side_b: [], side_c: [])
+                                             side_a: [], side_b: [], side_c: [],
+                                             a_party_type: [], b_party_type: [], c_party_type: [])
     end
   end
 end

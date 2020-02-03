@@ -16,7 +16,7 @@ module Api
       #     }
       #   ]
       def cp_performance_all_sectors_data
-        all_companies = Company.published.includes(:sector, :latest_cp_assessment)
+        all_companies = Company.published.active.includes(:sector, :latest_cp_assessment)
 
         cp_alignment_data = {}
         all_companies.each do |company|

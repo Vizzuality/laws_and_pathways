@@ -98,6 +98,24 @@ RSpec.describe Admin::NewsArticlesController, type: :controller do
     end
   end
 
+  describe 'DELETE destroy' do
+    let!(:news_article_to_delete) { create(:news_article) }
+
+    context 'with valid params' do
+      let(:id_to_delete) { news_article_to_delete.id }
+
+      subject { delete :destroy, params: {id: news_article_to_delete.id} }
+
+      it 'deletes NewsArticle' do
+        # should disappear from default scope
+        expect { subject }.to change { NewsArticle.count }.by(-1)
+        expect(NewsArticle.find_by_id(id_to_delete)).to be_nil
+
+        expect(flash[:notice]).to match('News article was successfully destroyed.')
+      end
+    end
+  end
+
   def last_news_article_created
     NewsArticle.order(:created_at).last
   end
