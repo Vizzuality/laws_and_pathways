@@ -46,36 +46,6 @@ module ChartHelper
     }
   end
 
-  def cp_all_sectors_chart_options
-    {
-      # I couldn't make highcharts to use color directly from the chart data so sorting chart data
-      # by cp alignment name and then we will use below colors in the right order
-      colors: [
-        '#00C170', '#FFDD49', '#FF9600', '#ED3D4A', '#595B5D'
-      ],
-      legend: {
-        align: 'left',
-        verticalAlign: 'top',
-        margin: 50
-      },
-      plotOptions: {
-        column: {
-          stacking: 'percent'
-          # below will show data labels for stacked bar but will also show 0 if no alignement in this category
-          # to fix this we will have to initialize chart in javascript and use formatter function
-          # dataLabels: {
-          #   enabled: true
-          # }
-        }
-      },
-      yAxis: {
-        labels: {
-          format: '{value}%' # does not work!
-        }
-      }
-    }
-  end
-
   def cp_chart_options(unit)
     {
       colors: [

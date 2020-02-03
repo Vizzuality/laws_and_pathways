@@ -6,7 +6,7 @@ ActiveAdmin.register TPISector do
 
   menu priority: 5, parent: 'TPI'
 
-  permit_params :name, cp_units_attributes: [:id, :unit, :valid_since, :_destroy]
+  permit_params :name, :cluster_id, cp_units_attributes: [:id, :unit, :valid_since, :_destroy]
 
   filter :name_contains
 
@@ -14,6 +14,7 @@ ActiveAdmin.register TPISector do
     column :name, &:name_link
     column 'Carbon Performance Unit', &:latest_cp_unit
     column :slug
+    column :cluster
     actions
   end
 
@@ -25,6 +26,7 @@ ActiveAdmin.register TPISector do
           row :name
           list_row 'Carbon Performance Unit', &:cp_units_list
           row :slug
+          row :cluster
           row :created_at
           row :updated_at
         end

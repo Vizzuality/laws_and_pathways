@@ -2,7 +2,7 @@ ActiveAdmin.register NewsArticle do
   config.batch_actions = false
   config.sort_order = 'publication_date_desc'
 
-  menu parent: 'TPI', priority: 7
+  menu parent: 'TPI', priority: 8
 
   decorate_with NewsArticleDecorator
 

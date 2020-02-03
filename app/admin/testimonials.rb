@@ -3,7 +3,7 @@ ActiveAdmin.register Testimonial do
 
   decorate_with TestimonialDecorator
 
-  menu priority: 7, parent: 'TPI'
+  menu priority: 8, parent: 'TPI'
 
   permit_params :quote, :author, :role
 

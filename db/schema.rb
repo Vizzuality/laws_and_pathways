@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_28_123316) do
+ActiveRecord::Schema.define(version: 2020_01_31_074036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -513,11 +513,19 @@ ActiveRecord::Schema.define(version: 2020_01_28_123316) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "tpi_sector_clusters", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "tpi_sectors", force: :cascade do |t|
     t.string "name", null: false
     t.string "slug", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "cluster_id"
+    t.index ["cluster_id"], name: "index_tpi_sectors_on_cluster_id"
     t.index ["name"], name: "index_tpi_sectors_on_name", unique: true
     t.index ["slug"], name: "index_tpi_sectors_on_slug", unique: true
   end
@@ -558,4 +566,5 @@ ActiveRecord::Schema.define(version: 2020_01_28_123316) do
   add_foreign_key "targets", "admin_users", column: "updated_by_id"
   add_foreign_key "targets", "geographies"
   add_foreign_key "targets", "laws_sectors", column: "sector_id"
+  add_foreign_key "tpi_sectors", "tpi_sector_clusters", column: "cluster_id"
 end

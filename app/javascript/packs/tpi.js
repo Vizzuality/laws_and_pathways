@@ -1,5 +1,5 @@
 /* import Turbolinks from "turbolinks"; */
-import Chartkick from 'chartkick';
+import Chartkick from 'react-chartkick';
 import HighCharts from 'highcharts';
 import Rails from '@rails/ujs';
 import ReactRailsUJS from 'react_ujs';
