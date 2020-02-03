@@ -1,8 +1,13 @@
 class CCLOWMapContextData
   DATASETS = {
-    total_emissions_fossil_fuels_2018: {
-      file: 'emissions_total_fossil_fuels_and_cement_in_MtCO2e_2018',
-      value_column: :emissions_total_fossil_fuels_and_cement_in_mtco2e_2018
+    emissions_total_fossil_fuels_and_cement_including_lucf_in_mtco2e_2016: {
+      file: 'emissions_total_fossil_fuels_and_cement_including_LUCF_in_MtCO2e_2016',
+      value_column: :emissions_total_fossil_fuels_and_cement_including_lucf_in_mtco2e_2016
+    },
+    emissions_total_fossil_fuels_and_cement_including_lucf_in_percent_2016: {
+      file: 'emissions_total_fossil_fuels_and_cement_including_LUCF_in_percent_2016',
+      value_column: :emissions_total_fossil_fuels_and_cement_including_lucf_in_percent_2016,
+      parse_value: ->(value) { value.to_f.round(2) }
     },
     cumulative_direct_economic_loss_disaters_absolute: {
       file: 'cumalitive_direct_economic_loss_disasters_in_current_us_dollars_2005--2018',
@@ -25,6 +30,7 @@ class CCLOWMapContextData
         csv_file = File.read(Rails.root.join('map_data', "#{dataset[:file]}.csv"))
         metadata_file = File.read(Rails.root.join('map_data', "#{dataset[:file]}.yml"))
         value_column = dataset[:value_column]
+
         parse_value = dataset[:parse_value] || ->(value) { value.to_f }
 
         data = CSV.parse(
