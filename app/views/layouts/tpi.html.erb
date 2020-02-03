@@ -37,7 +37,7 @@
       <%= render "layouts/tpi/banner" %>
     </section>
 
-    <section class="tpi__navbar">
+    <section class="tpi__navbar <%= 'tpi__navbar-margin' if @current_user.present? %>">
       <%= render "layouts/tpi/header" %>
     </section>
 
