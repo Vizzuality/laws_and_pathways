@@ -11,6 +11,8 @@ module CCLOW
 
       @climate_targets = Queries::CCLOW::TargetQuery.new(filter_params).call
 
+      fixed_navbar('Climate targets', admin_targets_path)
+
       respond_to do |format|
         format.html do
           render component: 'pages/cclow/ClimateTargets', props: {

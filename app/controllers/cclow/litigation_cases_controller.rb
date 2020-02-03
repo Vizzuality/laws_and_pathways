@@ -11,6 +11,8 @@ module CCLOW
 
       @litigations = Queries::CCLOW::LitigationQuery.new(filter_params).call
 
+      fixed_navbar('All Litigation Cases', admin_litigations_path)
+
       respond_to do |format|
         format.html do
           render component: 'pages/cclow/LitigationCases', props: {

@@ -11,6 +11,8 @@ module CCLOW
 
       @legislations = sort_list(Queries::CCLOW::LegislationQuery.new(filter_params).call)
 
+      fixed_navbar('All laws and policies', admin_legislations_path)
+
       respond_to do |format|
         format.html do
           render component: 'pages/cclow/LegislationAndPolicies', props: {

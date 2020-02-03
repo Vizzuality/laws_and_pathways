@@ -1,0 +1,16 @@
+<% if @current_user.present? %>
+  <div class="fixed-navbar">
+    <div class="fixed-navbar__container">
+      <div class="fixed-navbar__info">
+        <span class="truncate"><%= @admin_panel_section_title %></span>
+        <%= link_to @link, class: "manage-data__button-container", target: :_blank, rel: "noopener noreferrer" do %>
+          <img class="manage-data__icon" src=<%= asset_path "icons/edit-icon-white.svg"%> alt="edit data">
+          <span class="manage-data__text">Manage data</span>
+        <% end %>
+      </div>
+      <div class="fixed-navbar__logout">
+        <a href="/admin/logout">Log out</a>
+      </div>
+    </div>
+  </div>
+<% end %>
