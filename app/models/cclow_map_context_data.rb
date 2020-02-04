@@ -1,39 +1,29 @@
 class CCLOWMapContextData
-  DATASETS = {
-    emissions_total_fossil_fuels_and_cement_including_lucf_in_mtco2e_2016: {
-      file: 'emissions_total_fossil_fuels_and_cement_including_LUCF_in_MtCO2e_2016',
-      value_column: :emissions_total_fossil_fuels_and_cement_including_lucf_in_mtco2e_2016
-    },
-    emissions_total_fossil_fuels_and_cement_including_lucf_in_percent_2016: {
-      file: 'emissions_total_fossil_fuels_and_cement_including_LUCF_in_percent_2016',
-      value_column: :emissions_total_fossil_fuels_and_cement_including_lucf_in_percent_2016,
-      parse_value: ->(value) { value.to_f.round(2) }
-    },
-    cumulative_direct_economic_loss_disaters_absolute: {
-      file: 'cumalitive_direct_economic_loss_disasters_in_current_us_dollars_2005--2018',
-      value_column: :cumalitive_direct_economic_loss_disasters_in_current_us_dollars,
-      parse_value: ->(value) { value.to_f.round(2) }
-    },
-    cumulative_direct_economic_loss_disaters_gdp: {
-      file: 'cumalitive_direct_economic_loss_disasters_relative_to_gdp_percent_2005--2018',
-      value_column: :cumalitive_direct_economic_loss_disasters_relative_to_gdp_percent
-    }
-    # cumulative_weather_idp: {
-    #   file: 'cumalitive_weather_idp_per_country_2008--2018',
-    #   value_column: :tot_weather_idp
-    # }
-  }.freeze
-
   class << self
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/MethodLength
-    def all
-      DATASETS.map do |key, dataset|
-        csv_file = File.read(Rails.root.join('map_data', "#{dataset[:file]}.csv"))
-        metadata_file = File.read(Rails.root.join('map_data', "#{dataset[:file]}.yml"))
-        value_column = dataset[:value_column]
 
-        parse_value = dataset[:parse_value] || ->(value) { value.to_f }
+    ROUND_VALUES = %w(USD %).freeze
+
+    def all
+      datasets = Dir.glob('map_data/*.csv')
+      datasets_map = datasets.each_with_object({}) do |file, hash|
+        hash[file.split('/')[1].split('.')[0]] = file
+      end
+      parsed = datasets_map.map do |key, dataset|
+        csv_file = File.read(dataset)
+        metadata_file = File.read(Rails.root.join('map_data', "#{key}.yml"))
+        metadata = YAML.safe_load(metadata_file)
+
+        next unless metadata['active']
+
+        value_column = metadata['value_column']
+
+        parse_value = if ROUND_VALUES.include?(metadata['unit'])
+                        ->(value) { value.to_f.round(2) }
+                      else
+                        ->(value) { value.to_f }
+                      end
 
         parsed_data = CSV.parse(
           csv_file,
@@ -45,7 +35,7 @@ class CCLOWMapContextData
         data = parsed_data.map do |row|
           {
             geography_iso: row[:iso3],
-            value: parse_value.call(row[value_column])
+            value: parse_value.call(row[value_column.to_sym])
           }
         end
 
@@ -56,13 +46,12 @@ class CCLOWMapContextData
         eu_aggregated_value = eu_countries_data.pluck(:value).reduce(:+)
         data << {geography_iso: 'EUR', value: eu_aggregated_value}
 
-        metadata = YAML.safe_load(metadata_file)
-
         {
           id: key,
           values: data
         }.merge(metadata)
       end
+      parsed.compact
     end
     # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/MethodLength
