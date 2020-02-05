@@ -38,7 +38,9 @@ class PublicActivity::ActivityDecorator < Draper::Decorator
   end
 
   def find_discarded_trackable
-    trackable_type.constantize.all_discarded.find(trackable_id)
+    return nil unless trackable_type.constantize.respond_to?(:all_discarded)
+
+    trackable_type.constantize.all_discarded.where(id: trackable_id).first
   end
 
   def trackable_display_name(trackable_object)
