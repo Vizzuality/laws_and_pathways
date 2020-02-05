@@ -58,8 +58,11 @@ ActiveAdmin.register Publication do
       f.input :tpi_sector_ids, label: 'Sectors', as: :select,
                                collection: TPISector.order(:name), input_html: {multiple: true}
       f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags, collection: Keyword.pluck(:name)
-      f.input :file, as: :file
-      f.input :image, as: :file
+      f.input :file,
+              as: :file,
+              hint: preview_file_tag(f.object.file),
+              input_html: {accept: 'application/pdf, application/vnd.ms-powerpoint, .ppt, .pptx'}
+      f.input :image, as: :file, hint: preview_file_tag(f.object.image), input_html: {accept: 'image/*'}
     end
 
     f.actions
