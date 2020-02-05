@@ -59,8 +59,6 @@ ActiveAdmin.register Geography do
     column :geography_type
     column 'ISO', :iso
     column 'Flag', :flag_image
-    column :created_by
-    column :updated_by
     tag_column :visibility_status
 
     actions

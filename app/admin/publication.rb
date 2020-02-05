@@ -42,8 +42,6 @@ ActiveAdmin.register Publication do
     column :file, &:file_link
     column :short_description
     column :publication_date
-    column :created_by
-    column :updated_by
 
     actions
   end

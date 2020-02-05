@@ -23,8 +23,6 @@ ActiveAdmin.register TPISectorCluster do
   index do
     id_column
     column :name, &:name_link
-    column :created_at
-    column :updated_at
     actions
   end
 end

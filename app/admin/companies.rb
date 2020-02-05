@@ -127,11 +127,8 @@ ActiveAdmin.register Company do
   index do
     column(:name) { |company| link_to company.name, admin_company_path(company) }
     column :sector
-    column :isin, &:isin_as_tags
-    column(:market_cap_group) { |company| company.market_cap_group.humanize }
     column :level, &:mq_level_tag
     column :geography
-    column :headquarters_geography
     column :active
     tag_column :visibility_status
 

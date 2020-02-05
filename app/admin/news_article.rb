@@ -41,8 +41,6 @@ ActiveAdmin.register NewsArticle do
     column 'Title', :title_link
     column :article_type
     column :publication_date
-    column :created_by
-    column :updated_by
 
     actions
   end
