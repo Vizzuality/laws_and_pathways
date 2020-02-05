@@ -66,7 +66,7 @@ ActiveAdmin.register NewsArticle do
       f.input :tpi_sector_ids, label: 'Sectors', as: :select,
                                collection: TPISector.order(:name), input_html: {multiple: true}
       f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags, collection: Keyword.pluck(:name)
-      f.input :image, as: :file
+      f.input :image, as: :file, input_html: {accept: 'image/*'}
     end
 
     f.actions
