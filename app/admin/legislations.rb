@@ -1,7 +1,7 @@
 ActiveAdmin.register Legislation do
   config.sort_order = 'updated_at_desc'
 
-  menu parent: 'Laws', priority: 1, label: 'Laws and Policies'
+  menu parent: 'Laws', priority: 1
 
   decorate_with LegislationDecorator
 
