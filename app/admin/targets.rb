@@ -30,10 +30,7 @@ ActiveAdmin.register Target do
     column(:description) { |target| link_to target.description, admin_target_path(target) }
     column :geography
     column :sector
-    column :ghg_target
     column :year
-    column :source
-    column :updated_by
     tag_column :visibility_status
 
     actions
