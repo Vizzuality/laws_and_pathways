@@ -27,6 +27,7 @@ module CP
     scope :published_on_or_before, lambda { |publication_date|
       order(:publication_date).where('publication_date <= ?', publication_date)
     }
+    scope :currently_published, -> { where('publication_date <= ?', DateTime.now) }
 
     validates_presence_of :publication_date
 

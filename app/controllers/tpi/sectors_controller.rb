@@ -69,11 +69,13 @@ module TPI
 
     def send_user_download_file(companies_ids, filename)
       mq_assessments = MQ::Assessment
+        .currently_published
         .where(company_id: companies_ids)
         .joins(:company)
         .order('companies.name ASC, assessment_date DESC')
         .includes(company: [:sector, :geography, :mq_assessments])
       cp_assessments = CP::Assessment
+        .currently_published
         .where(company_id: companies_ids)
         .joins(:company)
         .order('companies.name ASC, assessment_date DESC')
