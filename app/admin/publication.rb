@@ -61,7 +61,9 @@ ActiveAdmin.register Publication do
       f.input :file,
               as: :file,
               hint: preview_file_tag(f.object.file),
-              input_html: {accept: 'application/pdf, application/vnd.ms-powerpoint, .ppt, .pptx'}
+              input_html: {
+                accept: 'application/pdf, application/vnd.ms-powerpoint, .ppt, .pptx, application/msword, .docx'
+              }
       f.input :image, as: :file, hint: preview_file_tag(f.object.image), input_html: {accept: 'image/*'}
     end
 
