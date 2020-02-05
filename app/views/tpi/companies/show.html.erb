@@ -58,10 +58,15 @@
                 </span>
                 <%= @company_presenter.cp_alignment.name %>
               </p>
-              <% unless ['not aligned', 'no disclosure', nil].include?(@company.cp_alignment&.downcase) %>
+              <% if !['not assessed', 'not aligned', 'no disclosure', nil].include?(@company.cp_alignment&.downcase) %>
                 <p>
                   The company’s emissions intensity and target are aligned
                   with the Paris agreement benchmark of <%= @company.cp_alignment %>
+                </p>
+              <% elsif @company.cp_alignment && @company.cp_alignment.downcase == 'not assessed' %>
+                <p>
+                  The company’s activities don't fit the scope of TPI’s Carbon
+                  Performance assessment of this sector, hence the company is not assessed.
                 </p>
               <% end %>
             <% end %>
