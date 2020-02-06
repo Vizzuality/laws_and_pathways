@@ -58,7 +58,7 @@ module CCLOW
 
       def add_breadcrumbs
         add_breadcrumb('Climate targets', cclow_geography_climate_targets_path(@geography))
-        add_breadcrumb(@sector&.name, request.path)
+        add_breadcrumb(@sector&.name, request.path) if @sector
       end
     end
   end
