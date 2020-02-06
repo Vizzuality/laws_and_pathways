@@ -135,7 +135,7 @@ class Geography < ApplicationRecord
   end
 
   def laws_per_sector
-    targets.group_by(&:sector).map do |sector, targets|
+    targets.where.not(source: nil).group_by(&:sector).map do |sector, targets|
       {
         sector: sector&.name,
         ndc_targets_count:
