@@ -142,10 +142,10 @@ class Geography < ApplicationRecord
           if eu_member?
             Geography.eu_ndc_targets.select { |target| target.sector.eql?(sector) }.count
           else
-            targets.select { |t| t.source.eql?('ndc') }.count
+            targets.select { |t| t.source.downcase == 'ndc' }.count
           end,
-        law_targets_count: targets.select { |t| t.source.eql?('law') }.count,
-        policy_targets_count: targets.select { |t| t.source.eql?('policy') }.count
+        law_targets_count: targets.select { |t| t.source.downcase == 'law' }.count,
+        policy_targets_count: targets.select { |t| t.source.dowcase == 'policy' }.count
       }
     end
   end
