@@ -38,7 +38,7 @@ module CCLOW
         @climate_targets = CCLOW::TargetDecorator.decorate_collection(@climate_targets)
 
         fixed_navbar(
-          "Climate targets - #{@geography.name} - #{@sector.name}",
+          "Climate targets - #{@geography.name} - #{@sector&.name}",
           admin_targets_path('q[geography_id_eq]': @geography, 'q[sector_id_eq]': @sector)
         )
 
@@ -58,7 +58,7 @@ module CCLOW
 
       def add_breadcrumbs
         add_breadcrumb('Climate targets', cclow_geography_climate_targets_path(@geography))
-        add_breadcrumb(@sector.name, request.path)
+        add_breadcrumb(@sector&.name, request.path)
       end
     end
   end
