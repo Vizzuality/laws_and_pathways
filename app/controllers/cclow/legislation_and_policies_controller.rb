@@ -17,7 +17,9 @@ module CCLOW
         format.html do
           render component: 'pages/cclow/LegislationAndPolicies', props: {
             geo_filter_options: region_geography_options,
-            tags_filter_options: tags_options('Legislation'),
+            keywords_filter_options: tags_options('Legislation', 'Keyword'),
+            responses_filter_options: tags_options('Legislation', 'Response'),
+            frameworks_filter_options: tags_options('Legislation', 'Framework'),
             types_filter_options: legislation_types_options,
             legislations: CCLOW::LegislationDecorator.decorate_collection(@legislations.first(10)),
             count: @legislations.count

@@ -23,24 +23,37 @@ class LegislationAndPolicies extends Component {
       count,
       offset: 0,
       activeGeoFilter: {},
-      activeTagFilter: {},
+      activeKeywordsFilter: {},
+      activeResponsesFilter: {},
+      activeFrameworksFilter: {},
       activeTimeRangeFilter: {},
       activeTypesFilter: {}
     };
 
     this.geoFilter = React.createRef();
-    this.tagsFilter = React.createRef();
+    this.keywordsFilter = React.createRef();
+    this.responsesFilter = React.createRef();
+    this.frameworksFilter = React.createRef();
     this.timeRangeFilter = React.createRef();
     this.typesFilter = React.createRef();
   }
 
   getQueryString(extraParams = {}) {
-    const {activeGeoFilter, activeTagFilter, activeTypesFilter, activeTimeRangeFilter} = this.state;
+    const {
+      activeGeoFilter,
+      activeKeywordsFilter,
+      activeResponsesFilter,
+      activeFrameworksFilter,
+      activeTypesFilter,
+      activeTimeRangeFilter
+    } = this.state;
 
     const params = {
       ...getQueryFilters(),
       ...activeGeoFilter,
-      ...activeTagFilter,
+      ...activeKeywordsFilter,
+      ...activeResponsesFilter,
+      ...activeFrameworksFilter,
       ...activeTypesFilter,
       ...activeTimeRangeFilter,
       ...extraParams
@@ -94,20 +107,32 @@ class LegislationAndPolicies extends Component {
   }
 
   renderTags = () => {
-    const {activeGeoFilter, activeTagFilter, activeTimeRangeFilter, activeTypesFilter} = this.state;
+    const {
+      activeGeoFilter,
+      activeKeywordsFilter,
+      activeResponsesFilter,
+      activeFrameworksFilter,
+      activeTimeRangeFilter,
+      activeTypesFilter
+    } = this.state;
     const {
       geo_filter_options: geoFilterOptions,
-      tags_filter_options: tagsFilterOptions,
+      keywords_filter_options: keywordsFilterOptions,
+      responses_filter_options: responsesFilterOptions,
+      frameworks_filter_options: frameworksFilterOptions,
       types_filter_options: typesFilterOptions
     } = this.props;
     if (Object.keys(activeGeoFilter).length === 0
-      && Object.keys(activeTagFilter).length === 0
+      && Object.keys(activeKeywordsFilter).length === 0
+      && Object.keys(activeFrameworksFilter).length === 0
       && Object.keys(activeTypesFilter).length === 0
       && Object.keys(activeTimeRangeFilter).length === 0) return null;
     return (
       <div className="filter-tags">
         {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
-        {this.renderTagsGroup(activeTagFilter, tagsFilterOptions, 'tagsFilter')}
+        {this.renderTagsGroup(activeKeywordsFilter, keywordsFilterOptions, 'keywordsFilter')}
+        {this.renderTagsGroup(activeResponsesFilter, responsesFilterOptions, 'responsesFilter')}
+        {this.renderTagsGroup(activeFrameworksFilter, frameworksFilterOptions, 'frameworksFilter')}
         {this.renderTagsGroup(activeTypesFilter, typesFilterOptions, 'typesFilter')}
         {this.renderTimeRangeTags(activeTimeRangeFilter)}
       </div>
@@ -156,7 +181,9 @@ class LegislationAndPolicies extends Component {
     const {legislations, count} = this.state;
     const {
       geo_filter_options: geoFilterOptions,
-      tags_filter_options: tagsFilterOptions,
+      keywords_filter_options: keywordsFilterOptions,
+      responses_filter_options: responsesFilterOptions,
+      frameworks_filter_options: frameworksFilterOptions,
       types_filter_options: typesFilterOptions
     } = this.props;
     const hasMore = legislations.length < count;
@@ -190,10 +217,22 @@ class LegislationAndPolicies extends Component {
                 onChange={(event) => this.filterList('activeTypesFilter', event)}
               />
               <SearchFilter
-                ref={this.tagsFilter}
-                filterName="Tags"
-                params={tagsFilterOptions}
-                onChange={(event) => this.filterList('activeTagFilter', event)}
+                ref={this.keywordsFilter}
+                filterName="Keywords"
+                params={keywordsFilterOptions}
+                onChange={(event) => this.filterList('activeKeywordsFilter', event)}
+              />
+              <SearchFilter
+                ref={this.responsesFilter}
+                filterName="Responses"
+                params={responsesFilterOptions}
+                onChange={(event) => this.filterList('activeResponsesFilter', event)}
+              />
+              <SearchFilter
+                ref={this.frameworksFilter}
+                filterName="Frameworks"
+                params={frameworksFilterOptions}
+                onChange={(event) => this.filterList('activeFrameworksFilter', event)}
               />
             </div>
             <main className="column is-three-quarters">
@@ -252,7 +291,9 @@ class LegislationAndPolicies extends Component {
 LegislationAndPolicies.defaultProps = {
   count: 0,
   geo_filter_options: [],
-  tags_filter_options: [],
+  keywords_filter_options: [],
+  responses_filter_options: [],
+  frameworks_filter_options: [],
   types_filter_options: []
 };
 
@@ -260,7 +301,9 @@ LegislationAndPolicies.propTypes = {
   legislations: PropTypes.array.isRequired,
   count: PropTypes.number,
   geo_filter_options: PropTypes.array,
-  tags_filter_options: PropTypes.array,
+  keywords_filter_options: PropTypes.array,
+  responses_filter_options: PropTypes.array,
+  frameworks_filter_options: PropTypes.array,
   types_filter_options: PropTypes.array
 };
 
