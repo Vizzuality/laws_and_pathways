@@ -22,7 +22,6 @@ class LitigationCases extends Component {
       offset: 0,
       isMoreSearchOptionsVisible: false,
       activeGeoFilter: {},
-      activeTagFilter: {},
       activeKeywordsFilter: {},
       activeResponsesFilter: {},
       activeTimeRangeFilter: {},
@@ -38,7 +37,6 @@ class LitigationCases extends Component {
     };
 
     this.geoFilter = React.createRef();
-    this.tagsFilter = React.createRef();
     this.keywordsFilter = React.createRef();
     this.responsesFilter = React.createRef();
     this.timeRangeFilter = React.createRef();
@@ -56,7 +54,6 @@ class LitigationCases extends Component {
   getQueryString(extraParams = {}) {
     const {
       activeGeoFilter,
-      activeTagFilter,
       activeKeywordsFilter,
       activeResponsesFilter,
       activeTimeRangeFilter,
@@ -73,7 +70,6 @@ class LitigationCases extends Component {
     const params = {
       ...getQueryFilters(),
       ...activeGeoFilter,
-      ...activeTagFilter,
       ...activeKeywordsFilter,
       ...activeResponsesFilter,
       ...activeTimeRangeFilter,
@@ -123,7 +119,6 @@ class LitigationCases extends Component {
   renderTags = () => {
     const {
       activeGeoFilter,
-      activeTagFilter,
       activeKeywordsFilter,
       activeResponsesFilter,
       activeTimeRangeFilter,
@@ -139,7 +134,6 @@ class LitigationCases extends Component {
     } = this.state;
     const {
       geo_filter_options: geoFilterOptions,
-      tags_filter_options: tagsFilterOptions,
       keywords_filter_options: keywordsFilterOptions,
       responses_filter_options: responsesFilterOptions,
       statuses_filter_options: statusesFilterOptions,
@@ -153,7 +147,6 @@ class LitigationCases extends Component {
       litigation_side_c_party_type_options: litigationSideCPartyTypeOptions
     } = this.props;
     if (!Object.keys(activeGeoFilter).length
-      && !Object.keys(activeTagFilter).length
       && !Object.keys(activeKeywordsFilter).length
       && !Object.keys(activeResponsesFilter).length
       && !Object.keys(activeStatusesFilter).length
@@ -168,7 +161,6 @@ class LitigationCases extends Component {
     return (
       <div className="filter-tags">
         {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
-        {this.renderTagsGroup(activeTagFilter, tagsFilterOptions, 'tagsFilter')}
         {this.renderTagsGroup(activeKeywordsFilter, keywordsFilterOptions, 'keywordsFilter')}
         {this.renderTagsGroup(activeResponsesFilter, responsesFilterOptions, 'responsesFilter')}
         {this.renderTagsGroup(activeStatusesFilter, statusesFilterOptions, 'statusFilter')}
@@ -330,7 +322,6 @@ class LitigationCases extends Component {
     const {litigations, count} = this.state;
     const {
       geo_filter_options: geoFilterOptions,
-      tags_filter_options: tagsFilterOptions,
       keywords_filter_options: keywordsFilterOptions,
       responses_filter_options: responsesFilterOptions,
       statuses_filter_options: statusesFilterOptions
@@ -361,12 +352,6 @@ class LitigationCases extends Component {
                   filterName="Status"
                   params={statusesFilterOptions}
                   onChange={(event) => this.filterList('activeStatusesFilter', event)}
-                />
-                <SearchFilter
-                  ref={this.tagsFilter}
-                  filterName="Tags"
-                  params={tagsFilterOptions}
-                  onChange={(event) => this.filterList('activeTagFilter', event)}
                 />
                 <SearchFilter
                   ref={this.keywordsFilter}
@@ -432,7 +417,6 @@ class LitigationCases extends Component {
 LitigationCases.defaultProps = {
   count: 0,
   geo_filter_options: [],
-  tags_filter_options: [],
   keywords_filter_options: [],
   responses_filter_options: [],
   statuses_filter_options: [],
@@ -450,7 +434,6 @@ LitigationCases.propTypes = {
   litigations: PropTypes.array.isRequired,
   count: PropTypes.number,
   geo_filter_options: PropTypes.array,
-  tags_filter_options: PropTypes.array,
   keywords_filter_options: PropTypes.array,
   responses_filter_options: PropTypes.array,
   statuses_filter_options: PropTypes.array,

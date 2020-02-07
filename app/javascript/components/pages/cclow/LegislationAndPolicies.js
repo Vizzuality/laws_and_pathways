@@ -23,7 +23,6 @@ class LegislationAndPolicies extends Component {
       count,
       offset: 0,
       activeGeoFilter: {},
-      activeTagFilter: {},
       activeKeywordsFilter: {},
       activeResponsesFilter: {},
       activeFrameworksFilter: {},
@@ -32,7 +31,6 @@ class LegislationAndPolicies extends Component {
     };
 
     this.geoFilter = React.createRef();
-    this.tagsFilter = React.createRef();
     this.keywordsFilter = React.createRef();
     this.responsesFilter = React.createRef();
     this.frameworksFilter = React.createRef();
@@ -43,7 +41,6 @@ class LegislationAndPolicies extends Component {
   getQueryString(extraParams = {}) {
     const {
       activeGeoFilter,
-      activeTagFilter,
       activeKeywordsFilter,
       activeResponsesFilter,
       activeFrameworksFilter,
@@ -54,7 +51,6 @@ class LegislationAndPolicies extends Component {
     const params = {
       ...getQueryFilters(),
       ...activeGeoFilter,
-      ...activeTagFilter,
       ...activeKeywordsFilter,
       ...activeResponsesFilter,
       ...activeFrameworksFilter,
@@ -113,7 +109,6 @@ class LegislationAndPolicies extends Component {
   renderTags = () => {
     const {
       activeGeoFilter,
-      activeTagFilter,
       activeKeywordsFilter,
       activeResponsesFilter,
       activeFrameworksFilter,
@@ -122,14 +117,12 @@ class LegislationAndPolicies extends Component {
     } = this.state;
     const {
       geo_filter_options: geoFilterOptions,
-      tags_filter_options: tagsFilterOptions,
       keywords_filter_options: keywordsFilterOptions,
       responses_filter_options: responsesFilterOptions,
       frameworks_filter_options: frameworksFilterOptions,
       types_filter_options: typesFilterOptions
     } = this.props;
     if (Object.keys(activeGeoFilter).length === 0
-      && Object.keys(activeTagFilter).length === 0
       && Object.keys(activeKeywordsFilter).length === 0
       && Object.keys(activeFrameworksFilter).length === 0
       && Object.keys(activeTypesFilter).length === 0
@@ -137,7 +130,6 @@ class LegislationAndPolicies extends Component {
     return (
       <div className="filter-tags">
         {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
-        {this.renderTagsGroup(activeTagFilter, tagsFilterOptions, 'tagsFilter')}
         {this.renderTagsGroup(activeKeywordsFilter, keywordsFilterOptions, 'keywordsFilter')}
         {this.renderTagsGroup(activeResponsesFilter, responsesFilterOptions, 'responsesFilter')}
         {this.renderTagsGroup(activeFrameworksFilter, frameworksFilterOptions, 'frameworksFilter')}
@@ -189,7 +181,6 @@ class LegislationAndPolicies extends Component {
     const {legislations, count} = this.state;
     const {
       geo_filter_options: geoFilterOptions,
-      tags_filter_options: tagsFilterOptions,
       keywords_filter_options: keywordsFilterOptions,
       responses_filter_options: responsesFilterOptions,
       frameworks_filter_options: frameworksFilterOptions,
@@ -224,12 +215,6 @@ class LegislationAndPolicies extends Component {
                 params={typesFilterOptions}
                 isSearchable={false}
                 onChange={(event) => this.filterList('activeTypesFilter', event)}
-              />
-              <SearchFilter
-                ref={this.tagsFilter}
-                filterName="Tags"
-                params={tagsFilterOptions}
-                onChange={(event) => this.filterList('activeTagFilter', event)}
               />
               <SearchFilter
                 ref={this.keywordsFilter}
@@ -306,7 +291,6 @@ class LegislationAndPolicies extends Component {
 LegislationAndPolicies.defaultProps = {
   count: 0,
   geo_filter_options: [],
-  tags_filter_options: [],
   keywords_filter_options: [],
   responses_filter_options: [],
   frameworks_filter_options: [],
@@ -317,7 +301,6 @@ LegislationAndPolicies.propTypes = {
   legislations: PropTypes.array.isRequired,
   count: PropTypes.number,
   geo_filter_options: PropTypes.array,
-  tags_filter_options: PropTypes.array,
   keywords_filter_options: PropTypes.array,
   responses_filter_options: PropTypes.array,
   frameworks_filter_options: PropTypes.array,

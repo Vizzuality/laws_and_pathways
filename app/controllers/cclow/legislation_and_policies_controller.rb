@@ -15,7 +15,6 @@ module CCLOW
         format.html do
           render component: 'pages/cclow/LegislationAndPolicies', props: {
             geo_filter_options: region_geography_options,
-            tags_filter_options: tags_options('Legislation', 'Keyword'),
             keywords_filter_options: tags_options('Legislation', 'Keyword'),
             responses_filter_options: tags_options('Legislation', 'Response'),
             frameworks_filter_options: tags_options('Legislation', 'Framework'),

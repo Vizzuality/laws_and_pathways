@@ -14,7 +14,6 @@ module Queries
           .merge(full_text_filter)
           .merge(filter_by_region)
           .merge(filter_by_geography)
-          .merge(filter_by_tags)
           .merge(filter_by_from_date)
           .merge(filter_by_to_date)
           .merge(filter_by_to_type)
@@ -63,12 +62,6 @@ module Queries
         return scope unless params[:type].present?
 
         scope.where(target_type: params[:type])
-      end
-
-      def filter_by_tags
-        return scope unless params[:tags].present?
-
-        scope.includes(:tags).where(tags: {id: params[:tags]})
       end
 
       def filter_recent
