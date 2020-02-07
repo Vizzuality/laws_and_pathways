@@ -23,6 +23,8 @@ class LitigationCases extends Component {
       isMoreSearchOptionsVisible: false,
       activeGeoFilter: {},
       activeTagFilter: {},
+      activeKeywordsFilter: {},
+      activeResponsesFilter: {},
       activeTimeRangeFilter: {},
       activeStatusesFilter: {},
       activeSideAFilter: {},
@@ -37,6 +39,8 @@ class LitigationCases extends Component {
 
     this.geoFilter = React.createRef();
     this.tagsFilter = React.createRef();
+    this.keywordsFilter = React.createRef();
+    this.responsesFilter = React.createRef();
     this.timeRangeFilter = React.createRef();
     this.statusFilter = React.createRef();
     this.sideAFilter = React.createRef();
@@ -53,6 +57,8 @@ class LitigationCases extends Component {
     const {
       activeGeoFilter,
       activeTagFilter,
+      activeKeywordsFilter,
+      activeResponsesFilter,
       activeTimeRangeFilter,
       activeStatusesFilter,
       activePartyTypesFilter,
@@ -68,6 +74,8 @@ class LitigationCases extends Component {
       ...getQueryFilters(),
       ...activeGeoFilter,
       ...activeTagFilter,
+      ...activeKeywordsFilter,
+      ...activeResponsesFilter,
       ...activeTimeRangeFilter,
       ...activeStatusesFilter,
       ...activeSideAFilter,
@@ -116,6 +124,8 @@ class LitigationCases extends Component {
     const {
       activeGeoFilter,
       activeTagFilter,
+      activeKeywordsFilter,
+      activeResponsesFilter,
       activeTimeRangeFilter,
       activeStatusesFilter,
       activeSideAFilter,
@@ -130,6 +140,8 @@ class LitigationCases extends Component {
     const {
       geo_filter_options: geoFilterOptions,
       tags_filter_options: tagsFilterOptions,
+      keywords_filter_options: keywordsFilterOptions,
+      responses_filter_options: responsesFilterOptions,
       statuses_filter_options: statusesFilterOptions,
       litigation_side_a_names_options: litigationSideAOptions,
       litigation_side_b_names_options: litigationSideBOptions,
@@ -142,6 +154,8 @@ class LitigationCases extends Component {
     } = this.props;
     if (!Object.keys(activeGeoFilter).length
       && !Object.keys(activeTagFilter).length
+      && !Object.keys(activeKeywordsFilter).length
+      && !Object.keys(activeResponsesFilter).length
       && !Object.keys(activeStatusesFilter).length
       && !Object.keys(activeTimeRangeFilter).length
       && !Object.keys(activeSideAFilter).length
@@ -155,6 +169,8 @@ class LitigationCases extends Component {
       <div className="filter-tags">
         {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
         {this.renderTagsGroup(activeTagFilter, tagsFilterOptions, 'tagsFilter')}
+        {this.renderTagsGroup(activeKeywordsFilter, keywordsFilterOptions, 'keywordsFilter')}
+        {this.renderTagsGroup(activeResponsesFilter, responsesFilterOptions, 'responsesFilter')}
         {this.renderTagsGroup(activeStatusesFilter, statusesFilterOptions, 'statusFilter')}
         {this.renderTagsGroup(activeSideAFilter, litigationSideAOptions, 'sideAFilter')}
         {this.renderTagsGroup(activeSideBFilter, litigationSideBOptions, 'sideBFilter')}
@@ -315,6 +331,8 @@ class LitigationCases extends Component {
     const {
       geo_filter_options: geoFilterOptions,
       tags_filter_options: tagsFilterOptions,
+      keywords_filter_options: keywordsFilterOptions,
+      responses_filter_options: responsesFilterOptions,
       statuses_filter_options: statusesFilterOptions
     } = this.props;
     const hasMore = litigations.length < count;
@@ -349,6 +367,18 @@ class LitigationCases extends Component {
                   filterName="Tags"
                   params={tagsFilterOptions}
                   onChange={(event) => this.filterList('activeTagFilter', event)}
+                />
+                <SearchFilter
+                  ref={this.keywordsFilter}
+                  filterName="Keywords"
+                  params={keywordsFilterOptions}
+                  onChange={(event) => this.filterList('activeKeywordsFilter', event)}
+                />
+                <SearchFilter
+                  ref={this.responsesFilter}
+                  filterName="Responses"
+                  params={responsesFilterOptions}
+                  onChange={(event) => this.filterList('activeResponsesFilter', event)}
                 />
                 {this.renderMoreOptions()}
               </div>
@@ -403,6 +433,8 @@ LitigationCases.defaultProps = {
   count: 0,
   geo_filter_options: [],
   tags_filter_options: [],
+  keywords_filter_options: [],
+  responses_filter_options: [],
   statuses_filter_options: [],
   litigation_side_a_names_options: [],
   litigation_side_b_names_options: [],
@@ -419,6 +451,8 @@ LitigationCases.propTypes = {
   count: PropTypes.number,
   geo_filter_options: PropTypes.array,
   tags_filter_options: PropTypes.array,
+  keywords_filter_options: PropTypes.array,
+  responses_filter_options: PropTypes.array,
   statuses_filter_options: PropTypes.array,
   litigation_party_types_options: PropTypes.array,
   litigation_side_a_names_options: PropTypes.array,

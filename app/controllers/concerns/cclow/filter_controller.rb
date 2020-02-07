@@ -8,9 +8,10 @@ module CCLOW
       [region_options, geography_options]
     end
 
-    def tags_options(taggable_type)
-      tags = Keyword.all.includes(:taggings).where(taggings: {taggable_type: taggable_type})
-      [{field_name: 'tags', options: tags.map { |l| {value: l.id, label: l.name} }.sort_by { |h| h[:label] }}]
+    def tags_options(taggable_type, type)
+      name = type.downcase.pluralize
+      tags = Tag.all.includes(:taggings).where(taggings: {taggable_type: taggable_type}, type: type)
+      [{field_name: name, options: tags.map { |l| {value: l.id, label: l.name} }.sort_by { |h| h[:label] }}]
     end
 
     def litigation_statuses_options
@@ -77,7 +78,8 @@ module CCLOW
     def filter_params
       params.permit(:q, :from_date,
                     :to_date, :recent, :ids, region: [], geography: [], jurisdiction: [],
-                                             status: [], type: [], tags: [], party_type: [],
+                                             status: [], type: [], keywords: [], responses: [],
+                                             frameworks: [], party_type: [],
                                              side_a: [], side_b: [], side_c: [],
                                              a_party_type: [], b_party_type: [], c_party_type: [])
     end

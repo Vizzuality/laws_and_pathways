@@ -15,7 +15,9 @@ module CCLOW
         format.html do
           render component: 'pages/cclow/LitigationCases', props: {
             geo_filter_options: region_geography_options,
-            tags_filter_options: tags_options('Litigation'),
+            tags_filter_options: tags_options('Litigation', 'Keyword'),
+            keywords_filter_options: tags_options('Litigation', 'Keyword'),
+            responses_filter_options: tags_options('Litigation', 'Response'),
             statuses_filter_options: litigation_statuses_options,
             litigation_side_a_names_options: litigation_side_a_names_options,
             litigation_side_b_names_options: litigation_side_b_names_options,
