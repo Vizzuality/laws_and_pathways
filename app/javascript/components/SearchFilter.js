@@ -148,7 +148,6 @@ class SearchFilter extends Component {
     const {selectedList, isShowOptions} = this.state;
     const {filterName} = this.props;
     let selectedCount = 0;
-
     Object.values(selectedList).forEach(list => { selectedCount += list.length; });
 
     return (
