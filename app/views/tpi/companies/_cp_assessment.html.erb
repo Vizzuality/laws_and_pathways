@@ -1,19 +1,8 @@
 <% if assessment.emissions.any?  %>
-  <div class="chart chart--cp-emissions">
-    <div class="legend">
-      <span class="legend-item legend-item--reported">Reported</span>
-      <span class="legend-item legend-item--targeted">Targeted</span>
-    </div>
-
-    <%= line_chart(
-      emissions_chart_data_tpi_company_path(assessment.company, cp_assessment_id: assessment.id),
-      id: 'cp_assessment_chart',
-      curve: false,
-      width: '100%',
-      height: '600px',
-      library: cp_chart_options(assessment.unit)
-      )%>
-  </div>
+  <%= react_component('charts/CPPerformance', {
+    dataUrl: emissions_chart_data_tpi_company_path(assessment.company, cp_assessment_id: assessment.id),
+    unit: assessment.unit
+    }) %>
 <% end %>
 
 <% unless assessment.assumptions.blank? %>
