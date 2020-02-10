@@ -144,9 +144,19 @@ class SearchFilter extends Component {
     );
   };
 
+  isEmpty = () => {
+    const {params} = this.props;
+    for (let i = 0; i < params.length; i = 1) {
+      if ((params[i].options || []).length !== 0) return false;
+    }
+    return true;
+  };
+
   render() {
     const {selectedList, isShowOptions} = this.state;
     const {filterName} = this.props;
+    if (this.isEmpty()) return null;
+
     let selectedCount = 0;
     Object.values(selectedList).forEach(list => { selectedCount += list.length; });
 
