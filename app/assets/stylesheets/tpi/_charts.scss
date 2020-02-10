@@ -81,14 +81,31 @@ $tpi-pie-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB;
     font-family: $font-family-regular !important;
   }
 
+  .legend {
+    display: flex;
+
+    .legend-item {
+      margin-right: 5px;
+
+      &__color {
+
+      }
+
+      &__remove {
+        margin-left: 5px;
+      }
+    }
+  }
+
   &--cp-emissions {
     margin-top: 10px;
     justify-content: unset;
+    flex-flow: column;
 
-    .legend {
+    .line-legend {
       display: flex;
 
-      .legend-item {
+      .line-legend-item {
         display: flex;
         align-items: center;
         margin-right: 20px;
