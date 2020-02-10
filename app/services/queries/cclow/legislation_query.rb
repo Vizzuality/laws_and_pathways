@@ -15,6 +15,8 @@ module Queries
           .merge(filter_by_region)
           .merge(filter_by_geography)
           .merge(filter_by_tags)
+          .merge(filter_by_instruments)
+          .merge(filter_by_governances)
           .merge(filter_by_from_date)
           .merge(filter_by_to_date)
           .merge(filter_by_type)
@@ -58,6 +60,18 @@ module Queries
         end
 
         sql.present? ? scope.joins(sql) : scope
+      end
+
+      def filter_by_instruments
+        return scope unless params[:instrument].present?
+
+        scope.joins(:instruments).where(instruments: {id: params[:instrument]})
+      end
+
+      def filter_by_governances
+        return scope unless params[:governance].present?
+
+        scope.joins(:governances).where(governances: {id: params[:governance]})
       end
 
       def filter_by_from_date

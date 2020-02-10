@@ -20,7 +20,10 @@ module CCLOW
             keywords_filter_options: tags_options('Legislation', 'Keyword'),
             responses_filter_options: tags_options('Legislation', 'Response'),
             frameworks_filter_options: tags_options('Legislation', 'Framework'),
+            natural_hazards_filter_options: tags_options('Legislation', 'NaturalHazards'),
             types_filter_options: legislation_types_options,
+            instruments_filter_options: instruments_options,
+            governances_filter_options: governances_options,
             legislations: CCLOW::LegislationDecorator.decorate_collection(@legislations.first(10)),
             count: @legislations.count
           }, prerender: false

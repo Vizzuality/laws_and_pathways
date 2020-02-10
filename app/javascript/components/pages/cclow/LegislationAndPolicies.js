@@ -22,12 +22,16 @@ class LegislationAndPolicies extends Component {
       legislations,
       count,
       offset: 0,
+      isMoreSearchOptionsVisible: false,
       activeGeoFilter: {},
       activeKeywordsFilter: {},
       activeResponsesFilter: {},
       activeFrameworksFilter: {},
       activeTimeRangeFilter: {},
-      activeTypesFilter: {}
+      activeTypesFilter: {},
+      activeInstrumentsFilter: {},
+      activeNaturalHazardsFilter: {},
+      activeGovernancesFilter: {}
     };
 
     this.geoFilter = React.createRef();
@@ -36,6 +40,9 @@ class LegislationAndPolicies extends Component {
     this.frameworksFilter = React.createRef();
     this.timeRangeFilter = React.createRef();
     this.typesFilter = React.createRef();
+    this.instrumentsFilter = React.createRef();
+    this.naturalHazardsFilter = React.createRef();
+    this.governancesFilter = React.createRef();
   }
 
   getQueryString(extraParams = {}) {
@@ -45,6 +52,9 @@ class LegislationAndPolicies extends Component {
       activeResponsesFilter,
       activeFrameworksFilter,
       activeTypesFilter,
+      activeInstrumentsFilter,
+      activeNaturalHazardsFilter,
+      activeGovernancesFilter,
       activeTimeRangeFilter
     } = this.state;
 
@@ -55,6 +65,9 @@ class LegislationAndPolicies extends Component {
       ...activeResponsesFilter,
       ...activeFrameworksFilter,
       ...activeTypesFilter,
+      ...activeInstrumentsFilter,
+      ...activeNaturalHazardsFilter,
+      ...activeGovernancesFilter,
       ...activeTimeRangeFilter,
       ...extraParams
     };
@@ -106,6 +119,79 @@ class LegislationAndPolicies extends Component {
     return (<h5>All laws and policies</h5>);
   }
 
+  renderMoreOptions() {
+    const { isMoreSearchOptionsVisible } = this.state;
+    const {
+      keywords_filter_options: keywordsFilterOptions,
+      responses_filter_options: responsesFilterOptions,
+      frameworks_filter_options: frameworksFilterOptions,
+      instruments_filter_options: instrumentsFilterOptions,
+      natural_hazards_filter_options: naturalHazardsFilterOptions,
+      governances_filter_options: governancesFilterOptions
+    } = this.props;
+
+    return (
+      <Fragment>
+        {!isMoreSearchOptionsVisible && (
+          <button
+            type="button"
+            onClick={() => this.setState({isMoreSearchOptionsVisible: true})}
+            className="more-options"
+          >
+            + Show more search options
+          </button>
+        )}
+        {isMoreSearchOptionsVisible && (
+          <Fragment>
+            <SearchFilter
+              ref={this.keywordsFilter}
+              filterName="Keywords"
+              params={keywordsFilterOptions}
+              onChange={(event) => this.filterList('activeKeywordsFilter', event)}
+            />
+            <SearchFilter
+              ref={this.responsesFilter}
+              filterName="Responses"
+              params={responsesFilterOptions}
+              onChange={(event) => this.filterList('activeResponsesFilter', event)}
+            />
+            <SearchFilter
+              ref={this.frameworksFilter}
+              filterName="Frameworks"
+              params={frameworksFilterOptions}
+              onChange={(event) => this.filterList('activeFrameworksFilter', event)}
+            />
+            <SearchFilter
+              ref={this.instrumentsFilter}
+              filterName="Instruments"
+              params={instrumentsFilterOptions}
+              onChange={(event) => this.filterList('activeInstrumentsFilter', event)}
+            />
+            <SearchFilter
+              ref={this.naturalHazardsFilter}
+              filterName="Natural Hazards"
+              params={naturalHazardsFilterOptions}
+              onChange={(event) => this.filterList('activeNaturalHazardsFilter', event)}
+            />
+            <SearchFilter
+              ref={this.governancesFilter}
+              filterName="Governances"
+              params={governancesFilterOptions}
+              onChange={(event) => this.filterList('activeGovernancesFilter', event)}
+            />
+            <button
+              type="button"
+              onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
+              className="more-options"
+            >
+              - Show less search options
+            </button>
+          </Fragment>
+        )}
+      </Fragment>
+    );
+  }
+
   renderTags = () => {
     const {
       activeGeoFilter,
@@ -113,19 +199,28 @@ class LegislationAndPolicies extends Component {
       activeResponsesFilter,
       activeFrameworksFilter,
       activeTimeRangeFilter,
-      activeTypesFilter
+      activeTypesFilter,
+      activeInstrumentsFilter,
+      activeNaturalHazardsFilter,
+      activeGovernancesFilter
     } = this.state;
     const {
       geo_filter_options: geoFilterOptions,
       keywords_filter_options: keywordsFilterOptions,
       responses_filter_options: responsesFilterOptions,
       frameworks_filter_options: frameworksFilterOptions,
-      types_filter_options: typesFilterOptions
+      types_filter_options: typesFilterOptions,
+      instruments_filter_options: instrumentsFilterOptions,
+      natural_hazards_filter_options: naturalHazardsFilterOptions,
+      governances_filter_options: governancesFilterOptions
     } = this.props;
     if (Object.keys(activeGeoFilter).length === 0
       && Object.keys(activeKeywordsFilter).length === 0
       && Object.keys(activeFrameworksFilter).length === 0
       && Object.keys(activeTypesFilter).length === 0
+      && Object.keys(activeInstrumentsFilter).length === 0
+      && Object.keys(activeNaturalHazardsFilter).length === 0
+      && Object.keys(activeGovernancesFilter).length === 0
       && Object.keys(activeTimeRangeFilter).length === 0) return null;
     return (
       <div className="filter-tags">
@@ -134,6 +229,9 @@ class LegislationAndPolicies extends Component {
         {this.renderTagsGroup(activeResponsesFilter, responsesFilterOptions, 'responsesFilter')}
         {this.renderTagsGroup(activeFrameworksFilter, frameworksFilterOptions, 'frameworksFilter')}
         {this.renderTagsGroup(activeTypesFilter, typesFilterOptions, 'typesFilter')}
+        {this.renderTagsGroup(activeInstrumentsFilter, instrumentsFilterOptions, 'instrumentsFilter')}
+        {this.renderTagsGroup(activeNaturalHazardsFilter, naturalHazardsFilterOptions, 'naturalHazardsFilter')}
+        {this.renderTagsGroup(activeGovernancesFilter, governancesFilterOptions, 'governancesFilter')}
         {this.renderTimeRangeTags(activeTimeRangeFilter)}
       </div>
     );
@@ -181,9 +279,6 @@ class LegislationAndPolicies extends Component {
     const {legislations, count} = this.state;
     const {
       geo_filter_options: geoFilterOptions,
-      keywords_filter_options: keywordsFilterOptions,
-      responses_filter_options: responsesFilterOptions,
-      frameworks_filter_options: frameworksFilterOptions,
       types_filter_options: typesFilterOptions
     } = this.props;
     const hasMore = legislations.length < count;
@@ -216,24 +311,7 @@ class LegislationAndPolicies extends Component {
                 isSearchable={false}
                 onChange={(event) => this.filterList('activeTypesFilter', event)}
               />
-              <SearchFilter
-                ref={this.keywordsFilter}
-                filterName="Keywords"
-                params={keywordsFilterOptions}
-                onChange={(event) => this.filterList('activeKeywordsFilter', event)}
-              />
-              <SearchFilter
-                ref={this.responsesFilter}
-                filterName="Responses"
-                params={responsesFilterOptions}
-                onChange={(event) => this.filterList('activeResponsesFilter', event)}
-              />
-              <SearchFilter
-                ref={this.frameworksFilter}
-                filterName="Frameworks"
-                params={frameworksFilterOptions}
-                onChange={(event) => this.filterList('activeFrameworksFilter', event)}
-              />
+              {this.renderMoreOptions()}
             </div>
             <main className="column is-three-quarters">
               <div className="columns pre-content">
@@ -294,7 +372,10 @@ LegislationAndPolicies.defaultProps = {
   keywords_filter_options: [],
   responses_filter_options: [],
   frameworks_filter_options: [],
-  types_filter_options: []
+  types_filter_options: [],
+  instruments_filter_options: [],
+  natural_hazards_filter_options: [],
+  governances_filter_options: []
 };
 
 LegislationAndPolicies.propTypes = {
@@ -304,7 +385,10 @@ LegislationAndPolicies.propTypes = {
   keywords_filter_options: PropTypes.array,
   responses_filter_options: PropTypes.array,
   frameworks_filter_options: PropTypes.array,
-  types_filter_options: PropTypes.array
+  types_filter_options: PropTypes.array,
+  instruments_filter_options: PropTypes.array,
+  natural_hazards_filter_options: PropTypes.array,
+  governances_filter_options: PropTypes.array
 };
 
 export default LegislationAndPolicies;

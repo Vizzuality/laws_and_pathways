@@ -29,6 +29,16 @@ module CCLOW
       [{field_name: 'type', options: types.sort_by { |h| h[:label] }}]
     end
 
+    def instruments_options
+      instruments = Instrument.joins(:legislations).map { |j| {value: j.id, label: j.name} }
+      [{field_name: 'instrument', options: instruments.sort_by { |h| h[:label] }}]
+    end
+
+    def governances_options
+      governances = Governance.joins(:legislations).map { |j| {value: j.id, label: j.name} }
+      [{field_name: 'governance', options: governances.sort_by { |h| h[:label] }}]
+    end
+
     def litigation_side_a_party_type_options
       side_a_party_types = LitigationSide.where(side_type: 'a').pluck(:party_type).uniq.compact.map do |n|
         {value: n, label: n.humanize}
@@ -79,9 +89,10 @@ module CCLOW
       params.permit(:q, :from_date,
                     :to_date, :recent, :ids, region: [], geography: [], jurisdiction: [],
                                              status: [], type: [], keywords: [], responses: [],
-                                             frameworks: [], party_type: [],
+                                             frameworks: [], natural_hazards: [], party_type: [],
                                              side_a: [], side_b: [], side_c: [],
-                                             a_party_type: [], b_party_type: [], c_party_type: [])
+                                             a_party_type: [], b_party_type: [], c_party_type: [],
+                                             instrument: [], governance: [])
     end
   end
 end

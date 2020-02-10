@@ -234,6 +234,8 @@ class LitigationCases extends Component {
   renderMoreOptions() {
     const { isMoreSearchOptionsVisible } = this.state;
     const {
+      keywords_filter_options: keywordsFilterOptions,
+      responses_filter_options: responsesFilterOptions,
       litigation_party_types_options: litigationPartyTypesOptions,
       litigation_jurisdictions_options: litigationJurisdictionsOptions,
       litigation_side_a_names_options: litigationSideAOptions,
@@ -257,6 +259,18 @@ class LitigationCases extends Component {
         )}
         {isMoreSearchOptionsVisible && (
           <>
+            <SearchFilter
+              ref={this.keywordsFilter}
+              filterName="Keywords"
+              params={keywordsFilterOptions}
+              onChange={(event) => this.filterList('activeKeywordsFilter', event)}
+            />
+            <SearchFilter
+              ref={this.responsesFilter}
+              filterName="Responses"
+              params={responsesFilterOptions}
+              onChange={(event) => this.filterList('activeResponsesFilter', event)}
+            />
             <SearchFilter
               ref={this.jurisdictionFilter}
               filterName="Jurisdiction"
@@ -322,8 +336,6 @@ class LitigationCases extends Component {
     const {litigations, count} = this.state;
     const {
       geo_filter_options: geoFilterOptions,
-      keywords_filter_options: keywordsFilterOptions,
-      responses_filter_options: responsesFilterOptions,
       statuses_filter_options: statusesFilterOptions
     } = this.props;
     const hasMore = litigations.length < count;
@@ -354,18 +366,6 @@ class LitigationCases extends Component {
                   filterName="Status"
                   params={statusesFilterOptions}
                   onChange={(event) => this.filterList('activeStatusesFilter', event)}
-                />
-                <SearchFilter
-                  ref={this.keywordsFilter}
-                  filterName="Keywords"
-                  params={keywordsFilterOptions}
-                  onChange={(event) => this.filterList('activeKeywordsFilter', event)}
-                />
-                <SearchFilter
-                  ref={this.responsesFilter}
-                  filterName="Responses"
-                  params={responsesFilterOptions}
-                  onChange={(event) => this.filterList('activeResponsesFilter', event)}
                 />
                 {this.renderMoreOptions()}
               </div>
