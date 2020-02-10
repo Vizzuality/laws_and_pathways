@@ -65,13 +65,13 @@ module Queries
       def filter_by_instruments
         return scope unless params[:instrument].present?
 
-        scope.includes(:instruments).where(instruments: {id: params[:instrument]})
+        scope.joins(:instruments).where(instruments: {id: params[:instrument]})
       end
 
       def filter_by_governances
         return scope unless params[:governance].present?
 
-        scope.includes(:governances).where(governances: {id: params[:governance]})
+        scope.joins(:governances).where(governances: {id: params[:governance]})
       end
 
       def filter_by_from_date
