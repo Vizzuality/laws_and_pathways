@@ -144,6 +144,10 @@ $tpi-pie-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB;
     stroke: black;
   }
 
+  .highcharts-series-group {
+    mix-blend-mode: multiply;
+  }
+
   .cp-tooltip {
     font-family: $font-family-regular;
     min-width: 300px;

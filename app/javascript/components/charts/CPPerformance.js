@@ -5,10 +5,21 @@ import PropTypes from 'prop-types';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
+function createSVGGroup(className) {
+  const group = createSVGElement('g');
+  group.setAttribute('class', className);
+  group.setAttribute('opacity', 0.3);
+  return group;
+}
+
+function createSVGElement(element) {
+  return document.createElementNS('http://www.w3.org/2000/svg', element);
+}
+
 function Line({ dashStyle, color, width }) {
   const style = {
-    'border-bottom-style': dashStyle === 'dot' ? 'dotted' : 'solid',
-    'border-bottom-color': color,
+    borderBottomStyle: dashStyle === 'dot' ? 'dotted' : 'solid',
+    borderBottomColor: color,
     width
   };
 
@@ -95,6 +106,24 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
   }, [data, legendItems]);
 
   const options = {
+    chart: {
+      events: {
+        render() {
+          // this will group all area series under one element
+          // it will be possible to set opacity for all areas at once to make it looks as on designs
+          const seriesGroup = document.querySelector('.chart--cp-emissions g.highcharts-series-group');
+          const groupedAreas = seriesGroup.querySelector('.areas-group') || createSVGGroup('areas-group');
+          const series = [...seriesGroup.querySelectorAll('g.highcharts-area-series')];
+
+          seriesGroup.appendChild(groupedAreas);
+
+          series.forEach(serie => {
+            groupedAreas.appendChild(serie);
+          });
+        }
+      }
+    },
+
     colors: [
       '#00C170', '#ED3D4A', '#FFDD49', '#440388', '#FF9600', '#B75038', '#00A8FF', '#F78FB3', '#191919', '#F602B4'
     ],
