@@ -1,4 +1,6 @@
 .chart--cp-performance {
+  @import 'chart-company-selector';
+  
   margin-top: 10px;
   justify-content: unset;
   flex-flow: column;
