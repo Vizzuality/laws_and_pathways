@@ -116,7 +116,14 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
         stacking: 'normal'
       },
       series: {
-        lineWidth: 4
+        lineWidth: 4,
+        marker: {
+          states: {
+            hover: {
+              enabled: false
+            }
+          }
+        }
       }
     },
     yAxis: {
