@@ -14,7 +14,7 @@ function Tooltip({ xValue, yValues, unit }) {
       </div>
 
       {companyValues.map(y => (
-        <div className="cp-tooltip__row cp-tooltip__row--bold">
+        <div key={y.title} className="cp-tooltip__row cp-tooltip__row--bold">
           <span className="cp-tooltip__value-title">
             <span
               className={`line line--${y.dashStyle === 'dot' ? 'dotted' : 'solid'}`}
@@ -32,7 +32,7 @@ function Tooltip({ xValue, yValues, unit }) {
       </div>
 
       {benchmarkValues.map(y => (
-        <div className="cp-tooltip__row cp-tooltip__row--targets">
+        <div key={y.title} className="cp-tooltip__row cp-tooltip__row--targets">
           <span className="cp-tooltip__value-title">
             <span
               className="circle"

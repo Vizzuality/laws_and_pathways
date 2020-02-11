@@ -88,6 +88,12 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
         y: -20
       }
     },
+    xAxis: {
+      crosshair: {
+        width: 2,
+        color: '#191919'
+      }
+    },
     title: {
       text: ''
     },
@@ -122,7 +128,7 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
     <div className="chart chart--cp-performance">
       <div className="legend">
         <div className="legend-row">
-          {legendItems.map(i => <LegendItem name={i.name} onRemove={() => handleLegendItemRemove(i)} />)}
+          {legendItems.map(i => <LegendItem key={i.name} name={i.name} onRemove={() => handleLegendItemRemove(i)} />)}
         </div>
         <div className="legend-row">
           <span className="legend-item">
