@@ -41,7 +41,7 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
         render() {
           // this will group all area series under one element
           // it will be possible to set opacity for all areas at once to make it looks as on designs
-          const seriesGroup = document.querySelector('.chart--cp-emissions g.highcharts-series-group');
+          const seriesGroup = document.querySelector('.chart--cp-performance g.highcharts-series-group');
           const groupedAreas = seriesGroup.querySelector('.areas-group') || createSVGGroup('areas-group');
           const series = [...seriesGroup.querySelectorAll('g.highcharts-area-series')];
 
@@ -129,7 +129,7 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
   };
 
   return (
-    <div className="chart chart--cp-emissions">
+    <div className="chart chart--cp-performance">
       <div className="legend">
         {legendItems.map(i => <LegendItem name={i.name} onRemove={() => handleLegendItemRemove(i)} />)}
       </div>

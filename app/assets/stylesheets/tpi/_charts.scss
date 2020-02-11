@@ -65,8 +65,6 @@ $navigator-series-border: $highlight-color-80 !default;
 $scrollbar-track-background: $neutral-color-5 !default;
 $scrollbar-track-border: $neutral-color-5 !default;
 
-$tpi-pie-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB;
-
 .chart {
   display: flex;
   flex-flow: row wrap;
@@ -81,153 +79,8 @@ $tpi-pie-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB;
     font-family: $font-family-regular !important;
   }
 
-  .legend {
-    display: flex;
-
-    .legend-item {
-      margin-right: 5px;
-
-      &__color {
-
-      }
-
-      &__remove {
-        margin-left: 5px;
-      }
-    }
-  }
-
-  &--cp-emissions {
-    margin-top: 10px;
-    justify-content: unset;
-    flex-flow: column;
-
-    .line-legend {
-      display: flex;
-
-      .line-legend-item {
-        display: flex;
-        align-items: center;
-        margin-right: 20px;
-        font-size: 12px;
-
-        &::before {
-          content: '';
-          display: block;
-          width: 40px;
-          margin-right: 10px;
-        }
-
-        &--reported {
-          &::before {
-            border-bottom: 4px solid black;
-          }
-        }
-
-        &--targeted {
-          &::before {
-            border-bottom: 4px dotted black;
-          }
-        }
-      }
-    }
-  }
-
   .line {
     display: block;
-  }
-
-  .highcharts-tooltip-box {
-    fill: white;
-	  fill-opacity: 1;
-	  stroke-width: 1;
-    stroke: black;
-  }
-
-  .highcharts-series-group {
-    mix-blend-mode: multiply;
-  }
-
-  .cp-tooltip {
-    font-family: $font-family-regular;
-    min-width: 300px;
-    padding: 20px;
-
-    &__header {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    &__value-title {
-      display: flex;
-      align-items: center;
-
-      font-size: 14px;
-
-      .line {
-        margin-right: 10px;
-        width: 20px;
-      }
-
-      small {
-        color: $grey-dark;
-        font-size: 12px;
-        margin-left: 5px;
-      }
-    }
-
-    &__targets {
-      color: $grey-dark;
-      margin: 20px 0;
-      font-size: 12px;
-    }
-
-    &__row {
-      display: flex;
-      justify-content: space-between;
-      margin: 10px 0;
-
-      &--bold {
-        font-family: $font-family-bold;
-      }
-    }
-  }
-
-  &--cp-all-sectors {
-    div[data-react-class] {
-      width: 100%;
-    }
-  }
-
-  &--mq-sector-pie-chart {
-    @for $i from 1 through length($tpi-pie-chart-colors) {
-      $color: nth($tpi-pie-chart-colors, $i);
-      .highcharts-color-#{$i - 1} {
-        fill: $color;
-        stroke: $color;
-      }
-    }
-
-    .highcharts-data-label {
-      font-size: 1rem;
-      font-family: $font-family-bold;
-      font-weight: unset;
-    }
-
-    .highcharts-data-label-connector {
-      stroke: $black;
-      fill: none;
-    }
-
-    .chart-title {
-      font-family: $font-family-regular;
-      font-size: 16px;
-
-      .companies-size {
-        font-size: 36px;
-        font-family: $font-family-bold;
-      }
-    }
   }
 }
 
@@ -238,3 +91,7 @@ $tpi-pie-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB;
   text-align: center;
   line-height: 30px;
 }
+
+@import 'charts/cp-performance';
+@import 'charts/cp-all-sectors';
+@import 'charts/mq-sector-pie-chart';
