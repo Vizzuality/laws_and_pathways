@@ -123,7 +123,9 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
         }
       }
     },
-
+    credits: {
+      enabled: false
+    },
     colors: [
       '#00C170', '#ED3D4A', '#FFDD49', '#440388', '#FF9600', '#B75038', '#00A8FF', '#F78FB3', '#191919', '#F602B4'
     ],
@@ -165,6 +167,9 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
         x: 0,
         y: -20
       }
+    },
+    title: {
+      text: ''
     },
     tooltip: {
       crosshairs: true,
