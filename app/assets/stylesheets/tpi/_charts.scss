@@ -133,6 +133,62 @@ $tpi-pie-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB;
     }
   }
 
+  .line {
+    display: block;
+  }
+
+  .highcharts-tooltip-box {
+    fill: white;
+	  fill-opacity: 1;
+	  stroke-width: 1;
+    stroke: black;
+  }
+
+  .cp-tooltip {
+    font-family: $font-family-regular;
+    min-width: 300px;
+    padding: 20px;
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &__value-title {
+      display: flex;
+      align-items: center;
+
+      font-size: 14px;
+
+      .line {
+        margin-right: 10px;
+        width: 20px;
+      }
+
+      small {
+        color: $grey-dark;
+        font-size: 12px;
+        margin-left: 5px;
+      }
+    }
+
+    &__targets {
+      color: $grey-dark;
+      margin: 20px 0;
+      font-size: 12px;
+    }
+
+    &__row {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+
+      &--bold {
+        font-family: $font-family-bold;
+      }
+    }
+  }
+
   &--cp-all-sectors {
     div[data-react-class] {
       width: 100%;
