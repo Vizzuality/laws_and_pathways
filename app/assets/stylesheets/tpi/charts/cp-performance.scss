@@ -40,13 +40,16 @@
     &--solid {
       border-bottom: 4px solid black; 
     }
-  }  
+  }
 
+  // remove overflow hidden
+  div[data-highcharts-chart], .highcharts-container {
+    overflow: unset !important;
+  }
+
+  // hide SVG tooltip, we only display HTML one
   .highcharts-tooltip-box {
-    fill: white;
-	  fill-opacity: 1;
-	  stroke-width: 1;
-    stroke: black;
+    display: none;
   }
 
   .highcharts-series-group {
@@ -55,6 +58,8 @@
 
   .cp-tooltip {
     font-family: $font-family-regular;
+    background-color: $white;
+    border: 1px solid $dark;
     min-width: 300px;
     padding: 20px;
 
