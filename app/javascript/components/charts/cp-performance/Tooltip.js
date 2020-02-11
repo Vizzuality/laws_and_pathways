@@ -1,18 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Line({ dashStyle, color, width }) {
-  const style = {
-    borderBottomStyle: dashStyle === 'dot' ? 'dotted' : 'solid',
-    borderBottomColor: color,
-    width
-  };
-
-  return (
-    <span className="line" style={style} />
-  );
-}
-
 function Tooltip({ xValue, yValues, unit }) {
   const companyValues = yValues.filter(v => !v.isBenchmark);
   const benchmarkValues = yValues.filter(v => v.isBenchmark);
@@ -27,7 +15,10 @@ function Tooltip({ xValue, yValues, unit }) {
       {companyValues.map(y => (
         <div className="cp-tooltip__row cp-tooltip__row--bold">
           <span className="cp-tooltip__value-title">
-            <Line dashStyle={y.dashStyle} color={y.color} />
+            <span
+              className={`line line--${y.dashStyle === 'dot' ? 'dotted' : 'solid'}`}
+              style={{borderBottomColor: y.color}}
+            />
             {y.title}
             {y.isTargeted && (<small>(targeted)</small>)}
           </span>

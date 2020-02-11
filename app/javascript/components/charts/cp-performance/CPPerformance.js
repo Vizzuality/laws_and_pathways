@@ -131,13 +131,21 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
   return (
     <div className="chart chart--cp-performance">
       <div className="legend">
-        {legendItems.map(i => <LegendItem name={i.name} onRemove={() => handleLegendItemRemove(i)} />)}
+        <div className="legend-row">
+          {legendItems.map(i => <LegendItem name={i.name} onRemove={() => handleLegendItemRemove(i)} />)}
+        </div>
+        <div className="legend-row">
+          <span className="legend-item">
+            <span className="line line--solid" />
+            Reported
+          </span>
+          <span className="legend-item">
+            <span className="line line--dotted" />
+            Targeted
+          </span>
+        </div>
       </div>
 
-      <div className="line-legend">
-        <span className="line-legend-item line-legend-item--reported">Reported</span>
-        <span className="line-legend-item line-legend-item--targeted">Targeted</span>
-      </div>
       <div style={chartWrapperStyle}>
         <HighchartsReact
           highcharts={Highcharts}

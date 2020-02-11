@@ -5,9 +5,18 @@
 
   .legend {
     display: flex;
+    flex-direction: column;
+
+    .legend-row {
+      display: flex;
+      margin-bottom: 20px;
+    }
 
     .legend-item {
-      margin-right: 5px;
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+      font-size: 12px;
 
       &__color {
 
@@ -18,36 +27,20 @@
       }
     }
   }
+  
+  .line {
+    display: block;
+    width: 40px;
+    margin-right: 10px;
 
-  .line-legend {
-    display: flex;
-
-    .line-legend-item {
-      display: flex;
-      align-items: center;
-      margin-right: 20px;
-      font-size: 12px;
-
-      &::before {
-        content: '';
-        display: block;
-        width: 40px;
-        margin-right: 10px;
-      }
-
-      &--reported {
-        &::before {
-          border-bottom: 4px solid black;
-        }
-      }
-
-      &--targeted {
-        &::before {
-          border-bottom: 4px dotted black;
-        }
-      }
+    &--dotted {
+      border-bottom: 4px dotted black;
     }
-  }
+
+    &--solid {
+      border-bottom: 4px solid black; 
+    }
+  }  
 
   .highcharts-tooltip-box {
     fill: white;
