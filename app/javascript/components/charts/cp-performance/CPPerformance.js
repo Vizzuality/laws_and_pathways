@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
+import PlusIcon from 'images/icons/plus.svg';
 import { groupAllAreaSeries } from './helpers';
 import LegendItem from './LegendItem';
 import Tooltip from './Tooltip';
@@ -129,6 +130,11 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
       <div className="legend">
         <div className="legend-row">
           {legendItems.map(i => <LegendItem key={i.name} name={i.name} onRemove={() => handleLegendItemRemove(i)} />)}
+          <span className="separator" />
+          <button type="button" className="button is-primary with-icon">
+            <img src={PlusIcon} />
+            Add companies to the chart
+          </button>
         </div>
         <div className="legend-row">
           <span className="legend-item">
