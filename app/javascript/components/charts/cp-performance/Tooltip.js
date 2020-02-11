@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import hexToRgba from 'hex-to-rgba';
 
 function Tooltip({ xValue, yValues, unit }) {
   const companyValues = yValues.filter(v => !v.isBenchmark);
@@ -7,9 +8,9 @@ function Tooltip({ xValue, yValues, unit }) {
 
   return (
     <div className="cp-tooltip">
-      <div className="cp-tooltip__row cp-tooltip__row--bold">
+      <div className="cp-tooltip__header">
         <span>{xValue}</span>
-        <span>{unit}</span>
+        <span className="cp-tooltip__value">{unit}</span>
       </div>
 
       {companyValues.map(y => (
@@ -22,7 +23,7 @@ function Tooltip({ xValue, yValues, unit }) {
             {y.title}
             {y.isTargeted && (<small>(targeted)</small>)}
           </span>
-          <span>{y.value}</span>
+          <span className="cp-tooltip__value">{y.value}</span>
         </div>
       ))}
 
@@ -31,9 +32,15 @@ function Tooltip({ xValue, yValues, unit }) {
       </div>
 
       {benchmarkValues.map(y => (
-        <div className="cp-tooltip__row">
-          <span>{y.title}</span>
-          <span>{y.value}</span>
+        <div className="cp-tooltip__row cp-tooltip__row--targets">
+          <span className="cp-tooltip__value-title">
+            <span
+              className="circle"
+              style={{backgroundColor: hexToRgba(y.color, 0.2)}}
+            />
+            {y.title}
+          </span>
+          <span className="cp-tooltip__value">{y.value}</span>
         </div>
       ))}
     </div>
