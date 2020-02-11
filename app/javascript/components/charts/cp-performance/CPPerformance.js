@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
-import { createSVGGroup } from './helpers';
+import { groupAllAreaSeries } from './helpers';
 import LegendItem from './LegendItem';
 import Tooltip from './Tooltip';
 
@@ -39,17 +39,7 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
     chart: {
       events: {
         render() {
-          // this will group all area series under one element
-          // it will be possible to set opacity for all areas at once to make it looks as on designs
-          const seriesGroup = document.querySelector('.chart--cp-performance g.highcharts-series-group');
-          const groupedAreas = seriesGroup.querySelector('.areas-group') || createSVGGroup('areas-group');
-          const series = [...seriesGroup.querySelectorAll('g.highcharts-area-series')];
-
-          seriesGroup.appendChild(groupedAreas);
-
-          series.forEach(serie => {
-            groupedAreas.appendChild(serie);
-          });
+          groupAllAreaSeries();
         }
       }
     },
