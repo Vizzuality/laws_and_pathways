@@ -1,5 +1,5 @@
 <% if assessment.emissions.any?  %>
-  <%= react_component('charts/CPPerformance', {
+  <%= react_component('charts/cp-performance', {
     dataUrl: emissions_chart_data_tpi_company_path(assessment.company, cp_assessment_id: assessment.id),
     unit: assessment.unit
     }) %>
