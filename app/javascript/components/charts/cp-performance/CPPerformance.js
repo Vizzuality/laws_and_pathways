@@ -45,7 +45,7 @@ function applyColorsToLegendItems(items) {
   return items.map((d, idx) => ({...d, color: COLORS[idx % 10]}));
 }
 
-function CPPerformanceAllSectors({ dataUrl, unit }) {
+function CPPerformance({ dataUrl, companySelector, unit }) {
   const [data, setData] = useState([]);
   const [legendItems, setLegendItems] = useState([]);
   const [showCompanySelector, setCompanySelectorVisible] = useState(false);
@@ -181,24 +181,28 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
       <div className="legend">
         <div className="legend-row">
           {legendItems.map(i => <CompanyTag className="legend-item" key={i.name} item={i} onRemove={handleLegendItemRemove} />)}
-          <span className="separator" />
 
-          <div className="chart-company-selector-wrapper" ref={companySelectorWrapper}>
-            <button type="button" className="button is-primary with-icon" onClick={handleAddCompaniesClick}>
-              <img src={PlusIcon} />
-              Add companies to the chart
-            </button>
+          {companySelector && (
+            <React.Fragment>
+              <span className="separator" />
 
-            {showCompanySelector && (
-              <CompanySelector
-                companies={companies}
-                selected={selectedCompanies}
-                onChange={handleSelectedCompaniesChange}
-                onClose={() => setCompanySelectorVisible(false)}
-              />
-            )}
-          </div>
+              <div className="chart-company-selector-wrapper" ref={companySelectorWrapper}>
+                <button type="button" className="button is-primary with-icon" onClick={handleAddCompaniesClick}>
+                  <img src={PlusIcon} />
+                  Add companies to the chart
+                </button>
 
+                {showCompanySelector && (
+                  <CompanySelector
+                    companies={companies}
+                    selected={selectedCompanies}
+                    onChange={handleSelectedCompaniesChange}
+                    onClose={() => setCompanySelectorVisible(false)}
+                  />
+                )}
+              </div>
+            </React.Fragment>
+          )}
         </div>
         <div className="legend-row">
           <span className="legend-item">
@@ -222,9 +226,14 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
   );
 }
 
-CPPerformanceAllSectors.propTypes = {
+CPPerformance.defaultProps = {
+  companySelector: true
+};
+
+CPPerformance.propTypes = {
+  companySelector: PropTypes.bool,
   dataUrl: PropTypes.string.isRequired,
   unit: PropTypes.string.isRequired
 };
 
-export default CPPerformanceAllSectors;
+export default CPPerformance;
