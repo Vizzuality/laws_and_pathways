@@ -24,8 +24,6 @@
         column :id
         column :name
       end
-      column :created_at
-      column :updated_at
       column 'Actions' do |tag|
         div class: 'table_actions' do
           span link_to 'Edit', resource_path(tag)

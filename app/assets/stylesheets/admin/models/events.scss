@@ -23,3 +23,14 @@
     flex-grow: 1;
   }
 }
+
+#index_table_events {
+  td {
+    &.col-title {
+      min-width: 120px;
+    }
+    &.col-date {
+      min-width: 100px;
+    }
+  }
+}

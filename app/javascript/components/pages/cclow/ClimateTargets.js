@@ -21,24 +21,21 @@ class ClimateTargets extends Component {
       count,
       offset: 0,
       activeGeoFilter: {},
-      activeTagFilter: {},
       activeTimeRangeFilter: {},
       activeTypesFilter: {}
     };
 
     this.geoFilter = React.createRef();
-    this.tagsFilter = React.createRef();
     this.timeRangeFilter = React.createRef();
     this.typesFilter = React.createRef();
   }
 
   getQueryString(extraParams = {}) {
-    const {activeGeoFilter, activeTypesFilter, activeTimeRangeFilter, activeTagFilter} = this.state;
+    const {activeGeoFilter, activeTypesFilter, activeTimeRangeFilter} = this.state;
     const params = {
       ...getQueryFilters(),
       ...activeTimeRangeFilter,
       ...activeGeoFilter,
-      ...activeTagFilter,
       ...activeTypesFilter,
       ...extraParams
     };
@@ -49,7 +46,7 @@ class ClimateTargets extends Component {
   handleLoadMore = () => {
     const { climate_targets } = this.state;
     this.setState({ offset: climate_targets.length }, this.fetchData.bind(this));
-  }
+  };
 
   filterList = (activeFilterName, filterParams) => {
     this.setState({[activeFilterName]: filterParams, offset: 0}, this.fetchData.bind(this));
@@ -91,20 +88,17 @@ class ClimateTargets extends Component {
   }
 
   renderTags = () => {
-    const {activeGeoFilter, activeTagFilter, activeTimeRangeFilter, activeTypesFilter} = this.state;
+    const {activeGeoFilter, activeTimeRangeFilter, activeTypesFilter} = this.state;
     const {
       geo_filter_options: geoFilterOptions,
-      tags_filter_options: tagsFilterOptions,
       types_filter_options: typesFilterOptions
     } = this.props;
     if (Object.keys(activeGeoFilter).length === 0
-      && Object.keys(activeTagFilter).length === 0
       && Object.keys(activeTypesFilter).length === 0
       && Object.keys(activeTimeRangeFilter).length === 0) return null;
     return (
       <div className="filter-tags">
         {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
-        {this.renderTagsGroup(activeTagFilter, tagsFilterOptions, 'tagsFilter')}
         {this.renderTagsGroup(activeTypesFilter, typesFilterOptions, 'typesFilter')}
         {this.renderTimeRangeTags(activeTimeRangeFilter)}
       </div>
@@ -153,7 +147,6 @@ class ClimateTargets extends Component {
     const {climate_targets, count} = this.state;
     const {
       geo_filter_options: geoFilterOptions,
-      tags_filter_options: tagsFilterOptions,
       types_filter_options: typesFilterOptions
     } = this.props;
     const hasMore = climate_targets.length < count;
@@ -163,7 +156,9 @@ class ClimateTargets extends Component {
       <Fragment>
         <div className="cclow-geography-page">
           <div className="container">
-            {this.renderPageTitle()}
+            <div className="flex-container">
+              {this.renderPageTitle()}
+            </div>
             <hr />
             <div className="columns">
               <div className="column is-one-quarter filter-column">
@@ -183,12 +178,6 @@ class ClimateTargets extends Component {
                   filterName="Types"
                   params={typesFilterOptions}
                   onChange={(event) => this.filterList('activeTypesFilter', event)}
-                />
-                <SearchFilter
-                  ref={this.tagsFilter}
-                  filterName="Tags"
-                  params={tagsFilterOptions}
-                  onChange={(event) => this.filterList('activeTagFilter', event)}
                 />
               </div>
               <main className="column is-three-quarters">
@@ -239,7 +228,6 @@ class ClimateTargets extends Component {
 ClimateTargets.defaultProps = {
   count: 0,
   geo_filter_options: [],
-  tags_filter_options: [],
   types_filter_options: []
 };
 
@@ -247,7 +235,6 @@ ClimateTargets.propTypes = {
   climate_targets: PropTypes.array.isRequired,
   count: PropTypes.number,
   geo_filter_options: PropTypes.array,
-  tags_filter_options: PropTypes.array,
   types_filter_options: PropTypes.array
 };
 

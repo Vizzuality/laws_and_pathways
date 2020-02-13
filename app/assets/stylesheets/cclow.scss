@@ -9,6 +9,7 @@
 @import "cclow/filters";
 @import "cclow/tooltip";
 @import "common/youtube";
+@import "cclow/fixed-navbar";
 
 @import "bulma";
 
@@ -22,4 +23,8 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+:root {
+  --fixed-navbar-height: 56px;
 }

@@ -7,7 +7,8 @@
 
     decorate_with PageDecorator
 
-    menu priority: 6, parent: (page_class == 'TPIPage' ? 'TPI' : 'Laws')
+    menu priority: (page_class == 'TPIPage' ? 7 : 6),
+         parent: (page_class == 'TPIPage' ? 'TPI' : 'Laws')
 
     permit_params :title, :slug, :description, :menu,
                   contents_attributes: [:id, :title, :content_type, :text, :_destroy,

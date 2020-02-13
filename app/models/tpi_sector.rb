@@ -14,6 +14,8 @@ class TPISector < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: [:slugged, :history], routes: :default
 
+  belongs_to :cluster, class_name: 'TPISectorCluster', foreign_key: 'cluster_id', optional: true
+
   has_many :companies, foreign_key: 'sector_id'
   has_many :cp_benchmarks, class_name: 'CP::Benchmark', foreign_key: 'sector_id'
   has_many :cp_units, class_name: 'CP::Unit', foreign_key: 'sector_id', inverse_of: :sector

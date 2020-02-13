@@ -1,5 +1,9 @@
 @import "colors";
 
+.header__margin {
+  margin-top: var(--fixed-navbar-height);
+}
+
 .tpi__banner {
   .banner {
     height: 130px;

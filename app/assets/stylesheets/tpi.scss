@@ -34,9 +34,14 @@
 @import "tpi/newsletter";
 @import "tpi/pages";
 @import "tpi/search";
+@import "tpi/fixed-navbar";
 
 @import "tpi/pages/*";
 
 html {
   scroll-behavior: smooth;
+}
+
+:root {
+  --fixed-navbar-height: 56px;
 }

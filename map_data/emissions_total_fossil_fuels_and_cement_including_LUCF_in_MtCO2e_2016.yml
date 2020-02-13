@@ -1,0 +1,11 @@
+name: CAIT Country Greenhouse Gas Emissions Data (2016) (MtCO2e)
+value_column: emissions_total_fossil_fuels_and_cement_including_lucf_in_mtco2e_2016
+active: true
+ramp: emissions
+legend_description: >
+  The <b>colour</b> of the circle represents Carbon dioxide emissions from the use of fossil fuel and the manufacture of cement, land-use change, and forestry (MtCO2e).
+  The darker the circle, the higher the emissions.
+unit: MtCO2e
+creator:
+  url: http://cait.wri.org/historical/
+  name: World Resources Institute

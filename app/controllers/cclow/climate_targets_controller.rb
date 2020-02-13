@@ -11,11 +11,12 @@ module CCLOW
 
       @climate_targets = Queries::CCLOW::TargetQuery.new(filter_params).call
 
+      fixed_navbar('Climate targets', admin_targets_path)
+
       respond_to do |format|
         format.html do
           render component: 'pages/cclow/ClimateTargets', props: {
             geo_filter_options: region_geography_options,
-            tags_filter_options: tags_options('Target'),
             types_filter_options: target_types_options,
             climate_targets: CCLOW::TargetDecorator.decorate_collection(@climate_targets.first(10)),
             count: @climate_targets.count

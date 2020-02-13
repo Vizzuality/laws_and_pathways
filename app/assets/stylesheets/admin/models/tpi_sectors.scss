@@ -1,0 +1,10 @@
+#index_table_tpi_sectors {
+  td {
+    &.col-name {
+      min-width: 100px;
+    }
+    &.col-slug {
+      min-width: 110px;
+    }
+  }
+}

@@ -15,6 +15,8 @@ module Queries
           .merge(filter_by_region)
           .merge(filter_by_geography)
           .merge(filter_by_tags)
+          .merge(filter_by_instruments)
+          .merge(filter_by_governances)
           .merge(filter_by_from_date)
           .merge(filter_by_to_date)
           .merge(filter_by_type)
@@ -42,9 +44,34 @@ module Queries
       end
 
       def filter_by_tags
-        return scope unless params[:tags].present?
+        sql = ''
 
-        scope.includes(:tags).where(tags: {id: params[:tags]})
+        %w(Response Keyword Framework).each do |type|
+          tag_param = type.downcase.pluralize
+          next unless params[tag_param.to_sym].present?
+
+          sql += <<-SQL
+          INNER JOIN taggings AS #{tag_param}_taggings
+          ON #{tag_param}_taggings.taggable_id = legislations.id AND #{tag_param}_taggings.taggable_type = 'Legislation'
+            INNER JOIN tags AS #{tag_param} ON #{tag_param}.id = #{tag_param}_taggings.tag_id
+            AND #{tag_param}.id IN (#{params[tag_param].join(', ')})
+            AND #{tag_param}.type = '#{type}'
+          SQL
+        end
+
+        sql.present? ? scope.joins(sql) : scope
+      end
+
+      def filter_by_instruments
+        return scope unless params[:instrument].present?
+
+        scope.joins(:instruments).where(instruments: {id: params[:instrument]})
+      end
+
+      def filter_by_governances
+        return scope unless params[:governance].present?
+
+        scope.joins(:governances).where(governances: {id: params[:governance]})
       end
 
       def filter_by_from_date

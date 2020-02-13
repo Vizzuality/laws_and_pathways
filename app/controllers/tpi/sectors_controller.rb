@@ -9,6 +9,8 @@ module TPI
 
     def index
       @companies_by_sectors = ::Api::Charts::Sector.new(companies_scope(params)).companies_market_cap_by_sector
+
+      fixed_navbar('Sectors', admin_tpi_sectors_path)
     end
 
     def show
@@ -17,6 +19,8 @@ module TPI
       @companies_by_levels = ::Api::Charts::Sector.new(companies_scope(params)).companies_summaries_by_level
 
       @publications_and_articles = @sector.publications_and_articles
+
+      fixed_navbar("Sector #{@sector.name}", admin_tpi_sector_path(@sector))
     end
 
     # Chart data endpoints
@@ -97,7 +101,7 @@ module TPI
     end
 
     def fetch_sectors
-      @sectors = TPISector.select(:id, :name, :slug).order(:name)
+      @sectors = TPISector.all.includes(:cluster).order(:name)
     end
 
     def fetch_companies

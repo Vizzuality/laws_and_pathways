@@ -2,7 +2,7 @@ ActiveAdmin.register NewsArticle do
   config.batch_actions = false
   config.sort_order = 'publication_date_desc'
 
-  menu parent: 'TPI', priority: 7
+  menu parent: 'TPI', priority: 8
 
   decorate_with NewsArticleDecorator
 
@@ -41,8 +41,6 @@ ActiveAdmin.register NewsArticle do
     column 'Title', :title_link
     column :article_type
     column :publication_date
-    column :created_by
-    column :updated_by
 
     actions
   end
@@ -66,7 +64,7 @@ ActiveAdmin.register NewsArticle do
       f.input :tpi_sector_ids, label: 'Sectors', as: :select,
                                collection: TPISector.order(:name), input_html: {multiple: true}
       f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags, collection: Keyword.pluck(:name)
-      f.input :image, as: :file
+      f.input :image, as: :file, input_html: {accept: 'image/*'}
     end
 
     f.actions

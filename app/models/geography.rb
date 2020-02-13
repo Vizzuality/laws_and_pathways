@@ -134,6 +134,7 @@ class Geography < ApplicationRecord
     eu.targets.published.where(source: 'ndc')
   end
 
+  # rubocop:disable Metrics/AbcSize
   def laws_per_sector
     targets.group_by(&:sector).map do |sector, targets|
       {
@@ -142,11 +143,12 @@ class Geography < ApplicationRecord
           if eu_member?
             Geography.eu_ndc_targets.select { |target| target.sector.eql?(sector) }.count
           else
-            targets.select { |t| t.source.eql?('ndc') }.count
+            targets.select { |t| t.source && t.source.downcase == 'ndc' }.count
           end,
-        law_targets_count: targets.select { |t| t.source.eql?('law') }.count,
-        policy_targets_count: targets.select { |t| t.source.eql?('policy') }.count
+        law_targets_count: targets.select { |t| t.source && t.source.downcase == 'law' }.count,
+        policy_targets_count: targets.select { |t| t.source && t.source.downcase == 'policy' }.count
       }
     end
   end
+  # rubocop:enable Metrics/AbcSize
 end

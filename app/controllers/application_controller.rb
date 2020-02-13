@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
 
   def set_current_user
     ::Current.admin_user = current_admin_user
+    @current_user = current_admin_user
   end
 
   rescue_from CanCan::AccessDenied do |exception|

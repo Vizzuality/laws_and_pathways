@@ -14,3 +14,14 @@
     padding: 8px 4px;
   }
 }
+
+#index_table_mq_assessments {
+  td {
+    &.col-methodology_version {
+      min-width: 65px;
+    }
+    &.col-title {
+      min-width: 150px;
+    }
+  }
+}

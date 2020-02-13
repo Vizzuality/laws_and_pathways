@@ -71,7 +71,7 @@ ActiveAdmin.register MQ::Assessment do
   form partial: 'form'
 
   index do
-    column :methodology_version
+    column 'Version', :methodology_version
     column :title, &:title_link
     column :assessment_date
     column :publication_date

@@ -14,6 +14,11 @@ module TPI
       @companies =
         Company.published.joins(:sector).select(:id, :name, :slug, 'tpi_sectors.name as sector_name', :active)
       @companies = TPI::CompanyDecorator.decorate_collection(@companies)
+
+      fixed_navbar(
+        "Company #{@company.name}",
+        admin_company_path(@company)
+      )
     end
 
     def mq_assessment; end

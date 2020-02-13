@@ -540,6 +540,36 @@ $count-description-lines: 2;
       }
     }
   }
+
+  .legislative-process-toggle {
+    &:checked {
+      & + div {
+        .legislative-process-preview {
+          display: none;
+        }
+
+        .legislative-process {
+          display: block;
+        }
+      }
+    }
+
+    &:not(:checked) {
+      & + div {
+        .legislative-process-preview {
+          display: block;
+        }
+
+        .legislative-process {
+          display: none;
+        }
+
+        .read-more-process {
+          cursor: pointer;
+        }
+      }
+    }
+  }
 }
 
 mark {
@@ -611,5 +641,10 @@ mark {
 .tag__container {
   display: flex;
   max-width: 100px;
+  align-items: center;
+}
+
+.flex-container {
+  display: flex;
   align-items: center;
 }
