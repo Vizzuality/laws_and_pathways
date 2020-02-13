@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import hexToRgba from 'hex-to-rgba';
 
 import XIcon from 'images/icons/x.svg';
 
@@ -10,7 +9,7 @@ function CompanyTag({ className, item, onRemove }) {
       {item.color && (
         <span
           className="circle"
-          style={{backgroundColor: hexToRgba(item.color, 0.2)}}
+          style={{backgroundColor: item.color}}
         />
       )}
       {item.name}

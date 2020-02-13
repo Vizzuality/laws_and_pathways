@@ -14,6 +14,8 @@ import CompanySelector from './CompanySelector';
 import CompanyTag from './CompanyTag';
 import Tooltip from './Tooltip';
 
+const COLORS = ['#00C170', '#ED3D4A', '#FFDD49', '#440388', '#FF9600', '#B75038', '#00A8FF', '#F78FB3', '#191919', '#F602B4'];
+
 // TODO: move to common hooks
 const useCallbackOutsideClick = (element, action) => {
   if (typeof action !== 'function') throw new Error('useCallbackOutsideClick expects action to be function');
@@ -31,6 +33,13 @@ const useCallbackOutsideClick = (element, action) => {
   }, []);
 };
 
+function getLegendItems(data) {
+  return data
+    .filter(d => d.type !== 'area')
+    .map((d, idx) => ({...d, color: COLORS[idx % 10]}))
+    .slice(0, 10);
+}
+
 function CPPerformanceAllSectors({ dataUrl, unit }) {
   const [data, setData] = useState([]);
   const [legendItems, setLegendItems] = useState([]);
@@ -44,9 +53,7 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
       .then((r) => r.json())
       .then((chartData) => {
         setData(chartData);
-        setLegendItems(
-          chartData.filter(d => d.type !== 'area').slice(0, 9)
-        );
+        setLegendItems(getLegendItems(chartData));
       });
   }, []);
   useCallbackOutsideClick(companySelectorWrapper, () => setCompanySelectorVisible(false));
@@ -56,7 +63,7 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
   };
 
   const handleSelectedCompaniesChange = (selected) => {
-    setLegendItems(data.filter((d) => selected.includes(d.name)));
+    setLegendItems(getLegendItems(data.filter((d) => selected.includes(d.name))));
   };
 
   const companies = useMemo(() => data.filter(d => d.type !== 'area').map(i => i.name), [data]);
@@ -78,9 +85,7 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
     credits: {
       enabled: false
     },
-    colors: [
-      '#00C170', '#ED3D4A', '#FFDD49', '#440388', '#FF9600', '#B75038', '#00A8FF', '#F78FB3', '#191919', '#F602B4'
-    ],
+    colors: COLORS,
     legend: {
       enabled: false
     },
