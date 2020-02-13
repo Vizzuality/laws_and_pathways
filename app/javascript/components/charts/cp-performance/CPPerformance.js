@@ -89,6 +89,7 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
   // TODO: move to separate file
   const options = {
     chart: {
+      height: '500px',
       marginTop: 30,
       events: {
         render() {
@@ -170,10 +171,6 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
     },
     series: chartData
   };
-  const chartWrapperStyle = {
-    width: '100%',
-    height: '800px'
-  };
 
   const handleAddCompaniesClick = (e) => {
     if (e.currentTarget) e.currentTarget.blur();
@@ -230,12 +227,10 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
         </div>
       </div>
 
-      <div style={chartWrapperStyle}>
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={options}
-        />
-      </div>
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={options}
+      />
     </div>
   );
 }
