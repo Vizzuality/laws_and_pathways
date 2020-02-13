@@ -9,7 +9,7 @@ module CCLOW
       add_breadcrumb('Litigation cases', cclow_litigation_cases_path(@geography))
       add_breadcrumb('Search results', request.path) if params[:q].present? || params[:recent].present?
 
-      @litigations = Queries::CCLOW::LitigationQuery.new(filter_params).call
+      @litigations = sort_list(Queries::CCLOW::LitigationQuery.new(filter_params).call)
 
       fixed_navbar('All Litigation Cases', admin_litigations_path)
 
@@ -29,7 +29,7 @@ module CCLOW
             litigation_side_b_party_type_options: litigation_side_b_party_type_options,
             litigation_side_c_party_type_options: litigation_side_c_party_type_options,
             litigations: CCLOW::LitigationDecorator.decorate_collection(@litigations.first(10)),
-            count: @litigations.count
+            count: @litigations.size
           }, prerender: false
         end
         format.json do
@@ -37,7 +37,7 @@ module CCLOW
             litigations: CCLOW::LitigationDecorator.decorate_collection(
               @litigations.offset(params[:offset] || 0).take(10)
             ),
-            count: @litigations.count
+            count: @litigations.size
           }
         end
         format.csv do
@@ -53,6 +53,20 @@ module CCLOW
                  filename: "litigation_cases_#{timestamp}"
         end
       end
+    end
+
+    private
+
+    def sort_list(litigations)
+      return litigations if (filter_params.keys - %w(from_date to_date)).present?
+
+      sql = <<-SQL
+        LEFT OUTER JOIN events ON events.eventable_id = litigations.id
+        AND events.eventable_type = 'Litigation'
+        AND events.event_type IN (#{Litigation::EVENT_STARTED_TYPES.map { |type| "'#{type}'" }.join(', ')})
+      SQL
+
+      Litigation.where(id: litigations.map(&:id)).joins(sql).order('events.date DESC NULLS LAST')
     end
     # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/MethodLength
