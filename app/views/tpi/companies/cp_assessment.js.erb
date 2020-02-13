@@ -3,4 +3,5 @@
   const newUrl = new URL(window.location.href);
   newUrl.searchParams.set('cp_assessment_id', <%= @cp_assessment.id %>);
   window.history.replaceState({}, '', newUrl.href);
+  ReactRailsUJS.mountComponents('#cp-assessment');
 })();
