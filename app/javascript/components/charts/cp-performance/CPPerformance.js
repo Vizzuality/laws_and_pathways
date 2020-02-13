@@ -8,21 +8,26 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
 import PlusIcon from 'images/icons/plus.svg';
+
 import { groupAllAreaSeries } from './helpers';
+import CompanySelector from './CompanySelector';
 import LegendItem from './LegendItem';
 import Tooltip from './Tooltip';
 
 function CPPerformanceAllSectors({ dataUrl, unit }) {
   const [data, setData] = useState([]);
   const [legendItems, setLegendItems] = useState([]);
+  const [showCompanySelector, setCompanySelectorVisible] = useState(false);
 
+  // TODO: add error handling
   useEffect(() => {
     fetch(dataUrl)
       .then((r) => r.json())
       .then((chartData) => {
         setData(chartData);
-        const companiesData = chartData.filter(d => d.type !== 'area');
-        setLegendItems(companiesData);
+        setLegendItems(
+          chartData.filter(d => d.type !== 'area').slice(0, 9)
+        );
       });
   }, []);
 
@@ -30,11 +35,16 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
     setLegendItems(legendItems.filter(l => l.name !== item.name));
   };
 
-  const chartData = useMemo(() => {
-    const legendItemsNames = legendItems.map(l => l.name);
+  const handleSelectedCompaniesChange = (selected) => {
+    setLegendItems(data.filter((d) => selected.includes(d.name)));
+  };
 
-    return data.filter(d => d.type === 'area' || legendItemsNames.includes(d.name));
-  }, [data, legendItems]);
+  const companies = useMemo(() => data.filter(d => d.type !== 'area').map(i => i.name), [data]);
+  const selectedCompanies = useMemo(() => legendItems.map(i => i.name), [legendItems]);
+  const chartData = useMemo(
+    () => data.filter(d => d.type === 'area' || selectedCompanies.includes(d.name)),
+    [data, selectedCompanies]
+  );
 
   const options = {
     chart: {
@@ -131,10 +141,14 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
         <div className="legend-row">
           {legendItems.map(i => <LegendItem key={i.name} name={i.name} onRemove={() => handleLegendItemRemove(i)} />)}
           <span className="separator" />
-          <button type="button" className="button is-primary with-icon">
+          <button type="button" className="button is-primary with-icon" onClick={() => setCompanySelectorVisible(!showCompanySelector)}>
             <img src={PlusIcon} />
             Add companies to the chart
           </button>
+
+          {showCompanySelector && (
+            <CompanySelector companies={companies} selected={selectedCompanies} onChange={handleSelectedCompaniesChange} />
+          )}
         </div>
         <div className="legend-row">
           <span className="legend-item">
