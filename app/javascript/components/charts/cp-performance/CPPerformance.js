@@ -21,6 +21,7 @@ const useCallbackOutsideClick = (element, action) => {
   if (typeof action !== 'function') throw new Error('useCallbackOutsideClick expects action to be function');
 
   const handleClickOutside = event => {
+    if (!element.current) return;
     if (!element.current.contains(event.target)) action();
   };
 
