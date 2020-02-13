@@ -60,6 +60,10 @@
   &__item {
     cursor: pointer;
     margin: 15px 0;
+
+    &.disabled {
+      opacity: .4;
+    }
   }
 
   &__item_checkbox {

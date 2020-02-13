@@ -18,7 +18,7 @@ function CompanySelector({ companies, selected, onChange, onClose }) {
   return (
     <div className="chart-company-selector">
       <p>
-        Add up to 10 companies simultaneously
+        Add <strong>up to 10</strong> companies simultaneously
       </p>
 
       <CheckList
