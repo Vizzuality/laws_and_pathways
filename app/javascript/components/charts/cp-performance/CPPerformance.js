@@ -1,6 +1,6 @@
 /* eslint-disable react/no-this-in-sfc */
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useRef, useMemo, useState } from 'react';
 import { renderToString } from 'react-dom/server';
 import PropTypes from 'prop-types';
 
@@ -14,10 +14,29 @@ import CompanySelector from './CompanySelector';
 import LegendItem from './LegendItem';
 import Tooltip from './Tooltip';
 
+// TODO: move to common hooks
+const useCallbackOutsideClick = (element, action) => {
+  if (typeof action !== 'function') throw new Error('useCallbackOutsideClick expects action to be function');
+
+  const handleClickOutside = event => {
+    if (!element.current.contains(event.target)) action();
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+};
+
 function CPPerformanceAllSectors({ dataUrl, unit }) {
   const [data, setData] = useState([]);
   const [legendItems, setLegendItems] = useState([]);
   const [showCompanySelector, setCompanySelectorVisible] = useState(false);
+
+  const companySelectorWrapper = useRef();
 
   // TODO: add error handling
   useEffect(() => {
@@ -30,6 +49,7 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
         );
       });
   }, []);
+  useCallbackOutsideClick(companySelectorWrapper, () => setCompanySelectorVisible(false));
 
   const handleLegendItemRemove = (item) => {
     setLegendItems(legendItems.filter(l => l.name !== item.name));
@@ -46,6 +66,7 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
     [data, selectedCompanies]
   );
 
+  // TODO: move to separate file
   const options = {
     chart: {
       events: {
@@ -147,7 +168,7 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
           {legendItems.map(i => <LegendItem key={i.name} name={i.name} onRemove={() => handleLegendItemRemove(i)} />)}
           <span className="separator" />
 
-          <div className="chart-company-selector-wrapper">
+          <div className="chart-company-selector-wrapper" ref={companySelectorWrapper}>
             <button type="button" className="button is-primary with-icon" onClick={handleAddCompaniesClick}>
               <img src={PlusIcon} />
               Add companies to the chart
