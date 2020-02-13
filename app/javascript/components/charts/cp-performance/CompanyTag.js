@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import XIcon from 'images/icons/x.svg';
+import DarkXIcon from 'images/icons/dark-x.svg';
 
 function CompanyTag({ className, item, onRemove }) {
   return (
@@ -14,7 +14,7 @@ function CompanyTag({ className, item, onRemove }) {
       )}
       {item.name}
       <span className="company-tag__remove" onClick={() => onRemove(item)}>
-        <img src={XIcon} />
+        <img src={DarkXIcon} />
       </span>
     </div>
   );
