@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import DarkXIcon from 'images/icons/dark-x.svg';
 
-function CompanyTag({ className, item, onRemove }) {
+function CompanyTag({ className, item, hideRemoveIcon, onRemove }) {
   return (
     <div className={`company-tag ${className}`}>
       {item.color && (
@@ -13,14 +13,21 @@ function CompanyTag({ className, item, onRemove }) {
         />
       )}
       {item.name}
-      <span className="company-tag__remove" onClick={() => onRemove(item)}>
-        <img src={DarkXIcon} />
-      </span>
+      {!hideRemoveIcon && (
+        <span className="company-tag__remove" onClick={() => onRemove(item)}>
+          <img src={DarkXIcon} />
+        </span>
+      )}
     </div>
   );
 }
 
+CompanyTag.defaultProps = {
+  hideRemoveIcon: false
+};
+
 CompanyTag.propTypes = {
+  hideRemoveIcon: PropTypes.bool,
   className: PropTypes.string.isRequired,
   item: PropTypes.object.isRequired,
   onRemove: PropTypes.func.isRequired

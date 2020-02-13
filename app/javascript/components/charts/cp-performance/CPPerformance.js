@@ -180,7 +180,17 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
     <div className="chart chart--cp-performance">
       <div className="legend">
         <div className="legend-row">
-          {legendItems.map(i => <CompanyTag className="legend-item" key={i.name} item={i} onRemove={handleLegendItemRemove} />)}
+          {legendItems.map(
+            i => (
+              <CompanyTag
+                key={i.name}
+                className="legend-item"
+                item={i}
+                hideRemoveIcon={!companySelector}
+                onRemove={handleLegendItemRemove}
+              />
+            )
+          )}
 
           {companySelector && (
             <React.Fragment>
