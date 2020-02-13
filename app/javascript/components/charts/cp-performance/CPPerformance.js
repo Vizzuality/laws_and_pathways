@@ -34,10 +34,15 @@ const useCallbackOutsideClick = (element, action) => {
 };
 
 function getLegendItems(data) {
-  return data
-    .filter(d => d.type !== 'area')
-    .map((d, idx) => ({...d, color: COLORS[idx % 10]}))
-    .slice(0, 10);
+  return applyColorsToLegendItems(
+    data
+      .filter(d => d.type !== 'area')
+      .slice(0, 10)
+  );
+}
+
+function applyColorsToLegendItems(items) {
+  return items.map((d, idx) => ({...d, color: COLORS[idx % 10]}));
 }
 
 function CPPerformanceAllSectors({ dataUrl, unit }) {
@@ -59,7 +64,11 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
   useCallbackOutsideClick(companySelectorWrapper, () => setCompanySelectorVisible(false));
 
   const handleLegendItemRemove = (item) => {
-    setLegendItems(legendItems.filter(l => l.name !== item.name));
+    setLegendItems(
+      applyColorsToLegendItems(
+        legendItems.filter(l => l.name !== item.name)
+      )
+    );
   };
 
   const handleSelectedCompaniesChange = (selected) => {
