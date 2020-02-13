@@ -76,7 +76,10 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
     setLegendItems(getLegendItems(data.filter((d) => selected.includes(d.name))));
   };
 
-  const companies = useMemo(() => data.filter(d => d.type !== 'area').map(i => i.name), [data]);
+  const companies = useMemo(
+    () => data.filter(d => d.type !== 'area').map(i => i.name).sort(),
+    [data]
+  );
   const selectedCompanies = useMemo(() => legendItems.map(i => i.name), [legendItems]);
   const chartData = useMemo(
     () => data.filter(d => d.type === 'area' || selectedCompanies.includes(d.name)),
