@@ -9,6 +9,8 @@
     display: flex;
     flex-direction: column;
 
+    $legend-item-height: 30px;
+
     .legend-row {
       display: flex;
       flex-wrap: wrap;
@@ -16,18 +18,35 @@
 
       > * {
         margin-bottom: 10px;
+        margin-right: 12px;
+        height: $legend-item-height;
+      }
+
+      button {
+        font-size: 12px;
+        height: $legend-item-height;
       }
     }
 
     .legend-item {
       display: flex;
       align-items: center;
-      margin-right: 20px;
+      color: $grey-dark;
       font-size: 12px;
+    }
 
-      &__color {
+    .separator {
+      display: block;
+      width: 1px;
+      background-color: rgba(89,91,93,0.2);
+    }
 
-      }
+    .company-tag {
+      border: 1px solid rgba(89,91,93,0.5);
+
+      padding: 0 10px;
+
+      line-height: 30px;
 
       &__remove {
         margin-left: 5px;

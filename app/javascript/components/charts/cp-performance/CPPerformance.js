@@ -11,7 +11,7 @@ import PlusIcon from 'images/icons/plus.svg';
 
 import { groupAllAreaSeries } from './helpers';
 import CompanySelector from './CompanySelector';
-import LegendItem from './LegendItem';
+import CompanyTag from './CompanyTag';
 import Tooltip from './Tooltip';
 
 // TODO: move to common hooks
@@ -165,7 +165,7 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
     <div className="chart chart--cp-performance">
       <div className="legend">
         <div className="legend-row">
-          {legendItems.map(i => <LegendItem key={i.name} name={i.name} onRemove={() => handleLegendItemRemove(i)} />)}
+          {legendItems.map(i => <CompanyTag className="legend-item" key={i.name} item={i} onRemove={handleLegendItemRemove} />)}
           <span className="separator" />
 
           <div className="chart-company-selector-wrapper" ref={companySelectorWrapper}>
