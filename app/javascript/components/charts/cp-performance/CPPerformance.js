@@ -180,7 +180,12 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
             </button>
 
             {showCompanySelector && (
-              <CompanySelector companies={companies} selected={selectedCompanies} onChange={handleSelectedCompaniesChange} />
+              <CompanySelector
+                companies={companies}
+                selected={selectedCompanies}
+                onChange={handleSelectedCompaniesChange}
+                onClose={() => setCompanySelectorVisible(false)}
+              />
             )}
           </div>
 

@@ -17,6 +17,10 @@
     overflow: auto;
     max-height: 300px;
   }
+
+  .apply-changes-button {
+    float: right;
+  }
 }
 
 .check-list {
@@ -54,6 +58,7 @@
   }
 
   &__item {
+    cursor: pointer;
     margin: 15px 0;
   }
 

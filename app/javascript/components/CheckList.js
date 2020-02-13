@@ -56,7 +56,7 @@ function CheckList({ isSearchable, options, selected, onChange, maxSelectedCount
             <div className={cx('check-list__item_checkbox', { checked: isSelected(option) })}>
               {isSelected(option) && <i className="fa fa-check" />}
             </div>
-            <label>{option.label}</label>
+            {option.label}
           </li>
         ))}
       </ul>
