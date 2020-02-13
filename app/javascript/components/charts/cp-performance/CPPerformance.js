@@ -135,20 +135,29 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
     height: '800px'
   };
 
+  const handleAddCompaniesClick = (e) => {
+    if (e.currentTarget) e.currentTarget.blur();
+    setCompanySelectorVisible(!showCompanySelector);
+  };
+
   return (
     <div className="chart chart--cp-performance">
       <div className="legend">
         <div className="legend-row">
           {legendItems.map(i => <LegendItem key={i.name} name={i.name} onRemove={() => handleLegendItemRemove(i)} />)}
           <span className="separator" />
-          <button type="button" className="button is-primary with-icon" onClick={() => setCompanySelectorVisible(!showCompanySelector)}>
-            <img src={PlusIcon} />
-            Add companies to the chart
-          </button>
 
-          {showCompanySelector && (
-            <CompanySelector companies={companies} selected={selectedCompanies} onChange={handleSelectedCompaniesChange} />
-          )}
+          <div className="chart-company-selector-wrapper">
+            <button type="button" className="button is-primary with-icon" onClick={handleAddCompaniesClick}>
+              <img src={PlusIcon} />
+              Add companies to the chart
+            </button>
+
+            {showCompanySelector && (
+              <CompanySelector companies={companies} selected={selectedCompanies} onChange={handleSelectedCompaniesChange} />
+            )}
+          </div>
+
         </div>
         <div className="legend-row">
           <span className="legend-item">

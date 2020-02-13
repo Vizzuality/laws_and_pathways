@@ -1,3 +1,82 @@
 .chart-company-selector {
-  min-width: 300px;
+  padding: 20px;
+
+  min-width: 400px;
+  overflow: hidden;
+
+  border: 1px solid $black;
+
+  background: $white;
+
+  p {
+    font-size: 12px;
+    color: $grey-dark;
+  }
+
+  ul {
+    overflow: auto;
+    max-height: 300px;
+  }
+}
+
+.check-list {
+  &__search {
+
+    border: 1px solid $dark;
+
+    margin-top: 15px;
+    width: 100%;
+
+    label {
+      display: flex;
+      align-items: center;
+    }
+
+    input {
+      border: none;
+      color: #2E3152;
+      font-size: 14px;
+      outline: none;
+      padding: 12px;
+      width: 100%;
+    }
+
+    img {
+      display: flex;
+      height: 16px;
+      margin-right: 1rem;
+      width: 16px;
+    }
+  }
+
+  &__items {
+    margin: 20px 0;
+  }
+
+  &__item {
+    margin: 15px 0;
+  }
+
+  &__item_checkbox {
+    color: $white;
+    display: inline-block;
+    height: 24px;
+    margin-right: 10px;
+    vertical-align: bottom;
+    width: 24px;
+
+    border: solid 2px $grey-dark;
+
+    .fa {
+      vertical-align: top;
+    }
+
+    &.checked {
+      background-color: $blue-dark;
+      border: solid 2px $blue-dark;
+      color: $white;
+      text-align: center;
+      padding-top: 2px;
+    }
+  }
 }

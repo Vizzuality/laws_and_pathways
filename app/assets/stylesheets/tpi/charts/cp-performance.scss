@@ -1,6 +1,6 @@
 .chart--cp-performance {
   @import 'chart-company-selector';
-  
+
   margin-top: 10px;
   justify-content: unset;
   flex-flow: column;
@@ -35,6 +35,18 @@
     }
   }
 
+  .chart-company-selector-wrapper {
+    position: relative;
+
+    .chart-company-selector {
+      position: absolute;
+
+      top: 60px;
+
+      z-index: 100;
+    }
+  }
+
   .line {
     display: block;
     width: 40px;
@@ -45,7 +57,7 @@
     }
 
     &--solid {
-      border-bottom: 4px solid black; 
+      border-bottom: 4px solid black;
     }
   }
 
@@ -69,7 +81,7 @@
     border: 1px solid $dark;
     min-width: 300px;
     padding: 20px;
-    
+
     &__row {
       display: flex;
       justify-content: space-between;
@@ -134,6 +146,3 @@
     }
   }
 }
-
-
-
