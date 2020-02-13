@@ -85,6 +85,7 @@ function CPPerformanceAllSectors({ dataUrl, unit }) {
   // TODO: move to separate file
   const options = {
     chart: {
+      marginTop: 30,
       events: {
         render() {
           groupAllAreaSeries();
