@@ -46,48 +46,6 @@ module ChartHelper
     }
   end
 
-  def cp_chart_options(unit)
-    {
-      colors: [
-        '#00C170', '#ED3D4A', '#FFDD49', '#440388', '#FF9600', '#B75038', '#00A8FF', '#F78FB3', '#191919', '#F602B4'
-      ],
-      legend: {
-        verticalAlign: 'top',
-        margin: 50
-      },
-      plotOptions: {
-        area: {
-          # fillOpacity: 0.3,
-          marker: {
-            enabled: false
-          }
-        },
-        line: {
-          marker: {
-            enabled: false
-          }
-        },
-        column: {
-          stacking: 'normal'
-        },
-        series: {
-          lineWidth: 4
-        }
-      },
-      yAxis: {
-        title: {
-          text: unit,
-          reserveSpace: false,
-          textAlign: 'left',
-          align: 'high',
-          rotation: 0,
-          x: 0,
-          y: -20
-        }
-      }
-    }
-  end
-
   def mq_company_no_of_assessments_chart_options
     {
       chart: {

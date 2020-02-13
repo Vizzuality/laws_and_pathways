@@ -78,20 +78,11 @@
 
   <section id="carbon-performance" class="container">
     <h4>Carbon Performance: <%= @sector.name %></h4>
-    <div class="chart chart--cp-emissions">
-      <div class="legend">
-        <span class="legend-item legend-item--reported">Reported</span>
-        <span class="legend-item legend-item--targeted">Targeted</span>
-      </div>
 
-      <%= line_chart(
-        emissions_chart_data_tpi_sector_path(@sector.id),
-        width: '1200px',
-        height: '800px',
-        curve: false,
-        library: cp_chart_options(@sector.latest_cp_unit&.unit)
-        )%>
-    </div>
+    <%= react_component('charts/cp-performance', {
+      dataUrl: emissions_chart_data_tpi_sector_path(@sector.id),
+      unit: @sector.latest_cp_unit&.unit
+    }) %>
   </section>
 
   <% if @publications_and_articles.present? %>
