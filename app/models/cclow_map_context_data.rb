@@ -10,7 +10,8 @@ class CCLOWMapContextData
       datasets_map = datasets.each_with_object({}) do |file, hash|
         hash[file.split('/')[1].split('.')[0]] = file
       end
-      parsed = datasets_map.map do |key, dataset|
+
+      parsed = datasets_map.sort.to_h.map do |key, dataset|
         csv_file = File.read(dataset)
         metadata_file = File.read(Rails.root.join('map_data', "#{key}.yml"))
         metadata = YAML.safe_load(metadata_file)
