@@ -1,4 +1,4 @@
-name: CAIT Country Greenhouse Gas Emissions Data (2016) (%)
+name: Country Greenhouse Gas Emissions Data (CAIT 2016) (per cent of global emissions)
 value_column: emissions_total_fossil_fuels_and_cement_including_lucf_in_percent_2016
 active: true
 ramp: emissions

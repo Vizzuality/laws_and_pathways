@@ -1,4 +1,4 @@
-name: CAIT Country Greenhouse Gas Emissions Data (2016) (MtCO2e)
+name: Country Greenhouse Gas Emissions Data (CAIT 2016) (MtCO2e)
 value_column: emissions_total_fossil_fuels_and_cement_including_lucf_in_mtco2e_2016
 active: true
 ramp: emissions
