@@ -1,6 +1,7 @@
 name: Global Climate Risk Index 1999-2018 (no units)
 value_column: cri_score_1999_2018
 active: true
+eu_method: avg
 legend_description: |-
   The <b>colour</b> of the circle represents the global climate risk index (CRI, no units).
   The darker the circle, the higher the level of exposure and vulnerability to extreme weather events.
