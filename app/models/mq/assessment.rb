@@ -25,6 +25,7 @@ module MQ
     scope :latest_first, -> { order(assessment_date: :desc) }
     scope :all_publication_dates, -> { distinct.order(publication_date: :desc).pluck(:publication_date) }
     scope :all_methodology_versions, -> { distinct.order(methodology_version: :asc).pluck(:methodology_version) }
+    scope :currently_published, -> { where('publication_date <= ?', DateTime.now) }
 
     validates :level, inclusion: {in: LEVELS}
     validates_presence_of :assessment_date, :publication_date, :level
@@ -38,6 +39,7 @@ module MQ
       # keep select and sort by, company - mq assessments will be cached once
       company
         .mq_assessments
+        .currently_published
         .select { |a| a.assessment_date < assessment_date }
         .sort_by(&:assessment_date)
     end

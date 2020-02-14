@@ -14,6 +14,12 @@ RSpec.describe Api::Charts::MQAssessment do
         create(:mq_assessment, company: company, assessment_date: '2018-08-08', level: '2')
         create(:mq_assessment, company: company, assessment_date: '2019-02-02', level: '4')
         create(:mq_assessment, company: company, assessment_date: '2020-03-03', level: '3')
+        # should be ignored
+        create(:mq_assessment,
+               company: company,
+               assessment_date: '2020-02-03',
+               level: '1',
+               publication_date: 6.months.from_now)
       end
 
       it 'returns [year, level] pairs from begining of first year to present year' do

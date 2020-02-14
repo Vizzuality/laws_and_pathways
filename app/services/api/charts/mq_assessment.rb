@@ -47,7 +47,7 @@ module Api
       def company_mq_assessments
         return [] unless company.present?
 
-        @company_mq_assessments ||= company.mq_assessments.order(:assessment_date)
+        @company_mq_assessments ||= company.mq_assessments.currently_published.order(:assessment_date)
       end
     end
   end
