@@ -26,6 +26,10 @@ RSpec.describe Api::Charts::CPPerformance do
           cp_assessments: [
             build(:cp_assessment, cp_alignment: 'Not Aligned', assessment_date: 12.months.ago), # ignored
             build(:cp_assessment, cp_alignment: '2 degrees', assessment_date: 6.months.ago), # ignored
+            build(:cp_assessment,
+                  cp_alignment: 'below 3 degrees',
+                  assessment_date: 2.months.ago,
+                  publication_date: 6.months.from_now), # ignored
             build(:cp_assessment, cp_alignment: 'below 2 degrees', assessment_date: 3.months.ago)
           ]
         )
@@ -36,7 +40,10 @@ RSpec.describe Api::Charts::CPPerformance do
           sector: sector_autos,
           cp_assessments: [
             build(:cp_assessment, cp_alignment: '2 degrees', assessment_date: 12.months.ago), # ignored
-            build(:cp_assessment, cp_alignment: 'Below 2 degrees', assessment_date: 3.months.ago)
+            build(:cp_assessment, cp_alignment: 'Below 2 degrees', assessment_date: 3.months.ago),
+            build(:cp_assessment, cp_alignment: 'below 3 degrees',
+                                  assessment_date: 2.months.ago,
+                                  publication_date: 6.months.from_now) # ignored
           ]
         )
 
@@ -46,7 +53,10 @@ RSpec.describe Api::Charts::CPPerformance do
           sector: sector_autos,
           cp_assessments: [
             build(:cp_assessment, cp_alignment: '2 degrees', assessment_date: 12.months.ago), # ignored
-            build(:cp_assessment, cp_alignment: 'Not Aligned', assessment_date: 3.months.ago)
+            build(:cp_assessment, cp_alignment: 'Not Aligned', assessment_date: 3.months.ago),
+            build(:cp_assessment, cp_alignment: 'below 3 degrees',
+                                  assessment_date: 2.months.ago,
+                                  publication_date: 6.months.from_now) # ignored
           ]
         )
 
@@ -56,7 +66,10 @@ RSpec.describe Api::Charts::CPPerformance do
           sector: sector_airlines,
           cp_assessments: [
             build(:cp_assessment, cp_alignment: '2 degrees', assessment_date: 12.months.ago), # ignored
-            build(:cp_assessment, cp_alignment: 'Paris pledges', assessment_date: 3.months.ago)
+            build(:cp_assessment, cp_alignment: 'Paris pledges', assessment_date: 3.months.ago),
+            build(:cp_assessment, cp_alignment: '3 degrees',
+                                  assessment_date: 2.months.ago,
+                                  publication_date: 6.months.from_now) # ignored
           ]
         )
 
@@ -66,7 +79,10 @@ RSpec.describe Api::Charts::CPPerformance do
           sector: sector_airlines,
           cp_assessments: [
             build(:cp_assessment, cp_alignment: '2 degrees', assessment_date: 12.months.ago), # ignored
-            build(:cp_assessment, cp_alignment: 'not Aligned', assessment_date: 3.months.ago)
+            build(:cp_assessment, cp_alignment: 'not Aligned', assessment_date: 3.months.ago),
+            build(:cp_assessment, cp_alignment: '3 degrees',
+                                  assessment_date: 2.months.ago,
+                                  publication_date: 6.months.from_now) # ignored
           ]
         )
 
@@ -76,7 +92,10 @@ RSpec.describe Api::Charts::CPPerformance do
           sector: sector_airlines,
           cp_assessments: [
             build(:cp_assessment, cp_alignment: '2 degrees', assessment_date: 12.months.ago), # ignored
-            build(:cp_assessment, cp_alignment: 'Paris pledges', assessment_date: 3.months.ago)
+            build(:cp_assessment, cp_alignment: 'Paris pledges', assessment_date: 3.months.ago),
+            build(:cp_assessment, cp_alignment: '3 degrees',
+                                  assessment_date: 2.months.ago,
+                                  publication_date: 6.months.from_now) # ignored
           ]
         )
 
@@ -91,7 +110,10 @@ RSpec.describe Api::Charts::CPPerformance do
           sector: sector_steel,
           cp_assessments: [
             build(:cp_assessment, cp_alignment: '2 degrees', assessment_date: 12.months.ago), # ignored
-            build(:cp_assessment, cp_alignment: '2 degrees (High efficiency)', assessment_date: 3.months.ago)
+            build(:cp_assessment, cp_alignment: '2 degrees (High efficiency)', assessment_date: 3.months.ago),
+            build(:cp_assessment, cp_alignment: '3 degrees',
+                                  assessment_date: 2.months.ago,
+                                  publication_date: 6.months.from_now) # ignored
           ]
         )
 
@@ -102,7 +124,10 @@ RSpec.describe Api::Charts::CPPerformance do
           visibility_status: 'published',
           cp_assessments: [
             build(:cp_assessment, cp_alignment: 'Not aligned', assessment_date: 12.months.ago), # ignored
-            build(:cp_assessment, cp_alignment: '2 degrees (shift-improve)', assessment_date: 3.months.ago)
+            build(:cp_assessment, cp_alignment: '2 degrees (shift-improve)', assessment_date: 3.months.ago),
+            build(:cp_assessment, cp_alignment: '3 degrees',
+                                  assessment_date: 2.months.ago,
+                                  publication_date: 6.months.from_now) # ignored
           ]
         )
 
@@ -112,7 +137,10 @@ RSpec.describe Api::Charts::CPPerformance do
           sector: sector_steel,
           cp_assessments: [
             build(:cp_assessment, cp_alignment: '2 degrees', assessment_date: 12.months.ago), # ignored
-            build(:cp_assessment, cp_alignment: 'international pledges', assessment_date: 3.months.ago)
+            build(:cp_assessment, cp_alignment: 'international pledges', assessment_date: 3.months.ago),
+            build(:cp_assessment, cp_alignment: '3 degrees',
+                                  assessment_date: 2.months.ago,
+                                  publication_date: 6.months.from_now) # ignored
           ]
         )
 
@@ -123,7 +151,10 @@ RSpec.describe Api::Charts::CPPerformance do
           sector: sector_no_cluster,
           cp_assessments: [
             build(:cp_assessment, cp_alignment: '2 degrees', assessment_date: 12.months.ago), # ignored
-            build(:cp_assessment, cp_alignment: 'international pledges', assessment_date: 3.months.ago)
+            build(:cp_assessment, cp_alignment: 'international pledges', assessment_date: 3.months.ago),
+            build(:cp_assessment, cp_alignment: '3 degrees',
+                                  assessment_date: 2.months.ago,
+                                  publication_date: 6.months.from_now) # ignored
           ]
         )
       end

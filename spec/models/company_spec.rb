@@ -72,7 +72,7 @@ RSpec.describe Company, type: :model do
                          create(:cp_assessment, assessment_date: '2012-05-01'),
                          create(:cp_assessment, assessment_date: '2019-05-01'),
                          create(:cp_assessment, assessment_date: '2013-05-01'),
-                         create(:cp_assessment, assessment_date: '2020-01-01', publication_date: DateTime.now + 1.year)
+                         create(:cp_assessment, assessment_date: '2020-01-01', publication_date: 1.year.from_now)
                        ])
 
       expect(company.latest_cp_assessment.assessment_date.to_s).to eq('01/05/2019')
@@ -86,7 +86,7 @@ RSpec.describe Company, type: :model do
                          create(:mq_assessment, assessment_date: '2019-05-01'),
                          create(:mq_assessment, assessment_date: '2013-05-01'),
                          create(:mq_assessment, assessment_date: '2018-05-01'),
-                         create(:mq_assessment, assessment_date: '2020-01-01', publication_date: DateTime.now + 1.year)
+                         create(:mq_assessment, assessment_date: '2020-01-01', publication_date: 1.year.from_now)
                        ])
 
       expect(company.latest_mq_assessment.assessment_date.to_s).to eq('01/05/2019')
