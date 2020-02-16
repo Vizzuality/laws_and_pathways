@@ -15,6 +15,7 @@ module Api
     # rubocop:disable Metrics/AbcSize
     def litigations
       litigations = Litigation.published
+        .includes(:geography)
         .joins(:events)
         .order('events.date ASC, litigations.created_at ASC')
         .last(@count)
@@ -36,6 +37,7 @@ module Api
 
     def legislations
       legislation = Legislation.published
+        .includes(:geography)
         .joins(:events)
         .order('events.date ASC, legislations.created_at ASC')
         .last(@count)
