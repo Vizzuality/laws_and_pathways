@@ -107,7 +107,7 @@ class Litigation < ApplicationRecord
                     trigram: {
                       word_similarity: true,
                       only: [:title],
-                      threshold: 0.3
+                      threshold: 0.7
                     }
                   },
                   ignoring: :accents
