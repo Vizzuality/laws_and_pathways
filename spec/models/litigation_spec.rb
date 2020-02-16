@@ -47,4 +47,58 @@ RSpec.describe Litigation, type: :model do
     litigation.update!(title: 'New title')
     expect(litigation.slug).to eq('new-title')
   end
+
+  context 'full_text_search' do
+    let!(:litigation_1) {
+      create(
+        :litigation,
+        title: 'Charles & Howard Pty. Ltd. v. Redland Shire Council',
+        summary: "The owner of property located on Australia's northwest coast. Łąka"
+      )
+    }
+    let!(:litigation_2) {
+      create(
+        :litigation,
+        title: 'Able Lott Holdings Pty. Ltd. v. City of Fremantle',
+        summary: 'This case concerned a development application',
+        litigation_sides: [
+          build(:litigation_side, name: 'Not real side name, only testing')
+        ]
+      )
+    }
+    let!(:litigation_3) {
+      create(
+        :litigation,
+        title: 'Anvil Hill Project Watch Association v. Minister for the Environment',
+        summary: 'Under section 75(1) of the Environmental Protection and Biodiversity Conservation',
+        keywords: [
+          build(:keyword, name: 'Super keyword')
+        ]
+      )
+    }
+
+    it 'ignores accents' do
+      expect(Litigation.full_text_search('Laka')).to contain_exactly(litigation_1)
+    end
+
+    it 'uses title' do
+      expect(Litigation.full_text_search('Pty')).to contain_exactly(litigation_1, litigation_2)
+    end
+
+    it 'fuzzy search works' do
+      expect(Litigation.full_text_search('Lott Hodlings')).to contain_exactly(litigation_2)
+    end
+
+    it 'uses summary' do
+      expect(Litigation.full_text_search('Environment')).to contain_exactly(litigation_3)
+    end
+
+    it 'uses litigation cases side names' do
+      expect(Litigation.full_text_search('side name')).to contain_exactly(litigation_2)
+    end
+
+    it 'uses tags' do
+      expect(Litigation.full_text_search('keyword')).to contain_exactly(litigation_3)
+    end
+  end
 end

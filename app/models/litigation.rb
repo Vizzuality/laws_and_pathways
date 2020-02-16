@@ -92,15 +92,25 @@ class Litigation < ApplicationRecord
 
   pg_search_scope :full_text_search,
                   associated_against: {
-                    tags: [:name]
+                    tags: [:name],
+                    litigation_sides: [:name]
                   },
                   against: {
                     title: 'A',
                     summary: 'B'
                   },
                   using: {
-                    tsearch: {prefix: true}
-                  }
+                    tsearch: {
+                      prefix: true,
+                      dictionary: 'english'
+                    },
+                    trigram: {
+                      word_similarity: true,
+                      only: [:title],
+                      threshold: 0.3
+                    }
+                  },
+                  ignoring: :accents
 
   tag_with :keywords
   tag_with :responses
