@@ -103,11 +103,6 @@ class Litigation < ApplicationRecord
                     tsearch: {
                       prefix: true,
                       dictionary: 'english'
-                    },
-                    trigram: {
-                      word_similarity: true,
-                      only: [:title],
-                      threshold: 0.7
                     }
                   },
                   ignoring: :accents

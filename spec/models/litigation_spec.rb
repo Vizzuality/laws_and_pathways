@@ -85,10 +85,6 @@ RSpec.describe Litigation, type: :model do
       expect(Litigation.full_text_search('Pty')).to contain_exactly(litigation_1, litigation_2)
     end
 
-    it 'fuzzy search works' do
-      expect(Litigation.full_text_search('Lott Hodlings')).to contain_exactly(litigation_2)
-    end
-
     it 'uses summary' do
       expect(Litigation.full_text_search('Environment')).to contain_exactly(litigation_3)
     end

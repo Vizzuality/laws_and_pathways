@@ -63,14 +63,15 @@ class Geography < ApplicationRecord
   enum geography_type: array_to_enum_hash(GEOGRAPHY_TYPES)
 
   pg_search_scope :full_text_search,
-                  associated_against: {tags: [:name]},
                   against: {
                     name: 'A',
-                    region: 'B',
-                    legislative_process: 'C'
+                    region: 'B'
                   },
                   using: {
-                    tsearch: {prefix: true}
+                    trigram: {
+                      word_similarity: true,
+                      threshold: 0.5
+                    }
                   }
 
   tag_with :political_groups
