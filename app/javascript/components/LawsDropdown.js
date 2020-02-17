@@ -108,7 +108,10 @@ const LawsDropdown = () => {
 
   // searching
   useEffect(() => {
-    if (!searchValue) return;
+    if (!searchValue) {
+      setResults({});
+      return;
+    }
 
     fetch(`/cclow/api/search?q=${encodeURIComponent(searchValue)}`)
       .then((r) => r.json())
@@ -180,7 +183,7 @@ const LawsDropdown = () => {
     };
   }, []);
 
-  const renderContent = () => {
+  const renderContent = useCallback(() => {
     if (!searchValue) return renderAllOptions();
     if (noMatches) {
       return (
@@ -255,7 +258,7 @@ const LawsDropdown = () => {
         )}
       </>
     );
-  };
+  }, [results]);
 
   return (
     <div ref={dropdownContainer} className="laws-dropdown__container container">
