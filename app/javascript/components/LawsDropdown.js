@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import { useDebounce, useOutsideClick } from 'shared/hooks';
 
@@ -12,7 +13,7 @@ import legalScale from 'images/icons/legal-scale.svg';
 import target from 'images/icons/target.svg';
 
 const ESCAPE_KEY = 27;
-const SEARCH_DEBOUNCE = 500;
+const SEARCH_DEBOUNCE = 400;
 
 const GEOGRAPHY_TYPES = {
   national: 'Country profile',
@@ -49,6 +50,7 @@ LawsDropdownCategory.propTypes = {
 const LawsDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [sValue, setSearchValue] = useState(null);
+  const [searching, setSearching] = useState(false);
   const searchValue = useDebounce(sValue, SEARCH_DEBOUNCE);
   const dropdownContainer = useRef(null);
 
@@ -113,10 +115,13 @@ const LawsDropdown = () => {
       return;
     }
 
+    setSearching(true);
+
     fetch(`/cclow/api/search?q=${encodeURIComponent(searchValue)}`)
       .then((r) => r.json())
       .then((data) => {
         setResults(data);
+        setSearching(false);
       });
   }, [searchValue]);
 
@@ -258,7 +263,7 @@ const LawsDropdown = () => {
         )}
       </>
     );
-  }, [results]);
+  }, [results, counts, noMatches]);
 
   return (
     <div ref={dropdownContainer} className="laws-dropdown__container container">
@@ -275,7 +280,7 @@ const LawsDropdown = () => {
         </a>
       </div>
       {isOpen && (
-        <div className="laws-dropdown__content">
+        <div className={cx('laws-dropdown__content', { searching })}>
           {renderContent()}
         </div>
       )}
