@@ -2,7 +2,8 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import debounce from 'lodash/debounce';
+
+import { useDebounce, useOutsideClick } from 'shared/hooks';
 
 import searchAgain from 'images/icons/search-again.svg';
 import countryFlag from 'images/icons/country-flag.svg';
@@ -47,8 +48,8 @@ LawsDropdownCategory.propTypes = {
 
 const LawsDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [searching, setSearching] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
+  const [sValue, setSearchValue] = useState(null);
+  const searchValue = useDebounce(sValue, SEARCH_DEBOUNCE);
   const dropdownContainer = useRef(null);
 
   const lastSearch = localStorage.getItem('lastSearch');
@@ -57,13 +58,6 @@ const LawsDropdown = () => {
 
   const [counts, setCounts] = useState({});
   const [results, setResults] = useState({});
-
-  const handleInput = input => {
-    setSearchValue(input);
-  };
-
-  const delaySettingInput = useCallback(debounce(value => handleInput(value), SEARCH_DEBOUNCE));
-  const handleInputThrottled = e => delaySettingInput(e.target.value);
 
   const setLastSearch = (s, category, link) => {
     localStorage.setItem('lastSearch', s);
@@ -81,6 +75,10 @@ const LawsDropdown = () => {
   const allSearchResultsCount = searchGeographiesResults.length + lawsResultsCount + litigationsResultsCount + targetsResultsCount;
   const noMatches = allSearchResultsCount === 0;
 
+  const handleInput = e => {
+    setSearchValue(e.target.value);
+  };
+
   const handleCloseDropdown = () => {
     setIsOpen(false);
   };
@@ -95,12 +93,7 @@ const LawsDropdown = () => {
     }
   }, []);
 
-  const handleClickOutside = useCallback((event) => {
-    if (dropdownContainer.current && !dropdownContainer.current.contains(event.target)) {
-      handleCloseDropdown();
-    }
-  }, []);
-
+  useOutsideClick(dropdownContainer, handleCloseDropdown);
 
   // loading data
 
@@ -117,16 +110,10 @@ const LawsDropdown = () => {
   useEffect(() => {
     if (!searchValue) return;
 
-    setSearching(true);
-
     fetch(`/cclow/api/search?q=${encodeURIComponent(searchValue)}`)
       .then((r) => r.json())
       .then((data) => {
-        setSearching(false);
         setResults(data);
-      })
-      .catch(() => {
-        setSearching(false);
       });
   }, [searchValue]);
 
@@ -193,16 +180,7 @@ const LawsDropdown = () => {
     };
   }, []);
 
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
   const renderContent = () => {
-    if (searching) return 'Searching...';
     if (!searchValue) return renderAllOptions();
     if (noMatches) {
       return (
@@ -211,7 +189,7 @@ const LawsDropdown = () => {
             <div className="no-matches-text">
               No matches for&nbsp;
               <span className="laws-dropdown__option-in-bold">{searchValue}</span>,
-        please try another term or browse the link below
+              please try another term or browse the link below
             </div>
           </div>
           {renderAllOptions(false)}
@@ -284,7 +262,7 @@ const LawsDropdown = () => {
       <div className="laws-dropdown__input-container">
         <input
           id="search-input"
-          onChange={handleInputThrottled}
+          onChange={handleInput}
           placeholder="Search for countries, legislation and policies and litigation cases"
           className="laws-input"
           onClick={handleInputClick}

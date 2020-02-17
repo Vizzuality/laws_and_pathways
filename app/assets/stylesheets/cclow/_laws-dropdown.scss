@@ -38,7 +38,7 @@ $icon-margin-right: 24px;
   @include desktop {
     padding: 20px 30px;
   }
-  
+
   &[placeholder] {
     text-overflow: ellipsis;
     width: calc(100% - #{$icon-size + $icon-margin-right});
