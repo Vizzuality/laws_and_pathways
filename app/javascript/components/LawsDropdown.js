@@ -13,7 +13,7 @@ import legalScale from 'images/icons/legal-scale.svg';
 import target from 'images/icons/target.svg';
 
 const ESCAPE_KEY = 27;
-const SEARCH_DEBOUNCE = 400;
+const SEARCH_DEBOUNCE = 500;
 
 const GEOGRAPHY_TYPES = {
   national: 'Country profile',
