@@ -62,7 +62,7 @@ RSpec.describe Litigation, type: :model do
         title: 'Able Lott Holdings Pty. Ltd. v. City of Fremantle',
         summary: 'This case concerned a development application',
         litigation_sides: [
-          build(:litigation_side, name: 'Not real side name, only testing')
+          build(:litigation_side, name: 'Not real side name, only test')
         ]
       )
     }
@@ -79,6 +79,10 @@ RSpec.describe Litigation, type: :model do
 
     it 'ignores accents' do
       expect(Litigation.full_text_search('Laka')).to contain_exactly(litigation_1)
+    end
+
+    it 'uses stemming' do
+      expect(Litigation.full_text_search('testing')).to contain_exactly(litigation_2)
     end
 
     it 'uses title' do

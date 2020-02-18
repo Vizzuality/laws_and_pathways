@@ -26,6 +26,25 @@ FactoryBot.define do
     }
   end
 
+  factory :scope do
+    type { 'Scope' }
+
+    sequence(:name) { |n|
+      [
+        'Energy Intensity',
+        'Energy Access',
+        'Transport: General',
+        'Energy Efficiency',
+        'Renewable Energy',
+        'Energy: General',
+        'Fuel Efficiency',
+        'Transportation Fuels',
+        'General',
+        'Afforestation'
+      ].sample << n.to_s
+    }
+  end
+
   factory :natural_hazard do
     type { 'NaturalHazard' }
     sequence(:name) { |n|
