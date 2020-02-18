@@ -51,7 +51,8 @@ const LawsDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [sValue, setSearchValue] = useState(null);
   const [searching, setSearching] = useState(false);
-  const searchValue = useDebounce(sValue, SEARCH_DEBOUNCE);
+  const [typing, setTyping] = useState(false);
+  const searchValue = useDebounce(sValue, SEARCH_DEBOUNCE, () => setTyping(false));
   const dropdownContainer = useRef(null);
 
   const lastSearch = localStorage.getItem('lastSearch');
@@ -78,6 +79,7 @@ const LawsDropdown = () => {
   const noMatches = allSearchResultsCount === 0;
 
   const handleInput = e => {
+    setTyping(true);
     setSearchValue(e.target.value);
   };
 
@@ -280,7 +282,7 @@ const LawsDropdown = () => {
         </a>
       </div>
       {isOpen && (
-        <div className={cx('laws-dropdown__content', { searching })}>
+        <div className={cx('laws-dropdown__content', { loading: searching || typing })}>
           {renderContent()}
         </div>
       )}

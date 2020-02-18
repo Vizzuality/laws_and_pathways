@@ -79,7 +79,9 @@ $icon-margin-right: 24px;
   border-top: none;
   padding-bottom: $space-between-categories;
 
-  &.searching {
+  &.loading {
+    overflow: hidden;
+
     &:before {
       content: '';
       position: absolute;

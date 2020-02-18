@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function useDebounce(value, delay) {
+export default function useDebounce(value, delay, callback) {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(
@@ -8,6 +8,7 @@ export default function useDebounce(value, delay) {
       // Set debouncedValue to value (passed in) after the specified delay
       const handler = setTimeout(() => {
         setDebouncedValue(value);
+        if (callback && typeof callback === 'function') callback();
       }, delay);
 
       return () => {
