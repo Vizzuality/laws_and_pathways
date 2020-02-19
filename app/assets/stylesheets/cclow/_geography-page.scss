@@ -71,8 +71,6 @@ $count-description-lines: 2;
       .description {
         display: -webkit-box;
         overflow: hidden;
-        max-height: #{$count-description-lines * $body-line-height}rem;
-        overflow: hidden;
         -webkit-line-clamp: $count-description-lines;
         -webkit-box-orient: vertical;
 

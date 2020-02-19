@@ -9,7 +9,7 @@ module CCLOW
       add_breadcrumb('Litigation cases', cclow_litigation_cases_path(@geography))
       add_breadcrumb('Search results', request.path) if params[:q].present? || params[:recent].present?
 
-      @litigations = sort_list(Queries::CCLOW::LitigationQuery.new(filter_params).call)
+      @litigations = Queries::CCLOW::LitigationQuery.new(filter_params).call
 
       fixed_navbar('All Litigation Cases', admin_litigations_path)
 
