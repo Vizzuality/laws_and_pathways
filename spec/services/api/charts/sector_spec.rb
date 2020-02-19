@@ -26,6 +26,14 @@ RSpec.describe Api::Charts::Sector do
       company: company2,
       level: '4STAR'
     )
+    # should be ignored
+    create(
+      :mq_assessment,
+      assessment_date: '2019-03-01',
+      level: '3',
+      company: company,
+      publication_date: 6.months.from_now
+    )
   end
 
   describe '.companies_summaries_by_level' do
@@ -55,6 +63,13 @@ RSpec.describe Api::Charts::Sector do
 
   describe '.companies_emissions_data' do
     before do
+      create(
+        :cp_assessment,
+        company: company,
+        assessment_date: '2019-01-01',
+        emissions: {'2017': 70.0, '2018': 110.0, '2019': 100.0},
+        publication_date: 6.months.from_now
+      ) # ignored
       create(
         :cp_assessment,
         company: company,

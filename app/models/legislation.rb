@@ -91,8 +91,12 @@ class Legislation < ApplicationRecord
                     description: 'B'
                   },
                   using: {
-                    tsearch: {prefix: true}
-                  }
+                    tsearch: {
+                      prefix: true,
+                      dictionary: 'english'
+                    }
+                  },
+                  ignoring: :accents
 
   with_options allow_destroy: true, reject_if: :all_blank do
     accepts_nested_attributes_for :documents

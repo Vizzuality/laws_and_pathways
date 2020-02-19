@@ -1,0 +1,231 @@
+/* eslint-disable react/no-this-in-sfc */
+
+import React, { useEffect, useRef, useMemo, useState } from 'react';
+import { renderToString } from 'react-dom/server';
+import PropTypes from 'prop-types';
+
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+
+import PlusIcon from 'images/icons/plus.svg';
+
+import { useOutsideClick } from 'shared/hooks';
+import { groupAllAreaSeries } from './helpers';
+import CompanySelector from './CompanySelector';
+import CompanyTag from './CompanyTag';
+import Tooltip from './Tooltip';
+
+const COLORS = ['#00C170', '#ED3D4A', '#FFDD49', '#440388', '#FF9600', '#B75038', '#00A8FF', '#F78FB3', '#191919', '#F602B4'];
+
+function getLegendItems(data) {
+  return applyColorsToLegendItems(
+    data
+      .filter(d => d.type !== 'area')
+      .slice(0, 10)
+  );
+}
+
+function applyColorsToLegendItems(items) {
+  return items.map((d, idx) => ({...d, color: COLORS[idx % 10]}));
+}
+
+function CPPerformance({ dataUrl, companySelector, unit }) {
+  const [data, setData] = useState([]);
+  const [legendItems, setLegendItems] = useState([]);
+  const [showCompanySelector, setCompanySelectorVisible] = useState(false);
+
+  const companySelectorWrapper = useRef();
+
+  // TODO: add error handling
+  useEffect(() => {
+    fetch(dataUrl)
+      .then((r) => r.json())
+      .then((chartData) => {
+        setData(chartData);
+        setLegendItems(getLegendItems(chartData));
+      });
+  }, []);
+  useOutsideClick(companySelectorWrapper, () => setCompanySelectorVisible(false));
+
+  const handleLegendItemRemove = (item) => {
+    setLegendItems(
+      applyColorsToLegendItems(
+        legendItems.filter(l => l.name !== item.name)
+      )
+    );
+  };
+
+  const handleSelectedCompaniesChange = (selected) => {
+    setLegendItems(getLegendItems(data.filter((d) => selected.includes(d.name))));
+  };
+
+  const companies = useMemo(
+    () => data.filter(d => d.type !== 'area').map(i => i.name).sort(),
+    [data]
+  );
+  const selectedCompanies = useMemo(() => legendItems.map(i => i.name), [legendItems]);
+  const chartData = useMemo(
+    () => data.filter(d => d.type === 'area' || selectedCompanies.includes(d.name)),
+    [data, selectedCompanies]
+  );
+
+  // TODO: move to separate file
+  const options = {
+    chart: {
+      height: '500px',
+      marginTop: 30,
+      events: {
+        render() {
+          groupAllAreaSeries();
+        }
+      }
+    },
+    credits: {
+      enabled: false
+    },
+    colors: COLORS,
+    legend: {
+      enabled: false
+    },
+    plotOptions: {
+      area: {
+        marker: {
+          enabled: false
+        }
+      },
+      line: {
+        marker: {
+          enabled: false
+        }
+      },
+      column: {
+        stacking: 'normal'
+      },
+      series: {
+        lineWidth: 4,
+        marker: {
+          states: {
+            hover: {
+              enabled: false
+            }
+          }
+        }
+      }
+    },
+    yAxis: {
+      title: {
+        text: unit,
+        reserveSpace: false,
+        textAlign: 'left',
+        align: 'high',
+        rotation: 0,
+        x: 0,
+        y: -20
+      }
+    },
+    xAxis: {
+      crosshair: {
+        width: 2,
+        color: '#191919'
+      }
+    },
+    title: {
+      text: ''
+    },
+    tooltip: {
+      crosshairs: true,
+      shared: true,
+      useHTML: true,
+      formatter() {
+        const xValue = this.x;
+        const yValues = this.points.map(p => ({
+          value: p.y,
+          color: p.color,
+          title: p.series.name,
+          dashStyle: p.point.zone.dashStyle,
+          isTargeted: p.point.zone.dashStyle === 'dot',
+          isBenchmark: p.series.type === 'area'
+        }));
+
+        return renderToString(
+          <Tooltip xValue={xValue} yValues={yValues} unit={unit} />
+        );
+      }
+    },
+    series: chartData
+  };
+
+  const handleAddCompaniesClick = (e) => {
+    if (e.currentTarget) e.currentTarget.blur();
+    setCompanySelectorVisible(!showCompanySelector);
+  };
+
+  return (
+    <div className="chart chart--cp-performance">
+      <div className="legend">
+        <div className="legend-row">
+          {legendItems.map(
+            i => (
+              <CompanyTag
+                key={i.name}
+                className="legend-item"
+                item={i}
+                hideRemoveIcon={!companySelector}
+                onRemove={handleLegendItemRemove}
+              />
+            )
+          )}
+
+          {companySelector && (
+            <React.Fragment>
+              <span className="separator" />
+
+              <div className="chart-company-selector-wrapper" ref={companySelectorWrapper}>
+                <button type="button" className="button is-primary with-icon" onClick={handleAddCompaniesClick}>
+                  <img src={PlusIcon} />
+                  Add companies to the chart
+                </button>
+
+                {showCompanySelector && (
+                  <CompanySelector
+                    companies={companies}
+                    selected={selectedCompanies}
+                    onChange={handleSelectedCompaniesChange}
+                    onClose={() => setCompanySelectorVisible(false)}
+                  />
+                )}
+              </div>
+            </React.Fragment>
+          )}
+        </div>
+        <div className="legend-row">
+          <span className="legend-item">
+            <span className="line line--solid" />
+            Reported
+          </span>
+          <span className="legend-item">
+            <span className="line line--dotted" />
+            Targeted
+          </span>
+        </div>
+      </div>
+
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={options}
+      />
+    </div>
+  );
+}
+
+CPPerformance.defaultProps = {
+  companySelector: true
+};
+
+CPPerformance.propTypes = {
+  companySelector: PropTypes.bool,
+  dataUrl: PropTypes.string.isRequired,
+  unit: PropTypes.string.isRequired
+};
+
+export default CPPerformance;

@@ -52,4 +52,51 @@ RSpec.describe Legislation, type: :model do
     legislation.update!(title: 'New title')
     expect(legislation.slug).to eq('new-title')
   end
+
+  context 'full_text_search' do
+    let!(:legislation_1) {
+      create(
+        :legislation,
+        title: 'Presidential decree declaring rational and efficient energy use a national priority',
+        description: 'This decree has far-reaching and ambitious goals to reduce energy consumption'
+      )
+    }
+    let!(:legislation_2) {
+      create(
+        :legislation,
+        title: 'Energy Policy of Poland until 2030',
+        description: 'Grzegorz Brzęczyszczykiewicz'
+      )
+    }
+    let!(:legislation_3) {
+      create(
+        :legislation,
+        title: 'The Mother Earth Law and Integral Development',
+        description: "The Mother Earth Law is a piece of legislation that epitomises Bolivia's dedication",
+        keywords: [
+          build(:keyword, name: 'Super keyword')
+        ]
+      )
+    }
+
+    it 'ignores accents' do
+      expect(Legislation.full_text_search('Brzeczyszczykiewicz')).to contain_exactly(legislation_2)
+    end
+
+    it 'uses stemming' do
+      expect(Legislation.full_text_search('reducing')).to contain_exactly(legislation_1)
+    end
+
+    it 'uses title' do
+      expect(Legislation.full_text_search('decree')).to contain_exactly(legislation_1)
+    end
+
+    it 'uses description' do
+      expect(Legislation.full_text_search('piece of legislation')).to contain_exactly(legislation_3)
+    end
+
+    it 'uses tags' do
+      expect(Legislation.full_text_search('keyword')).to contain_exactly(legislation_3)
+    end
+  end
 end

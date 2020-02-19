@@ -73,13 +73,14 @@ class Target < ApplicationRecord
                   associated_against: {
                     tags: [:name]
                   },
-                  against: {
-                    target_type: 'A',
-                    description: 'B'
-                  },
+                  against: [:description],
                   using: {
-                    tsearch: {prefix: true}
-                  }
+                    tsearch: {
+                      prefix: true,
+                      dictionary: 'english'
+                    }
+                  },
+                  ignoring: :accents
 
   accepts_nested_attributes_for :events, allow_destroy: true, reject_if: :all_blank
 

@@ -46,12 +46,20 @@ RSpec.describe Api::Charts::CPAssessment do
                last_reported_year: 2018,
                company: company_sector_a_2,
                emissions: {'2017' => 40.0, '2018' => 50.0})
+        # should be ignored
+        create(:cp_assessment,
+               assessment_date: 11.months.ago,
+               publication_date: 6.months.from_now,
+               last_reported_year: 2018,
+               company: company_sector_a_1,
+               emissions: {'2017' => 80.0, '2018' => 80.0, '2019' => 110.0})
       end
 
       context 'for last assessment' do
         subject { described_class.new(company_sector_a_1.latest_cp_assessment) }
 
         it 'returns emissions data from: company, sector avg & sector benchmarks' do
+          # byebug
           company_sector_a_1_data = subject.emissions_data.find { |s| s[:name] == company_sector_a_1.name }[:data]
           sector_average_data = subject.emissions_data.find { |s| s[:name] == "#{sector_a.name} sector mean" }[:data]
           cp_benchmarks_data = subject.emissions_data.find { |s| s[:name] == 'scenario' }[:data]
@@ -64,7 +72,9 @@ RSpec.describe Api::Charts::CPAssessment do
       end
 
       context 'for first historic assessment' do
-        subject { described_class.new(company_sector_a_1.cp_assessments.order(:assessment_date).first) }
+        subject do
+          described_class.new(company_sector_a_1.cp_assessments.currently_published.order(:assessment_date).first)
+        end
 
         it 'returns emissions data from: company, sector avg & sector benchmarks' do
           company_sector_a_1_data = subject.emissions_data.find { |s| s[:name] == company_sector_a_1.name }[:data]

@@ -12,7 +12,7 @@
         Go to Management Quality
       </a>
 
-      <% unless @company.cp_assessments.empty? %>
+      <% unless @company.cp_assessments.currently_published.empty? %>
         <a href="#carbon-performance" class="link with-icon is-pulled-left">
           <img src="<%= asset_path 'icons/arrow-down.svg'%>" />
           Go to Carbon Performance
@@ -33,9 +33,9 @@
           <div class="summary-box summary-box--assessment">
             <h4>Management Quality</h4>
             <p>
-              <small>Number of assessments: <%= @company.mq_assessments.size %></small>
+              <small>Number of assessments: <%= @company.mq_assessments.currently_published.size %></small>
             </p>
-            <% if @company.mq_assessments.any? %>
+            <% if @company.mq_assessments.currently_published.any? %>
               <%= render 'mq_level', level: @company.mq_level, status: @company.mq_status %>
               <p>
                 <%= t("tpi.company.level_description.#{@company.mq_level.to_i}") %></h3>
@@ -49,7 +49,7 @@
           <div class="summary-box summary-box--assessment">
             <h4>Carbon Performance</h4>
             <p>
-              <small>Number of assessments: <%= @company.cp_assessments.size %></small>
+              <small>Number of assessments: <%= @company.cp_assessments.currently_published.size %></small>
             </p>
 
             <% if @company_presenter.cp_alignment.present? %>
@@ -114,7 +114,7 @@
     </div>
   </section>
 
-  <% if @company.mq_assessments.any? %>
+  <% if @company.mq_assessments.currently_published.any? %>
     <section id="management-quality" class="management-quality container">
       <div class="management-quality__header">
         <h4>
@@ -124,7 +124,7 @@
         <div>
           Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.mq_assessment_date') }) %>
           <%= select_tag :mq_assessment_id,
-               options_from_collection_for_select(@company.mq_assessments, "id", "assessment_date", @mq_assessment.id),
+               options_from_collection_for_select(@company.mq_assessments.currently_published, "id", "assessment_date", @mq_assessment.id),
              class: 'input',
              data: {
                remote: true,
@@ -139,12 +139,13 @@
       </p>
 
       <div id="mq-assessment" class="management-quality__content">
-        <%= render partial: 'mq_assessment', locals: { assessment: @mq_assessment } %>
+
+        <%= render partial: 'mq_assessment', locals: { assessment: @mq_assessment } if @mq_assessment.present? %>
       </div>
     </section>
   <% end %>
 
-  <% if @company.cp_assessments.any? %>
+  <% if @company.cp_assessments.currently_published.any? %>
     <section id="carbon-performance" class="carbon-performance container">
       <div class="management-quality__header">
         <h4>
@@ -154,7 +155,7 @@
           <div>
             Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.cp_assessment_date') }) %>
             <%= select_tag :cp_assessment_id,
-                           options_from_collection_for_select(@company.cp_assessments, "id", "assessment_date", @cp_assessment.id),
+                           options_from_collection_for_select(@company.cp_assessments.currently_published, "id", "assessment_date", @cp_assessment.id),
                            class: 'input',
                            data: {
                              remote: true,

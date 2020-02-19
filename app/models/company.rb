@@ -38,9 +38,9 @@ class Company < ApplicationRecord
   belongs_to :headquarters_geography, class_name: 'Geography'
 
   has_many :mq_assessments, class_name: 'MQ::Assessment', inverse_of: :company
-  has_one :latest_mq_assessment, -> { order(assessment_date: :desc) }, class_name: 'MQ::Assessment'
+  has_one :latest_mq_assessment, -> { currently_published.order(assessment_date: :desc) }, class_name: 'MQ::Assessment'
   has_many :cp_assessments, class_name: 'CP::Assessment', inverse_of: :company
-  has_one :latest_cp_assessment, -> { order(assessment_date: :desc) }, class_name: 'CP::Assessment'
+  has_one :latest_cp_assessment, -> { currently_published.order(assessment_date: :desc) }, class_name: 'CP::Assessment'
   has_many :litigation_sides, as: :connected_entity
   has_many :litigations, through: :litigation_sides
 

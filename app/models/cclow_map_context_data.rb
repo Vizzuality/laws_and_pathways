@@ -10,7 +10,8 @@ class CCLOWMapContextData
       datasets_map = datasets.each_with_object({}) do |file, hash|
         hash[file.split('/')[1].split('.')[0]] = file
       end
-      parsed = datasets_map.map do |key, dataset|
+
+      parsed = datasets_map.sort.to_h.map do |key, dataset|
         csv_file = File.read(dataset)
         metadata_file = File.read(Rails.root.join('map_data', "#{key}.yml"))
         metadata = YAML.safe_load(metadata_file)
@@ -43,7 +44,13 @@ class CCLOWMapContextData
           ::Geography::EU_COUNTRIES.include?(el[:geography_iso])
         end
 
-        eu_aggregated_value = eu_countries_data.pluck(:value).reduce(:+)
+        eu_aggregated_value = case metadata['eu_method']
+                              when 'avg'
+                                (eu_countries_data.pluck(:value).reduce(:+) / eu_countries_data.size).round(2)
+                              else
+                                eu_countries_data.pluck(:value).reduce(:+)
+                              end
+
         data << {geography_iso: 'EUR', value: eu_aggregated_value}
 
         {

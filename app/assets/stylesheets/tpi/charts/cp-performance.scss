@@ -1,0 +1,182 @@
+.chart--cp-performance {
+  @import 'chart-company-selector';
+
+  margin-top: 10px;
+  justify-content: unset;
+  flex-flow: column;
+
+  .legend {
+    display: flex;
+    flex-direction: column;
+
+    $legend-item-height: 30px;
+
+    .legend-row {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+
+      > * {
+        margin-bottom: 10px;
+        margin-right: 12px;
+        height: $legend-item-height;
+      }
+
+      button {
+        font-size: 12px;
+        height: $legend-item-height;
+      }
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      color: $grey-dark;
+      font-size: 12px;
+    }
+
+    .separator {
+      display: block;
+      width: 1px;
+      background-color: rgba(89,91,93,0.2);
+    }
+
+    .company-tag {
+      border: 1px solid rgba(89,91,93,0.5);
+
+      padding: 0 10px;
+
+      line-height: 30px;
+
+      .circle {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        margin-right: 8px;
+      }
+
+      &__remove {
+        margin-left: 8px;
+
+        img {
+          cursor: pointer;
+          opacity: .5;
+          width: 8px;
+          height: 8px;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+
+  .chart-company-selector-wrapper {
+    position: relative;
+
+    .chart-company-selector {
+      position: absolute;
+
+      top: 60px;
+
+      z-index: 100;
+    }
+  }
+
+  .line {
+    display: block;
+    width: 40px;
+    margin-right: 10px;
+
+    &--dotted {
+      border-bottom: 4px dotted black;
+    }
+
+    &--solid {
+      border-bottom: 4px solid black;
+    }
+  }
+
+  // remove overflow hidden
+  div[data-highcharts-chart], .highcharts-container {
+    overflow: unset !important;
+  }
+
+  // hide SVG tooltip, we only display HTML one
+  .highcharts-tooltip-box {
+    display: none;
+  }
+
+  .highcharts-series-group {
+    mix-blend-mode: multiply;
+  }
+
+  .cp-tooltip {
+    font-family: $font-family-regular;
+    background-color: $white;
+    border: 1px solid $dark;
+    min-width: 300px;
+    padding: 20px;
+
+    &__row {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+      font-size: 14px;
+
+      &--bold {
+        font-family: $font-family-bold;
+      }
+
+      &--targets {
+        font-size: 12px;
+        color: $grey-dark;
+
+        span {
+          line-height: 15px;;
+        }
+      }
+    }
+
+    &__value-title {
+      display: flex;
+      align-items: center;
+
+      .line {
+        margin-right: 15px;
+        width: 20px;
+      }
+
+      .circle {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        border: 1px solid $grey-dark;
+        margin-right: 19px;
+      }
+
+      small {
+        color: $grey-dark;
+        font-size: 12px;
+        margin-left: 5px;
+      }
+    }
+
+    &__value {
+      margin-left: 20px;
+    }
+
+    &__header {
+      @extend .cp-tooltip__row;
+
+      font-size: 12px;
+      font-family: $font-family-bold;
+      margin-bottom: 20px;
+    }
+
+    &__targets {
+      color: $grey-dark;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-size: 12px;
+    }
+  }
+}

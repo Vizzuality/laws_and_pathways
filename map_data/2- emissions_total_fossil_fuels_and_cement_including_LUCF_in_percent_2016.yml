@@ -1,6 +1,7 @@
-name: CAIT Country Greenhouse Gas Emissions Data (2016) (%)
+name: Country Greenhouse Gas Emissions Data (CAIT 2016) (per cent of global emissions)
 value_column: emissions_total_fossil_fuels_and_cement_including_lucf_in_percent_2016
 active: true
+eu_method: sum
 ramp: emissions
 legend_description: >
   The <b>colour</b> of the circle represents the percentage of Carbon dioxide emissions from the use of fossil fuel and the manufacture of cement, land-use change, and forestry (%).
