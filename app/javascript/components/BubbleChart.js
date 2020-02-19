@@ -132,7 +132,6 @@ const showTooltip = (node, u) => {
 
   tooltip.style.left = `${leftOffset}px`;
   tooltip.style.top = `${topOffset}px`;
-  tooltip.removeAttribute('hidden');
 };
 
 const hideTooltip = () => {
