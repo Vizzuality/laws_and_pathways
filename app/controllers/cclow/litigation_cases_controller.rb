@@ -54,20 +54,6 @@ module CCLOW
         end
       end
     end
-
-    private
-
-    def sort_list(litigations)
-      return litigations if (filter_params.keys - %w(from_date to_date)).present?
-
-      sql = <<-SQL
-        LEFT OUTER JOIN events ON events.eventable_id = litigations.id
-        AND events.eventable_type = 'Litigation'
-        AND events.event_type IN (#{Litigation::EVENT_STARTED_TYPES.map { |type| "'#{type}'" }.join(', ')})
-      SQL
-
-      Litigation.where(id: litigations.map(&:id)).joins(sql).order('events.date DESC NULLS LAST')
-    end
     # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/MethodLength
   end
