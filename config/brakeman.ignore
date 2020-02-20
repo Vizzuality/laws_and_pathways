@@ -1,6 +1,26 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "0707d2fe6c481f7c3d2c52e16c31844b742e7ebf7b47ac4c87e62b30770d2be7",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/cclow/litigation_cases_controller.rb",
+      "line": 69,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "Litigation.where(:id => litigations.map(&:id)).joins(\"        LEFT OUTER JOIN events ON events.eventable_id = litigations.id\\n        AND events.eventable_type = 'Litigation'\\n        AND events.event_type IN (#{[\"case_filed\", \"case_opened\", \"case_started\"].map do\n \"'#{:BRAKEMAN_SAFE_LITERAL}'\"\n end.join(\", \")})\\n\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "CCLOW::LitigationCasesController",
+        "method": "sort_list"
+      },
+      "user_input": "[\"case_filed\", \"case_opened\", \"case_started\"].map do\n \"'#{:BRAKEMAN_SAFE_LITERAL}'\"\n end.join(\", \")",
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
       "fingerprint": "398aa3993d445d32ee3c218998a6e6a409abc2154531826fffa90d7594eee271",
@@ -38,7 +58,7 @@
       "check_name": "LinkToHref",
       "message": "Potentially unsafe model attribute in `link_to` href",
       "file": "app/views/tpi/home/_partners.html.erb",
-      "line": 22,
+      "line": 23,
       "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
       "code": "link_to((Unresolved Model).new.link)",
       "render_path": [
@@ -46,7 +66,7 @@
           "type": "controller",
           "class": "TPI::HomeController",
           "method": "index",
-          "line": 18,
+          "line": 23,
           "file": "app/controllers/tpi/home_controller.rb",
           "rendered": {
             "name": "tpi/home/index",
@@ -87,7 +107,7 @@
           "type": "controller",
           "class": "CCLOW::PagesController",
           "method": "show",
-          "line": 12,
+          "line": 14,
           "file": "app/controllers/cclow/pages_controller.rb",
           "rendered": {
             "name": "cclow/pages/show",
@@ -110,7 +130,7 @@
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/tpi/companies/show.html.erb",
-      "line": 93,
+      "line": 98,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "TPI::CompanyDecorator.decorate(Company.published.friendly.find(params[:id])).isin_array.join(\"<br/>\")",
       "render_path": [
@@ -118,7 +138,7 @@
           "type": "controller",
           "class": "TPI::CompaniesController",
           "method": "show",
-          "line": 17,
+          "line": 19,
           "file": "app/controllers/tpi/companies_controller.rb",
           "rendered": {
             "name": "tpi/companies/show",
@@ -149,7 +169,7 @@
           "type": "controller",
           "class": "TPI::PagesController",
           "method": "show",
-          "line": 6,
+          "line": 9,
           "file": "app/controllers/tpi/pages_controller.rb",
           "rendered": {
             "name": "tpi/pages/show",
@@ -180,7 +200,7 @@
           "type": "controller",
           "class": "CCLOW::Geography::ClimateTargetsController",
           "method": "show",
-          "line": 16,
+          "line": 23,
           "file": "app/controllers/cclow/geography/climate_targets_controller.rb",
           "rendered": {
             "name": "cclow/geography/climate_targets/show",
@@ -211,7 +231,7 @@
           "type": "controller",
           "class": "CCLOW::Geography::LitigationCasesController",
           "method": "show",
-          "line": 24,
+          "line": 29,
           "file": "app/controllers/cclow/geography/litigation_cases_controller.rb",
           "rendered": {
             "name": "cclow/geography/litigation_cases/show",
@@ -242,7 +262,7 @@
           "type": "controller",
           "class": "CCLOW::Geography::LegislationsController",
           "method": "show",
-          "line": 28,
+          "line": 36,
           "file": "app/controllers/cclow/geography/legislations_controller.rb",
           "rendered": {
             "name": "cclow/geography/legislations/show",
@@ -273,7 +293,7 @@
           "type": "controller",
           "class": "CCLOW::PagesController",
           "method": "show",
-          "line": 12,
+          "line": 14,
           "file": "app/controllers/cclow/pages_controller.rb",
           "rendered": {
             "name": "cclow/pages/show",
@@ -324,7 +344,7 @@
           "type": "controller",
           "class": "TPI::PagesController",
           "method": "show",
-          "line": 6,
+          "line": 9,
           "file": "app/controllers/tpi/pages_controller.rb",
           "rendered": {
             "name": "tpi/pages/show",
@@ -341,6 +361,6 @@
       "note": ""
     }
   ],
-  "updated": "2020-01-30 12:42:31 +0300",
+  "updated": "2020-02-13 15:57:46 +0300",
   "brakeman_version": "4.7.2"
 }

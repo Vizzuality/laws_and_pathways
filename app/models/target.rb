@@ -69,6 +69,11 @@ class Target < ApplicationRecord
       .where('events.date > ?', date)
       .where(events: {event_type: %w[set updated]})
   }
+  scope :with_id_order, ->(ids) {
+    order = sanitize_sql_array(['array_position(ARRAY[?]::int[], id::int)', ids])
+    order(order)
+  }
+
   pg_search_scope :full_text_search,
                   associated_against: {
                     tags: [:name]

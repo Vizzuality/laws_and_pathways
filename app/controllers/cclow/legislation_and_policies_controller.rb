@@ -9,7 +9,7 @@ module CCLOW
       add_breadcrumb('Laws and policies', cclow_legislation_and_policies_path(@geography))
       add_breadcrumb('Search results', request.path) if params[:q].present? || params[:recent].present?
 
-      @legislations = sort_list(Queries::CCLOW::LegislationQuery.new(filter_params).call)
+      @legislations = Queries::CCLOW::LegislationQuery.new(filter_params).call
 
       fixed_navbar('All laws and policies', admin_legislations_path)
 
@@ -50,13 +50,6 @@ module CCLOW
       end
     end
 
-    private
-
-    def sort_list(legislations)
-      return legislations if (filter_params.keys - %w(from_date to_date)).present?
-
-      legislations.includes(:events).order('events.date DESC NULLS LAST')
-    end
     # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/MethodLength
   end

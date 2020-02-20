@@ -21,6 +21,7 @@ module Queries
           .merge(filter_by_to_date)
           .merge(filter_by_type)
           .merge(filter_recent)
+          .merge(order)
       end
 
       private
@@ -28,7 +29,8 @@ module Queries
       def full_text_filter
         return scope unless params[:q].present?
 
-        scope.where(id: scope.full_text_search(params[:q]).pluck(:id))
+        @full_text_result_ids = scope.full_text_search(params[:q]).pluck(:id)
+        scope.where(id: @full_text_result_ids)
       end
 
       def filter_by_geography
@@ -102,6 +104,12 @@ module Queries
         return scope unless params[:recent].present?
 
         scope.recent
+      end
+
+      def order
+        return scope.with_id_order(@full_text_result_ids) if defined?(@full_text_result_ids)
+
+        scope.includes(:events).order('events.date DESC NULLS LAST')
       end
     end
   end
