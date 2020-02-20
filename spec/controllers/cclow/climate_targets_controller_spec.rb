@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe CCLOW::ClimateTargetsController, type: :controller do
   let!(:target1) { create(:target, :published, description: 'Super target') }
-  let!(:target2) { create(:target, :published, description: 'Description') }
-  let!(:target3) { create(:target, :published, description: 'Target Example') }
+  let!(:target2) { create(:target, :published, description: 'Example Description') }
+  let!(:target3) { create(:target, :published, description: 'Example') }
   let!(:target4) { create(:target, :draft, description: 'This one is unpublished example') }
 
   before do
