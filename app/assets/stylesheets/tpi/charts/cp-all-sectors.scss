@@ -1,5 +1,7 @@
 .chart--cp-all-sectors {
-  div[data-react-class] {
+  justify-content: unset;
+
+  div[data-highcharts-chart] {
     width: 100%;
   }
 }
