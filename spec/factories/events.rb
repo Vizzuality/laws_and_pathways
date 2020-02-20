@@ -32,6 +32,13 @@ FactoryBot.define do
       eventable { |e| e.association(:legislation) }
     end
 
+    factory :target_event do
+      title { 'Some target was set' }
+      description { 'Description of target event' }
+      event_type { 'set' }
+      eventable { |e| e.association(:target) }
+    end
+
     factory :geography_event do
       title { 'Barcelona event' }
       description { 'Description of event' }

@@ -1,11 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe CCLOW::ClimateTargetsController, type: :controller do
+  let!(:target1) { create(:target, :published, description: 'Super target') }
+  let!(:target2) { create(:target, :published, description: 'Description') }
+  let!(:target3) { create(:target, :published, description: 'Target Example') }
+  let!(:target4) { create(:target, :draft, description: 'This one is unpublished example') }
+
   before do
-    create(:target, :published, description: 'Super Litigation')
-    create(:target, :published, description: 'Example description')
-    create(:target, :published, description: 'Example')
-    create(:target, :draft, description: 'This one is unpublished example')
+    create(:target_event, eventable: target1, date: 30.days.ago)
+    create(:target_event, eventable: target1, date: 50.days.ago)
+
+    create(:target_event, eventable: target2, date: 40.days.ago)
+    create(:target_event, eventable: target2, date: 10.days.ago)
+
+    create(:target_event, eventable: target3, date: 30.days.ago)
+    create(:target_event, eventable: target3, date: 20.days.ago)
   end
 
   describe 'GET index' do
@@ -17,6 +26,11 @@ RSpec.describe CCLOW::ClimateTargetsController, type: :controller do
       it('should return all published targets') do
         subject
         expect(assigns(:climate_targets).size).to eq(3)
+      end
+
+      it('should be ordered by latest date of the event') do
+        subject
+        expect(assigns(:climate_targets)).to eq([target2, target3, target1])
       end
 
       it 'responds to csv' do
