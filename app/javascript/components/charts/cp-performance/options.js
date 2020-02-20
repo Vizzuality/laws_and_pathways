@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { groupAllAreaSeries } from './helpers';
+import { groupAllAreaSeries, renderBenchmarksLabels } from './helpers';
 import { renderToString } from 'react-dom/server';
 import Tooltip from './Tooltip';
 
@@ -14,6 +14,7 @@ export function getOptions({ chartData, unit }) {
       events: {
         render() {
           groupAllAreaSeries();
+          renderBenchmarksLabels(this);
         }
       }
     },
@@ -28,6 +29,9 @@ export function getOptions({ chartData, unit }) {
       area: {
         marker: {
           enabled: false
+        },
+        label: {
+          area: false
         }
       },
       line: {
@@ -64,7 +68,8 @@ export function getOptions({ chartData, unit }) {
       crosshair: {
         width: 2,
         color: '#191919'
-      }
+      },
+      maxPadding: 0.15
     },
     title: {
       text: ''
