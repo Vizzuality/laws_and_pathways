@@ -9,26 +9,10 @@ import HighchartsReact from 'highcharts-react-official';
 import PlusIcon from 'images/icons/plus.svg';
 
 import { getOptions, COLORS } from './options';
+import { useOutsideClick } from 'shared/hooks';
+
 import CompanySelector from './CompanySelector';
 import CompanyTag from './CompanyTag';
-
-// TODO: move to common hooks
-const useCallbackOutsideClick = (element, action) => {
-  if (typeof action !== 'function') throw new Error('useCallbackOutsideClick expects action to be function');
-
-  const handleClickOutside = event => {
-    if (!element.current) return;
-    if (!element.current.contains(event.target)) action();
-  };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-};
 
 function getLegendItems(data) {
   return applyColorsToLegendItems(
@@ -58,7 +42,7 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
         setLegendItems(getLegendItems(chartData));
       });
   }, []);
-  useCallbackOutsideClick(companySelectorWrapper, () => setCompanySelectorVisible(false));
+  useOutsideClick(companySelectorWrapper, () => setCompanySelectorVisible(false));
 
   const companies = useMemo(
     () => data.filter(d => d.type !== 'area').map(i => i.name).sort(),

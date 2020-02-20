@@ -58,4 +58,40 @@ RSpec.describe Geography, type: :model do
     geography.update!(name: 'New name')
     expect(geography.slug).to eq('new-name')
   end
+
+  context 'full_text_search' do
+    let!(:portugal) {
+      create(
+        :geography,
+        name: 'Portugal',
+        region: 'Europe & Central Asia'
+      )
+    }
+    let!(:argentina) {
+      create(
+        :geography,
+        name: 'Argentina',
+        region: 'Latin America & Caribbean'
+      )
+    }
+    let!(:austria) {
+      create(
+        :geography,
+        name: 'Austria',
+        region: 'Europe & Central Asia'
+      )
+    }
+
+    it 'uses name' do
+      expect(Geography.full_text_search('Argentina')).to contain_exactly(argentina)
+    end
+
+    it 'uses region' do
+      expect(Geography.full_text_search('europe')).to contain_exactly(austria, portugal)
+    end
+
+    it 'uses fuzzy searching' do
+      expect(Geography.full_text_search('portuagal')).to contain_exactly(portugal)
+    end
+  end
 end
