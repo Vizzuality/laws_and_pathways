@@ -88,8 +88,6 @@
 
     <%= react_component('charts/cp-performance', {
       dataUrl: emissions_chart_data_tpi_sector_path(@sector.id),
-      geographies: CP::Assessment.all_geographies.select(:id, :name).sort_by(&:name).map { |g| g.slice(:id, :name) },
-      regions: Geography::REGIONS.sort,
       unit: @sector.latest_cp_unit&.unit
     }) %>
   </section>

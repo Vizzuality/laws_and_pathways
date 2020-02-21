@@ -149,6 +149,7 @@ module Api
             id: company.id,
             region: company.geography.region,
             geography_id: company.geography_id,
+            geography_name: company.geography.name,
             market_cap_group: company.market_cap_group
           },
           data: emissions_data_as_numbers(assessment&.emissions),

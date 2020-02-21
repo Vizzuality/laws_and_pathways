@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import uniqBy from 'lodash/uniqBy';
+import sortBy from 'lodash/sortBy';
 
 import PlusIcon from 'images/icons/plus.svg';
 
@@ -77,10 +79,26 @@ function getDropdownOptions(geographies, regions) {
   ];
 }
 
-function CPPerformance({ geographies, regions, dataUrl, companySelector, unit }) {
+function CPPerformance({ dataUrl, companySelector, unit }) {
   const [data, setData] = useState([]);
   const [legendItems, setLegendItems] = useState([]);
   const [showCompanySelector, setCompanySelectorVisible] = useState(false);
+  const { geographies, regions } = useMemo(() => {
+    const companyData = data
+      .map(d => d.company)
+      .filter(d => d);
+
+    return {
+      geographies: sortBy(
+        uniqBy(
+          companyData.map(c => ({ id: c.geography_id, name: c.geography_name })),
+          'id'
+        ),
+        'name'
+      ),
+      regions: [...new Set(companyData.map(c => c.region).sort())]
+    };
+  }, [data]);
   const dropdownOptions = getDropdownOptions(geographies, regions);
   const [selectedShowBy, setSelectedShowBy] = useState(dropdownOptions[0]);
 
@@ -208,15 +226,11 @@ function CPPerformance({ geographies, regions, dataUrl, companySelector, unit })
 }
 
 CPPerformance.defaultProps = {
-  companySelector: true,
-  geographies: [],
-  regions: []
+  companySelector: true
 };
 
 CPPerformance.propTypes = {
   companySelector: PropTypes.bool,
-  geographies: PropTypes.array,
-  regions: PropTypes.array,
   dataUrl: PropTypes.string.isRequired,
   unit: PropTypes.string.isRequired
 };

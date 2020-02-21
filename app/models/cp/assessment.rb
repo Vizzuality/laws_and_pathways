@@ -34,15 +34,5 @@ module CP
     def unit
       company.sector.cp_unit_valid_for_date(publication_date)&.unit
     end
-
-    def self.all_geographies
-      ids = CP::Assessment
-        .joins(:company)
-        .where.not(emissions: {})
-        .pluck('companies.geography_id')
-        .uniq
-
-      Geography.where(id: ids)
-    end
   end
 end
