@@ -23,7 +23,7 @@ function Tooltip({ xValue, yValues, unit }) {
             {y.title}
             {y.isTargeted && (<small>(targeted)</small>)}
           </span>
-          <span className="cp-tooltip__value">{y.value}</span>
+          <span className="cp-tooltip__value">{Number.isInteger(y.value) ? y.value : y.value.toFixed(2)}</span>
         </div>
       ))}
 

@@ -36,7 +36,7 @@ module ChartHelper
         pie: {
           dataLabels: {
             enabled: true,
-            format: '<strong>Level {point.name}</strong> <br> {point.y} companies <br> {point.percentage:.1f}%',
+            format: '<strong>Level {point.name}</strong> <br> {point.y} companies <br> {point.percentage:.2f}%',
             alignTo: 'connectors',
             connectorShape: 'crookedLine',
             crookDistance: '100%'
