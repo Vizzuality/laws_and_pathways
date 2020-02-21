@@ -62,7 +62,7 @@ function applyColorsToLegendItems(items) {
   return items.map((d, idx) => ({...d, color: COLORS[idx % 10]}));
 }
 
-function getDropdownOptions(geographies, regions) {
+function getDropdownOptions(geographies, regions, marketCapGroups) {
   return [
     {
       value: 'top_10',
@@ -71,11 +71,7 @@ function getDropdownOptions(geographies, regions) {
     {
       value: 'market_cap',
       label: 'by Market Cap',
-      items: [
-        { value: 'market_cap_small', label: 'small' },
-        { value: 'market_cap_medium', label: 'medium' },
-        { value: 'market_cap_big', label: 'big' }
-      ]
+      items: marketCapGroups.map(g => ({ label: g, value: `market_cap_${g}` }))
     },
     {
       value: 'geographies',
@@ -94,7 +90,7 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
   const [data, setData] = useState([]);
   const [legendItems, setLegendItems] = useState([]);
   const [showCompanySelector, setCompanySelectorVisible] = useState(false);
-  const { geographies, regions } = useMemo(() => {
+  const { geographies, regions, marketCapGroups } = useMemo(() => {
     const companyData = data
       .map(d => d.company)
       .filter(d => d);
@@ -107,10 +103,11 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
         ),
         'name'
       ),
-      regions: [...new Set(companyData.map(c => c.region).sort())]
+      regions: [...new Set(companyData.map(c => c.region).sort())],
+      marketCapGroups: [...new Set(companyData.map(c => c.market_cap_group))]
     };
   }, [data]);
-  const dropdownOptions = getDropdownOptions(geographies, regions);
+  const dropdownOptions = getDropdownOptions(geographies, regions, marketCapGroups);
   const [selectedShowBy, setSelectedShowBy] = useState(dropdownOptions[0]);
 
   const companySelectorWrapper = useRef();
