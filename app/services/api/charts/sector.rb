@@ -119,7 +119,7 @@ module Api
 
       def emissions_data_from_companies
         @company_scope
-          .includes(:latest_cp_assessment)
+          .includes(:latest_cp_assessment, :geography)
           .map { |company| emissions_data_from_company(company) }
           .reject { |company_data| company_data[:data].empty? }
       end
@@ -145,6 +145,12 @@ module Api
 
         {
           name: company.name,
+          company: {
+            id: company.id,
+            region: company.geography.region,
+            geography_id: company.geography_id,
+            market_cap_group: company.market_cap_group
+          },
           data: emissions_data_as_numbers(assessment&.emissions),
           zoneAxis: 'x',
           zones: [{

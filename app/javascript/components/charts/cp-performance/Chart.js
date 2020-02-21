@@ -16,11 +16,32 @@ import CompanySelector from './CompanySelector';
 import CompanyTag from './CompanyTag';
 import NestedDropdown from 'components/NestedDropdown';
 
-function getLegendItems(data) {
+function getLegendItems(data, showByValue) {
+  let companyData = data.filter(d => d.type !== 'area');
+
+  if (showByValue) {
+    const getLastEmission = (d) => d.data && d.data.length && d.data.slice(-1)[0];
+
+    companyData = companyData.filter(d => {
+      if (showByValue.startsWith('market_cap')) {
+        return d.company.market_cap_group === showByValue.replace('market_cap_', '');
+      }
+
+      if (showByValue.startsWith('by_country')) {
+        return parseInt(d.company.geography_id, 10) === parseInt(showByValue.replace('by_country_', ''), 10);
+      }
+
+      if (showByValue.startsWith('by_region')) {
+        return d.company.region === showByValue.replace('by_region_', '');
+      }
+
+      return true;
+    });
+    companyData = companyData.sort((a, b) => getLastEmission(a) > getLastEmission(b));
+  }
+
   return applyColorsToLegendItems(
-    data
-      .filter(d => d.type !== 'area')
-      .slice(0, 10)
+    companyData.slice(0, 10)
   );
 }
 
@@ -28,10 +49,40 @@ function applyColorsToLegendItems(items) {
   return items.map((d, idx) => ({...d, color: COLORS[idx % 10]}));
 }
 
+function getDropdownOptions(geographies, regions) {
+  return [
+    {
+      value: 'top_10',
+      label: 'Top 10 Emitters'
+    },
+    {
+      value: 'market_cap',
+      label: 'by Market Cap',
+      items: [
+        { value: 'market_cap_small', label: 'small' },
+        { value: 'market_cap_medium', label: 'medium' },
+        { value: 'market_cap_big', label: 'big' }
+      ]
+    },
+    {
+      value: 'geographies',
+      label: 'by Country',
+      items: geographies.map(c => ({ label: c.name, value: `by_country_${c.id}` }))
+    },
+    {
+      value: 'regions',
+      label: 'by Region',
+      items: regions.map(r => ({ label: r, value: `by_region_${r}` }))
+    }
+  ];
+}
+
 function CPPerformance({ geographies, regions, dataUrl, companySelector, unit }) {
   const [data, setData] = useState([]);
   const [legendItems, setLegendItems] = useState([]);
   const [showCompanySelector, setCompanySelectorVisible] = useState(false);
+  const dropdownOptions = getDropdownOptions(geographies, regions);
+  const [selectedShowBy, setSelectedShowBy] = useState(dropdownOptions[0]);
 
   const companySelectorWrapper = useRef();
 
@@ -41,7 +92,7 @@ function CPPerformance({ geographies, regions, dataUrl, companySelector, unit })
       .then((r) => r.json())
       .then((chartData) => {
         setData(chartData);
-        setLegendItems(getLegendItems(chartData));
+        setLegendItems(getLegendItems(chartData, selectedShowBy.value));
       });
   }, []);
   useOutsideClick(companySelectorWrapper, () => setCompanySelectorVisible(false));
@@ -69,37 +120,15 @@ function CPPerformance({ geographies, regions, dataUrl, companySelector, unit })
     );
   };
   const handleSelectedCompaniesChange = (selected) => {
-    setLegendItems(getLegendItems(data.filter((d) => selected.includes(d.name))));
+    setLegendItems(
+      getLegendItems(data.filter((d) => selected.includes(d.name)))
+    );
+  };
+  const handleShowBySelect = (selected) => {
+    setSelectedShowBy(selected);
+    setLegendItems(getLegendItems(data, selected.value));
   };
 
-  const options = getOptions({ chartData, unit });
-
-  const dropdownOptions = [
-    {
-      value: 'top_10',
-      label: 'Top 10 Emitters'
-    },
-    {
-      value: 'market_cap',
-      label: 'by Market Cap',
-      items: [
-        { value: 'market_cap_small', label: 'small' },
-        { value: 'market_cap_medium', label: 'medium' },
-        { value: 'market_cap_big', label: 'big' }
-      ]
-    },
-    {
-      value: 'geographies',
-      label: 'by Country',
-      items: geographies.map(c => ({ label: c.name, value: `by_country_${c.id}` }))
-    },
-    {
-      value: 'regions',
-      label: 'by Region',
-      items: regions.map(r => ({ label: r, value: `by_region_${r}` }))
-    }
-  ];
-  const [selectedShowBy, setSelectedShowBy] = useState(dropdownOptions[0]);
   const subTitle = ((item) => {
     if (item.value === 'top_10') return null;
     if (item.value.startsWith('market_cap')) return `${item.label} market cap`;
@@ -112,10 +141,12 @@ function CPPerformance({ geographies, regions, dataUrl, companySelector, unit })
       title="Top 10 Emitters"
       subTitle={subTitle}
       items={dropdownOptions}
-      onSelect={(item) => setSelectedShowBy(item)}
+      onSelect={handleShowBySelect}
     />,
     document.querySelector('#show-by-dropdown-placeholder')
   );
+
+  const options = getOptions({ chartData, unit });
 
   return (
     <div className="chart chart--cp-performance">
