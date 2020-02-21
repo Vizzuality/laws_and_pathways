@@ -155,7 +155,7 @@ module Api
           data: emissions_data_as_numbers(assessment&.emissions),
           zoneAxis: 'x',
           zones: [{
-            value: assessment&.last_reported_year&.to_i
+            value: (assessment&.last_reported_year&.to_i || 0) + 1
           }, {
             dashStyle: 'dot'
           }]
