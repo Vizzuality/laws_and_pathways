@@ -47,7 +47,7 @@ module Queries
       def filter_by_sector
         return scope unless params[:law_sector].present?
 
-        scope.includes(:laws_sectors).where(laws_sectors: {id: params[:law_sector]})
+        scope.joins(:laws_sectors).where(laws_sectors: {id: params[:law_sector]})
       end
 
       def filter_by_geography
