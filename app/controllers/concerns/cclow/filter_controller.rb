@@ -87,8 +87,7 @@ module CCLOW
 
     def sectors_options(class_name)
       name = class_name.downcase.pluralize
-
-      sectors = LawsSector.joins(name.to_sym).map { |j| {value: j.id, label: j.name} }
+      sectors = LawsSector.joins(name.to_sym).distinct.map { |j| {value: j.id, label: j.name} }
       [{field_name: 'law_sector', options: sectors.sort_by { |h| h[:label] }}]
     end
 

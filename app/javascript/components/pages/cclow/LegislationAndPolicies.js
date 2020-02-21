@@ -31,7 +31,8 @@ class LegislationAndPolicies extends Component {
       activeTypesFilter: {},
       activeInstrumentsFilter: {},
       activeNaturalHazardsFilter: {},
-      activeGovernancesFilter: {}
+      activeGovernancesFilter: {},
+      activeSectorsFilter: {}
     };
 
     this.geoFilter = React.createRef();
@@ -43,6 +44,7 @@ class LegislationAndPolicies extends Component {
     this.instrumentsFilter = React.createRef();
     this.naturalHazardsFilter = React.createRef();
     this.governancesFilter = React.createRef();
+    this.sectorsFilter = React.createRef();
   }
 
   getQueryString(extraParams = {}) {
@@ -55,7 +57,8 @@ class LegislationAndPolicies extends Component {
       activeInstrumentsFilter,
       activeNaturalHazardsFilter,
       activeGovernancesFilter,
-      activeTimeRangeFilter
+      activeTimeRangeFilter,
+      activeSectorsFilter
     } = this.state;
 
     const params = {
@@ -69,6 +72,7 @@ class LegislationAndPolicies extends Component {
       ...activeNaturalHazardsFilter,
       ...activeGovernancesFilter,
       ...activeTimeRangeFilter,
+      ...activeSectorsFilter,
       ...extraParams
     };
 
@@ -127,7 +131,8 @@ class LegislationAndPolicies extends Component {
       frameworks_filter_options: frameworksFilterOptions,
       instruments_filter_options: instrumentsFilterOptions,
       natural_hazards_filter_options: naturalHazardsFilterOptions,
-      governances_filter_options: governancesFilterOptions
+      governances_filter_options: governancesFilterOptions,
+      sectors_options: sectorsOptions
     } = this.props;
 
     return (
@@ -179,6 +184,12 @@ class LegislationAndPolicies extends Component {
               params={governancesFilterOptions}
               onChange={(event) => this.filterList('activeGovernancesFilter', event)}
             />
+            <SearchFilter
+              ref={this.sectorsFilter}
+              filterName="Sectors"
+              params={sectorsOptions}
+              onChange={(event) => this.filterList('activeSectorsFilter', event)}
+            />
             <button
               type="button"
               onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
@@ -202,7 +213,8 @@ class LegislationAndPolicies extends Component {
       activeTypesFilter,
       activeInstrumentsFilter,
       activeNaturalHazardsFilter,
-      activeGovernancesFilter
+      activeGovernancesFilter,
+      activeSectorsFilter
     } = this.state;
     const {
       geo_filter_options: geoFilterOptions,
@@ -212,7 +224,8 @@ class LegislationAndPolicies extends Component {
       types_filter_options: typesFilterOptions,
       instruments_filter_options: instrumentsFilterOptions,
       natural_hazards_filter_options: naturalHazardsFilterOptions,
-      governances_filter_options: governancesFilterOptions
+      governances_filter_options: governancesFilterOptions,
+      sectors_options: sectorsOptions
     } = this.props;
     if (Object.keys(activeGeoFilter).length === 0
       && Object.keys(activeKeywordsFilter).length === 0
@@ -221,6 +234,7 @@ class LegislationAndPolicies extends Component {
       && Object.keys(activeInstrumentsFilter).length === 0
       && Object.keys(activeNaturalHazardsFilter).length === 0
       && Object.keys(activeGovernancesFilter).length === 0
+      && Object.keys(activeSectorsFilter).length === 0
       && Object.keys(activeTimeRangeFilter).length === 0) return null;
     return (
       <div className="filter-tags">
@@ -229,6 +243,7 @@ class LegislationAndPolicies extends Component {
         {this.renderTagsGroup(activeResponsesFilter, responsesFilterOptions, 'responsesFilter')}
         {this.renderTagsGroup(activeFrameworksFilter, frameworksFilterOptions, 'frameworksFilter')}
         {this.renderTagsGroup(activeTypesFilter, typesFilterOptions, 'typesFilter')}
+        {this.renderTagsGroup(activeSectorsFilter, sectorsOptions, 'sectorsFilter')}
         {this.renderTagsGroup(activeInstrumentsFilter, instrumentsFilterOptions, 'instrumentsFilter')}
         {this.renderTagsGroup(activeNaturalHazardsFilter, naturalHazardsFilterOptions, 'naturalHazardsFilter')}
         {this.renderTagsGroup(activeGovernancesFilter, governancesFilterOptions, 'governancesFilter')}
@@ -375,7 +390,8 @@ LegislationAndPolicies.defaultProps = {
   types_filter_options: [],
   instruments_filter_options: [],
   natural_hazards_filter_options: [],
-  governances_filter_options: []
+  governances_filter_options: [],
+  sectors_options: []
 };
 
 LegislationAndPolicies.propTypes = {
@@ -388,7 +404,8 @@ LegislationAndPolicies.propTypes = {
   types_filter_options: PropTypes.array,
   instruments_filter_options: PropTypes.array,
   natural_hazards_filter_options: PropTypes.array,
-  governances_filter_options: PropTypes.array
+  governances_filter_options: PropTypes.array,
+  sectors_options: PropTypes.array
 };
 
 export default LegislationAndPolicies;

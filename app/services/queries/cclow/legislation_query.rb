@@ -21,6 +21,7 @@ module Queries
           .merge(filter_by_to_date)
           .merge(filter_by_type)
           .merge(filter_recent)
+          .merge(filter_by_sector)
           .merge(order)
       end
 
@@ -43,6 +44,12 @@ module Queries
         return scope unless params[:region].present?
 
         scope.includes(:geography).where(geographies: {region: params[:region]})
+      end
+
+      def filter_by_sector
+        return scope unless params[:law_sector].present?
+
+        scope.includes(:laws_sectors).where(laws_sectors: {id: params[:law_sector]})
       end
 
       def filter_by_tags
