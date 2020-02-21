@@ -28,6 +28,7 @@ module CCLOW
             litigation_side_a_party_type_options: litigation_side_a_party_type_options,
             litigation_side_b_party_type_options: litigation_side_b_party_type_options,
             litigation_side_c_party_type_options: litigation_side_c_party_type_options,
+            sectors_options: sectors_options('Litigation'),
             litigations: CCLOW::LitigationDecorator.decorate_collection(@litigations.first(10)),
             count: @litigations.size
           }, prerender: false
