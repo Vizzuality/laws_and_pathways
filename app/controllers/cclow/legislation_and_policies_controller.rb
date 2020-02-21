@@ -24,6 +24,7 @@ module CCLOW
             types_filter_options: legislation_types_options,
             instruments_filter_options: instruments_options,
             governances_filter_options: governances_options,
+            sectors_options: sectors_options('Legislation'),
             legislations: CCLOW::LegislationDecorator.decorate_collection(@legislations.first(10)),
             count: @legislations.count
           }, prerender: false

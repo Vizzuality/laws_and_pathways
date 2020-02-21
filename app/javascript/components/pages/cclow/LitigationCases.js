@@ -33,13 +33,15 @@ class LitigationCases extends Component {
       activeSideAPartyTypesFilter: {},
       activeSideBPartyTypesFilter: {},
       activeSideCPartyTypesFilter: {},
-      activeJurisdictionsFilter: {}
+      activeJurisdictionsFilter: {},
+      activeSectorsFilter: {}
     };
 
     this.geoFilter = React.createRef();
     this.keywordsFilter = React.createRef();
     this.responsesFilter = React.createRef();
     this.timeRangeFilter = React.createRef();
+    this.sectorsFilter = React.createRef();
     this.statusFilter = React.createRef();
     this.sideAFilter = React.createRef();
     this.sideBFilter = React.createRef();
@@ -62,6 +64,7 @@ class LitigationCases extends Component {
       activeSideAFilter,
       activeSideBFilter,
       activeSideCFilter,
+      activeSectorsFilter,
       activeJurisdictionsFilter,
       activeSideAPartyTypesFilter,
       activeSideBPartyTypesFilter,
@@ -77,6 +80,7 @@ class LitigationCases extends Component {
       ...activeSideAFilter,
       ...activeSideBFilter,
       ...activeSideCFilter,
+      ...activeSectorsFilter,
       ...activePartyTypesFilter,
       ...activeJurisdictionsFilter,
       ...activeSideAPartyTypesFilter,
@@ -126,6 +130,7 @@ class LitigationCases extends Component {
       activeSideAFilter,
       activeSideBFilter,
       activeSideCFilter,
+      activeSectorsFilter,
       activePartyTypesFilter,
       activeJurisdictionsFilter,
       activeSideAPartyTypesFilter,
@@ -140,6 +145,7 @@ class LitigationCases extends Component {
       litigation_side_a_names_options: litigationSideAOptions,
       litigation_side_b_names_options: litigationSideBOptions,
       litigation_side_c_names_options: litigationSideCOptions,
+      sectors_options: sectorsOptions,
       litigation_party_types_options: litigationPartyTypesOptions,
       litigation_jurisdictions_options: litigationJurisdictionsOptions,
       litigation_side_a_party_type_options: litigationSideAPartyTypeOptions,
@@ -154,6 +160,7 @@ class LitigationCases extends Component {
       && !Object.keys(activeSideAFilter).length
       && !Object.keys(activeSideBFilter).length
       && !Object.keys(activeSideCFilter).length
+      && !Object.keys(activeSectorsFilter).length
       && !Object.keys(activeSideAPartyTypesFilter).length
       && !Object.keys(activeSideBPartyTypesFilter).length
       && !Object.keys(activeSideCPartyTypesFilter).length
@@ -167,6 +174,7 @@ class LitigationCases extends Component {
         {this.renderTagsGroup(activeSideAFilter, litigationSideAOptions, 'sideAFilter')}
         {this.renderTagsGroup(activeSideBFilter, litigationSideBOptions, 'sideBFilter')}
         {this.renderTagsGroup(activeSideCFilter, litigationSideCOptions, 'sideCFilter')}
+        {this.renderTagsGroup(activeSectorsFilter, sectorsOptions, 'sectorsFilter')}
         {this.renderTagsGroup(activePartyTypesFilter, litigationPartyTypesOptions, 'partyTypeFilter')}
         {this.renderTagsGroup(activeJurisdictionsFilter, litigationJurisdictionsOptions, 'jurisdictionFilter')}
         {this.renderTagsGroup(activeSideAPartyTypesFilter, litigationSideAPartyTypeOptions, 'sideAPartyTypeFilter')}
@@ -243,7 +251,8 @@ class LitigationCases extends Component {
       litigation_side_c_names_options: litigationSideCOptions,
       litigation_side_a_party_type_options: litigationSideAPartyTypeOptions,
       litigation_side_b_party_type_options: litigationSideBPartyTypeOptions,
-      litigation_side_c_party_type_options: litigationSideCPartyTypeOptions
+      litigation_side_c_party_type_options: litigationSideCPartyTypeOptions,
+      sectors_options: sectorsOptions
     } = this.props;
 
     return (
@@ -282,6 +291,12 @@ class LitigationCases extends Component {
               filterName="Party types"
               params={litigationPartyTypesOptions}
               onChange={(event) => this.filterList('activePartyTypesFilter', event)}
+            />
+            <SearchFilter
+              ref={this.sectorsFilter}
+              filterName="Sectors"
+              params={sectorsOptions}
+              onChange={(event) => this.filterList('activeSectorsFilter', event)}
             />
             <SearchFilter
               ref={this.sideAPartyTypeFilter}
@@ -382,16 +397,16 @@ class LitigationCases extends Component {
                     <Fragment key={i}>
                       <li className="content-item">
                         <h5 className="title" dangerouslySetInnerHTML={{__html: litigation.link}} />
-                          <div className="meta">
-                            {litigation.geography && (
-                              <a href={litigation.geography_path}>
-                                <img src={`/images/flags/${litigation.geography.iso}.svg`} alt="" />
-                                {litigation.geography.name}
-                              </a>
-                            )}
-                            {litigation.opened_in && <div>Opened in {litigation.opened_in}</div>}
-                            {litigation.last_development_in && <div>Last development in {litigation.last_development_in}</div>}
-                          </div>
+                        <div className="meta">
+                          {litigation.geography && (
+                            <a href={litigation.geography_path}>
+                              <img src={`/images/flags/${litigation.geography.iso}.svg`} alt="" />
+                              {litigation.geography.name}
+                            </a>
+                          )}
+                          {litigation.opened_in && <div>Opened in {litigation.opened_in}</div>}
+                          {litigation.last_development_in && <div>Last development in {litigation.last_development_in}</div>}
+                        </div>
                         <div className="description" dangerouslySetInnerHTML={{__html: litigation.summary}} />
                       </li>
                     </Fragment>
@@ -427,7 +442,8 @@ LitigationCases.defaultProps = {
   litigation_side_a_party_type_options: [],
   litigation_side_b_party_type_options: [],
   litigation_side_c_party_type_options: [],
-  litigation_jurisdictions_options: []
+  litigation_jurisdictions_options: [],
+  sectors_options: []
 };
 
 LitigationCases.propTypes = {
@@ -444,7 +460,8 @@ LitigationCases.propTypes = {
   litigation_side_a_party_type_options: PropTypes.array,
   litigation_side_b_party_type_options: PropTypes.array,
   litigation_side_c_party_type_options: PropTypes.array,
-  litigation_jurisdictions_options: PropTypes.array
+  litigation_jurisdictions_options: PropTypes.array,
+  sectors_options: PropTypes.array
 };
 
 export default LitigationCases;

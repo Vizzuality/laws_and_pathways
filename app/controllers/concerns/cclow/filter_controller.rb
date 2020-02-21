@@ -85,12 +85,18 @@ module CCLOW
       [{field_name: 'jurisdiction', options: jurisdiction_types.sort_by { |h| h[:label] }}]
     end
 
+    def sectors_options(class_name)
+      name = class_name.downcase.pluralize
+      sectors = LawsSector.joins(name.to_sym).distinct.map { |j| {value: j.id, label: j.name} }
+      [{field_name: 'law_sector', options: sectors.sort_by { |h| h[:label] }}]
+    end
+
     def filter_params
       params.permit(:q, :from_date,
                     :to_date, :recent, :ids, region: [], geography: [], jurisdiction: [],
                                              status: [], type: [], keywords: [], responses: [],
                                              frameworks: [], natural_hazards: [], party_type: [],
-                                             side_a: [], side_b: [], side_c: [],
+                                             side_a: [], side_b: [], side_c: [], law_sector: [],
                                              a_party_type: [], b_party_type: [], c_party_type: [],
                                              instrument: [], governance: [])
     end
