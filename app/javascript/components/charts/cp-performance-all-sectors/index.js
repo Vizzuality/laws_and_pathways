@@ -1,3 +1,3 @@
-import CPPerformanceAllSectors from './CPPerformanceAllSectors';
+import Chart from './Chart';
 
-export default CPPerformanceAllSectors;
+export default Chart;
