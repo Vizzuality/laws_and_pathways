@@ -58,6 +58,11 @@ function NestedDropdown({ items, title, subTitle, onSelect }) {
 
   useOutsideClick(nestedDropdown, () => setIsOpen(false));
 
+  const handleSelect = (item) => {
+    setIsOpen(false);
+    onSelect(item);
+  };
+
   return (
     <div ref={nestedDropdown} className="nested-dropdown">
       <div className="nested-dropdown__title" onClick={() => setIsOpen(!isOpen)}>
@@ -67,7 +72,7 @@ function NestedDropdown({ items, title, subTitle, onSelect }) {
         </div>
         <img src={chevronIconBlack} />
       </div>
-      {isOpen && <List items={items} onSelect={onSelect} />}
+      {isOpen && <List items={items} onSelect={handleSelect} />}
     </div>
   );
 }

@@ -95,4 +95,13 @@ $tape-color: rgba(25,25,25,0.1);
     justify-content: space-between;
     margin-bottom: 15px;
   }
+
+  .show-by-dropdown {
+    display: flex;
+    align-items: center;
+
+    #show-by-dropdown-placeholder {
+      margin-left: 10px;
+    }
+  }
 }

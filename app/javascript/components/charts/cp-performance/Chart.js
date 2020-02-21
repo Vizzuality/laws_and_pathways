@@ -114,7 +114,7 @@ function CPPerformance({ geographies, regions, dataUrl, companySelector, unit })
       items={dropdownOptions}
       onSelect={(item) => setSelectedShowBy(item)}
     />,
-    document.querySelector('#show-by-dropdown')
+    document.querySelector('#show-by-dropdown-placeholder')
   );
 
   return (
