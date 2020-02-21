@@ -1,0 +1,73 @@
+.nested-dropdown {
+  height: 40px;
+  position: relative;
+  background: $white;
+
+  img {
+    margin-left: 10px;
+  }
+
+  &__list {
+    z-index: 100;
+    min-width: 100%;
+    border: 1px solid $black;
+    background: $white;
+    position: absolute;
+  }
+
+  > &__list {
+    right: 0;
+  }
+
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    border: 1px solid $black;
+    cursor: pointer;
+    height: 100%;
+  }
+
+  &__title-header {
+    display: flex;
+    flex-direction: column;
+
+    small {
+      margin-top: -7px;
+      font-size: 10px;
+      color: $grey-dark;
+    }
+  }
+
+  &__item {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    cursor: pointer;
+    background: $white;
+    color: $black;
+    line-height: 40px;
+    white-space: nowrap;
+
+    img {
+      transform: rotate(-90deg);
+    }
+
+    &:hover {
+      background: $blue-dark;
+      color: $white;
+    }
+
+    > .nested-dropdown__list {
+      top: 0;
+      left: 100%;
+
+      &.left {
+        left: unset;
+        right: 100%;
+      }
+    }
+  }
+}

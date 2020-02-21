@@ -1,25 +1,26 @@
-/* eslint-disable react/no-this-in-sfc */
-
-import React from 'react';
-import PropTypes from 'prop-types';
 import sortBy from 'lodash/sortBy';
+import merge from 'lodash/merge';
 
-import { ColumnChart } from 'react-chartkick';
+import defaultOptions from '../default-options';
 
 import {
   createSVGLineBelowElements,
   createSVGTextBetweenElements
 } from './helpers';
 
-function CPPerformanceAllSectors({ dataUrl, sectors }) {
-  const options = {
+export function getOptions(data, sectors) {
+  return merge({}, defaultOptions, {
     // I couldn't make highcharts to use color directly from the chart data so sorting chart data
     // by cp alignment name and then we will use below colors in the right order
     chart: {
       marginBottom: 80,
+      height: '600px',
+      type: 'column',
       events: {
         render() {
           const g = document.querySelector('#cp-performance-all-sectors-chart g.highcharts-xaxis-labels');
+
+          if (!g) return;
 
           [...g.querySelectorAll('.generated')].forEach((el) => el.remove());
 
@@ -52,6 +53,9 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
         }
       }
     },
+    credits: {
+      enabled: false
+    },
     colors: [
       '#00C170', '#FFDD49', '#FF9600', '#ED3D4A', '#595B5D'
     ],
@@ -76,6 +80,9 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
         }
       }
     },
+    title: {
+      text: ''
+    },
     xAxis: {
       labels: {
         style: {
@@ -88,31 +95,23 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
 
           return sector.link;
         }
-      }
+      },
+      categories: data && data.length && data[0].data.map(x => x[0])
     },
     yAxis: {
+      title: {
+        enabled: false
+      },
       labels: {
         formatter() {
           return `${this.value}%`;
         }
       }
-    }
-  };
-
-  return (
-    <ColumnChart id="cp-performance-all-sectors-chart" data={dataUrl} height="600px" library={options} stacked />
-  );
+    },
+    series: data.map(d => ({
+      ...d,
+      type: 'column',
+      data: d.data.map(x => x[1])
+    }))
+  });
 }
-
-CPPerformanceAllSectors.propTypes = {
-  dataUrl: PropTypes.string.isRequired,
-  sectors: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      link: PropTypes.string.isRequired,
-      cluster: PropTypes.string
-    }).isRequired
-  ).isRequired
-};
-
-export default CPPerformanceAllSectors;

@@ -77,7 +77,14 @@
   </section>
 
   <section id="carbon-performance" class="container">
-    <h4>Carbon Performance: <%= @sector.name %></h4>
+    <div class="cp-performance-header">
+      <h4>Carbon Performance: <%= @sector.name %></h4>
+      <div class="show-by-dropdown">
+        Showing:
+        <div id="show-by-dropdown-placeholder">
+        </div>
+      </div>
+    </div>
 
     <%= react_component('charts/cp-performance', {
       dataUrl: emissions_chart_data_tpi_sector_path(@sector.id),
