@@ -52,23 +52,43 @@ export function renderBenchmarksLabels(chart) {
 
   [...g.querySelectorAll('.generated')].forEach((el) => el.remove()); // cleanup
 
-  let lastLabelY = 0;
-  const minLabelDistance = 20;
-
-  chart.series.filter(s => s.type === 'area').forEach((area) => {
+  const areas = chart.series.filter(s => s.type === 'area');
+  const benchmarks = areas.map((area) => {
     const lastPoint = area.points.length && area.points.slice(-1)[0];
 
-    if (!lastPoint) return;
+    if (!lastPoint) return null;
 
-    const lastPointX = area.xAxis.toPixels(lastPoint.x);
-    const lastPointY = area.yAxis.toPixels(lastPoint.y);
+    return {
+      name: area.name,
+      maxY: area.yAxis.height,
+      point: {
+        x: area.xAxis.toPixels(lastPoint.x),
+        y: area.yAxis.toPixels(lastPoint.y)
+      }
+    };
+  }).filter(x => x);
 
-    const textX = lastPointX + 30;
-    const textY = (lastPointY > lastLabelY + minLabelDistance)
+  let lastLabelY = 0;
+  const minLabelSpacing = 20;
+  const labelToAreaSpacing = 15;
+
+  // benchmarks from top to bottom
+  benchmarks.forEach((benchmark, idx) => {
+    const lastPointX = benchmark.point.x;
+    let lastPointY = benchmark.point.y;
+
+    const nextBenchmark = benchmarks[idx + 1];
+    const offsetTo = nextBenchmark ? nextBenchmark.point.y : benchmark.maxY;
+    lastPointY += Math.abs((offsetTo - lastPointY) / 2);
+
+    const textX = lastPointX + labelToAreaSpacing;
+    // ensure minimum spacing to the previous label
+    const textY = (lastPointY > lastLabelY + minLabelSpacing)
       ? lastPointY
-      : lastLabelY + minLabelDistance;
+      : lastLabelY + minLabelSpacing;
     lastLabelY = textY;
-    const text = createSVGText(textX, textY, area.name);
+
+    const text = createSVGText(textX, textY, benchmark.name);
     const line = createSVGLine(lastPointX, lastPointY, textX, textY);
     g.appendChild(text);
     g.appendChild(line);
