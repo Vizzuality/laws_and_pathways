@@ -1,6 +1,7 @@
 /* eslint-disable react/no-this-in-sfc */
 
 import React, { useEffect, useRef, useMemo, useState } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 import Highcharts from 'highcharts';
@@ -106,16 +107,19 @@ function CPPerformance({ geographies, regions, dataUrl, companySelector, unit })
     return item.label;
   })(selectedShowBy);
 
+  const renderDropdown = () => ReactDOM.createPortal(
+    <NestedDropdown
+      title="Top 10 Emitters"
+      subTitle={subTitle}
+      items={dropdownOptions}
+      onSelect={(item) => setSelectedShowBy(item)}
+    />,
+    document.querySelector('#show-by-dropdown')
+  );
+
   return (
     <div className="chart chart--cp-performance">
-      <NestedDropdown
-        title="Top 10 Emitters"
-        subTitle={subTitle}
-        renderTo="#show-by-dropdown"
-        items={dropdownOptions}
-        onSelect={(item) => setSelectedShowBy(item)}
-      />
-
+      {renderDropdown()}
       <div className="legend">
         <div className="legend-row">
           {legendItems.map(

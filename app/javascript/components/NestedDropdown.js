@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 import { useOutsideClick } from 'shared/hooks';
@@ -89,12 +88,4 @@ NestedDropdown.propTypes = {
   onSelect: PropTypes.func.isRequired
 };
 
-export {
-  NestedDropdown
-};
-
-const PortalDropdown = ({ renderTo, ...rest }) => (
-  ReactDOM.createPortal(<NestedDropdown {...rest} />, document.querySelector(renderTo))
-);
-
-export default PortalDropdown;
+export default NestedDropdown;
