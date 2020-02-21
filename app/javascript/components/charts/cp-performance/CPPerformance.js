@@ -3,19 +3,17 @@
 import React, { useEffect, useRef, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import Select, { components } from 'react-select';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
 import PlusIcon from 'images/icons/plus.svg';
-import chevronIconBlack from 'images/icon_chevron_dark/chevron_down_black-1.svg';
 
 import { getOptions, COLORS } from './options';
 import { useOutsideClick } from 'shared/hooks';
 
 import CompanySelector from './CompanySelector';
 import CompanyTag from './CompanyTag';
-import NestedDropdown from './NestedDropdown';
+import NestedDropdown from 'components/NestedDropdown';
 
 function getLegendItems(data) {
   return applyColorsToLegendItems(
@@ -100,16 +98,22 @@ function CPPerformance({ geographies, regions, dataUrl, companySelector, unit })
       items: regions.map(r => ({ label: r, value: `by_region_${r}` }))
     }
   ];
-  const [selectedShowBy, setSelectedShowBy] = useState('top_10');
+  const [selectedShowBy, setSelectedShowBy] = useState(dropdownOptions[0]);
+  const subTitle = ((item) => {
+    if (item.value === 'top_10') return null;
+    if (item.value.startsWith('market_cap')) return `${item.label} market cap`;
+
+    return item.label;
+  })(selectedShowBy);
 
   return (
     <div className="chart chart--cp-performance">
       <NestedDropdown
         title="Top 10 Emitters"
+        subTitle={subTitle}
         renderTo="#show-by-dropdown"
-        selected={selectedShowBy}
         items={dropdownOptions}
-        onChange={(value) => setSelectedShowBy(value)}
+        onSelect={(item) => setSelectedShowBy(item)}
       />
 
       <div className="legend">
