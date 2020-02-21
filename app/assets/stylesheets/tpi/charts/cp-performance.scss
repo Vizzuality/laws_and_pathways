@@ -5,6 +5,10 @@
   justify-content: unset;
   flex-flow: column;
 
+  svg {
+    overflow: unset !important;
+  }
+
   .legend {
     display: flex;
     flex-direction: column;

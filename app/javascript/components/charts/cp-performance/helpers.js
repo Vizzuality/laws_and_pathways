@@ -52,6 +52,9 @@ export function renderBenchmarksLabels(chart) {
 
   [...g.querySelectorAll('.generated')].forEach((el) => el.remove()); // cleanup
 
+  let lastLabelY = 0;
+  const minLabelDistance = 20;
+
   chart.series.filter(s => s.type === 'area').forEach((area) => {
     const lastPoint = area.points.length && area.points.slice(-1)[0];
 
@@ -61,7 +64,10 @@ export function renderBenchmarksLabels(chart) {
     const lastPointY = area.yAxis.toPixels(lastPoint.y);
 
     const textX = lastPointX + 30;
-    const textY = lastPointY;
+    const textY = (lastPointY > lastLabelY + minLabelDistance)
+      ? lastPointY
+      : lastLabelY + minLabelDistance;
+    lastLabelY = textY;
     const text = createSVGText(textX, textY, area.name);
     const line = createSVGLine(lastPointX, lastPointY, textX, textY);
     g.appendChild(text);
