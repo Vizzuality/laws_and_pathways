@@ -180,3 +180,68 @@
     }
   }
 }
+
+.nested-dropdown {
+  height: 40px;
+  line-height: 40px;
+  position: relative;
+  background: $white;
+  border: 1px solid $black;
+
+  img {
+    margin-left: 10px;
+  }
+
+  &__list {
+    z-index: 100;
+    min-width: 150px;
+    border: 1px solid $black;
+    background: $white;
+    position: absolute;
+    visibility: hidden;
+  }
+
+  > &__list {
+    right: 0;
+  }
+
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+  }
+
+  &__item {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    cursor: pointer;
+    background: $white;
+    color: $black;
+
+    img {
+      transform: rotate(-90deg);
+    }
+
+    &:hover {
+      background: $blue-dark;
+      color: $white;
+
+      > .nested-dropdown__list {
+        visibility: visible;
+      }
+    }
+
+    > .nested-dropdown__list {
+      top: 0;
+      left: 100%;
+    }
+  }
+
+  &:hover {
+    > .nested-dropdown__list {
+      visibility: visible;
+    }
+  }
+}

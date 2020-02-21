@@ -89,4 +89,10 @@ $tape-color: rgba(25,25,25,0.1);
       }
     }
   }
+
+  .cp-performance-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
 }

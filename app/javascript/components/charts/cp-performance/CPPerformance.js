@@ -3,16 +3,19 @@
 import React, { useEffect, useRef, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
+import Select, { components } from 'react-select';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
 import PlusIcon from 'images/icons/plus.svg';
+import chevronIconBlack from 'images/icon_chevron_dark/chevron_down_black-1.svg';
 
 import { getOptions, COLORS } from './options';
 import { useOutsideClick } from 'shared/hooks';
 
 import CompanySelector from './CompanySelector';
 import CompanyTag from './CompanyTag';
+import NestedDropdown from './NestedDropdown';
 
 function getLegendItems(data) {
   return applyColorsToLegendItems(
@@ -26,7 +29,7 @@ function applyColorsToLegendItems(items) {
   return items.map((d, idx) => ({...d, color: COLORS[idx % 10]}));
 }
 
-function CPPerformance({ dataUrl, companySelector, unit }) {
+function CPPerformance({ geographies, regions, dataUrl, companySelector, unit }) {
   const [data, setData] = useState([]);
   const [legendItems, setLegendItems] = useState([]);
   const [showCompanySelector, setCompanySelectorVisible] = useState(false);
@@ -72,8 +75,43 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
 
   const options = getOptions({ chartData, unit });
 
+  const dropdownOptions = [
+    {
+      value: 'top_10',
+      label: 'Top 10 Emitters'
+    },
+    {
+      value: 'market_cap',
+      label: 'by Market Cap',
+      items: [
+        { value: 'market_cap_small', label: 'small' },
+        { value: 'market_cap_medium', label: 'medium' },
+        { value: 'market_cap_big', label: 'big' }
+      ]
+    },
+    {
+      value: 'geographies',
+      label: 'by Country',
+      items: geographies.map(c => ({ label: c.name, value: `by_country_${c.id}` }))
+    },
+    {
+      value: 'regions',
+      label: 'by Region',
+      items: regions.map(r => ({ label: r, value: `by_region_${r}` }))
+    }
+  ];
+  const [selectedShowBy, setSelectedShowBy] = useState('top_10');
+
   return (
     <div className="chart chart--cp-performance">
+      <NestedDropdown
+        title="Top 10 Emitters"
+        renderTo="#show-by-dropdown"
+        selected={selectedShowBy}
+        items={dropdownOptions}
+        onChange={(value) => setSelectedShowBy(value)}
+      />
+
       <div className="legend">
         <div className="legend-row">
           {legendItems.map(
@@ -131,11 +169,15 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
 }
 
 CPPerformance.defaultProps = {
-  companySelector: true
+  companySelector: true,
+  geographies: [],
+  regions: []
 };
 
 CPPerformance.propTypes = {
   companySelector: PropTypes.bool,
+  geographies: PropTypes.array,
+  regions: PropTypes.array,
   dataUrl: PropTypes.string.isRequired,
   unit: PropTypes.string.isRequired
 };
