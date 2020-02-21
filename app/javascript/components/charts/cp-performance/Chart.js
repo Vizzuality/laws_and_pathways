@@ -165,15 +165,21 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
     return item.label;
   })(selectedShowBy);
 
-  const renderDropdown = () => ReactDOM.createPortal(
-    <NestedDropdown
-      title="Top 10 Emitters"
-      subTitle={subTitle}
-      items={dropdownOptions}
-      onSelect={handleShowBySelect}
-    />,
-    document.querySelector('#show-by-dropdown-placeholder')
-  );
+  const renderDropdown = () => {
+    const element = document.querySelector('#show-by-dropdown-placeholder');
+
+    if (!element) return null;
+
+    return ReactDOM.createPortal(
+      <NestedDropdown
+        title="Top 10 Emitters"
+        subTitle={subTitle}
+        items={dropdownOptions}
+        onSelect={handleShowBySelect}
+      />,
+      element
+    );
+  };
 
   const options = getOptions({ chartData, unit });
 
