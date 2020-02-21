@@ -1,13 +1,24 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import { useOutsideClick } from 'shared/hooks';
 
 import chevronIconBlack from 'images/icon_chevron_dark/chevron_down_black-1.svg';
 
 function List({ items, onSelect }) {
+  const listItem = useRef(null);
+  const [isOpenOnLeft, setIsOpenOnLeft] = useState(false);
+
+  useEffect(() => {
+    if (listItem.current) {
+      const boundingBox = listItem.current.getBoundingClientRect();
+      setIsOpenOnLeft(boundingBox.right > window.innerWidth);
+    }
+  }, []);
+
   return (
-    <ul className="nested-dropdown__list">
+    <ul ref={listItem} className={cx('nested-dropdown__list', { left: isOpenOnLeft })}>
       {items.map((item) => <Item key={item.value} item={item} onSelect={onSelect} />)}
     </ul>
   );
@@ -25,6 +36,7 @@ List.propTypes = {
 
 function Item({ item, onSelect }) {
   const [isOpen, setIsOpen] = useState(false);
+
   const itemElement = useRef(null);
   const isNested = Boolean(item.items && item.items.length);
 

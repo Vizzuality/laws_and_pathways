@@ -63,6 +63,11 @@
     > .nested-dropdown__list {
       top: 0;
       left: 100%;
+
+      &.left {
+        left: unset;
+        right: 100%;
+      }
     }
   }
 }
