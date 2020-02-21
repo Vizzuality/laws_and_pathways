@@ -8,6 +8,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import uniqBy from 'lodash/uniqBy';
 import sortBy from 'lodash/sortBy';
+import get from 'lodash/get';
 
 import PlusIcon from 'images/icons/plus.svg';
 
@@ -22,7 +23,19 @@ function getLegendItems(data, showByValue) {
   let companyData = data.filter(d => d.type !== 'area');
 
   if (showByValue) {
-    const getLastEmission = (d) => d.data && d.data.length && d.data.slice(-1)[0];
+    // get last emission also looking at targeted
+    // const getLastEmission = (d) => d.data && d.data.length && d.data.slice(-1)[0][1];
+    const getLastEmission = (d) => {
+      const lastEmissionYear = get(d, 'data.zones[0].value');
+      let lastEmission;
+      if (!lastEmissionYear) {
+        // get last emission
+        lastEmission = d.data && d.data.length && d.data.slice(-1)[0][1];
+      } else {
+        lastEmission = d.data && d.data.length && d.data.find(x => x[0] === lastEmissionYear)[1];
+      }
+      return parseFloat(lastEmission, 10);
+    };
 
     companyData = companyData.filter(d => {
       if (showByValue.startsWith('market_cap')) {
@@ -39,12 +52,10 @@ function getLegendItems(data, showByValue) {
 
       return true;
     });
-    companyData = companyData.sort((a, b) => getLastEmission(a) > getLastEmission(b));
+    companyData = companyData.sort((a, b) => getLastEmission(b) - getLastEmission(a));
   }
 
-  return applyColorsToLegendItems(
-    companyData.slice(0, 10)
-  );
+  return applyColorsToLegendItems(companyData.slice(0, 10));
 }
 
 function applyColorsToLegendItems(items) {
