@@ -70,8 +70,8 @@ class Target < ApplicationRecord
       .where(events: {event_type: %w[set updated]})
   }
   scope :with_id_order, ->(ids) {
-    order = sanitize_sql_array(['array_position(ARRAY[?]::int[], id::int)', ids])
-    order(order)
+    order = sanitize_sql_array(['array_position(ARRAY[?]::int[], targets.id::int)', ids])
+    order(Arel.sql(order))
   }
 
   pg_search_scope :full_text_search,

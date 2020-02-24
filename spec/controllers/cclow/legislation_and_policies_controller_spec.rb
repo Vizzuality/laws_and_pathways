@@ -1,8 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
+  let!(:keyword) { create(:keyword, name: 'climate') }
   let!(:legislation1) { create(:legislation, :published, title: 'Super Legislation') }
-  let!(:legislation2) { create(:legislation, :published, title: 'Example', description: 'Legislation example') }
+  let!(:legislation2) {
+    create(:legislation, :published, title: 'Example', description: 'Legislation example', keywords: [keyword])
+  }
   let!(:legislation3) { create(:legislation, :published, title: 'Legislation Example', description: 'Example') }
   let!(:legislation4) { create(:legislation, :draft, title: 'This one is unpublished', description: 'Example') }
 
@@ -76,6 +79,18 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
       it 'responds to csv' do
         get :index, params: params, format: :csv
         expect(response.content_type).to eq('text/csv')
+      end
+    end
+
+    context 'with query params and keywords' do
+      let(:params) { {q: 'legislation example', keywords: [keyword.id]} }
+      subject { get :index, params: params }
+
+      it { is_expected.to be_successful }
+
+      it 'should return legislations' do
+        subject
+        expect(assigns(:legislations).size).to eq(1)
       end
     end
   end
