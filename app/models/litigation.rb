@@ -90,7 +90,7 @@ class Litigation < ApplicationRecord
   scope :started, -> { joins(:events).where(events: {event_type: EVENT_STARTED_TYPES}) }
   scope :recent, ->(date = 1.month.ago) { started.where('events.date > ?', date) }
   scope :with_id_order, ->(ids) {
-    order = sanitize_sql_array(['array_position(ARRAY[?]::int[], id::int)', ids])
+    order = sanitize_sql_array(['array_position(ARRAY[?]::int[], litigations.id::int)', ids])
     order(order)
   }
 
