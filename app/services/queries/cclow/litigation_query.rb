@@ -3,6 +3,8 @@ module Queries
     class LitigationQuery
       attr_reader :scope, :params
 
+      TAG_PARAMS = %w(responses keywords).freeze
+
       def initialize(params)
         @params = params
       end
@@ -35,8 +37,7 @@ module Queries
       def full_text_filter
         return scope unless params[:q].present?
 
-        @full_text_result_ids = scope.full_text_search(params[:q]).pluck(:id)
-        scope.where(id: @full_text_result_ids)
+        scope.full_text_search(params[:q]).with_pg_search_rank
       end
 
       def filter_by_region
@@ -58,22 +59,10 @@ module Queries
       end
 
       def filter_by_tags
-        sql = ''
+        return scope unless TAG_PARAMS.any? { |p| params[p.to_sym].present? }
 
-        %w(Response Keyword).each do |type|
-          tag_param = type.downcase.pluralize
-          next unless params[tag_param.to_sym].present?
-
-          sql += <<-SQL
-          INNER JOIN taggings AS #{tag_param}_taggings
-          ON #{tag_param}_taggings.taggable_id = litigations.id AND #{tag_param}_taggings.taggable_type = 'Litigation'
-            INNER JOIN tags AS #{tag_param} ON #{tag_param}.id = #{tag_param}_taggings.tag_id
-            AND #{tag_param}.id IN (#{params[tag_param.to_sym].join(', ')})
-            AND #{tag_param}.type = '#{type}'
-          SQL
-        end
-
-        sql.present? ? scope.joins(sql) : scope
+        tag_ids = TAG_PARAMS.flat_map { |p| params[p.to_sym] }.compact
+        scope.where(id: Litigation.with_tags_by_id(tag_ids))
       end
 
       def filter_by_from_date
@@ -129,7 +118,8 @@ module Queries
       def filter_by_litigation_party_type
         return scope unless params[:party_type].present?
 
-        scope.includes(:litigation_sides)
+        scope
+          .includes(:litigation_sides)
           .where(litigation_sides: {party_type: params[:party_type]})
       end
 
@@ -146,12 +136,12 @@ module Queries
       end
 
       def order
-        return scope.with_id_order(@full_text_result_ids) if defined?(@full_text_result_ids)
+        return scope if params[:q].present?
 
         scope
           .with_last_events
           .order('last_events.date DESC NULLS LAST, litigations.id')
-          .select('litigations.*, last_events.date')
+          .select('last_events.date, litigations.*')
       end
     end
   end

@@ -60,12 +60,13 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
     it 'should return all litigations with no filters' do
       results = subject.new({}).call
 
-      expect(results.count).to eq(4)
+      expect(results.size).to eq(4)
       expect(results).not_to include(unpublished_litigation)
     end
 
     it 'should use full text search' do
       results = subject.new(q: 'PGE').call
+      expect(results.size).to eq(1)
       expect(results).to contain_exactly(litigation1)
     end
 
@@ -101,7 +102,7 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
 
     it 'should filter by side A and Side B by matching both sides' do
       results = subject.new(side_a: ['Second Side A'], side_b: ['Side B']).call
-      expect(results.count).to eq(0)
+      expect(results.size).to eq(0)
     end
 
     it 'should filter by side C' do
@@ -116,13 +117,13 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
 
     it 'should filter by party type' do
       results = subject.new(party_type: ['corporation']).call
-      expect(results.count).to eq(2)
+      expect(results.size).to eq(2)
       expect(results).to contain_exactly(litigation1, litigation3)
     end
 
     it 'should filter by "a" party type' do
       results = subject.new(a_party_type: ['corporation']).call
-      expect(results.count).to eq(1)
+      expect(results.size).to eq(1)
       expect(results).to contain_exactly(litigation1)
     end
 
