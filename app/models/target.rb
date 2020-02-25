@@ -21,6 +21,7 @@
 #
 
 class Target < ApplicationRecord
+  include Eventable
   include UserTrackable
   include VisibilityStatus
   include DiscardableModel
@@ -61,7 +62,6 @@ class Target < ApplicationRecord
 
   belongs_to :geography
   belongs_to :sector, class_name: 'LawsSector', foreign_key: 'sector_id'
-  has_many :events, as: :eventable, dependent: :destroy
   has_and_belongs_to_many :legislations
 
   scope :recent, ->(date = 1.month.ago) {

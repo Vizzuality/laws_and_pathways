@@ -9,12 +9,17 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
   let(:side_c1) { create(:litigation_side, name: 'Side C', side_type: 'c', party_type: 'individual') }
   let(:side_c2) { create(:litigation_side, name: 'Side C', side_type: 'c', party_type: 'corporation') }
 
+  let(:biodiversity) { create(:keyword, name: 'Biodiversity') }
+  let(:business_risk) { create(:keyword, name: 'Business risk') }
+  let(:cap_and_trade) { create(:keyword, name: 'Cap and Trade') }
+
   let!(:litigation1) {
     litigation = create(
       :litigation,
       :published,
       title: 'PGE vs Common folks',
       litigation_sides: [side_a1, side_a11, side_a12, side_b1, side_c1],
+      keywords: [biodiversity, cap_and_trade],
       events: [
         build(:event, event_type: 'case_started', date: '2010-01-01'),
         build(:event, event_type: 'case_decided', date: '2013-03-01')
@@ -28,6 +33,7 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
       :published,
       title: 'Testing',
       litigation_sides: [side_a2],
+      keywords: [business_risk, cap_and_trade],
       events: [
         build(:event, event_type: 'case_started', date: '2014-12-02')
       ]
@@ -61,6 +67,11 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
     it 'should use full text search' do
       results = subject.new(q: 'PGE').call
       expect(results).to contain_exactly(litigation1)
+    end
+
+    it 'should filter by tags' do
+      results = subject.new(keywords: [cap_and_trade.id, biodiversity.id]).call
+      expect(results).to contain_exactly(litigation1, litigation2)
     end
 
     it 'should filter by from date' do
@@ -112,6 +123,11 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
     it 'should filter by "a" party type' do
       results = subject.new(a_party_type: ['corporation']).call
       expect(results.count).to eq(1)
+      expect(results).to contain_exactly(litigation1)
+    end
+
+    it 'should filter by status' do
+      results = subject.new(status: ['case_decided']).call
       expect(results).to contain_exactly(litigation1)
     end
 

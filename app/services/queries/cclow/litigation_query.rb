@@ -26,6 +26,7 @@ module Queries
           .merge(filter_by_sector)
           .merge(filter_recent)
           .merge(order)
+          .distinct
       end
       # rubocop:enable Metrics/AbcSize
 
@@ -67,7 +68,7 @@ module Queries
           INNER JOIN taggings AS #{tag_param}_taggings
           ON #{tag_param}_taggings.taggable_id = litigations.id AND #{tag_param}_taggings.taggable_type = 'Litigation'
             INNER JOIN tags AS #{tag_param} ON #{tag_param}.id = #{tag_param}_taggings.tag_id
-            AND #{tag_param}.id IN (#{params[tag_param].join(', ')})
+            AND #{tag_param}.id IN (#{params[tag_param.to_sym].join(', ')})
             AND #{tag_param}.type = '#{type}'
           SQL
         end
@@ -78,28 +79,19 @@ module Queries
       def filter_by_from_date
         return scope unless params[:from_date].present?
 
-        event_ids =
-          Event.where(eventable_type: 'Litigation').group('eventable_id', :id).having('MAX(date) >= date').map(&:id)
-
-        scope.joins(:events)
-          .where('events.date >= (?) AND events.id in (?)', Date.new(params[:from_date].to_i, 1, 1), event_ids).distinct
+        scope.with_last_events.where('last_events.date >= (?)', Date.new(params[:from_date].to_i, 1, 1))
       end
 
       def filter_by_to_date
         return scope unless params[:to_date].present?
 
-        event_ids =
-          Event.where(eventable_type: 'Litigation').group('eventable_id', :id).having('MAX(date) >= date').map(&:id)
-        scope.joins(:events)
-          .where('events.date <= (?) AND events.id in (?)', Date.new(params[:to_date].to_i, 12, 31), event_ids)
+        scope.with_last_events.where('last_events.date <= (?)', Date.new(params[:to_date].to_i, 12, 31))
       end
 
       def filter_by_to_status
         return scope unless params[:status].present?
 
-        event_ids =
-          Event.where(eventable_type: 'Litigation').group('eventable_id', :id).having('MAX(date) >= date').map(&:id)
-        scope.joins(:events).where(events: {id: event_ids, event_type: params[:status]}).distinct
+        scope.with_last_events.where(last_events: {event_type: params[:status]})
       end
 
       def filter_by_litigation_side_party_types
@@ -156,16 +148,10 @@ module Queries
       def order
         return scope.with_id_order(@full_text_result_ids) if defined?(@full_text_result_ids)
 
-        last_events_sql = <<-SQL
-          LEFT OUTER JOIN (
-            SELECT le.eventable_id, MAX(le.date) as date
-            FROM Events le
-            WHERE le.eventable_type = 'Litigation'
-            GROUP BY le.eventable_id
-          ) AS last_events ON last_events.eventable_id = litigations.id
-        SQL
-
-        scope.joins(last_events_sql).order('last_events.date DESC NULLS LAST')
+        scope
+          .with_last_events
+          .order('last_events.date DESC NULLS LAST, litigations.id')
+          .select('litigations.*, last_events.date')
       end
     end
   end
