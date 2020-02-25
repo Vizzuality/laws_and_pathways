@@ -156,7 +156,16 @@ module Queries
       def order
         return scope.with_id_order(@full_text_result_ids) if defined?(@full_text_result_ids)
 
-        scope.includes(:events).order('events.date DESC NULLS LAST')
+        last_events_sql = <<-SQL
+          LEFT OUTER JOIN (
+            SELECT le.eventable_id, MAX(le.date) as date
+            FROM Events le
+            WHERE le.eventable_type = 'Litigation'
+            GROUP BY le.eventable_id
+          ) AS last_events ON last_events.eventable_id = litigations.id
+        SQL
+
+        scope.joins(last_events_sql).order('last_events.date DESC NULLS LAST')
       end
     end
   end

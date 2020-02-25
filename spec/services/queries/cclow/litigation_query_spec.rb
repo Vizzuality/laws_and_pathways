@@ -1,18 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe Queries::CCLOW::LitigationQuery do
-  let(:side_a1) { create(:litigation_side, name: 'Side A', side_type: 'a') }
-  let(:side_a2) { create(:litigation_side, name: 'Second Side A', side_type: 'a') }
-  let(:side_b1) { create(:litigation_side, name: 'Side B', side_type: 'b') }
-  let(:side_c1) { create(:litigation_side, name: 'Side C', side_type: 'c') }
-  let(:side_c2) { create(:litigation_side, name: 'Side C', side_type: 'c') }
+  let(:side_a1) { create(:litigation_side, name: 'Side A', side_type: 'a', party_type: 'corporation') }
+  let(:side_a11) { create(:litigation_side, name: 'Side A 2', side_type: 'a', party_type: 'corporation') }
+  let(:side_a12) { create(:litigation_side, name: 'Side A 3', side_type: 'a', party_type: 'government') }
+  let(:side_a2) { create(:litigation_side, name: 'Second Side A', side_type: 'a', party_type: 'government') }
+  let(:side_b1) { create(:litigation_side, name: 'Side B', side_type: 'b', party_type: 'corporation') }
+  let(:side_c1) { create(:litigation_side, name: 'Side C', side_type: 'c', party_type: 'individual') }
+  let(:side_c2) { create(:litigation_side, name: 'Side C', side_type: 'c', party_type: 'corporation') }
 
   let!(:litigation1) {
     litigation = create(
       :litigation,
       :published,
       title: 'PGE vs Common folks',
-      litigation_sides: [side_a1, side_b1, side_c1],
+      litigation_sides: [side_a1, side_a11, side_a12, side_b1, side_c1],
       events: [
         build(:event, event_type: 'case_started', date: '2010-01-01'),
         build(:event, event_type: 'case_decided', date: '2013-03-01')
@@ -31,7 +33,16 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
       ]
     )
   }
-  let!(:litigation3) { create(:litigation, :published, litigation_sides: [side_c2]) }
+  let!(:litigation3) {
+    create(
+      :litigation,
+      :published,
+      litigation_sides: [side_c2],
+      events: [
+        build(:event, event_type: 'case_started', date: '2016-12-02')
+      ]
+    )
+  }
   let!(:litigation4) { create(:litigation, :published) }
 
   # It shouldn't show, so total is 4 not 5 at max!
@@ -54,7 +65,7 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
 
     it 'should filter by from date' do
       results = subject.new(from_date: '2011').call
-      expect(results).to contain_exactly(litigation1, litigation2)
+      expect(results).to contain_exactly(litigation1, litigation2, litigation3)
     end
 
     it 'should filter by to date' do
@@ -92,9 +103,26 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
       expect(results).to contain_exactly(litigation1)
     end
 
+    it 'should filter by party type' do
+      results = subject.new(party_type: ['corporation']).call
+      expect(results.count).to eq(2)
+      expect(results).to contain_exactly(litigation1, litigation3)
+    end
+
+    it 'should filter by "a" party type' do
+      results = subject.new(a_party_type: ['corporation']).call
+      expect(results.count).to eq(1)
+      expect(results).to contain_exactly(litigation1)
+    end
+
     it 'should filter by multiple params' do
       results = subject.new(q: 'Test', from_date: '2011', side_a: ['Side A']).call
       expect(results).to contain_exactly(litigation2)
+    end
+
+    it 'should be ordered by last event date' do
+      results = subject.new({}).call
+      expect(results.map(&:id)).to eq([litigation3.id, litigation2.id, litigation1.id, litigation4.id])
     end
   end
 end
