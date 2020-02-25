@@ -18,7 +18,7 @@ FactoryBot.define do
   factory :litigation_side do
     association :litigation
 
-    sequence(:name) { |n| 'Litigation side name -' + ('AA'..'ZZ').to_a[n] }
+    sequence(:name) { |n| 'Litigation side name -' + ('AAAA'..'ZZZZ').to_a[n] }
     side_type { 'a' }
     party_type { 'individual' }
 

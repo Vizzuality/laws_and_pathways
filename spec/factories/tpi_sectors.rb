@@ -12,7 +12,7 @@
 
 FactoryBot.define do
   factory :tpi_sector do
-    sequence(:name) { |n| 'name-' + ('AA'..'ZZ').to_a[n] }
+    sequence(:name) { |n| 'name-' + ('AAAA'..'ZZZZ').to_a[n] }
 
     trait :with_benchmarks do
       after(:create) do |s|

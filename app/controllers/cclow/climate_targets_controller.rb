@@ -19,7 +19,7 @@ module CCLOW
             geo_filter_options: region_geography_options,
             types_filter_options: target_types_options,
             climate_targets: CCLOW::TargetDecorator.decorate_collection(@climate_targets.first(10)),
-            count: @climate_targets.count
+            count: @climate_targets.size
           }, prerender: false
         end
         format.json do
@@ -27,7 +27,7 @@ module CCLOW
             climate_targets: CCLOW::TargetDecorator.decorate_collection(
               @climate_targets.offset(params[:offset] || 0).take(10)
             ),
-            count: @climate_targets.count
+            count: @climate_targets.size
           }
         end
         format.csv do

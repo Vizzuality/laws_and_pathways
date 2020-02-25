@@ -26,7 +26,7 @@ module CCLOW
             governances_filter_options: governances_options,
             sectors_options: sectors_options('Legislation'),
             legislations: CCLOW::LegislationDecorator.decorate_collection(@legislations.first(10)),
-            count: @legislations.count
+            count: @legislations.size
           }, prerender: false
         end
         format.json do
@@ -34,7 +34,7 @@ module CCLOW
             legislations: CCLOW::LegislationDecorator.decorate_collection(
               @legislations.offset(params[:offset] || 0).take(10)
             ),
-            count: @legislations.count
+            count: @legislations.size
           }
         end
         format.csv do

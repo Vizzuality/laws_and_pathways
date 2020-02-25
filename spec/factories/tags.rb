@@ -45,6 +45,10 @@ FactoryBot.define do
     }
   end
 
+  factory :response do
+    type { 'Response' }
+  end
+
   factory :natural_hazard do
     type { 'NaturalHazard' }
     sequence(:name) { |n|
