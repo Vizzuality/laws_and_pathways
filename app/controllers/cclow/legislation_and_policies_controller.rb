@@ -43,7 +43,7 @@ module CCLOW
             :frameworks, :document_types, :keywords,
             :natural_hazards, :responses,
             :parent, :geography, :events
-          ).where(id: @legislations.pluck(:id))
+          ).where(id: @legislations.reorder(:id).pluck(:id))
 
           render csv: CSVExport::User::Legislations.new(legislations).call,
                  filename: "laws_and_policies_#{timestamp}"

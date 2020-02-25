@@ -44,7 +44,7 @@ module CCLOW
         format.csv do
           timestamp = Time.now.strftime('%d%m%Y')
           litigations = Litigation
-            .where(id: @litigations.pluck(:id))
+            .where(id: @litigations.reorder(:id).pluck(:id))
             .includes(
               :geography, :responses, :keywords,
               :events, :legislations, :external_legislations

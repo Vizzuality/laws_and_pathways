@@ -33,7 +33,7 @@ module CCLOW
         format.csv do
           timestamp = Time.now.strftime('%d%m%Y')
           targets = Target
-            .where(id: @climate_targets.pluck(:id))
+            .where(id: @climate_targets.reorder(:id).pluck(:id))
             .includes(:sector, :scopes, :geography, :events)
 
           render csv: CSVExport::User::Targets.new(targets).call,
