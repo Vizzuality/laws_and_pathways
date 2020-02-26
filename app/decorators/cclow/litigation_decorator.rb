@@ -13,7 +13,7 @@ module CCLOW
     def short_summary
       h.truncate(
         h.strip_tags(summary),
-        length: 500
+        length: 300
       )
     end
 

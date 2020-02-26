@@ -17,7 +17,7 @@ module CCLOW
     def short_description
       h.truncate(
         h.strip_tags(description),
-        length: 500
+        length: 300
       )
     end
 
