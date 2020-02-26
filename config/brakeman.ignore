@@ -1,57 +1,6 @@
 {
   "ignored_warnings": [
     {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "0707d2fe6c481f7c3d2c52e16c31844b742e7ebf7b47ac4c87e62b30770d2be7",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/controllers/cclow/litigation_cases_controller.rb",
-      "line": 69,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "Litigation.where(:id => litigations.map(&:id)).joins(\"        LEFT OUTER JOIN events ON events.eventable_id = litigations.id\\n        AND events.eventable_type = 'Litigation'\\n        AND events.event_type IN (#{[\"case_filed\", \"case_opened\", \"case_started\"].map do\n \"'#{:BRAKEMAN_SAFE_LITERAL}'\"\n end.join(\", \")})\\n\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "CCLOW::LitigationCasesController",
-        "method": "sort_list"
-      },
-      "user_input": "[\"case_filed\", \"case_opened\", \"case_started\"].map do\n \"'#{:BRAKEMAN_SAFE_LITERAL}'\"\n end.join(\", \")",
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 2,
-      "fingerprint": "398aa3993d445d32ee3c218998a6e6a409abc2154531826fffa90d7594eee271",
-      "check_name": "CrossSiteScripting",
-      "message": "Unescaped model attribute",
-      "file": "app/views/tpi/publications/show.html.erb",
-      "line": 11,
-      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "(NewsArticle.find(params[:id]) or Publication.find(params[:id])).content",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "TPI::PublicationsController",
-          "method": "show",
-          "line": 20,
-          "file": "app/controllers/tpi/publications_controller.rb",
-          "rendered": {
-            "name": "tpi/publications/show",
-            "file": "app/views/tpi/publications/show.html.erb"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "tpi/publications/show"
-      },
-      "user_input": "NewsArticle.find(params[:id])",
-      "confidence": "Weak",
-      "note": ""
-    },
-    {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 4,
       "fingerprint": "3a9d04efafeb7619a7e6db3c8ee025dc5c756204db484431c02a2b0087a166ea",
@@ -310,6 +259,26 @@
       "note": ""
     },
     {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "dd3cca7bf39b0acadf49c3b86e558a87286fa786a100532e2fdd94e9507ff2d9",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/concerns/eventable.rb",
+      "line": 19,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "joins(\"        LEFT OUTER JOIN (\\n          SELECT DISTINCT ON(le.eventable_id) *\\n          FROM Events le\\n          WHERE le.eventable_type = '#{model_name}'\\n          ORDER BY le.eventable_id, le.date DESC NULLS LAST\\n        ) AS last_events ON last_events.eventable_id = #{table_name}.id\\n\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Eventable",
+        "method": "with_last_events"
+      },
+      "user_input": "model_name",
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
       "warning_type": "Weak Hash",
       "warning_code": 90,
       "fingerprint": "e6f71a72258ad09ef86a513f86bd32b984da44f5e3707878d6323d551517e0df",
@@ -361,6 +330,6 @@
       "note": ""
     }
   ],
-  "updated": "2020-02-13 15:57:46 +0300",
+  "updated": "2020-02-26 01:05:39 +0100",
   "brakeman_version": "4.7.2"
 }
