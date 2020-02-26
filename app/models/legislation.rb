@@ -81,10 +81,6 @@ class Legislation < ApplicationRecord
   scope :policies, -> { executive }
   scope :passed, -> { joins(:events).where(events: {event_type: 'law_passed'}) }
   scope :recent, ->(date = 1.month.ago) { passed.where('events.date > ?', date) }
-  scope :with_id_order, ->(ids) {
-    order = sanitize_sql_array(['array_position(ARRAY[?]::int[], legislations.id::int)', ids])
-    order(Arel.sql(order))
-  }
 
   pg_search_scope :full_text_search,
                   associated_against: {
