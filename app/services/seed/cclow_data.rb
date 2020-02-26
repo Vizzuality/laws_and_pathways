@@ -20,6 +20,12 @@ module Seed
       end
     end
 
+    def call_litigation_sources_import
+      TimedLogger.log('Migrate litigations source files') do
+        Migration::Litigation.migrate_source_files(seed_file('litigation-sources.csv'))
+      end
+    end
+
     def call
       ### import Laws ###
       TimedLogger.log('Import legislation') do

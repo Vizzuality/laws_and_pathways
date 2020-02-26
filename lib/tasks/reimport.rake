@@ -38,6 +38,14 @@ namespace :reimport do
     Seed::CCLOWData.call_sources_import
   end
 
+  desc 'Reimport CCLOW litigation files data only - USE WITH CAUTION'
+  task cclow_sources: :environment do
+    # let's start by appending
+    # Document.delete_all
+
+    Seed::CCLOWData.call_litigation_sources_import
+  end
+
   desc 'Reimport CCLOW LitigationSides'
   task cclow_litigation_sides: :environment do
     LitigationSide.delete_all
