@@ -8,6 +8,7 @@ module Seed
       delegate :call, to: :instance
       delegate :call_sources_import, to: :instance
       delegate :import_litigation_sides, to: :instance
+      delegate :call_litigation_sources_import, to: :instance
     end
 
     def call_sources_import

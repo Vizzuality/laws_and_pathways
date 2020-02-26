@@ -39,7 +39,7 @@ module Migration
           #   doc.type = 'external'
           #   doc.external_url = row['url']
           # end
-          l.documents << doc
+          l.documents << doc if for_real
         end
       end
       # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
