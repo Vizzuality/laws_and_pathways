@@ -34,12 +34,12 @@ module CCLOW
         legislation_events = @legislation.events.order(:date)
         @legislation_events_with_links = legislation_events.map do |e|
           ::Api::Presenters::Event.call(e, :legislation)
-
-          fixed_navbar(
-            "Climate Laws and Policies - #{@geography.name} - #{@legislation.title}",
-            admin_legislation_path(@legislation)
-          )
         end
+
+        fixed_navbar(
+          "Climate Laws and Policies - #{@geography.name} - #{@legislation.title}",
+          admin_legislation_path(@legislation)
+        )
       end
 
       private

@@ -27,12 +27,12 @@ module CCLOW
         @litigation_events = @litigation.events.order(:date)
         @litigation_events_with_links = @litigation_events.map do |e|
           ::Api::Presenters::Event.call(e, :litigation)
-
-          fixed_navbar(
-            "Litigation cases - #{@geography.name} - #{@litigation.title}",
-            admin_litigation_path(@litigation)
-          )
         end
+
+        fixed_navbar(
+          "Litigation cases - #{@geography.name} - #{@litigation.title}",
+          admin_litigation_path(@litigation)
+        )
       end
       # rubocop:enable Metrics/AbcSize
     end
