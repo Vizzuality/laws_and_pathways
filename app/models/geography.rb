@@ -20,6 +20,7 @@
 #
 
 class Geography < ApplicationRecord
+  include Eventable
   include UserTrackable
   include Taggable
   include VisibilityStatus
@@ -79,7 +80,6 @@ class Geography < ApplicationRecord
   has_many :litigations
   has_many :legislations
   has_many :targets
-  has_many :events, as: :eventable, dependent: :destroy
 
   accepts_nested_attributes_for :events, allow_destroy: true, reject_if: :all_blank
 

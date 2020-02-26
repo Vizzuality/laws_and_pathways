@@ -29,7 +29,7 @@ FactoryBot.define do
     association :headquarters_geography, factory: :geography
     association :sector, factory: :tpi_sector
 
-    sequence(:name) { |n| 'Company name -' + ('AA'..'ZZ').to_a[n] }
+    sequence(:name) { |n| 'Company name -' + ('AAAA'..'ZZZZ').to_a[n] }
     isin { SecureRandom.uuid }
 
     ca100 { true }

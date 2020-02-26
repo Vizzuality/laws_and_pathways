@@ -20,6 +20,7 @@
 #
 
 class Litigation < ApplicationRecord
+  include Eventable
   include UserTrackable
   include Taggable
   include VisibilityStatus
@@ -89,10 +90,6 @@ class Litigation < ApplicationRecord
 
   scope :started, -> { joins(:events).where(events: {event_type: EVENT_STARTED_TYPES}) }
   scope :recent, ->(date = 1.month.ago) { started.where('events.date > ?', date) }
-  scope :with_id_order, ->(ids) {
-    order = sanitize_sql_array(['array_position(ARRAY[?]::int[], litigations.id::int)', ids])
-    order(Arel.sql(order))
-  }
 
   pg_search_scope :full_text_search,
                   associated_against: {
@@ -118,7 +115,6 @@ class Litigation < ApplicationRecord
   has_and_belongs_to_many :laws_sectors
   has_many :litigation_sides, -> { order(:side_type) }, inverse_of: :litigation
   has_many :documents, as: :documentable, dependent: :destroy
-  has_many :events, as: :eventable, dependent: :destroy
   has_and_belongs_to_many :legislations
   has_and_belongs_to_many :external_legislations
 

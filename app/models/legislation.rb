@@ -19,6 +19,7 @@
 #
 
 class Legislation < ApplicationRecord
+  include Eventable
   include UserTrackable
   include Taggable
   include VisibilityStatus
@@ -70,7 +71,6 @@ class Legislation < ApplicationRecord
   belongs_to :geography
   belongs_to :parent, class_name: 'Legislation', foreign_key: 'parent_id', optional: true
   has_many :documents, as: :documentable, dependent: :destroy
-  has_many :events, as: :eventable, dependent: :destroy
   has_and_belongs_to_many :targets
   has_and_belongs_to_many :litigations
   has_and_belongs_to_many :instruments
@@ -81,10 +81,6 @@ class Legislation < ApplicationRecord
   scope :policies, -> { executive }
   scope :passed, -> { joins(:events).where(events: {event_type: 'law_passed'}) }
   scope :recent, ->(date = 1.month.ago) { passed.where('events.date > ?', date) }
-  scope :with_id_order, ->(ids) {
-    order = sanitize_sql_array(['array_position(ARRAY[?]::int[], legislations.id::int)', ids])
-    order(Arel.sql(order))
-  }
 
   pg_search_scope :full_text_search,
                   associated_against: {

@@ -17,6 +17,7 @@ FactoryBot.define do
   factory :event do
     url { 'https://test.com' }
     date { 10.days.ago }
+    title { 'Lorem ipsum' }
 
     factory :litigation_event do
       title { 'Some case was started' }

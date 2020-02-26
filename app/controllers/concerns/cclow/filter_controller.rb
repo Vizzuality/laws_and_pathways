@@ -30,12 +30,12 @@ module CCLOW
     end
 
     def instruments_options
-      instruments = Instrument.joins(:legislations).map { |j| {value: j.id, label: j.name} }
+      instruments = Instrument.joins(:legislations).distinct.map { |j| {value: j.id, label: j.name} }
       [{field_name: 'instrument', options: instruments.sort_by { |h| h[:label] }}]
     end
 
     def governances_options
-      governances = Governance.joins(:legislations).map { |j| {value: j.id, label: j.name} }
+      governances = Governance.joins(:legislations).distinct.map { |j| {value: j.id, label: j.name} }
       [{field_name: 'governance', options: governances.sort_by { |h| h[:label] }}]
     end
 
