@@ -14,9 +14,17 @@ module CCLOW
       h.cclow_geography_path(geography)
     end
 
+    def short_description
+      h.truncate(
+        h.strip_tags(description),
+        length: 300
+      )
+    end
+
     def as_json(*)
       super.tap do |hash|
         hash['link'] = link
+        hash['short_description'] = short_description
         hash['geography'] = model.geography
         hash['date_passed'] = model.first_event&.date&.strftime('%Y')
         hash['last_change'] = model.last_event&.date&.strftime('%B, %Y')

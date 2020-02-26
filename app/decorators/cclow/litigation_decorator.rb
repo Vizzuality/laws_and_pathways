@@ -10,6 +10,13 @@ module CCLOW
       end
     end
 
+    def short_summary
+      h.truncate(
+        h.strip_tags(summary),
+        length: 300
+      )
+    end
+
     def geography_path
       return nil if geography.nil?
 
@@ -19,6 +26,7 @@ module CCLOW
     def as_json(*)
       super.tap do |hash|
         hash['link'] = link
+        hash['short_summary'] = short_summary
         hash['geography'] = model.geography
         hash['opened_in'] = model.started_event&.date&.year
         hash['last_development_in'] = model.last_non_starting_event&.date&.strftime('%B, %Y')

@@ -407,7 +407,7 @@ class LitigationCases extends Component {
                           {litigation.opened_in && <div>Opened in {litigation.opened_in}</div>}
                           {litigation.last_development_in && <div>Last development in {litigation.last_development_in}</div>}
                         </div>
-                        <div className="description" dangerouslySetInnerHTML={{__html: litigation.summary}} />
+                        <div className="description" dangerouslySetInnerHTML={{__html: litigation.short_summary}} />
                       </li>
                     </Fragment>
                   ))}
