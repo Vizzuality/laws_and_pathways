@@ -360,7 +360,9 @@ class LegislationAndPolicies extends Component {
                         {legislation.date_passed && <div>{legislation.date_passed}</div>}
                         {legislation.last_change && <div>Last change in {legislation.last_change}</div>}
                       </div>
-                      <div className="description" dangerouslySetInnerHTML={{__html: legislation.description}} />
+                      <div className="description">
+                        {legislation.short_description}
+                      </div>
                     </li>
                   </Fragment>
                 ))}
