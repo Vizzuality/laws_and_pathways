@@ -4,7 +4,7 @@ module Migration
     class << self
       # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def migrate_source_files(source)
-        for_real = Rails.env.production?
+        for_real = Rails.env.staging?
         file = File.read(source).force_encoding('UTF-8')
         csv = CSV.parse(
           file,
@@ -23,23 +23,23 @@ module Migration
           doc = Document.new(name: row['title'],
                              last_verified_on: row['date'],
                              language: row['language'])
-          if row['url'].include?('http://www.lse.ac.uk/GranthamInstitute/wp-content/uploads')
-            doc.type = 'uploaded'
-            if for_real
-              begin
-                filename = File.basename(URI.parse(source).path)
-                file = URI.open(source)
-              rescue URI::InvalidURIError, OpenURI::HTTPError, OpenSSL::SSL::SSLError
-                puts "File for #{row['law_id']} and #{row['url']} not working"
-                next
-              end
-              doc.file.attach(io: file, filename: filename.last)
+          # if row['url'].include?('http://www.lse.ac.uk/GranthamInstitute/wp-content/uploads')
+          doc.type = 'uploaded'
+          if for_real
+            begin
+              filename = File.basename(URI.parse(source).path)
+              file = URI.open(source)
+            rescue URI::InvalidURIError, OpenURI::HTTPError, OpenSSL::SSL::SSLError
+              puts "File for #{row['law_id']} and #{row['url']} not working"
+              next
             end
-          else
-            doc.type = 'external'
-            doc.external_url = row['url']
+            doc.file.attach(io: file, filename: filename.last)
           end
-          l.documents << doc
+          # else
+          #   doc.type = 'external'
+          #   doc.external_url = row['url']
+          # end
+          l.documents << doc if for_real
         end
       end
       # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
