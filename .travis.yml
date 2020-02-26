@@ -1,3 +1,4 @@
+dist: bionic
 language: ruby
 cache:
   bundler: true
@@ -7,19 +8,16 @@ cache:
     - /home/travis/.rvm/
 services:
   - postgres
+addons:
+  postgresql: 11
 before_install:
-  - sudo apt-get update
-  - sudo apt-get --yes remove postgresql\*
-  - sudo apt-get install -y postgresql-11 postgresql-client-11
-  - sudo cp /etc/postgresql/{9.6,11}/main/pg_hba.conf
-  - sudo service postgresql restart 11
   - nvm install
   - node -v
   - npm i -g yarn
 install:
-  - bundle install --jobs=3 --retry=3 --deployment --path=${BUNDLE_PATH:-vendor/bundle}
+  - bundle install --jobs=3 --retry=3
   - yarn
 before_script:
-  - bundle exec rake db:test:prepare
+  - bundle exec rake db:drop db:create db:schema:load RAILS_ENV=test
 script:
   - yarn test
