@@ -92,4 +92,24 @@ class Target < ApplicationRecord
     parts = [geography.name, target_type&.humanize, year]
     parts.compact.join(' - ')
   end
+
+  def to_api_format
+    {
+      id: id,
+      iso_code3: geography.iso,
+      country: geography.name,
+      doc_type: source&.downcase,
+      type: target_type&.humanize,
+      scope: scopes&.map(&:name)&.join(', '),
+      sector: sector&.name&.parameterize,
+      description: description,
+      sources: legislations.map do |l|
+        {
+          id: l.id,
+          title: l.title,
+          link: l.route(geography)
+        }
+      end
+    }
+  end
 end
