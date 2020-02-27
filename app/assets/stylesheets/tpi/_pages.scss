@@ -3,8 +3,13 @@
 @import "colors";
 @import "typography";
 
+$lists-margin: 5px;
+$lists-line-height: 24px;
+$text-indent: 26px;
+$margin-between-list-items: 20px;
+
 .pages__title {
-  margin-top: 80px;
+  margin-top: 65px;
   margin-bottom: 40px;
 }
 
@@ -12,7 +17,7 @@
   color: $dark;
   font-size: 16px;
   line-height: 30px;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 
   h1, h2, h3, h4, h5 {
     margin-top: 45px;
@@ -27,6 +32,63 @@
 
 .pages__content {
   margin-bottom: 70px;
+
+  * > {
+    ul {
+      margin-left: $lists-margin;
+      list-style: none;
+
+      li {
+        line-height: $lists-line-height;
+        margin-bottom: $margin-between-list-items;
+        
+        &:before {
+          display: inline-block;
+          content: '';
+          border-radius: 50%;
+          height: 0.4em;
+          width: 0.4em;
+          margin-right: 1em;
+          background-color: $dark;
+          vertical-align: middle;
+        }
+      }
+    }
+
+    ol {
+      margin-left: calc(#{$text-indent} + #{$lists-margin});
+
+      li {
+        list-style-type: decimal;
+        list-style-position: inside;
+        line-height: $lists-line-height;
+        margin-bottom: $margin-between-list-items;
+        text-indent: calc(-1 * #{$text-indent});
+
+        &:before {
+          display: inline-block;
+          content: '';
+          width: 10px;
+        }
+      }
+    }
+
+    a {
+      color: $blue;
+      font-family: $font-family-bold;
+
+      &:hover {
+        color: $blue-darker;
+        text-decoration: underline;
+      }
+
+      &:focus {
+        color: $blue-darker;
+        background-color: $yellow;
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 .pages__content-title {
