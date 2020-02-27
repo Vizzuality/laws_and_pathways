@@ -3,15 +3,15 @@ module CCLOW
     delegate_all
 
     def link
-      return h.link_to(title, h.cclow_geography_law_path(geography, model)) if law?
+      return h.link_to(title, h.cclow_geography_law_path(geography.slug, model)) if law?
 
-      h.link_to(title, h.cclow_geography_policy_path(geography, model)) if policy?
+      h.link_to(title, h.cclow_geography_policy_path(geography.slug, model)) if policy?
     end
 
     def geography_path
       return nil if geography.nil?
 
-      h.cclow_geography_path(geography)
+      h.cclow_geography_path(geography.slug)
     end
 
     def short_description

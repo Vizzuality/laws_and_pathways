@@ -8,7 +8,7 @@ module CCLOW
 
       if model.sector
         h.link_to(link_title,
-                  h.cclow_geography_geography_climate_targets_sector_path(model.geography,
+                  h.cclow_geography_geography_climate_targets_sector_path(model.geography.slug,
                                                                           model.sector.name))
       else
         h.link_to(link_title, h.cclow_geography_climate_targets_path(model.geography))
@@ -26,7 +26,7 @@ module CCLOW
     def geography_path
       return nil if geography.nil?
 
-      h.cclow_geography_path(geography)
+      h.cclow_geography_path(geography.slug)
     end
 
     def as_json(*)

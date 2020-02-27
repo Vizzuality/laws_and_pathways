@@ -1,11 +1,11 @@
 <%
-  sidebar_links = [{label: 'Laws', path: cclow_geography_laws_path(@geography), count: @geography_overview.number_of_laws},
-                   {label: 'Policies', path: cclow_geography_policies_path(@geography), count: @geography_overview.number_of_policies},
+  sidebar_links = [{label: 'Laws', path: cclow_geography_laws_path(@geography.slug), count: @geography_overview.number_of_laws},
+                   {label: 'Policies', path: cclow_geography_policies_path(@geography.slug), count: @geography_overview.number_of_policies},
                    {label: 'Litigation cases',
-                    path: cclow_geography_litigation_cases_path(@geography),
+                    path: cclow_geography_litigation_cases_path(@geography.slug),
                     count: @geography_overview.number_of_litigation_cases},
                    {label: 'Climate targets',
-                    path: cclow_geography_climate_targets_path(@geography),
+                    path: cclow_geography_climate_targets_path(@geography.slug),
                     count: @geography_overview.number_of_targets}]
 %>
 
@@ -19,7 +19,7 @@
     <div class="columns">
       <aside class="column is-one-quarter">
         <ul class="sidebar">
-          <li><%= active_link_to 'Overview and context', cclow_geography_path(@geography), active: :exclusive %></li>
+          <li><%= active_link_to 'Overview and context', cclow_geography_path(@geography.slug), active: :exclusive %></li>
           <% sidebar_links.each do |link| %>
             <li><%= active_link_to "#{link[:label]} (#{link[:count]})", link[:path], active: :inclusive %></li>
           <% end %>
