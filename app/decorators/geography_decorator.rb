@@ -34,4 +34,8 @@ class GeographyDecorator < Draper::Decorator
 
     h.link_to 'INDC Link', indc_url, target: '_blank'
   end
+
+  def percent_global_emissions
+    model.percent_global_emissions ? "#{model.percent_global_emissions} %" : '-'
+  end
 end

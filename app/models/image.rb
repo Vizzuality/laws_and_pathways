@@ -6,6 +6,8 @@
 #  link       :string
 #  content_id :bigint           not null
 #  name       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 
 class Image < ApplicationRecord

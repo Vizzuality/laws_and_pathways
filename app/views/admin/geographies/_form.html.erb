@@ -20,6 +20,9 @@
           <%= f.input :federal_details, wrapper_html: {data: {controller: 'dependent-input', depends_on: 'federal'}} %>
           <%= f.input :legislative_process, as: :trix %>
           <%= f.input :political_group_ids, label: 'Political Groups', as: :tags, collection: PoliticalGroup.all %>
+          <%= f.input :percent_global_emissions, label: 'Percentage of Global Emissions' %>
+          <%= f.input :climate_risk_index %>
+          <%= f.input :wb_income_group, label: 'World Bank Income Group' %>
           <%= f.input :visibility_status, as: :select %>
         <% end %>
       </div>
