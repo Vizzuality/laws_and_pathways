@@ -8,6 +8,16 @@ $lists-line-height: 24px;
 $text-indent: 26px;
 $margin-between-list-items: 20px;
 
+.pages__grid {
+  width: 100%;
+  padding: 0 15px;
+
+  @include desktop {
+    width: 75%;
+    padding: unset;
+  }
+}
+
 .pages__title {
   margin-top: 65px;
   margin-bottom: 40px;

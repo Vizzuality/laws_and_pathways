@@ -46,3 +46,13 @@ html {
 :root {
   --fixed-navbar-height: 56px;
 }
+
+.columns {
+  margin-left: -0.75rem;
+  margin-right: 0;
+  margin-top: -0.75rem;
+
+  @include desktop {
+    margin-right: -0.75rem;
+  }
+}
