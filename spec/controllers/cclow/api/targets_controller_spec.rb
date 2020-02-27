@@ -7,9 +7,10 @@ RSpec.describe CCLOW::Api::TargetsController, type: :controller do
   let!(:sector1) { create(:laws_sector) }
   let!(:sector2) { create(:laws_sector) }
   let!(:sector3) { create(:laws_sector) }
+  let!(:legislation) { create(:legislation, laws_sectors: []) }
   let!(:target1) { create(:target, year: 2025, geography_id: geography.id, sector: sector1) }
   let!(:target2) { create(:target, year: 2020, geography_id: geography.id, sector: sector1) }
-  let!(:target3) { create(:target, geography_id: geography2.id, sector: sector2) }
+  let!(:target3) { create(:target, geography_id: geography2.id, sector: sector2, legislations: [legislation]) }
 
   describe 'Get index with geography iso as param' do
     subject { get :index, params: {iso: geography.iso} }

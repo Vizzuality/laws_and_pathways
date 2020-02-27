@@ -107,7 +107,7 @@ class Target < ApplicationRecord
         {
           id: l.id,
           title: l.title,
-          link: legislation_route(geography, l)
+          link: l.route(geography)
         }
       end
     }

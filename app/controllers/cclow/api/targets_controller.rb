@@ -30,11 +30,6 @@ module CCLOW
         }
         result
       end
-
-      def legislation_route(geography, legislation)
-        send("cclow_geography_#{legislation.law? ? 'law' : 'policy'}_url",
-             geography, legislation)
-      end
     end
   end
 end
