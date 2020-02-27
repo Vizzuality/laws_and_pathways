@@ -2,7 +2,7 @@
 
 <div class="container">
   <h1 class="pages__title"><%= @publication.title %></h1>
-  <p class="pages__date"><%= @publication.publication_date %></p>
+  <p class="pages__date"><%= @publication.publication_date.strftime('%d/%m/%Y') %></p>
   <% if @publication.class.name.eql?("NewsArticle") && @publication.image.present? %>
     <div class="pages__image"><%= image_tag(@publication.image) %></div>
   <% end %>

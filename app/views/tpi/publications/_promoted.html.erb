@@ -15,7 +15,7 @@
               <% end %>
             </div>
           <% end %>
-          <p class="updated_at"><%= publication.publication_date %></p>
+          <p class="updated_at"><%= publication.publication_date.strftime('%d/%m/%Y') %></p>
           <div class="content__title-wrapper">
             <div class="content__title">
               <% if publication.is_a?(Publication) %>
@@ -30,7 +30,7 @@
           <div class="content__message">
             <p>
               <% if publication.class.name.eql?("NewsArticle") %>
-                Article type: <%= publication.article_type %>
+                <%= truncate(strip_tags(publication.content), length: 100) %>
               <% else %>
                 <%= publication.short_description %>
               <% end %>

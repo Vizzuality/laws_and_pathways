@@ -19,16 +19,7 @@ class NewsArticle < ApplicationRecord
   include Taggable
   include ImageWithThumb
 
-  ARTICLE_TYPES = [
-    'Announcement',
-    'Commentaries',
-    'In the news',
-    'Press Releases'
-  ].freeze
-
   tag_with :keywords
-
-  enum article_type: array_to_enum_hash(ARTICLE_TYPES)
 
   has_and_belongs_to_many :tpi_sectors
 

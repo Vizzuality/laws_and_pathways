@@ -33,8 +33,7 @@ module CSVImport
       {
         title: row[:title],
         content: row[:content],
-        publication_date: row[:date],
-        article_type: row[:article_type]
+        publication_date: row[:date]
       }
     end
   end
