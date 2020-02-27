@@ -60,7 +60,7 @@ ActiveAdmin.register NewsArticle do
       f.input :title
       f.input :article_type, as: :select, collection: array_to_select_collection(NewsArticle::ARTICLE_TYPES)
       f.input :content, as: :trix, embed_youtube: true
-      f.input :publication_date
+      f.input :publication_date, as: :datetime_picker
       f.input :tpi_sector_ids, label: 'Sectors', as: :select,
                                collection: TPISector.order(:name), input_html: {multiple: true}
       f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags, collection: Keyword.pluck(:name)

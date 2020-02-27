@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_27_100810) do
+ActiveRecord::Schema.define(version: 2020_02_27_112956) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -421,12 +421,11 @@ ActiveRecord::Schema.define(version: 2020_02_27_100810) do
   create_table "news_articles", force: :cascade do |t|
     t.string "title"
     t.text "content"
-    t.date "publication_date"
+    t.datetime "publication_date"
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "article_type"
     t.index ["created_by_id"], name: "index_news_articles_on_created_by_id"
     t.index ["updated_by_id"], name: "index_news_articles_on_updated_by_id"
   end
@@ -453,7 +452,7 @@ ActiveRecord::Schema.define(version: 2020_02_27_100810) do
     t.text "short_description"
     t.bigint "file"
     t.bigint "image"
-    t.date "publication_date"
+    t.datetime "publication_date"
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
     t.datetime "created_at", precision: 6, null: false
