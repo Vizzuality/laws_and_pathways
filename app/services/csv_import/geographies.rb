@@ -39,6 +39,9 @@ module CSVImport
         federal_details: row[:federal_details],
         legislative_process: row[:legislative_process],
         geography_type: row[:geography_type].downcase,
+        percent_global_emissions: row[:percent_global_emissions],
+        climate_risk_index: row[:climate_risk_index],
+        wb_income_group: row[:wb_income_group],
         visibility_status: row[:visibility_status]
       }
     end

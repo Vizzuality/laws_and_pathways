@@ -36,6 +36,6 @@ class GeographyDecorator < Draper::Decorator
   end
 
   def percent_global_emissions
-    "#{model.percent_global_emissions} %"
+    model.percent_global_emissions ? "#{model.percent_global_emissions} %" : '-'
   end
 end

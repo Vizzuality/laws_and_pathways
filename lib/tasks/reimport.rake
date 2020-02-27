@@ -64,4 +64,9 @@ namespace :reimport do
 
     Seed::CCLOWData.import_litigation_sides
   end
+
+  desc 'Reimport Geographies Metadata'
+  task geographies_metadata: :environment do
+    Seed::CCLOWData.import_geographies_metadata
+  end
 end
