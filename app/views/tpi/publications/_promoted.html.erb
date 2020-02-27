@@ -30,7 +30,7 @@
           <div class="content__message">
             <p>
               <% if publication.class.name.eql?("NewsArticle") %>
-                Article type: <%= publication.article_type %>
+                <%= truncate(strip_tags(publication.content), length: 100) %>
               <% else %>
                 <%= publication.short_description %>
               <% end %>
