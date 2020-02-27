@@ -56,7 +56,7 @@ ActiveAdmin.register NewsArticle do
     f.inputs do
       f.input :title
       f.input :content, as: :trix, embed_youtube: true
-      f.input :publication_date, as: :datetime_picker
+      f.input :publication_date, as: :date_time_picker
       f.input :tpi_sector_ids, label: 'Sectors', as: :select,
                                collection: TPISector.order(:name), input_html: {multiple: true}
       f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags, collection: Keyword.pluck(:name)

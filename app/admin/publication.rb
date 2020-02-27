@@ -52,7 +52,7 @@ ActiveAdmin.register Publication do
     f.inputs do
       f.input :title
       f.input :short_description, as: :text
-      f.input :publication_date, as: :datetime_picker
+      f.input :publication_date, as: :date_time_picker
       f.input :tpi_sector_ids, label: 'Sectors', as: :select,
                                collection: TPISector.order(:name), input_html: {multiple: true}
       f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags, collection: Keyword.pluck(:name)
