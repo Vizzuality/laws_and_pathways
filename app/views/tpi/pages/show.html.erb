@@ -1,23 +1,25 @@
 <% content_for :page_title, "TPI - #{@page.title}" %>
 
 <div class="container">
-  <h1 class="pages__title"><%= @page.title %></h1>
-  <div class="pages__description">
-    <%= @page.description&.html_safe %>
-  </div>
-  <% @page.contents.order(:created_at).each do |content| %>
-    <div class="pages__content">
-      <h4 class="pages__content-title"><%= content.title %></h4>
-      <div class="pages__description"><%= content.text.html_safe %></div>
-      <% if content.images.any? %>
-        <div class="pages__content-logos">
-          <% content.images.order(:name).each do |image| %>
-            <% if image.logo.present? %>
-              <%= link_to(image_tag(image.logo), image.link) %>
-            <% end %>
-          <% end %>
-        </div>
-      <% end %>
+  <div class="pages__grid">
+    <h1 class="pages__title"><%= @page.title %></h1>
+    <div class="pages__description">
+      <%= @page.description&.html_safe %>
     </div>
-  <% end %>
+    <% @page.contents.order(:created_at).each do |content| %>
+      <div class="pages__content">
+        <h4 class="pages__content-title"><%= content.title %></h4>
+        <div class="pages__description"><%= content.text.html_safe %></div>
+        <% if content.images.any? %>
+          <div class="pages__content-logos">
+            <% content.images.order(:name).each do |image| %>
+              <% if image.logo.present? %>
+                <%= link_to(image_tag(image.logo), image.link) %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>
