@@ -3,7 +3,7 @@
 <div class="container">
   <h1 class="pages__title"><%= @page.title %></h1>
   <div class="pages__description">
-    <%= @page.description.html_safe %>
+    <%= @page.description&.html_safe %>
   </div>
   <% @page.contents.order(:created_at).each do |content| %>
     <div class="pages__content">
