@@ -2,16 +2,56 @@
 @import "colors";
 @import "bulma/sass/utilities/all";
 
+$text-indent: 25px;
+$text-indent-numbers: 18px;
+
 .pages__title {
   margin-top: 40px;
   margin-bottom: 40px;
   color: $blue-dark;
   font-family: $family-sans-serif-bold;
+  font-weight: normal;
   font-size: 28px;
 }
 
 .pages__content {
   margin: 0 150px;
+
+  * > {
+    ul {
+      margin-top: 20px;
+      margin-left: $text-indent;
+
+      li {
+        list-style-type: disc;
+        list-style-position: inside;
+        line-height: 32px;
+        text-indent: calc(-1 * #{$text-indent});
+      }
+    }
+
+    ol {
+      margin-top: 20px;
+      margin-left: $text-indent-numbers;
+
+      li {
+        list-style-type: decimal;
+        list-style-position: inside;
+        line-height: 32px;
+        text-indent: calc(-1 * #{$text-indent-numbers});
+      }
+    }
+
+    strong {
+      font-weight: normal;
+      font-family: $family-sans-serif-bold;
+    }
+
+    h4 {
+      font-family: $family-sans-serif-bold;
+      font-size: 20px !important;
+    }
+  }
 }
 
 .pages__description {
@@ -22,7 +62,7 @@
 
   h1, h2, h3, h4, h5 {
     margin-top: 40px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
   }
 
   img {
@@ -32,6 +72,18 @@
 
   a {
     color: $red;
+    font-family: $family-sans-serif-bold;
+
+    &:hover {
+      color: $red-medium;
+      text-decoration: underline;
+    }
+
+    &:focus {
+      color: $white;
+      background-color: $red-medium;
+      text-decoration: underline;
+    }
   }
 }
 
@@ -41,6 +93,7 @@
   grid-column-gap: 50px;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
+  text-align: center;
 }
 
 .latest_additions__container {
