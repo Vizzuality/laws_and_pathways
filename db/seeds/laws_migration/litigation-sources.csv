@@ -124,9 +124,7 @@ case_id,title,url,date,language
 7132,Judgment,http://curia.europa.eu/juris/document/document.jsf;jsessionid=9ea7d0f130d5c86283c9d5d5497b8877a8f3debe0aee.e34KaxiLc3eQc40LaxqMbN4OahuOe0?text=&docid=142213&pageIndex=0&doclang=en&mode=lst&dir=&occ=first&part=1&cid=385786,11/4/2016,en
 7131,Judgment,http://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A62007CJ0127,11/4/2016,en
 7130,Judgment,http://curia.europa.eu/juris/document/document.jsf?text=&docid=162532&pageIndex=0&doclang=EN&mode=req&dir=&occ=first&part=1&cid=586939,11/4/2016,en
-7129,Judgment,http://curia.europa.eu/juris/liste.jsf?language=en&jur=C,,en
-7129,T,,,en
-7129,F&num=T-370/11&td=ALL,11/4/2016,,en
+7129,Judgment,http://curia.europa.eu/juris/liste.jsf?language=en&jur=C,T,F&num=T-370/11&td=ALL,11/4/2016,en
 7128,Judgment,http://curia.europa.eu/juris/liste.jsf?language=en&num=T-183/07,11/4/2016,en
 7127,Judgment,http://curia.europa.eu/juris/liste.jsf?language=en&num=T-263/07,11/4/2016,en
 7126,Case document,http://ec.europa.eu/dgs/legal_service/arrets/04c217_en.pdf,11/4/2016,en
