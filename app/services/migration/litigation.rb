@@ -11,6 +11,14 @@ module Migration
           headers: true,
           skip_blanks: true
         ).delete_if { |row| row.to_hash.values.all?(&:blank?) }
+
+        # clear Case Documents before import, for cases in the file
+        d = ::Document
+          .where(documentable_id: csv.map { |g| g['case_id'] }.uniq,
+                 documentable_type: 'Litigation', name: 'Case document')
+        puts "Deleting #{d.size} case documents"
+        d.delete_all
+
         csv.each do |row|
           l = ::Litigation.where(id: row['case_id']).first
           unless l
