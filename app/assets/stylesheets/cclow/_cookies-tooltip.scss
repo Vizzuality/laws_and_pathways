@@ -1,7 +1,6 @@
 @import "colors";
 @import "variables";
 
-$margin: 40px 30px;
 $padding: 11px 20px 11px 30px;
 $shadow-cl: rgba(46,49,82,0.05);
 
@@ -9,14 +8,13 @@ $shadow-cl: rgba(46,49,82,0.05);
   align-items: center;
   background-color: $white;
   border: 1px solid $grey;
-  bottom: 0;
+  bottom: 40px;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1), 0 0 20px 0 $shadow-cl;
   display: flex;
   font-size: $size-7;
-  margin: $margin;
   padding: $padding;
   position: fixed;
-  right: 0;
+  right: 30px;
   z-index: 999;
 
   a {
