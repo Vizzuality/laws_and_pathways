@@ -139,7 +139,7 @@ const LawsDropdown = () => {
 
       <LawsDropdownCategory title="Countries and territories" icon={countryFlag}>
         {(counts.geographies || []).map(geography => (
-          <a href={`/cclow/geographies/${geography.id}`} key={geography.slug} className="laws-dropdown__option">
+          <a href={`/cclow/geographies/${geography.slug}`} key={geography.slug} className="laws-dropdown__option">
             <span>{geography.name}</span>
             <span className="laws-dropdown__disclaimer">{GEOGRAPHY_TYPES[geography.geography_type]}</span>
           </a>
