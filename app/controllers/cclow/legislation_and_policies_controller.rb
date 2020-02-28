@@ -6,7 +6,7 @@ module CCLOW
     # rubocop:disable Metrics/MethodLength
     def index
       add_breadcrumb('Climate Change Laws of the World', cclow_root_path)
-      add_breadcrumb('Laws and policies', cclow_legislation_and_policies_path(@geography))
+      add_breadcrumb('Laws and policies', cclow_legislation_and_policies_path)
       add_breadcrumb('Search results', request.path) if params[:q].present? || params[:recent].present?
 
       @legislations = Queries::CCLOW::LegislationQuery.new(filter_params).call

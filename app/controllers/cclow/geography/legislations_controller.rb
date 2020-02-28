@@ -46,9 +46,9 @@ module CCLOW
 
       def set_common_breadcrumb
         if show_laws?
-          add_breadcrumb('Laws', cclow_geography_laws_path(@geography))
+          add_breadcrumb('Laws', cclow_geography_laws_path(@geography.slug))
         else
-          add_breadcrumb('Policies', cclow_geography_policies_path(@geography))
+          add_breadcrumb('Policies', cclow_geography_policies_path(@geography.slug))
         end
       end
 

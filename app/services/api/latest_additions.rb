@@ -29,7 +29,7 @@ module Api
          iso: item.geography.iso,
          addition_type: addition_type,
          jurisdiction: item.jurisdiction,
-         jurisdiction_link: link_to(item.geography.name, url.cclow_geography_path(item.geography)),
+         jurisdiction_link: link_to(item.geography.name, url.cclow_geography_path(item.geography.slug)),
          link: item.link}
       end
     end

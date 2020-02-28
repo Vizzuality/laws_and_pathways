@@ -18,7 +18,7 @@ module CCLOW
       def show
         @litigation = @geography.litigations.find(params[:id])
         @legislations = CCLOW::LegislationDecorator.decorate_collection(@litigation.legislations)
-        add_breadcrumb('Litigation cases', cclow_geography_litigation_cases_path(@geography))
+        add_breadcrumb('Litigation cases', cclow_geography_litigation_cases_path(@geography.slug))
         add_breadcrumb(@litigation.title, request.path)
         @sectors = @litigation.laws_sectors.order(:name)
         @keywords = @litigation.keywords.order(:name)

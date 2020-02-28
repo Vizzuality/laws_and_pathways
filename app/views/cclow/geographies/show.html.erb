@@ -31,7 +31,7 @@
             This country is a member of the EU and <a href="#" class="highlight">so EU NDC data</a> is being displayed.
           </div>
           <div class="meta">For further information about the EU's NDC, legislation, and targets, please see the
-            <%= link_to "EU profile", cclow_geography_path(Geography.where(iso: 'EUR').first), class: 'highlight' %>
+            <%= link_to "EU profile", cclow_geography_path(Geography.where(iso: 'EUR').first.slug), class: 'highlight' %>
           </div>
         </div>
       <% end %>

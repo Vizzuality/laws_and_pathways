@@ -4,7 +4,7 @@ module CCLOW
 
     def link
       if geography
-        h.link_to(title, h.cclow_geography_litigation_case_path(geography, model))
+        h.link_to(title, h.cclow_geography_litigation_case_path(geography.slug, model))
       else
         title
       end
@@ -20,7 +20,7 @@ module CCLOW
     def geography_path
       return nil if geography.nil?
 
-      h.cclow_geography_path(geography)
+      h.cclow_geography_path(geography.slug)
     end
 
     def as_json(*)
