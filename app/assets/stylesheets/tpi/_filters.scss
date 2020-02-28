@@ -47,7 +47,8 @@
 
 .filters__tags-container {
   display: flex;
-  padding-bottom: 52px;
+  flex-wrap: wrap;
+  padding-bottom: 42px;
 }
 
 %tag {
@@ -56,6 +57,7 @@
   font-size: 14px;
   font-family: $family-sans-serif;
   margin-right: 16px;
+  margin-bottom: 10px;
 }
 
 .filters__tag {
