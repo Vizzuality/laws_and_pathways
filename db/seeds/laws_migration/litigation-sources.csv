@@ -81,7 +81,7 @@ case_id,title,url,date,language
 7222,Judgment,http://www.bailii.org/ew/cases/EWHC/Admin/2007/2288.html,11/4/2016,en
 7221,Opinion,http://www.scotcourts.gov.uk/search-judgments/judgment?id=608b8aa6-8980-69d2-b500-ff0000d74aa7,11/4/2016,en
 7220,Judgment,http://www.bailii.org/ew/cases/EWHC/Admin/2014/3677.html,11/4/2016,en
-7217,Judgment,https://www.unece.org/fileadmin/DAM/env/pp/a.to.j/Jurisprudence_prj/UNITED_KINGDOM/Littlewood/LittlewoodJudgment.pdf,11/.04/2016,en
+7217,Judgment,https://www.unece.org/fileadmin/DAM/env/pp/a.to.j/Jurisprudence_prj/UNITED_KINGDOM/Littlewood/LittlewoodJudgment.pdf,11/04/2016,en
 7216,Judgment,http://g8fip1kplyr33r3krz5b97d1.wpengine.netdna-cdn.com/wp-content/uploads/2016/12/Judgement_ETS_Swiss.pdf,18/02/2017,en
 7215,Judgment,http://blogs2.law.columbia.edu/climate-change-litigation/wp-content/uploads/sites/16/non-us-case-documents/2009/20091020_2009-EWHC-3020_judgment.pdf,23/08/2017,en
 7214,Judgment,http://www.bailii.org/ew/cases/EWHC/Admin/2017/121.html,28/08/2017,en
@@ -153,9 +153,7 @@ case_id,title,url,date,language
 7101,Judgment,http://curia.europa.eu/juris/liste.jsf?language=en&num=C-2/10,11/4/2016,en
 7100,Judgment,http://curia.europa.eu/juris/liste.jsf?language=en&num=T-16/04,11/1/2016,en
 7099,Judgment,http://curia.europa.eu/juris/document/document_print.jsf?doclang=EN&text=&pageIndex=0&part=1&mode=lst&docid=154403&occ=first&dir=&cid=67445,11/4/2016,en
-7098,Judgment,http://curia.europa.eu/juris/liste.jsf?language=en&jur=C,,en
-7098,T,,,en
-7098,F&num=366/10&td=ALL,11/4/2016,,en
+7098,Judgment,http://curia.europa.eu/juris/liste.jsf?language=en&jur=C,T,F&num=366/10&td=ALL,11/4/2016,en
 7098,Case document,http://cases.iclr.co.uk/Subscr/search.aspx?path=WLR%20Dailies/WLRD%202011/wlrd2011-386,04/11/2016,en
 7097,Decision,http://www.bailii.org/eu/cases/EUECJ/2013/C54511.html,11/4/2016,en
 7096,Judgment,http://curia.europa.eu/juris/document/document.jsf?text=&docid=83134&pageIndex=0&doclang=EN&mode=lst&dir=&occ=first&part=1&cid=355098,,en
