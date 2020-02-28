@@ -38,7 +38,7 @@ module Migration
               filename = File.basename(URI.parse(source).path)
               file = URI.open(source)
             rescue URI::InvalidURIError, OpenURI::HTTPError, OpenSSL::SSL::SSLError
-              puts "File for #{row['law_id']} and #{row['url']} not working"
+              puts "File for #{row['case_id']}, #{row['title']}, and #{row['url']} not working"
               next
             end
             doc.file.attach(io: file, filename: filename.last)
