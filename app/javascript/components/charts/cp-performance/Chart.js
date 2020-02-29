@@ -8,6 +8,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import uniqBy from 'lodash/uniqBy';
 import sortBy from 'lodash/sortBy';
+import cloneDeep from 'lodash/cloneDeep';
 import get from 'lodash/get';
 
 import PlusIcon from 'images/icons/plus.svg';
@@ -19,24 +20,24 @@ import CompanySelector from './CompanySelector';
 import CompanyTag from './CompanyTag';
 import NestedDropdown from 'components/NestedDropdown';
 
+// get last emission also looking at targeted
+// const getLastEmission = (d) => d.data && d.data.length && d.data.slice(-1)[0][1];
+function getLastEmission(d) {
+  const lastEmissionYear = get(d, 'data.zones[0].value');
+  let lastEmission;
+  if (!lastEmissionYear) {
+    // get last emission
+    lastEmission = d.data && d.data.length && d.data.slice(-1)[0][1];
+  } else {
+    lastEmission = d.data && d.data.length && d.data.find(x => x[0] === lastEmissionYear)[1];
+  }
+  return parseFloat(lastEmission, 10);
+}
+
 function getLegendItems(data, showByValue) {
   let companyData = data.filter(d => d.type !== 'area');
 
   if (showByValue) {
-    // get last emission also looking at targeted
-    // const getLastEmission = (d) => d.data && d.data.length && d.data.slice(-1)[0][1];
-    const getLastEmission = (d) => {
-      const lastEmissionYear = get(d, 'data.zones[0].value');
-      let lastEmission;
-      if (!lastEmissionYear) {
-        // get last emission
-        lastEmission = d.data && d.data.length && d.data.slice(-1)[0][1];
-      } else {
-        lastEmission = d.data && d.data.length && d.data.find(x => x[0] === lastEmissionYear)[1];
-      }
-      return parseFloat(lastEmission, 10);
-    };
-
     companyData = companyData.filter(d => {
       if (showByValue.startsWith('market_cap')) {
         return d.company.market_cap_group === showByValue.replace('market_cap_', '');
@@ -52,7 +53,7 @@ function getLegendItems(data, showByValue) {
 
       return true;
     });
-    companyData = companyData.sort((a, b) => getLastEmission(b) - getLastEmission(a));
+    companyData.sort((a, b) => getLastEmission(b) - getLastEmission(a));
   }
 
   return applyColorsToLegendItems(companyData.slice(0, 10));
@@ -103,7 +104,7 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
         ),
         'name'
       ),
-      regions: [...new Set(companyData.map(c => c.region).sort())],
+      regions: [...new Set(companyData.map(c => c.region))].sort(),
       marketCapGroups: [...new Set(companyData.map(c => c.market_cap_group))]
     };
   }, [data]);
@@ -128,8 +129,18 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
     [data]
   );
   const selectedCompanies = useMemo(() => legendItems.map(i => i.name), [legendItems]);
+  // TODO: refactor this
   const chartData = useMemo(
-    () => data.filter(d => d.type === 'area' || selectedCompanies.includes(d.name)),
+    () => cloneDeep(data.filter(
+      d => d.type === 'area' || selectedCompanies.includes(d.name)
+    ).map(d => {
+      if (d.type === 'area') return d;
+      const lItem = legendItems.find(l => l.name === d.name);
+      return {
+        ...d,
+        color: lItem && lItem.color
+      };
+    })),
     [data, selectedCompanies]
   );
 

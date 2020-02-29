@@ -21,7 +21,6 @@ export function getOptions({ chartData, unit }) {
     credits: {
       enabled: false
     },
-    colors: COLORS,
     legend: {
       enabled: false
     },
@@ -82,13 +81,12 @@ export function getOptions({ chartData, unit }) {
         const xValue = this.x;
         const yValues = this.points.map(p => ({
           value: p.y,
-          color: p.color,
+          color: p.series.color,
           title: p.series.name,
           dashStyle: p.point.zone.dashStyle,
           isTargeted: p.point.zone.dashStyle === 'dot',
           isBenchmark: p.series.type === 'area'
         }));
-
         return renderToString(
           <Tooltip xValue={xValue} yValues={yValues} unit={unit} />
         );
