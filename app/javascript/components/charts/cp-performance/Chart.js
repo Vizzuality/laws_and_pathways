@@ -135,15 +135,16 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
   const chartData = useMemo(
     () => {
       const benchmarks = data.filter(d => d.type === 'area');
-      const cd = applyColors(
-        selectedCompanies.map(
-          c => data.find(d => get(d, 'company.id') === c.id)
-        )
+      const restData = applyColors(
+        companySelector
+          ? selectedCompanies.map(c => data.find(d => get(d, 'company.id') === c.id))
+          : data.filter(d => d.type !== 'area')
       );
+
       // do not why cloneDeep is needed, but highchart seems to mutate the data
-      return cloneDeep([...benchmarks, ...cd]);
+      return cloneDeep([...benchmarks, ...restData]);
     },
-    [data, selectedCompanies]
+    [data, companySelector, selectedCompanies]
   );
   const legendItems = chartData.filter(d => d.company);
 
