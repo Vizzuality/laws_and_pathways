@@ -92,6 +92,7 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
   const companySelectorWrapper = useRef();
 
   const [data, setData] = useState([]);
+  const [error, setError] = useState('');
   const [selectedCompanies, setSelectedCompanies] = useState([]); // Array of just company data { id, name, geography, region }
   const [showCompanySelector, setCompanySelectorVisible] = useState(false);
 
@@ -118,7 +119,8 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
       .then((r) => r.json())
       .then((chartData) => {
         setData(chartData);
-      });
+      })
+      .catch(() => setError('Error while loading the data'));
   }, [dataUrl]);
   useEffect(() => {
     setSelectedCompanies(
@@ -236,6 +238,12 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
           </span>
         </div>
       </div>
+
+      {error && (
+        <div>
+          <p>{error}</p>
+        </div>
+      )}
 
       <HighchartsReact
         highcharts={Highcharts}
