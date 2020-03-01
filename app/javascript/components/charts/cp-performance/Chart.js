@@ -34,33 +34,34 @@ function getLastEmission(d) {
   return parseFloat(lastEmission, 10);
 }
 
-function getLegendItems(data, showByValue) {
-  let companyData = data.filter(d => d.type !== 'area');
+function filterByShowValue(companyData, showByValue) {
+  if (!showByValue) return companyData;
 
-  if (showByValue) {
-    companyData = companyData.filter(d => {
-      if (showByValue.startsWith('market_cap')) {
-        return d.company.market_cap_group === showByValue.replace('market_cap_', '');
-      }
+  return companyData.filter(d => {
+    if (showByValue.startsWith('market_cap')) {
+      return d.company.market_cap_group === showByValue.replace('market_cap_', '');
+    }
 
-      if (showByValue.startsWith('by_country')) {
-        return parseInt(d.company.geography_id, 10) === parseInt(showByValue.replace('by_country_', ''), 10);
-      }
+    if (showByValue.startsWith('by_country')) {
+      return parseInt(d.company.geography_id, 10) === parseInt(showByValue.replace('by_country_', ''), 10);
+    }
 
-      if (showByValue.startsWith('by_region')) {
-        return d.company.region === showByValue.replace('by_region_', '');
-      }
+    if (showByValue.startsWith('by_region')) {
+      return d.company.region === showByValue.replace('by_region_', '');
+    }
 
-      return true;
-    });
-    companyData.sort((a, b) => getLastEmission(b) - getLastEmission(a));
-  }
-
-  return applyColorsToLegendItems(companyData.slice(0, 10));
+    return true;
+  });
 }
 
-function applyColorsToLegendItems(items) {
+function applyColors(items) {
   return items.map((d, idx) => ({...d, color: COLORS[idx % 10]}));
+}
+
+function ensure10sorted(companyData) {
+  return [...companyData]
+    .sort((a, b) => getLastEmission(b) - getLastEmission(a))
+    .slice(0, 10);
 }
 
 function getDropdownOptions(geographies, regions, marketCapGroups) {
@@ -88,30 +89,28 @@ function getDropdownOptions(geographies, regions, marketCapGroups) {
 }
 
 function CPPerformance({ dataUrl, companySelector, unit }) {
-  const [data, setData] = useState([]);
-  const [legendItems, setLegendItems] = useState([]);
-  const [showCompanySelector, setCompanySelectorVisible] = useState(false);
-  const { geographies, regions, marketCapGroups } = useMemo(() => {
-    const companyData = data
-      .map(d => d.company)
-      .filter(d => d);
-
-    return {
-      geographies: sortBy(
-        uniqBy(
-          companyData.map(c => ({ id: c.geography_id, name: c.geography_name })),
-          'id'
-        ),
-        'name'
-      ),
-      regions: [...new Set(companyData.map(c => c.region))].sort(),
-      marketCapGroups: [...new Set(companyData.map(c => c.market_cap_group))]
-    };
-  }, [data]);
-  const dropdownOptions = getDropdownOptions(geographies, regions, marketCapGroups);
-  const [selectedShowBy, setSelectedShowBy] = useState(dropdownOptions[0]);
-
   const companySelectorWrapper = useRef();
+
+  const [data, setData] = useState([]);
+  const [selectedCompanies, setSelectedCompanies] = useState([]); // Array of just company data { id, name, geography, region }
+  const [showCompanySelector, setCompanySelectorVisible] = useState(false);
+
+  const companyData = useMemo(() => data.filter(d => d.company), [data]);
+  const companies = useMemo(() => companyData.map(d => d.company), [companyData]);
+  const dropdownOptions = useMemo(() => {
+    const geographies = sortBy(
+      uniqBy(
+        companies.map(c => ({ id: c.geography_id, name: c.geography_name })),
+        'id'
+      ),
+      'name'
+    );
+    const regions = [...new Set(companies.map(c => c.region))].sort();
+    const marketCapGroups = [...new Set(companies.map(c => c.market_cap_group))];
+
+    return getDropdownOptions(geographies, regions, marketCapGroups);
+  }, [companies]);
+  const [selectedShowBy, setSelectedShowBy] = useState(dropdownOptions[0]);
 
   // TODO: add error handling
   useEffect(() => {
@@ -119,30 +118,32 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
       .then((r) => r.json())
       .then((chartData) => {
         setData(chartData);
-        setLegendItems(getLegendItems(chartData, selectedShowBy.value));
       });
-  }, []);
+  }, [dataUrl]);
+  useEffect(() => {
+    setSelectedCompanies(
+      ensure10sorted(
+        filterByShowValue(companyData, selectedShowBy.value)
+      ).map(c => c.company)
+    );
+  }, [companyData, selectedShowBy]);
+
   useOutsideClick(companySelectorWrapper, () => setCompanySelectorVisible(false));
 
-  const companies = useMemo(
-    () => data.filter(d => d.type !== 'area').map(i => i.name).sort(),
-    [data]
-  );
-  const selectedCompanies = useMemo(() => legendItems.map(i => i.name), [legendItems]);
-  // TODO: refactor this
   const chartData = useMemo(
-    () => cloneDeep(data.filter(
-      d => d.type === 'area' || selectedCompanies.includes(d.name)
-    ).map(d => {
-      if (d.type === 'area') return d;
-      const lItem = legendItems.find(l => l.name === d.name);
-      return {
-        ...d,
-        color: lItem && lItem.color
-      };
-    })),
+    () => {
+      const benchmarks = data.filter(d => d.type === 'area');
+      const cd = applyColors(
+        selectedCompanies.map(
+          c => data.find(d => get(d, 'company.id') === c.id)
+        )
+      );
+      // do not why cloneDeep is needed, but highchart seems to mutate the data
+      return cloneDeep([...benchmarks, ...cd]);
+    },
     [data, selectedCompanies]
   );
+  const legendItems = chartData.filter(d => d.company);
 
   // handlers
   const handleAddCompaniesClick = (e) => {
@@ -150,20 +151,14 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
     setCompanySelectorVisible(!showCompanySelector);
   };
   const handleLegendItemRemove = (item) => {
-    setLegendItems(
-      applyColorsToLegendItems(
-        legendItems.filter(l => l.name !== item.name)
-      )
-    );
+    setSelectedCompanies((selected) => selected.filter(l => l.id !== item.company.id));
   };
   const handleSelectedCompaniesChange = (selected) => {
-    setLegendItems(
-      getLegendItems(data.filter((d) => selected.includes(d.name)))
+    setSelectedCompanies(
+      ensure10sorted(
+        companyData.filter(c => selected.includes(String(c.company.id)))
+      ).map(c => c.company)
     );
-  };
-  const handleShowBySelect = (selected) => {
-    setSelectedShowBy(selected);
-    setLegendItems(getLegendItems(data, selected.value));
   };
 
   const subTitle = ((item) => {
@@ -183,7 +178,7 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
         title="Top 10 Emitters"
         subTitle={subTitle}
         items={dropdownOptions}
-        onSelect={handleShowBySelect}
+        onSelect={setSelectedShowBy}
       />,
       element
     );
@@ -220,8 +215,8 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
 
                 {showCompanySelector && (
                   <CompanySelector
-                    companies={companies}
-                    selected={selectedCompanies}
+                    companies={sortBy(companies, 'name')}
+                    selected={selectedCompanies.map(c => String(c.id))}
                     onChange={handleSelectedCompaniesChange}
                     onClose={() => setCompanySelectorVisible(false)}
                   />

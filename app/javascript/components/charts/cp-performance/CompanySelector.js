@@ -5,7 +5,7 @@ import CheckList from 'components/CheckList';
 
 function CompanySelector({ companies, selected, onChange, onClose }) {
   const options = useMemo(
-    () => companies.map(c => ({ value: c, label: c })),
+    () => companies.map(c => ({ value: String(c.id), label: c.name })),
     [companies]
   );
   const [selectedCompanies, setSelectedCompanies] = useState(selected);
@@ -45,7 +45,7 @@ CompanySelector.defaultProps = {
 };
 
 CompanySelector.propTypes = {
-  companies: PropTypes.arrayOf(PropTypes.string),
+  companies: PropTypes.arrayOf(PropTypes.object),
   selected: PropTypes.arrayOf(PropTypes.string),
   onChange: PropTypes.func,
   onClose: PropTypes.func
