@@ -93,7 +93,7 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
 
   const [data, setData] = useState([]);
   const [error, setError] = useState('');
-  const [selectedCompanies, setSelectedCompanies] = useState([]); // Array of just company data { id, name, geography, region }
+  const [selectedCompanies, setSelectedCompanies] = useState([]); // Array of company names
   const [showCompanySelector, setCompanySelectorVisible] = useState(false);
 
   const companyData = useMemo(() => data.filter(d => d.company), [data]);
@@ -126,7 +126,7 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
     setSelectedCompanies(
       ensure10sorted(
         filterByShowValue(companyData, selectedShowBy.value)
-      ).map(c => c.company)
+      ).map(c => c.name)
     );
   }, [companyData, selectedShowBy]);
 
@@ -137,7 +137,7 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
       const benchmarks = data.filter(d => d.type === 'area');
       const restData = applyColors(
         companySelector
-          ? selectedCompanies.map(c => data.find(d => get(d, 'company.id') === c.id))
+          ? selectedCompanies.map(c => data.find(d => get(d, 'company.name') === c))
           : data.filter(d => d.type !== 'area')
       );
 
@@ -146,7 +146,7 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
     },
     [data, companySelector, selectedCompanies]
   );
-  const legendItems = chartData.filter(d => d.company);
+  const legendItems = chartData.filter(d => d.type !== 'area');
 
   // handlers
   const handleAddCompaniesClick = (e) => {
@@ -154,13 +154,13 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
     setCompanySelectorVisible(!showCompanySelector);
   };
   const handleLegendItemRemove = (item) => {
-    setSelectedCompanies((selected) => selected.filter(l => l.id !== item.company.id));
+    setSelectedCompanies((selected) => selected.filter(s => s !== item.name));
   };
   const handleSelectedCompaniesChange = (selected) => {
     setSelectedCompanies(
       ensure10sorted(
-        companyData.filter(c => selected.includes(String(c.company.id)))
-      ).map(c => c.company)
+        companyData.filter(c => selected.includes(c.company.name))
+      ).map(c => c.name)
     );
   };
 
@@ -218,8 +218,8 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
 
                 {showCompanySelector && (
                   <CompanySelector
-                    companies={sortBy(companies, 'name')}
-                    selected={selectedCompanies.map(c => String(c.id))}
+                    companies={companies.map(c => c.name).sort()}
+                    selected={selectedCompanies}
                     onChange={handleSelectedCompaniesChange}
                     onClose={() => setCompanySelectorVisible(false)}
                   />
