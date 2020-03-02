@@ -34,7 +34,7 @@ module Api
           legislation_route
         elsif eventable.is_a?(Litigation)
           url.cclow_geography_litigation_case_path(
-            eventable&.geography&.slug, eventable
+            eventable&.geography&.slug, eventable&.slug
           )
         elsif eventable.is_a?(Geography)
           url.cclow_geography_path(eventable.slug)
@@ -43,9 +43,9 @@ module Api
 
       def legislation_route
         if eventable.law?
-          url.cclow_geography_law_path(eventable&.geography&.slug, eventable)
+          url.cclow_geography_law_path(eventable&.geography&.slug, eventable&.slug)
         else
-          url.cclow_geography_policy_path(eventable&.geography&.slug, eventable)
+          url.cclow_geography_policy_path(eventable&.geography&.slug, eventable&.slug)
         end
       end
 
