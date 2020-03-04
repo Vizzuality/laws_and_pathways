@@ -5,7 +5,9 @@
 $search-field-height: 3.75rem;
 
 .header__margin {
-  margin-top: var(--fixed-navbar-height);
+  @include desktop {
+    margin-top: var(--fixed-navbar-height);
+  }
 }
 
 .header {
@@ -17,6 +19,10 @@ $search-field-height: 3.75rem;
 
   .navbar {
     &> .container {
+      @include until($desktop) {
+        padding: 0 15px;
+      }
+
       .navbar-menu {
         margin-right: 0;
       }
@@ -113,6 +119,25 @@ $search-field-height: 3.75rem;
 
   .section__contact {
     grid-area: contact;
+
+    @include until($desktop) {
+      .contact-data {
+        display: grid;
+        grid-column-gap: 10px;
+        grid-template-columns: repeat(2, 1fr);
+        margin-top: 0.25rem;
+  
+        li {
+          align-items: center;
+          display: flex;
+          flex-wrap: wrap;
+
+          span {
+            margin-right: 5px;
+          }
+        }
+      }
+    }
   }
 
   .section__follow {

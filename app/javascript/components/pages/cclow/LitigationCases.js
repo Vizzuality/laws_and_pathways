@@ -37,6 +37,8 @@ class LitigationCases extends Component {
       activeSectorsFilter: {}
     };
 
+    this.isMobile = window.innerWidth < 1024;
+
     this.geoFilter = React.createRef();
     this.keywordsFilter = React.createRef();
     this.responsesFilter = React.createRef();
@@ -166,7 +168,7 @@ class LitigationCases extends Component {
       && !Object.keys(activeSideCPartyTypesFilter).length
       && !Object.keys(activePartyTypesFilter).length) return null;
     return (
-      <div className="filter-tags">
+      <div className="filter-tags tags">
         {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
         {this.renderTagsGroup(activeKeywordsFilter, keywordsFilterOptions, 'keywordsFilter')}
         {this.renderTagsGroup(activeResponsesFilter, responsesFilterOptions, 'responsesFilter')}
@@ -268,6 +270,16 @@ class LitigationCases extends Component {
         )}
         {isMoreSearchOptionsVisible && (
           <>
+            {this.isMobile && (
+              <button
+                type="button"
+                onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
+                className="more-options"
+              >
+                - Show fewer search options
+              </button>
+            )}
+            {this.isMobile && this.renderMainFilters()}
             <SearchFilter
               ref={this.keywordsFilter}
               filterName="Keywords"
@@ -334,25 +346,50 @@ class LitigationCases extends Component {
               params={litigationSideCOptions}
               onChange={(event) => this.filterList('activeSideCFilter', event)}
             />
-            <button
-              type="button"
-              onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
-              className="more-options"
-            >
-              - Show less search options
-            </button>
+            {!this.isMobile && (
+              <button
+                type="button"
+                onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
+                className="more-options"
+              >
+                - Show less search options
+              </button>
+            )}
           </>
         )}
       </>
     );
   }
 
-  render() {
-    const {litigations, count} = this.state;
+  renderMainFilters = () => {
     const {
       geo_filter_options: geoFilterOptions,
       statuses_filter_options: statusesFilterOptions
     } = this.props;
+    return (
+      <Fragment>
+        <SearchFilter
+          ref={this.geoFilter}
+          filterName="Regions and countries"
+          params={geoFilterOptions}
+          onChange={(event) => this.filterList('activeGeoFilter', event)}
+        />
+        <TimeRangeFilter
+          ref={this.timeRangeFilter}
+          onChange={(event) => this.filterList('activeTimeRangeFilter', event)}
+        />
+        <SearchFilter
+          ref={this.statusFilter}
+          filterName="Status"
+          params={statusesFilterOptions}
+          onChange={(event) => this.filterList('activeStatusesFilter', event)}
+        />
+      </Fragment>
+    );
+  }
+
+  render() {
+    const {litigations, count} = this.state;
     const hasMore = litigations.length < count;
     const downloadResultsLink = `/cclow/litigation_cases.csv?${this.getQueryString()}`;
     return (
@@ -362,32 +399,20 @@ class LitigationCases extends Component {
             <div className="flex-container">
               {this.renderPageTitle()}
             </div>
+            {this.isMobile && (<div className="filter-column">{this.renderMoreOptions()}</div>)}
             <hr />
             <div className="columns">
-              <div className="column is-one-quarter filter-column">
-                <div className="search-by">Narrow this search by</div>
-                <SearchFilter
-                  ref={this.geoFilter}
-                  filterName="Regions and countries"
-                  params={geoFilterOptions}
-                  onChange={(event) => this.filterList('activeGeoFilter', event)}
-                />
-                <TimeRangeFilter
-                  ref={this.timeRangeFilter}
-                  onChange={(event) => this.filterList('activeTimeRangeFilter', event)}
-                />
-                <SearchFilter
-                  ref={this.statusFilter}
-                  filterName="Status"
-                  params={statusesFilterOptions}
-                  onChange={(event) => this.filterList('activeStatusesFilter', event)}
-                />
-                {this.renderMoreOptions()}
-              </div>
-              <main className="column is-three-quarters">
+              {!this.isMobile && (
+                <div className="column is-one-quarter filter-column">
+                  <div className="search-by">Narrow this search by</div>
+                  {this.renderMainFilters()}
+                  {this.renderMoreOptions()}
+                </div>
+              )}
+              <main className={`column${!this.isMobile ? ' is-three-quarters' : ''}`}>
                 <div className="columns pre-content">
                   <span className="column is-half">Showing {count} results</span>
-                  <span className="column is-half download-link">
+                  <span className="column is-half download-link is-hidden-touch">
                     <a className="download-link" href={downloadResultsLink}>Download results (.csv)</a>
                   </span>
                 </div>
@@ -413,8 +438,8 @@ class LitigationCases extends Component {
                   ))}
                 </ul>
                 {hasMore && (
-                  <div className="column is-offset-5">
-                    <button type="button" className="button is-primary load-more-btn" onClick={this.handleLoadMore}>
+                  <div className={`column load-more-container${!this.isMobile ? ' is-offset-5' : ''}`}>
+                    <button type="button" className="button is-primary" onClick={this.handleLoadMore}>
                       Load 10 more entries
                     </button>
                   </div>

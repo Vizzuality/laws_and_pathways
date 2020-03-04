@@ -4,6 +4,12 @@
 $count-description-lines: 2;
 
 .cclow-geography-page {
+  @include until($desktop) {
+    & >.container {
+      padding: 0 .75rem;
+    }
+  }
+
   margin-top: 2.8rem;
 
   .title-page {
@@ -24,6 +30,7 @@ $count-description-lines: 2;
     display: flex;
     margin-bottom: 0.875rem;
     font-size: 0.875rem;
+    flex-wrap: wrap;
 
     .flag {
       height: 20px;
@@ -60,7 +67,13 @@ $count-description-lines: 2;
     margin: 0 4px;
   }
 
-  .content-list {
+  .content-list {    
+    @include until($desktop) {
+      .content-item:first-child {
+        margin-top: 0;
+      }
+    }
+    
     .title {
       color: $red;
     }
@@ -515,6 +528,11 @@ $count-description-lines: 2;
       margin-top: 25px;
       border: none;
       background-color: transparent;
+
+      @include until($desktop) {
+        margin: 0;
+        padding: 0;
+      }
     }
   }
 
@@ -568,6 +586,24 @@ $count-description-lines: 2;
       }
     }
   }
+
+  @include until($desktop) {
+    main {
+      margin-top: 0;
+    }
+
+    .columns {
+      margin: 0;
+
+      .column {
+        padding: 0;
+      }
+    }
+
+    .load-more-container {
+      text-align: center;
+    }
+  }
 }
 
 mark {
@@ -576,11 +612,20 @@ mark {
 }
 
 .search-wrapper {
-  width: 80%;
+  left: 10%;
   position: absolute;
   top: 70%;
-  left: 10%;
+  width: 80%;
   z-index: 35;
+
+  @include until($desktop) {
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
+    right: 0;
+    top: 82.5%;
+    width: calc(100% - #{0.75rem * 2});
+  }
 }
 
 .sidebar__categories {

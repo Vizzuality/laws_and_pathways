@@ -22,8 +22,11 @@ class ClimateTargets extends Component {
       offset: 0,
       activeGeoFilter: {},
       activeTimeRangeFilter: {},
-      activeTypesFilter: {}
+      activeTypesFilter: {},
+      isMoreSearchOptionsVisible: false
     };
+
+    this.isMobile = window.innerWidth < 1024;
 
     this.geoFilter = React.createRef();
     this.timeRangeFilter = React.createRef();
@@ -143,12 +146,64 @@ class ClimateTargets extends Component {
     </Fragment>
   );
 
-  render() {
-    const {climate_targets, count} = this.state;
+  renderFilters = () => {
     const {
       geo_filter_options: geoFilterOptions,
       types_filter_options: typesFilterOptions
     } = this.props;
+    return (
+      <Fragment>
+        <SearchFilter
+          ref={this.geoFilter}
+          filterName="Regions and countries"
+          params={geoFilterOptions}
+          onChange={(event) => this.filterList('activeGeoFilter', event)}
+        />
+        {/* <TimeRangeFilter
+            ref={this.timeRangeFilter}
+            onChange={(event) => this.filterList('activeTimeRangeFilter', event)}
+            /> */}
+        <SearchFilter
+          ref={this.typesFilter}
+          filterName="Types"
+          params={typesFilterOptions}
+          onChange={(event) => this.filterList('activeTypesFilter', event)}
+        />
+      </Fragment>
+    );
+  }
+
+  renderMoreOptions = () => {
+    const {isMoreSearchOptionsVisible} = this.state;
+    return (
+      <Fragment>
+        {!isMoreSearchOptionsVisible && (
+          <button
+            type="button"
+            onClick={() => this.setState({isMoreSearchOptionsVisible: true})}
+            className="more-options"
+          >
+            + Show more search options
+          </button>
+        )}
+        {isMoreSearchOptionsVisible && (
+          <Fragment>
+            <button
+              type="button"
+              onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
+              className="more-options"
+            >
+              - Show fewer search options
+            </button>
+            {this.renderFilters()}
+          </Fragment>
+        )}
+      </Fragment>
+    );
+  }
+
+  render() {
+    const {climate_targets, count} = this.state;
     const hasMore = climate_targets.length < count;
     const downloadResultsLink = `/cclow/climate_targets.csv?${this.getQueryString()}`;
 
@@ -159,31 +214,19 @@ class ClimateTargets extends Component {
             <div className="flex-container">
               {this.renderPageTitle()}
             </div>
+            {this.isMobile && (<div className="filter-column">{this.renderMoreOptions()}</div>)}
             <hr />
             <div className="columns">
-              <div className="column is-one-quarter filter-column">
-                <div className="search-by">Narrow this search by</div>
-                <SearchFilter
-                  ref={this.geoFilter}
-                  filterName="Regions and countries"
-                  params={geoFilterOptions}
-                  onChange={(event) => this.filterList('activeGeoFilter', event)}
-                />
-                {/* <TimeRangeFilter
-                    ref={this.timeRangeFilter}
-                    onChange={(event) => this.filterList('activeTimeRangeFilter', event)}
-                    /> */}
-                <SearchFilter
-                  ref={this.typesFilter}
-                  filterName="Types"
-                  params={typesFilterOptions}
-                  onChange={(event) => this.filterList('activeTypesFilter', event)}
-                />
-              </div>
+              {!this.isMobile && (
+                <div className="column is-one-quarter filter-column">
+                  <div className="search-by">Narrow this search by</div>
+                  {this.renderFilters()}
+                </div>
+              )}
               <main className="column is-three-quarters">
                 <div className="columns pre-content">
                   <span className="column is-half">Showing {count} results</span>
-                  <span className="column is-half download-link">
+                  <span className="column is-half download-link is-hidden-touch">
                     <a className="download-link" href={downloadResultsLink}>Download results (.csv)</a>
                   </span>
                 </div>
@@ -191,7 +234,7 @@ class ClimateTargets extends Component {
                 <ul className="content-list">
                   {climate_targets.map((target, i) => (
                     <Fragment key={i}>
-                      <li>
+                      <li className="content-item">
                         <h5 className="title" dangerouslySetInnerHTML={{__html: target.link}} />
                         <div className="meta">
                           {target.geography && (
@@ -209,7 +252,7 @@ class ClimateTargets extends Component {
                   ))}
                 </ul>
                 {hasMore && (
-                  <div className="column is-offset-5">
+                  <div className={`column load-more-container${!this.isMobile ? ' is-offset-5' : ''}`}>
                     <button type="button" className="button is-primary load-more-btn" onClick={this.handleLoadMore}>
                       Load 10 more entries
                     </button>
