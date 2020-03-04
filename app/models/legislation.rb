@@ -103,7 +103,7 @@ class Legislation < ApplicationRecord
     accepts_nested_attributes_for :events
   end
 
-  validates_presence_of :title, :slug
+  validates_presence_of :title, :slug, :legislation_type
   validates_uniqueness_of :slug
 
   def should_generate_new_friendly_id?

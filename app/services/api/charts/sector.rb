@@ -147,6 +147,7 @@ module Api
           name: company.name,
           company: {
             id: company.id,
+            name: company.name,
             region: company.geography.region,
             geography_id: company.geography_id,
             geography_name: company.geography.name,

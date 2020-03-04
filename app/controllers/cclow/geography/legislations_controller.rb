@@ -2,6 +2,7 @@ module CCLOW
   module Geography
     class LegislationsController < CCLOWController
       include GeographyController
+      before_action :set_legislation, :redirect_if_numeric_or_historic_slug, only: [:show]
 
       before_action :set_common_breadcrumb
 
@@ -26,7 +27,6 @@ module CCLOW
       end
 
       def show
-        @legislation = CCLOW::LegislationDecorator.new(::Legislation.find(params[:id]))
         add_breadcrumb(@legislation.title, request.path)
         @sectors = @legislation.laws_sectors.order(:name)
         @keywords = @legislation.keywords.order(:name)
@@ -54,6 +54,19 @@ module CCLOW
 
       def show_laws?
         params[:scope] == :laws
+      end
+
+      def set_legislation
+        @legislation = CCLOW::LegislationDecorator.new(::Legislation.friendly.find(params[:id]))
+      end
+
+      def redirect_if_numeric_or_historic_slug
+        path = if show_laws?
+                 cclow_geography_law_path(@geography.slug, @legislation.slug)
+               else
+                 cclow_geography_policy_path(@geography.slug, @legislation.slug)
+               end
+        redirect_to path, status: :moved_permanently if params[:id] != @legislation.slug
       end
     end
   end

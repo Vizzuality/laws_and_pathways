@@ -8,6 +8,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import uniqBy from 'lodash/uniqBy';
 import sortBy from 'lodash/sortBy';
+import cloneDeep from 'lodash/cloneDeep';
 import get from 'lodash/get';
 
 import PlusIcon from 'images/icons/plus.svg';
@@ -19,47 +20,48 @@ import CompanySelector from './CompanySelector';
 import CompanyTag from './CompanyTag';
 import NestedDropdown from 'components/NestedDropdown';
 
-function getLegendItems(data, showByValue) {
-  let companyData = data.filter(d => d.type !== 'area');
-
-  if (showByValue) {
-    // get last emission also looking at targeted
-    // const getLastEmission = (d) => d.data && d.data.length && d.data.slice(-1)[0][1];
-    const getLastEmission = (d) => {
-      const lastEmissionYear = get(d, 'data.zones[0].value');
-      let lastEmission;
-      if (!lastEmissionYear) {
-        // get last emission
-        lastEmission = d.data && d.data.length && d.data.slice(-1)[0][1];
-      } else {
-        lastEmission = d.data && d.data.length && d.data.find(x => x[0] === lastEmissionYear)[1];
-      }
-      return parseFloat(lastEmission, 10);
-    };
-
-    companyData = companyData.filter(d => {
-      if (showByValue.startsWith('market_cap')) {
-        return d.company.market_cap_group === showByValue.replace('market_cap_', '');
-      }
-
-      if (showByValue.startsWith('by_country')) {
-        return parseInt(d.company.geography_id, 10) === parseInt(showByValue.replace('by_country_', ''), 10);
-      }
-
-      if (showByValue.startsWith('by_region')) {
-        return d.company.region === showByValue.replace('by_region_', '');
-      }
-
-      return true;
-    });
-    companyData = companyData.sort((a, b) => getLastEmission(b) - getLastEmission(a));
+// get last emission also looking at targeted
+// const getLastEmission = (d) => d.data && d.data.length && d.data.slice(-1)[0][1];
+function getLastEmission(d) {
+  const lastEmissionYear = get(d, 'data.zones[0].value');
+  let lastEmission;
+  if (!lastEmissionYear) {
+    // get last emission
+    lastEmission = d.data && d.data.length && d.data.slice(-1)[0][1];
+  } else {
+    lastEmission = d.data && d.data.length && d.data.find(x => x[0] === lastEmissionYear)[1];
   }
-
-  return applyColorsToLegendItems(companyData.slice(0, 10));
+  return parseFloat(lastEmission, 10);
 }
 
-function applyColorsToLegendItems(items) {
+function filterByShowValue(companyData, showByValue) {
+  if (!showByValue) return companyData;
+
+  return companyData.filter(d => {
+    if (showByValue.startsWith('market_cap')) {
+      return d.company.market_cap_group === showByValue.replace('market_cap_', '');
+    }
+
+    if (showByValue.startsWith('by_country')) {
+      return parseInt(d.company.geography_id, 10) === parseInt(showByValue.replace('by_country_', ''), 10);
+    }
+
+    if (showByValue.startsWith('by_region')) {
+      return d.company.region === showByValue.replace('by_region_', '');
+    }
+
+    return true;
+  });
+}
+
+function applyColors(items) {
   return items.map((d, idx) => ({...d, color: COLORS[idx % 10]}));
+}
+
+function ensure10sorted(companyData) {
+  return [...companyData]
+    .sort((a, b) => getLastEmission(b) - getLastEmission(a))
+    .slice(0, 10);
 }
 
 function getDropdownOptions(geographies, regions, marketCapGroups) {
@@ -87,30 +89,29 @@ function getDropdownOptions(geographies, regions, marketCapGroups) {
 }
 
 function CPPerformance({ dataUrl, companySelector, unit }) {
-  const [data, setData] = useState([]);
-  const [legendItems, setLegendItems] = useState([]);
-  const [showCompanySelector, setCompanySelectorVisible] = useState(false);
-  const { geographies, regions, marketCapGroups } = useMemo(() => {
-    const companyData = data
-      .map(d => d.company)
-      .filter(d => d);
-
-    return {
-      geographies: sortBy(
-        uniqBy(
-          companyData.map(c => ({ id: c.geography_id, name: c.geography_name })),
-          'id'
-        ),
-        'name'
-      ),
-      regions: [...new Set(companyData.map(c => c.region).sort())],
-      marketCapGroups: [...new Set(companyData.map(c => c.market_cap_group))]
-    };
-  }, [data]);
-  const dropdownOptions = getDropdownOptions(geographies, regions, marketCapGroups);
-  const [selectedShowBy, setSelectedShowBy] = useState(dropdownOptions[0]);
-
   const companySelectorWrapper = useRef();
+
+  const [data, setData] = useState([]);
+  const [error, setError] = useState('');
+  const [selectedCompanies, setSelectedCompanies] = useState([]); // Array of company names
+  const [showCompanySelector, setCompanySelectorVisible] = useState(false);
+
+  const companyData = useMemo(() => data.filter(d => d.company), [data]);
+  const companies = useMemo(() => companyData.map(d => d.company), [companyData]);
+  const dropdownOptions = useMemo(() => {
+    const geographies = sortBy(
+      uniqBy(
+        companies.map(c => ({ id: c.geography_id, name: c.geography_name })),
+        'id'
+      ),
+      'name'
+    );
+    const regions = [...new Set(companies.map(c => c.region))].sort();
+    const marketCapGroups = [...new Set(companies.map(c => c.market_cap_group))];
+
+    return getDropdownOptions(geographies, regions, marketCapGroups);
+  }, [companies]);
+  const [selectedShowBy, setSelectedShowBy] = useState(dropdownOptions[0]);
 
   // TODO: add error handling
   useEffect(() => {
@@ -118,20 +119,34 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
       .then((r) => r.json())
       .then((chartData) => {
         setData(chartData);
-        setLegendItems(getLegendItems(chartData, selectedShowBy.value));
-      });
-  }, []);
+      })
+      .catch(() => setError('Error while loading the data'));
+  }, [dataUrl]);
+  useEffect(() => {
+    setSelectedCompanies(
+      ensure10sorted(
+        filterByShowValue(companyData, selectedShowBy.value)
+      ).map(c => c.name)
+    );
+  }, [companyData, selectedShowBy]);
+
   useOutsideClick(companySelectorWrapper, () => setCompanySelectorVisible(false));
 
-  const companies = useMemo(
-    () => data.filter(d => d.type !== 'area').map(i => i.name).sort(),
-    [data]
-  );
-  const selectedCompanies = useMemo(() => legendItems.map(i => i.name), [legendItems]);
   const chartData = useMemo(
-    () => data.filter(d => d.type === 'area' || selectedCompanies.includes(d.name)),
-    [data, selectedCompanies]
+    () => {
+      const benchmarks = data.filter(d => d.type === 'area');
+      const restData = applyColors(
+        companySelector
+          ? selectedCompanies.map(c => data.find(d => get(d, 'company.name') === c))
+          : data.filter(d => d.type !== 'area')
+      );
+
+      // do not why cloneDeep is needed, but highchart seems to mutate the data
+      return cloneDeep([...benchmarks, ...restData]);
+    },
+    [data, companySelector, selectedCompanies]
   );
+  const legendItems = chartData.filter(d => d.type !== 'area');
 
   // handlers
   const handleAddCompaniesClick = (e) => {
@@ -139,20 +154,14 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
     setCompanySelectorVisible(!showCompanySelector);
   };
   const handleLegendItemRemove = (item) => {
-    setLegendItems(
-      applyColorsToLegendItems(
-        legendItems.filter(l => l.name !== item.name)
-      )
-    );
+    setSelectedCompanies((selected) => selected.filter(s => s !== item.name));
   };
   const handleSelectedCompaniesChange = (selected) => {
-    setLegendItems(
-      getLegendItems(data.filter((d) => selected.includes(d.name)))
+    setSelectedCompanies(
+      ensure10sorted(
+        companyData.filter(c => selected.includes(c.company.name))
+      ).map(c => c.name)
     );
-  };
-  const handleShowBySelect = (selected) => {
-    setSelectedShowBy(selected);
-    setLegendItems(getLegendItems(data, selected.value));
   };
 
   const subTitle = ((item) => {
@@ -172,7 +181,7 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
         title="Top 10 Emitters"
         subTitle={subTitle}
         items={dropdownOptions}
-        onSelect={handleShowBySelect}
+        onSelect={setSelectedShowBy}
       />,
       element
     );
@@ -209,7 +218,7 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
 
                 {showCompanySelector && (
                   <CompanySelector
-                    companies={companies}
+                    companies={companies.map(c => c.name).sort()}
                     selected={selectedCompanies}
                     onChange={handleSelectedCompaniesChange}
                     onClose={() => setCompanySelectorVisible(false)}
@@ -230,6 +239,12 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
           </span>
         </div>
       </div>
+
+      {error && (
+        <div>
+          <p>{error}</p>
+        </div>
+      )}
 
       <HighchartsReact
         highcharts={Highcharts}

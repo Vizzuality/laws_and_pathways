@@ -4,7 +4,7 @@ module CCLOW
 
     def link
       if geography
-        h.link_to(title, h.cclow_geography_litigation_case_path(geography.slug, model))
+        h.link_to(title, h.cclow_geography_litigation_case_path(geography.slug, model.slug))
       else
         title
       end
