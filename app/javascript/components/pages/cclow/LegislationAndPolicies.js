@@ -148,71 +148,69 @@ class LegislationAndPolicies extends Component {
             + Show more search options
           </button>
         )}
-        {isMoreSearchOptionsVisible && (
-          <Fragment>
-            {this.isMobile && (
-              <button
-                type="button"
-                onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
-                className="more-options"
-              >
-                - Show fewer search options
-              </button>
-            )}
-            {this.isMobile && this.renderMainFilters()}
-            <SearchFilter
-              ref={this.keywordsFilter}
-              filterName="Keywords"
-              params={keywordsFilterOptions}
-              onChange={(event) => this.filterList('activeKeywordsFilter', event)}
-            />
-            <SearchFilter
-              ref={this.responsesFilter}
-              filterName="Responses"
-              params={responsesFilterOptions}
-              onChange={(event) => this.filterList('activeResponsesFilter', event)}
-            />
-            <SearchFilter
-              ref={this.frameworksFilter}
-              filterName="Frameworks"
-              params={frameworksFilterOptions}
-              onChange={(event) => this.filterList('activeFrameworksFilter', event)}
-            />
-            <SearchFilter
-              ref={this.instrumentsFilter}
-              filterName="Instruments"
-              params={instrumentsFilterOptions}
-              onChange={(event) => this.filterList('activeInstrumentsFilter', event)}
-            />
-            <SearchFilter
-              ref={this.naturalHazardsFilter}
-              filterName="Natural Hazards"
-              params={naturalHazardsFilterOptions}
-              onChange={(event) => this.filterList('activeNaturalHazardsFilter', event)}
-            />
-            <SearchFilter
-              ref={this.governancesFilter}
-              filterName="Governances"
-              params={governancesFilterOptions}
-              onChange={(event) => this.filterList('activeGovernancesFilter', event)}
-            />
-            <SearchFilter
-              ref={this.sectorsFilter}
-              filterName="Sectors"
-              params={sectorsOptions}
-              onChange={(event) => this.filterList('activeSectorsFilter', event)}
-            />
-            {!this.isMobile && (
-              <button
-                type="button"
-                onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
-                className="more-options"
-              >
-                - Show less search options
-              </button>
-            )}
-          </Fragment>
-        )}
+        <div className={isMoreSearchOptionsVisible ? 'more-filters' : 'more-filters hidden'}>
+          {this.isMobile && (
+            <button
+              type="button"
+              onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
+              className="more-options"
+            >
+              - Show fewer search options
+            </button>
+          )}
+          {this.isMobile && this.renderMainFilters()}
+          <SearchFilter
+            ref={this.keywordsFilter}
+            filterName="Keywords"
+            params={keywordsFilterOptions}
+            onChange={(event) => this.filterList('activeKeywordsFilter', event)}
+          />
+          <SearchFilter
+            ref={this.responsesFilter}
+            filterName="Responses"
+            params={responsesFilterOptions}
+            onChange={(event) => this.filterList('activeResponsesFilter', event)}
+          />
+          <SearchFilter
+            ref={this.frameworksFilter}
+            filterName="Frameworks"
+            params={frameworksFilterOptions}
+            onChange={(event) => this.filterList('activeFrameworksFilter', event)}
+          />
+          <SearchFilter
+            ref={this.instrumentsFilter}
+            filterName="Instruments"
+            params={instrumentsFilterOptions}
+            onChange={(event) => this.filterList('activeInstrumentsFilter', event)}
+          />
+          <SearchFilter
+            ref={this.naturalHazardsFilter}
+            filterName="Natural Hazards"
+            params={naturalHazardsFilterOptions}
+            onChange={(event) => this.filterList('activeNaturalHazardsFilter', event)}
+          />
+          <SearchFilter
+            ref={this.governancesFilter}
+            filterName="Governances"
+            params={governancesFilterOptions}
+            onChange={(event) => this.filterList('activeGovernancesFilter', event)}
+          />
+          <SearchFilter
+            ref={this.sectorsFilter}
+            filterName="Sectors"
+            params={sectorsOptions}
+            onChange={(event) => this.filterList('activeSectorsFilter', event)}
+          />
+          {!this.isMobile && (
+            <button
+              type="button"
+              onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
+              className="more-options"
+            >
+              - Show less search options
+            </button>
+          )}
+        </div>
       </Fragment>
     );
   }

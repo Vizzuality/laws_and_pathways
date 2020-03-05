@@ -186,18 +186,16 @@ class ClimateTargets extends Component {
             + Show more search options
           </button>
         )}
-        {isMoreSearchOptionsVisible && (
-          <Fragment>
-            <button
-              type="button"
-              onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
-              className="more-options"
-            >
-              - Show fewer search options
-            </button>
-            {this.renderFilters()}
-          </Fragment>
-        )}
+        <div className={isMoreSearchOptionsVisible ? '' : 'hidden'}>
+          <button
+            type="button"
+            onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
+            className="more-options"
+          >
+            - Show fewer search options
+          </button>
+          {this.renderFilters()}
+        </div>
       </Fragment>
     );
   }

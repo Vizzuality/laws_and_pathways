@@ -268,95 +268,93 @@ class LitigationCases extends Component {
             + Show more search options
           </button>
         )}
-        {isMoreSearchOptionsVisible && (
-          <>
-            {this.isMobile && (
-              <button
-                type="button"
-                onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
-                className="more-options"
-              >
-                - Show fewer search options
-              </button>
-            )}
-            {this.isMobile && this.renderMainFilters()}
-            <SearchFilter
-              ref={this.keywordsFilter}
-              filterName="Keywords"
-              params={keywordsFilterOptions}
-              onChange={(event) => this.filterList('activeKeywordsFilter', event)}
-            />
-            <SearchFilter
-              ref={this.responsesFilter}
-              filterName="Responses"
-              params={responsesFilterOptions}
-              onChange={(event) => this.filterList('activeResponsesFilter', event)}
-            />
-            <SearchFilter
-              ref={this.jurisdictionFilter}
-              filterName="Jurisdiction"
-              params={litigationJurisdictionsOptions}
-              onChange={(event) => this.filterList('activeJurisdictionsFilter', event)}
-            />
-            <SearchFilter
-              ref={this.partyTypeFilter}
-              filterName="Party types"
-              params={litigationPartyTypesOptions}
-              onChange={(event) => this.filterList('activePartyTypesFilter', event)}
-            />
-            <SearchFilter
-              ref={this.sectorsFilter}
-              filterName="Sectors"
-              params={sectorsOptions}
-              onChange={(event) => this.filterList('activeSectorsFilter', event)}
-            />
-            <SearchFilter
-              ref={this.sideAPartyTypeFilter}
-              filterName="Side A Type"
-              params={litigationSideAPartyTypeOptions}
-              onChange={(event) => this.filterList('activeSideAPartyTypesFilter', event)}
-            />
-            <SearchFilter
-              ref={this.sideBPartyTypeFilter}
-              filterName="Side B Type"
-              params={litigationSideBPartyTypeOptions}
-              onChange={(event) => this.filterList('activeSideBPartyTypesFilter', event)}
-            />
-            <SearchFilter
-              ref={this.sideCPartyTypeFilter}
-              filterName="Side C Type"
-              params={litigationSideCPartyTypeOptions}
-              onChange={(event) => this.filterList('activeSideCPartyTypesFilter', event)}
-            />
-            <SearchFilter
-              ref={this.sideAFilter}
-              filterName="Side A name"
-              params={litigationSideAOptions}
-              onChange={(event) => this.filterList('activeSideAFilter', event)}
-            />
-            <SearchFilter
-              ref={this.sideBFilter}
-              filterName="Side B name"
-              params={litigationSideBOptions}
-              onChange={(event) => this.filterList('activeSideBFilter', event)}
-            />
-            <SearchFilter
-              ref={this.sideCFilter}
-              filterName="Side C name"
-              params={litigationSideCOptions}
-              onChange={(event) => this.filterList('activeSideCFilter', event)}
-            />
-            {!this.isMobile && (
-              <button
-                type="button"
-                onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
-                className="more-options"
-              >
-                - Show less search options
-              </button>
-            )}
-          </>
-        )}
+        <div className={isMoreSearchOptionsVisible ? 'more-filters' : 'more-filters hidden'}>
+          {this.isMobile && (
+            <button
+              type="button"
+              onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
+              className="more-options"
+            >
+              - Show fewer search options
+            </button>
+          )}
+          {this.isMobile && this.renderMainFilters()}
+          <SearchFilter
+            ref={this.keywordsFilter}
+            filterName="Keywords"
+            params={keywordsFilterOptions}
+            onChange={(event) => this.filterList('activeKeywordsFilter', event)}
+          />
+          <SearchFilter
+            ref={this.responsesFilter}
+            filterName="Responses"
+            params={responsesFilterOptions}
+            onChange={(event) => this.filterList('activeResponsesFilter', event)}
+          />
+          <SearchFilter
+            ref={this.jurisdictionFilter}
+            filterName="Jurisdiction"
+            params={litigationJurisdictionsOptions}
+            onChange={(event) => this.filterList('activeJurisdictionsFilter', event)}
+          />
+          <SearchFilter
+            ref={this.partyTypeFilter}
+            filterName="Party types"
+            params={litigationPartyTypesOptions}
+            onChange={(event) => this.filterList('activePartyTypesFilter', event)}
+          />
+          <SearchFilter
+            ref={this.sectorsFilter}
+            filterName="Sectors"
+            params={sectorsOptions}
+            onChange={(event) => this.filterList('activeSectorsFilter', event)}
+          />
+          <SearchFilter
+            ref={this.sideAPartyTypeFilter}
+            filterName="Side A Type"
+            params={litigationSideAPartyTypeOptions}
+            onChange={(event) => this.filterList('activeSideAPartyTypesFilter', event)}
+          />
+          <SearchFilter
+            ref={this.sideBPartyTypeFilter}
+            filterName="Side B Type"
+            params={litigationSideBPartyTypeOptions}
+            onChange={(event) => this.filterList('activeSideBPartyTypesFilter', event)}
+          />
+          <SearchFilter
+            ref={this.sideCPartyTypeFilter}
+            filterName="Side C Type"
+            params={litigationSideCPartyTypeOptions}
+            onChange={(event) => this.filterList('activeSideCPartyTypesFilter', event)}
+          />
+          <SearchFilter
+            ref={this.sideAFilter}
+            filterName="Side A name"
+            params={litigationSideAOptions}
+            onChange={(event) => this.filterList('activeSideAFilter', event)}
+          />
+          <SearchFilter
+            ref={this.sideBFilter}
+            filterName="Side B name"
+            params={litigationSideBOptions}
+            onChange={(event) => this.filterList('activeSideBFilter', event)}
+          />
+          <SearchFilter
+            ref={this.sideCFilter}
+            filterName="Side C name"
+            params={litigationSideCOptions}
+            onChange={(event) => this.filterList('activeSideCFilter', event)}
+          />
+          {!this.isMobile && (
+            <button
+              type="button"
+              onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
+              className="more-options"
+            >
+              - Show less search options
+            </button>
+          )}
+        </div>
       </>
     );
   }
