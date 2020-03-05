@@ -35,6 +35,8 @@ class LegislationAndPolicies extends Component {
       activeSectorsFilter: {}
     };
 
+    this.isMobile = window.innerWidth < 1024;
+
     this.geoFilter = React.createRef();
     this.keywordsFilter = React.createRef();
     this.responsesFilter = React.createRef();
@@ -146,50 +148,60 @@ class LegislationAndPolicies extends Component {
             + Show more search options
           </button>
         )}
-        {isMoreSearchOptionsVisible && (
-          <Fragment>
-            <SearchFilter
-              ref={this.keywordsFilter}
-              filterName="Keywords"
-              params={keywordsFilterOptions}
-              onChange={(event) => this.filterList('activeKeywordsFilter', event)}
-            />
-            <SearchFilter
-              ref={this.responsesFilter}
-              filterName="Responses"
-              params={responsesFilterOptions}
-              onChange={(event) => this.filterList('activeResponsesFilter', event)}
-            />
-            <SearchFilter
-              ref={this.frameworksFilter}
-              filterName="Frameworks"
-              params={frameworksFilterOptions}
-              onChange={(event) => this.filterList('activeFrameworksFilter', event)}
-            />
-            <SearchFilter
-              ref={this.instrumentsFilter}
-              filterName="Instruments"
-              params={instrumentsFilterOptions}
-              onChange={(event) => this.filterList('activeInstrumentsFilter', event)}
-            />
-            <SearchFilter
-              ref={this.naturalHazardsFilter}
-              filterName="Natural Hazards"
-              params={naturalHazardsFilterOptions}
-              onChange={(event) => this.filterList('activeNaturalHazardsFilter', event)}
-            />
-            <SearchFilter
-              ref={this.governancesFilter}
-              filterName="Governances"
-              params={governancesFilterOptions}
-              onChange={(event) => this.filterList('activeGovernancesFilter', event)}
-            />
-            <SearchFilter
-              ref={this.sectorsFilter}
-              filterName="Sectors"
-              params={sectorsOptions}
-              onChange={(event) => this.filterList('activeSectorsFilter', event)}
-            />
+        <div className={isMoreSearchOptionsVisible ? 'more-filters' : 'more-filters hidden'}>
+          {this.isMobile && (
+            <button
+              type="button"
+              onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
+              className="more-options"
+            >
+              - Show fewer search options
+            </button>
+          )}
+          {this.isMobile && this.renderMainFilters()}
+          <SearchFilter
+            ref={this.keywordsFilter}
+            filterName="Keywords"
+            params={keywordsFilterOptions}
+            onChange={(event) => this.filterList('activeKeywordsFilter', event)}
+          />
+          <SearchFilter
+            ref={this.responsesFilter}
+            filterName="Responses"
+            params={responsesFilterOptions}
+            onChange={(event) => this.filterList('activeResponsesFilter', event)}
+          />
+          <SearchFilter
+            ref={this.frameworksFilter}
+            filterName="Frameworks"
+            params={frameworksFilterOptions}
+            onChange={(event) => this.filterList('activeFrameworksFilter', event)}
+          />
+          <SearchFilter
+            ref={this.instrumentsFilter}
+            filterName="Instruments"
+            params={instrumentsFilterOptions}
+            onChange={(event) => this.filterList('activeInstrumentsFilter', event)}
+          />
+          <SearchFilter
+            ref={this.naturalHazardsFilter}
+            filterName="Natural Hazards"
+            params={naturalHazardsFilterOptions}
+            onChange={(event) => this.filterList('activeNaturalHazardsFilter', event)}
+          />
+          <SearchFilter
+            ref={this.governancesFilter}
+            filterName="Governances"
+            params={governancesFilterOptions}
+            onChange={(event) => this.filterList('activeGovernancesFilter', event)}
+          />
+          <SearchFilter
+            ref={this.sectorsFilter}
+            filterName="Sectors"
+            params={sectorsOptions}
+            onChange={(event) => this.filterList('activeSectorsFilter', event)}
+          />
+          {!this.isMobile && (
             <button
               type="button"
               onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
@@ -197,8 +209,8 @@ class LegislationAndPolicies extends Component {
             >
               - Show less search options
             </button>
-          </Fragment>
-        )}
+          )}
+        </div>
       </Fragment>
     );
   }
@@ -237,7 +249,7 @@ class LegislationAndPolicies extends Component {
       && Object.keys(activeSectorsFilter).length === 0
       && Object.keys(activeTimeRangeFilter).length === 0) return null;
     return (
-      <div className="filter-tags">
+      <div className="filter-tags tags">
         {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
         {this.renderTagsGroup(activeKeywordsFilter, keywordsFilterOptions, 'keywordsFilter')}
         {this.renderTagsGroup(activeResponsesFilter, responsesFilterOptions, 'responsesFilter')}
@@ -290,89 +302,102 @@ class LegislationAndPolicies extends Component {
     </Fragment>
   );
 
-  render() {
-    const {legislations, count} = this.state;
+  renderMainFilters = () => {
     const {
       geo_filter_options: geoFilterOptions,
       types_filter_options: typesFilterOptions
     } = this.props;
+    return (
+      <Fragment>
+        <SearchFilter
+          ref={this.geoFilter}
+          filterName="Regions and countries"
+          params={geoFilterOptions}
+          onChange={(event) => this.filterList('activeGeoFilter', event)}
+        />
+        <TimeRangeFilter
+          ref={this.timeRangeFilter}
+          onChange={(event) => this.filterList('activeTimeRangeFilter', event)}
+        />
+        <SearchFilter
+          ref={this.typesFilter}
+          filterName="Executive / Legislative"
+          params={typesFilterOptions}
+          isSearchable={false}
+          onChange={(event) => this.filterList('activeTypesFilter', event)}
+        />
+      </Fragment>
+    );
+  }
+
+  render() {
+    const {legislations, count} = this.state;
     const hasMore = legislations.length < count;
     const downloadResultsLink = `/cclow/legislation_and_policies.csv?${this.getQueryString()}`;
 
     return (
       <Fragment>
         <div className="cclow-geography-page">
-          <div className="title-page">
-            {this.renderPageTitle()}
-          </div>
-          <hr />
-          <div className="columns">
-            <div className="column is-one-quarter filter-column">
-              <div className="search-by">Narrow this search by</div>
-              <SearchFilter
-                ref={this.geoFilter}
-                filterName="Regions and countries"
-                params={geoFilterOptions}
-                onChange={(event) => this.filterList('activeGeoFilter', event)}
-              />
-              <TimeRangeFilter
-                ref={this.timeRangeFilter}
-                onChange={(event) => this.filterList('activeTimeRangeFilter', event)}
-              />
-              <SearchFilter
-                ref={this.typesFilter}
-                filterName="Executive / Legislative"
-                params={typesFilterOptions}
-                isSearchable={false}
-                onChange={(event) => this.filterList('activeTypesFilter', event)}
-              />
-              {this.renderMoreOptions()}
+          <div className="container">
+            <div className="title-page">
+              {this.renderPageTitle()}
             </div>
-            <main className="column is-three-quarters">
-              <div className="columns pre-content">
-                <span className="column is-half">Showing {count} results</span>
-                <span className="column is-half download-link">
-                  <a className="download-link" href={downloadResultsLink}>Download results (.csv)</a>
-                </span>
-              </div>
-              {this.renderTags()}
-              <ul className="content-list">
-                {legislations.map((legislation, i) => (
-                  <Fragment key={i}>
-                    <li className="content-item">
-                      <h5 className="title" dangerouslySetInnerHTML={{__html: legislation.link}} />
-                      <div className="meta">
-                        {legislation.geography && (
-                          <Fragment>
-                            <a href={legislation.geography_path}>
-                              <img src={`/images/flags/${legislation.geography.iso}.svg`} alt="" />
-                              {legislation.geography.name}
-                            </a>
-                          </Fragment>
-                        )}
-                        <div>
-                          <img
-                            src={legislation.legislation_type === 'executive' ? ExecutiveSVG : LegislativeSVG}
-                            alt={legislation.legislation_type}
-                          />
-                          {legislation.legislation_type_humanize}
-                        </div>
-                        {legislation.date_passed && <div>{legislation.date_passed}</div>}
-                        {legislation.last_change && <div>Last change in {legislation.last_change}</div>}
-                      </div>
-                      <div className="description" dangerouslySetInnerHTML={{__html: legislation.short_description}} />
-                    </li>
-                  </Fragment>
-                ))}
-              </ul>
-              {hasMore && (
-                <div className="column is-offset-5">
-                  <button type="button" className="button is-primary load-more-btn" onClick={this.handleLoadMore}>
-                    Load 10 more entries
-                  </button>
+            {this.isMobile && (<div className="filter-column">{this.renderMoreOptions()}</div>)}
+            <hr />
+            <div className="columns">
+              {!this.isMobile && (
+                <div className="column is-one-quarter filter-column">
+                  <div className="search-by">Narrow this search by</div>
+                  {this.renderMainFilters()}
+                  {this.renderMoreOptions()}
                 </div>
               )}
-            </main>
+              <main className="column is-three-quarters">
+                <div className="columns pre-content">
+                  <span className="column is-half">Showing {count} results</span>
+                  <span className="column is-half download-link is-hidden-touch">
+                    <a className="download-link" href={downloadResultsLink}>Download results (.csv)</a>
+                  </span>
+                </div>
+                {this.renderTags()}
+                <ul className="content-list">
+                  {legislations.map((legislation, i) => (
+                    <Fragment key={i}>
+                      <li className="content-item">
+                        <h5 className="title" dangerouslySetInnerHTML={{__html: legislation.link}} />
+                        <div className="meta">
+                          {legislation.geography && (
+                            <Fragment>
+                              <a href={legislation.geography_path}>
+                                <img src={`/images/flags/${legislation.geography.iso}.svg`} alt="" />
+                                {legislation.geography.name}
+                              </a>
+                            </Fragment>
+                          )}
+                          <div>
+                            <img
+                              src={legislation.legislation_type === 'executive' ? ExecutiveSVG : LegislativeSVG}
+                              alt={legislation.legislation_type}
+                            />
+                            {legislation.legislation_type_humanize}
+                          </div>
+                          {legislation.date_passed && <div>{legislation.date_passed}</div>}
+                          {legislation.last_change && <div>Last change in {legislation.last_change}</div>}
+                        </div>
+                        <div className="description" dangerouslySetInnerHTML={{__html: legislation.short_description}} />
+                      </li>
+                    </Fragment>
+                  ))}
+                </ul>
+                {hasMore && (
+                  <div className={`column load-more-container${!this.isMobile ? ' is-offset-5' : ''}`}>
+                    <button type="button" className="button is-primary load-more-btn" onClick={this.handleLoadMore}>
+                      Load 10 more entries
+                    </button>
+                  </div>
+                )}
+              </main>
+            </div>
           </div>
         </div>
       </Fragment>
