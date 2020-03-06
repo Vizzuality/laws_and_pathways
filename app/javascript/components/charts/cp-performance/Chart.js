@@ -113,7 +113,6 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
   }, [companies]);
   const [selectedShowBy, setSelectedShowBy] = useState(dropdownOptions[0]);
 
-  // TODO: add error handling
   useEffect(() => {
     fetch(dataUrl)
       .then((r) => r.json())

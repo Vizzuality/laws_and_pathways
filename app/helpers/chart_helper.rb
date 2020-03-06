@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/MethodLength
 module ChartHelper
   # defaults chart options (Highcharts)
   def default_chart_options
@@ -45,46 +44,4 @@ module ChartHelper
       }
     }
   end
-
-  def mq_company_no_of_assessments_chart_options
-    {
-      chart: {
-        marginTop: 50
-      },
-      colors: ['#00C170'],
-      legend: {
-        enabled: false
-      },
-      tooltip: {
-        dateTimeLabelFormats: {
-          day: '%B %Y',
-          hour: '%B %Y',
-          minute: '%B %Y',
-          month: '%B %Y',
-          second: '%B %Y',
-          year: '%Y'
-        }
-      },
-      xAxis: {
-        type: 'datetime',
-        dateTimeLabelFormats: {
-          month: '%Y',
-          year: '%Y'
-        },
-        tickInterval: (Time.now - 1.year.ago).round * 1000
-      },
-      yAxis: {
-        tickInterval: 1,
-        title: {
-          text: 'Level',
-          textAlign: 'right',
-          align: 'high',
-          rotation: 0,
-          x: 20,
-          y: -20
-        }
-      }
-    }
-  end
 end
-# rubocop:enable Metrics/MethodLength

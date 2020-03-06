@@ -16,13 +16,8 @@
   <div class="column">
     <div class="mq-assessment-box">
       <div>Nr of assessments: <%= assessment.previous_assessments.size + 1 %></div>
-      <div>
-        <%= line_chart(
-          assessments_levels_chart_data_tpi_company_path(@company.id, mq_assessment_id: assessment.id),
-          curve: false,
-          library: mq_company_no_of_assessments_chart_options
-          ) %>
-      </div>
+
+      <%= react_component('charts/mq-level', { dataUrl: assessments_levels_chart_data_tpi_company_path(@company.id, mq_assessment_id: assessment.id) }) %>
     </div>
   </div>
 </div>
