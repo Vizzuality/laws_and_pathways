@@ -83,6 +83,29 @@ export function getOptions(data, sectors) {
     title: {
       text: ''
     },
+    tooltip: {
+      useHTML: true,
+      formatter() {
+        const xValue = this.x;
+        const nrOfCompanies = this.y;
+        const nrOfCompaniesPercentage = Math.round(this.percentage);
+        const alignment = this.series;
+
+        return `
+          <div class="tooltip">
+            <div class="x-value">${xValue}</div>
+            <div class="alignment">
+              <span class="circle" style="background: ${alignment.color}"></span>
+              ${alignment.name}
+            </div>
+            <div class="companies">
+              ${nrOfCompanies} ${nrOfCompanies === 1 ? 'company' : 'companies'}<br/>
+              ${nrOfCompaniesPercentage}%
+            </div>
+          </div>
+        `;
+      }
+    },
     xAxis: {
       labels: {
         style: {
