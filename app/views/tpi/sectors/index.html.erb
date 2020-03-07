@@ -35,18 +35,7 @@
 
     <div class="columns">
       <div class="column is-6 is-offset-3">
-        <div class="chart chart--styled chart--mq-sector-pie-chart">
-          <%= pie_chart(
-            levels_chart_data_tpi_sectors_path,
-            height: '400px',
-            donut: true,
-            library: mq_sector_pie_chart_options
-          ) %>
-          <div class="chart-title">
-            <p class="companies-size"><%= @companies.active.size %></p>
-            companies
-          </div>
-        </div>
+        <%= react_component('charts/mq-sector-pie', { dataUrl: levels_chart_data_tpi_sectors_path }) %>
       </div>
     </div>
 
