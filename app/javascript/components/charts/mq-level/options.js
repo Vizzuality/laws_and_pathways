@@ -76,7 +76,7 @@ export function getOptions({ chartData }) {
           }
         },
         fillColor: d.name === 'Current Level' ? hexToRgba('#00C170', 0.2) : '#00C170',
-        radius: d.name === 'Current Level' ? 24 : 6,
+        radius: d.name === 'Current Level' ? 24 : 8,
         symbol: 'circle'
       },
       data: d.data.map(x => [Date.parse(parse(x[0], 'dd/MM/yyyy', new Date())), x[1]])
