@@ -40,7 +40,6 @@ gem 'active_link_to' # simple helper for making links with active class
 gem 'font-awesome-rails'
 
 # TPI
-gem 'chartkick'
 gem 'react-rails'
 
 gem 'appsignal'
