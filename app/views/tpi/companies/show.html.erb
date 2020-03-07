@@ -124,7 +124,9 @@
         <div>
           Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.mq_assessment_date') }) %>
           <%= select_tag :mq_assessment_id,
-               options_from_collection_for_select(@company.mq_assessments.currently_published, "id", "assessment_date", @mq_assessment.id),
+             options_from_collection_for_select(
+               @company.mq_assessments.currently_published.order(assessment_date: :desc), "id", "assessment_date", @mq_assessment.id
+             ),
              class: 'input',
              data: {
                remote: true,
@@ -155,7 +157,9 @@
           <div>
             Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.cp_assessment_date') }) %>
             <%= select_tag :cp_assessment_id,
-                           options_from_collection_for_select(@company.cp_assessments.currently_published, "id", "assessment_date", @cp_assessment.id),
+                           options_from_collection_for_select(
+                             @company.cp_assessments.currently_published.order(assessment_date: :desc), "id", "assessment_date", @cp_assessment.id
+                           ),
                            class: 'input',
                            data: {
                              remote: true,
