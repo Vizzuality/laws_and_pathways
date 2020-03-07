@@ -28,14 +28,12 @@ RSpec.describe Api::Charts::MQAssessment do
             .to eq([
                      {
                        data: [
-                         ['01/01/2016', nil],
                          %w[01/01/2016 1],
                          %w[01/01/2017 2],
                          %w[01/01/2018 3],
                          %w[08/08/2018 2],
                          %w[02/02/2019 4],
-                         %w[03/03/2020 3],
-                         ['05/05/2020', nil]
+                         %w[03/03/2020 3]
                        ],
                        name: 'Level'
                      },
@@ -66,9 +64,7 @@ RSpec.describe Api::Charts::MQAssessment do
             .to eq([
                      {
                        data: [
-                         ['01/01/2018', nil],
-                         %w[08/08/2018 2],
-                         ['03/11/2019', nil]
+                         %w[08/08/2018 2]
                        ],
                        name: 'Level'
                      },

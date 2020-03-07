@@ -33,11 +33,7 @@
       Distribution of companies in the <strong><%= @sector.name %></strong> sector according to the management of their greenhouse gas emissions and of risks and opportunities related to the low-carbon transition.
     </p>
 
-    <div class="columns">
-      <div class="column is-6 is-offset-3">
-        <%= react_component('charts/mq-sector-pie', { dataUrl: levels_chart_data_tpi_sector_path(@sector.id) }) %>
-      </div>
-    </div>
+    <%= react_component('charts/mq-sector-pie', { dataUrl: levels_chart_data_tpi_sector_path(@sector.id) }) %>
 
     <div class="sector-level-overview columns">
       <% @companies_by_levels.each do |level, companies| -%>

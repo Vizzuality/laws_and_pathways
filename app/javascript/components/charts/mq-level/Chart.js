@@ -1,38 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
 import { getOptions } from './options';
+import { useChartData } from '../hooks';
 
 function MQLevelChart({ dataUrl }) {
-  const [data, setData] = useState([]);
-  const [error, setError] = useState('');
-
+  const { data, error, loading } = useChartData(dataUrl);
   const options = getOptions({ chartData: data });
-
-  useEffect(() => {
-    fetch(dataUrl)
-      .then((r) => r.json())
-      .then((chartData) => {
-        setData(chartData);
-      })
-      .catch(() => setError('Error while loading the data'));
-  }, [dataUrl]);
 
   return (
     <div className="chart chart--mq-level">
-      {error && (
-        <div>
-          <p>{error}</p>
-        </div>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <React.Fragment>
+          {error ? (
+            <p>{error}</p>
+          ) : (
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={options}
+            />
+          )}
+        </React.Fragment>
       )}
-
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={options}
-      />
     </div>
   );
 }

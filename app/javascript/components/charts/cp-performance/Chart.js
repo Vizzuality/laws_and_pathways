@@ -15,6 +15,7 @@ import PlusIcon from 'images/icons/plus.svg';
 
 import { getOptions, COLORS } from './options';
 import { useOutsideClick } from 'shared/hooks';
+import { useChartData } from '../hooks';
 
 import CompanySelector from './CompanySelector';
 import CompanyTag from './CompanyTag';
@@ -91,8 +92,7 @@ function getDropdownOptions(geographies, regions, marketCapGroups) {
 function CPPerformance({ dataUrl, companySelector, unit }) {
   const companySelectorWrapper = useRef();
 
-  const [data, setData] = useState([]);
-  const [error, setError] = useState('');
+  const { data, error, loading } = useChartData(dataUrl);
   const [selectedCompanies, setSelectedCompanies] = useState([]); // Array of company names
   const [showCompanySelector, setCompanySelectorVisible] = useState(false);
 
@@ -113,14 +113,6 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
   }, [companies]);
   const [selectedShowBy, setSelectedShowBy] = useState(dropdownOptions[0]);
 
-  useEffect(() => {
-    fetch(dataUrl)
-      .then((r) => r.json())
-      .then((chartData) => {
-        setData(chartData);
-      })
-      .catch(() => setError('Error while loading the data'));
-  }, [dataUrl]);
   useEffect(() => {
     setSelectedCompanies(
       ensure10sorted(
@@ -239,16 +231,20 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
         </div>
       </div>
 
-      {error && (
-        <div>
-          <p>{error}</p>
-        </div>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <React.Fragment>
+          {error ? (
+            <p>{error}</p>
+          ) : (
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={options}
+            />
+          )}
+        </React.Fragment>
       )}
-
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={options}
-      />
     </div>
   );
 }

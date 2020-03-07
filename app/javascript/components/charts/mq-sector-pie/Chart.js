@@ -1,44 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
 import { getOptions } from './options';
+import { useChartData } from '../hooks';
 
 function MQSectorChart({ dataUrl }) {
-  const [data, setData] = useState([]);
-  const [error, setError] = useState('');
-
+  const { data, loading, error } = useChartData(dataUrl);
   const options = getOptions({ chartData: data });
   const numberOfCompanies = data.reduce((acc, d) => acc + d[1], 0);
 
-  useEffect(() => {
-    fetch(dataUrl)
-      .then((r) => r.json())
-      .then((chartData) => {
-        setData(chartData);
-      })
-      .catch(() => setError('Error while loading the data'));
-  }, [dataUrl]);
-
   return (
     <div className="chart chart--styled chart--mq-sector-pie-chart">
-      {error && (
-        <div>
-          <p>{error}</p>
-        </div>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <React.Fragment>
+          {error ? (
+            <p>{error}</p>
+          ) : (
+            <React.Fragment>
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={options}
+              />
+
+              <div className="chart-title">
+                <p className="companies-size">{numberOfCompanies}</p>
+                companies
+              </div>
+            </React.Fragment>
+          )}
+        </React.Fragment>
       )}
-
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={options}
-      />
-
-      <div className="chart-title">
-        <p className="companies-size">{numberOfCompanies}</p>
-        companies
-      </div>
     </div>
   );
 }
