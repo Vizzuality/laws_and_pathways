@@ -41,7 +41,6 @@ RSpec.describe Api::Charts::MQAssessment do
                        data: [
                          ['08/08/2018', 2]
                        ],
-                       color: 'red',
                        name: 'Current Level'
                      }
                    ])
@@ -70,8 +69,7 @@ RSpec.describe Api::Charts::MQAssessment do
                      },
                      {
                        data: [['08/08/2018', 2]],
-                       name: 'Current Level',
-                       color: 'red'
+                       name: 'Current Level'
                      }
                    ])
         end

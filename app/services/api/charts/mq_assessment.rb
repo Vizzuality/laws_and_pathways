@@ -29,8 +29,7 @@ module Api
           },
           {
             name: 'Current Level',
-            data: [[assessment.assessment_date.to_s, assessment.level.to_i]],
-            color: 'red'
+            data: [[assessment.assessment_date.to_s, assessment.level.to_i]]
           }
         ]
       end
