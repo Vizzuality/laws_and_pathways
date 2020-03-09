@@ -1,5 +1,3 @@
-/* eslint-disable react/no-this-in-sfc */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -9,12 +7,12 @@ import HighchartsReact from 'highcharts-react-official';
 import { getOptions } from './options';
 import { useChartData } from '../hooks';
 
-function CPPerformanceAllSectors({ dataUrl, sectors }) {
+function MQLevelChart({ dataUrl }) {
   const { data, error, loading } = useChartData(dataUrl);
-  const options = getOptions(data, sectors);
+  const options = getOptions({ chartData: data });
 
   return (
-    <div id="cp-performance-all-sectors-chart" className="chart chart--cp-all-sectors">
+    <div className="chart chart--mq-level">
       {loading ? (
         <p>Loading...</p>
       ) : (
@@ -33,15 +31,8 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
   );
 }
 
-CPPerformanceAllSectors.propTypes = {
-  dataUrl: PropTypes.string.isRequired,
-  sectors: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      link: PropTypes.string.isRequired,
-      cluster: PropTypes.string
-    }).isRequired
-  ).isRequired
+MQLevelChart.propTypes = {
+  dataUrl: PropTypes.string.isRequired
 };
 
-export default CPPerformanceAllSectors;
+export default MQLevelChart;

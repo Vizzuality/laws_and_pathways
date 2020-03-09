@@ -4,7 +4,7 @@ import { range } from 'd3-array';
 import { select } from 'd3-selection';
 import * as d3 from 'd3-force';
 
-const SingleBubbleChart = ({ width, height, handleNodeClick, data, uniqueKey, showTooltip, hideTooltip }) => {
+const SingleCell = ({ width, height, handleNodeClick, data, uniqueKey, showTooltip, hideTooltip }) => {
   const computizedKey = uniqueKey.split(' ').join('_');
   const key = `${computizedKey.replace(/[&]/g, '_')}-${(Math.random() * 100).toFixed()}`;
 
@@ -59,7 +59,7 @@ const SingleBubbleChart = ({ width, height, handleNodeClick, data, uniqueKey, sh
   );
 };
 
-SingleBubbleChart.propTypes = {
+SingleCell.propTypes = {
   showTooltip: PropTypes.func.isRequired,
   hideTooltip: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired,
@@ -72,4 +72,4 @@ SingleBubbleChart.propTypes = {
   uniqueKey: PropTypes.string.isRequired
 };
 
-export default SingleBubbleChart;
+export default SingleCell;

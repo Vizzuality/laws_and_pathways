@@ -11,8 +11,9 @@ module TPI
       @company_presenter = ::Api::Presenters::Company.new(@company)
 
       @sectors = TPISector.select(:id, :name, :slug).order(:name)
-      @companies =
-        Company.published.joins(:sector).select(:id, :name, :slug, 'tpi_sectors.name as sector_name', :active)
+      @companies = Company.published.joins(:sector)
+        .select(:id, :name, :slug, 'tpi_sectors.name as sector_name', :active)
+        .order('tpi_sectors.name', :name)
       @companies = TPI::CompanyDecorator.decorate_collection(@companies)
 
       fixed_navbar(

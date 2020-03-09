@@ -18,16 +18,9 @@ module Api
       def assessments_levels_data
         return [] unless company_mq_assessments.any?
 
-        # we are adding first and last point with nil value to have those ticks on the chart
-        # to fool Highcharts
-        first_point = [company_mq_assessments.first.assessment_date.beginning_of_year.to_s, nil]
-        last_point = [Time.now.to_date.to_s, nil]
-
-        results = [first_point]
-        company_mq_assessments.each do |a|
-          results << [a.assessment_date.to_s, a.level]
+        results = company_mq_assessments.map do |a|
+          [a.assessment_date.to_s, a.level.to_i]
         end
-        results << last_point
 
         [
           {
@@ -36,8 +29,7 @@ module Api
           },
           {
             name: 'Current Level',
-            data: [[assessment.assessment_date.to_s, assessment.level]],
-            color: 'red'
+            data: [[assessment.assessment_date.to_s, assessment.level.to_i]]
           }
         ]
       end
