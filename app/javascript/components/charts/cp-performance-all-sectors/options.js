@@ -70,8 +70,16 @@ export function getOptions(data, sectors) {
         borderWidth: 0,
         dataLabels: {
           enabled: true,
+          useHTML: true,
           formatter() {
-            return this.y > 0 ? this.y : null;
+            if (this.y <= 0) return null;
+            if (this.series.name !== 'No Disclosure') return this.y;
+
+            return `
+              <span style="color: white;">
+                ${this.y}
+              </span>
+            `;
           },
           style: {
             color: '#000000',
