@@ -16,6 +16,7 @@
       <h5><%= @geography.name %></h5>
     </div>
     <hr>
+    <%= react_component("MobileNavigateMenu", {options: sidebar_links.map {|v| {label: v[:label], value: v[:path]}}}) %>
     <div class="columns">
       <aside class="column is-one-quarter">
         <ul class="sidebar">
