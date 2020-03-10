@@ -34,7 +34,7 @@ class MobileNavigateMenu extends Component {
   constructor(props) {
     super(props);
     const {options} = this.props;
-    this.value = options.filter(option => window.location.pathname.includes(option.value))[0];
+    this.value = [...options].reverse().filter(option => window.location.pathname.includes(option.value))[0];
   }
 
   DropdownIndicator = (props) => (

@@ -7,6 +7,8 @@
                    {label: 'Climate targets',
                     path: cclow_geography_climate_targets_path(@geography.slug),
                     count: @geography_overview.number_of_targets}]
+  mobile_links = [{label: 'Overview and context', value: cclow_geography_path(@geography.slug)}] +
+                  sidebar_links.map {|v| {label: "#{v[:label]} (#{v[:count]})", value: v[:path]}}
 %>
 
 <% content_for :content do %>
@@ -16,7 +18,7 @@
       <h5><%= @geography.name %></h5>
     </div>
     <hr>
-    <%= react_component("MobileNavigateMenu", {options: sidebar_links.map {|v| {label: v[:label], value: v[:path]}}}) %>
+    <%= react_component("MobileNavigateMenu", {options: mobile_links}) %>
     <div class="columns">
       <aside class="column is-one-quarter">
         <ul class="sidebar">
