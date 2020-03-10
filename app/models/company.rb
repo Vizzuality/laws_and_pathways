@@ -81,7 +81,7 @@ class Company < ApplicationRecord
   end
 
   def self.search(query)
-    where('name ilike ? OR historical_comments ilike ?',
+    where('name ilike ? OR company_comments_internal ilike ?',
           "%#{query}%", "%#{query}%")
   end
 end
