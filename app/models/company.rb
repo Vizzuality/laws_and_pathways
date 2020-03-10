@@ -17,7 +17,7 @@
 #  discarded_at              :datetime
 #  sedol                     :string
 #  latest_information        :text
-#  historical_comments       :text
+#  company_comments_internal :text
 #  active                    :boolean          default(TRUE)
 #
 
