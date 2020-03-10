@@ -28,22 +28,19 @@ RSpec.describe Api::Charts::MQAssessment do
             .to eq([
                      {
                        data: [
-                         ['01/01/2016', nil],
-                         %w[01/01/2016 1],
-                         %w[01/01/2017 2],
-                         %w[01/01/2018 3],
-                         %w[08/08/2018 2],
-                         %w[02/02/2019 4],
-                         %w[03/03/2020 3],
-                         ['05/05/2020', nil]
+                         ['01/01/2016', 1],
+                         ['01/01/2017', 2],
+                         ['01/01/2018', 3],
+                         ['08/08/2018', 2],
+                         ['02/02/2019', 4],
+                         ['03/03/2020', 3]
                        ],
                        name: 'Level'
                      },
                      {
                        data: [
-                         %w[08/08/2018 2]
+                         ['08/08/2018', 2]
                        ],
-                       color: 'red',
                        name: 'Current Level'
                      }
                    ])
@@ -66,16 +63,13 @@ RSpec.describe Api::Charts::MQAssessment do
             .to eq([
                      {
                        data: [
-                         ['01/01/2018', nil],
-                         %w[08/08/2018 2],
-                         ['03/11/2019', nil]
+                         ['08/08/2018', 2]
                        ],
                        name: 'Level'
                      },
                      {
-                       data: [%w[08/08/2018 2]],
-                       name: 'Current Level',
-                       color: 'red'
+                       data: [['08/08/2018', 2]],
+                       name: 'Current Level'
                      }
                    ])
         end

@@ -109,6 +109,7 @@ module TPI
         .published
         .joins(:sector)
         .select(:id, :name, :slug, :sector_id, 'tpi_sectors.name as sector_name', :active)
+        .order('tpi_sectors.name', :name)
     end
 
     def companies_scope(params)

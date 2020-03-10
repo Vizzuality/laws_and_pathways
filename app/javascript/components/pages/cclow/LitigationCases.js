@@ -37,6 +37,8 @@ class LitigationCases extends Component {
       activeSectorsFilter: {}
     };
 
+    this.isMobile = window.innerWidth < 1024;
+
     this.geoFilter = React.createRef();
     this.keywordsFilter = React.createRef();
     this.responsesFilter = React.createRef();
@@ -166,7 +168,7 @@ class LitigationCases extends Component {
       && !Object.keys(activeSideCPartyTypesFilter).length
       && !Object.keys(activePartyTypesFilter).length) return null;
     return (
-      <div className="filter-tags">
+      <div className="filter-tags tags">
         {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
         {this.renderTagsGroup(activeKeywordsFilter, keywordsFilterOptions, 'keywordsFilter')}
         {this.renderTagsGroup(activeResponsesFilter, responsesFilterOptions, 'responsesFilter')}
@@ -266,74 +268,84 @@ class LitigationCases extends Component {
             + Show more search options
           </button>
         )}
-        {isMoreSearchOptionsVisible && (
-          <>
-            <SearchFilter
-              ref={this.keywordsFilter}
-              filterName="Keywords"
-              params={keywordsFilterOptions}
-              onChange={(event) => this.filterList('activeKeywordsFilter', event)}
-            />
-            <SearchFilter
-              ref={this.responsesFilter}
-              filterName="Responses"
-              params={responsesFilterOptions}
-              onChange={(event) => this.filterList('activeResponsesFilter', event)}
-            />
-            <SearchFilter
-              ref={this.jurisdictionFilter}
-              filterName="Jurisdiction"
-              params={litigationJurisdictionsOptions}
-              onChange={(event) => this.filterList('activeJurisdictionsFilter', event)}
-            />
-            <SearchFilter
-              ref={this.partyTypeFilter}
-              filterName="Party types"
-              params={litigationPartyTypesOptions}
-              onChange={(event) => this.filterList('activePartyTypesFilter', event)}
-            />
-            <SearchFilter
-              ref={this.sectorsFilter}
-              filterName="Sectors"
-              params={sectorsOptions}
-              onChange={(event) => this.filterList('activeSectorsFilter', event)}
-            />
-            <SearchFilter
-              ref={this.sideAPartyTypeFilter}
-              filterName="Side A Type"
-              params={litigationSideAPartyTypeOptions}
-              onChange={(event) => this.filterList('activeSideAPartyTypesFilter', event)}
-            />
-            <SearchFilter
-              ref={this.sideBPartyTypeFilter}
-              filterName="Side B Type"
-              params={litigationSideBPartyTypeOptions}
-              onChange={(event) => this.filterList('activeSideBPartyTypesFilter', event)}
-            />
-            <SearchFilter
-              ref={this.sideCPartyTypeFilter}
-              filterName="Side C Type"
-              params={litigationSideCPartyTypeOptions}
-              onChange={(event) => this.filterList('activeSideCPartyTypesFilter', event)}
-            />
-            <SearchFilter
-              ref={this.sideAFilter}
-              filterName="Side A name"
-              params={litigationSideAOptions}
-              onChange={(event) => this.filterList('activeSideAFilter', event)}
-            />
-            <SearchFilter
-              ref={this.sideBFilter}
-              filterName="Side B name"
-              params={litigationSideBOptions}
-              onChange={(event) => this.filterList('activeSideBFilter', event)}
-            />
-            <SearchFilter
-              ref={this.sideCFilter}
-              filterName="Side C name"
-              params={litigationSideCOptions}
-              onChange={(event) => this.filterList('activeSideCFilter', event)}
-            />
+        <div className={isMoreSearchOptionsVisible ? 'more-filters' : 'more-filters hidden'}>
+          {this.isMobile && (
+            <button
+              type="button"
+              onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
+              className="more-options"
+            >
+              - Show fewer search options
+            </button>
+          )}
+          {this.isMobile && this.renderMainFilters()}
+          <SearchFilter
+            ref={this.keywordsFilter}
+            filterName="Keywords"
+            params={keywordsFilterOptions}
+            onChange={(event) => this.filterList('activeKeywordsFilter', event)}
+          />
+          <SearchFilter
+            ref={this.responsesFilter}
+            filterName="Responses"
+            params={responsesFilterOptions}
+            onChange={(event) => this.filterList('activeResponsesFilter', event)}
+          />
+          <SearchFilter
+            ref={this.jurisdictionFilter}
+            filterName="Jurisdiction"
+            params={litigationJurisdictionsOptions}
+            onChange={(event) => this.filterList('activeJurisdictionsFilter', event)}
+          />
+          <SearchFilter
+            ref={this.partyTypeFilter}
+            filterName="Party types"
+            params={litigationPartyTypesOptions}
+            onChange={(event) => this.filterList('activePartyTypesFilter', event)}
+          />
+          <SearchFilter
+            ref={this.sectorsFilter}
+            filterName="Sectors"
+            params={sectorsOptions}
+            onChange={(event) => this.filterList('activeSectorsFilter', event)}
+          />
+          <SearchFilter
+            ref={this.sideAPartyTypeFilter}
+            filterName="Side A Type"
+            params={litigationSideAPartyTypeOptions}
+            onChange={(event) => this.filterList('activeSideAPartyTypesFilter', event)}
+          />
+          <SearchFilter
+            ref={this.sideBPartyTypeFilter}
+            filterName="Side B Type"
+            params={litigationSideBPartyTypeOptions}
+            onChange={(event) => this.filterList('activeSideBPartyTypesFilter', event)}
+          />
+          <SearchFilter
+            ref={this.sideCPartyTypeFilter}
+            filterName="Side C Type"
+            params={litigationSideCPartyTypeOptions}
+            onChange={(event) => this.filterList('activeSideCPartyTypesFilter', event)}
+          />
+          <SearchFilter
+            ref={this.sideAFilter}
+            filterName="Side A name"
+            params={litigationSideAOptions}
+            onChange={(event) => this.filterList('activeSideAFilter', event)}
+          />
+          <SearchFilter
+            ref={this.sideBFilter}
+            filterName="Side B name"
+            params={litigationSideBOptions}
+            onChange={(event) => this.filterList('activeSideBFilter', event)}
+          />
+          <SearchFilter
+            ref={this.sideCFilter}
+            filterName="Side C name"
+            params={litigationSideCOptions}
+            onChange={(event) => this.filterList('activeSideCFilter', event)}
+          />
+          {!this.isMobile && (
             <button
               type="button"
               onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
@@ -341,18 +353,41 @@ class LitigationCases extends Component {
             >
               - Show less search options
             </button>
-          </>
-        )}
+          )}
+        </div>
       </>
+    );
+  }
+
+  renderMainFilters = () => {
+    const {
+      geo_filter_options: geoFilterOptions,
+      statuses_filter_options: statusesFilterOptions
+    } = this.props;
+    return (
+      <Fragment>
+        <SearchFilter
+          ref={this.geoFilter}
+          filterName="Regions and countries"
+          params={geoFilterOptions}
+          onChange={(event) => this.filterList('activeGeoFilter', event)}
+        />
+        <TimeRangeFilter
+          ref={this.timeRangeFilter}
+          onChange={(event) => this.filterList('activeTimeRangeFilter', event)}
+        />
+        <SearchFilter
+          ref={this.statusFilter}
+          filterName="Status"
+          params={statusesFilterOptions}
+          onChange={(event) => this.filterList('activeStatusesFilter', event)}
+        />
+      </Fragment>
     );
   }
 
   render() {
     const {litigations, count} = this.state;
-    const {
-      geo_filter_options: geoFilterOptions,
-      statuses_filter_options: statusesFilterOptions
-    } = this.props;
     const hasMore = litigations.length < count;
     const downloadResultsLink = `/cclow/litigation_cases.csv?${this.getQueryString()}`;
     return (
@@ -362,32 +397,20 @@ class LitigationCases extends Component {
             <div className="flex-container">
               {this.renderPageTitle()}
             </div>
+            {this.isMobile && (<div className="filter-column">{this.renderMoreOptions()}</div>)}
             <hr />
             <div className="columns">
-              <div className="column is-one-quarter filter-column">
-                <div className="search-by">Narrow this search by</div>
-                <SearchFilter
-                  ref={this.geoFilter}
-                  filterName="Regions and countries"
-                  params={geoFilterOptions}
-                  onChange={(event) => this.filterList('activeGeoFilter', event)}
-                />
-                <TimeRangeFilter
-                  ref={this.timeRangeFilter}
-                  onChange={(event) => this.filterList('activeTimeRangeFilter', event)}
-                />
-                <SearchFilter
-                  ref={this.statusFilter}
-                  filterName="Status"
-                  params={statusesFilterOptions}
-                  onChange={(event) => this.filterList('activeStatusesFilter', event)}
-                />
-                {this.renderMoreOptions()}
-              </div>
-              <main className="column is-three-quarters">
+              {!this.isMobile && (
+                <div className="column is-one-quarter filter-column">
+                  <div className="search-by">Narrow this search by</div>
+                  {this.renderMainFilters()}
+                  {this.renderMoreOptions()}
+                </div>
+              )}
+              <main className={`column${!this.isMobile ? ' is-three-quarters' : ''}`}>
                 <div className="columns pre-content">
                   <span className="column is-half">Showing {count} results</span>
-                  <span className="column is-half download-link">
+                  <span className="column is-half download-link is-hidden-touch">
                     <a className="download-link" href={downloadResultsLink}>Download results (.csv)</a>
                   </span>
                 </div>
@@ -413,8 +436,8 @@ class LitigationCases extends Component {
                   ))}
                 </ul>
                 {hasMore && (
-                  <div className="column is-offset-5">
-                    <button type="button" className="button is-primary load-more-btn" onClick={this.handleLoadMore}>
+                  <div className={`column load-more-container${!this.isMobile ? ' is-offset-5' : ''}`}>
+                    <button type="button" className="button is-primary" onClick={this.handleLoadMore}>
                       Load 10 more entries
                     </button>
                   </div>
