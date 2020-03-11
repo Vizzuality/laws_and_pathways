@@ -5,12 +5,11 @@
 #  id               :bigint           not null, primary key
 #  title            :string
 #  content          :text
-#  publication_date :date
+#  publication_date :datetime
 #  created_by_id    :bigint
 #  updated_by_id    :bigint
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
-#  article_type     :string
 #
 
 require 'rails_helper'

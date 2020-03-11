@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_27_112956) do
+ActiveRecord::Schema.define(version: 2020_03_10_163503) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 2020_02_27_112956) do
     t.datetime "discarded_at"
     t.string "sedol"
     t.text "latest_information"
-    t.text "historical_comments"
+    t.text "company_comments_internal"
     t.boolean "active", default: true
     t.index ["discarded_at"], name: "index_companies_on_discarded_at"
     t.index ["geography_id"], name: "index_companies_on_geography_id"

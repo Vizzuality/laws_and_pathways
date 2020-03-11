@@ -17,7 +17,7 @@
 #  discarded_at              :datetime
 #  sedol                     :string
 #  latest_information        :text
-#  historical_comments       :text
+#  company_comments_internal :text
 #  active                    :boolean          default(TRUE)
 #
 
@@ -81,7 +81,7 @@ class Company < ApplicationRecord
   end
 
   def self.search(query)
-    where('name ilike ? OR historical_comments ilike ?',
+    where('name ilike ? OR company_comments_internal ilike ?',
           "%#{query}%", "%#{query}%")
   end
 end

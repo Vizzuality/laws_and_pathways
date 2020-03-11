@@ -11,7 +11,7 @@ ActiveAdmin.register Company do
 
   permit_params :name, :isin, :sector_id, :geography_id, :headquarters_geography_id,
                 :ca100, :market_cap_group, :visibility_status, :sedol,
-                :latest_information, :historical_comments, :active
+                :latest_information, :company_comments_internal, :active
 
   filter :isin_contains, label: 'ISIN'
   filter :name_contains, label: 'Name'
@@ -50,7 +50,7 @@ ActiveAdmin.register Company do
           row :market_cap_group
           row 'Management Quality Level', &:mq_level_tag
           row :latest_information
-          row :historical_comments
+          row :company_comments_internal
           row :created_at
           row :updated_at
         end
@@ -185,7 +185,7 @@ ActiveAdmin.register Company do
 
       f.input :latest_information,
               hint: 'Information displayed on the company page of TPI'
-      f.input :historical_comments,
+      f.input :company_comments_internal,
               hint: 'Name changes, or other historical information, not displayed on the public interface'
     end
 
