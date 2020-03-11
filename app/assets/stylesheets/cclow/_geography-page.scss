@@ -16,6 +16,10 @@ $count-description-lines: 2;
         margin: 3.8rem 0 1rem;
       }
     }
+
+    .geography-list {
+      margin-top: 4rem;
+    }
   }
 
   margin-top: 2.8rem;
@@ -61,6 +65,10 @@ $count-description-lines: 2;
 
       &:not(:last-child) {
         margin-right: 1.5rem;
+
+        @include until($desktop) {
+          margin-right: .75rem;
+        }
       }
 
       &> * {
@@ -111,6 +119,10 @@ $count-description-lines: 2;
 
     margin-bottom: 5rem;
 
+    @include until($desktop) {
+      margin-bottom: 1.5rem;
+    }
+
     .sectors-list {
       .column-name {
         color: $blue-dark;
@@ -123,13 +135,31 @@ $count-description-lines: 2;
         align-items: center;
       }
 
+      .no-climate-targets {
+        font-family: $family-sans-serif-bold;
+        margin-bottom: 2rem;
+      }
+
+      hr {
+        margin: 50px 0 40px;
+      }
+
       .column-title {
         max-width: 150px;
+      }
+
+      @include until($desktop) {
+        .sector-name {
+          color: $red;
+          margin-bottom: 10px;
+          font-family: $family-sans-serif-bold;
+        }
       }
 
       a.item:hover {
         .sector-name {
           text-decoration: underline;
+          font-family: $family-sans-serif-bold;
         }
       }
 
@@ -139,10 +169,22 @@ $count-description-lines: 2;
         font-size: $size-6;
         min-height: 4.3rem;
 
-        &.active {
-          color: $red;
-          cursor: pointer;
-          font-family: $family-sans-serif-bold;
+        @include until($desktop) {
+          a {
+            color: $blue-dark;
+            font-family: $family-sans-serif;
+          }
+
+          &.active {
+            color: $blue-dark;;
+            font-family: $family-sans-serif;
+          }
+        }
+        @include desktop {
+          &.active {
+            cursor: pointer;
+            font-family: $family-sans-serif-bold;
+          }
         }
 
         &:hover {
@@ -151,6 +193,13 @@ $count-description-lines: 2;
 
         .value {
           justify-content: center;
+
+          @include until($desktop) {
+            display: flex;
+            justify-content: flex-end;
+            text-align: center;
+            width: 50%;
+          }
         }
 
         &> * {
@@ -178,6 +227,11 @@ $count-description-lines: 2;
         background-color: $grey;
         height: 30px;
         width: 30px;
+
+        @include until($desktop) {
+          margin-bottom: 10px;
+          margin-right: 10px;
+        }
       }
     }
   }
@@ -322,6 +376,15 @@ $count-description-lines: 2;
       color: $blue-dark;
       margin: 0 5px 2px;
       font-size: $size-7;
+    }
+  }
+
+  .ndc-hint-mobile {
+    font-size: $size-7;
+    margin-bottom: 5rem;
+
+    .climate-watch-icon {
+      margin-bottom: -8px;
     }
   }
 

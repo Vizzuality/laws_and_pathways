@@ -28,6 +28,10 @@ class MobileNavigateMenu extends Component {
       ...provided,
       margin: 0,
       borderRadius: 0
+    }),
+    container: (provided) => ({
+      ...provided,
+      marginBottom: '4rem'
     })
   };
 
