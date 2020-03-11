@@ -7,29 +7,34 @@
                    {label: 'Climate targets',
                     path: cclow_geography_climate_targets_path(@geography.slug),
                     count: @geography_overview.number_of_targets}]
+  mobile_links = [{label: 'Overview and context', value: cclow_geography_path(@geography.slug)}] +
+                  sidebar_links.map {|v| {label: "#{v[:label]} (#{v[:count]})", value: v[:path]}}
 %>
 
 <% content_for :content do %>
   <div class="cclow-geography-page">
-    <div class="title-page">
-      <%= @geography.flag_image %>
-      <h5><%= @geography.name %></h5>
-    </div>
-    <hr>
-    <div class="columns">
-      <aside class="column is-one-quarter">
-        <ul class="sidebar">
-          <li><%= active_link_to 'Overview and context', cclow_geography_path(@geography.slug), active: :exclusive %></li>
-          <% sidebar_links.each do |link| %>
-            <li><%= active_link_to "#{link[:label]} (#{link[:count]})", link[:path], active: :inclusive %></li>
-          <% end %>
-        </ul>
+    <div class="container">
+      <div class="title-page">
+        <%= @geography.flag_image %>
+        <h5><%= @geography.name %></h5>
+      </div>
+      <hr class="is-hidden-touch">
+      <%= react_component("MobileNavigateMenu", {options: mobile_links}) %>
+      <div class="columns">
+        <aside class="column is-one-quarter-desktop is-hidden-touch">
+          <ul class="sidebar">
+            <li><%= active_link_to 'Overview and context', cclow_geography_path(@geography.slug), active: :exclusive %></li>
+            <% sidebar_links.each do |link| %>
+              <li><%= active_link_to "#{link[:label]} (#{link[:count]})", link[:path], active: :inclusive %></li>
+            <% end %>
+          </ul>
 
-        <%= yield :sidebar %>
-      </aside>
-      <main class="column is-three-quarters">
-        <%= yield %>
-      </main>
+          <%= yield :sidebar %>
+        </aside>
+        <main class="column is-three-quarters-desktop">
+          <%= yield %>
+        </main>
+      </div>
     </div>
   </div>
 <% end %>

@@ -30,10 +30,25 @@
     </div>
     <hr>
     <% 2.times do |i| %>
-      <div class="columns properties-container">
+      <div class="columns properties-container is-hidden-touch">
         <% 3.times do |j| %>
           <% item =  properties[(i * 3) + (j + 1) - 1]%>
           <div class="column is-one-third">
+            <div class="property-name"><%= item[:caption] %>
+              <% if item[:question] %>
+                <span class="icon question-icon"><i class="fa fa-question"></i></span>
+              <% end %>
+            </div>
+            <div class="property-value"><%= item[:value] %></div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    <% 3.times do |i| %>
+      <div class="columns properties-container is-hidden-desktop is-mobile">
+        <% 2.times do |j| %>
+          <% item =  properties[(j * 3) + (i + 1) - 1]%>
+          <div class="column is-half-mobile">
             <div class="property-name"><%= item[:caption] %>
               <% if item[:question] %>
                 <span class="icon question-icon"><i class="fa fa-question"></i></span>

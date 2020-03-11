@@ -273,6 +273,11 @@ $m-map-container-height: 400px;
     margin-bottom: 28px;
     height: 80px;
 
+    &.rectangle__legend {
+      justify-content: flex-start;
+      overflow-y: auto;
+    }
+
     @include desktop {
       justify-content: flex-start;
       margin-left: 60px;

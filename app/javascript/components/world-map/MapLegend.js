@@ -46,7 +46,7 @@ function MapLegend({ content, context, scales }) {
         </div>
         <div className="column is-half world-map__legend-scale">
           <div className="name">{context.name}</div>
-          <div className="world-map__legend-scale-buckets world-map__legend-scale-buckets--context">
+          <div className="world-map__legend-scale-buckets world-map__legend-scale-buckets--context rectangle__legend">
             {colors.map((color, i) => (
               <div>
                 <div className="rectangle" style={{backgroundColor: color}} />&nbsp;
