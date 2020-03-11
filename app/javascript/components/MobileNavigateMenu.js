@@ -58,6 +58,7 @@ class MobileNavigateMenu extends Component {
       <Select
         options={options}
         value={this.value}
+        className="is-hidden-desktop"
         onChange={(e) => { window.location.href = e.value; }}
         isSearchable={false}
         styles={this.customStyles}

@@ -7,6 +7,14 @@ $count-description-lines: 2;
   @include until($desktop) {
     & >.container {
       padding: 0 .75rem;
+
+      .section {
+        padding: 1.5rem 0 0.75rem;
+      }
+
+      .title-page {
+        margin: 3.8rem 0 1rem;
+      }
     }
   }
 
@@ -67,13 +75,13 @@ $count-description-lines: 2;
     margin: 0 4px;
   }
 
-  .content-list {    
+  .content-list {
     @include until($desktop) {
       .content-item:first-child {
         margin-top: 0;
       }
     }
-    
+
     .title {
       color: $red;
     }
@@ -187,26 +195,36 @@ $count-description-lines: 2;
     .documents-list {
       margin: 2.75rem 0.75rem;
 
+      @include until($desktop) {
+        margin: 2rem 0;
+      }
+
       li {
         &:not(:last-child) {
           margin-bottom: 1.75rem;
         }
       }
 
+      .document-item {
+        align-items: center;
+        display: flex;
+      }
+
       a {
         color: $red;
         font-size: $size-7;
+        margin-left: 1rem;
       }
     }
 
     .document-icon {
-      display: flex;
       align-items: center;
-      justify-content: center;
       background-color: $grey-light;
       border-radius: 50%;
-      height: 3rem;
-      width: 3rem;
+      display: flex;
+      justify-content: center;
+      min-height: 3rem;
+      min-width: 3rem;
     }
   }
 
@@ -217,6 +235,10 @@ $count-description-lines: 2;
 
     a {
       color: $red;
+    }
+
+    @include until($desktop) {
+      padding: 1.6rem;
     }
   }
 
@@ -321,10 +343,20 @@ $count-description-lines: 2;
         margin-right: 10px;
         vertical-align: bottom;
       }
+
+      @include until($desktop) {
+        .meta {
+          margin-top: 1rem;
+        }
+      }
     }
 
     .documents-list {
       margin-bottom: 0;
+    }
+
+    @include until($desktop) {
+      margin-top: 4rem;
     }
   }
 
@@ -428,6 +460,18 @@ $count-description-lines: 2;
       .property-value {
         font-size: $size-7;
         margin-top: 0.3rem;
+      }
+    }
+
+    @include until($desktop) {
+      padding: 2.5rem 1.3rem;
+
+      hr {
+        margin: 2.5rem 0;
+      }
+
+      .properties-container {
+        margin-bottom: 2rem;
       }
     }
   }
@@ -587,6 +631,7 @@ $count-description-lines: 2;
 
         .read-more-process {
           cursor: pointer;
+          content: 'test'
         }
       }
     }
@@ -595,6 +640,7 @@ $count-description-lines: 2;
   @include until($desktop) {
     main {
       margin-top: 0;
+      width: 100%;
     }
 
     .columns {

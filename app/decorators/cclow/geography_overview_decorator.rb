@@ -22,9 +22,15 @@ module CCLOW
       h.truncate(model.legislative_process,
                  length: 645,
                  omission: h.content_tag(:label,
-                                         "Read more about #{model.name}’s legislative process  >>",
                                          for: 'legislative-process-toggle',
-                                         class: 'highlight read-more-process'),
+                                         class: 'highlight read-more-process') do
+                                           h.content_tag(:span,
+                                                         'Read more >>',
+                                                         class: 'is-hidden-desktop') +
+                                           h.content_tag(:span,
+                                                         "Read more about #{model.name}’s legislative process  >>",
+                                                         class: 'is-hidden-touch')
+                                         end,
                  escape: false)
     end
   end
