@@ -37,7 +37,7 @@ FactoryBot.define do
     market_cap_group { Company::MARKET_CAP_GROUPS.sample }
 
     latest_information { 'My information' }
-    historical_comments { 'I changed my name last week' }
+    company_comments_internal { 'I changed my name last week' }
 
     trait :with_mq_assessments do
       after(:create) do |c|
