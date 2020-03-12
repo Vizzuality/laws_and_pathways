@@ -47,8 +47,9 @@ module CSVImport
         ca100: row[:ca100] || false,
         sedol: row[:sedol],
         latest_information: row[:latest_information],
-        historical_comments: row[:historical_comments],
-        visibility_status: row[:visibility_status]
+        company_comments_internal: row[:company_comments_internal],
+        visibility_status: row[:visibility_status],
+        active: row[:active] || true
       }
     end
   end

@@ -18,6 +18,7 @@
   <% if @partners_logos&.any? %>
     <div class="logos">
       <% @partners_logos.each do |image| %>
+        <% next unless image.logo.present? %>
         <div class="image__container">
           <%= link_to image.link do %>
             <%= image_tag image.logo %>

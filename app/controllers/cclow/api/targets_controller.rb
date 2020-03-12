@@ -13,29 +13,22 @@ module CCLOW
       private
 
       def targets_as_json(geography)
-        geography.targets.order(:year).map do |t|
+        result = {}
+        result[:targets] = geography.targets.order(:year).map(&:to_api_format)
+        result[:sectors] = LawsSector.order(:name).map do |s|
           {
-            id: t.id,
-            iso_code3: geography.iso,
-            doc_type: t.source&.humanize,
-            type: t.target_type&.humanize,
-            scope: t.scopes&.map(&:name)&.join(', '),
-            sector: t.sector&.name,
-            description: t.description,
-            sources: t.legislations.map do |l|
-              {
-                id: l.id,
-                title: l.title,
-                link: legislation_route(geography, l)
-              }
-            end
+            key: s.name.parameterize,
+            title: s.name
           }
         end
-      end
 
-      def legislation_route(geography, legislation)
-        send("cclow_geography_#{legislation.law? ? 'law' : 'policy'}_url",
-             geography, legislation)
+        result[:country_meta] = {
+          'BRA': {
+            country_profile: cclow_geography_url(geography),
+            lnp_count: geography.legislations.count
+          }
+        }
+        result
       end
     end
   end

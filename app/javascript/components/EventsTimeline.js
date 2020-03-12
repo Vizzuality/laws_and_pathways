@@ -22,7 +22,7 @@ const customStyles = {
   }),
   container: (provided) => ({
     ...provided,
-    display: 'inline-block'
+    display: window.innerWidth < 1024 ? 'block' : 'inline-block'
   }),
   control: (provided, state) => ({
     ...provided,
@@ -70,11 +70,21 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
 
   return (
     <div className="timeline-events-container">
-      { !isFiltered && <h5>Timeline of events</h5> }
+      { !isFiltered && (
+        <Fragment>
+          <h5>Timeline of events</h5>
+          <div className="topic-details is-hidden-desktop">
+            Use the dropdown menu to select the different events you wish to see displayed on the country timeline.
+          </div>
+        </Fragment>
+      ) }
       {isFiltered && (
         <Fragment>
           <div className="title-block">
             <h5>Timeline of events</h5>
+            <div className="topic-details is-hidden-desktop">
+              Use the dropdown menu to select the different events you wish to see displayed on the country timeline.
+            </div>
             <div className="filter-block">
               <span>Show events:</span>
               <MultiSelect
@@ -87,7 +97,7 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
               />
             </div>
           </div>
-          <div className="topic-details">
+          <div className="topic-details is-hidden-touch">
             Use the dropdown menu to select the different events you wish to see displayed on the country timeline.
           </div>
         </Fragment>
@@ -103,7 +113,12 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
             {currentEvents.map((event, i) => (
               <div key={`${event.title}-${i}`} className={cx('time-point', { 'time-point-multiple-events': currentEvents.length > 1 })}>
                 <div className="event-title">{event.title}</div>
-                <div className="point" data-tip onClick={() => window.open(event.link, '_self')} onMouseEnter={() => setTooltip(event.eventable_title)} />
+                <div
+                  className="point"
+                  data-tip
+                  onClick={() => window.open(event.link, '_self')}
+                  onMouseEnter={() => setTooltip(event.eventable_title)}
+                />
                 <div className="date">{ format(new Date(event.date), 'MMMM Y') }</div>
               </div>
             ))}

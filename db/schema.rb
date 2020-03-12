@@ -10,10 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_28_123316) do
+ActiveRecord::Schema.define(version: 2020_03_10_163503) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_trgm"
   enable_extension "plpgsql"
+  enable_extension "unaccent"
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -99,7 +101,8 @@ ActiveRecord::Schema.define(version: 2020_01_28_123316) do
     t.datetime "discarded_at"
     t.string "sedol"
     t.text "latest_information"
-    t.text "historical_comments"
+    t.text "company_comments_internal"
+    t.boolean "active", default: true
     t.index ["discarded_at"], name: "index_companies_on_discarded_at"
     t.index ["geography_id"], name: "index_companies_on_geography_id"
     t.index ["headquarters_geography_id"], name: "index_companies_on_headquarters_geography_id"
@@ -231,6 +234,9 @@ ActiveRecord::Schema.define(version: 2020_01_28_123316) do
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
     t.datetime "discarded_at"
+    t.string "percent_global_emissions"
+    t.string "climate_risk_index"
+    t.string "wb_income_group"
     t.index ["created_by_id"], name: "index_geographies_on_created_by_id"
     t.index ["discarded_at"], name: "index_geographies_on_discarded_at"
     t.index ["iso"], name: "index_geographies_on_iso", unique: true
@@ -415,12 +421,11 @@ ActiveRecord::Schema.define(version: 2020_01_28_123316) do
   create_table "news_articles", force: :cascade do |t|
     t.string "title"
     t.text "content"
-    t.date "publication_date"
+    t.datetime "publication_date"
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "article_type"
     t.index ["created_by_id"], name: "index_news_articles_on_created_by_id"
     t.index ["updated_by_id"], name: "index_news_articles_on_updated_by_id"
   end
@@ -447,7 +452,7 @@ ActiveRecord::Schema.define(version: 2020_01_28_123316) do
     t.text "short_description"
     t.bigint "file"
     t.bigint "image"
-    t.date "publication_date"
+    t.datetime "publication_date"
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
     t.datetime "created_at", precision: 6, null: false
@@ -512,11 +517,19 @@ ActiveRecord::Schema.define(version: 2020_01_28_123316) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "tpi_sector_clusters", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "tpi_sectors", force: :cascade do |t|
     t.string "name", null: false
     t.string "slug", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "cluster_id"
+    t.index ["cluster_id"], name: "index_tpi_sectors_on_cluster_id"
     t.index ["name"], name: "index_tpi_sectors_on_name", unique: true
     t.index ["slug"], name: "index_tpi_sectors_on_slug", unique: true
   end
@@ -557,4 +570,5 @@ ActiveRecord::Schema.define(version: 2020_01_28_123316) do
   add_foreign_key "targets", "admin_users", column: "updated_by_id"
   add_foreign_key "targets", "geographies"
   add_foreign_key "targets", "laws_sectors", column: "sector_id"
+  add_foreign_key "tpi_sectors", "tpi_sector_clusters", column: "cluster_id"
 end

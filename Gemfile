@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.3'
+ruby '2.6.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.1'
@@ -40,7 +40,6 @@ gem 'active_link_to' # simple helper for making links with active class
 gem 'font-awesome-rails'
 
 # TPI
-gem 'chartkick'
 gem 'react-rails'
 
 gem 'appsignal'
@@ -48,6 +47,7 @@ gem 'appsignal'
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara'
+  gem 'database_cleaner-active_record'
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
   gem 'rspec-collection_matchers'

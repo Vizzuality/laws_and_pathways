@@ -1,4 +1,4 @@
-<header class="header">
+<header class="header <%= 'header__margin' if @current_user.present? %>">
   <div class="search-wrapper">
     <%= react_component("LawsDropdown", {
       recentDate: @search_recent_date,
@@ -31,6 +31,9 @@
                     <a href="<%= page[:slug] %>"><%= page[:title] %></a>
                   <% end %>
                 <% end %>
+                <%= link_to 'Climate Laws Publications',
+                  'http://www.lse.ac.uk/GranthamInstitute/tag/cclw/',
+                  target: "_blank", rel: "noopener noreferrer" %>
               </div>
               <div class="title">
                 <%= link_to "Climate Change Laws of the World", cclow_root_path %>

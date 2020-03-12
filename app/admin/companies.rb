@@ -11,7 +11,7 @@ ActiveAdmin.register Company do
 
   permit_params :name, :isin, :sector_id, :geography_id, :headquarters_geography_id,
                 :ca100, :market_cap_group, :visibility_status, :sedol,
-                :latest_information, :historical_comments
+                :latest_information, :company_comments_internal, :active
 
   filter :isin_contains, label: 'ISIN'
   filter :name_contains, label: 'Name'
@@ -27,6 +27,7 @@ ActiveAdmin.register Company do
   sidebar 'Details', only: :show do
     attributes_table do
       row :company, &:name
+      row :active, &:active
       row :level, &:mq_level_tag
       row :updated_at
     end
@@ -39,6 +40,7 @@ ActiveAdmin.register Company do
           row :id
           row :name
           row :slug
+          row :active
           row :sector
           row :isin, &:isin_as_tags
           row :sedol
@@ -48,7 +50,7 @@ ActiveAdmin.register Company do
           row :market_cap_group
           row 'Management Quality Level', &:mq_level_tag
           row :latest_information
-          row :historical_comments
+          row :company_comments_internal
           row :created_at
           row :updated_at
         end
@@ -125,11 +127,9 @@ ActiveAdmin.register Company do
   index do
     column(:name) { |company| link_to company.name, admin_company_path(company) }
     column :sector
-    column :isin, &:isin_as_tags
-    column(:market_cap_group) { |company| company.market_cap_group.humanize }
     column :level, &:mq_level_tag
     column :geography
-    column :headquarters_geography
+    column :active
     tag_column :visibility_status
 
     actions
@@ -148,6 +148,7 @@ ActiveAdmin.register Company do
     column(:headquarters_geography) { |c| c.headquarters_geography.name }
     column :latest_information
     column :ca100
+    column :active
     column :visibility_status
   end
 
@@ -178,11 +179,13 @@ ActiveAdmin.register Company do
         end
       end
 
+      f.input :active
+
       f.input :ca100
 
       f.input :latest_information,
               hint: 'Information displayed on the company page of TPI'
-      f.input :historical_comments,
+      f.input :company_comments_internal,
               hint: 'Name changes, or other historical information, not displayed on the public interface'
     end
 

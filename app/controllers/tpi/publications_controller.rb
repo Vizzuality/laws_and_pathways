@@ -1,11 +1,16 @@
 module TPI
   class PublicationsController < TPIController
+    include ActionController::Live
+
     before_action :fetch_tags, only: [:index]
     before_action :fetch_sectors, only: [:index]
+    before_action :fetch_publication, only: [:show]
 
     def index
       @publications_and_articles = Queries::TPI::NewsPublicationsQuery
         .new(filter_params).call
+
+      fixed_navbar('Publications', admin_publications_path)
     end
 
     def partial
@@ -15,18 +20,39 @@ module TPI
     end
 
     def show
-      @publication = params[:type].eql?('NewsArticle') ? NewsArticle.find(params[:id]) : Publication.find(params[:id])
       respond_to do |format|
-        format.html
-        format.pdf { redirect_to rails_blob_url(@publication.file, disposition: 'preview') }
+        format.html do
+          admin_panel_path = polymorphic_path([:admin, @publication])
+          fixed_navbar("#{@publication.class.name.underscore.humanize} #{@publication.title}", admin_panel_path)
+
+          redirect_to '' unless @publication
+        end
+        format.pdf { stream_publication_file }
       end
-      redirect_to '' unless @publication
     end
 
     private
 
+    def stream_publication_file
+      send_file_headers!(
+        type: @publication.file.content_type,
+        disposition: 'inline',
+        filename: @publication.file.filename.to_s
+      )
+
+      @publication.file.download do |chunk|
+        response.stream.write(chunk)
+      end
+    ensure
+      response.stream.close
+    end
+
     def filter_params
       params.permit(:tags, :sectors)
+    end
+
+    def fetch_publication
+      @publication = params[:type].eql?('NewsArticle') ? NewsArticle.find(params[:id]) : Publication.find(params[:id])
     end
 
     def fetch_tags

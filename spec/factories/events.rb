@@ -17,6 +17,7 @@ FactoryBot.define do
   factory :event do
     url { 'https://test.com' }
     date { 10.days.ago }
+    title { 'Lorem ipsum' }
 
     factory :litigation_event do
       title { 'Some case was started' }
@@ -30,6 +31,13 @@ FactoryBot.define do
       description { 'Description of approved law' }
       event_type { 'approved' }
       eventable { |e| e.association(:legislation) }
+    end
+
+    factory :target_event do
+      title { 'Some target was set' }
+      description { 'Description of target event' }
+      event_type { 'set' }
+      eventable { |e| e.association(:target) }
     end
 
     factory :geography_event do

@@ -2,24 +2,28 @@
 #
 # Table name: geographies
 #
-#  id                  :bigint           not null, primary key
-#  geography_type      :string           not null
-#  iso                 :string           not null
-#  name                :string           not null
-#  slug                :string           not null
-#  region              :string           not null
-#  federal             :boolean          default(FALSE), not null
-#  federal_details     :text
-#  legislative_process :text
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  visibility_status   :string           default("draft")
-#  created_by_id       :bigint
-#  updated_by_id       :bigint
-#  discarded_at        :datetime
+#  id                       :bigint           not null, primary key
+#  geography_type           :string           not null
+#  iso                      :string           not null
+#  name                     :string           not null
+#  slug                     :string           not null
+#  region                   :string           not null
+#  federal                  :boolean          default(FALSE), not null
+#  federal_details          :text
+#  legislative_process      :text
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  visibility_status        :string           default("draft")
+#  created_by_id            :bigint
+#  updated_by_id            :bigint
+#  discarded_at             :datetime
+#  percent_global_emissions :string
+#  climate_risk_index       :string
+#  wb_income_group          :string
 #
 
 class Geography < ApplicationRecord
+  include Eventable
   include UserTrackable
   include Taggable
   include VisibilityStatus
@@ -63,14 +67,15 @@ class Geography < ApplicationRecord
   enum geography_type: array_to_enum_hash(GEOGRAPHY_TYPES)
 
   pg_search_scope :full_text_search,
-                  associated_against: {tags: [:name]},
                   against: {
                     name: 'A',
-                    region: 'B',
-                    legislative_process: 'C'
+                    region: 'B'
                   },
                   using: {
-                    tsearch: {prefix: true}
+                    trigram: {
+                      word_similarity: true,
+                      threshold: 0.5
+                    }
                   }
 
   tag_with :political_groups
@@ -78,7 +83,6 @@ class Geography < ApplicationRecord
   has_many :litigations
   has_many :legislations
   has_many :targets
-  has_many :events, as: :eventable, dependent: :destroy
 
   accepts_nested_attributes_for :events, allow_destroy: true, reject_if: :all_blank
 
@@ -134,6 +138,7 @@ class Geography < ApplicationRecord
     eu.targets.published.where(source: 'ndc')
   end
 
+  # rubocop:disable Metrics/AbcSize
   def laws_per_sector
     targets.group_by(&:sector).map do |sector, targets|
       {
@@ -142,11 +147,12 @@ class Geography < ApplicationRecord
           if eu_member?
             Geography.eu_ndc_targets.select { |target| target.sector.eql?(sector) }.count
           else
-            targets.select { |t| t.source.eql?('ndc') }.count
+            targets.select { |t| t.source && t.source.downcase == 'ndc' }.count
           end,
-        law_targets_count: targets.select { |t| t.source.eql?('law') }.count,
-        policy_targets_count: targets.select { |t| t.source.eql?('policy') }.count
+        law_targets_count: targets.select { |t| t.source && t.source.downcase == 'law' }.count,
+        policy_targets_count: targets.select { |t| t.source && t.source.downcase == 'policy' }.count
       }
     end
   end
+  # rubocop:enable Metrics/AbcSize
 end

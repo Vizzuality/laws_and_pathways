@@ -33,5 +33,13 @@ FactoryBot.define do
 
     association :geography
     laws_sectors { |a| [a.association(:laws_sector)] }
+
+    trait :executive do
+      legislation_type { 'executive' }
+    end
+
+    trait :legislative do
+      legislation_type { 'legislative' }
+    end
   end
 end

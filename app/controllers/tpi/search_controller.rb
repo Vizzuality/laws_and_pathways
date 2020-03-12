@@ -2,7 +2,7 @@ module TPI
   class SearchController < TPIController
     def index
       @sectors = TPISector.search(params[:query]).order(:name)
-      @companies = Company.published.search(params[:query]).order(:name)
+      @companies = TPI::CompanyDecorator.decorate_collection(Company.published.search(params[:query]).order(:name))
 
       publications = Publication.search(params[:query]).order(:title)
       news = NewsArticle.search(params[:query]).order(:title)

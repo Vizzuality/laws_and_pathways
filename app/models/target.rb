@@ -21,6 +21,7 @@
 #
 
 class Target < ApplicationRecord
+  include Eventable
   include UserTrackable
   include VisibilityStatus
   include DiscardableModel
@@ -61,7 +62,6 @@ class Target < ApplicationRecord
 
   belongs_to :geography
   belongs_to :sector, class_name: 'LawsSector', foreign_key: 'sector_id'
-  has_many :events, as: :eventable, dependent: :destroy
   has_and_belongs_to_many :legislations
 
   scope :recent, ->(date = 1.month.ago) {
@@ -69,17 +69,19 @@ class Target < ApplicationRecord
       .where('events.date > ?', date)
       .where(events: {event_type: %w[set updated]})
   }
+
   pg_search_scope :full_text_search,
                   associated_against: {
                     tags: [:name]
                   },
-                  against: {
-                    target_type: 'A',
-                    description: 'B'
-                  },
+                  against: [:description],
                   using: {
-                    tsearch: {prefix: true}
-                  }
+                    tsearch: {
+                      prefix: true,
+                      dictionary: 'english'
+                    }
+                  },
+                  ignoring: :accents
 
   accepts_nested_attributes_for :events, allow_destroy: true, reject_if: :all_blank
 
@@ -89,5 +91,25 @@ class Target < ApplicationRecord
   def to_s
     parts = [geography.name, target_type&.humanize, year]
     parts.compact.join(' - ')
+  end
+
+  def to_api_format
+    {
+      id: id,
+      iso_code3: geography.iso,
+      country: geography.name,
+      doc_type: source&.downcase,
+      type: target_type&.humanize,
+      scope: scopes&.map(&:name)&.join(', '),
+      sector: sector&.name&.parameterize,
+      description: description,
+      sources: legislations.map do |l|
+        {
+          id: l.id,
+          title: l.title,
+          link: l.route(geography)
+        }
+      end
+    }
   end
 end

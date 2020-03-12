@@ -31,16 +31,16 @@
             This country is a member of the EU and <a href="#" class="highlight">so EU NDC data</a> is being displayed.
           </div>
           <div class="meta">For further information about the EU's NDC, legislation, and targets, please see the
-            <%= link_to "EU profile", cclow_geography_path(Geography.where(iso: 'EUR').first), class: 'highlight' %>
+            <%= link_to "EU profile", cclow_geography_path(Geography.where(iso: 'EUR').first.slug), class: 'highlight' %>
           </div>
         </div>
       <% end %>
       <ul class="documents-list">
-        <li class="columns">
-          <span class="document-icon column is-1">
+        <li class="document-item">
+          <span class="document-icon">
             <i class="fa fa-lg fa-link"></i>
           </span>
-          <a href="https://www4.unfccc.int/sites/NDCStaging/pages/Party.aspx?party=<%=@geography.iso%>" class="column is-11">
+          <a href="https://www4.unfccc.int/sites/NDCStaging/pages/Party.aspx?party=<%=@geography.iso%>" class="">
             visit UNFCCC NDCs registry for this country.
           </a>
         </li>
@@ -50,13 +50,18 @@
 
   <section class="section is-medium">
     <h5>Legislative process</h5>
+    <input id="legislative-process-toggle" class="legislative-process-toggle" type='checkbox' hidden>
     <div>
       <% if @geography_overview.legislative_process.present? %>
-        <%= @geography_overview.legislative_process.html_safe %>
+        <div class="legislative-process-preview">
+          <%= @geography_overview.legislative_process_preview %>
+        </div>
+        <div class="legislative-process">
+          <%= @geography_overview.legislative_process.html_safe %>
+        </div>
       <% else %>
         <p>No information currently - work in progress.</p>
       <% end %>
-      <!--<a href="#" class="highlight">Read more about Germany’s legislative process  >></a>-->
     </div>
   </section>
   <hr>

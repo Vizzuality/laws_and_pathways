@@ -2,11 +2,11 @@ ActiveAdmin.register NewsArticle do
   config.batch_actions = false
   config.sort_order = 'publication_date_desc'
 
-  menu parent: 'TPI', priority: 7
+  menu parent: 'TPI', priority: 8
 
   decorate_with NewsArticleDecorator
 
-  permit_params :title, :content, :publication_date, :article_type,
+  permit_params :title, :content, :publication_date,
                 :created_by_id, :updated_by_id,
                 :image, :keywords_string, tpi_sector_ids: []
 
@@ -19,7 +19,6 @@ ActiveAdmin.register NewsArticle do
       tab :details do
         attributes_table do
           row :title
-          row :article_type
           row :content
           row :publication_date
           list_row 'Sectors', :tpi_sector_links
@@ -39,10 +38,7 @@ ActiveAdmin.register NewsArticle do
 
   index do
     column 'Title', :title_link
-    column :article_type
     column :publication_date
-    column :created_by
-    column :updated_by
 
     actions
   end
@@ -50,7 +46,6 @@ ActiveAdmin.register NewsArticle do
   csv do
     column :id
     column :title
-    column :article_type
     column :content
     column :publication_date
   end
@@ -60,13 +55,12 @@ ActiveAdmin.register NewsArticle do
 
     f.inputs do
       f.input :title
-      f.input :article_type, as: :select, collection: array_to_select_collection(NewsArticle::ARTICLE_TYPES)
       f.input :content, as: :trix, embed_youtube: true
-      f.input :publication_date
+      f.input :publication_date, as: :date_time_picker
       f.input :tpi_sector_ids, label: 'Sectors', as: :select,
                                collection: TPISector.order(:name), input_html: {multiple: true}
       f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags, collection: Keyword.pluck(:name)
-      f.input :image, as: :file
+      f.input :image, as: :file, input_html: {accept: 'image/*'}
     end
 
     f.actions

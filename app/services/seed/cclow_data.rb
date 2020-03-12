@@ -8,6 +8,8 @@ module Seed
       delegate :call, to: :instance
       delegate :call_sources_import, to: :instance
       delegate :import_litigation_sides, to: :instance
+      delegate :call_litigation_sources_import, to: :instance
+      delegate :import_geographies_metadata, to: :instance
     end
 
     def call_sources_import
@@ -15,6 +17,12 @@ module Seed
         Migration::Legislation.migrate_source_files(seed_file('legislation-sources.csv'))
       end
 
+      TimedLogger.log('Migrate litigations source files') do
+        Migration::Litigation.migrate_source_files(seed_file('litigation-sources.csv'))
+      end
+    end
+
+    def call_litigation_sources_import
       TimedLogger.log('Migrate litigations source files') do
         Migration::Litigation.migrate_source_files(seed_file('litigation-sources.csv'))
       end
@@ -55,6 +63,12 @@ module Seed
     def import_litigation_sides
       TimedLogger.log('Import Litigations Sides') do
         CSVImport::LitigationSides.new(seed_file('litigations-sides.csv')).call
+      end
+    end
+
+    def import_geographies_metadata
+      TimedLogger.log('Import Geographies Metadata') do
+        Migration::Geographies.migrate_metadata_file(seed_file('geographies_metadata.csv'))
       end
     end
 

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
-import legendImage from '../../assets/images/bubble-chart-legend.svg';
-import SingleBubbleChart from './SingleBubbleChart';
-import BaseTooltip from './BaseTooltip';
+import legendImage from 'images/bubble-chart-legend.svg';
+import SingleCell from './SingleCell';
+import BaseTooltip from '../../BaseTooltip';
 
 const SCALE = 5;
 
@@ -34,8 +34,14 @@ const LEVELS_SUBTITLES = {
 };
 
 const tooltipDisclaimer = 'Companies have to answer “yes” to all questions on a level to move to the next one';
+let tooltip = null;
 
 const BubbleChart = ({ levels, sectors }) => {
+  const tooltipEl = '<div id="bubble-chart-tooltip" class="bubble-tip" hidden style="position:absolute;"></div>';
+  useEffect(() => {
+    document.body.insertAdjacentHTML('beforeend', tooltipEl);
+    tooltip = document.getElementById('bubble-chart-tooltip');
+  }, []);
   const parsedData = Object.keys(levels).map(sectorName => ({
     sector: sectorName,
     data: Object.values(levels[sectorName])
@@ -96,14 +102,40 @@ const ForceLayoutBubbleChart = (companiesBubbles, uniqueKey) => {
   const handleBubbleClick = (company) => window.open(`/tpi/companies/${company.slug}`, '_blank');
 
   return (
-    <SingleBubbleChart
+    <SingleCell
       width={SINGLE_CELL_SVG_WIDTH}
       height={SINGLE_CELL_SVG_HEIGHT}
       uniqueKey={uniqueKey}
       handleNodeClick={handleBubbleClick}
+      showTooltip={showTooltip}
+      hideTooltip={hideTooltip}
       data={companiesBubbles.length && companiesBubbles}
     />
   );
+};
+
+const getTooltipText = ({ tooltipContent }) => {
+  if (tooltipContent && tooltipContent.length) {
+    return tooltipContent.join('<br>');
+  }
+  return '';
+};
+
+const showTooltip = (node, u) => {
+  const bubble = u._groups[0][node.index];
+
+  tooltip.innerHTML = getTooltipText(node);
+  tooltip.removeAttribute('hidden');
+  const bubbleBoundingRect = bubble.getBoundingClientRect();
+  const topOffset = bubbleBoundingRect.top - tooltip.offsetHeight + window.pageYOffset;
+  const leftOffset = bubbleBoundingRect.left + (bubbleBoundingRect.width - tooltip.offsetWidth) / 2 + window.pageXOffset;
+
+  tooltip.style.left = `${leftOffset}px`;
+  tooltip.style.top = `${topOffset}px`;
+};
+
+const hideTooltip = () => {
+  tooltip.setAttribute('hidden', true);
 };
 
 const createRow = (dataRow, title, sectors) => {

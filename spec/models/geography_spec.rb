@@ -2,21 +2,24 @@
 #
 # Table name: geographies
 #
-#  id                  :bigint           not null, primary key
-#  geography_type      :string           not null
-#  iso                 :string           not null
-#  name                :string           not null
-#  slug                :string           not null
-#  region              :string           not null
-#  federal             :boolean          default(FALSE), not null
-#  federal_details     :text
-#  legislative_process :text
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  visibility_status   :string           default("draft")
-#  created_by_id       :bigint
-#  updated_by_id       :bigint
-#  discarded_at        :datetime
+#  id                       :bigint           not null, primary key
+#  geography_type           :string           not null
+#  iso                      :string           not null
+#  name                     :string           not null
+#  slug                     :string           not null
+#  region                   :string           not null
+#  federal                  :boolean          default(FALSE), not null
+#  federal_details          :text
+#  legislative_process      :text
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  visibility_status        :string           default("draft")
+#  created_by_id            :bigint
+#  updated_by_id            :bigint
+#  discarded_at             :datetime
+#  percent_global_emissions :string
+#  climate_risk_index       :string
+#  wb_income_group          :string
 #
 
 require 'rails_helper'
@@ -57,5 +60,41 @@ RSpec.describe Geography, type: :model do
     expect(geography.slug).to eq('some-name')
     geography.update!(name: 'New name')
     expect(geography.slug).to eq('new-name')
+  end
+
+  context 'full_text_search' do
+    let!(:portugal) {
+      create(
+        :geography,
+        name: 'Portugal',
+        region: 'Europe & Central Asia'
+      )
+    }
+    let!(:argentina) {
+      create(
+        :geography,
+        name: 'Argentina',
+        region: 'Latin America & Caribbean'
+      )
+    }
+    let!(:austria) {
+      create(
+        :geography,
+        name: 'Austria',
+        region: 'Europe & Central Asia'
+      )
+    }
+
+    it 'uses name' do
+      expect(Geography.full_text_search('Argentina')).to contain_exactly(argentina)
+    end
+
+    it 'uses region' do
+      expect(Geography.full_text_search('europe')).to contain_exactly(austria, portugal)
+    end
+
+    it 'uses fuzzy searching' do
+      expect(Geography.full_text_search('portuagal')).to contain_exactly(portugal)
+    end
   end
 end

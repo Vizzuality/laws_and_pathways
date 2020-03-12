@@ -8,9 +8,10 @@ module CCLOW
       [region_options, geography_options]
     end
 
-    def tags_options(taggable_type)
-      tags = Tag.all.includes(:taggings).where(taggings: {taggable_type: taggable_type})
-      [{field_name: 'tags', options: tags.map { |l| {value: l.id, label: l.name} }.sort_by { |h| h[:label] }}]
+    def tags_options(taggable_type, type)
+      name = type.downcase.pluralize
+      tags = Tag.all.includes(:taggings).where(taggings: {taggable_type: taggable_type}, type: type)
+      [{field_name: name, options: tags.map { |l| {value: l.id, label: l.name} }.sort_by { |h| h[:label] }}]
     end
 
     def litigation_statuses_options
@@ -26,6 +27,16 @@ module CCLOW
     def target_types_options
       types = Target::TYPES.map { |l| {value: l, label: l.humanize} }
       [{field_name: 'type', options: types.sort_by { |h| h[:label] }}]
+    end
+
+    def instruments_options
+      instruments = Instrument.joins(:legislations).distinct.map { |j| {value: j.id, label: j.name} }
+      [{field_name: 'instrument', options: instruments.sort_by { |h| h[:label] }}]
+    end
+
+    def governances_options
+      governances = Governance.joins(:legislations).distinct.map { |j| {value: j.id, label: j.name} }
+      [{field_name: 'governance', options: governances.sort_by { |h| h[:label] }}]
     end
 
     def litigation_side_a_party_type_options
@@ -74,12 +85,20 @@ module CCLOW
       [{field_name: 'jurisdiction', options: jurisdiction_types.sort_by { |h| h[:label] }}]
     end
 
+    def sectors_options(class_name)
+      name = class_name.downcase.pluralize
+      sectors = LawsSector.joins(name.to_sym).distinct.map { |j| {value: j.id, label: j.name} }
+      [{field_name: 'law_sector', options: sectors.sort_by { |h| h[:label] }}]
+    end
+
     def filter_params
       params.permit(:q, :from_date,
                     :to_date, :recent, :ids, region: [], geography: [], jurisdiction: [],
-                                             status: [], type: [], tags: [], party_type: [],
-                                             side_a: [], side_b: [], side_c: [],
-                                             a_party_type: [], b_party_type: [], c_party_type: [])
+                                             status: [], type: [], keywords: [], responses: [],
+                                             frameworks: [], natural_hazards: [], party_type: [],
+                                             side_a: [], side_b: [], side_c: [], law_sector: [],
+                                             a_party_type: [], b_party_type: [], c_party_type: [],
+                                             instrument: [], governance: [])
     end
   end
 end

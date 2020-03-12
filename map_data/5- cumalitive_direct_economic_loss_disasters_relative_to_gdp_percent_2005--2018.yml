@@ -1,4 +1,7 @@
-name: Cumulative direct economic loss attributed to disasters relative to global GDP (%)
+name: Cumulative direct economic loss attributed to disasters relative to global GDP (per cent of GDP)
+value_column: cumalitive_direct_economic_loss_disasters_relative_to_gdp_percent
+active: false
+eu_method: avg
 ramp: risk
 legend_description: >
   The <b>colour</b> of the circle represents a cumulative direct economic loss relative to global GDP.

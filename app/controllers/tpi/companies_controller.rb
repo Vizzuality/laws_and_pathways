@@ -11,7 +11,15 @@ module TPI
       @company_presenter = ::Api::Presenters::Company.new(@company)
 
       @sectors = TPISector.select(:id, :name, :slug).order(:name)
-      @companies = Company.published.joins(:sector).select(:id, :name, :slug, 'tpi_sectors.name as sector_name')
+      @companies = Company.published.joins(:sector)
+        .select(:id, :name, :slug, 'tpi_sectors.name as sector_name', :active)
+        .order('tpi_sectors.name', :name)
+      @companies = TPI::CompanyDecorator.decorate_collection(@companies)
+
+      fixed_navbar(
+        "Company #{@company.name}",
+        admin_company_path(@company)
+      )
     end
 
     def mq_assessment; end
@@ -40,8 +48,8 @@ module TPI
 
     def user_download
       send_tpi_user_file(
-        mq_assessments: @company.mq_assessments.order(assessment_date: :desc),
-        cp_assessments: @company.cp_assessments.order(assessment_date: :desc),
+        mq_assessments: @company.mq_assessments.currently_published.order(assessment_date: :desc),
+        cp_assessments: @company.cp_assessments.currently_published.order(assessment_date: :desc),
         filename: "TPI company data - #{@company.name}"
       )
     end
@@ -49,7 +57,7 @@ module TPI
     private
 
     def fetch_company
-      @company = Company.published.friendly.find(params[:id])
+      @company = TPI::CompanyDecorator.decorate(Company.published.friendly.find(params[:id]))
     end
 
     def redirect_if_numeric_or_historic_slug

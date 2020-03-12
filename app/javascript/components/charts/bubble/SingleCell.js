@@ -2,13 +2,11 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { range } from 'd3-array';
 import { select } from 'd3-selection';
-import tip from 'd3-tip';
 import * as d3 from 'd3-force';
 
-const SingleBubbleChart = ({ width, height, handleNodeClick, data, uniqueKey }) => {
+const SingleCell = ({ width, height, handleNodeClick, data, uniqueKey, showTooltip, hideTooltip }) => {
   const computizedKey = uniqueKey.split(' ').join('_');
   const key = `${computizedKey.replace(/[&]/g, '_')}-${(Math.random() * 100).toFixed()}`;
-  const d3Tip = tip().attr('class', 'd3-tip').html(function (d) { return getTooltipText(d); });
 
   const nodes = range(data.length).map(function (index) {
     return {
@@ -18,13 +16,6 @@ const SingleBubbleChart = ({ width, height, handleNodeClick, data, uniqueKey }) 
       radius: data[index].value
     };
   });
-
-  const getTooltipText = ({ tooltipContent }) => {
-    if (tooltipContent && tooltipContent.length) {
-      return tooltipContent.join('<br>');
-    }
-    return '';
-  };
 
   const simulation = () => {
     d3.forceSimulation(nodes)
@@ -43,18 +34,17 @@ const SingleBubbleChart = ({ width, height, handleNodeClick, data, uniqueKey }) 
       .selectAll('circle')
       .data(nodes);
 
-    const visualisation = u.enter()
+    u.enter()
       .append('circle')
       .attr('r', (d) => d.radius)
       .style('fill', (d) => d.color)
       .merge(u)
       .attr('cx', (d) => d.x)
       .attr('cy', (d) => d.y)
-      .on('mouseover', d3Tip.show)
-      .on('mouseout', d3Tip.hide)
+      .on('mouseover', (d) => showTooltip(d, u))
+      .on('mouseout', hideTooltip)
       .on('click', (d) => handleNodeClick(d));
 
-    visualisation.call(d3Tip); // bind the d3 tooltip with the visualisation
     u.exit().remove();
   };
 
@@ -69,7 +59,9 @@ const SingleBubbleChart = ({ width, height, handleNodeClick, data, uniqueKey }) 
   );
 };
 
-SingleBubbleChart.propTypes = {
+SingleCell.propTypes = {
+  showTooltip: PropTypes.func.isRequired,
+  hideTooltip: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   handleNodeClick: PropTypes.func.isRequired,
@@ -80,4 +72,4 @@ SingleBubbleChart.propTypes = {
   uniqueKey: PropTypes.string.isRequired
 };
 
-export default SingleBubbleChart;
+export default SingleCell;

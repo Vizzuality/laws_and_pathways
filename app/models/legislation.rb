@@ -19,6 +19,7 @@
 #
 
 class Legislation < ApplicationRecord
+  include Eventable
   include UserTrackable
   include Taggable
   include VisibilityStatus
@@ -70,7 +71,6 @@ class Legislation < ApplicationRecord
   belongs_to :geography
   belongs_to :parent, class_name: 'Legislation', foreign_key: 'parent_id', optional: true
   has_many :documents, as: :documentable, dependent: :destroy
-  has_many :events, as: :eventable, dependent: :destroy
   has_and_belongs_to_many :targets
   has_and_belongs_to_many :litigations
   has_and_belongs_to_many :instruments
@@ -91,15 +91,19 @@ class Legislation < ApplicationRecord
                     description: 'B'
                   },
                   using: {
-                    tsearch: {prefix: true}
-                  }
+                    tsearch: {
+                      prefix: true,
+                      dictionary: 'english'
+                    }
+                  },
+                  ignoring: :accents
 
   with_options allow_destroy: true, reject_if: :all_blank do
     accepts_nested_attributes_for :documents
     accepts_nested_attributes_for :events
   end
 
-  validates_presence_of :title, :slug
+  validates_presence_of :title, :slug, :legislation_type
   validates_uniqueness_of :slug
 
   def should_generate_new_friendly_id?
@@ -130,5 +134,11 @@ class Legislation < ApplicationRecord
 
   def last_event
     events.order(:date).offset(1).last
+  end
+
+  def route(geography)
+    Rails.application.routes.url_helpers.send("cclow_geography_#{law? ? 'law' : 'policy'}_url",
+                                              geography, self,
+                                              host: 'climate-laws.org')
   end
 end

@@ -9,14 +9,18 @@ module TPI
 
     def index
       @companies_by_sectors = ::Api::Charts::Sector.new(companies_scope(params)).companies_market_cap_by_sector
+
+      fixed_navbar('Sectors', admin_tpi_sectors_path)
     end
 
     def show
-      @sector_companies = @companies.select { |c| c.sector_id == @sector.id }
+      @sector_companies = @companies.active.select { |c| c.sector_id == @sector.id }
 
       @companies_by_levels = ::Api::Charts::Sector.new(companies_scope(params)).companies_summaries_by_level
 
       @publications_and_articles = @sector.publications_and_articles
+
+      fixed_navbar("Sector #{@sector.name}", admin_tpi_sector_path(@sector))
     end
 
     # Chart data endpoints
@@ -69,11 +73,13 @@ module TPI
 
     def send_user_download_file(companies_ids, filename)
       mq_assessments = MQ::Assessment
+        .currently_published
         .where(company_id: companies_ids)
         .joins(:company)
         .order('companies.name ASC, assessment_date DESC')
         .includes(company: [:sector, :geography, :mq_assessments])
       cp_assessments = CP::Assessment
+        .currently_published
         .where(company_id: companies_ids)
         .joins(:company)
         .order('companies.name ASC, assessment_date DESC')
@@ -95,21 +101,22 @@ module TPI
     end
 
     def fetch_sectors
-      @sectors = TPISector.select(:id, :name, :slug).order(:name)
+      @sectors = TPISector.all.includes(:cluster).order(:name)
     end
 
     def fetch_companies
       @companies = Company
         .published
         .joins(:sector)
-        .select(:id, :name, :slug, :sector_id, 'tpi_sectors.name as sector_name')
+        .select(:id, :name, :slug, :sector_id, 'tpi_sectors.name as sector_name', :active)
+        .order('tpi_sectors.name', :name)
     end
 
     def companies_scope(params)
       if params[:id]
-        TPISector.friendly.find(params[:id]).companies.published
+        TPISector.friendly.find(params[:id]).companies.published.active
       else
-        Company.published
+        Company.published.active
       end
     end
   end

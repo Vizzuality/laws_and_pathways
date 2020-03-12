@@ -58,5 +58,9 @@ module Taggable
 
       alias_method "#{name}_string=", "#{name}_list="
     end
+
+    def with_tags_by_id(tag_ids)
+      joins(:taggings).where(taggings: {tag_id: Array.wrap(tag_ids)})
+    end
   end
 end

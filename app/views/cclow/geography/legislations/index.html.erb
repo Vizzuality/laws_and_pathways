@@ -1,15 +1,14 @@
 <% content_for :page_title, "Climate Laws - #{@geography.name} - Laws and Policies" %>
-<div class="geography-laws">
-  <div class="container">
-    <h3><%= params[:scope] == :laws ? 'Laws' : 'Policies' %></h3>
-    <% if @legislations.any? %>
-      <ul class="content-list">
-        <% @legislations.uniq.each do |l| %>
-          <%= render 'cclow/geography/legislations/list_item', legislation: l %>
-        <% end %>
-      </ul>
-    <% else %>
-      <p>No data available for <%= @geography.name %>.</p>
-    <% end %>
-  </div>
+
+<div class="container">
+  <h3><%= params[:scope] == :laws ? 'Laws' : 'Policies' %></h3>
+  <% if @legislations.any? %>
+    <ul class="content-list">
+      <% @legislations.uniq.each do |l| %>
+        <%= render 'cclow/geography/legislations/list_item', legislation: l %>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No data available for <%= @geography.name %>.</p>
+  <% end %>
 </div>

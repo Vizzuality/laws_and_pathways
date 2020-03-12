@@ -20,6 +20,7 @@
 #
 
 class Litigation < ApplicationRecord
+  include Eventable
   include UserTrackable
   include Taggable
   include VisibilityStatus
@@ -92,15 +93,20 @@ class Litigation < ApplicationRecord
 
   pg_search_scope :full_text_search,
                   associated_against: {
-                    tags: [:name]
+                    tags: [:name],
+                    litigation_sides: [:name]
                   },
                   against: {
                     title: 'A',
                     summary: 'B'
                   },
                   using: {
-                    tsearch: {prefix: true}
-                  }
+                    tsearch: {
+                      prefix: true,
+                      dictionary: 'english'
+                    }
+                  },
+                  ignoring: :accents
 
   tag_with :keywords
   tag_with :responses
@@ -109,7 +115,6 @@ class Litigation < ApplicationRecord
   has_and_belongs_to_many :laws_sectors
   has_many :litigation_sides, -> { order(:side_type) }, inverse_of: :litigation
   has_many :documents, as: :documentable, dependent: :destroy
-  has_many :events, as: :eventable, dependent: :destroy
   has_and_belongs_to_many :legislations
   has_and_belongs_to_many :external_legislations
 

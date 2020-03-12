@@ -1,0 +1,13 @@
+#index_table_companies {
+  td {
+    &.col-name {
+      min-width: 100px;
+    }
+    &.col-sector {
+      min-width: 120px;
+    }
+    &.col-geography {
+      min-width: 100px;
+    }
+  }
+}

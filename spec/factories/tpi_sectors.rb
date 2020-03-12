@@ -7,12 +7,12 @@
 #  slug       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  cp_unit    :text
+#  cluster_id :bigint
 #
 
 FactoryBot.define do
   factory :tpi_sector do
-    sequence(:name) { |n| 'name-' + ('AA'..'ZZ').to_a[n] }
+    sequence(:name) { |n| 'name-' + ('AAAA'..'ZZZZ').to_a[n] }
 
     trait :with_benchmarks do
       after(:create) do |s|

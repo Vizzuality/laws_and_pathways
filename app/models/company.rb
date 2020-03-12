@@ -17,7 +17,8 @@
 #  discarded_at              :datetime
 #  sedol                     :string
 #  latest_information        :text
-#  historical_comments       :text
+#  company_comments_internal :text
+#  active                    :boolean          default(TRUE)
 #
 
 class Company < ApplicationRecord
@@ -37,9 +38,9 @@ class Company < ApplicationRecord
   belongs_to :headquarters_geography, class_name: 'Geography'
 
   has_many :mq_assessments, class_name: 'MQ::Assessment', inverse_of: :company
-  has_one :latest_mq_assessment, -> { order(assessment_date: :desc) }, class_name: 'MQ::Assessment'
+  has_one :latest_mq_assessment, -> { currently_published.order(assessment_date: :desc) }, class_name: 'MQ::Assessment'
   has_many :cp_assessments, class_name: 'CP::Assessment', inverse_of: :company
-  has_one :latest_cp_assessment, -> { order(assessment_date: :desc) }, class_name: 'CP::Assessment'
+  has_one :latest_cp_assessment, -> { currently_published.order(assessment_date: :desc) }, class_name: 'CP::Assessment'
   has_many :litigation_sides, as: :connected_entity
   has_many :litigations, through: :litigation_sides
 
@@ -50,6 +51,8 @@ class Company < ApplicationRecord
   validates :ca100, inclusion: {in: [true, false]}
   validates_presence_of :name, :slug, :isin, :market_cap_group
   validates_uniqueness_of :slug, :name
+
+  scope :active, -> { where(active: true) }
 
   def should_generate_new_friendly_id?
     name_changed? || super
@@ -78,7 +81,7 @@ class Company < ApplicationRecord
   end
 
   def self.search(query)
-    where('name ilike ? OR historical_comments ilike ?',
+    where('name ilike ? OR company_comments_internal ilike ?',
           "%#{query}%", "%#{query}%")
   end
 end

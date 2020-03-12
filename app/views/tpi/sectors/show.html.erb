@@ -2,7 +2,11 @@
 
 <div class="sector-page">
   <div class="dropdown-selector-sector-page-wrapper">
-    <%= react_component("DropdownSelector", { sectors: @sectors, companies: @companies, selectedOption: @sector.name }) %>
+    <%= react_component("DropdownSelector", {
+        sectors: @sectors,
+        companies: TPI::CompanyDecorator.decorate_collection(@companies),
+        selectedOption: @sector.name
+    }) %>
   </div>
   <div class="sectors-header">
     <div class="container">
@@ -29,22 +33,7 @@
       Distribution of companies in the <strong><%= @sector.name %></strong> sector according to the management of their greenhouse gas emissions and of risks and opportunities related to the low-carbon transition.
     </p>
 
-    <div class="columns">
-      <div class="column is-6 is-offset-3">
-        <div class="chart chart--styled chart--mq-sector-pie-chart">
-          <%= pie_chart(
-            levels_chart_data_tpi_sector_path(@sector.id),
-            height: '400px',
-            donut: true,
-            library: mq_sector_pie_chart_options
-            ) %>
-          <div class="chart-title">
-            <p class="companies-size"><%= @sector_companies.size %></p>
-            companies
-          </div>
-        </div>
-      </div>
-    </div>
+    <%= react_component('charts/mq-sector-pie', { dataUrl: levels_chart_data_tpi_sector_path(@sector.id) }) %>
 
     <div class="sector-level-overview columns">
       <% @companies_by_levels.each do |level, companies| -%>
@@ -73,21 +62,19 @@
   </section>
 
   <section id="carbon-performance" class="container">
-    <h4>Carbon Performance: <%= @sector.name %></h4>
-    <div class="chart chart--cp-emissions">
-      <div class="legend">
-        <span class="legend-item legend-item--reported">Reported</span>
-        <span class="legend-item legend-item--targeted">Targeted</span>
+    <div class="cp-performance-header">
+      <h4>Carbon Performance: <%= @sector.name %></h4>
+      <div class="show-by-dropdown">
+        Showing:
+        <div id="show-by-dropdown-placeholder">
+        </div>
       </div>
-
-      <%= line_chart(
-        emissions_chart_data_tpi_sector_path(@sector.id),
-        width: '1200px',
-        height: '800px',
-        curve: false,
-        library: cp_chart_options(@sector.latest_cp_unit&.unit)
-        )%>
     </div>
+
+    <%= react_component('charts/cp-performance', {
+      dataUrl: emissions_chart_data_tpi_sector_path(@sector.id),
+      unit: @sector.latest_cp_unit&.unit
+    }) %>
   </section>
 
   <% if @publications_and_articles.present? %>

@@ -32,6 +32,7 @@
     <%= javascript_pack_tag 'cclow' %>
   </head>
   <body>
+    <%= render "layouts/cclow/fixed-navbar" %>
     <% if controller_name == 'home' && action_name == 'index'  %>
       <%= render "cclow/home/hero" %>
     <% else %>
@@ -46,6 +47,9 @@
       </div>
     </main>
     <%= render "layouts/cclow/footer" %>
+    <% if cookies && cookies['cookies_consented'] != 'true' %>
+      <%= render "layouts/cclow/cookies_tooltip" %>
+    <% end %>
     <% if Rails.env.production? %>
       <!-- Global site tag (gtag.js) - Google Analytics -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=UA-153841121-2"></script>

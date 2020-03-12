@@ -1,0 +1,47 @@
+.chart--cp-all-sectors {
+  justify-content: unset;
+
+  div[data-highcharts-chart] {
+    width: 100%;
+  }
+
+  // hide SVG tooltip, we only display HTML one
+  .highcharts-tooltip-box {
+    display: none;
+  }
+
+  .tooltip {
+    font-family: $font-family-regular;
+    background-color: $white;
+    border: 1px solid $dark;
+    // min-width: 300px;
+    padding: 20px;
+
+    .x-value {
+      font-size: 12px;
+      line-height: 15px;
+      font-family: $font-family-bold;
+    }
+
+    .alignment {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+
+      .circle {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        margin-right: 8px;
+      }
+    }
+
+    .companies {
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }
+}

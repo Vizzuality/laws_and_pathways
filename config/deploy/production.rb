@@ -6,3 +6,5 @@ set :branch, 'master'
 set :deploy_to, '/var/www/laws-pathways-production'
 
 append :linked_files, 'config/secrets/google-credentials-staging.json'
+
+set :rvm_ruby_version, '2.6.5'

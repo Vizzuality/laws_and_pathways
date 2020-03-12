@@ -1,4 +1,7 @@
 name: Cumulative direct economic loss attributed to disasters as current US dollars
+value_column: cumalitive_direct_economic_loss_disasters_in_current_us_dollars
+active: false
+eu_method: sum
 legend_description: >
   The <b>colour</b> of the circle represents a cumulative direct economic loss in US dollars.
   The darker the circle, the higher the loss.

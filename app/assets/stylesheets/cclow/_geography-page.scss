@@ -4,6 +4,24 @@
 $count-description-lines: 2;
 
 .cclow-geography-page {
+  @include until($desktop) {
+    & >.container {
+      padding: 0 .75rem;
+
+      .section {
+        padding: 1.5rem 0 0.75rem;
+      }
+
+      .title-page {
+        margin: 3.8rem 0 1rem;
+      }
+    }
+
+    .geography-list {
+      margin-top: 4rem;
+    }
+  }
+
   margin-top: 2.8rem;
 
   .title-page {
@@ -24,6 +42,7 @@ $count-description-lines: 2;
     display: flex;
     margin-bottom: 0.875rem;
     font-size: 0.875rem;
+    flex-wrap: wrap;
 
     .flag {
       height: 20px;
@@ -46,6 +65,10 @@ $count-description-lines: 2;
 
       &:not(:last-child) {
         margin-right: 1.5rem;
+
+        @include until($desktop) {
+          margin-right: .75rem;
+        }
       }
 
       &> * {
@@ -61,6 +84,12 @@ $count-description-lines: 2;
   }
 
   .content-list {
+    @include until($desktop) {
+      .content-item:first-child {
+        margin-top: 0;
+      }
+    }
+
     .title {
       color: $red;
     }
@@ -70,8 +99,6 @@ $count-description-lines: 2;
 
       .description {
         display: -webkit-box;
-        overflow: hidden;
-        max-height: #{$count-description-lines * $body-line-height}rem;
         overflow: hidden;
         -webkit-line-clamp: $count-description-lines;
         -webkit-box-orient: vertical;
@@ -92,6 +119,10 @@ $count-description-lines: 2;
 
     margin-bottom: 5rem;
 
+    @include until($desktop) {
+      margin-bottom: 1.5rem;
+    }
+
     .sectors-list {
       .column-name {
         color: $blue-dark;
@@ -104,13 +135,31 @@ $count-description-lines: 2;
         align-items: center;
       }
 
+      .no-climate-targets {
+        font-family: $family-sans-serif-bold;
+        margin-bottom: 2rem;
+      }
+
+      hr {
+        margin: 50px 0 40px;
+      }
+
       .column-title {
         max-width: 150px;
+      }
+
+      @include until($desktop) {
+        .sector-name {
+          color: $red;
+          margin-bottom: 10px;
+          font-family: $family-sans-serif-bold;
+        }
       }
 
       a.item:hover {
         .sector-name {
           text-decoration: underline;
+          font-family: $family-sans-serif-bold;
         }
       }
 
@@ -120,10 +169,22 @@ $count-description-lines: 2;
         font-size: $size-6;
         min-height: 4.3rem;
 
-        &.active {
-          color: $red;
-          cursor: pointer;
-          font-family: $family-sans-serif-bold;
+        @include until($desktop) {
+          a {
+            color: $blue-dark;
+            font-family: $family-sans-serif;
+          }
+
+          &.active {
+            color: $blue-dark;;
+            font-family: $family-sans-serif;
+          }
+        }
+        @include desktop {
+          &.active {
+            cursor: pointer;
+            font-family: $family-sans-serif-bold;
+          }
         }
 
         &:hover {
@@ -132,6 +193,13 @@ $count-description-lines: 2;
 
         .value {
           justify-content: center;
+
+          @include until($desktop) {
+            display: flex;
+            justify-content: flex-end;
+            text-align: center;
+            width: 50%;
+          }
         }
 
         &> * {
@@ -159,6 +227,11 @@ $count-description-lines: 2;
         background-color: $grey;
         height: 30px;
         width: 30px;
+
+        @include until($desktop) {
+          margin-bottom: 10px;
+          margin-right: 10px;
+        }
       }
     }
   }
@@ -176,26 +249,36 @@ $count-description-lines: 2;
     .documents-list {
       margin: 2.75rem 0.75rem;
 
+      @include until($desktop) {
+        margin: 2rem 0;
+      }
+
       li {
         &:not(:last-child) {
           margin-bottom: 1.75rem;
         }
       }
 
+      .document-item {
+        align-items: center;
+        display: flex;
+      }
+
       a {
         color: $red;
         font-size: $size-7;
+        margin-left: 1rem;
       }
     }
 
     .document-icon {
-      display: flex;
       align-items: center;
-      justify-content: center;
       background-color: $grey-light;
       border-radius: 50%;
-      height: 3rem;
-      width: 3rem;
+      display: flex;
+      justify-content: center;
+      min-height: 3rem;
+      min-width: 3rem;
     }
   }
 
@@ -206,6 +289,10 @@ $count-description-lines: 2;
 
     a {
       color: $red;
+    }
+
+    @include until($desktop) {
+      padding: 1.6rem;
     }
   }
 
@@ -292,6 +379,15 @@ $count-description-lines: 2;
     }
   }
 
+  .ndc-hint-mobile {
+    font-size: $size-7;
+    margin-bottom: 5rem;
+
+    .climate-watch-icon {
+      margin-bottom: -8px;
+    }
+  }
+
   .question-icon {
     background-color: $red;
     border-radius: 50%;
@@ -310,10 +406,20 @@ $count-description-lines: 2;
         margin-right: 10px;
         vertical-align: bottom;
       }
+
+      @include until($desktop) {
+        .meta {
+          margin-top: 1rem;
+        }
+      }
     }
 
     .documents-list {
       margin-bottom: 0;
+    }
+
+    @include until($desktop) {
+      margin-top: 4rem;
     }
   }
 
@@ -328,6 +434,7 @@ $count-description-lines: 2;
 
     .indicators {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       padding: 0 1rem;
     }
@@ -416,6 +523,18 @@ $count-description-lines: 2;
       .property-value {
         font-size: $size-7;
         margin-top: 0.3rem;
+      }
+    }
+
+    @include until($desktop) {
+      padding: 2.5rem 1.3rem;
+
+      hr {
+        margin: 2.5rem 0;
+      }
+
+      .properties-container {
+        margin-bottom: 2rem;
       }
     }
   }
@@ -517,6 +636,15 @@ $count-description-lines: 2;
       margin-top: 25px;
       border: none;
       background-color: transparent;
+
+      @include until($desktop) {
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    .more-filters {
+      margin-top: 1rem;
     }
   }
 
@@ -540,6 +668,56 @@ $count-description-lines: 2;
       }
     }
   }
+
+  .legislative-process-toggle {
+    &:checked {
+      & + div {
+        .legislative-process-preview {
+          display: none;
+        }
+
+        .legislative-process {
+          display: block;
+        }
+      }
+    }
+
+    &:not(:checked) {
+      & + div {
+        .legislative-process-preview {
+          display: block;
+        }
+
+        .legislative-process {
+          display: none;
+        }
+
+        .read-more-process {
+          cursor: pointer;
+          content: 'test'
+        }
+      }
+    }
+  }
+
+  @include until($desktop) {
+    main {
+      margin-top: 0;
+      width: 100%;
+    }
+
+    .columns {
+      margin: 0;
+
+      .column {
+        padding: 0;
+      }
+    }
+
+    .load-more-container {
+      text-align: center;
+    }
+  }
 }
 
 mark {
@@ -548,11 +726,20 @@ mark {
 }
 
 .search-wrapper {
-  width: 80%;
+  left: 10%;
   position: absolute;
   top: 70%;
-  left: 10%;
+  width: 80%;
   z-index: 35;
+
+  @include until($desktop) {
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
+    right: 0;
+    top: 82.5%;
+    width: calc(100% - #{0.75rem * 2});
+  }
 }
 
 .sidebar__categories {
@@ -611,5 +798,10 @@ mark {
 .tag__container {
   display: flex;
   max-width: 100px;
+  align-items: center;
+}
+
+.flex-container {
+  display: flex;
   align-items: center;
 }

@@ -41,4 +41,44 @@ RSpec.describe Target, type: :model do
     subject.visibility_status = nil
     expect(subject).to have(2).errors_on(:visibility_status)
   end
+
+  context 'full_text_search' do
+    let!(:target_1) {
+      create(
+        :target,
+        description: "30% obliged entity's energy efficiency requirements implemented by 2016"
+      )
+    }
+    let!(:target_2) {
+      create(
+        :target,
+        description: '35% cut in GHG emissions from biofuels and bioliquids compared to fossil fuels by 2017 Łąka'
+      )
+    }
+    let!(:target_3) {
+      create(
+        :target,
+        description: '63 aggregated energy efficiency ratio by 2020 against a 2000 baseline',
+        scopes: [
+          build(:scope, name: 'Transport')
+        ]
+      )
+    }
+
+    it 'ignores accents' do
+      expect(Target.full_text_search('Laka')).to contain_exactly(target_2)
+    end
+
+    it 'uses stemming' do
+      expect(Target.full_text_search('comparing')).to contain_exactly(target_2)
+    end
+
+    it 'uses description' do
+      expect(Target.full_text_search('energy')).to contain_exactly(target_1, target_3)
+    end
+
+    it 'uses tags' do
+      expect(Target.full_text_search('transport')).to contain_exactly(target_3)
+    end
+  end
 end

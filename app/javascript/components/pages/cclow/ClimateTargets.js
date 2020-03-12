@@ -21,24 +21,24 @@ class ClimateTargets extends Component {
       count,
       offset: 0,
       activeGeoFilter: {},
-      activeTagFilter: {},
       activeTimeRangeFilter: {},
-      activeTypesFilter: {}
+      activeTypesFilter: {},
+      isMoreSearchOptionsVisible: false
     };
 
+    this.isMobile = window.innerWidth < 1024;
+
     this.geoFilter = React.createRef();
-    this.tagsFilter = React.createRef();
     this.timeRangeFilter = React.createRef();
     this.typesFilter = React.createRef();
   }
 
   getQueryString(extraParams = {}) {
-    const {activeGeoFilter, activeTypesFilter, activeTimeRangeFilter, activeTagFilter} = this.state;
+    const {activeGeoFilter, activeTypesFilter, activeTimeRangeFilter} = this.state;
     const params = {
       ...getQueryFilters(),
       ...activeTimeRangeFilter,
       ...activeGeoFilter,
-      ...activeTagFilter,
       ...activeTypesFilter,
       ...extraParams
     };
@@ -49,7 +49,7 @@ class ClimateTargets extends Component {
   handleLoadMore = () => {
     const { climate_targets } = this.state;
     this.setState({ offset: climate_targets.length }, this.fetchData.bind(this));
-  }
+  };
 
   filterList = (activeFilterName, filterParams) => {
     this.setState({[activeFilterName]: filterParams, offset: 0}, this.fetchData.bind(this));
@@ -91,20 +91,17 @@ class ClimateTargets extends Component {
   }
 
   renderTags = () => {
-    const {activeGeoFilter, activeTagFilter, activeTimeRangeFilter, activeTypesFilter} = this.state;
+    const {activeGeoFilter, activeTimeRangeFilter, activeTypesFilter} = this.state;
     const {
       geo_filter_options: geoFilterOptions,
-      tags_filter_options: tagsFilterOptions,
       types_filter_options: typesFilterOptions
     } = this.props;
     if (Object.keys(activeGeoFilter).length === 0
-      && Object.keys(activeTagFilter).length === 0
       && Object.keys(activeTypesFilter).length === 0
       && Object.keys(activeTimeRangeFilter).length === 0) return null;
     return (
       <div className="filter-tags">
         {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
-        {this.renderTagsGroup(activeTagFilter, tagsFilterOptions, 'tagsFilter')}
         {this.renderTagsGroup(activeTypesFilter, typesFilterOptions, 'typesFilter')}
         {this.renderTimeRangeTags(activeTimeRangeFilter)}
       </div>
@@ -149,13 +146,62 @@ class ClimateTargets extends Component {
     </Fragment>
   );
 
-  render() {
-    const {climate_targets, count} = this.state;
+  renderFilters = () => {
     const {
       geo_filter_options: geoFilterOptions,
-      tags_filter_options: tagsFilterOptions,
       types_filter_options: typesFilterOptions
     } = this.props;
+    return (
+      <Fragment>
+        <SearchFilter
+          ref={this.geoFilter}
+          filterName="Regions and countries"
+          params={geoFilterOptions}
+          onChange={(event) => this.filterList('activeGeoFilter', event)}
+        />
+        {/* <TimeRangeFilter
+            ref={this.timeRangeFilter}
+            onChange={(event) => this.filterList('activeTimeRangeFilter', event)}
+            /> */}
+        <SearchFilter
+          ref={this.typesFilter}
+          filterName="Types"
+          params={typesFilterOptions}
+          onChange={(event) => this.filterList('activeTypesFilter', event)}
+        />
+      </Fragment>
+    );
+  }
+
+  renderMoreOptions = () => {
+    const {isMoreSearchOptionsVisible} = this.state;
+    return (
+      <Fragment>
+        {!isMoreSearchOptionsVisible && (
+          <button
+            type="button"
+            onClick={() => this.setState({isMoreSearchOptionsVisible: true})}
+            className="more-options"
+          >
+            + Show more search options
+          </button>
+        )}
+        <div className={isMoreSearchOptionsVisible ? '' : 'hidden'}>
+          <button
+            type="button"
+            onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
+            className="more-options"
+          >
+            - Show fewer search options
+          </button>
+          {this.renderFilters()}
+        </div>
+      </Fragment>
+    );
+  }
+
+  render() {
+    const {climate_targets, count} = this.state;
     const hasMore = climate_targets.length < count;
     const downloadResultsLink = `/cclow/climate_targets.csv?${this.getQueryString()}`;
 
@@ -163,38 +209,22 @@ class ClimateTargets extends Component {
       <Fragment>
         <div className="cclow-geography-page">
           <div className="container">
-            {this.renderPageTitle()}
+            <div className="flex-container">
+              {this.renderPageTitle()}
+            </div>
+            {this.isMobile && (<div className="filter-column">{this.renderMoreOptions()}</div>)}
             <hr />
             <div className="columns">
-              <div className="column is-one-quarter filter-column">
-                <div className="search-by">Narrow this search by</div>
-                <SearchFilter
-                  ref={this.geoFilter}
-                  filterName="Regions and countries"
-                  params={geoFilterOptions}
-                  onChange={(event) => this.filterList('activeGeoFilter', event)}
-                />
-                {/* <TimeRangeFilter
-                    ref={this.timeRangeFilter}
-                    onChange={(event) => this.filterList('activeTimeRangeFilter', event)}
-                    /> */}
-                <SearchFilter
-                  ref={this.typesFilter}
-                  filterName="Types"
-                  params={typesFilterOptions}
-                  onChange={(event) => this.filterList('activeTypesFilter', event)}
-                />
-                <SearchFilter
-                  ref={this.tagsFilter}
-                  filterName="Tags"
-                  params={tagsFilterOptions}
-                  onChange={(event) => this.filterList('activeTagFilter', event)}
-                />
-              </div>
+              {!this.isMobile && (
+                <div className="column is-one-quarter filter-column">
+                  <div className="search-by">Narrow this search by</div>
+                  {this.renderFilters()}
+                </div>
+              )}
               <main className="column is-three-quarters">
                 <div className="columns pre-content">
                   <span className="column is-half">Showing {count} results</span>
-                  <span className="column is-half download-link">
+                  <span className="column is-half download-link is-hidden-touch">
                     <a className="download-link" href={downloadResultsLink}>Download results (.csv)</a>
                   </span>
                 </div>
@@ -202,7 +232,7 @@ class ClimateTargets extends Component {
                 <ul className="content-list">
                   {climate_targets.map((target, i) => (
                     <Fragment key={i}>
-                      <li>
+                      <li className="content-item">
                         <h5 className="title" dangerouslySetInnerHTML={{__html: target.link}} />
                         <div className="meta">
                           {target.geography && (
@@ -220,7 +250,7 @@ class ClimateTargets extends Component {
                   ))}
                 </ul>
                 {hasMore && (
-                  <div className="column is-offset-5">
+                  <div className={`column load-more-container${!this.isMobile ? ' is-offset-5' : ''}`}>
                     <button type="button" className="button is-primary load-more-btn" onClick={this.handleLoadMore}>
                       Load 10 more entries
                     </button>
@@ -239,7 +269,6 @@ class ClimateTargets extends Component {
 ClimateTargets.defaultProps = {
   count: 0,
   geo_filter_options: [],
-  tags_filter_options: [],
   types_filter_options: []
 };
 
@@ -247,7 +276,6 @@ ClimateTargets.propTypes = {
   climate_targets: PropTypes.array.isRequired,
   count: PropTypes.number,
   geo_filter_options: PropTypes.array,
-  tags_filter_options: PropTypes.array,
   types_filter_options: PropTypes.array
 };
 

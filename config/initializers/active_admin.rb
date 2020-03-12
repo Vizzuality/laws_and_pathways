@@ -6,6 +6,13 @@ ActiveAdmin.setup do |config|
   # Set the title that is displayed on the main layout
   # for each of the active admin pages.
   #
+
+  ActiveAdmin::Devise::SessionsController.class_eval do
+    def after_sign_out_path_for(_resource)
+      '/'
+    end
+  end
+
   config.site_title = 'Laws And Pathways'
 
   # Set the link url for the title. For example, to take

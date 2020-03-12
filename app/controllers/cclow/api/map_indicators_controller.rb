@@ -13,7 +13,7 @@ module CCLOW
 
       def fetch_geographies
         ::Geography.published.select(:id, :iso, :slug, :name).as_json.map do |g|
-          g.merge(link: cclow_geography_path(g['id']))
+          g.merge(link: cclow_geography_path(g['slug']))
         end
       end
     end

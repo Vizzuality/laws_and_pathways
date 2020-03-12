@@ -34,6 +34,8 @@
 @import "tpi/newsletter";
 @import "tpi/pages";
 @import "tpi/search";
+@import "tpi/fixed-navbar";
+@import "tpi/nested-dropdown";
 
 @import "tpi/pages/*";
 
@@ -44,5 +46,19 @@ html {
 body {
   @include mobile {
     overflow-x: hidden;
+  }
+}
+
+:root {
+  --fixed-navbar-height: 56px;
+}
+
+.columns {
+  margin-left: -0.75rem;
+  margin-right: 0;
+  margin-top: -0.75rem;
+
+  @include desktop {
+    margin-right: -0.75rem;
   }
 }

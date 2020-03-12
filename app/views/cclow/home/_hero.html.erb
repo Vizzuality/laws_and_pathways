@@ -1,4 +1,4 @@
-<section class="hero">
+<section class="hero <%= 'header__margin' if @current_user.present? %>">
   <div class="hero-head">
     <div class="navbar">
       <div class="container">
@@ -24,6 +24,9 @@
                     <a href="<%= page[:slug] %>"><%= page[:title] %></a>
                   <% end %>
                 <% end %>
+                <%= link_to 'Climate Laws Publications',
+                  'http://www.lse.ac.uk/GranthamInstitute/tag/cclw/',
+                  target: "_blank", rel: "noopener noreferrer" %>
               </div>
             </div>
           </div>
@@ -91,7 +94,7 @@
           <div class="value-block">
             <ul>
               <% @featured_countries.each do |country| %>
-                <li><%= link_to country.name, cclow_geography_path(country) %></li>
+                <li><%= link_to country.name, cclow_geography_path(country.slug) %></li>
               <% end %>
             </ul>
           </div>

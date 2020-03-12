@@ -3,9 +3,9 @@
            {caption: 'Litigation cases', count: geography_overview.number_of_litigation_cases, img: 'scale', link: cclow_geography_litigation_cases_path(geography)},
            {caption: 'Climate targets', count: geography_overview.number_of_targets, img: 'target', link: cclow_geography_climate_targets_path(geography)}] %>
 <% properties = [{caption: 'Region', value: geography.region, question: false},
-                 {caption: 'Rank as emitter', question: false},
-                 {caption: 'Paris Agreement ratification status', question: false},
-                 {caption: 'Income group (World Bank)', question: false},
+                 {caption: '% Global Emissions', value: geography.percent_global_emissions, question: false},
+                 {caption: 'Global Climate Risk Index', value: geography.climate_risk_index, question: false},
+                 {caption: 'Income group (World Bank)', value: geography.wb_income_group, question: false},
                  {caption: 'Main political groups', value: geography.political_groups.map(&:name).join('; '), question: false},
                  {caption: 'Federative/Unitary',
                   value: geography.federal ? "Federative #{geography.federal_details}" : 'Unitary', question: false}] %>
@@ -30,10 +30,25 @@
     </div>
     <hr>
     <% 2.times do |i| %>
-      <div class="columns properties-container">
+      <div class="columns properties-container is-hidden-touch">
         <% 3.times do |j| %>
           <% item =  properties[(i * 3) + (j + 1) - 1]%>
           <div class="column is-one-third">
+            <div class="property-name"><%= item[:caption] %>
+              <% if item[:question] %>
+                <span class="icon question-icon"><i class="fa fa-question"></i></span>
+              <% end %>
+            </div>
+            <div class="property-value"><%= item[:value] %></div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    <% 3.times do |i| %>
+      <div class="columns properties-container is-hidden-desktop is-mobile">
+        <% 2.times do |j| %>
+          <% item =  properties[(j * 3) + (i + 1) - 1]%>
+          <div class="column is-half-mobile">
             <div class="property-name"><%= item[:caption] %>
               <% if item[:question] %>
                 <span class="icon question-icon"><i class="fa fa-question"></i></span>

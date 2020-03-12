@@ -5,12 +5,11 @@
 #  id               :bigint           not null, primary key
 #  title            :string
 #  content          :text
-#  publication_date :date
+#  publication_date :datetime
 #  created_by_id    :bigint
 #  updated_by_id    :bigint
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
-#  article_type     :string
 #
 
 class NewsArticle < ApplicationRecord
@@ -19,20 +18,11 @@ class NewsArticle < ApplicationRecord
   include Taggable
   include ImageWithThumb
 
-  ARTICLE_TYPES = [
-    'Announcement',
-    'Commentaries',
-    'In the news',
-    'Press Releases'
-  ].freeze
-
   tag_with :keywords
-
-  enum article_type: array_to_enum_hash(ARTICLE_TYPES)
 
   has_and_belongs_to_many :tpi_sectors
 
-  validates_presence_of :title, :content
+  validates_presence_of :title, :content, :publication_date
 
   def self.search(query)
     where('title ilike ? OR content ilike ?',

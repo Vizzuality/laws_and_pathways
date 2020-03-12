@@ -1,59 +1,107 @@
 <% content_for :page_title, "Climate Laws - #{@geography.name} - Climate Targets" %>
 
-<div class="container">
-  <h3>Climate targets</h3>
-  <ul class="content-list">
-    <li class="with-meta">
-      <% if @geography.eu_member? %>
-        <div class="meta"><img class="flag" src=<%= asset_path "flags/EUR.svg"%> alt="">
-          This country is a member of the EU and so <span class="highlight"> EU NDC data </span> is being displayed.
+<div class="geography-list">
+  <div class="container">
+    <h3>Climate targets</h3>
+    <ul class="content-list">
+      <li class="with-meta">
+        <% if @geography.eu_member? %>
+          <div class="meta"><img class="flag" src=<%= asset_path "flags/EUR.svg"%> alt="">
+            This country is a member of the EU and so <span class="highlight"> EU NDC data </span> is being displayed.
+          </div>
+        <% end %>
+      </li>
+      <div class="sectors-list">
+        <div class="columns is-hidden-touch">
+          <div class="column is-one-thirds"></div>
+          <div class="column is-one-thirds column-name">Targets in NDC content</div>
+          <div class="column is-one-thirds column-name">
+            <span class="column-title">Targets in national laws and policies</span>
+          </div>
         </div>
-      <% end %>
-    </li>
-    <div class="sectors-list">
-      <div class="columns">
-        <div class="column is-one-thirds"></div>
-        <div class="column is-one-thirds column-name">Targets in NDC content</div>
-        <div class="column is-one-thirds column-name">
-          <span class="column-title">Targets in national laws and policies</span>
+
+        <% @list.each do |data| %>
+          <hr class="is-hidden-desktop">
+          <a href="<%= "/cclow/geographies/#{@geography.id}/climate_targets/#{data[:sector]}" %>" class="item active is-hidden-desktop">
+            <div class="sector-name"><%= data[:sector] %></div>
+            <div class="columns">
+              <div class="column is-half">Targets in NDC content</div>
+              <div class="column is-half value">
+                <% if !data[:ndc_targets_count].zero? %>
+                  <div class="current-circle">
+                    <%= data[:ndc_targets_count] %>
+                  </div>
+                <% else %>
+                  <div class="empty-circle"></div>
+                <% end %>
+              </div>
+            </div>
+            <div class="columns">
+            <div class="column is-half">Targets in national laws and policies</div>
+              <div class="column is-half value">
+                <% if data[:law_targets_count] + data[:policy_targets_count] %>
+                  <div class="current-circle">
+                    <%= data[:law_targets_count] + data[:policy_targets_count] %>
+                  </div>
+                <% else %>
+                  <div class="empty-circle"></div>
+                <% end %>
+              </div>
+            </div>
+          </a>
+        <% end %>
+        <hr class="is-hidden-desktop">
+
+        <% @list.each do |data| %>
+          <a href="<%= "/cclow/geographies/#{@geography.id}/climate_targets/#{data[:sector]}" %>" class="columns item active is-hidden-touch">
+            <div class="column is-one-thirds sector-name"><%= data[:sector] %></div>
+            <div class="column is-one-thirds value">
+              <% if !data[:ndc_targets_count].zero? %>
+                <div class="current-circle">
+                  <%= data[:ndc_targets_count] %>
+                </div>
+              <% else %>
+                <div class="empty-circle"></div>
+              <% end %>
+            </div>
+            <div class="column is-one-thirds value">
+              <% if data[:law_targets_count] + data[:policy_targets_count] %>
+                <div class="current-circle">
+                  <%= data[:law_targets_count] + data[:policy_targets_count] %>
+                </div>
+              <% else %>
+                <div class="empty-circle"></div>
+              <% end %>
+            </div>
+          </a>
+        <% end %>
+
+        <% @sectors_without_targets.each do |sector| %>
+          <div class="columns is-hidden-touch item">
+            <div class="column is-one-thirds sector-name"><%= sector %></div>
+            <div class="column is-one-thirds value"><div class="empty-circle"></div></div>
+            <div class="column is-one-thirds value"><div class="empty-circle"></div></div>
+          </div>
+        <% end %>
+
+        <div class="is-hidden-desktop">
+        <div class="no-climate-targets">No climate targets for the folowing sectors:</div>
+          <% @sectors_without_targets.each do |sector| %>
+            <div class="item">
+              <div class="column"><%= sector %></div>
+            </div>
+          <% end %>
         </div>
       </div>
-
-      <% @list.each do |data| %>
-        <a href="<%= "/cclow/geographies/#{@geography.id}/climate_targets/#{data[:sector]}" %>" class="columns item active">
-          <div class="column is-one-thirds sector-name"><%= data[:sector] %></div>
-          <div class="column is-one-thirds value">
-            <% if !data[:ndc_targets_count].zero? %>
-              <div class="current-circle">
-                <%= data[:ndc_targets_count] %>
-              </div>
-            <% else %>
-              <div class="empty-circle"></div>
-            <% end %>
-          </div>
-          <div class="column is-one-thirds value">
-            <% if data[:law_targets_count] + data[:policy_targets_count] %>
-              <div class="current-circle">
-                <%= data[:law_targets_count] + data[:policy_targets_count] %>
-              </div>
-            <% else %>
-              <div class="empty-circle"></div>
-            <% end %>
-          </div>
-        </a>
-      <% end %>
-
-      <% @sectors_without_targets.each do |sector| %>
-        <div class="columns item">
-          <div class="column is-one-thirds sector-name"><%= sector %></div>
-          <div class="column is-one-thirds value"><div class="empty-circle"></div></div>
-          <div class="column is-one-thirds value"><div class="empty-circle"></div></div>
-        </div>
-      <% end %>
+    </ul>
+    <div class="ndc-hint is-hidden-touch">
+      <span>For further analysis of the NDC, see <%= @geography.name %> country profile on</span>
+      <img src=<%= asset_path "cclow/climate_watch.png"%> alt="">
     </div>
-  </ul>
-  <div class="ndc-hint">
-    <span>For further analysis of the NDC, see <%= @geography.name %> country profile on</span>
-    <img src=<%= asset_path "cclow/climate_watch.png"%> alt="">
+    </ul>
+    <div class="ndc-hint-mobile is-hidden-desktop">
+      <span>For further analysis of the NDC, see <%= @geography.name %> country profile on</span>
+      <span><img class="climate-watch-icon" src=<%= asset_path "cclow/climate_watch.png"%> alt=""></span>
+    </div>
   </div>
 </div>

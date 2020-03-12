@@ -49,7 +49,7 @@ ActiveAdmin.register Litigation do
   index do
     selectable_column
     column :id
-    column :title, class: 'max-width-300', &:title_link
+    column :title, &:title_link
     column :geography
     column :document_type
     tag_column :visibility_status

@@ -1,0 +1,32 @@
+.chart--mq-level {
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+
+  div[data-highcharts-chart] {
+    overflow: unset !important;
+  }
+
+  .highcharts-container, svg {
+    width: unset !important;
+    height: unset !important;
+
+    max-width: 100%;
+
+    overflow: unset !important;
+  }
+
+  // hide SVG tooltip, we only display HTML one
+  .highcharts-tooltip-box {
+    display: none;
+  }
+
+  .tooltip {
+    font-family: $font-family-regular;
+    font-size: 14px;
+    line-height: 1.5em;
+    background-color: $white;
+    border: 1px solid $dark;
+    padding: 20px;
+  }
+}

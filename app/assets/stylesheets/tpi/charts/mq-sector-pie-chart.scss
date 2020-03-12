@@ -1,0 +1,42 @@
+$tpi-pie-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB;
+
+.chart--mq-sector-pie-chart {
+  margin: 0 auto;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+
+  // remove overflow hidden from the chart
+  div[data-highcharts-chart], .highcharts-container, svg {
+    overflow: unset !important;
+  }
+
+  @for $i from 1 through length($tpi-pie-chart-colors) {
+    $color: nth($tpi-pie-chart-colors, $i);
+    .highcharts-color-#{$i - 1} {
+      fill: $color;
+      stroke: $color;
+    }
+  }
+
+  .highcharts-data-label {
+    font-size: 1rem;
+    font-family: $font-family-bold;
+    font-weight: unset;
+  }
+
+  .highcharts-data-label-connector {
+    stroke: $black;
+    fill: none;
+  }
+
+  .chart-title {
+    font-family: $font-family-regular;
+    font-size: 16px;
+
+    .companies-size {
+      font-size: 36px;
+      font-family: $font-family-bold;
+    }
+  }
+}
