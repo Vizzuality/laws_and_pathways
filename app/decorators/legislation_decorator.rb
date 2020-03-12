@@ -70,4 +70,8 @@ class LegislationDecorator < Draper::Decorator
                 title: laws_sector.name
     end
   end
+
+  def as_json(_ = {})
+    super(methods: :display_name)
+  end
 end

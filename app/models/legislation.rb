@@ -118,6 +118,10 @@ class Legislation < ApplicationRecord
     executive?
   end
 
+  def display_name
+    ["#{title} (id: #{id})", geography&.name].join(' | ')
+  end
+
   def events_with_eventable_title
     events
       .joins('INNER JOIN legislations ON legislations.id = events.eventable_id')
