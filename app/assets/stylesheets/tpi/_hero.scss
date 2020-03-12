@@ -16,7 +16,7 @@ $home-background: image-url("homepage/homepage-bg.jpg");
     @include from($tablet) {
       min-height: 500px;
     }
-    
+
     @include mobile {
       height: 340px;
       max-height: 340px;
@@ -139,6 +139,10 @@ $home-background: image-url("homepage/homepage-bg.jpg");
     background-repeat: no-repeat;
     background-size: contain;
 
+    @include until($desktop) {
+      padding-top: 1.5rem;
+    }
+
     @include from($tablet) {
       padding-top: 80px;
       padding-bottom: 80px;
@@ -152,6 +156,13 @@ $home-background: image-url("homepage/homepage-bg.jpg");
 
 .section-clickable {
   margin: 20px 0 30px;
+
+  @include until($desktop) {
+    margin: 0;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -242,7 +253,7 @@ $home-background: image-url("homepage/homepage-bg.jpg");
 
   @media #{$tablet-portrait} {
     padding: 0.75rem 2.75rem;
-  }  
+  }
 }
 
 .column-left {
