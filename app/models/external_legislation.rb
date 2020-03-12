@@ -16,4 +16,8 @@ class ExternalLegislation < ApplicationRecord
 
   validates_presence_of :name
   validates :url, url: true
+
+  def display_name
+    ["#{name} (id: #{id})", geography&.name].join(' | ')
+  end
 end
