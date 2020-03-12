@@ -8,7 +8,10 @@
           <i class="fa fa-lg fa-link"></i>
         <% end %>
       </span>
-      <a href="<%= document.url %>" class="column is-11"><%= document.name %></a>
+      <a href="<%= document.url %>" class="column is-11">
+        <%= document.name %>
+        <%= "(#{::Language.find(document.language).name})" if document.language %>
+      </a>
     </li>
   <% end %>
 </ul>
