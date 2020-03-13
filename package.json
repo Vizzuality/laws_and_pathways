@@ -13,7 +13,7 @@
     "test:rails": "bundle exec rspec",
     "test:sast": "bundle exec brakeman",
     "js:server": "yarn install && ./bin/webpack-dev-server",
-    "rails:server": "bundle exec rails s",
+    "rails:server": "bundle exec rails s --binding=0.0.0.0",
     "rails:bundle-audit": "bundle exec bundle-audit check --update"
   },
   "dependencies": {
