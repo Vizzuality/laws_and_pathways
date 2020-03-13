@@ -1,7 +1,7 @@
 $button-cl: #00689f;
 
 .trix-button--icon-video::before {
-  background-image: url('icon_youtube/youtube_gray.svg');
+  background-image: asset-url('icon_youtube/youtube_gray.svg');
 }
 
 trix-toolbar {
