@@ -1,7 +1,7 @@
 @import "colors";
 @import "typography";
 
-$home-background: image-url("homepage/homepage-bg.jpg");
+$home-background: image-url("homepage/homepage-bg@2x.jpg");
 
 .tpi-home__hero {
   color: $white;
@@ -11,7 +11,7 @@ $home-background: image-url("homepage/homepage-bg.jpg");
 
   &.is-primary {
     padding: 0;
-    background: $blue-dark;
+    background: $blue-ribbon;
 
     @include from($tablet) {
       min-height: 500px;
@@ -114,27 +114,28 @@ $home-background: image-url("homepage/homepage-bg.jpg");
       background-position: center;
       background-repeat: no-repeat;
       overflow: hidden;
+      max-width: 720px;
 
       &::after {
         position: absolute;
         top: 0;
-        left: -300px;
+        left: 0;
         right: 0;
         bottom: 0;
         content: " ";
         height: 50%;
         background-image: image-url("homepage/homepage_pattern.svg");
         background-repeat: no-repeat;
-        background-size: cover;
-        background-position-x: 0;
-        background-position-y: -300px;
+        background-size: contain;
+        background-position-x: right;
+        background-position-y: -10px;
       }
     }
   }
 
   &.is-secondary {
     background: $blue;
-    background-image: image-url('hero_background_dark.svg');
+    background-image: image-url('homepage/homepage-dot-pattern.png');
     background-position: -60px -60px;
     background-repeat: no-repeat;
     background-size: contain;
