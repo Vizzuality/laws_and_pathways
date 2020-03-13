@@ -44,8 +44,10 @@ html {
 }
 
 body {
-  @include mobile {
-    overflow-x: hidden;
+  overflow-x: hidden;
+
+  @include desktop {
+    overflow-x: visible;
   }
 }
 
