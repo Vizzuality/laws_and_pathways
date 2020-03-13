@@ -45,6 +45,7 @@ $button-border-width: 4px;
     justify-content: center;
     align-items: center;
     height: $button-height;
+    background-color: $primary;
 
     &.is-small {
       border-radius: 0;
