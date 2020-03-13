@@ -8,13 +8,6 @@
         <% end %>
 
         <div class="publication__content">
-          <% if publication.keywords.any? || publication.tpi_sectors.any? %>
-            <div class="publication__tags">
-              <% publication.tags_and_sectors.each do |tag| %>
-                <span class="tag"><%= tag %></span>
-              <% end %>
-            </div>
-          <% end %>
           <p class="updated_at"><%= publication.publication_date.strftime('%d/%m/%Y') %></p>
           <div class="content__title-wrapper">
             <div class="content__title">
@@ -36,6 +29,13 @@
               <% end %>
             </p>
           </div>
+          <% if publication.keywords.any? || publication.tpi_sectors.any? %>
+            <div class="publication__tags">
+              <% publication.tags_and_sectors.each do |tag| %>
+                <span class="tag"><%= tag %></span>
+              <% end %>
+            </div>
+          <% end %>
         </div>
       </div>
     <% end %>
