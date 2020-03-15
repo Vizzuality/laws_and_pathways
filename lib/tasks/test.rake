@@ -15,7 +15,7 @@ namespace :test do
       Rake::Task['test:db_dump'].invoke
     end
 
-    system "pg_restore --clean --no-owner --dbname=#{db_name} #{dump_path}"
+    system "pg_restore -j 8 --clean --no-owner --dbname=#{db_name} #{dump_path}"
   end
 
   private
