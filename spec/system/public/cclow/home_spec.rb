@@ -7,13 +7,26 @@ describe 'Home', type: 'system' do
 
   it 'loads the page' do
     expect(page).to have_text('Climate Change Laws of the World')
-  end
 
-  it 'loads laws search component' do
     expect(page).to have_selector('.laws-dropdown__container')
+    expect(page).to have_selector('.world-map__container')
   end
 
-  it 'loads the map' do
-    expect(page).to have_selector('.world-map__container')
+  describe 'search dropdown' do
+    it 'works' do
+      within '.laws-dropdown__container' do
+        find('input#search-input').click
+        find('input#search-input').set('Polan')
+
+        Capybara.using_wait_time(5) do
+          expect(page).to have_text("Search \nPolan\n in Laws and policies\n11")
+          expect(page).to have_text("Search \nPolan\n in Litigation\n5")
+          expect(page).to have_text("Search \nPolan\n in Climate targets\n11")
+        end
+
+        click_link 'Poland'
+        expect(page).to have_current_path('/cclow/geographies/poland')
+      end
+    end
   end
 end
