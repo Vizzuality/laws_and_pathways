@@ -15,7 +15,7 @@ module CCLOW
           )
         )
       else
-        h.link_to(link_title, h.cclow_geography_climate_targets_path(model.geography))
+        h.link_to(link_title, h.cclow_geography_climate_targets_path(model.geography.slug))
       end
     end
     # rubocop:enable Metrics/AbcSize
