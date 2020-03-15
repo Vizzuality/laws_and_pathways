@@ -41,14 +41,6 @@ describe 'Sector', type: 'system' do
         expect(page).to have_text('Level 36 companies') # Level 3 6 companies
         expect(page).to have_selector('.companies-size', text: '22')
       end
-
-      # sector level overview, ladder
-      # within '.sector-level-overview' do
-      #   within :xpath, ".//div[contains(@class, '.sector-level__title') and contains(. 'Level 1')]/parent" do
-      #     expect(page).to have_text('Air China')
-      #     expect(page).to have_text('Alaska Air')
-      #   end
-      # end
     end
   end
 end
