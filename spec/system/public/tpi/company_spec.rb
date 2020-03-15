@@ -45,8 +45,4 @@ describe 'Company Page', type: 'system' do
       expect(page).to have_text(text)
     end
   end
-
-  def contains_class(class_name)
-    "contains(concat(' ', normalize-space(@class), ' '), ' #{class_name} ')"
-  end
 end
