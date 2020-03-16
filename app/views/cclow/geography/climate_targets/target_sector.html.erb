@@ -64,7 +64,7 @@
                   <% target.legislations.each do |legislation|%>
                     <div class="name">
                       <% path = legislation.policy? ? 'cclow_geography_policy_path' : 'cclow_geography_law_path' %>
-                      <%= link_to legislation.title, send(path, @geography, legislation) %>
+                      <%= link_to legislation.title, send(path, @geography.slug, legislation.slug) %>
                     </div>
                     <p class="meta">
                     <span>

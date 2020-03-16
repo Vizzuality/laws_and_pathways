@@ -213,8 +213,8 @@ const LawsDropdown = () => {
           <LawsDropdownCategory title={CATEGORIES.countries} icon={countryFlag}>
             {searchGeographiesResults.map(geography => (
               <a
-                href={`/cclow/geographies/${geography.id}`}
-                onClick={() => setLastSearch(searchValue, CATEGORIES.countries, `/cclow/geographies/${geography.id}`)}
+                href={`/cclow/geographies/${geography.slug}`}
+                onClick={() => setLastSearch(searchValue, CATEGORIES.countries, `/cclow/geographies/${geography.slug}`)}
                 key={geography.slug}
                 className="laws-dropdown__option"
               >
