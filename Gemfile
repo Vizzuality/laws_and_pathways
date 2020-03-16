@@ -56,7 +56,7 @@ group :test do
   gem 'capybara'
   gem 'rails-controller-testing'
   gem 'rspec-collection_matchers'
-  gem 'rspec-rails', '~> 3.8'
+  gem 'rspec-rails', '~> 4.0.rc'
   gem 'selenium-webdriver'
   gem 'webdrivers', '~> 4.0'
 end
