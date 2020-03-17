@@ -7,11 +7,15 @@ module CCLOW
       link_title = model.description || [model.target_type.humanize, model.year].compact.join(', ')
 
       if model.sector
-        h.link_to(link_title,
-                  h.cclow_geography_geography_climate_targets_sector_path(model.geography.slug,
-                                                                          model.sector.name))
+        h.link_to(
+          link_title,
+          h.cclow_geography_geography_climate_targets_sector_path(
+            model.geography.slug,
+            model.sector.name
+          )
+        )
       else
-        h.link_to(link_title, h.cclow_geography_climate_targets_path(model.geography))
+        h.link_to(link_title, h.cclow_geography_climate_targets_path(model.geography.slug))
       end
     end
     # rubocop:enable Metrics/AbcSize

@@ -15,7 +15,6 @@ module CCLOW
         )
       end
 
-      # rubocop:disable Metrics/AbcSize
       def show
         @legislations = CCLOW::LegislationDecorator.decorate_collection(@litigation.legislations)
         add_breadcrumb('Litigation cases', cclow_geography_litigation_cases_path(@geography.slug))
@@ -23,7 +22,7 @@ module CCLOW
         @sectors = @litigation.laws_sectors.order(:name)
         @keywords = @litigation.keywords.order(:name)
         @responses = @litigation.responses.order(:name)
-        @litigation_sides = @litigation.litigation_sides.map { |ls| CCLOW::LitigationSideDecorator.decorate(ls) }
+        @litigation_sides = @litigation.litigation_sides
         @litigation_events = @litigation.events.order(:date)
         @litigation_events_with_links = @litigation_events.map do |e|
           ::Api::Presenters::Event.call(e, :litigation)
@@ -34,7 +33,6 @@ module CCLOW
           admin_litigation_path(@litigation)
         )
       end
-      # rubocop:enable Metrics/AbcSize
 
       private
 
