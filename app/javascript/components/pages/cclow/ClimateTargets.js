@@ -100,7 +100,7 @@ class ClimateTargets extends Component {
       && Object.keys(activeTypesFilter).length === 0
       && Object.keys(activeTimeRangeFilter).length === 0) return null;
     return (
-      <div className="filter-tags">
+      <div className="filter-tags tags">
         {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
         {this.renderTagsGroup(activeTypesFilter, typesFilterOptions, 'typesFilter')}
         {this.renderTimeRangeTags(activeTimeRangeFilter)}
