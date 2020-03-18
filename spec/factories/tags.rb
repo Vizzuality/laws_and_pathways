@@ -45,8 +45,16 @@ FactoryBot.define do
     }
   end
 
+  factory :document_type do
+    type { 'DocumentType' }
+  end
+
   factory :response do
     type { 'Response' }
+  end
+
+  factory :framework do
+    type { 'Framework' }
   end
 
   factory :natural_hazard do

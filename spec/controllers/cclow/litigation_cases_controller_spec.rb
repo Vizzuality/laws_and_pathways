@@ -1,20 +1,38 @@
 require 'rails_helper'
 
 RSpec.describe CCLOW::LitigationCasesController, type: :controller do
-  let!(:litigation1) { create(:litigation, :published, title: 'Super Litigation') }
+  let!(:litigation1) {
+    create(
+      :litigation,
+      :published,
+      title: 'Super Litigation',
+      keywords: [
+        build(:keyword, name: 'keyword1'),
+        build(:keyword, name: 'keyword2')
+      ],
+      responses: [
+        build(:response, name: 'response1'),
+        build(:response, name: 'response2')
+      ],
+      legislations: [
+        build(:legislation, title: 'Legislation 1'),
+        build(:legislation, title: 'Legislation 2')
+      ]
+    )
+  }
   let!(:litigation2) { create(:litigation, :published, title: 'Example', summary: 'Litigation example') }
   let!(:litigation3) { create(:litigation, :published, title: 'Litigation Example', summary: 'Example') }
   let!(:litigation4) { create(:litigation, :draft, title: 'This one is unpublished', summary: 'Example') }
 
   before do
-    create(:litigation_event, eventable: litigation1, date: 30.days.ago)
-    create(:litigation_event, eventable: litigation1, date: 50.days.ago)
+    create(:litigation_event, eventable: litigation1,  date: Date.parse('2018-04-03'))
+    create(:litigation_event, eventable: litigation1,  date: Date.parse('2018-03-02'))
 
-    create(:litigation_event, eventable: litigation2, date: 40.days.ago)
-    create(:litigation_event, eventable: litigation2, date: 10.days.ago)
+    create(:litigation_event, eventable: litigation2,  date: Date.parse('2019-03-02'))
+    create(:litigation_event, eventable: litigation2,  date: Date.parse('2019-05-01'))
 
-    create(:litigation_event, eventable: litigation3, date: 30.days.ago)
-    create(:litigation_event, eventable: litigation3, date: 20.days.ago)
+    create(:litigation_event, eventable: litigation3,  date: Date.parse('2018-03-03'))
+    create(:litigation_event, eventable: litigation3,  date: Date.parse('2018-05-01'))
   end
 
   describe 'GET index' do
@@ -36,6 +54,7 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller do
       it 'responds to csv' do
         get :index, format: :csv
         expect(response.content_type).to eq('text/csv')
+        expect(response.body).to match_snapshot('cclow_litigation_cases_controller_csv')
       end
     end
 

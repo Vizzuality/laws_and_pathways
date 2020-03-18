@@ -1,20 +1,32 @@
 require 'rails_helper'
 
 RSpec.describe CCLOW::ClimateTargetsController, type: :controller do
-  let!(:target1) { create(:target, :published, description: 'Super target') }
+  let!(:target1) {
+    create(
+      :target,
+      :published,
+      base_year_period: '2020',
+      description: 'Super target',
+      source: 'framework',
+      scopes: [
+        build(:scope, name: 'scope1'),
+        build(:scope, name: 'scope2')
+      ]
+    )
+  }
   let!(:target2) { create(:target, :published, description: 'Example Description') }
   let!(:target3) { create(:target, :published, description: 'Example') }
   let!(:target4) { create(:target, :draft, description: 'This one is unpublished example') }
 
   before do
-    create(:target_event, eventable: target1, date: 30.days.ago)
-    create(:target_event, eventable: target1, date: 50.days.ago)
+    create(:target_event, eventable: target1,  date: Date.parse('2018-04-03'))
+    create(:target_event, eventable: target1,  date: Date.parse('2018-03-02'))
 
-    create(:target_event, eventable: target2, date: 40.days.ago)
-    create(:target_event, eventable: target2, date: 10.days.ago)
+    create(:target_event, eventable: target2,  date: Date.parse('2019-03-02'))
+    create(:target_event, eventable: target2,  date: Date.parse('2019-05-01'))
 
-    create(:target_event, eventable: target3, date: 30.days.ago)
-    create(:target_event, eventable: target3, date: 20.days.ago)
+    create(:target_event, eventable: target3,  date: Date.parse('2018-03-03'))
+    create(:target_event, eventable: target3,  date: Date.parse('2018-05-01'))
   end
 
   describe 'GET index' do
@@ -36,6 +48,7 @@ RSpec.describe CCLOW::ClimateTargetsController, type: :controller do
       it 'responds to csv' do
         get :index, format: :csv
         expect(response.content_type).to eq('text/csv')
+        expect(response.body).to match_snapshot('cclow_climate_targets_controller_csv')
       end
     end
 

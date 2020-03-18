@@ -1,0 +1,4 @@
+Title,Description,Type,Parent,Geography,Geography Code,Frameworks,Responses,Document Types,Keywords,Natural Hazards,Events
+Super Legislation,Test Legislation Description,executive,Legislation 1 Title,name-AAAC,AAC,"framework2, framework1","response2, response1","","","hazard2, hazard1",02/03/2018 | Some law was approved | Description of approved law | https://test.com ; 03/04/2018 | Some law was approved | Description of approved law | https://test.com
+Example,Legislation example,executive,,name-AAAD,AAD,"","","",climate,"",01/05/2017 | Some law was approved | Description of approved law | https://test.com ; 02/03/2019 | Some law was approved | Description of approved law | https://test.com
+Legislation Example,Example,executive,,name-AAAE,AAE,"","","","","",03/03/2018 | Some law was approved | Description of approved law | https://test.com ; 01/05/2018 | Some law was approved | Description of approved law | https://test.com
