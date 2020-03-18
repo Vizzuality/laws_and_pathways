@@ -316,28 +316,28 @@ class LitigationCases extends Component {
             onChange={(event) => this.filterList('activeSideAPartyTypesFilter', event)}
           />
           <SearchFilter
-            ref={this.sideBPartyTypeFilter}
-            filterName="Side B Type"
-            params={litigationSideBPartyTypeOptions}
-            onChange={(event) => this.filterList('activeSideBPartyTypesFilter', event)}
-          />
-          <SearchFilter
-            ref={this.sideCPartyTypeFilter}
-            filterName="Side C Type"
-            params={litigationSideCPartyTypeOptions}
-            onChange={(event) => this.filterList('activeSideCPartyTypesFilter', event)}
-          />
-          <SearchFilter
             ref={this.sideAFilter}
             filterName="Side A name"
             params={litigationSideAOptions}
             onChange={(event) => this.filterList('activeSideAFilter', event)}
           />
           <SearchFilter
+            ref={this.sideBPartyTypeFilter}
+            filterName="Side B Type"
+            params={litigationSideBPartyTypeOptions}
+            onChange={(event) => this.filterList('activeSideBPartyTypesFilter', event)}
+          />
+          <SearchFilter
             ref={this.sideBFilter}
             filterName="Side B name"
             params={litigationSideBOptions}
             onChange={(event) => this.filterList('activeSideBFilter', event)}
+          />
+          <SearchFilter
+            ref={this.sideCPartyTypeFilter}
+            filterName="Side C Type"
+            params={litigationSideCPartyTypeOptions}
+            onChange={(event) => this.filterList('activeSideCPartyTypesFilter', event)}
           />
           <SearchFilter
             ref={this.sideCFilter}
