@@ -351,7 +351,7 @@ class LitigationCases extends Component {
               onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
               className="more-options"
             >
-              - Show less search options
+              - Show fewer search options
             </button>
           )}
         </div>
