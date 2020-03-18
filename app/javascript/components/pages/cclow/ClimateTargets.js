@@ -165,7 +165,7 @@ class ClimateTargets extends Component {
             /> */}
         <SearchFilter
           ref={this.typesFilter}
-          filterName="Types"
+          filterName="Target types"
           params={typesFilterOptions}
           onChange={(event) => this.filterList('activeTypesFilter', event)}
         />
