@@ -10,6 +10,11 @@ import { useChartData } from '../hooks';
 function MQSectorChart({ dataUrl }) {
   const { data, loading, error } = useChartData(dataUrl);
   const options = getOptions({ chartData: data });
+
+  if (window.innerWidth < 600) {
+    options.chart.width = window.innerWidth - 30;
+  }
+
   const numberOfCompanies = data.reduce((acc, d) => acc + d[1], 0);
 
   return (

@@ -1,0 +1,81 @@
+@import "../colors";
+@import "../typography";
+
+$tpi-level-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB;
+
+.mobile_bubble-chart__container {
+  margin: 0 -0.75rem;
+  padding: 50px 0 0;
+
+  .accordions-list {
+    color: $white;
+
+    .item-list {
+      &.open {
+        .item-body {
+          display: block;
+        }
+      }
+    }
+
+    .item-header {
+      min-height: 80px;
+      font-size: $size-6;
+      padding: 1rem 0.75rem;
+
+      .item-title {
+        display: flex;
+        font-family: $family-sans-serif-bold;
+        font-size: $size-5;
+        justify-content: space-between;
+        margin-bottom: 0.75rem;
+      }
+
+      .sector-subtitle {
+        opacity: 0.8;
+      }
+    }
+
+    .item-body {
+      display: none;
+      font-size: $size-5;
+      overflow: hidden;
+      padding: 0 0.75rem 1rem;
+    }
+
+    .no-companies {
+      margin-top: 1rem;
+    }
+
+    .companies-list {
+      li {
+        margin-top: 1rem;
+      }
+    }
+
+    hr {
+      color: rgba(255, 255, 255, 0.4);
+      height: 1px;
+      margin: 1rem 0 0;
+      padding: 0;
+    }
+  }
+
+  .go-to-button__container {
+    padding-top: 1.5rem;
+    text-align: center;
+    width: 100%;
+
+    a {
+      border-width: 2px;
+      font-size: $size-5;
+    }
+  }
+
+  @for $i from 1 through length($tpi-level-chart-colors) {
+    $color: nth($tpi-level-chart-colors, $i);
+    .level-item-color-#{$i - 1} {
+      background-color: $color;
+    }
+  }
+}
