@@ -12,8 +12,16 @@ module CSVExport
             .slice(:date, :title, :description, :url)
             .values
             .compact
-            .join(' | ')
-        end.join(' ; ')
+            .join('|')
+        end.join(';')
+      end
+
+      def format_documents(documents)
+        return unless documents.any?
+
+        documents.map do |document|
+          [document.name, document.url, document.language].join('|')
+        end.join(';')
       end
 
       def format_boolean(value)

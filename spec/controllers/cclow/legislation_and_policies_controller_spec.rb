@@ -3,12 +3,17 @@ require 'rails_helper'
 RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
   let!(:keyword) { create(:keyword, name: 'climate') }
   let(:parent_legislation) { create(:legislation) }
+  let(:instrument_type) { create(:instrument_type, name: 'instrument_type_test') }
   let!(:legislation1) {
     create(
       :legislation,
       :published,
       title: 'Super Legislation',
       parent: parent_legislation,
+      laws_sectors: [
+        build(:laws_sector, name: 'sector1'),
+        build(:laws_sector, name: 'sector2')
+      ],
       document_types: [
         build(:document_type, name: 'document_type1'),
         build(:document_type, name: 'document_type2')
@@ -24,6 +29,14 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
       responses: [
         build(:response, name: 'response1'),
         build(:response, name: 'response2')
+      ],
+      instruments: [
+        build(:instrument, name: 'instrument1', instrument_type: instrument_type),
+        build(:instrument, name: 'instrument2', instrument_type: instrument_type)
+      ],
+      documents: [
+        build(:document),
+        build(:document_uploaded)
       ]
     )
   }
