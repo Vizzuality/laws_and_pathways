@@ -46,8 +46,9 @@ module CCLOW
           litigations = Litigation
             .where(id: @litigations.reorder(:id).pluck(:id))
             .includes(
-              :geography, :responses, :keywords,
-              :events, :legislations, :external_legislations
+              :geography, :responses,
+              :events, :legislations, :external_legislations,
+              :laws_sectors, :litigation_sides
             )
 
           render csv: CSVExport::User::Litigations.new(litigations).call,

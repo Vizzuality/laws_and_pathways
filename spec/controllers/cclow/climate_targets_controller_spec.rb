@@ -1,10 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe CCLOW::ClimateTargetsController, type: :controller do
+  let(:geography) { create(:geography, name: 'Poland', iso: 'POL') }
+  let(:sector) { create(:laws_sector, name: 'Airlines') }
   let!(:target1) {
     create(
       :target,
       :published,
+      geography: geography,
+      sector: sector,
       base_year_period: '2020',
       description: 'Super target',
       source: 'framework',
@@ -14,9 +18,15 @@ RSpec.describe CCLOW::ClimateTargetsController, type: :controller do
       ]
     )
   }
-  let!(:target2) { create(:target, :published, description: 'Example Description') }
-  let!(:target3) { create(:target, :published, description: 'Example') }
-  let!(:target4) { create(:target, :draft, description: 'This one is unpublished example') }
+  let!(:target2) {
+    create(:target, :published, sector: sector, geography: geography, description: 'Example Description')
+  }
+  let!(:target3) {
+    create(:target, :published, sector: sector, geography: geography, description: 'Example')
+  }
+  let!(:target4) {
+    create(:target, :draft, sector: sector, geography: geography, description: 'This one is unpublished example')
+  }
 
   before do
     create(:target_event, eventable: target1,  date: Date.parse('2018-04-03'))

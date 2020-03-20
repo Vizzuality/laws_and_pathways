@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
+  let(:geography) { create(:geography, name: 'Poland', iso: 'POL') }
+  let(:sector1) { create(:laws_sector, name: 'sector1') }
+  let(:sector2) { create(:laws_sector, name: 'sector2') }
   let!(:keyword) { create(:keyword, name: 'climate') }
   let(:parent_legislation) { create(:legislation) }
   let(:instrument_type) { create(:instrument_type, name: 'instrument_type_test') }
@@ -8,12 +11,10 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
     create(
       :legislation,
       :published,
+      geography: geography,
       title: 'Super Legislation',
       parent: parent_legislation,
-      laws_sectors: [
-        build(:laws_sector, name: 'sector1'),
-        build(:laws_sector, name: 'sector2')
-      ],
+      laws_sectors: [sector1, sector2],
       document_types: [
         build(:document_type, name: 'document_type1'),
         build(:document_type, name: 'document_type2')
@@ -41,10 +42,36 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
     )
   }
   let!(:legislation2) {
-    create(:legislation, :published, title: 'Example', description: 'Legislation example', keywords: [keyword])
+    create(
+      :legislation,
+      :published,
+      laws_sectors: [sector1],
+      geography: geography,
+      title: 'Example',
+      description: 'Legislation example',
+      keywords: [keyword]
+    )
   }
-  let!(:legislation3) { create(:legislation, :published, title: 'Legislation Example', description: 'Example') }
-  let!(:legislation4) { create(:legislation, :draft, title: 'This one is unpublished', description: 'Example') }
+  let!(:legislation3) {
+    create(
+      :legislation,
+      :published,
+      geography: geography,
+      laws_sectors: [sector1],
+      title: 'Legislation Example',
+      description: 'Example'
+    )
+  }
+  let!(:legislation4) {
+    create(
+      :legislation,
+      :draft,
+      geography: geography,
+      laws_sectors: [sector1],
+      title: 'This one is unpublished',
+      description: 'Example'
+    )
+  }
 
   before do
     create(:legislation_event, eventable: legislation1, date: Date.parse('2018-04-03'))

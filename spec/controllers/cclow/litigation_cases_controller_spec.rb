@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe CCLOW::LitigationCasesController, type: :controller do
+  let(:geography) { create(:geography, name: 'Poland', iso: 'POL') }
   let!(:litigation1) {
     create(
       :litigation,
       :published,
+      geography: geography,
       title: 'Super Litigation',
       laws_sectors: [
         build(:laws_sector, name: 'sector1'),
@@ -34,9 +36,15 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller do
       ]
     )
   }
-  let!(:litigation2) { create(:litigation, :published, title: 'Example', summary: 'Litigation example') }
-  let!(:litigation3) { create(:litigation, :published, title: 'Litigation Example', summary: 'Example') }
-  let!(:litigation4) { create(:litigation, :draft, title: 'This one is unpublished', summary: 'Example') }
+  let!(:litigation2) {
+    create(:litigation, :published, geography: geography, title: 'Example', summary: 'Litigation example')
+  }
+  let!(:litigation3) {
+    create(:litigation, :published, geography: geography, title: 'Litigation Example', summary: 'Example')
+  }
+  let!(:litigation4) {
+    create(:litigation, :draft, geography: geography, title: 'This one is unpublished', summary: 'Example')
+  }
 
   before do
     create(:litigation_event, eventable: litigation1,  date: Date.parse('2018-04-03'))

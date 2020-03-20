@@ -1,4 +1,4 @@
 Type,Description,Is GHG Target?,Year,Base Year Period,Is Single Year Target?,Source,Geography,Geography ISO,Sector,Scopes,Events
-base_year_target,Super target,No,2023,2020,Yes,framework,name-AAAN,AAN,name-AAAN,"scope2, scope1",02/03/2018 | Some target was set | Description of target event | https://test.com ; 03/04/2018 | Some target was set | Description of target event | https://test.com
-base_year_target,Example Description,No,2023,,Yes,,name-AAAO,AAO,name-AAAO,"",02/03/2019 | Some target was set | Description of target event | https://test.com ; 01/05/2019 | Some target was set | Description of target event | https://test.com
-base_year_target,Example,No,2023,,Yes,,name-AAAP,AAP,name-AAAP,"",03/03/2018 | Some target was set | Description of target event | https://test.com ; 01/05/2018 | Some target was set | Description of target event | https://test.com
+base_year_target,Super target,No,2023,2020,Yes,framework,Poland,POL,Airlines,"scope2, scope1",02/03/2018|Some target was set|Description of target event|https://test.com;03/04/2018|Some target was set|Description of target event|https://test.com
+base_year_target,Example Description,No,2023,,Yes,,Poland,POL,Airlines,"",02/03/2019|Some target was set|Description of target event|https://test.com;01/05/2019|Some target was set|Description of target event|https://test.com
+base_year_target,Example,No,2023,,Yes,,Poland,POL,Airlines,"",03/03/2018|Some target was set|Description of target event|https://test.com;01/05/2018|Some target was set|Description of target event|https://test.com

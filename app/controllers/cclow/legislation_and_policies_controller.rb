@@ -40,6 +40,7 @@ module CCLOW
         format.csv do
           timestamp = Time.now.strftime('%d%m%Y')
           legislations = Legislation.includes(
+            :laws_sectors, :instruments, :documents,
             :frameworks, :document_types, :keywords,
             :natural_hazards, :responses,
             :parent, :geography, :events

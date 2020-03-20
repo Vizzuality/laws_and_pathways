@@ -143,7 +143,7 @@ class Legislation < ApplicationRecord
 
   def url
     Rails.application.routes.url_helpers.send("cclow_geography_#{law? ? 'law' : 'policy'}_url",
-                                              geography, self,
+                                              geography.slug, slug,
                                               host: 'climate-laws.org')
   end
 end
