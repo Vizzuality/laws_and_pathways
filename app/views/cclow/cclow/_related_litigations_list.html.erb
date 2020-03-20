@@ -2,7 +2,7 @@
   <% litigations.each do |litigation| %>
     <li>
       <h5 class="title">
-        <%= link_to litigation.title, cclow_geography_litigation_case_path(litigation.geography, litigation.slug) %>
+        <%= link_to litigation.title, cclow_geography_litigation_case_path(litigation.geography.slug, litigation.slug) %>
       </h5>
       <p class="meta">
         <% if litigation.started_event.present? %>

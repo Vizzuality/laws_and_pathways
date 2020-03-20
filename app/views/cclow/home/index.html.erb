@@ -16,27 +16,3 @@
   </p>
   <%= react_component("world-map/WorldMap") %>
 </section>
-
-<section class="section is-medium section__about">
-  <div class="container">
-    <div class="columns">
-      <div class="column is-offset-2 is-8">
-        <p class="content">
-          Climate Change Laws of the World builds on a decade of data collection and analysis by the Grantham Research Institute on Climate Change and the Environment at LSE in collaboration with the Sabin Center for Climate Change Law at Columbia Law School. <!--a href="" class="link">Learn more >></a>-->
-        </p>
-      </div>
-    </div>
-    <div class="columns about__partners">
-      <div class="column is-offset-3 is-3">
-        <%= link_to 'http://www.lse.ac.uk/GranthamInstitute', target: '_blank' do %>
-          <img class="logo__gri" src="<%= asset_path 'logo/gri-logo.png' %>" alt="GRI">
-        <% end %>
-      </div>
-      <div class="column is-3">
-        <%= link_to 'https://climate.law.columbia.edu/', target: '_blank'  do %>
-          <img class="logo__cls" src="<%= asset_path 'logo/columbia_law_school_logo.jpg' %>" alt="Columbia Law School - Sabin Center for Climate Change">
-        <% end %>
-      </div>
-    </div>
-  </div>
-</section>

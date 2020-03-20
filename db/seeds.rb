@@ -2,7 +2,7 @@ require "#{Rails.root}/lib/timed_logger"
 
 # admin users
 # envs: DEV
-if Rails.env.development? && !AdminUser.find_by(email: 'admin@example.com')
+if (Rails.env.development? || Rails.env.test?) && !AdminUser.find_by(email: 'admin@example.com')
   AdminUser.create!(
     email: 'admin@example.com',
     password: 'password', password_confirmation: 'password',
@@ -88,7 +88,7 @@ def seed_file(filename)
   File.open(Rails.root.join('db', 'seeds', filename), 'r')
 end
 
-if Rails.env.development? || ENV['SEED_DATA']
+if Rails.env.development? || Rails.env.test? || ENV['SEED_DATA']
   # import geographies
   TimedLogger.log('Import geographies') do
     CSVImport::Geographies.new(seed_file('geographies.csv')).call

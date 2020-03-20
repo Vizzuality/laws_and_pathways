@@ -1,5 +1,6 @@
 require 'simplecov'
 require 'timecop'
+require 'capybara/rspec'
 
 SimpleCov.start do
   add_filter '/spec/'
