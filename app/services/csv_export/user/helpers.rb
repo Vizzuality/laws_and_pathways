@@ -24,6 +24,10 @@ module CSVExport
         end.join(';')
       end
 
+      def format_sectors(sectors)
+        sectors.map(&:name).join(', ')
+      end
+
       def format_boolean(value)
         return if value.nil?
 

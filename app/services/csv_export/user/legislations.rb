@@ -53,10 +53,6 @@ module CSVExport
           [instrument.name, instrument.instrument_type.name].join('|')
         end.join(';')
       end
-
-      def format_sectors(sectors)
-        sectors.map(&:name).join(';')
-      end
     end
   end
 end

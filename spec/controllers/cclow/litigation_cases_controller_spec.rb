@@ -6,6 +6,10 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller do
       :litigation,
       :published,
       title: 'Super Litigation',
+      laws_sectors: [
+        build(:laws_sector, name: 'sector1'),
+        build(:laws_sector, name: 'sector2')
+      ],
       keywords: [
         build(:keyword, name: 'keyword1'),
         build(:keyword, name: 'keyword2')
@@ -17,6 +21,16 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller do
       legislations: [
         build(:legislation, title: 'Legislation 1'),
         build(:legislation, title: 'Legislation 2')
+      ],
+      external_legislations: [
+        build(:external_legislation, name: 'External legislation1', url: 'https://example.com'),
+        build(:external_legislation, name: 'External legislation2', url: 'https://next-example.com')
+      ],
+      litigation_sides: [
+        build(:litigation_side, name: 'Side A1', side_type: 'a', party_type: 'government'),
+        build(:litigation_side, name: 'Side A2', side_type: 'a', party_type: 'ngo'),
+        build(:litigation_side, name: 'Side B', side_type: 'b', party_type: 'corporation'),
+        build(:litigation_side, name: 'Side C', side_type: 'c', party_type: 'government')
       ]
     )
   }

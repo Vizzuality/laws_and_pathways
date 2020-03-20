@@ -141,7 +141,7 @@ class Legislation < ApplicationRecord
     events.order(:date).offset(1).last
   end
 
-  def route(geography)
+  def url
     Rails.application.routes.url_helpers.send("cclow_geography_#{law? ? 'law' : 'policy'}_url",
                                               geography, self,
                                               host: 'climate-laws.org')

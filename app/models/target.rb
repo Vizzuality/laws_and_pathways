@@ -108,7 +108,7 @@ class Target < ApplicationRecord
         {
           id: l.id,
           title: l.title,
-          link: l.route(geography)
+          link: l.url
         }
       end
     }
