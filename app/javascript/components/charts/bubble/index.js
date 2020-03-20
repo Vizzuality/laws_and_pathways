@@ -1,3 +1,4 @@
 import Chart from './Chart';
+import MobileChart from './MobileChart';
 
-export default Chart;
+export {Chart, MobileChart};

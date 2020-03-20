@@ -1,3 +1,5 @@
+@import '../variables';
+
 $tpi-pie-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB;
 
 .chart--mq-sector-pie-chart {
@@ -9,6 +11,15 @@ $tpi-pie-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB;
   // remove overflow hidden from the chart
   div[data-highcharts-chart], .highcharts-container, svg {
     overflow: unset !important;
+
+    @include until($desktop) {
+      tspan {
+        &:not(.highcharts-strong) {
+          font-size: $size-7;
+          font-family: $family-sans-serif;
+        }
+      }
+    }
   }
 
   @for $i from 1 through length($tpi-pie-chart-colors) {
@@ -37,6 +48,14 @@ $tpi-pie-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB;
     .companies-size {
       font-size: 36px;
       font-family: $font-family-bold;
+    }
+
+    @include until($desktop) {
+      font-size: 14px;
+
+      .companies-size {
+        font-size: 24px;
+      }
     }
   }
 }

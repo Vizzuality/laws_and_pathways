@@ -11,7 +11,7 @@
 
 
   <div class="sectors-header">
-    <div class="container">
+    <div class="container is-hidden-touch">
       <a href="#management-quality" class="link with-icon is-pulled-left">
         <img src="<%= asset_path 'icons/arrow-down.svg'%>" />
         Go to Management Quality
@@ -26,6 +26,14 @@
         Download All sectors data
       <% end %>
     </div>
+    <div class="container is-hidden-desktop">
+      <a href="#management-quality" class="link with-icon is-pulled-left">
+        Management Quality
+      </a>
+      <a href="#carbon-performance" class="link with-icon is-pulled-left">
+        Carbon Performance
+      </a>
+    </div>
   </div>
 
   <section id="management-quality" class="container">
@@ -34,7 +42,8 @@
     <p>Distribution of companies in All sectors according to the management of their greenhouse gas emissions and of risks and opportunities to the low-carbon transition.</p>
 
     <%= react_component('charts/mq-sector-pie', { dataUrl: levels_chart_data_tpi_sectors_path }) %>
-    <%= react_component("charts/bubble", { levels: @companies_by_sectors, sectors: @sectors }) %>
+    <%= react_component("charts/bubble/Chart", { levels: @companies_by_sectors, sectors: @sectors }) %>
+    <%= react_component("charts/bubble/MobileChart", { levels: @companies_by_sectors, sectors: @sectors }) %>
   </section>
 
   <section id="carbon-performance" class="container">
