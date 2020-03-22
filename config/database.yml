@@ -83,11 +83,10 @@ test:
 
 staging: &staging
   <<: *default
-  database: laws_production
-  # host: <%= ENV['LAWS_AND_PATHWAYS_DATABASE_HOST'] || LawsAndPathways.credentials.dig(:postgres, :host) || '/var/run/postgresql' %>
-  # database: laws_and_pathways_staging
-  # username: laws_and_pathways
-  # password: <%= ENV['LAWS_AND_PATHWAYS_DATABASE_PASSWORD'] || LawsAndPathways.credentials.dig(:postgres, :password) %>
+  host: <%= ENV['LAWS_AND_PATHWAYS_DATABASE_HOST'] || LawsAndPathways.credentials.dig(:postgres, :host) || '/var/run/postgresql' %>
+  database: laws_and_pathways_staging
+  username: laws_and_pathways
+  password: <%= ENV['LAWS_AND_PATHWAYS_DATABASE_PASSWORD'] || LawsAndPathways.credentials.dig(:postgres, :password) %>
 
 production:
   <<: *staging
