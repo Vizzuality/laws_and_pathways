@@ -3,14 +3,14 @@ module CSVExport
     class Legislations
       include Helpers
 
-      def initialize(legislations)
-        @legislations = legislations
+      def initialize(legislation_ids)
+        @ids = legislation_ids
       end
 
       # rubocop:disable Metrics/AbcSize
       # rubocop:disable Metrics/MethodLength
       def call
-        return if @legislations.empty?
+        return if legislations.empty?
 
         headers = [
           'Title', 'Type', 'Geography', 'Geography ISO', 'Frameworks', 'Responses',
@@ -22,7 +22,7 @@ module CSVExport
           csv << headers
 
           # TODO: Fix rails urls wihtout base path
-          @legislations.each do |legislation|
+          legislations.each do |legislation|
             csv << [
               legislation.title,
               legislation.legislation_type.downcase,
@@ -47,6 +47,17 @@ module CSVExport
       # rubocop:enable Metrics/MethodLength
 
       private
+
+      def legislations
+        Legislation
+          .includes(
+            :laws_sectors, :instruments,
+            :frameworks, :document_types, :keywords,
+            :natural_hazards, :responses,
+            :parent, :geography, :events,
+            documents: {file_attachment: :blob}
+          ).where(id: @ids)
+      end
 
       def format_instruments(instruments)
         instruments.map do |instrument|
