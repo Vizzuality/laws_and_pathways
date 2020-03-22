@@ -2,16 +2,15 @@ require 'rails_helper'
 
 RSpec.describe CCLOW::LitigationCasesController, type: :controller do
   let(:geography) { create(:geography, name: 'Poland', iso: 'POL') }
+  let(:sector1) { create(:laws_sector, name: 'sector1') }
+  let(:sector2) { create(:laws_sector, name: 'sector2') }
   let!(:litigation1) {
     create(
       :litigation,
       :published,
       geography: geography,
       title: 'Super Litigation',
-      laws_sectors: [
-        build(:laws_sector, name: 'sector1'),
-        build(:laws_sector, name: 'sector2')
-      ],
+      laws_sectors: [sector1, sector2],
       keywords: [
         build(:keyword, name: 'keyword1'),
         build(:keyword, name: 'keyword2')
@@ -37,10 +36,24 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller do
     )
   }
   let!(:litigation2) {
-    create(:litigation, :published, geography: geography, title: 'Example', summary: 'Litigation example')
+    create(
+      :litigation,
+      :published,
+      laws_sectors: [sector1],
+      geography: geography,
+      title: 'Example',
+      summary: 'Litigation example'
+    )
   }
   let!(:litigation3) {
-    create(:litigation, :published, geography: geography, title: 'Litigation Example', summary: 'Example')
+    create(
+      :litigation,
+      :published,
+      laws_sectors: [sector2],
+      geography: geography,
+      title: 'Litigation Example',
+      summary: 'Example'
+    )
   }
   let!(:litigation4) {
     create(:litigation, :draft, geography: geography, title: 'This one is unpublished', summary: 'Example')

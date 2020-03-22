@@ -101,6 +101,9 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
       end
 
       it 'responds to csv' do
+        # stub active storage dynamic blob path to test with snapshots
+        allow_any_instance_of(Document).to receive(:file_url).and_return('http://internal-url.com')
+
         get :index, format: :csv
         expect(response.content_type).to eq('text/csv')
         # remove snapshot to update it (from spec/snapshots)
