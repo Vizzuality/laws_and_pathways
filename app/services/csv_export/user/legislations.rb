@@ -68,7 +68,7 @@ module CSVExport
             documents: {file_attachment: :blob}
           )
           .where(id: @ids)
-          .order('geography_name')
+          .order('geography_name, id')
       end
 
       def format_instruments(instruments)

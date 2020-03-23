@@ -56,7 +56,7 @@ module CSVExport
           .left_outer_joins(:geography)
           .includes(:sector, :scopes, :events)
           .where(id: @ids)
-          .order('geography_name')
+          .order('geography_name, id')
       end
     end
   end

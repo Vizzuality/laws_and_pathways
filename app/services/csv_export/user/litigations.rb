@@ -66,7 +66,7 @@ module CSVExport
             :laws_sectors, :litigation_sides
           )
           .where(id: @ids)
-          .order('geography_name')
+          .order('geography_name, id')
       end
 
       def format_laws(laws)
