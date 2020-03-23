@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
-  let(:geography) { create(:geography, name: 'Poland', iso: 'POL') }
-  let(:sector1) { create(:laws_sector, name: 'sector1') }
-  let(:sector2) { create(:laws_sector, name: 'sector2') }
-  let!(:keyword) { create(:keyword, name: 'climate') }
-  let(:parent_legislation) { create(:legislation, title: 'Parent Legislation') }
-  let(:instrument_type) { create(:instrument_type, name: 'instrument_type_test') }
-  let!(:legislation1) {
+  let_it_be(:geography) { create(:geography, name: 'Poland', iso: 'POL') }
+  let_it_be(:sector1) { create(:laws_sector, name: 'sector1') }
+  let_it_be(:sector2) { create(:laws_sector, name: 'sector2') }
+  let_it_be(:keyword) { create(:keyword, name: 'climate') }
+  let_it_be(:parent_legislation) { create(:legislation, title: 'Parent Legislation') }
+  let_it_be(:instrument_type) { create(:instrument_type, name: 'instrument_type_test') }
+  let_it_be(:legislation1) {
     create(
       :legislation,
       :published,
@@ -38,10 +38,14 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
       documents: [
         build(:document),
         build(:document_uploaded)
+      ],
+      events: [
+        build(:legislation_event, date: Date.parse('2018-04-03')),
+        build(:legislation_event, date: Date.parse('2018-03-02'))
       ]
     )
   }
-  let!(:legislation2) {
+  let_it_be(:legislation2) {
     create(
       :legislation,
       :published,
@@ -49,20 +53,28 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
       geography: geography,
       title: 'Example',
       description: 'Legislation example',
-      keywords: [keyword]
+      keywords: [keyword],
+      events: [
+        build(:legislation_event, date: Date.parse('2019-03-02')),
+        build(:legislation_event, date: Date.parse('2017-05-01'))
+      ]
     )
   }
-  let!(:legislation3) {
+  let_it_be(:legislation3) {
     create(
       :legislation,
       :published,
       geography: geography,
       laws_sectors: [sector1],
       title: 'Legislation Example',
-      description: 'Example'
+      description: 'Example',
+      events: [
+        build(:legislation_event, date: Date.parse('2018-03-03')),
+        build(:legislation_event, date: Date.parse('2018-05-01'))
+      ]
     )
   }
-  let!(:legislation4) {
+  let_it_be(:legislation4) {
     create(
       :legislation,
       :draft,
@@ -72,17 +84,6 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
       description: 'Example'
     )
   }
-
-  before do
-    create(:legislation_event, eventable: legislation1, date: Date.parse('2018-04-03'))
-    create(:legislation_event, eventable: legislation1, date: Date.parse('2018-03-02'))
-
-    create(:legislation_event, eventable: legislation2, date: Date.parse('2019-03-02'))
-    create(:legislation_event, eventable: legislation2, date: Date.parse('2017-05-01'))
-
-    create(:legislation_event, eventable: legislation3, date: Date.parse('2018-03-03'))
-    create(:legislation_event, eventable: legislation3, date: Date.parse('2018-05-01'))
-  end
 
   describe 'GET index' do
     context 'without filters' do

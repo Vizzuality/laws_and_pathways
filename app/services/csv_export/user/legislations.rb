@@ -21,7 +21,6 @@ module CSVExport
         CSV.generate do |csv|
           csv << headers
 
-          # TODO: Fix rails urls wihtout base path
           legislations.each do |legislation|
             csv << [
               legislation.title,

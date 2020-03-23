@@ -8,6 +8,8 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 require 'cancan/matchers'
 
+require 'test_prof/recipes/rspec/let_it_be'
+
 require 'rake'
 Rails.application.load_tasks
 

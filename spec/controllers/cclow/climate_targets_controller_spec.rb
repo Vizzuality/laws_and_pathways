@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe CCLOW::ClimateTargetsController, type: :controller do
-  let(:geography) { create(:geography, name: 'Poland', iso: 'POL') }
-  let(:sector) { create(:laws_sector, name: 'Airlines') }
-  let!(:target1) {
+  let_it_be(:geography) { create(:geography, name: 'Poland', iso: 'POL') }
+  let_it_be(:sector) { create(:laws_sector, name: 'Airlines') }
+  let_it_be(:target1) {
     create(
       :target,
       :published,
@@ -15,29 +15,42 @@ RSpec.describe CCLOW::ClimateTargetsController, type: :controller do
       scopes: [
         build(:scope, name: 'scope1'),
         build(:scope, name: 'scope2')
+      ],
+      events: [
+        build(:target_event, date: Date.parse('2018-04-03')),
+        build(:target_event, date: Date.parse('2018-03-02'))
       ]
     )
   }
-  let!(:target2) {
-    create(:target, :published, sector: sector, geography: geography, description: 'Example Description')
+  let_it_be(:target2) {
+    create(
+      :target,
+      :published,
+      sector: sector,
+      geography: geography,
+      description: 'Example Description',
+      events: [
+        build(:target_event, date: Date.parse('2019-03-02')),
+        build(:target_event, date: Date.parse('2019-05-01'))
+      ]
+    )
   }
-  let!(:target3) {
-    create(:target, :published, sector: sector, geography: geography, description: 'Example')
+  let_it_be(:target3) {
+    create(
+      :target,
+      :published,
+      sector: sector,
+      geography: geography,
+      description: 'Example',
+      events: [
+        build(:target_event, date: Date.parse('2018-03-03')),
+        build(:target_event, date: Date.parse('2018-05-01'))
+      ]
+    )
   }
-  let!(:target4) {
+  let_it_be(:target4) {
     create(:target, :draft, sector: sector, geography: geography, description: 'This one is unpublished example')
   }
-
-  before do
-    create(:target_event, eventable: target1,  date: Date.parse('2018-04-03'))
-    create(:target_event, eventable: target1,  date: Date.parse('2018-03-02'))
-
-    create(:target_event, eventable: target2,  date: Date.parse('2019-03-02'))
-    create(:target_event, eventable: target2,  date: Date.parse('2019-05-01'))
-
-    create(:target_event, eventable: target3,  date: Date.parse('2018-03-03'))
-    create(:target_event, eventable: target3,  date: Date.parse('2018-05-01'))
-  end
 
   describe 'GET index' do
     context 'without filters' do

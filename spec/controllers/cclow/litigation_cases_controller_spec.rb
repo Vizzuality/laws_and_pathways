@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe CCLOW::LitigationCasesController, type: :controller do
-  let(:geography) { create(:geography, name: 'Poland', iso: 'POL') }
-  let(:sector1) { create(:laws_sector, name: 'sector1') }
-  let(:sector2) { create(:laws_sector, name: 'sector2') }
-  let!(:litigation1) {
+  let_it_be(:geography) { create(:geography, name: 'Poland', iso: 'POL') }
+  let_it_be(:sector1) { create(:laws_sector, name: 'sector1') }
+  let_it_be(:sector2) { create(:laws_sector, name: 'sector2') }
+  let_it_be(:litigation1) {
     create(
       :litigation,
       :published,
@@ -32,43 +32,44 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller do
         build(:litigation_side, name: 'Side A2', side_type: 'a', party_type: 'ngo'),
         build(:litigation_side, name: 'Side B', side_type: 'b', party_type: 'corporation'),
         build(:litigation_side, name: 'Side C', side_type: 'c', party_type: 'government')
+      ],
+      events: [
+        build(:litigation_event, date: Date.parse('2018-04-03')),
+        build(:litigation_event, date: Date.parse('2018-03-02'))
       ]
     )
   }
-  let!(:litigation2) {
+  let_it_be(:litigation2) {
     create(
       :litigation,
       :published,
       laws_sectors: [sector1],
       geography: geography,
       title: 'Example',
-      summary: 'Litigation example'
+      summary: 'Litigation example',
+      events: [
+        build(:litigation_event, date: Date.parse('2019-03-02')),
+        build(:litigation_event, date: Date.parse('2019-05-01'))
+      ]
     )
   }
-  let!(:litigation3) {
+  let_it_be(:litigation3) {
     create(
       :litigation,
       :published,
       laws_sectors: [sector2],
       geography: geography,
       title: 'Litigation Example',
-      summary: 'Example'
+      summary: 'Example',
+      events: [
+        create(:litigation_event, date: Date.parse('2018-03-03')),
+        create(:litigation_event, date: Date.parse('2018-05-01'))
+      ]
     )
   }
-  let!(:litigation4) {
+  let_it_be(:litigation4) {
     create(:litigation, :draft, geography: geography, title: 'This one is unpublished', summary: 'Example')
   }
-
-  before do
-    create(:litigation_event, eventable: litigation1,  date: Date.parse('2018-04-03'))
-    create(:litigation_event, eventable: litigation1,  date: Date.parse('2018-03-02'))
-
-    create(:litigation_event, eventable: litigation2,  date: Date.parse('2019-03-02'))
-    create(:litigation_event, eventable: litigation2,  date: Date.parse('2019-05-01'))
-
-    create(:litigation_event, eventable: litigation3,  date: Date.parse('2018-03-03'))
-    create(:litigation_event, eventable: litigation3,  date: Date.parse('2018-05-01'))
-  end
 
   describe 'GET index' do
     context 'without filters' do
