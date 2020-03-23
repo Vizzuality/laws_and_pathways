@@ -26,13 +26,14 @@ module Taggable
 
   included do
     has_many :taggings, as: :taggable
-    has_many :tags, through: :taggings
+    has_many :tags, -> { order(:id) }, through: :taggings
   end
 
+  # rubocop:disable Metrics/AbcSize
   class_methods do
     def tag_with(name, **attrs)
       class_name = attrs[:class_name] || name.to_s.singularize.camelize
-      has_many name, through: :taggings, source: :tag, class_name: class_name
+      has_many name, -> { order(:id) }, through: :taggings, source: :tag, class_name: class_name
 
       define_method("#{name}_list") do
         send(name).map(&:name)
@@ -63,4 +64,5 @@ module Taggable
       joins(:taggings).where(taggings: {tag_id: Array.wrap(tag_ids)})
     end
   end
+  # rubocop:enable Metrics/AbcSize
 end
