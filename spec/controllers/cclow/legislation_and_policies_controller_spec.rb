@@ -5,7 +5,7 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
   let(:sector1) { create(:laws_sector, name: 'sector1') }
   let(:sector2) { create(:laws_sector, name: 'sector2') }
   let!(:keyword) { create(:keyword, name: 'climate') }
-  let(:parent_legislation) { create(:legislation) }
+  let(:parent_legislation) { create(:legislation, title: 'Parent Legislation') }
   let(:instrument_type) { create(:instrument_type, name: 'instrument_type_test') }
   let!(:legislation1) {
     create(
@@ -107,6 +107,7 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
         get :index, format: :csv
         expect(response.content_type).to eq('text/csv')
         # remove snapshot to update it (from spec/snapshots)
+        # make sure no dynamic, sequenced entity values are used
         expect(response.body).to match_snapshot('cclow_legislation_and_policies_controller_csv')
       end
     end

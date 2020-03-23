@@ -26,8 +26,8 @@ module CSVExport
             csv << [
               legislation.title,
               legislation.legislation_type.downcase,
-              legislation.geography.name,
-              legislation.geography.iso,
+              legislation.geography_name,
+              legislation.geography_iso,
               legislation.frameworks_string,
               legislation.responses_string,
               format_instruments(legislation.instruments),
@@ -50,13 +50,25 @@ module CSVExport
 
       def legislations
         Legislation
+          .select(
+            :id,
+            :title,
+            :legislation_type,
+            :parent_id,
+            :description,
+            'geographies.name as geography_name',
+            'geographies.iso as geography_iso'
+          )
+          .left_outer_joins(:geography)
           .includes(
             :laws_sectors, :instruments,
             :frameworks, :document_types, :keywords,
             :natural_hazards, :responses,
-            :parent, :geography, :events,
+            :parent, :events,
             documents: {file_attachment: :blob}
-          ).where(id: @ids)
+          )
+          .where(id: @ids)
+          .order('geography_name')
       end
 
       def format_instruments(instruments)

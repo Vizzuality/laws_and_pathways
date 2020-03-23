@@ -58,6 +58,8 @@ RSpec.describe CCLOW::ClimateTargetsController, type: :controller do
       it 'responds to csv' do
         get :index, format: :csv
         expect(response.content_type).to eq('text/csv')
+        # remove snapshot to update it (from spec/snapshots)
+        # make sure no dynamic, sequenced entity values are used
         expect(response.body).to match_snapshot('cclow_climate_targets_controller_csv')
       end
     end

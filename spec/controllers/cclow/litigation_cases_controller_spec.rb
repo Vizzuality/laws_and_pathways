@@ -20,8 +20,8 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller do
         build(:response, name: 'response2')
       ],
       legislations: [
-        build(:legislation, title: 'Legislation 1'),
-        build(:legislation, title: 'Legislation 2')
+        build(:legislation, geography: geography, title: 'Legislation 1'),
+        build(:legislation, geography: geography, title: 'Legislation 2')
       ],
       external_legislations: [
         build(:external_legislation, name: 'External legislation1', url: 'https://example.com'),
@@ -89,6 +89,8 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller do
       it 'responds to csv' do
         get :index, format: :csv
         expect(response.content_type).to eq('text/csv')
+        # remove snapshot to update it (from spec/snapshots)
+        # make sure no dynamic, sequenced entity values are used
         expect(response.body).to match_snapshot('cclow_litigation_cases_controller_csv')
       end
     end

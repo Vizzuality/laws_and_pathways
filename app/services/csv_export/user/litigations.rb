@@ -3,14 +3,14 @@ module CSVExport
     class Litigations
       include Helpers
 
-      def initialize(litigations)
-        @litigations = litigations
+      def initialize(litigation_ids)
+        @ids = litigation_ids
       end
 
       # rubocop:disable Metrics/AbcSize
       # rubocop:disable Metrics/MethodLength
       def call
-        return if @litigations.empty?
+        return if litigations.empty?
 
         headers = [
           'Title', 'Geography', 'Geography ISO', 'Jurisdiction',
@@ -22,11 +22,11 @@ module CSVExport
         CSV.generate do |csv|
           csv << headers
 
-          @litigations.each do |litigation|
+          litigations.each do |litigation|
             csv << [
               litigation.title,
-              litigation.geography&.name,
-              litigation.geography&.iso,
+              litigation.geography_name,
+              litigation.geography_iso,
               litigation.jurisdiction,
               litigation.citation_reference_number,
               litigation.responses_string,
@@ -47,6 +47,27 @@ module CSVExport
       # rubocop:enable Metrics/MethodLength
 
       private
+
+      def litigations
+        Litigation
+          .select(
+            :id,
+            :title,
+            :jurisdiction,
+            :citation_reference_number,
+            :at_issue,
+            :summary,
+            'geographies.name as geography_name',
+            'geographies.iso as geography_iso'
+          )
+          .left_outer_joins(:geography)
+          .includes(
+            :responses, :events, :legislations, :external_legislations,
+            :laws_sectors, :litigation_sides
+          )
+          .where(id: @ids)
+          .order('geography_name')
+      end
 
       def format_laws(laws)
         laws.map do |law|
