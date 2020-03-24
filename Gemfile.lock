@@ -518,7 +518,7 @@ DEPENDENCIES
   bundler-audit
   byebug
   cancancan
-  capistrano (~> 3.11)
+  capistrano (~> 3.12)
   capistrano-bundler
   capistrano-nvm
   capistrano-passenger

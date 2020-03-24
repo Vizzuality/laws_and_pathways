@@ -68,7 +68,7 @@ group :development do
   gem 'brakeman', require: false
   gem 'bundler-audit', require: false
   gem 'bullet'
-  gem 'capistrano', '~> 3.11', require: false
+  gem 'capistrano', '~> 3.12', require: false
   gem 'capistrano-bundler'
   gem 'capistrano-nvm'
   gem 'capistrano-passenger'
