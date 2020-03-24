@@ -1,5 +1,5 @@
 # config valid for current version and patch releases of Capistrano
-lock "~> 3.11.0"
+lock "~> 3.12"
 
 set :application, "laws-pathways"
 set :repo_url, "https://github.com/Vizzuality/laws_and_pathways.git"
