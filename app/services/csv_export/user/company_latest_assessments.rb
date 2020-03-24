@@ -7,8 +7,6 @@ module CSVExport
         @latest_cp_assessments_hash = get_latest_cp_assessments_hash(cp_assessments)
       end
 
-      # rubocop:disable Metrics/AbcSize
-      # rubocop:disable Metrics/MethodLength
       def call
         return if @companies.empty?
 
@@ -65,18 +63,16 @@ module CSVExport
       def get_latest_mq_assessments_hash(assessments)
         latest_methodology = assessments.max_by(&:methodology_version)&.methodology_version
 
-        assessments.group_by(&:company_id).map do |company_id, grouped|
-          [company_id, grouped.find { |a| a.methodology_version == latest_methodology }]
-        end.to_h
+        assessments.group_by(&:company_id).transform_values do |grouped|
+          grouped.find { |a| a.methodology_version == latest_methodology }
+        end
       end
 
       def get_latest_cp_assessments_hash(assessments)
-        assessments.group_by(&:company_id).map do |company_id, grouped|
-          [company_id, grouped.max_by(&:publication_date)]
-        end.to_h
+        assessments.group_by(&:company_id).transform_values do |grouped|
+          grouped.max_by(&:publication_date)
+        end
       end
     end
-    # rubocop:enable Metrics/AbcSize
-    # rubocop:enable Metrics/MethodLength
   end
 end

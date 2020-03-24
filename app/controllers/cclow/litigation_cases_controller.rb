@@ -1,9 +1,6 @@
 module CCLOW
   class LitigationCasesController < CCLOWController
     include FilterController
-
-    # rubocop:disable Metrics/AbcSize
-    # rubocop:disable Metrics/MethodLength
     def index
       add_breadcrumb('Climate Change Laws of the World', cclow_root_path)
       add_breadcrumb('Litigation cases', cclow_litigation_cases_path)
@@ -49,7 +46,5 @@ module CCLOW
         end
       end
     end
-    # rubocop:enable Metrics/AbcSize
-    # rubocop:enable Metrics/MethodLength
   end
 end

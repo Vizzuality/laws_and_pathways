@@ -1,8 +1,6 @@
 module CSVImport
   class Legislations < BaseImporter
     include UploaderHelpers
-
-    # rubocop:disable Metrics/AbcSize
     def import
       import_each_csv_row(csv) do |row|
         if override_id && Legislation.where(id: row[:id]).any?
@@ -27,7 +25,6 @@ module CSVImport
         update_import_results(was_new_record, any_changes)
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     private
 

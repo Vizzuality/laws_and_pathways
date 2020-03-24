@@ -138,7 +138,6 @@ class Geography < ApplicationRecord
     eu.targets.published.where(source: 'ndc')
   end
 
-  # rubocop:disable Metrics/AbcSize
   def laws_per_sector
     targets.group_by(&:sector).map do |sector, targets|
       {
@@ -154,5 +153,4 @@ class Geography < ApplicationRecord
       }
     end
   end
-  # rubocop:enable Metrics/AbcSize
 end

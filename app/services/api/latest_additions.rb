@@ -12,7 +12,6 @@ module Api
 
     private
 
-    # rubocop:disable Metrics/AbcSize
     def litigations
       litigations = Litigation.published
         .includes(:geography)
@@ -33,7 +32,6 @@ module Api
          link: item.link}
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     def legislations
       legislation = Legislation.published

@@ -2,8 +2,6 @@
 # for multiple series
 # use Enumerable so it can be called on arrays
 module Enumerable
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
   def chart_json
     if is_a?(Hash)
       if (key = keys.first) && key.is_a?(Array) && key.size == 2
@@ -25,6 +23,4 @@ module Enumerable
       self
     end.to_json
   end
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/PerceivedComplexity
 end

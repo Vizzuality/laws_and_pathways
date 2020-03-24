@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 2.5
+  TargetRubyVersion: 2.6
   Exclude:
     - 'bin/*'
     - 'db/schema.rb'
@@ -70,24 +70,17 @@ Layout/LineLength:
     - 'Gemfile'
     - 'Rakefile'
 
-Metrics/BlockLength:
+Metrics:
   Enabled: false
-
-Metrics/ModuleLength:
-  Enabled: false
-
-Metrics/AbcSize:
-  Max: 25
-  Exclude:
-    - 'lib/modules/*'
-
-Metrics/MethodLength:
-  Max: 25
-  Exclude:
-    - 'lib/modules/*'
-
-Metrics/ClassLength:
-  Max: 150
 
 Bundler/OrderedGems:
   Enabled: false
+
+Style/HashEachMethods:
+  Enabled: false
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true

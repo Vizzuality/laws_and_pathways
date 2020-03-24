@@ -1,8 +1,5 @@
 class CCLOWMapContextData
   class << self
-    # rubocop:disable Metrics/AbcSize
-    # rubocop:disable Metrics/MethodLength
-
     ROUND_VALUES = %w(USD %).freeze
 
     def all
@@ -60,8 +57,6 @@ class CCLOWMapContextData
       end
       parsed.compact
     end
-    # rubocop:enable Metrics/AbcSize
-    # rubocop:enable Metrics/MethodLength
 
     def check_data_integrity
       all_geographies = Geography.all
