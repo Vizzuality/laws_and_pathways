@@ -58,12 +58,12 @@ const DropdownIndicator = (props) => (
 );
 
 
-const MobileBubbleChart = ({ levels }) => {
+const MobileBubbleChart = ({ levels, by_sector = true }) => {
   const selectOptions = Object.keys(levels).map((level) => ({label: level, value: level}));
-  const levelsSignature = levels && Object.keys(levels[Object.keys(levels)[0]]);
+  const levelsSignature = by_sector ? levels && Object.keys(levels[Object.keys(levels)[0]]) : levels && Object.keys(levels);
   const [openItems, setOpenItems] = useState([]);
   const [activeOption, setActiveOption] = useState(selectOptions[0]);
-  const activeSector = levels[activeOption.value];
+  const activeSector = by_sector ? levels[activeOption.value] : levels;
 
   function setOpenItemByIndex(index) {
     setOpenItems(openItems.includes(index) ? openItems.filter(i => i !== index) : [...openItems, index]);
@@ -71,16 +71,18 @@ const MobileBubbleChart = ({ levels }) => {
 
   return (
     <div className="mobile_bubble-chart__container is-hidden-desktop">
-      <Select
-        options={selectOptions}
-        value={activeOption}
-        className="is-hidden-desktop"
-        onChange={(e) => { setActiveOption(e); }}
-        isSearchable={false}
-        styles={customSelectStyles}
-        components={{DropdownIndicator}}
-        theme={customSelectTheme}
-      />
+      {by_sector && (
+        <Select
+          options={selectOptions}
+          value={activeOption}
+          className="is-hidden-desktop"
+          onChange={(e) => { setActiveOption(e); }}
+          isSearchable={false}
+          styles={customSelectStyles}
+          components={{DropdownIndicator}}
+          theme={customSelectTheme}
+        />)
+      }
 
       <div className="accordions-list">
         {levelsSignature.map((el, i) => (
@@ -100,7 +102,7 @@ const MobileBubbleChart = ({ levels }) => {
                   {activeSector[el].map((company, index) => (
                     <li
                       key={`chart-companies-${index}`}
-                      onClick={() => { window.location.href = `tpi/companies/${company.slug}`; }}
+                      onClick={() => { window.location.href = `/tpi/companies/${company.slug}`; }}
                     >{company.name}
                     </li>
                   ))}
@@ -110,15 +112,21 @@ const MobileBubbleChart = ({ levels }) => {
           </div>
         ))}
       </div>
-      <div className="go-to-button__container">
-        <a href={`/tpi/sectors/${activeOption.value.toLowerCase()}`} className="button is-primary is-outlined">Go to sector</a>
-      </div>
+      {by_sector && (
+        <div className="go-to-button__container">
+          <a href={`/tpi/sectors/${activeOption.value.toLowerCase()}`} className="button is-primary is-outlined">Go to sector</a>
+        </div>)
+      }
     </div>
   );
 };
 
+MobileBubbleChart.defaultProps = {
+  by_sector: true
+};
 
 MobileBubbleChart.propTypes = {
-  levels: PropTypes.object.isRequired
+  levels: PropTypes.object.isRequired,
+  by_sector: PropTypes.bool
 };
 export default MobileBubbleChart;

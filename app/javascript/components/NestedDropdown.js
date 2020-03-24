@@ -40,7 +40,7 @@ function Item({ item, onSelect }) {
   const itemElement = useRef(null);
   const isNested = Boolean(item.items && item.items.length);
 
-  useOutsideClick(itemElement, () => setIsOpen(false));
+  useOutsideClick(itemElement, () => window.innerWidth > 1023 && setIsOpen(false));
 
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -48,9 +48,11 @@ function Item({ item, onSelect }) {
   };
 
   return (
-    <li ref={itemElement} className="nested-dropdown__item" onClick={handleClick}>
-      <span>{item.label}</span>
-      {isNested && <img src={chevronIconBlack} />}
+    <li ref={itemElement} className={cx('nested-dropdown__item', { open: isOpen })} onClick={handleClick}>
+      <div>
+        <span>{item.label}</span>
+        {isNested && <img src={chevronIconBlack} />}
+      </div>
       {isNested && isOpen && <List items={item.items} onSelect={onSelect} />}
     </li>
   );

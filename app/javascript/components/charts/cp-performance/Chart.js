@@ -199,9 +199,9 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
 
           {companySelector && (
             <React.Fragment>
-              <span className="separator" />
+              <span className="separator is-hidden-touch" />
 
-              <div className="chart-company-selector-wrapper" ref={companySelectorWrapper}>
+              <div className="chart-company-selector-wrapper is-hidden-touch" ref={companySelectorWrapper}>
                 <button type="button" className="button is-primary with-icon" onClick={handleAddCompaniesClick}>
                   <img src={PlusIcon} />
                   Add companies to the chart
