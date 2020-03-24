@@ -8,6 +8,8 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 require 'cancan/matchers'
 
+require 'test_prof/recipes/rspec/let_it_be'
+
 require 'rake'
 Rails.application.load_tasks
 
@@ -42,6 +44,8 @@ FactoryBot::SyntaxRunner.class_eval do
 end
 
 RSpec.configure do |config|
+  config.snapshot_dir = 'spec/snapshots'
+
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include FactoryBot::Syntax::Methods
   config.include CapybaraHelpers, type: :system

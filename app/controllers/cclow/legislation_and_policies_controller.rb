@@ -39,13 +39,8 @@ module CCLOW
         end
         format.csv do
           timestamp = Time.now.strftime('%d%m%Y')
-          legislations = Legislation.includes(
-            :frameworks, :document_types, :keywords,
-            :natural_hazards, :responses,
-            :parent, :geography, :events
-          ).where(id: @legislations.reorder(:id).pluck(:id))
-
-          render csv: CSVExport::User::Legislations.new(legislations).call,
+          legislation_ids = @legislations.reorder(:id).pluck(:id)
+          render csv: CSVExport::User::Legislations.new(legislation_ids).call,
                  filename: "laws_and_policies_#{timestamp}"
         end
       end

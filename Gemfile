@@ -57,7 +57,9 @@ group :test do
   gem 'rails-controller-testing'
   gem 'rspec-collection_matchers'
   gem 'rspec-rails', '~> 4.0.rc'
+  gem 'rspec-snapshot'
   gem 'selenium-webdriver'
+  gem 'test-prof'
   gem 'webdrivers', '~> 4.0'
 end
 
