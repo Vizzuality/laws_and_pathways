@@ -5,8 +5,6 @@ module CSVExport
         @assessments = assessments
       end
 
-      # rubocop:disable Metrics/AbcSize
-      # rubocop:disable Metrics/MethodLength
       def call
         return if @assessments.empty?
 
@@ -42,7 +40,5 @@ module CSVExport
         end
       end
     end
-    # rubocop:enable Metrics/AbcSize
-    # rubocop:enable Metrics/MethodLength
   end
 end

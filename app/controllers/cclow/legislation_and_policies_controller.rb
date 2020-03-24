@@ -1,9 +1,6 @@
 module CCLOW
   class LegislationAndPoliciesController < CCLOWController
     include FilterController
-
-    # rubocop:disable Metrics/AbcSize
-    # rubocop:disable Metrics/MethodLength
     def index
       add_breadcrumb('Climate Change Laws of the World', cclow_root_path)
       add_breadcrumb('Laws and policies', cclow_legislation_and_policies_path)
@@ -45,8 +42,5 @@ module CCLOW
         end
       end
     end
-
-    # rubocop:enable Metrics/AbcSize
-    # rubocop:enable Metrics/MethodLength
   end
 end

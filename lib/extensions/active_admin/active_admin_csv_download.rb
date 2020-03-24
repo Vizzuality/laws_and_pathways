@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/AbcSize, Metrics/MethodLength
 module ActiveAdminCsvDownload
   #
   # Generates Export Data sidebar section.
@@ -57,4 +56,4 @@ module ActiveAdminCsvDownload
     end
   end
 end
-# rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+# rubocop:enable
