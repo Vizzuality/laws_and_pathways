@@ -12,7 +12,8 @@ function MQSectorChart({ dataUrl }) {
   const options = getOptions({ chartData: data });
 
   if (window.innerWidth < 600) {
-    options.chart.width = window.innerWidth - 30;
+    options.chart.width = window.innerWidth;
+    options.plotOptions.pie.size = '50%';
   }
 
   const numberOfCompanies = data.reduce((acc, d) => acc + d[1], 0);

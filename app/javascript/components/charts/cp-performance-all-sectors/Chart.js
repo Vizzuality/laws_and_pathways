@@ -6,12 +6,14 @@ import PropTypes from 'prop-types';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
-import { getOptions } from './options';
+import { getOptions, getMobileOptions } from './options';
 import { useChartData } from '../hooks';
+import { useMediaQuery } from 'react-responsive';
 
 function CPPerformanceAllSectors({ dataUrl, sectors }) {
   const { data, error, loading } = useChartData(dataUrl);
-  const options = getOptions(data, sectors);
+  const isMobile = useMediaQuery({ query: '(max-width: 1024px)' });
+  const options = isMobile ? getMobileOptions(data, sectors) : getOptions(data, sectors);
 
   return (
     <div id="cp-performance-all-sectors-chart" className="chart chart--cp-all-sectors">

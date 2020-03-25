@@ -49,14 +49,22 @@ $tpi-level-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB;
 
     .companies-list {
       li {
+        align-items: center;
+        display: flex;
         margin-top: 1rem;
+      }
+
+      .mq-level-trend {
+        @include mq-level-trend(20px);
+
+        margin-left: 10px;
       }
     }
 
     hr {
       color: rgba(255, 255, 255, 0.4);
       height: 1px;
-      margin: 1rem 0 0;
+      margin: 0.25rem 0 0;
       padding: 0;
     }
   }

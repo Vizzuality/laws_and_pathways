@@ -146,3 +146,36 @@ export function getOptions(data, sectors) {
     }))
   });
 }
+
+export function getMobileOptions(data, sectors) {
+  const descktopOptions = getOptions(data, sectors);
+  return merge({}, descktopOptions, {
+    chart: {
+      height: 500
+    },
+    plotOptions: {
+      grouping: false
+    },
+    legend: {
+      margin: 35,
+      marginLeft: 0,
+      padding: 0,
+      alignColumns: false,
+      itemStyle: {fontSize: '14px', fontWeight: 'normal'},
+      itemMarginTop: 20
+    },
+    labels: {
+      style: {fontSize: '10px'}
+    },
+    xAxis: {
+      labels: {
+        style: {fontSize: '14px'}
+      }
+    },
+    yAxis: {
+      labels: {
+        x: -3
+      }
+    }
+  });
+}
