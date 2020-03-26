@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :set_current_user
+  before_action :set_request_info
 
   private
 
@@ -10,6 +11,10 @@ class ApplicationController < ActionController::Base
   def set_current_user
     ::Current.admin_user = current_admin_user
     @current_user = current_admin_user
+  end
+
+  def set_request_info
+    ::Current.request_host = "#{request.protocol}#{request.host_with_port}"
   end
 
   rescue_from CanCan::AccessDenied do |exception|

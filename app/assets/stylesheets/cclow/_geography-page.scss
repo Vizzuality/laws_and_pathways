@@ -84,10 +84,8 @@ $count-description-lines: 2;
   }
 
   .content-list {
-    @include until($desktop) {
-      .content-item:first-child {
-        margin-top: 0;
-      }
+    .content-item:first-child {
+      margin-top: 0;
     }
 
     .title {
@@ -726,10 +724,9 @@ mark {
 }
 
 .search-wrapper {
-  left: 10%;
   position: absolute;
   top: 70%;
-  width: 80%;
+  width: 100%;
   z-index: 35;
 
   @include until($desktop) {

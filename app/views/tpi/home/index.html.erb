@@ -1,44 +1,59 @@
 <% content_for :page_title, 'Transition Pathway Initiative - Home' %>
 
-<div class="first-tpi-section">
-  <div class="column-left">
-    <div class="title">
-      <h1>The TPI tool</h1>
-    </div>
-    <div class="description">
-      <p class="content">
-        The Transition Pathway Initiative (TPI) is a global, asset-owner led initiative which assesses companies' preparedness for the transition to a low carbon economy. Rapidly becoming the go-to corporate climate action benchmark, the TPI tool is available here.
-      </p>
-    </div>
-    <div class="button__container">
-      <%= link_to 'Access the tool', tpi_sectors_path, class: 'button is-primary button__hero' %>
+<section class="section tpi-home__hero is-primary">
+  <div class="container">
+    <div class="mobile-background is-hidden-tablet"></div>
+    <div class="columns">
+      <div class="column is-4 left-size">
+        <div class="title">
+          <h1>The TPI tool</h1>
+        </div>
+        <div class="description">
+          <p class="content">
+            The Transition Pathway Initiative (TPI) is a global, asset-owner led initiative which assesses companies' preparedness for the transition to a low carbon economy. Rapidly becoming the go-to corporate climate action benchmark, the TPI tool is available here.
+          </p>
+        </div>
+        <div class="button__container">
+          <%= link_to 'Access the tool', tpi_sectors_path, class: 'button is-primary button__hero' %>
+        </div>
+      </div>
+      <div class="column is-offset-1 is-hidden-mobile hero__splash">
+        <div class="background"></div>
+      </div>
     </div>
   </div>
-  <div class="column-right">
-    <%= image_tag("homepage/homepage-bg.jpg", srcset: [["homepage/homepage-bg@2x.jpg", "2x"], ["homepage/homepage-bg@3x.jpg", "3x"]]) %>
-  </div>
-</div>
+</section>
 
 <section class="section tpi-home__hero is-secondary">
   <div class="container tpi-hero__body">
     <div class="columns">
-      <%= link_to '/tpi/investors', class: "column is-half section-separator section-clickable" do %>
-        <h4 class="section-title">How investors can use the TPI</h4>
+      <%= link_to '/tpi/investors', class: "column is-5 section-clickable" do %>
+        <div class="subsection-content__container">
+          <h4 class="section-title">How investors can use the TPI</h4>
 
-        <p class="section-description">
-          The TPI is designed to support investors. Find out how they can use its findings.
-        </p>
+          <p class="section-description">
+            The TPI is designed to support investors. Find out how they can use its findings.
+          </p>
+        </div>
+
         <div class="subsection-button__container">
           <button class="section-button"></button>
           <span class="button__title">TPI for investors</span>
         </div>
       <% end %>
-      <%= link_to '/tpi/supporters', class: "column is-half right-column section-clickable" do %>
-        <h4 class="section-title">Supporters</h4>
 
-        <p class="section-description">
-          The TPI is supported globally by over 60 investors with over $18.5 trillion combined Assets Under Management and Advice.
-        </p>
+      <div class="column is-2 separator__container">
+        <div class="separator"></div>
+      </div>
+
+      <%= link_to '/tpi/supporters', class: "column is-5 section-clickable" do %>
+        <div class="subsection-content__container">
+          <h4 class="section-title">Supporters</h4>
+
+          <p class="section-description">
+            The TPI is supported globally by over 60 investors with over $18 trillion combined Assets Under Management and Advice.
+          </p>
+        </div>
 
         <div class="subsection-button__container">
           <button class="section-button"></button>

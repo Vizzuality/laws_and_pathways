@@ -94,7 +94,8 @@ class Litigation < ApplicationRecord
   pg_search_scope :full_text_search,
                   associated_against: {
                     tags: [:name],
-                    litigation_sides: [:name]
+                    litigation_sides: [:name],
+                    geography: [:name]
                   },
                   against: {
                     title: 'A',

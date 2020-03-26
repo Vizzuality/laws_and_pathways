@@ -72,7 +72,8 @@ class Target < ApplicationRecord
 
   pg_search_scope :full_text_search,
                   associated_against: {
-                    tags: [:name]
+                    tags: [:name],
+                    geography: [:name]
                   },
                   against: [:description],
                   using: {
@@ -107,7 +108,7 @@ class Target < ApplicationRecord
         {
           id: l.id,
           title: l.title,
-          link: l.route(geography)
+          link: l.url
         }
       end
     }

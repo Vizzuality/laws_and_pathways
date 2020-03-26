@@ -133,8 +133,7 @@ class LegislationAndPolicies extends Component {
       frameworks_filter_options: frameworksFilterOptions,
       instruments_filter_options: instrumentsFilterOptions,
       natural_hazards_filter_options: naturalHazardsFilterOptions,
-      governances_filter_options: governancesFilterOptions,
-      sectors_options: sectorsOptions
+      governances_filter_options: governancesFilterOptions
     } = this.props;
 
     return (
@@ -167,7 +166,7 @@ class LegislationAndPolicies extends Component {
           />
           <SearchFilter
             ref={this.responsesFilter}
-            filterName="Responses"
+            filterName="Mitigation / Adaptation / DRM"
             params={responsesFilterOptions}
             onChange={(event) => this.filterList('activeResponsesFilter', event)}
           />
@@ -195,19 +194,13 @@ class LegislationAndPolicies extends Component {
             params={governancesFilterOptions}
             onChange={(event) => this.filterList('activeGovernancesFilter', event)}
           />
-          <SearchFilter
-            ref={this.sectorsFilter}
-            filterName="Sectors"
-            params={sectorsOptions}
-            onChange={(event) => this.filterList('activeSectorsFilter', event)}
-          />
           {!this.isMobile && (
             <button
               type="button"
               onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
               className="more-options"
             >
-              - Show less search options
+              - Show fewer search options
             </button>
           )}
         </div>
@@ -305,7 +298,8 @@ class LegislationAndPolicies extends Component {
   renderMainFilters = () => {
     const {
       geo_filter_options: geoFilterOptions,
-      types_filter_options: typesFilterOptions
+      types_filter_options: typesFilterOptions,
+      sectors_options: sectorsOptions
     } = this.props;
     return (
       <Fragment>
@@ -325,6 +319,12 @@ class LegislationAndPolicies extends Component {
           params={typesFilterOptions}
           isSearchable={false}
           onChange={(event) => this.filterList('activeTypesFilter', event)}
+        />
+        <SearchFilter
+          ref={this.sectorsFilter}
+          filterName="Sectors"
+          params={sectorsOptions}
+          onChange={(event) => this.filterList('activeSectorsFilter', event)}
         />
       </Fragment>
     );

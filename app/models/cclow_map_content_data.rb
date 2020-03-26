@@ -12,7 +12,7 @@ class CCLOWMapContentData
         .joins(:legislations)
         .where(legislations: {visibility_status: ::Legislation.visibility_statuses[:published]})
         .group(:iso)
-        .pluck('iso, count(*) as count')
+        .pluck(Arel.sql('iso, count(*) as count'))
         .map do |data|
           {
             geography_iso: data[0],
@@ -39,7 +39,7 @@ class CCLOWMapContentData
         .joins(:litigations)
         .where(litigations: {visibility_status: Litigation.visibility_statuses[:published]})
         .group(:iso)
-        .pluck('iso, count(*) as count')
+        .pluck(Arel.sql('iso, count(*) as count'))
         .map do |data|
         {
           geography_iso: data[0],

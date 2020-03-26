@@ -30,7 +30,7 @@ FactoryBot.define do
     sequence(:iso) { |n| ('AAA'..'ZZZ').to_a[n] }
 
     geography_type { 'national' }
-    region { Geography::REGIONS.sample }
+    region { Geography::REGIONS.first }
     federal { false }
     percent_global_emissions { '10.0' }
     climate_risk_index { '0.5' }

@@ -84,7 +84,8 @@ class Legislation < ApplicationRecord
 
   pg_search_scope :full_text_search,
                   associated_against: {
-                    tags: [:name]
+                    tags: [:name],
+                    geography: [:name]
                   },
                   against: {
                     title: 'A',
@@ -140,9 +141,9 @@ class Legislation < ApplicationRecord
     events.order(:date).offset(1).last
   end
 
-  def route(geography)
+  def url
     Rails.application.routes.url_helpers.send("cclow_geography_#{law? ? 'law' : 'policy'}_url",
-                                              geography, self,
+                                              geography.slug, slug,
                                               host: 'climate-laws.org')
   end
 end

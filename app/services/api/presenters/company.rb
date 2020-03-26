@@ -12,7 +12,7 @@ module Api
           sector: @company.sector.name,
           market_cap: @company.market_cap_group.titlecase,
           isin: @company.isin,
-          sedol: 60,
+          sedol: @company.sedol,
           ca100: @company.ca100 ? 'Yes' : 'No'
         )
       end

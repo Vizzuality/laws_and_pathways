@@ -1,5 +1,5 @@
 # config valid for current version and patch releases of Capistrano
-lock "~> 3.11.0"
+lock "~> 3.12"
 
 set :application, "laws-pathways"
 set :repo_url, "https://github.com/Vizzuality/laws_and_pathways.git"
@@ -39,7 +39,7 @@ set :init_system, :systemd
 set :rvm_custom_path, '/usr/share/rvm'
 
 set :nvm_type, :user
-set :nvm_node, 'v8.16.2'
+set :nvm_node, 'v10.16.0'
 set :nvm_map_bins, %w{node npm yarn}
 
 # Temporary workaround for https://github.com/koenpunt/capistrano-nvm/issues/25

@@ -1,21 +1,75 @@
 require 'rails_helper'
 
 RSpec.describe CCLOW::LitigationCasesController, type: :controller do
-  let!(:litigation1) { create(:litigation, :published, title: 'Super Litigation') }
-  let!(:litigation2) { create(:litigation, :published, title: 'Example', summary: 'Litigation example') }
-  let!(:litigation3) { create(:litigation, :published, title: 'Litigation Example', summary: 'Example') }
-  let!(:litigation4) { create(:litigation, :draft, title: 'This one is unpublished', summary: 'Example') }
-
-  before do
-    create(:litigation_event, eventable: litigation1, date: 30.days.ago)
-    create(:litigation_event, eventable: litigation1, date: 50.days.ago)
-
-    create(:litigation_event, eventable: litigation2, date: 40.days.ago)
-    create(:litigation_event, eventable: litigation2, date: 10.days.ago)
-
-    create(:litigation_event, eventable: litigation3, date: 30.days.ago)
-    create(:litigation_event, eventable: litigation3, date: 20.days.ago)
-  end
+  let_it_be(:geography) { create(:geography, name: 'Poland', iso: 'POL') }
+  let_it_be(:sector1) { create(:laws_sector, name: 'sector1') }
+  let_it_be(:sector2) { create(:laws_sector, name: 'sector2') }
+  let_it_be(:litigation1) {
+    create(
+      :litigation,
+      :published,
+      geography: geography,
+      title: 'Super Litigation',
+      laws_sectors: [sector1, sector2],
+      keywords: [
+        build(:keyword, name: 'keyword1'),
+        build(:keyword, name: 'keyword2')
+      ],
+      responses: [
+        build(:response, name: 'response1'),
+        build(:response, name: 'response2')
+      ],
+      legislations: [
+        build(:legislation, geography: geography, title: 'Legislation 1'),
+        build(:legislation, geography: geography, title: 'Legislation 2')
+      ],
+      external_legislations: [
+        build(:external_legislation, name: 'External legislation1', url: 'https://example.com'),
+        build(:external_legislation, name: 'External legislation2', url: 'https://next-example.com')
+      ],
+      litigation_sides: [
+        build(:litigation_side, name: 'Side A1', side_type: 'a', party_type: 'government'),
+        build(:litigation_side, name: 'Side A2', side_type: 'a', party_type: 'ngo'),
+        build(:litigation_side, name: 'Side B', side_type: 'b', party_type: 'corporation'),
+        build(:litigation_side, name: 'Side C', side_type: 'c', party_type: 'government')
+      ],
+      events: [
+        build(:litigation_event, date: Date.parse('2018-04-03')),
+        build(:litigation_event, date: Date.parse('2018-03-02'))
+      ]
+    )
+  }
+  let_it_be(:litigation2) {
+    create(
+      :litigation,
+      :published,
+      laws_sectors: [sector1],
+      geography: geography,
+      title: 'Example',
+      summary: 'Litigation example',
+      events: [
+        build(:litigation_event, date: Date.parse('2019-03-02')),
+        build(:litigation_event, date: Date.parse('2019-05-01'))
+      ]
+    )
+  }
+  let_it_be(:litigation3) {
+    create(
+      :litigation,
+      :published,
+      laws_sectors: [sector2],
+      geography: geography,
+      title: 'Litigation Example',
+      summary: 'Example',
+      events: [
+        create(:litigation_event, date: Date.parse('2018-03-03')),
+        create(:litigation_event, date: Date.parse('2018-05-01'))
+      ]
+    )
+  }
+  let_it_be(:litigation4) {
+    create(:litigation, :draft, geography: geography, title: 'This one is unpublished', summary: 'Example')
+  }
 
   describe 'GET index' do
     context 'without filters' do
@@ -36,6 +90,9 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller do
       it 'responds to csv' do
         get :index, format: :csv
         expect(response.content_type).to eq('text/csv')
+        # remove snapshot to update it (from spec/snapshots)
+        # make sure no dynamic, sequenced entity values are used
+        expect(response.body).to match_snapshot('cclow_litigation_cases_controller_csv')
       end
     end
 

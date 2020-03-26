@@ -8,6 +8,11 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 require 'cancan/matchers'
 
+require 'test_prof/recipes/rspec/let_it_be'
+
+require 'rake'
+Rails.application.load_tasks
+
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -39,8 +44,11 @@ FactoryBot::SyntaxRunner.class_eval do
 end
 
 RSpec.configure do |config|
+  config.snapshot_dir = 'spec/snapshots'
+
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include FactoryBot::Syntax::Methods
+  config.include CapybaraHelpers, type: :system
 
   config.render_views
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
@@ -72,5 +80,17 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
   config.after :each, type: :controller do
     ActiveSupport::CurrentAttributes.reset_all
+  end
+
+  config.before(:each, type: :system) do
+    driven_by :selenium, using: :headless_chrome, screen_size: [1400, 800]
+  end
+
+  config.before(:all, type: :system) do
+    Rake::Task['test:db_load'].execute
+  end
+
+  config.after(:all, type: :system) do
+    DatabaseCleaner.clean_with(:truncation)
   end
 end

@@ -43,6 +43,14 @@ html {
   scroll-behavior: smooth;
 }
 
+body {
+  overflow-x: hidden;
+
+  @include desktop {
+    overflow-x: visible;
+  }
+}
+
 :root {
   --fixed-navbar-height: 56px;
 }

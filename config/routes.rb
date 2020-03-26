@@ -76,5 +76,5 @@ Rails.application.routes.draw do
   # root to: 'cclow/home#index', constraints: { host: ['www.climate-laws.org', 'climate-laws.org'] }, as: nil
   root to: 'admin/dashboard#index', constraints: { host: 'laws-pathways.vizzuality.com' }, as: nil
   root to: 'admin/dashboard#index', constraints: { host: 'laws-pathways-staging.vizzuality.com' }, as: nil
-  root to: 'cclow/home#index', constraints: { host: 'localhost' }
+  root to: 'cclow/home#index'
 end

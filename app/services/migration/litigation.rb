@@ -2,7 +2,6 @@ require 'uri'
 module Migration
   class Litigation
     class << self
-      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def migrate_source_files(source)
         for_real = Rails.env.staging?
         file = File.read(source).force_encoding('UTF-8')
@@ -50,7 +49,7 @@ module Migration
           l.documents << doc if for_real
         end
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+      # rubocop:enable
     end
   end
 end
