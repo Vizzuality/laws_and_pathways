@@ -183,7 +183,8 @@ module Api
             market_cap_group: company.market_cap_group,
             slug: company.slug,
             level4STAR: company.is_4_star?,
-            level: company.mq_level.to_i.to_s
+            level: company.mq_level.to_i.to_s,
+            status: company.mq_status
           }
         end
       end

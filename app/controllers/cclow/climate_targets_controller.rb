@@ -1,9 +1,6 @@
 module CCLOW
   class ClimateTargetsController < CCLOWController
     include FilterController
-
-    # rubocop:disable Metrics/AbcSize
-    # rubocop:disable Metrics/MethodLength
     def index
       add_breadcrumb('Climate Change Laws of the World', cclow_root_path)
       add_breadcrumb('Climate Targets', cclow_climate_targets_path)
@@ -32,16 +29,11 @@ module CCLOW
         end
         format.csv do
           timestamp = Time.now.strftime('%d%m%Y')
-          targets = Target
-            .where(id: @climate_targets.reorder(:id).pluck(:id))
-            .includes(:sector, :scopes, :geography, :events)
-
-          render csv: CSVExport::User::Targets.new(targets).call,
+          target_ids = @climate_targets.reorder(:id).pluck(:id)
+          render csv: CSVExport::User::Targets.new(target_ids).call,
                  filename: "climate_targets_#{timestamp}"
         end
       end
     end
-    # rubocop:enable Metrics/AbcSize
-    # rubocop:enable Metrics/MethodLength
   end
 end

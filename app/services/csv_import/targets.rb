@@ -55,8 +55,6 @@ module CSVImport
       }
     end
 
-    # rubocop:disable Metrics/PerceivedComplexity
-    # rubocop:disable Metrics/CyclomaticComplexity
     def connect_laws(documents)
       return [] unless documents
 
@@ -75,7 +73,5 @@ module CSVImport
       end
       laws
     end
-    # rubocop:enable Metrics/PerceivedComplexity
-    # rubocop:enable Metrics/CyclomaticComplexity
   end
 end

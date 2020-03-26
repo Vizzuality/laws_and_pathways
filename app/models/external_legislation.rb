@@ -20,4 +20,6 @@ class ExternalLegislation < ApplicationRecord
   def display_name
     ["#{name} (id: #{id})", geography&.name].join(' | ')
   end
+
+  alias_attribute :title, :name
 end

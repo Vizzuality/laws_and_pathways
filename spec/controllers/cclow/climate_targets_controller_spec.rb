@@ -1,21 +1,56 @@
 require 'rails_helper'
 
 RSpec.describe CCLOW::ClimateTargetsController, type: :controller do
-  let!(:target1) { create(:target, :published, description: 'Super target') }
-  let!(:target2) { create(:target, :published, description: 'Example Description') }
-  let!(:target3) { create(:target, :published, description: 'Example') }
-  let!(:target4) { create(:target, :draft, description: 'This one is unpublished example') }
-
-  before do
-    create(:target_event, eventable: target1, date: 30.days.ago)
-    create(:target_event, eventable: target1, date: 50.days.ago)
-
-    create(:target_event, eventable: target2, date: 40.days.ago)
-    create(:target_event, eventable: target2, date: 10.days.ago)
-
-    create(:target_event, eventable: target3, date: 30.days.ago)
-    create(:target_event, eventable: target3, date: 20.days.ago)
-  end
+  let_it_be(:geography) { create(:geography, name: 'Poland', iso: 'POL') }
+  let_it_be(:sector) { create(:laws_sector, name: 'Airlines') }
+  let_it_be(:target1) {
+    create(
+      :target,
+      :published,
+      geography: geography,
+      sector: sector,
+      base_year_period: '2020',
+      description: 'Super target',
+      source: 'framework',
+      scopes: [
+        build(:scope, name: 'scope1'),
+        build(:scope, name: 'scope2')
+      ],
+      events: [
+        build(:target_event, date: Date.parse('2018-04-03')),
+        build(:target_event, date: Date.parse('2018-03-02'))
+      ]
+    )
+  }
+  let_it_be(:target2) {
+    create(
+      :target,
+      :published,
+      sector: sector,
+      geography: geography,
+      description: 'Example Description',
+      events: [
+        build(:target_event, date: Date.parse('2019-03-02')),
+        build(:target_event, date: Date.parse('2019-05-01'))
+      ]
+    )
+  }
+  let_it_be(:target3) {
+    create(
+      :target,
+      :published,
+      sector: sector,
+      geography: geography,
+      description: 'Example',
+      events: [
+        build(:target_event, date: Date.parse('2018-03-03')),
+        build(:target_event, date: Date.parse('2018-05-01'))
+      ]
+    )
+  }
+  let_it_be(:target4) {
+    create(:target, :draft, sector: sector, geography: geography, description: 'This one is unpublished example')
+  }
 
   describe 'GET index' do
     context 'without filters' do
@@ -36,6 +71,9 @@ RSpec.describe CCLOW::ClimateTargetsController, type: :controller do
       it 'responds to csv' do
         get :index, format: :csv
         expect(response.content_type).to eq('text/csv')
+        # remove snapshot to update it (from spec/snapshots)
+        # make sure no dynamic, sequenced entity values are used
+        expect(response.body).to match_snapshot('cclow_climate_targets_controller_csv')
       end
     end
 

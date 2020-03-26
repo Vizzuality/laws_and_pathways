@@ -11,7 +11,6 @@ module Queries
         @params = params
       end
 
-      # rubocop:disable Metrics/AbcSize
       def call(scope = Litigation.published)
         @scope = scope
 
@@ -32,7 +31,6 @@ module Queries
           .merge(order)
           .distinct
       end
-      # rubocop:enable Metrics/AbcSize
 
       private
 

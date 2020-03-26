@@ -2,7 +2,7 @@ require 'uri'
 module Migration
   class Legislation
     class << self
-      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Style/IfUnlessModifier
+      # rubocop:disable Style/IfUnlessModifier
       def fill_responses
         adaptation = Response.find_or_create_by(name: 'Adaptation')
         drm = Response.find_or_create_by(name: 'Disaster Risk Management')
@@ -36,9 +36,8 @@ module Migration
           l.save
         end
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Style/IfUnlessModifier
+      # rubocop:enable Style/IfUnlessModifier
 
-      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def migrate_source_files(source)
         for_real = Rails.env.production?
         file = File.read(source).force_encoding('UTF-8')
@@ -76,7 +75,7 @@ module Migration
           l.documents << doc
         end
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+      # rubocop:enable
     end
   end
 end

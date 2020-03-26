@@ -57,7 +57,9 @@ group :test do
   gem 'rails-controller-testing'
   gem 'rspec-collection_matchers'
   gem 'rspec-rails', '~> 4.0.rc'
+  gem 'rspec-snapshot'
   gem 'selenium-webdriver'
+  gem 'test-prof'
   gem 'webdrivers', '~> 4.0'
 end
 
@@ -66,7 +68,7 @@ group :development do
   gem 'brakeman', require: false
   gem 'bundler-audit', require: false
   gem 'bullet'
-  gem 'capistrano', '~> 3.11', require: false
+  gem 'capistrano', '~> 3.12', require: false
   gem 'capistrano-bundler'
   gem 'capistrano-nvm'
   gem 'capistrano-passenger'

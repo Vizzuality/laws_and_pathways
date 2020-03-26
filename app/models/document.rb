@@ -48,7 +48,7 @@ class Document < ApplicationRecord
   def file_url
     return unless file.attached?
 
-    Rails.application.routes.url_helpers.polymorphic_url(file, only_path: true)
+    Rails.application.routes.url_helpers.rails_blob_url(file, host: ::Current.request_host)
   end
 
   def set_last_verified_on

@@ -26,11 +26,15 @@ $header-height-mobile: 60px;
 
 .dropdown-selector__input {
   color: $dark;
-  font-size: 48px;
+  font-size: 30px;
   font-family: $font-family-regular;
   border: none;
   width: 100%;
   outline: none;
+
+  @include desktop {
+    font-size: 48px;
+  }
 }
 
 ::placeholder { /* Edge */
@@ -101,11 +105,15 @@ $header-height-mobile: 60px;
   overflow-y: scroll;
 
   & > * {
-    padding: 8px $container-side-padding;
+    padding: 0.5rem 0.75rem;
   }
 
   @include desktop {
     min-height: $header-height;
+
+    & > * {
+      padding: 8px $container-side-padding;
+    }
   }
 }
 

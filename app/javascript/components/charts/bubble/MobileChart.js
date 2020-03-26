@@ -89,7 +89,7 @@ const MobileBubbleChart = ({ levels, by_sector = true }) => {
           <div key={`chart-item-list-${i}`} className={`item-list level-item-color-${el} ${openItems.includes(i) ? ' open' : ''}`}>
             <div className="item-header" onClick={() => setOpenItemByIndex(i)}>
               <div className="item-title">
-                <div>livel {levelsSignature[el]}</div>
+                <div>level {levelsSignature[el]}</div>
                 <div>{activeSector[el].length} {activeSector[el].length === 1 ? 'company' : 'companies'}</div>
               </div>
               <div className="sector-subtitle">{LEVELS_SUBTITLES[el]}</div>
@@ -104,6 +104,7 @@ const MobileBubbleChart = ({ levels, by_sector = true }) => {
                       key={`chart-companies-${index}`}
                       onClick={() => { window.location.href = `/tpi/companies/${company.slug}`; }}
                     >{company.name}
+                      <span className={`mq-level-trend mq-level-trend--${company.status}`} />
                     </li>
                   ))}
                 </ul>
