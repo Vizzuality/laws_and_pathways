@@ -151,10 +151,8 @@ export function getMobileOptions(data, sectors) {
   const descktopOptions = getOptions(data, sectors);
   return merge({}, descktopOptions, {
     chart: {
-      height: 500
-    },
-    plotOptions: {
-      grouping: false
+      height: 500,
+      events: {render() {}}
     },
     legend: {
       margin: 35,
