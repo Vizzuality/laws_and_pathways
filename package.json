@@ -44,6 +44,7 @@
     "rc-slider": "^8.7.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-responsive": "^8.0.3",
     "react-select": "^3.0.8",
     "react-simple-maps": "^1.0.0-beta.0",
     "react-tooltip": "^3.11.1",

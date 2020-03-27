@@ -1,3 +1,4 @@
 import Chart from './Chart';
+import CompaniesAccordion from './CompaniesAccordion';
 
-export default Chart;
+export {Chart, CompaniesAccordion};
