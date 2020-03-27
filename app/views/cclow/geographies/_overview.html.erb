@@ -1,6 +1,6 @@
-<% list = [{caption: 'Laws', count: geography_overview.number_of_laws, img: 'paper', link: cclow_geography_laws_path(geography)},
-           {caption: 'Policies', count: geography_overview.number_of_policies, img: 'official-building', link: cclow_geography_policies_path(geography)},
-           {caption: 'Litigation cases', count: geography_overview.number_of_litigation_cases, img: 'scale', link: cclow_geography_litigation_cases_path(geography)},
+<% list = [{caption: 'Laws', count: geography_overview.number_of_laws, img: 'paper', link: cclow_legislation_and_policies_path(geography: [geography.id], type: ['legislative'])},
+           {caption: 'Policies', count: geography_overview.number_of_policies, img: 'official-building', link: cclow_legislation_and_policies_path(geography: [geography.id], type: ['executive'])},
+           {caption: 'Litigation cases', count: geography_overview.number_of_litigation_cases, img: 'scale', link: cclow_litigation_cases_path(geography: [geography.id])},
            {caption: 'Climate targets', count: geography_overview.number_of_targets, img: 'target', link: cclow_geography_climate_targets_path(geography)}] %>
 <% properties = [{caption: 'Region', value: geography.region, question: false},
                  {caption: '% Global Emissions', value: geography.percent_global_emissions, question: false},
