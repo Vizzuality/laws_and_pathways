@@ -41,12 +41,12 @@ RSpec.describe Api::Charts::Sector do
       expect(subject.companies_summaries_by_level).to eq(
         '0' => [],
         '1' => [
-          {id: company.id, name: company.name, status: 'down', level: '1'}
+          {id: company.id, name: company.name, status: 'down', level: '1', slug: company.slug}
         ],
         '2' => [],
         '3' => [],
         '4' => [
-          {id: company2.id, name: company2.name, status: 'new', level: '4STAR'}
+          {id: company2.id, name: company2.name, status: 'new', level: '4STAR', slug: company2.slug}
         ]
       )
     end
