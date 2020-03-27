@@ -47,7 +47,7 @@ export function groupAllAreaSeries() {
   });
 }
 
-export function renderBenchmarksLabels(chart) {
+export function renderBenchmarksLabels(chart, isMobile = false) {
   const g = document.querySelector('.chart--cp-performance g.highcharts-series-group');
 
   [...g.querySelectorAll('.generated')].forEach((el) => el.remove()); // cleanup
@@ -91,6 +91,14 @@ export function renderBenchmarksLabels(chart) {
     const text = createSVGText(textX, textY, benchmark.name);
     const line = createSVGLine(lastPointX, lastPointY, textX, textY);
     g.appendChild(text);
-    g.appendChild(line);
+
+
+    if (isMobile) {
+      const textWidth = text.getBBox().width;
+      const transformAttr = ` translate(-${textWidth + labelToAreaSpacing + 5},0)`;
+      text.setAttribute('transform', transformAttr);
+    } else {
+      g.appendChild(line);
+    }
   });
 }
