@@ -78,6 +78,13 @@ $button-border-width: 4px;
     &.is-outlined {
       border-color: $primary;
       color: $primary;
+      
+      &:hover,
+      &:focus {
+        background-color: $primary;
+        border-color: $primary;
+        color: $white;
+      }
     }
   }
 
