@@ -105,7 +105,8 @@ RSpec.describe Api::Charts::Sector do
               sector: company.sector.name,
               market_cap_group: company.market_cap_group,
               level: company.mq_level.to_i.to_s,
-              level4STAR: false
+              level4STAR: false,
+              status: company.mq_status
             }
           ],
           '2' => [],
@@ -124,7 +125,8 @@ RSpec.describe Api::Charts::Sector do
               sector: company2.sector.name,
               market_cap_group: company2.market_cap_group,
               level: company2.mq_level.to_i.to_s,
-              level4STAR: true
+              level4STAR: true,
+              status: company2.mq_status
             }
           ]
         }
