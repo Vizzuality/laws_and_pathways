@@ -91,14 +91,19 @@ module CCLOW
       [{field_name: 'law_sector', options: sectors.sort_by { |h| h[:label] }}]
     end
 
+    def target_years_options
+      years = Target.select(:year).order(:year).distinct.pluck(:year).compact
+      [{field_name: 'target_year', options: years.map { |y| {value: y, label: y} }}]
+    end
+
     def filter_params
-      params.permit(:q, :from_date,
-                    :to_date, :recent, :ids, region: [], geography: [], jurisdiction: [],
-                                             status: [], type: [], keywords: [], responses: [],
-                                             frameworks: [], natural_hazards: [], party_type: [],
-                                             side_a: [], side_b: [], side_c: [], law_sector: [],
-                                             a_party_type: [], b_party_type: [], c_party_type: [],
-                                             instrument: [], governance: [])
+      params.permit(:q, :from_date, :to_date, :recent, :ids,
+                    target_year: [], region: [], geography: [], jurisdiction: [],
+                    status: [], type: [], keywords: [], responses: [],
+                    frameworks: [], natural_hazards: [], party_type: [],
+                    side_a: [], side_b: [], side_c: [], law_sector: [],
+                    a_party_type: [], b_party_type: [], c_party_type: [],
+                    instrument: [], governance: [])
     end
   end
 end

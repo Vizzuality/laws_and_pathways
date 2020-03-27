@@ -16,6 +16,7 @@ module CCLOW
             geo_filter_options: region_geography_options,
             types_filter_options: target_types_options,
             sectors_options: sectors_options('Target'),
+            target_years_options: target_years_options,
             climate_targets: CCLOW::TargetDecorator.decorate_collection(@climate_targets.first(10)),
             count: @climate_targets.size
           }, prerender: false
