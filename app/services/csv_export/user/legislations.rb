@@ -7,8 +7,6 @@ module CSVExport
         @ids = legislation_ids
       end
 
-      # rubocop:disable Metrics/AbcSize
-      # rubocop:disable Metrics/MethodLength
       def call
         return if legislations.empty?
 
@@ -42,8 +40,6 @@ module CSVExport
           end
         end
       end
-      # rubocop:enable Metrics/AbcSize
-      # rubocop:enable Metrics/MethodLength
 
       private
 

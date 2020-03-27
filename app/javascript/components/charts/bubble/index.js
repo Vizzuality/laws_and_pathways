@@ -1,4 +1,4 @@
 import Chart from './Chart';
-import MobileChart from './MobileChart';
+import CompaniesAccordion from './CompaniesAccordion';
 
-export {Chart, MobileChart};
+export {Chart, CompaniesAccordion};

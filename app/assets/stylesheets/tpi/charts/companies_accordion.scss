@@ -77,6 +77,8 @@ $tpi-level-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB;
     a {
       border-width: 2px;
       font-size: $size-5;
+      border-radius: 0;
+      height: 30px;
     }
   }
 

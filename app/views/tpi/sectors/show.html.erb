@@ -43,7 +43,7 @@
 
     <%= react_component('charts/mq-sector-pie', { dataUrl: levels_chart_data_tpi_sector_path(@sector.id) }) %>
 
-    <%= react_component("charts/bubble/MobileChart", { levels: @companies_by_levels, by_sector: false }) %>
+    <%= react_component("charts/bubble/CompaniesAccordion", { levels: @companies_by_levels, by_sector: false }) %>
 
     <div class="sector-level-overview is-hidden-touch columns">
       <% @companies_by_levels.each do |level, companies| -%>
