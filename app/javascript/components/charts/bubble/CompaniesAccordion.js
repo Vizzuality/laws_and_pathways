@@ -58,7 +58,7 @@ const DropdownIndicator = (props) => (
 );
 
 
-const MobileBubbleChart = ({ levels }) => {
+const CompaniesAccordion = ({ levels }) => {
   const selectOptions = Object.keys(levels).map((level) => ({label: level, value: level}));
   const levelsSignature = levels && Object.keys(levels[Object.keys(levels)[0]]);
   const [openItems, setOpenItems] = useState([]);
@@ -119,7 +119,7 @@ const MobileBubbleChart = ({ levels }) => {
 };
 
 
-MobileBubbleChart.propTypes = {
+CompaniesAccordion.propTypes = {
   levels: PropTypes.object.isRequired
 };
-export default MobileBubbleChart;
+export default CompaniesAccordion;

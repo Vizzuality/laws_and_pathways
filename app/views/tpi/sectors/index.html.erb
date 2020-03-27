@@ -43,7 +43,7 @@
 
     <%= react_component('charts/mq-sector-pie', { dataUrl: levels_chart_data_tpi_sectors_path }) %>
     <%= react_component("charts/bubble/Chart", { levels: @companies_by_sectors, sectors: @sectors }) %>
-    <%= react_component("charts/bubble/MobileChart", { levels: @companies_by_sectors, sectors: @sectors }) %>
+    <%= react_component("charts/bubble/CompaniesAccordion", { levels: @companies_by_sectors, sectors: @sectors }) %>
   </section>
 
   <section id="carbon-performance" class="container">
