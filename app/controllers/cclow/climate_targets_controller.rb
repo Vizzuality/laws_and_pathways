@@ -15,6 +15,7 @@ module CCLOW
           render component: 'pages/cclow/ClimateTargets', props: {
             geo_filter_options: region_geography_options,
             types_filter_options: target_types_options,
+            sectors_options: sectors_options('Target'),
             climate_targets: CCLOW::TargetDecorator.decorate_collection(@climate_targets.first(10)),
             count: @climate_targets.size
           }, prerender: false

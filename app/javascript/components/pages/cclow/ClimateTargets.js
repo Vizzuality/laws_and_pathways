@@ -23,23 +23,32 @@ class ClimateTargets extends Component {
       activeGeoFilter: {},
       activeTimeRangeFilter: {},
       activeTypesFilter: {},
+      activeSectorsFilter: {},
       isMoreSearchOptionsVisible: false
     };
 
     this.isMobile = window.innerWidth < 1024;
 
     this.geoFilter = React.createRef();
+    this.sectorsFilter = React.createRef();
     this.timeRangeFilter = React.createRef();
     this.typesFilter = React.createRef();
   }
 
   getQueryString(extraParams = {}) {
-    const {activeGeoFilter, activeTypesFilter, activeTimeRangeFilter} = this.state;
+    const {
+      activeGeoFilter,
+      activeTypesFilter,
+      activeTimeRangeFilter,
+      activeSectorsFilter
+    } = this.state;
+
     const params = {
       ...getQueryFilters(),
       ...activeTimeRangeFilter,
       ...activeGeoFilter,
       ...activeTypesFilter,
+      ...activeSectorsFilter,
       ...extraParams
     };
 
@@ -91,17 +100,25 @@ class ClimateTargets extends Component {
   }
 
   renderTags = () => {
-    const {activeGeoFilter, activeTimeRangeFilter, activeTypesFilter} = this.state;
+    const {
+      activeGeoFilter,
+      activeTimeRangeFilter,
+      activeTypesFilter,
+      activeSectorsFilter
+    } = this.state;
     const {
       geo_filter_options: geoFilterOptions,
-      types_filter_options: typesFilterOptions
+      types_filter_options: typesFilterOptions,
+      sectors_options: sectorsOptions
     } = this.props;
     if (Object.keys(activeGeoFilter).length === 0
       && Object.keys(activeTypesFilter).length === 0
-      && Object.keys(activeTimeRangeFilter).length === 0) return null;
+      && Object.keys(activeTimeRangeFilter).length === 0
+      && Object.keys(activeSectorsFilter).length === 0) return null;
     return (
       <div className="filter-tags tags">
         {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
+        {this.renderTagsGroup(activeSectorsFilter, sectorsOptions, 'sectorsFilter')}
         {this.renderTagsGroup(activeTypesFilter, typesFilterOptions, 'typesFilter')}
         {this.renderTimeRangeTags(activeTimeRangeFilter)}
       </div>
@@ -149,7 +166,8 @@ class ClimateTargets extends Component {
   renderFilters = () => {
     const {
       geo_filter_options: geoFilterOptions,
-      types_filter_options: typesFilterOptions
+      types_filter_options: typesFilterOptions,
+      sectors_options: sectorsOptions
     } = this.props;
     return (
       <Fragment>
@@ -159,10 +177,12 @@ class ClimateTargets extends Component {
           params={geoFilterOptions}
           onChange={(event) => this.filterList('activeGeoFilter', event)}
         />
-        {/* <TimeRangeFilter
-            ref={this.timeRangeFilter}
-            onChange={(event) => this.filterList('activeTimeRangeFilter', event)}
-            /> */}
+        <SearchFilter
+          ref={this.sectorsFilter}
+          filterName="Sectors"
+          params={sectorsOptions}
+          onChange={(event) => this.filterList('activeSectorsFilter', event)}
+        />
         <SearchFilter
           ref={this.typesFilter}
           filterName="Target types"
@@ -269,14 +289,16 @@ class ClimateTargets extends Component {
 ClimateTargets.defaultProps = {
   count: 0,
   geo_filter_options: [],
-  types_filter_options: []
+  types_filter_options: [],
+  sectors_options: []
 };
 
 ClimateTargets.propTypes = {
   climate_targets: PropTypes.array.isRequired,
   count: PropTypes.number,
   geo_filter_options: PropTypes.array,
-  types_filter_options: PropTypes.array
+  types_filter_options: PropTypes.array,
+  sectors_options: PropTypes.array
 };
 
 export default ClimateTargets;
