@@ -20,6 +20,9 @@ module LawsAndPathways
     config.generators.system_tests = nil
 
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
+
+    config.cclow_domain = 'cclow.localhost'
+    config.tpi_domain = 'tpi.localhost'
   end
 
   def self.credentials

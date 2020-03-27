@@ -21,8 +21,8 @@ class TPIPage < Page
   validates :slug, uniqueness: true, presence: true
   validates :title, uniqueness: true, presence: true
 
-  def slug_path
-    "/tpi/#{slug}"
+  def path
+    "/#{slug}"
   end
 
   def admin_path

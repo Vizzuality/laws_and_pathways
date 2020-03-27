@@ -78,10 +78,7 @@ const NavbarComponent = ({ items, openSearchMode }) => {
     <div className="navbar" role="navigation" aria-label="main navigation">
       <div className="container">
         <div className="navbar-brand is-hidden-desktop">
-          <a
-            href="/tpi"
-            className="navbar-item logo"
-          >
+          <a href="/" className="navbar-item logo">
             <img src={Logo} alt="TPI logo" />
           </a>
           <a
@@ -126,10 +123,10 @@ const NavbarComponent = ({ items, openSearchMode }) => {
                   </a>
                 )}
                 {tpi.content && (
-                  tpi.content.map(({ slug, title }, i) => (
+                  tpi.content.map(({ path, title }, i) => (
                     <a
                       key={`${title}-${i}`}
-                      href={slug}
+                      href={path}
                       className="navbar-item"
                     >
                       {title}
@@ -159,10 +156,10 @@ const NavbarComponent = ({ items, openSearchMode }) => {
 
               <div className="navbar-dropdown">
                 {about.content && (
-                  about.content.map(({ slug, title }, i) => (
+                  about.content.map(({ path, title }, i) => (
                     <a
                       key={`${title}-${i}`}
-                      href={slug}
+                      href={path}
                       className="navbar-item"
                     >
                       {title}
@@ -211,7 +208,7 @@ NavbarComponent.propTypes = {
       content: PropTypes.arrayOf(
         PropTypes.shape({
           title: PropTypes.string.isRequired,
-          slug: PropTypes.string.isRequired
+          path: PropTypes.string.isRequired
         })
       ),
       active: PropTypes.bool.isRequired,

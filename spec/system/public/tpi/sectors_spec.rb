@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-describe 'Sector', type: 'system' do
+describe 'Sector', type: 'system', site: 'tpi' do
   describe 'all sectors page' do
     before do
-      visit 'tpi/sectors'
+      visit '/sectors'
     end
 
     it 'loads all elements' do
@@ -32,7 +32,7 @@ describe 'Sector', type: 'system' do
 
   describe 'single sector page' do
     before do
-      visit 'tpi/sectors/airlines'
+      visit '/sectors/airlines'
     end
 
     it 'loads all elements' do

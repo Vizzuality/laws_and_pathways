@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe 'Litigation cases search', type: 'system' do
+describe 'Litigation cases search', type: 'system', site: 'cclow' do
   before do
-    visit 'cclow/litigation_cases'
+    visit '/litigation_cases'
   end
 
   it 'loads the page' do

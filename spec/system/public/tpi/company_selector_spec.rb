@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe 'Company Selector', type: 'system' do
+describe 'Company Selector', type: 'system', site: 'tpi' do
   before(:each) do
-    visit 'tpi/sectors'
+    visit '/sectors'
   end
 
   it 'filters by company' do
@@ -10,7 +10,7 @@ describe 'Company Selector', type: 'system' do
     find('.dropdown-selector__header').click
     find('input.dropdown-selector__input').set('Renault')
     find('input.dropdown-selector__input').native.send_keys(:return)
-    expect(page).to have_current_path('/tpi/companies/renault')
+    expect(page).to have_current_path('/companies/renault')
   end
 
   it 'filters by sector' do
@@ -18,6 +18,6 @@ describe 'Company Selector', type: 'system' do
     find('.dropdown-selector__header').click
     find('input.dropdown-selector__input').set('Cement')
     find('input.dropdown-selector__input').native.send_keys(:return)
-    expect(page).to have_current_path('/tpi/sectors/cement')
+    expect(page).to have_current_path('/sectors/cement')
   end
 end

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe 'Laws and policies search', type: 'system' do
+describe 'Laws and policies search', type: 'system', site: 'cclow' do
   before do
-    visit 'cclow/legislation_and_policies'
+    visit '/legislation_and_policies'
   end
 
   it 'loads the page' do

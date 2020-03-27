@@ -59,7 +59,7 @@ class ClimateTargets extends Component {
     const { offset } = this.state;
     const newQs = this.getQueryString({ offset });
 
-    fetch(`/cclow/climate_targets.json?${newQs}`).then((response) => {
+    fetch(`/climate_targets.json?${newQs}`).then((response) => {
       response.json().then((data) => {
         if (response.ok) {
           if (offset > 0) {
@@ -203,7 +203,7 @@ class ClimateTargets extends Component {
   render() {
     const {climate_targets, count} = this.state;
     const hasMore = climate_targets.length < count;
-    const downloadResultsLink = `/cclow/climate_targets.csv?${this.getQueryString()}`;
+    const downloadResultsLink = `/climate_targets.csv?${this.getQueryString()}`;
 
     return (
       <Fragment>

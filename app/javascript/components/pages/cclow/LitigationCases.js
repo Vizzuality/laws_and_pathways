@@ -107,7 +107,7 @@ class LitigationCases extends Component {
     const { offset } = this.state;
     const newQs = this.getQueryString({ offset });
 
-    fetch(`/cclow/litigation_cases.json?${newQs}`).then((response) => {
+    fetch(`/litigation_cases.json?${newQs}`).then((response) => {
       response.json().then((data) => {
         if (response.ok) {
           if (offset > 0) {
@@ -389,7 +389,7 @@ class LitigationCases extends Component {
   render() {
     const {litigations, count} = this.state;
     const hasMore = litigations.length < count;
-    const downloadResultsLink = `/cclow/litigation_cases.csv?${this.getQueryString()}`;
+    const downloadResultsLink = `/litigation_cases.csv?${this.getQueryString()}`;
     return (
       <Fragment>
         <div className="cclow-geography-page">

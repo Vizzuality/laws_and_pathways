@@ -86,6 +86,14 @@ RSpec.configure do |config|
     driven_by :selenium, using: :headless_chrome, screen_size: [1400, 800]
   end
 
+  config.before(:each, type: :system, site: 'cclow') do
+    Capybara.app_host = "http://#{Rails.configuration.cclow_domain}"
+  end
+
+  config.before(:each, type: :system, site: 'tpi') do
+    Capybara.app_host = "http://#{Rails.configuration.tpi_domain}"
+  end
+
   config.before(:all, type: :system) do
     Rake::Task['test:db_load'].execute
   end

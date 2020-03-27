@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe 'Geography page', type: 'system' do
+describe 'Geography page', type: 'system', site: 'cclow' do
   before do
-    visit 'cclow/geographies/china'
+    visit '/geographies/china'
   end
 
   it 'loads the page' do
@@ -41,7 +41,7 @@ describe 'Geography page', type: 'system' do
     end
 
     it 'shows geography laws page' do
-      expect(page).to have_current_path('/cclow/geographies/china/laws')
+      expect(page).to have_current_path('/geographies/china/laws')
       expect(page).to have_text('Law on the Prevention and Control of Atmospheric Pollution')
       expect(page).to have_text('Energy Conservation Law')
     end
@@ -52,7 +52,7 @@ describe 'Geography page', type: 'system' do
       end
 
       it 'shows the page' do
-        expect(page).to have_current_path('/cclow/geographies/china/laws/renewable-energy-act-legislative')
+        expect(page).to have_current_path('/geographies/china/laws/renewable-energy-act-legislative')
         expect(page).to have_text('This Act describes duties of the government')
         expect(page).to have_text('Legislative')
         expect(page).to have_text('Action plan')
@@ -73,7 +73,7 @@ describe 'Geography page', type: 'system' do
     end
 
     it 'shows geography policies page' do
-      expect(page).to have_current_path('/cclow/geographies/china/policies')
+      expect(page).to have_current_path('/geographies/china/policies')
       expect(page).to have_text('13th Five-Year Plan')
       expect(page).to have_text('Energy Development Strategy Action Plan (2014-2020)')
     end
@@ -84,7 +84,7 @@ describe 'Geography page', type: 'system' do
       end
 
       it 'shows the page' do
-        expect(page).to have_current_path('/cclow/geographies/china/policies/13th-five-year-plan')
+        expect(page).to have_current_path('/geographies/china/policies/13th-five-year-plan')
         expect(page).to have_text('The 13th Five Year Plan lays down the strategy and pathway')
         expect(page).to have_text('Executive')
         expect(page).to have_text('Action plan')

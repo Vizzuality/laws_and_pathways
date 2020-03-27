@@ -22,7 +22,7 @@
 
         <% @list.each do |data| %>
           <hr class="is-hidden-desktop">
-          <a href="<%= "/cclow/geographies/#{@geography.slug}/climate_targets/#{data[:sector]}" %>" class="item active is-hidden-desktop">
+          <a href="<%= "/geographies/#{@geography.slug}/climate_targets/#{data[:sector]}" %>" class="item active is-hidden-desktop">
             <div class="sector-name"><%= data[:sector] %></div>
             <div class="columns">
               <div class="column is-half">Targets in NDC content</div>
@@ -53,7 +53,7 @@
         <hr class="is-hidden-desktop">
 
         <% @list.each do |data| %>
-          <a href="<%= "/cclow/geographies/#{@geography.slug}/climate_targets/#{data[:sector]}" %>" class="columns item active is-hidden-touch">
+          <a href="<%= "/geographies/#{@geography.slug}/climate_targets/#{data[:sector]}" %>" class="columns item active is-hidden-touch">
             <div class="column is-one-thirds sector-name"><%= data[:sector] %></div>
             <div class="column is-one-thirds value">
               <% if !data[:ndc_targets_count].zero? %>

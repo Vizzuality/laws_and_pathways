@@ -29,7 +29,6 @@ module Taggable
     has_many :tags, -> { order(:id) }, through: :taggings
   end
 
-  # rubocop:disable Metrics/AbcSize
   class_methods do
     def tag_with(name, **attrs)
       class_name = attrs[:class_name] || name.to_s.singularize.camelize
@@ -64,5 +63,4 @@ module Taggable
       joins(:taggings).where(taggings: {tag_id: Array.wrap(tag_ids)})
     end
   end
-  # rubocop:enable Metrics/AbcSize
 end

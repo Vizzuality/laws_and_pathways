@@ -94,7 +94,7 @@ class LegislationAndPolicies extends Component {
     const { offset } = this.state;
     const newQs = this.getQueryString({ offset });
 
-    fetch(`/cclow/legislation_and_policies.json?${newQs}`).then((response) => {
+    fetch(`/legislation_and_policies.json?${newQs}`).then((response) => {
       response.json().then((data) => {
         if (response.ok) {
           if (offset > 0) {
@@ -333,7 +333,7 @@ class LegislationAndPolicies extends Component {
   render() {
     const {legislations, count} = this.state;
     const hasMore = legislations.length < count;
-    const downloadResultsLink = `/cclow/legislation_and_policies.csv?${this.getQueryString()}`;
+    const downloadResultsLink = `/legislation_and_policies.csv?${this.getQueryString()}`;
 
     return (
       <Fragment>

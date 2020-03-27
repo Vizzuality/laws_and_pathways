@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe 'Company Page', type: 'system' do
+describe 'Company Page', type: 'system', site: 'tpi' do
   before(:each) do
-    visit 'tpi/companies/wizz-air'
+    visit '/companies/wizz-air'
   end
 
   it 'loads the page' do

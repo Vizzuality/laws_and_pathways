@@ -27,7 +27,7 @@
 <section class="section tpi-home__hero is-secondary">
   <div class="container tpi-hero__body">
     <div class="columns">
-      <%= link_to '/tpi/investors', class: "column is-5 section-clickable" do %>
+      <%= link_to '/investors', class: "column is-5 section-clickable" do %>
         <div class="subsection-content__container">
           <h4 class="section-title">How investors can use the TPI</h4>
 
@@ -46,7 +46,7 @@
         <div class="separator"></div>
       </div>
 
-      <%= link_to '/tpi/supporters', class: "column is-5 section-clickable" do %>
+      <%= link_to '/supporters', class: "column is-5 section-clickable" do %>
         <div class="subsection-content__container">
           <h4 class="section-title">Supporters</h4>
 
@@ -69,7 +69,7 @@
     <div class="promoted-publications__title">
       <h4 class="promoted-publications__title-text">Publications and news</h4>
 
-      <a href="/tpi/publications" class="button is-secondary">View all publications and news</a>
+      <%= link_to 'View all publications and news', tpi_publications_path, class: 'button is-secondary' %>
     </div>
 
     <%= render "tpi/publications/promoted" %>

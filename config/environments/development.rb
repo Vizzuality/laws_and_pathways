@@ -66,7 +66,4 @@ Rails.application.configure do
     Bullet.console = true
     Bullet.rails_logger = true
   end
-
-  config.cclow_domain = 'cclow.localhost'
-  config.tpi_domain = 'tpi.localhost'
 end

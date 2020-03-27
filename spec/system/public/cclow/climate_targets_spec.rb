@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe 'Climate Targets search', type: 'system' do
+describe 'Climate Targets search', type: 'system', site: 'cclow' do
   before do
-    visit 'cclow/climate_targets'
+    visit '/climate_targets'
   end
 
   it 'loads the page' do

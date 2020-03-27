@@ -80,6 +80,10 @@ class Company < ApplicationRecord
     mq_level.eql?('4STAR')
   end
 
+  def path
+    Rails.application.routes.url_helpers.tpi_company_path(slug)
+  end
+
   def self.search(query)
     where('name ilike ? OR company_comments_internal ilike ?',
           "%#{query}%", "%#{query}%")

@@ -152,7 +152,7 @@ function WorldMap({ zoomToGeographyIso }) {
   };
 
   useEffect(() => {
-    fetch('/cclow/api/map_indicators')
+    fetch('/api/map_indicators')
       .then((response) => response.json())
       .then((json) => {
         setData(json);

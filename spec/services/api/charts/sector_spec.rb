@@ -102,6 +102,7 @@ RSpec.describe Api::Charts::Sector do
             {
               name: company.name,
               slug: company.slug,
+              path: company.path,
               sector: company.sector.name,
               market_cap_group: company.market_cap_group,
               level: company.mq_level.to_i.to_s,
@@ -121,6 +122,7 @@ RSpec.describe Api::Charts::Sector do
             {
               name: company2.name,
               slug: company2.slug,
+              path: company2.path,
               sector: company2.sector.name,
               market_cap_group: company2.market_cap_group,
               level: company2.mq_level.to_i.to_s,
