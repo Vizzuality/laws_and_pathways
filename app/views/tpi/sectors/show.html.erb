@@ -9,7 +9,7 @@
     }) %>
   </div>
   <div class="sectors-header">
-    <div class="container">
+    <div class="container is-hidden-touch">
       <a href="#management-quality" class="link with-icon is-pulled-left">
         <img src="<%= asset_path 'icons/arrow-down.svg'%>" />
         Go to Management Quality
@@ -24,6 +24,14 @@
         Download sector data
       <% end %>
     </div>
+    <div class="container is-hidden-desktop">
+      <a href="#management-quality" class="link with-icon is-pulled-left">
+        Management Quality
+      </a>
+      <a href="#carbon-performance" class="link with-icon is-pulled-left">
+        Carbon Performance
+      </a>
+    </div>
   </div>
 
   <section id="management-quality" class="container">
@@ -35,7 +43,9 @@
 
     <%= react_component('charts/mq-sector-pie', { dataUrl: levels_chart_data_tpi_sector_path(@sector.id) }) %>
 
-    <div class="sector-level-overview columns">
+    <%= react_component("charts/bubble/CompaniesAccordion", { levels: @companies_by_levels, by_sector: false }) %>
+
+    <div class="sector-level-overview is-hidden-touch columns">
       <% @companies_by_levels.each do |level, companies| -%>
         <div class="sector-level column">
           <div class="sector-level__title">
@@ -64,10 +74,10 @@
   <section id="carbon-performance" class="container">
     <div class="cp-performance-header">
       <h4>Carbon Performance: <%= @sector.name %></h4>
+      <p class="is-hidden-desktop"><%= "Carbon Performance alignment of companies in the #{@sector.name} sector with the Paris agreement benchmarks." %></p>
       <div class="show-by-dropdown">
         Showing:
-        <div id="show-by-dropdown-placeholder">
-        </div>
+        <div id="show-by-dropdown-placeholder"></div>
       </div>
     </div>
 
@@ -83,13 +93,18 @@
     <section class="section tpi-sector__promoted-publications">
       <div class="container">
         <div class="promoted-publications__title">
-          <h4 class="promoted-publications__title-text">Publications and news</h4>
+          <div class="promoted-publications__title-text">Publications and news</div>
 
-          <a href="/tpi/publications" class="button is-secondary">View all publications and news</a>
+          <a href="/tpi/publications" class="button is-secondary is-hidden-touch">View all publications and news</a>
         </div>
 
         <%= render "tpi/publications/promoted" %>
+        <div class="view-all-btn__container">
+          <a href="/tpi/publications" class="button is-secondary is-hidden-desktop">View all news</a>
+        </div>
       </div>
     </section>
   <% end %>
+
+
 </div>

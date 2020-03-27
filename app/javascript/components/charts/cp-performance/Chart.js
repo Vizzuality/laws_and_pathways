@@ -10,10 +10,11 @@ import uniqBy from 'lodash/uniqBy';
 import sortBy from 'lodash/sortBy';
 import cloneDeep from 'lodash/cloneDeep';
 import get from 'lodash/get';
+import { useMediaQuery } from 'react-responsive';
 
 import PlusIcon from 'images/icons/plus.svg';
 
-import { getOptions, COLORS } from './options';
+import { getOptions, getMobileOptions, COLORS } from './options';
 import { useOutsideClick } from 'shared/hooks';
 import { useChartData } from '../hooks';
 
@@ -91,6 +92,7 @@ function getDropdownOptions(geographies, regions, marketCapGroups) {
 
 function CPPerformance({ dataUrl, companySelector, unit }) {
   const companySelectorWrapper = useRef();
+  const isMobile = useMediaQuery({ query: '(max-width: 1024px)' });
 
   const { data, error, loading } = useChartData(dataUrl);
   const [selectedCompanies, setSelectedCompanies] = useState([]); // Array of company names
@@ -178,7 +180,7 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
     );
   };
 
-  const options = getOptions({ chartData, unit });
+  const options = isMobile ? getMobileOptions({ chartData, unit }) : getOptions({ chartData, unit });
 
   return (
     <div className="chart chart--cp-performance">
@@ -199,9 +201,9 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
 
           {companySelector && (
             <React.Fragment>
-              <span className="separator" />
+              <span className="separator is-hidden-touch" />
 
-              <div className="chart-company-selector-wrapper" ref={companySelectorWrapper}>
+              <div className="chart-company-selector-wrapper is-hidden-touch" ref={companySelectorWrapper}>
                 <button type="button" className="button is-primary with-icon" onClick={handleAddCompaniesClick}>
                   <img src={PlusIcon} />
                   Add companies to the chart

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { groupAllAreaSeries, renderBenchmarksLabels } from './helpers';
 import { renderToString } from 'react-dom/server';
+import merge from 'lodash/merge';
 import Tooltip from './Tooltip';
 
 export const COLORS = ['#00C170', '#ED3D4A', '#FFDD49', '#440388', '#FF9600', '#B75038', '#00A8FF', '#F78FB3', '#191919', '#F602B4'];
@@ -94,4 +95,25 @@ export function getOptions({ chartData, unit }) {
     },
     series: chartData
   };
+}
+
+export function getMobileOptions({ chartData, unit }) {
+  const descktopOptions = getOptions({ chartData, unit });
+  return merge({}, descktopOptions, {
+    chart: {
+      height: 400,
+      events: {
+        render() {
+          groupAllAreaSeries();
+          renderBenchmarksLabels(this, true);
+        }
+      }
+    },
+    xAxis: {
+      maxPadding: 0.03,
+      labels: {
+        style: {fontSize: '10px', color: '#0A4BDC'}
+      }
+    }
+  });
 }

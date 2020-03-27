@@ -30,6 +30,10 @@
         font-size: 12px;
         height: $legend-item-height;
       }
+
+      @include until($desktop) {
+        margin-bottom: 10px;
+      }
     }
 
     .legend-item {
@@ -69,6 +73,16 @@
           height: 8px;
           vertical-align: middle;
         }
+      }
+
+      @include until($desktop) {
+        border: none;
+        padding: 0;
+
+        &__remove {
+          display: none;
+        }
+
       }
     }
   }

@@ -169,6 +169,7 @@ module Api
             id: company.id,
             name: company.name,
             status: company.mq_status,
+            slug: company.slug,
             level: company.mq_level
           }
         end
