@@ -52,11 +52,11 @@ const Filters = ({ tags, sectors, resultsSize }) => {
   useEffect(() => {
     const activeTagsQueryParam = activeTags
       .filter(t => t.active && t.name !== ALL_OPTION_NAME)
-      .map(t => t.name)
+      .map(t => encodeURIComponent(t.name))
       .join(', ');
     const activeSectorsQueryParam = activeSectors
       .filter(s => s.active && s.name !== ALL_OPTION_NAME)
-      .map(s => s.name)
+      .map(s => encodeURIComponent(s.name))
       .join(', ');
     refreshPublicationsHtml(`tags=${activeTagsQueryParam}&sectors=${activeSectorsQueryParam}`);
   }, [activeTags, activeSectors]);
