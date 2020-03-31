@@ -3,19 +3,19 @@ module CCLOW
     delegate_all
 
     def number_of_laws
-      model.legislations.laws.count
+      model.legislations.published.laws.count
     end
 
     def number_of_policies
-      model.legislations.policies.count
+      model.legislations.published.policies.count
     end
 
     def number_of_litigation_cases
-      model.litigations.count
+      model.litigations.published.count
     end
 
     def number_of_targets
-      model.targets.count
+      model.targets.published.count
     end
 
     def legislative_process_preview
