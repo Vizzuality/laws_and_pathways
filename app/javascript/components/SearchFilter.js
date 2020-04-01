@@ -10,7 +10,6 @@ class SearchFilter extends Component {
     super(props);
     this.state = {
       isShowOptions: false,
-      selectedList: {},
       searchValue: ''
     };
 
@@ -19,15 +18,13 @@ class SearchFilter extends Component {
 
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutside);
+  }
 
-    return () => {
-      document.removeEventListener('mousedown', this.handleClickOutside);
-    };
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
   }
 
   setShowOptions = value => this.setState({isShowOptions: value});
-
-  setSelectedList = value => this.setState({selectedList: value});
 
   setSearchValue = value => this.setState({searchValue: value});
 
@@ -43,23 +40,20 @@ class SearchFilter extends Component {
   };
 
   handleCheckItem = (blockName, value) => {
-    const {selectedList} = this.state;
-    const {onChange} = this.props;
+    const {onChange, selectedList} = this.props;
     const blocks = Object.assign({}, selectedList);
     if ((blocks[blockName] || []).includes(value)) {
       blocks[blockName] = blocks[blockName].filter(item => item !== value);
-      if (blocks[blockName].length === 0) delete blocks[blockName];
     } else {
       if (!blocks[blockName]) blocks[blockName] = [];
       blocks[blockName].push(value);
     }
     onChange(blocks);
-    this.setSelectedList(blocks);
   };
 
   handleSearchInput = e => this.setSearchValue(e.target.value);
 
-  itemIsSelected = (fieldName, value) => this.state.selectedList[fieldName] && this.state.selectedList[fieldName].includes(value);
+  itemIsSelected = (fieldName, value) => this.props.selectedList[fieldName] && this.props.selectedList[fieldName].includes(value);
 
   renderBlocksList = (blocks) => {
     const options = blocks.map((o) => {
@@ -153,8 +147,8 @@ class SearchFilter extends Component {
   };
 
   render() {
-    const {selectedList, isShowOptions} = this.state;
-    const {filterName} = this.props;
+    const {isShowOptions} = this.state;
+    const {filterName, selectedList} = this.props;
     if (this.isEmpty()) return null;
 
     let selectedCount = 0;
@@ -178,6 +172,7 @@ class SearchFilter extends Component {
 
 SearchFilter.defaultProps = {
   onChange: () => {},
+  selectedList: {},
   isSearchable: true
 };
 
@@ -185,6 +180,7 @@ SearchFilter.propTypes = {
   filterName: PropTypes.string.isRequired,
   params: PropTypes.array.isRequired,
   onChange: PropTypes.func,
+  selectedList: PropTypes.object,
   isSearchable: PropTypes.bool
 };
 

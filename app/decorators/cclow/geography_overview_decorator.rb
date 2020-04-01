@@ -3,23 +3,23 @@ module CCLOW
     delegate_all
 
     def number_of_laws
-      model.legislations.published.laws.count
+      legislations.published.laws.count
     end
 
     def number_of_policies
-      model.legislations.published.policies.count
+      legislations.published.policies.count
     end
 
     def number_of_litigation_cases
-      model.litigations.published.count
+      litigations.published.count
     end
 
     def number_of_targets
-      model.targets.published.count
+      targets.published.count
     end
 
     def legislative_process_preview
-      h.truncate(model.legislative_process,
+      h.truncate(legislative_process,
                  length: 645,
                  omission: h.content_tag(:label,
                                          for: 'legislative-process-toggle',

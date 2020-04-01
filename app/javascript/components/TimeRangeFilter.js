@@ -51,10 +51,10 @@ class TimeRangeFilter extends Component {
 
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutside);
+  }
 
-    return () => {
-      document.removeEventListener('mousedown', this.handleClickOutside);
-    };
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
   }
 
   setShowOptions = value => this.setState({isShowOptions: value});

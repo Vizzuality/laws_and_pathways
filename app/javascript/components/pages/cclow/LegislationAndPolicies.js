@@ -1,18 +1,26 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
+import pick from 'lodash/pick';
+import pickBy from 'lodash/pickBy';
+
 import SearchFilter from '../../SearchFilter';
 import TimeRangeFilter from '../../TimeRangeFilter';
+
+import {
+  getQueryFilters,
+  useInteger,
+  useIntegerArray,
+  useStringArray
+} from './helpers';
+
 import ExecutiveSVG from 'images/icons/legislation_types/executive.svg';
 import LegislativeSVG from 'images/icons/legislation_types/legislative.svg';
-
-function getQueryFilters() {
-  return qs.parse(window.location.search.slice(1));
-}
 
 class LegislationAndPolicies extends Component {
   constructor(props) {
     super(props);
+
     const {
       legislations,
       count
@@ -23,16 +31,7 @@ class LegislationAndPolicies extends Component {
       count,
       offset: 0,
       isMoreSearchOptionsVisible: false,
-      activeGeoFilter: {},
-      activeKeywordsFilter: {},
-      activeResponsesFilter: {},
-      activeFrameworksFilter: {},
-      activeTimeRangeFilter: {},
-      activeTypesFilter: {},
-      activeInstrumentsFilter: {},
-      activeNaturalHazardsFilter: {},
-      activeGovernancesFilter: {},
-      activeSectorsFilter: {}
+      ...this.resolveStateFromQueryString()
     };
 
     this.isMobile = window.innerWidth < 1024;
@@ -49,36 +48,16 @@ class LegislationAndPolicies extends Component {
     this.sectorsFilter = React.createRef();
   }
 
-  getQueryString(extraParams = {}) {
-    const {
-      activeGeoFilter,
-      activeKeywordsFilter,
-      activeResponsesFilter,
-      activeFrameworksFilter,
-      activeTypesFilter,
-      activeInstrumentsFilter,
-      activeNaturalHazardsFilter,
-      activeGovernancesFilter,
-      activeTimeRangeFilter,
-      activeSectorsFilter
-    } = this.state;
+  componentDidMount() {
+    window.addEventListener('popstate', this.handleHistoryChange);
+  }
 
-    const params = {
-      ...getQueryFilters(),
-      ...activeGeoFilter,
-      ...activeKeywordsFilter,
-      ...activeResponsesFilter,
-      ...activeFrameworksFilter,
-      ...activeTypesFilter,
-      ...activeInstrumentsFilter,
-      ...activeNaturalHazardsFilter,
-      ...activeGovernancesFilter,
-      ...activeTimeRangeFilter,
-      ...activeSectorsFilter,
-      ...extraParams
-    };
+  componentWillUnmount() {
+    window.removeEventListener('popstate', this.handleHistoryChange);
+  }
 
-    return qs.stringify(params, { arrayFormat: 'brackets' });
+  handleHistoryChange = () => {
+    this.setState({ ...this.resolveStateFromQueryString() }, this.fetchData.bind(this));
   }
 
   handleLoadMore = () => {
@@ -86,13 +65,63 @@ class LegislationAndPolicies extends Component {
     this.setState({ offset: legislations.length }, this.fetchData.bind(this));
   }
 
-  filterList = (activeFilterName, filterParams) => {
-    this.setState({[activeFilterName]: filterParams, offset: 0}, this.fetchData.bind(this));
-  };
+  handleFilterChange = (changedFilters) => {
+    this.setState((state) => ({
+      filters: {
+        ...state.filters,
+        ...changedFilters
+      },
+      offset: 0
+    }), () => {
+      this.updateHistory();
+      this.fetchData();
+    });
+  }
+
+  createQueryString(extraParams = {}) {
+    const notEmpty = (value) => {
+      if (value && value.length) return true;
+
+      return value !== undefined && value !== null;
+    };
+
+    const params = pickBy({
+      ...this.state.filters,
+      ...extraParams
+    }, notEmpty);
+
+    return qs.stringify(params, { arrayFormat: 'brackets' });
+  }
+
+  resolveStateFromQueryString() {
+    const query = getQueryFilters();
+
+    return {
+      filters: {
+        geography: useIntegerArray(query.geography),
+        region: useIntegerArray(query.region),
+        keywords: useIntegerArray(query.keywords),
+        responses: useIntegerArray(query.responses),
+        frameworks: useIntegerArray(query.frameworks),
+        from_date: useInteger(query.from_date),
+        to_date: useInteger(query.from_date),
+        type: useStringArray(query.type),
+        instruments: useIntegerArray(query.instruments),
+        natural_hazards: useIntegerArray(query.natural_hazards),
+        governances: useIntegerArray(query.governances),
+        law_sector: useIntegerArray(query.law_sector)
+      }
+    };
+  }
+
+  updateHistory() {
+    const newQs = this.createQueryString();
+    window.history.pushState(null, null, `?${newQs}`);
+  }
 
   fetchData() {
     const { offset } = this.state;
-    const newQs = this.getQueryString({ offset });
+    const newQs = this.createQueryString({ offset });
 
     fetch(`/cclow/legislation_and_policies.json?${newQs}`).then((response) => {
       response.json().then((data) => {
@@ -126,7 +155,7 @@ class LegislationAndPolicies extends Component {
   }
 
   renderMoreOptions() {
-    const { isMoreSearchOptionsVisible } = this.state;
+    const { isMoreSearchOptionsVisible, filters } = this.state;
     const {
       keywords_filter_options: keywordsFilterOptions,
       responses_filter_options: responsesFilterOptions,
@@ -162,37 +191,43 @@ class LegislationAndPolicies extends Component {
             ref={this.keywordsFilter}
             filterName="Keywords"
             params={keywordsFilterOptions}
-            onChange={(event) => this.filterList('activeKeywordsFilter', event)}
+            selectedList={pick(filters, 'keywords')}
+            onChange={this.handleFilterChange}
           />
           <SearchFilter
             ref={this.responsesFilter}
             filterName="Mitigation / Adaptation / DRM"
             params={responsesFilterOptions}
-            onChange={(event) => this.filterList('activeResponsesFilter', event)}
+            selectedList={pick(filters, 'responses')}
+            onChange={this.handleFilterChange}
           />
           <SearchFilter
             ref={this.frameworksFilter}
             filterName="Frameworks"
             params={frameworksFilterOptions}
-            onChange={(event) => this.filterList('activeFrameworksFilter', event)}
+            selectedList={pick(filters, 'frameworks')}
+            onChange={this.handleFilterChange}
           />
           <SearchFilter
             ref={this.instrumentsFilter}
             filterName="Instruments"
             params={instrumentsFilterOptions}
-            onChange={(event) => this.filterList('activeInstrumentsFilter', event)}
+            selectedList={pick(filters, 'instruments')}
+            onChange={this.handleFilterChange}
           />
           <SearchFilter
             ref={this.naturalHazardsFilter}
             filterName="Natural Hazards"
             params={naturalHazardsFilterOptions}
-            onChange={(event) => this.filterList('activeNaturalHazardsFilter', event)}
+            selectedList={pick(filters, 'natural_hazards')}
+            onChange={this.handleFilterChange}
           />
           <SearchFilter
             ref={this.governancesFilter}
             filterName="Governances"
             params={governancesFilterOptions}
-            onChange={(event) => this.filterList('activeGovernancesFilter', event)}
+            selectedList={pick(filters, 'governances')}
+            onChange={this.handleFilterChange}
           />
           {!this.isMobile && (
             <button
@@ -209,18 +244,7 @@ class LegislationAndPolicies extends Component {
   }
 
   renderTags = () => {
-    const {
-      activeGeoFilter,
-      activeKeywordsFilter,
-      activeResponsesFilter,
-      activeFrameworksFilter,
-      activeTimeRangeFilter,
-      activeTypesFilter,
-      activeInstrumentsFilter,
-      activeNaturalHazardsFilter,
-      activeGovernancesFilter,
-      activeSectorsFilter
-    } = this.state;
+    const { filters } = this.state;
     const {
       geo_filter_options: geoFilterOptions,
       keywords_filter_options: keywordsFilterOptions,
@@ -232,27 +256,21 @@ class LegislationAndPolicies extends Component {
       governances_filter_options: governancesFilterOptions,
       sectors_options: sectorsOptions
     } = this.props;
-    if (Object.keys(activeGeoFilter).length === 0
-      && Object.keys(activeKeywordsFilter).length === 0
-      && Object.keys(activeFrameworksFilter).length === 0
-      && Object.keys(activeTypesFilter).length === 0
-      && Object.keys(activeInstrumentsFilter).length === 0
-      && Object.keys(activeNaturalHazardsFilter).length === 0
-      && Object.keys(activeGovernancesFilter).length === 0
-      && Object.keys(activeSectorsFilter).length === 0
-      && Object.keys(activeTimeRangeFilter).length === 0) return null;
+
+    if (Object.keys(filters).every(x => !x)) return null;
+
     return (
       <div className="filter-tags tags">
-        {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
-        {this.renderTagsGroup(activeKeywordsFilter, keywordsFilterOptions, 'keywordsFilter')}
-        {this.renderTagsGroup(activeResponsesFilter, responsesFilterOptions, 'responsesFilter')}
-        {this.renderTagsGroup(activeFrameworksFilter, frameworksFilterOptions, 'frameworksFilter')}
-        {this.renderTagsGroup(activeTypesFilter, typesFilterOptions, 'typesFilter')}
-        {this.renderTagsGroup(activeSectorsFilter, sectorsOptions, 'sectorsFilter')}
-        {this.renderTagsGroup(activeInstrumentsFilter, instrumentsFilterOptions, 'instrumentsFilter')}
-        {this.renderTagsGroup(activeNaturalHazardsFilter, naturalHazardsFilterOptions, 'naturalHazardsFilter')}
-        {this.renderTagsGroup(activeGovernancesFilter, governancesFilterOptions, 'governancesFilter')}
-        {this.renderTimeRangeTags(activeTimeRangeFilter)}
+        {this.renderTagsGroup(pick(filters, 'geography', 'region'), geoFilterOptions, 'geoFilter')}
+        {this.renderTagsGroup(pick(filters, 'keywords'), keywordsFilterOptions, 'keywordsFilter')}
+        {this.renderTagsGroup(pick(filters, 'responses'), responsesFilterOptions, 'responsesFilter')}
+        {this.renderTagsGroup(pick(filters, 'frameworks'), frameworksFilterOptions, 'frameworksFilter')}
+        {this.renderTagsGroup(pick(filters, 'type'), typesFilterOptions, 'typesFilter')}
+        {this.renderTagsGroup(pick(filters, 'law_sector'), sectorsOptions, 'sectorsFilter')}
+        {this.renderTagsGroup(pick(filters, 'instruments'), instrumentsFilterOptions, 'instrumentsFilter')}
+        {this.renderTagsGroup(pick(filters, 'natural_hazards'), naturalHazardsFilterOptions, 'naturalHazardsFilter')}
+        {this.renderTagsGroup(pick(filters, 'governances'), governancesFilterOptions, 'governancesFilter')}
+        {this.renderTimeRangeTags(pick(filters, 'from_date', 'to_date'))}
       </div>
     );
   };
@@ -285,7 +303,7 @@ class LegislationAndPolicies extends Component {
   renderTagsGroup = (activeTags, options, filterEl) => (
     <Fragment>
       {Object.keys(activeTags).map((keyBlock) => (
-        activeTags[keyBlock].map((key, i) => (
+        activeTags[keyBlock].filter(x => x).map((key, i) => (
           <span key={`tag_${keyBlock}_${i}`} className="tag">
             {options.filter(item => item.field_name === keyBlock)[0].options.filter(l => l.value === key)[0].label}
             <button type="button" onClick={() => this[filterEl].current.handleCheckItem(keyBlock, key)} className="delete" />
@@ -301,30 +319,35 @@ class LegislationAndPolicies extends Component {
       types_filter_options: typesFilterOptions,
       sectors_options: sectorsOptions
     } = this.props;
+    const { filters } = this.state;
+
     return (
       <Fragment>
         <SearchFilter
           ref={this.geoFilter}
           filterName="Regions and countries"
           params={geoFilterOptions}
-          onChange={(event) => this.filterList('activeGeoFilter', event)}
+          selectedList={pick(filters, 'geography', 'region')}
+          onChange={this.handleFilterChange}
         />
         <TimeRangeFilter
           ref={this.timeRangeFilter}
-          onChange={(event) => this.filterList('activeTimeRangeFilter', event)}
+          onChange={this.handleFilterChange}
         />
         <SearchFilter
           ref={this.typesFilter}
           filterName="Executive / Legislative"
           params={typesFilterOptions}
+          selectedList={pick(filters, 'type')}
           isSearchable={false}
-          onChange={(event) => this.filterList('activeTypesFilter', event)}
+          onChange={this.handleFilterChange}
         />
         <SearchFilter
           ref={this.sectorsFilter}
           filterName="Sectors"
+          selectedList={pick(filters, 'law_sector')}
           params={sectorsOptions}
-          onChange={(event) => this.filterList('activeSectorsFilter', event)}
+          onChange={this.handleFilterChange}
         />
       </Fragment>
     );
@@ -333,7 +356,7 @@ class LegislationAndPolicies extends Component {
   render() {
     const {legislations, count} = this.state;
     const hasMore = legislations.length < count;
-    const downloadResultsLink = `/cclow/legislation_and_policies.csv?${this.getQueryString()}`;
+    const downloadResultsLink = `/cclow/legislation_and_policies.csv?${this.createQueryString()}`;
 
     return (
       <Fragment>
