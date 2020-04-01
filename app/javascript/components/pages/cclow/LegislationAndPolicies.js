@@ -9,9 +9,9 @@ import TimeRangeFilter from '../../TimeRangeFilter';
 
 import {
   getQueryFilters,
-  useInteger,
-  useIntegerArray,
-  useStringArray
+  paramInteger,
+  paramIntegerArray,
+  paramStringArray
 } from './helpers';
 
 import ExecutiveSVG from 'images/icons/legislation_types/executive.svg';
@@ -90,7 +90,7 @@ class LegislationAndPolicies extends Component {
       ...extraParams
     }, notEmpty);
 
-    return qs.stringify(params, { arrayFormat: 'brackets' });
+    return qs.stringify(params, { addQueryPrefix: true, arrayFormat: 'brackets' });
   }
 
   resolveStateFromQueryString() {
@@ -98,32 +98,32 @@ class LegislationAndPolicies extends Component {
 
     return {
       filters: {
-        geography: useIntegerArray(query.geography),
-        region: useIntegerArray(query.region),
-        keywords: useIntegerArray(query.keywords),
-        responses: useIntegerArray(query.responses),
-        frameworks: useIntegerArray(query.frameworks),
-        from_date: useInteger(query.from_date),
-        to_date: useInteger(query.from_date),
-        type: useStringArray(query.type),
-        instruments: useIntegerArray(query.instruments),
-        natural_hazards: useIntegerArray(query.natural_hazards),
-        governances: useIntegerArray(query.governances),
-        law_sector: useIntegerArray(query.law_sector)
+        geography: paramIntegerArray(query.geography),
+        region: paramIntegerArray(query.region),
+        keywords: paramIntegerArray(query.keywords),
+        responses: paramIntegerArray(query.responses),
+        frameworks: paramIntegerArray(query.frameworks),
+        from_date: paramInteger(query.from_date),
+        to_date: paramInteger(query.from_date),
+        type: paramStringArray(query.type),
+        instruments: paramIntegerArray(query.instruments),
+        natural_hazards: paramIntegerArray(query.natural_hazards),
+        governances: paramIntegerArray(query.governances),
+        law_sector: paramIntegerArray(query.law_sector)
       }
     };
   }
 
   updateHistory() {
-    const newQs = this.createQueryString();
-    window.history.pushState(null, null, `?${newQs}`);
+    const query = this.createQueryString();
+    window.history.pushState(null, null, query || window.location.pathname);
   }
 
   fetchData() {
     const { offset } = this.state;
     const newQs = this.createQueryString({ offset });
 
-    fetch(`/cclow/legislation_and_policies.json?${newQs}`).then((response) => {
+    fetch(`/cclow/legislation_and_policies.json${newQs}`).then((response) => {
       response.json().then((data) => {
         if (response.ok) {
           if (offset > 0) {
@@ -356,7 +356,7 @@ class LegislationAndPolicies extends Component {
   render() {
     const {legislations, count} = this.state;
     const hasMore = legislations.length < count;
-    const downloadResultsLink = `/cclow/legislation_and_policies.csv?${this.createQueryString()}`;
+    const downloadResultsLink = `/cclow/legislation_and_policies.csv${this.createQueryString()}`;
 
     return (
       <Fragment>

@@ -72,11 +72,11 @@ class TimeRangeFilter extends Component {
   handleChange = (value) => {
     const {onChange} = this.props;
     const {from_date, to_date} = this.state;
-    const result = {...value};
-    Object.keys(result).forEach((key) => (result[key] == null) && delete result[key]);
-    if (from_date && !Object.keys(value).includes('from_date')) Object.assign(result, {from_date});
-    if (to_date && !Object.keys(value).includes('to_date')) Object.assign(result, {to_date});
-    onChange(result);
+    onChange({
+      from_date,
+      to_date,
+      ...value
+    });
     this.setState(value);
   };
 
