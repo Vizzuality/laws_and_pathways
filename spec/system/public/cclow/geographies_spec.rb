@@ -51,20 +51,23 @@ describe 'Geography page', type: 'system' do
 
     describe 'Single law page' do
       before do
-        click_link 'Renewable Energy Act (Legislative)'
+        click_link 'Law on the Prevention and Control of Atmospheric Pollution'
       end
 
       it 'shows the page' do
-        expect(page).to have_current_path('/cclow/geographies/china/laws/renewable-energy-act-legislative')
-        expect(page).to have_text('This Act describes duties of the government')
+        expect(page).to have_current_path(
+          '/cclow/geographies/china/laws/law-on-the-prevention-and-control-of-atmospheric-pollution'
+        )
+        expect(page).to have_text('The 2015 revisions provide that China should promote clean and efficient')
         expect(page).to have_text('Legislative')
         expect(page).to have_text('Action plan')
         expect(page).to have_text('Mitigation Framework')
-        expect(page).to have_text('Passed in 2006')
+        expect(page).to have_text('Passed in 1987')
 
         within('.timeline-events-container') do
           expect(page).to have_text('Law passed')
           expect(page).to have_text('Last amendment')
+          expect(page).to have_text('Entry into force')
         end
       end
     end
