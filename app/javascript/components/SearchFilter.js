@@ -64,19 +64,17 @@ class SearchFilter extends Component {
     const sortedOptions = sortBy(options.flat(), 'label');
 
     return (
-      <Fragment>
-        <ul>
-          {sortedOptions.map(option => (
-            <li key={option.value} onClick={() => this.handleCheckItem(option.fieldName, option.value)}>
-              <input type="checkbox" hidden checked={this.itemIsSelected(option.fieldName, option.value) || false} onChange={() => {}} />
-              <div className={`${this.itemIsSelected(option.fieldName, option.value) ? 'checked' : 'unchecked'} select-checkbox`}>
-                {this.itemIsSelected(option.fieldName, option.value) && <i className="fa fa-check" />}
-              </div>
-              <label>{option.label}</label>
-            </li>
-          ))}
-        </ul>
-      </Fragment>
+      <ul>
+        {sortedOptions.map(option => (
+          <li key={option.value} onClick={() => this.handleCheckItem(option.fieldName, option.value)}>
+            <input type="checkbox" hidden checked={this.itemIsSelected(option.fieldName, option.value) || false} onChange={() => {}} />
+            <div className={`${this.itemIsSelected(option.fieldName, option.value) ? 'checked' : 'unchecked'} select-checkbox`}>
+              {this.itemIsSelected(option.fieldName, option.value) && <i className="fa fa-check" />}
+            </div>
+            <label>{option.label}</label>
+          </li>
+        ))}
+      </ul>
     );
   }
 
@@ -155,17 +153,15 @@ class SearchFilter extends Component {
     Object.values(selectedList).forEach(list => { selectedCount += list.length; });
 
     return (
-      <Fragment>
-        <div className={`filter-container ${className}`}>
-          <div className="control-field" onClick={() => this.setShowOptions(true)}>
-            <div className="select-field">
-              <span>{filterName}</span><span className="toggle-indicator"><img src={plus} alt="" /></span>
-            </div>
-            {selectedCount !== 0 && <div className="selected-count">{selectedCount} selected</div>}
+      <div className={`filter-container ${className}`}>
+        <div className="control-field" onClick={() => this.setShowOptions(true)}>
+          <div className="select-field">
+            <span>{filterName}</span><span className="toggle-indicator"><img src={plus} alt="" /></span>
           </div>
-          { isShowOptions && this.renderOptions()}
+          {selectedCount !== 0 && <div className="selected-count">{selectedCount} selected</div>}
         </div>
-      </Fragment>
+        { isShowOptions && this.renderOptions()}
+      </div>
     );
   }
 }

@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { Range, Handle } from 'rc-slider';
@@ -159,17 +159,15 @@ class TimeRangeFilter extends Component {
     if (to_date) selectedCount += 1;
 
     return (
-      <Fragment>
-        <div className={`filter-container ${className}`}>
-          <div className="control-field" onClick={() => this.setShowOptions(true)}>
-            <div className="select-field">
-              <span>{filterName}</span><span className="toggle-indicator"><img src={plus} alt="" /></span>
-            </div>
-            {selectedCount !== 0 && <div className="selected-count">{selectedCount} selected</div>}
+      <div className={`filter-container ${className}`}>
+        <div className="control-field" onClick={() => this.setShowOptions(true)}>
+          <div className="select-field">
+            <span>{filterName}</span><span className="toggle-indicator"><img src={plus} alt="" /></span>
           </div>
-          { isShowOptions && this.renderOptions()}
+          {selectedCount !== 0 && <div className="selected-count">{selectedCount} selected</div>}
         </div>
-      </Fragment>
+        { isShowOptions && this.renderOptions()}
+      </div>
     );
   }
 }

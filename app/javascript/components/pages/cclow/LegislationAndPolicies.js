@@ -131,12 +131,10 @@ function LegislationAndPolicies(props) {
           <h5 className="title" dangerouslySetInnerHTML={{__html: legislation.link}} />
           <div className="meta">
             {legislation.geography && (
-              <Fragment>
-                <a href={legislation.geography_path}>
-                  <img src={`/images/flags/${legislation.geography.iso}.svg`} alt="" />
-                  {legislation.geography.name}
-                </a>
-              </Fragment>
+              <a href={legislation.geography_path}>
+                <img src={`/images/flags/${legislation.geography.iso}.svg`} alt="" />
+                {legislation.geography.name}
+              </a>
             )}
             <div>
               <img

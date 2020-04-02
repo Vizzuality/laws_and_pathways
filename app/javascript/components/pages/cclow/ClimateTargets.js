@@ -71,12 +71,10 @@ function ClimateTargets(props) {
           <h5 className="title" dangerouslySetInnerHTML={{__html: target.link}} />
           <div className="meta">
             {target.geography && (
-              <Fragment>
-                <a href={target.geography_path}>
-                  <img src={`/images/flags/${target.geography.iso}.svg`} alt="" />
-                  {target.geography.name}
-                </a>
-              </Fragment>
+              <a href={target.geography_path}>
+                <img src={`/images/flags/${target.geography.iso}.svg`} alt="" />
+                {target.geography.name}
+              </a>
             )}
             <div>{target.target_tags && target.target_tags.join(' | ')}</div>
           </div>
