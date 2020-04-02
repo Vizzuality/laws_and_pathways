@@ -153,6 +153,7 @@ class List extends Component {
     if (filterConfig.timeRange) {
       return (
         <TimeRangeFilter
+          key={`filter_${name}`}
           ref={this.filterRefs[name]}
           className={className}
           onChange={this.handleFilterChange}
@@ -162,6 +163,7 @@ class List extends Component {
 
     return (
       <SearchFilter
+        key={`filter_${name}`}
         ref={this.filterRefs[name]}
         className={className}
         filterName={title}
@@ -220,22 +222,18 @@ class List extends Component {
 
     if (timeRange) return this.renderTimeRangeTags(activeTags, filterEl);
 
-    return (
-      <Fragment>
-        {Object.keys(activeTags).map((keyBlock) => (
-          activeTags[keyBlock].filter(x => x).map((key, i) => (
-            <span key={`tag_${keyBlock}_${i}`} className="tag">
-              {options.filter(item => item.field_name === keyBlock)[0].options.filter(l => l.value === key)[0].label}
-              <button type="button" onClick={() => filterEl.current.handleCheckItem(keyBlock, key)} className="delete" />
-            </span>
-          ))
-        ))}
-      </Fragment>
-    );
+    return Object.keys(activeTags).map((keyBlock) => (
+      activeTags[keyBlock].filter(x => x).map((key, i) => (
+        <span key={`tag_${keyBlock}_${i}`} className="tag">
+          {options.filter(item => item.field_name === keyBlock)[0].options.filter(l => l.value === key)[0].label}
+          <button type="button" onClick={() => filterEl.current.handleCheckItem(keyBlock, key)} className="delete" />
+        </span>
+      ))
+    ));
   }
 
   renderTimeRangeTags = (value, filterEl) => (
-    <Fragment>
+    <Fragment key="time-range-filters">
       {value.from_date && (
         <span key="tag-time-range-from" className="tag">
           From {value.from_date}
@@ -291,11 +289,9 @@ class List extends Component {
                 {this.renderTags()}
                 <ul className="content-list">
                   {items.map((legislation, i) => (
-                    <Fragment key={i}>
-                      <li key={i} className="content-item">
-                        {this.props.renderContentItem(legislation)}
-                      </li>
-                    </Fragment>
+                    <li key={i} className="content-item">
+                      {this.props.renderContentItem(legislation)}
+                    </li>
                   ))}
                 </ul>
                 {hasMore && (

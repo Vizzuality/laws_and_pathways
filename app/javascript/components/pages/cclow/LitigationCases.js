@@ -160,20 +160,18 @@ function LitigationCases(props) {
       allTitle="All Litigation Cases"
       renderContentItem={(litigation) => (
         <Fragment>
-          <li className="content-item">
-            <h5 className="title" dangerouslySetInnerHTML={{__html: litigation.link}} />
-            <div className="meta">
-              {litigation.geography && (
-                <a href={litigation.geography_path}>
-                  <img src={`/images/flags/${litigation.geography.iso}.svg`} alt="" />
-                  {litigation.geography.name}
-                </a>
-              )}
-              {litigation.opened_in && <div>Opened in {litigation.opened_in}</div>}
-              {litigation.last_development_in && <div>Last development in {litigation.last_development_in}</div>}
-            </div>
-            <div className="description" dangerouslySetInnerHTML={{__html: litigation.short_summary}} />
-          </li>
+          <h5 className="title" dangerouslySetInnerHTML={{__html: litigation.link}} />
+          <div className="meta">
+            {litigation.geography && (
+              <a href={litigation.geography_path}>
+                <img src={`/images/flags/${litigation.geography.iso}.svg`} alt="" />
+                {litigation.geography.name}
+              </a>
+            )}
+            {litigation.opened_in && <div>Opened in {litigation.opened_in}</div>}
+            {litigation.last_development_in && <div>Last development in {litigation.last_development_in}</div>}
+          </div>
+          <div className="description" dangerouslySetInnerHTML={{__html: litigation.short_summary}} />
         </Fragment>
       )}
     />
