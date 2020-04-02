@@ -16,8 +16,7 @@ module Queries
 
         @scope
           .merge(full_text_filter)
-          .merge(filter_by_region)
-          .merge(filter_by_geography)
+          .merge(filter_by_geography_or_region)
           .merge(filter_by_tags)
           .merge(filter_by_from_date)
           .merge(filter_by_to_date)

@@ -118,6 +118,12 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
       expect(results).to contain_exactly(@litigation1, @litigation3, @litigation4)
     end
 
+    it 'should filter by region and geography' do
+      results = subject.new(geography: [@geography2.id], region: 'East Asia & Pacific').call
+      expect(results.size).to eq(3)
+      expect(results).to contain_exactly(@litigation1, @litigation2, @litigation4)
+    end
+
     it 'should filter by jurisdiction' do
       results = subject.new(jurisdiction: 'Federal court').call
       expect(results.size).to eq(1)

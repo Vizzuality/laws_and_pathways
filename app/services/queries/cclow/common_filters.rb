@@ -10,7 +10,9 @@ module Queries
       def filter_by_region
         return scope unless params[:region].present?
 
-        scope.includes(:geography).where(geographies: {region: params[:region]})
+        # to be able to use 'or'
+        ids = scope.joins(:geography).where(geographies: {region: params[:region]}).pluck(:id)
+        scope.where(id: ids)
       end
 
       def filter_by_sector
@@ -23,6 +25,13 @@ module Queries
         return scope unless params[:geography].present?
 
         scope.where(geography_id: params[:geography])
+      end
+
+      def filter_by_geography_or_region
+        return filter_by_geography if params[:geography].present? && params[:region].nil?
+        return filter_by_region if params[:region].present? && params[:geography].nil?
+
+        filter_by_geography.or(filter_by_region)
       end
 
       def filter_by_tags

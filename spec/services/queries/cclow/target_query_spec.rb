@@ -5,9 +5,14 @@ RSpec.describe Queries::CCLOW::TargetQuery do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.start
 
+    @geography1 = create(:geography, region: 'East Asia & Pacific')
+    @geography2 = create(:geography, region: 'Europe & Central Asia')
+    @geography3 = create(:geography, region: 'Europe & Central Asia')
+
     @target1 = create(
       :target,
       :published,
+      geography: @geography1,
       target_type: 'base_year_target',
       description: 'Assure the development of climate resilience by reducing at least by 50% the climate change',
       events: [
@@ -19,6 +24,7 @@ RSpec.describe Queries::CCLOW::TargetQuery do
     @target2 = create(
       :target,
       :published,
+      geography: @geography2,
       target_type: 'base_year_target',
       description: 'By 2020, the NAP process is completed by 2020',
       events: [
@@ -29,6 +35,7 @@ RSpec.describe Queries::CCLOW::TargetQuery do
     @target3 = create(
       :target,
       :published,
+      geography: @geography3,
       target_type: 'intensity_target',
       description: 'To have, by 2020, six regional risk-management plans (covering the entire country)',
       events: [
@@ -39,6 +46,7 @@ RSpec.describe Queries::CCLOW::TargetQuery do
     @target4 = create(
       :target,
       :published,
+      geography: @geography1,
       target_type: 'trajectory_target',
       description: 'Some climate target',
       events: [
@@ -84,6 +92,24 @@ RSpec.describe Queries::CCLOW::TargetQuery do
     it 'should be ordered by last event date' do
       results = subject.new({}).call
       expect(results.map(&:id)).to eq([@target3.id, @target2.id, @target1.id, @target4.id])
+    end
+
+    it 'should filter by region' do
+      results = subject.new(region: 'Europe & Central Asia').call
+      expect(results.size).to eq(2)
+      expect(results).to contain_exactly(@target2, @target3)
+    end
+
+    it 'should filter by geography' do
+      results = subject.new(geography: [@geography1.id, @geography3.id]).call
+      expect(results.size).to eq(3)
+      expect(results).to contain_exactly(@target1, @target3, @target4)
+    end
+
+    it 'should filter by region and geography' do
+      results = subject.new(geography: [@geography2.id], region: 'East Asia & Pacific').call
+      expect(results.size).to eq(3)
+      expect(results).to contain_exactly(@target1, @target2, @target4)
     end
   end
 end
