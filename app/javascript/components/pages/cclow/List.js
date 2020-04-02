@@ -7,6 +7,7 @@ import flatten from 'lodash/flatten';
 
 import SearchFilter from '../../SearchFilter';
 import TimeRangeFilter from '../../TimeRangeFilter';
+import { withDeviceInfo } from 'components/Responsive';
 
 import { getQueryFilters } from './helpers';
 
@@ -21,8 +22,6 @@ class List extends Component {
       showMoreFilters: false,
       ...this.resolveStateFromQueryString()
     };
-
-    this.isMobile = window.innerWidth < 1024;
 
     this.filterRefs = this.props.filterConfigs
       .map(f => f.name)
@@ -259,7 +258,8 @@ class List extends Component {
 
   render() {
     const { items, count } = this.state;
-    const { url } = this.props;
+    const { url, deviceInfo } = this.props;
+    const { isMobile } = deviceInfo;
     const hasMore = items.length < count;
     const downloadResultsLink = `${url}.csv${this.createQueryString()}`;
 
@@ -270,10 +270,10 @@ class List extends Component {
             <div className="title-page">
               {this.renderPageTitle()}
             </div>
-            {this.isMobile && (<div className="filter-column">{this.renderFilters()}</div>)}
+            {isMobile && (<div className="filter-column">{this.renderFilters()}</div>)}
             <hr />
             <div className="columns">
-              {!this.isMobile && (
+              {!isMobile && (
                 <div className="column is-one-quarter filter-column">
                   <div className="search-by">Narrow this search by</div>
                   {this.renderFilters()}
@@ -295,7 +295,7 @@ class List extends Component {
                   ))}
                 </ul>
                 {hasMore && (
-                  <div className={`column load-more-container${!this.isMobile ? ' is-offset-5' : ''}`}>
+                  <div className={`column load-more-container${!isMobile ? ' is-offset-5' : ''}`}>
                     <button type="button" className="button is-primary load-more-btn" onClick={this.handleLoadMore}>
                       Load 10 more entries
                     </button>
@@ -319,7 +319,8 @@ List.propTypes = {
   title: PropTypes.string.isRequired,
   allTitle: PropTypes.string.isRequired,
   renderContentItem: PropTypes.func.isRequired,
-  count: PropTypes.number.isRequired
+  count: PropTypes.number.isRequired,
+  deviceInfo: PropTypes.object.isRequired
 };
 
-export default List;
+export default withDeviceInfo(List);
