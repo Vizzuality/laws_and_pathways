@@ -41,7 +41,10 @@ describe 'Geography page', type: 'system' do
     end
 
     it 'shows geography laws page' do
-      expect(page).to have_current_path('/cclow/geographies/china/laws')
+      geography = Geography.find_by(slug: 'china')
+      expect(page).to have_current_path(
+        cclow_legislation_and_policies_path(geography: [geography.id], type: ['legislative'])
+      )
       expect(page).to have_text('Law on the Prevention and Control of Atmospheric Pollution')
       expect(page).to have_text('Energy Conservation Law')
     end
@@ -73,7 +76,10 @@ describe 'Geography page', type: 'system' do
     end
 
     it 'shows geography policies page' do
-      expect(page).to have_current_path('/cclow/geographies/china/policies')
+      geography = Geography.find_by(slug: 'china')
+      expect(page).to have_current_path(
+        cclow_legislation_and_policies_path(geography: [geography.id], type: ['executive'])
+      )
       expect(page).to have_text('13th Five-Year Plan')
       expect(page).to have_text('Energy Development Strategy Action Plan (2014-2020)')
     end
@@ -111,7 +117,7 @@ describe 'Geography page', type: 'system' do
     end
 
     it 'shows geography litigation cases page' do
-      expect(page).to have_text('Currently there are no litigation cases available for China.')
+      expect(page).to have_text('Showing 0 results')
     end
   end
 
