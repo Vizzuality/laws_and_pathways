@@ -89,7 +89,13 @@ class List extends Component {
         [param[0]]: param[1](query[param[0]])
       }), {});
 
-    return { filters };
+    return {
+      filters: {
+        ...filters,
+        q: query.q,
+        recent: query.recent
+      }
+    };
   }
 
   updateHistory() {
