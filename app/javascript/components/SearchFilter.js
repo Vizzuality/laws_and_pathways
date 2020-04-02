@@ -103,10 +103,10 @@ class SearchFilter extends Component {
 
   renderOptions = () => {
     const {searchValue} = this.state;
-    const {filterName, params, isSearchable} = this.props;
+    const {filterName, items, isSearchable} = this.props;
     const listBlocks = [];
-    for (let i = 0; i < params.length; i += 1) {
-      listBlocks[i] = Object.assign({}, params[i]);
+    for (let i = 0; i < items.length; i += 1) {
+      listBlocks[i] = Object.assign({}, items[i]);
       if (searchValue) {
         listBlocks[i].options = listBlocks[i]
           .options.concat().filter(item => item.label.toLowerCase().includes(searchValue.toLowerCase()));
@@ -139,16 +139,16 @@ class SearchFilter extends Component {
   };
 
   isEmpty = () => {
-    const {params} = this.props;
-    for (let i = 0; i < params.length; i = 1) {
-      if ((params[i].options || []).length !== 0) return false;
+    const {items} = this.props;
+    for (let i = 0; i < items.length; i = 1) {
+      if ((items[i].options || []).length !== 0) return false;
     }
     return true;
   };
 
   render() {
     const {isShowOptions} = this.state;
-    const {filterName, selectedList} = this.props;
+    const {filterName, selectedList, className} = this.props;
     if (this.isEmpty()) return null;
 
     let selectedCount = 0;
@@ -156,7 +156,7 @@ class SearchFilter extends Component {
 
     return (
       <Fragment>
-        <div className="filter-container">
+        <div className={`filter-container ${className}`}>
           <div className="control-field" onClick={() => this.setShowOptions(true)}>
             <div className="select-field">
               <span>{filterName}</span><span className="toggle-indicator"><img src={plus} alt="" /></span>
@@ -171,14 +171,16 @@ class SearchFilter extends Component {
 }
 
 SearchFilter.defaultProps = {
+  className: '',
   onChange: () => {},
   selectedList: {},
   isSearchable: true
 };
 
 SearchFilter.propTypes = {
+  className: PropTypes.string,
   filterName: PropTypes.string.isRequired,
-  params: PropTypes.array.isRequired,
+  items: PropTypes.array.isRequired,
   onChange: PropTypes.func,
   selectedList: PropTypes.object,
   isSearchable: PropTypes.bool

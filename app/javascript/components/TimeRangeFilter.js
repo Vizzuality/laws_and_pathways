@@ -153,14 +153,14 @@ class TimeRangeFilter extends Component {
 
   render() {
     const {isShowOptions, from_date, to_date} = this.state;
-    const {filterName} = this.props;
+    const {filterName, className} = this.props;
     let selectedCount = 0;
     if (from_date) selectedCount += 1;
     if (to_date) selectedCount += 1;
 
     return (
       <Fragment>
-        <div className="filter-container">
+        <div className={`filter-container ${className}`}>
           <div className="control-field" onClick={() => this.setShowOptions(true)}>
             <div className="select-field">
               <span>{filterName}</span><span className="toggle-indicator"><img src={plus} alt="" /></span>
@@ -175,6 +175,7 @@ class TimeRangeFilter extends Component {
 }
 
 TimeRangeFilter.defaultProps = {
+  className: '',
   onChange: () => {},
   filterName: 'Time range',
   minDate: 1990,
@@ -182,6 +183,7 @@ TimeRangeFilter.defaultProps = {
 };
 
 TimeRangeFilter.propTypes = {
+  className: PropTypes.string,
   filterName: PropTypes.string,
   minDate: PropTypes.number,
   maxDate: PropTypes.number,

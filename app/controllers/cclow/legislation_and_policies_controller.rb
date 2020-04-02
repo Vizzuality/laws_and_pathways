@@ -28,7 +28,7 @@ module CCLOW
         end
         format.json do
           render json: {
-            legislations: CCLOW::LegislationDecorator.decorate_collection(
+            items: CCLOW::LegislationDecorator.decorate_collection(
               @legislations.offset(params[:offset] || 0).take(10)
             ),
             count: @legislations.size

@@ -1,305 +1,92 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import qs from 'qs';
-import SearchFilter from '../../SearchFilter';
-/* import TimeRangeFilter from '../../TimeRangeFilter'; */
 
-function getQueryFilters() {
-  return qs.parse(window.location.search.slice(1));
-}
+import List from './List';
 
-class ClimateTargets extends Component {
-  constructor(props) {
-    super(props);
-    const {
-      climate_targets,
-      count
-    } = this.props;
+import {
+  paramIntegerArray,
+  paramStringArray
+} from './helpers';
 
-    this.state = {
-      climate_targets,
-      count,
-      offset: 0,
-      activeGeoFilter: {},
-      activeTimeRangeFilter: {},
-      activeTypesFilter: {},
-      activeSectorsFilter: {},
-      activeTargetYearsFilter: {},
-      isMoreSearchOptionsVisible: false
-    };
+function ClimateTargets(props) {
+  const {
+    climate_targets,
+    count,
+    geo_filter_options,
+    types_filter_options,
+    sectors_options,
+    target_years_options
+  } = props;
 
-    this.isMobile = window.innerWidth < 1024;
-
-    this.geoFilter = React.createRef();
-    this.sectorsFilter = React.createRef();
-    this.targetYearsFilter = React.createRef();
-    this.timeRangeFilter = React.createRef();
-    this.typesFilter = React.createRef();
-  }
-
-  getQueryString(extraParams = {}) {
-    const {
-      activeGeoFilter,
-      activeTypesFilter,
-      activeTimeRangeFilter,
-      activeSectorsFilter,
-      activeTargetYearsFilter
-    } = this.state;
-
-    const params = {
-      ...getQueryFilters(),
-      ...activeTimeRangeFilter,
-      ...activeGeoFilter,
-      ...activeTypesFilter,
-      ...activeSectorsFilter,
-      ...activeTargetYearsFilter,
-      ...extraParams
-    };
-
-    return qs.stringify(params, { arrayFormat: 'brackets' });
-  }
-
-  handleLoadMore = () => {
-    const { climate_targets } = this.state;
-    this.setState({ offset: climate_targets.length }, this.fetchData.bind(this));
-  };
-
-  filterList = (activeFilterName, filterParams) => {
-    this.setState({[activeFilterName]: filterParams, offset: 0}, this.fetchData.bind(this));
-  };
-
-  fetchData() {
-    const { offset } = this.state;
-    const newQs = this.getQueryString({ offset });
-
-    fetch(`/cclow/climate_targets.json?${newQs}`).then((response) => {
-      response.json().then((data) => {
-        if (response.ok) {
-          if (offset > 0) {
-            this.setState(({ climate_targets }) => ({
-              climate_targets: climate_targets.concat(data.climate_targets)
-            }));
-          } else {
-            this.setState({climate_targets: data.climate_targets, count: data.count});
-          }
-        }
-      });
-    });
-  }
-
-  renderPageTitle() {
-    const qFilters = getQueryFilters();
-
-    const filterText = qFilters.q || (qFilters.recent && 'recent additions');
-
-    if (filterText) {
-      return (
-        <h5 className="search-title">
-          Search results: <strong>{filterText}</strong> in Climate Targets
-        </h5>
-      );
+  const filters = [
+    {
+      name: 'geo',
+      title: 'Regions and countries',
+      options: geo_filter_options,
+      mainFilter: true,
+      params: {
+        geography: paramIntegerArray,
+        region: paramIntegerArray
+      }
+    },
+    {
+      name: 'sectors',
+      title: 'Sectors',
+      options: sectors_options,
+      mainFilter: true,
+      params: {
+        law_sector: paramIntegerArray
+      }
+    },
+    {
+      name: 'type',
+      title: 'Target types',
+      options: types_filter_options,
+      mainFilter: true,
+      params: {
+        type: paramStringArray
+      }
+    },
+    {
+      name: 'year',
+      title: 'Target years',
+      options: target_years_options,
+      mainFilter: true,
+      params: {
+        target_year: paramIntegerArray
+      }
     }
+  ];
 
-    return (<h5>All Climate Targets</h5>);
-  }
-
-  renderTags = () => {
-    const {
-      activeGeoFilter,
-      activeTimeRangeFilter,
-      activeTypesFilter,
-      activeSectorsFilter,
-      activeTargetYearsFilter
-    } = this.state;
-    const {
-      geo_filter_options: geoFilterOptions,
-      types_filter_options: typesFilterOptions,
-      sectors_options: sectorsOptions,
-      target_years_options: targetYearsOptions
-    } = this.props;
-    if (Object.keys(activeGeoFilter).length === 0
-      && Object.keys(activeTypesFilter).length === 0
-      && Object.keys(activeTimeRangeFilter).length === 0
-      && Object.keys(activeSectorsFilter).length === 0
-      && Object.keys(activeTargetYearsFilter).length === 0) return null;
-    return (
-      <div className="filter-tags tags">
-        {this.renderTagsGroup(activeGeoFilter, geoFilterOptions, 'geoFilter')}
-        {this.renderTagsGroup(activeSectorsFilter, sectorsOptions, 'sectorsFilter')}
-        {this.renderTagsGroup(activeTypesFilter, typesFilterOptions, 'typesFilter')}
-        {this.renderTagsGroup(activeTargetYearsFilter, targetYearsOptions, 'targetYearsFilter')}
-        {this.renderTimeRangeTags(activeTimeRangeFilter)}
-      </div>
-    );
-  };
-
-  renderTimeRangeTags = (value) => (
-    <Fragment>
-      {value.from_date && (
-        <span key="tag-time-range-from" className="tag">
-          From {value.from_date}
-          <button
-            type="button"
-            onClick={() => this.timeRangeFilter.current.handleChange({from_date: null})}
-            className="delete"
-          />
-        </span>
-      )}
-      {value.to_date && (
-        <span key="tag-time-range-to" className="tag">
-          To {value.to_date}
-          <button
-            type="button"
-            onClick={() => this.timeRangeFilter.current.handleChange({to_date: null})}
-            className="delete"
-          />
-        </span>
-      )}
-    </Fragment>
-  );
-
-  renderTagsGroup = (activeTags, options, filterEl) => (
-    <Fragment>
-      {Object.keys(activeTags).map((keyBlock) => (
-        activeTags[keyBlock].map((key, i) => (
-          <span key={`tag_${keyBlock}_${i}`} className="tag">
-            {options.filter(item => item.field_name === keyBlock)[0].options.filter(l => l.value === key)[0].label}
-            <button type="button" onClick={() => this[filterEl].current.handleCheckItem(keyBlock, key)} className="delete" />
-          </span>
-        ))
-      ))}
-    </Fragment>
-  );
-
-  renderFilters = () => {
-    const {
-      geo_filter_options: geoFilterOptions,
-      types_filter_options: typesFilterOptions,
-      sectors_options: sectorsOptions,
-      target_years_options: targetYearsOptions
-    } = this.props;
-    return (
-      <Fragment>
-        <SearchFilter
-          ref={this.geoFilter}
-          filterName="Regions and countries"
-          params={geoFilterOptions}
-          onChange={(event) => this.filterList('activeGeoFilter', event)}
-        />
-        <SearchFilter
-          ref={this.sectorsFilter}
-          filterName="Sectors"
-          params={sectorsOptions}
-          onChange={(event) => this.filterList('activeSectorsFilter', event)}
-        />
-        <SearchFilter
-          ref={this.typesFilter}
-          filterName="Target types"
-          params={typesFilterOptions}
-          onChange={(event) => this.filterList('activeTypesFilter', event)}
-        />
-        <SearchFilter
-          ref={this.targetYearsFilter}
-          filterName="Target years"
-          params={targetYearsOptions}
-          onChange={(event) => this.filterList('activeTargetYearsFilter', event)}
-        />
-      </Fragment>
-    );
-  }
-
-  renderMoreOptions = () => {
-    const {isMoreSearchOptionsVisible} = this.state;
-    return (
-      <Fragment>
-        {!isMoreSearchOptionsVisible && (
-          <button
-            type="button"
-            onClick={() => this.setState({isMoreSearchOptionsVisible: true})}
-            className="more-options"
-          >
-            + Show more search options
-          </button>
-        )}
-        <div className={isMoreSearchOptionsVisible ? '' : 'hidden'}>
-          <button
-            type="button"
-            onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
-            className="more-options"
-          >
-            - Show fewer search options
-          </button>
-          {this.renderFilters()}
-        </div>
-      </Fragment>
-    );
-  }
-
-  render() {
-    const {climate_targets, count} = this.state;
-    const hasMore = climate_targets.length < count;
-    const downloadResultsLink = `/cclow/climate_targets.csv?${this.getQueryString()}`;
-
-    return (
-      <Fragment>
-        <div className="cclow-geography-page">
-          <div className="container">
-            <div className="flex-container">
-              {this.renderPageTitle()}
-            </div>
-            {this.isMobile && (<div className="filter-column">{this.renderMoreOptions()}</div>)}
-            <hr />
-            <div className="columns">
-              {!this.isMobile && (
-                <div className="column is-one-quarter filter-column">
-                  <div className="search-by">Narrow this search by</div>
-                  {this.renderFilters()}
-                </div>
+  return (
+    <List
+      items={climate_targets}
+      count={count}
+      filterConfigs={filters}
+      url="/cclow/climate_targets"
+      title="Climate Targets"
+      allTitle="All Climate Targets"
+      renderContentItem={(target) => (
+        <Fragment>
+          <li className="content-item">
+            <h5 className="title" dangerouslySetInnerHTML={{__html: target.link}} />
+            <div className="meta">
+              {target.geography && (
+                <Fragment>
+                  <a href={target.geography_path}>
+                    <img src={`/images/flags/${target.geography.iso}.svg`} alt="" />
+                    {target.geography.name}
+                  </a>
+                </Fragment>
               )}
-              <main className="column is-three-quarters">
-                <div className="columns pre-content">
-                  <span className="column is-half">Showing {count} results</span>
-                  <span className="column is-half download-link is-hidden-touch">
-                    <a className="download-link" href={downloadResultsLink}>Download results (.csv)</a>
-                  </span>
-                </div>
-                {this.renderTags()}
-                <ul className="content-list">
-                  {climate_targets.map((target, i) => (
-                    <Fragment key={i}>
-                      <li className="content-item">
-                        <h5 className="title" dangerouslySetInnerHTML={{__html: target.link}} />
-                        <div className="meta">
-                          {target.geography && (
-                            <Fragment>
-                              <a href={target.geography_path}>
-                                <img src={`/images/flags/${target.geography.iso}.svg`} alt="" />
-                                {target.geography.name}
-                              </a>
-                            </Fragment>
-                          )}
-                          <div>{target.target_tags && target.target_tags.join(' | ')}</div>
-                        </div>
-                      </li>
-                    </Fragment>
-                  ))}
-                </ul>
-                {hasMore && (
-                  <div className={`column load-more-container${!this.isMobile ? ' is-offset-5' : ''}`}>
-                    <button type="button" className="button is-primary load-more-btn" onClick={this.handleLoadMore}>
-                      Load 10 more entries
-                    </button>
-                  </div>
-                )}
-              </main>
+              <div>{target.target_tags && target.target_tags.join(' | ')}</div>
             </div>
-          </div>
-        </div>
-      </Fragment>
-    );
-  }
+          </li>
+        </Fragment>
+      )}
+    />
+  );
 }
-
 
 ClimateTargets.defaultProps = {
   count: 0,

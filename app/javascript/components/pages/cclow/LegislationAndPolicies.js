@@ -1,14 +1,9 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import qs from 'qs';
-import pick from 'lodash/pick';
-import pickBy from 'lodash/pickBy';
 
-import SearchFilter from '../../SearchFilter';
-import TimeRangeFilter from '../../TimeRangeFilter';
+import List from './List';
 
 import {
-  getQueryFilters,
   paramInteger,
   paramIntegerArray,
   paramStringArray
@@ -17,415 +12,147 @@ import {
 import ExecutiveSVG from 'images/icons/legislation_types/executive.svg';
 import LegislativeSVG from 'images/icons/legislation_types/legislative.svg';
 
-class LegislationAndPolicies extends Component {
-  constructor(props) {
-    super(props);
+function LegislationAndPolicies(props) {
+  const {
+    legislations,
+    count,
+    geo_filter_options,
+    keywords_filter_options,
+    responses_filter_options,
+    frameworks_filter_options,
+    types_filter_options,
+    instruments_filter_options,
+    natural_hazards_filter_options,
+    governances_filter_options,
+    sectors_options
+  } = props;
 
-    const {
-      legislations,
-      count
-    } = this.props;
-
-    this.state = {
-      legislations,
-      count,
-      offset: 0,
-      isMoreSearchOptionsVisible: false,
-      ...this.resolveStateFromQueryString()
-    };
-
-    this.isMobile = window.innerWidth < 1024;
-
-    this.geoFilter = React.createRef();
-    this.keywordsFilter = React.createRef();
-    this.responsesFilter = React.createRef();
-    this.frameworksFilter = React.createRef();
-    this.timeRangeFilter = React.createRef();
-    this.typesFilter = React.createRef();
-    this.instrumentsFilter = React.createRef();
-    this.naturalHazardsFilter = React.createRef();
-    this.governancesFilter = React.createRef();
-    this.sectorsFilter = React.createRef();
-  }
-
-  componentDidMount() {
-    window.addEventListener('popstate', this.handleHistoryChange);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('popstate', this.handleHistoryChange);
-  }
-
-  handleHistoryChange = () => {
-    this.setState({ ...this.resolveStateFromQueryString() }, this.fetchData.bind(this));
-  }
-
-  handleLoadMore = () => {
-    const { legislations } = this.state;
-    this.setState({ offset: legislations.length }, this.fetchData.bind(this));
-  }
-
-  handleFilterChange = (changedFilters) => {
-    this.setState((state) => ({
-      filters: {
-        ...state.filters,
-        ...changedFilters
-      },
-      offset: 0
-    }), () => {
-      this.updateHistory();
-      this.fetchData();
-    });
-  }
-
-  createQueryString(extraParams = {}) {
-    const notEmpty = (value) => {
-      if (value && value.length) return true;
-
-      return value !== undefined && value !== null;
-    };
-
-    const params = pickBy({
-      ...this.state.filters,
-      ...extraParams
-    }, notEmpty);
-
-    return qs.stringify(params, { addQueryPrefix: true, arrayFormat: 'brackets' });
-  }
-
-  resolveStateFromQueryString() {
-    const query = getQueryFilters();
-
-    return {
-      filters: {
-        geography: paramIntegerArray(query.geography),
-        region: paramIntegerArray(query.region),
-        keywords: paramIntegerArray(query.keywords),
-        responses: paramIntegerArray(query.responses),
-        frameworks: paramIntegerArray(query.frameworks),
-        from_date: paramInteger(query.from_date),
-        to_date: paramInteger(query.from_date),
-        type: paramStringArray(query.type),
-        instruments: paramIntegerArray(query.instruments),
-        natural_hazards: paramIntegerArray(query.natural_hazards),
-        governances: paramIntegerArray(query.governances),
-        law_sector: paramIntegerArray(query.law_sector)
+  const filters = [
+    {
+      name: 'geo',
+      title: 'Regions and countries',
+      options: geo_filter_options,
+      mainFilter: true,
+      params: {
+        geography: paramIntegerArray,
+        region: paramIntegerArray
       }
-    };
-  }
-
-  updateHistory() {
-    const query = this.createQueryString();
-    window.history.pushState(null, null, query || window.location.pathname);
-  }
-
-  fetchData() {
-    const { offset } = this.state;
-    const newQs = this.createQueryString({ offset });
-
-    fetch(`/cclow/legislation_and_policies.json${newQs}`).then((response) => {
-      response.json().then((data) => {
-        if (response.ok) {
-          if (offset > 0) {
-            this.setState(({ legislations }) => ({
-              legislations: legislations.concat(data.legislations)
-            }));
-          } else {
-            this.setState({legislations: data.legislations, count: data.count});
-          }
-        }
-      });
-    });
-  }
-
-  renderPageTitle() {
-    const qFilters = getQueryFilters();
-
-    const filterText = qFilters.q || (qFilters.recent && 'recent additions');
-
-    if (filterText) {
-      return (
-        <h5 className="search-title">
-          Search results: <strong>{filterText}</strong> in Legislation and policies
-        </h5>
-      );
+    },
+    {
+      name: 'timeRange',
+      timeRange: true,
+      mainFilter: true,
+      params: {
+        from_date: paramInteger,
+        to_date: paramInteger
+      }
+    },
+    {
+      name: 'type',
+      title: 'Executive / Legislative',
+      options: types_filter_options,
+      mainFilter: true,
+      props: {
+        isSearchable: false
+      },
+      params: {
+        type: paramStringArray
+      }
+    },
+    {
+      name: 'sectors',
+      title: 'Sectors',
+      options: sectors_options,
+      mainFilter: true,
+      params: {
+        law_sector: paramIntegerArray
+      }
+    },
+    {
+      name: 'keywords',
+      title: 'Keywords',
+      options: keywords_filter_options,
+      params: {
+        keywords: paramIntegerArray
+      }
+    },
+    {
+      name: 'responses',
+      title: 'Mitigation / Adaptation / DRM',
+      options: responses_filter_options,
+      params: {
+        responses: paramIntegerArray
+      }
+    },
+    {
+      name: 'frameworks',
+      title: 'Frameworks',
+      options: frameworks_filter_options,
+      params: {
+        frameworks: paramIntegerArray
+      }
+    },
+    {
+      name: 'instruments',
+      title: 'Instruments',
+      options: instruments_filter_options,
+      params: {
+        instruments: paramIntegerArray
+      }
+    },
+    {
+      name: 'naturalHazards',
+      title: 'Natural Hazards',
+      options: natural_hazards_filter_options,
+      params: {
+        natural_hazards: paramIntegerArray
+      }
+    },
+    {
+      name: 'governances',
+      title: 'Governances',
+      options: governances_filter_options,
+      params: {
+        governances: paramIntegerArray
+      }
     }
+  ];
 
-    return (<h5>All laws and policies</h5>);
-  }
-
-  renderMoreOptions() {
-    const { isMoreSearchOptionsVisible, filters } = this.state;
-    const {
-      keywords_filter_options: keywordsFilterOptions,
-      responses_filter_options: responsesFilterOptions,
-      frameworks_filter_options: frameworksFilterOptions,
-      instruments_filter_options: instrumentsFilterOptions,
-      natural_hazards_filter_options: naturalHazardsFilterOptions,
-      governances_filter_options: governancesFilterOptions
-    } = this.props;
-
-    return (
-      <Fragment>
-        {!isMoreSearchOptionsVisible && (
-          <button
-            type="button"
-            onClick={() => this.setState({isMoreSearchOptionsVisible: true})}
-            className="more-options"
-          >
-            + Show more search options
-          </button>
-        )}
-        <div className={isMoreSearchOptionsVisible ? 'more-filters' : 'more-filters hidden'}>
-          {this.isMobile && (
-            <button
-              type="button"
-              onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
-              className="more-options"
-            >
-              - Show fewer search options
-            </button>
-          )}
-          {this.isMobile && this.renderMainFilters()}
-          <SearchFilter
-            ref={this.keywordsFilter}
-            filterName="Keywords"
-            params={keywordsFilterOptions}
-            selectedList={pick(filters, 'keywords')}
-            onChange={this.handleFilterChange}
-          />
-          <SearchFilter
-            ref={this.responsesFilter}
-            filterName="Mitigation / Adaptation / DRM"
-            params={responsesFilterOptions}
-            selectedList={pick(filters, 'responses')}
-            onChange={this.handleFilterChange}
-          />
-          <SearchFilter
-            ref={this.frameworksFilter}
-            filterName="Frameworks"
-            params={frameworksFilterOptions}
-            selectedList={pick(filters, 'frameworks')}
-            onChange={this.handleFilterChange}
-          />
-          <SearchFilter
-            ref={this.instrumentsFilter}
-            filterName="Instruments"
-            params={instrumentsFilterOptions}
-            selectedList={pick(filters, 'instruments')}
-            onChange={this.handleFilterChange}
-          />
-          <SearchFilter
-            ref={this.naturalHazardsFilter}
-            filterName="Natural Hazards"
-            params={naturalHazardsFilterOptions}
-            selectedList={pick(filters, 'natural_hazards')}
-            onChange={this.handleFilterChange}
-          />
-          <SearchFilter
-            ref={this.governancesFilter}
-            filterName="Governances"
-            params={governancesFilterOptions}
-            selectedList={pick(filters, 'governances')}
-            onChange={this.handleFilterChange}
-          />
-          {!this.isMobile && (
-            <button
-              type="button"
-              onClick={() => this.setState({isMoreSearchOptionsVisible: false})}
-              className="more-options"
-            >
-              - Show fewer search options
-            </button>
-          )}
-        </div>
-      </Fragment>
-    );
-  }
-
-  renderTags = () => {
-    const { filters } = this.state;
-    const {
-      geo_filter_options: geoFilterOptions,
-      keywords_filter_options: keywordsFilterOptions,
-      responses_filter_options: responsesFilterOptions,
-      frameworks_filter_options: frameworksFilterOptions,
-      types_filter_options: typesFilterOptions,
-      instruments_filter_options: instrumentsFilterOptions,
-      natural_hazards_filter_options: naturalHazardsFilterOptions,
-      governances_filter_options: governancesFilterOptions,
-      sectors_options: sectorsOptions
-    } = this.props;
-
-    if (Object.keys(filters).every(x => !x)) return null;
-
-    return (
-      <div className="filter-tags tags">
-        {this.renderTagsGroup(pick(filters, 'geography', 'region'), geoFilterOptions, 'geoFilter')}
-        {this.renderTagsGroup(pick(filters, 'keywords'), keywordsFilterOptions, 'keywordsFilter')}
-        {this.renderTagsGroup(pick(filters, 'responses'), responsesFilterOptions, 'responsesFilter')}
-        {this.renderTagsGroup(pick(filters, 'frameworks'), frameworksFilterOptions, 'frameworksFilter')}
-        {this.renderTagsGroup(pick(filters, 'type'), typesFilterOptions, 'typesFilter')}
-        {this.renderTagsGroup(pick(filters, 'law_sector'), sectorsOptions, 'sectorsFilter')}
-        {this.renderTagsGroup(pick(filters, 'instruments'), instrumentsFilterOptions, 'instrumentsFilter')}
-        {this.renderTagsGroup(pick(filters, 'natural_hazards'), naturalHazardsFilterOptions, 'naturalHazardsFilter')}
-        {this.renderTagsGroup(pick(filters, 'governances'), governancesFilterOptions, 'governancesFilter')}
-        {this.renderTimeRangeTags(pick(filters, 'from_date', 'to_date'))}
-      </div>
-    );
-  };
-
-  renderTimeRangeTags = (value) => (
-    <Fragment>
-      {value.from_date && (
-        <span key="tag-time-range-from" className="tag">
-          From {value.from_date}
-          <button
-            type="button"
-            onClick={() => this.timeRangeFilter.current.handleChange({from_date: null})}
-            className="delete"
-          />
-        </span>
-      )}
-      {value.to_date && (
-        <span key="tag-time-range-to" className="tag">
-          To {value.to_date}
-          <button
-            type="button"
-            onClick={() => this.timeRangeFilter.current.handleChange({to_date: null})}
-            className="delete"
-          />
-        </span>
-      )}
-    </Fragment>
-  );
-
-  renderTagsGroup = (activeTags, options, filterEl) => (
-    <Fragment>
-      {Object.keys(activeTags).map((keyBlock) => (
-        activeTags[keyBlock].filter(x => x).map((key, i) => (
-          <span key={`tag_${keyBlock}_${i}`} className="tag">
-            {options.filter(item => item.field_name === keyBlock)[0].options.filter(l => l.value === key)[0].label}
-            <button type="button" onClick={() => this[filterEl].current.handleCheckItem(keyBlock, key)} className="delete" />
-          </span>
-        ))
-      ))}
-    </Fragment>
-  );
-
-  renderMainFilters = () => {
-    const {
-      geo_filter_options: geoFilterOptions,
-      types_filter_options: typesFilterOptions,
-      sectors_options: sectorsOptions
-    } = this.props;
-    const { filters } = this.state;
-
-    return (
-      <Fragment>
-        <SearchFilter
-          ref={this.geoFilter}
-          filterName="Regions and countries"
-          params={geoFilterOptions}
-          selectedList={pick(filters, 'geography', 'region')}
-          onChange={this.handleFilterChange}
-        />
-        <TimeRangeFilter
-          ref={this.timeRangeFilter}
-          onChange={this.handleFilterChange}
-        />
-        <SearchFilter
-          ref={this.typesFilter}
-          filterName="Executive / Legislative"
-          params={typesFilterOptions}
-          selectedList={pick(filters, 'type')}
-          isSearchable={false}
-          onChange={this.handleFilterChange}
-        />
-        <SearchFilter
-          ref={this.sectorsFilter}
-          filterName="Sectors"
-          selectedList={pick(filters, 'law_sector')}
-          params={sectorsOptions}
-          onChange={this.handleFilterChange}
-        />
-      </Fragment>
-    );
-  }
-
-  render() {
-    const {legislations, count} = this.state;
-    const hasMore = legislations.length < count;
-    const downloadResultsLink = `/cclow/legislation_and_policies.csv${this.createQueryString()}`;
-
-    return (
-      <Fragment>
-        <div className="cclow-geography-page">
-          <div className="container">
-            <div className="title-page">
-              {this.renderPageTitle()}
+  return (
+    <List
+      items={legislations}
+      count={count}
+      filterConfigs={filters}
+      url="/cclow/legislation_and_policies"
+      title="Laws and Policies"
+      allTitle="All laws and policies"
+      renderContentItem={(legislation) => (
+        <Fragment>
+          <h5 className="title" dangerouslySetInnerHTML={{__html: legislation.link}} />
+          <div className="meta">
+            {legislation.geography && (
+              <Fragment>
+                <a href={legislation.geography_path}>
+                  <img src={`/images/flags/${legislation.geography.iso}.svg`} alt="" />
+                  {legislation.geography.name}
+                </a>
+              </Fragment>
+            )}
+            <div>
+              <img
+                src={legislation.legislation_type === 'executive' ? ExecutiveSVG : LegislativeSVG}
+                alt={legislation.legislation_type}
+              />
+              {legislation.legislation_type_humanize}
             </div>
-            {this.isMobile && (<div className="filter-column">{this.renderMoreOptions()}</div>)}
-            <hr />
-            <div className="columns">
-              {!this.isMobile && (
-                <div className="column is-one-quarter filter-column">
-                  <div className="search-by">Narrow this search by</div>
-                  {this.renderMainFilters()}
-                  {this.renderMoreOptions()}
-                </div>
-              )}
-              <main className="column is-three-quarters">
-                <div className="columns pre-content">
-                  <span className="column is-half">Showing {count} results</span>
-                  <span className="column is-half download-link is-hidden-touch">
-                    <a className="download-link" href={downloadResultsLink}>Download results (.csv)</a>
-                  </span>
-                </div>
-                {this.renderTags()}
-                <ul className="content-list">
-                  {legislations.map((legislation, i) => (
-                    <Fragment key={i}>
-                      <li className="content-item">
-                        <h5 className="title" dangerouslySetInnerHTML={{__html: legislation.link}} />
-                        <div className="meta">
-                          {legislation.geography && (
-                            <Fragment>
-                              <a href={legislation.geography_path}>
-                                <img src={`/images/flags/${legislation.geography.iso}.svg`} alt="" />
-                                {legislation.geography.name}
-                              </a>
-                            </Fragment>
-                          )}
-                          <div>
-                            <img
-                              src={legislation.legislation_type === 'executive' ? ExecutiveSVG : LegislativeSVG}
-                              alt={legislation.legislation_type}
-                            />
-                            {legislation.legislation_type_humanize}
-                          </div>
-                          {legislation.date_passed && <div>{legislation.date_passed}</div>}
-                          {legislation.last_change && <div>Last change in {legislation.last_change}</div>}
-                        </div>
-                        <div className="description" dangerouslySetInnerHTML={{__html: legislation.short_description}} />
-                      </li>
-                    </Fragment>
-                  ))}
-                </ul>
-                {hasMore && (
-                  <div className={`column load-more-container${!this.isMobile ? ' is-offset-5' : ''}`}>
-                    <button type="button" className="button is-primary load-more-btn" onClick={this.handleLoadMore}>
-                      Load 10 more entries
-                    </button>
-                  </div>
-                )}
-              </main>
-            </div>
+            {legislation.date_passed && <div>{legislation.date_passed}</div>}
+            {legislation.last_change && <div>Last change in {legislation.last_change}</div>}
           </div>
-        </div>
-      </Fragment>
-    );
-  }
+          <div className="description" dangerouslySetInnerHTML={{__html: legislation.short_description}} />
+        </Fragment>
+      )}
+    />
+  );
 }
 
 
