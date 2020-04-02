@@ -3,6 +3,7 @@
 @import "bulma/sass/utilities/all";
 
 $side-padding: 54px;
+$side-padding-mobile: 20px;
 $space-between-options: 8px;
 $space-between-categories: 34px;
 $icon-size: 24px;
@@ -98,11 +99,19 @@ $icon-margin-right: 24px;
 
 .laws-dropdown__category {
   & > * {
-    padding: $space-between-options $side-padding;
+    padding: $space-between-options $side-padding-mobile;
+
+    @include from($desktop) {
+      padding: $space-between-options $side-padding;
+    }
   }
 
   & > *:first-child {
-    padding: $space-between-categories $side-padding $space-between-options $side-padding;
+    padding: $space-between-categories $side-padding-mobile $space-between-options $side-padding-mobile;
+
+    @include from($desktop) {
+      padding: $space-between-categories $side-padding $space-between-options $side-padding;
+    }
   }
 }
 

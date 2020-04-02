@@ -617,7 +617,9 @@ $count-description-lines: 2;
   }
 
   .filter-column {
-    margin-top: 1.5rem;
+    @include from($desktop) {
+      margin-top: 1.5rem;
+    }
 
     .search-by {
       color: $grey-text;
@@ -634,6 +636,7 @@ $count-description-lines: 2;
       margin-top: 25px;
       border: none;
       background-color: transparent;
+      outline: none;
 
       @include until($desktop) {
         margin: 0;
@@ -797,4 +800,16 @@ mark {
 .flex-container {
   display: flex;
   align-items: center;
+}
+
+.list-component {
+  hr {
+    @include until($desktop) {
+      margin: 1.5rem 0;
+    }
+  }
+
+  .list-count {
+    font-size: 14px;
+  }
 }

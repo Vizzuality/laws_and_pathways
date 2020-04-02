@@ -137,6 +137,7 @@ class List extends Component {
 
   renderFilter = (filterConfig) => {
     const { filters, showMoreFilters } = this.state;
+    const { deviceInfo } = this.props;
     const {
       name,
       options,
@@ -147,7 +148,8 @@ class List extends Component {
     const params = Object.keys(filterConfig.params);
     // filter must remain visible in DOM because refs are being used
     // TODO: refactor to not use refs
-    const className = (!showMoreFilters && !mainFilter) ? 'hidden' : '';
+    const isHidden = deviceInfo.isMobile ? !showMoreFilters : !showMoreFilters && !mainFilter;
+    const className = isHidden ? 'hidden' : '';
 
     if (filterConfig.timeRange) {
       return (
@@ -176,26 +178,32 @@ class List extends Component {
 
   renderFilters() {
     const { showMoreFilters } = this.state;
-    const { filterConfigs } = this.props;
+    const { deviceInfo, filterConfigs } = this.props;
+    const { isMobile } = deviceInfo;
 
     const toggleShowMoreFilters = () => {
       this.setState((state) => ({ showMoreFilters: !state.showMoreFilters }));
     };
-    const anySecondaryFilters = Boolean(filterConfigs.filter(c => !c.mainFilter).length);
+    const showMoreFiltersButton = Boolean(filterConfigs.filter(c => !c.mainFilter).length);
+    const renderFilterButton = () => {
+      if (!showMoreFiltersButton) return null;
+
+      return (
+        <button
+          type="button"
+          onClick={toggleShowMoreFilters}
+          className="more-options"
+        >
+          {showMoreFilters ? '- Show fewer search options' : '+ Show more search options'}
+        </button>
+      );
+    };
 
     return (
       <Fragment>
+        {isMobile && renderFilterButton()}
         {filterConfigs.map(this.renderFilter)}
-
-        {anySecondaryFilters && (
-          <button
-            type="button"
-            onClick={toggleShowMoreFilters}
-            className="more-options"
-          >
-            {showMoreFilters ? '- Show fewer search options' : '+ Show more search options'}
-          </button>
-        )}
+        {!isMobile && renderFilterButton()}
       </Fragment>
     );
   }
@@ -263,49 +271,60 @@ class List extends Component {
     const hasMore = items.length < count;
     const downloadResultsLink = `${url}.csv${this.createQueryString()}`;
 
+    const renderCount = () => (
+      <div className="columns pre-content">
+        <span className="column is-half list-count">Showing {count} results</span>
+        <span className="column is-half download-link is-hidden-touch">
+          <a className="download-link" href={downloadResultsLink}>Download results (.csv)</a>
+        </span>
+      </div>
+    );
+
     return (
-      <Fragment>
-        <div className="cclow-geography-page">
-          <div className="container">
-            <div className="title-page">
-              {this.renderPageTitle()}
-            </div>
-            {isMobile && (<div className="filter-column">{this.renderFilters()}</div>)}
-            <hr />
-            <div className="columns">
-              {!isMobile && (
-                <div className="column is-one-quarter filter-column">
-                  <div className="search-by">Narrow this search by</div>
-                  {this.renderFilters()}
+      <div className="cclow-geography-page list-component">
+        <div className="container">
+          <div className="title-page">
+            {this.renderPageTitle()}
+          </div>
+          {isMobile && (<div className="filter-column">{this.renderFilters()}</div>)}
+          <hr />
+          <div className="columns">
+            {!isMobile && (
+              <div className="column is-one-quarter filter-column">
+                <div className="search-by">Narrow this search by</div>
+                {this.renderFilters()}
+              </div>
+            )}
+            <main className="column is-three-quarters">
+              {isMobile ? (
+                <Fragment>
+                  {this.renderTags()}
+                  {renderCount()}
+                </Fragment>
+              ) : (
+                <Fragment>
+                  {renderCount()}
+                  {this.renderTags()}
+                </Fragment>
+              )}
+              <ul className="content-list">
+                {items.map((legislation, i) => (
+                  <li key={i} className="content-item">
+                    {this.props.renderContentItem(legislation)}
+                  </li>
+                ))}
+              </ul>
+              {hasMore && (
+                <div className={`column load-more-container${!isMobile ? ' is-offset-5' : ''}`}>
+                  <button type="button" className="button is-primary load-more-btn" onClick={this.handleLoadMore}>
+                    Load 10 more entries
+                  </button>
                 </div>
               )}
-              <main className="column is-three-quarters">
-                <div className="columns pre-content">
-                  <span className="column is-half">Showing {count} results</span>
-                  <span className="column is-half download-link is-hidden-touch">
-                    <a className="download-link" href={downloadResultsLink}>Download results (.csv)</a>
-                  </span>
-                </div>
-                {this.renderTags()}
-                <ul className="content-list">
-                  {items.map((legislation, i) => (
-                    <li key={i} className="content-item">
-                      {this.props.renderContentItem(legislation)}
-                    </li>
-                  ))}
-                </ul>
-                {hasMore && (
-                  <div className={`column load-more-container${!isMobile ? ' is-offset-5' : ''}`}>
-                    <button type="button" className="button is-primary load-more-btn" onClick={this.handleLoadMore}>
-                      Load 10 more entries
-                    </button>
-                  </div>
-                )}
-              </main>
-            </div>
+            </main>
           </div>
         </div>
-      </Fragment>
+      </div>
     );
   }
 }
