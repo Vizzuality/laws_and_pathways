@@ -272,7 +272,7 @@ class List extends Component {
 
   render() {
     const { items, count } = this.state;
-    const { url, deviceInfo } = this.props;
+    const { url, deviceInfo, title } = this.props;
     const { isMobile } = deviceInfo;
     const hasMore = items.length < count;
     const downloadResultsLink = `${url}.csv${this.createQueryString()}`;
@@ -314,6 +314,12 @@ class List extends Component {
                 </Fragment>
               )}
               <ul className="content-list">
+                {(items || []).length === 0 && (
+                  <li>
+                    No {title} match your search criteria.
+                  </li>
+                )}
+
                 {items.map((legislation, i) => (
                   <li key={i} className="content-item">
                     {this.props.renderContentItem(legislation)}
