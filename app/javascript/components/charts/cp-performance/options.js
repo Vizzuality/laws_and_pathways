@@ -109,6 +109,19 @@ export function getMobileOptions({ chartData, unit }) {
         }
       }
     },
+    yAxis: {
+      title: {
+        text: unit,
+        reserveSpace: false,
+        textAlign: 'left',
+        align: 'high',
+        rotation: 0,
+        x: 45,
+        y: 0,
+        useHTML: true,
+        style: {color: '#191919', backgroundColor: '#fff'}
+      }
+    },
     xAxis: {
       maxPadding: 0.03,
       labels: {

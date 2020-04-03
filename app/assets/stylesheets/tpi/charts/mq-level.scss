@@ -29,4 +29,8 @@
     border: 1px solid $dark;
     padding: 20px;
   }
+
+  @include until($desktop) {
+    min-height: unset;
+  }
 }

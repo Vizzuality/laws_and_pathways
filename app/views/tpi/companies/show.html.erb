@@ -6,27 +6,32 @@
   </div>
 
   <div class="companies-header">
-    <div class="container">
+    <div class="container is-hidden-touch">
       <a href="#management-quality" class="link with-icon is-pulled-left">
         <img src="<%= asset_path 'icons/arrow-down.svg'%>" />
         Go to Management Quality
       </a>
+      <a href="#carbon-performance" class="link with-icon is-pulled-left">
+        <img src="<%= asset_path 'icons/arrow-down.svg'%>" />
+        Go to Carbon Performance
+      </a>
 
-      <% unless @company.cp_assessments.currently_published.empty? %>
-        <a href="#carbon-performance" class="link with-icon is-pulled-left">
-          <img src="<%= asset_path 'icons/arrow-down.svg'%>" />
-          Go to Carbon Performance
-        </a>
-      <% end %>
-
-      <%= link_to user_download_tpi_company_path(@company), class: 'button is-primary is-pulled-right with-icon with-border' do %>
+      <%= link_to user_download_all_tpi_sectors_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
         <img src="<%= asset_path 'icons/download.svg'%>" />
-        Download company data
+        Download All sectors data
       <% end %>
+    </div>
+    <div class="container is-hidden-desktop">
+      <a href="#management-quality" class="link with-icon is-pulled-left">
+        Management Quality
+      </a>
+      <a href="#carbon-performance" class="link with-icon is-pulled-left">
+        Carbon Performance
+      </a>
     </div>
   </div>
 
-  <section class="container">
+  <section class="container summary-boxes">
     <div class="columns">
       <div class="column">
         <a href="#management-quality" class="summary-box-link">
@@ -79,32 +84,32 @@
         <div class="summary-box">
           <div class="columns">
             <div class="column">
-              <%= render 'company_property', name: 'Geography', tooltip: t('.tooltips.geography') do %>
+              <%= render 'company_property', highlight: true, name: 'Geography', tooltip: t('.tooltips.geography') do %>
                 <%= @company.geography.name %>
               <% end %>
             </div>
             <div class="column">
-              <%= render 'company_property', name: 'Sector' do %>
+              <%= render 'company_property', highlight: true, name: 'Sector' do %>
                 <%= link_to @company.sector.name, tpi_sector_path(@company.sector.slug) %>
               <% end %>
             </div>
             <div class="column">
-              <%= render 'company_property', name: 'Market cap (Group)', tooltip: t('.tooltips.market_cap') do %>
+              <%= render 'company_property', highlight: false, name: 'Market cap (Group)', tooltip: t('.tooltips.market_cap') do %>
                 <%= @company.market_cap_group %>
               <% end %>
             </div>
             <div class="column">
-              <%= render 'company_property', name: 'ISIN', tooltip: t('.tooltips.ISIN') do %>
+              <%= render 'company_property', highlight: false, name: 'ISIN', tooltip: t('.tooltips.ISIN') do %>
                 <%= @company.isin_array.join('<br/>').html_safe %>
               <% end %>
             </div>
             <div class="column">
-              <%= render 'company_property', name: 'SEDOL', tooltip: t('.tooltips.SEDOL') do %>
+              <%= render 'company_property', highlight: false, name: 'SEDOL', tooltip: t('.tooltips.SEDOL') do %>
                 <%= @company.sedol %>
               <% end %>
             </div>
             <div class="column">
-              <%= render 'company_property', name: 'CA100+ engagement', tooltip: t('.tooltips.CA100') do %>
+              <%= render 'company_property', highlight: true, name: 'CA100+ engagement', tooltip: t('.tooltips.CA100') do %>
                 <%= humanize_boolean(@company.ca100?) %>
               <% end %>
             </div>
@@ -121,24 +126,36 @@
           Management Quality: <%= @company.name %> <%= react_component("BaseTooltip", { content: t('.tooltips.mq_header') }) %>
         </h4>
 
-        <div>
-          Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.mq_assessment_date') }) %>
-          <%= select_tag :mq_assessment_id,
-             options_from_collection_for_select(
-               @company.mq_assessments.currently_published.order(assessment_date: :desc), "id", "assessment_date", @mq_assessment.id
-             ),
-             class: 'input',
-             data: {
-               remote: true,
-               url: mq_assessment_tpi_company_path(@company)
-             }
-          %>
+        <div class="is-hidden-touch show-by-dropdown assessment-date__container">
+          <div class="caption">
+            Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.mq_assessment_date') }) %>
+          </div>
+          <div class="date-dropdown">
+            <%= react_component('RemoteDropdown', {
+              name: 'mq_assessment_id',
+              remote: true,
+              url: mq_assessment_tpi_company_path(@company),
+              data: @company.mq_assessments.currently_published.order(assessment_date: :desc).map {|v| {label: v['assessment_date'].strftime('%B %Y'), value: v['id']}}
+            }) %>
+          </div>
         </div>
       </div>
-
       <p>
         Assessment of <%= @company.name %> according to the management of its greenhouse gas emissions and of risks and opportunities related to the low-carbon transition.
       </p>
+      <div class="is-hidden-desktop assessment-date__container">
+        <div class="caption">
+          Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.mq_assessment_date') }) %>
+        </div>
+        <div class="date-dropdown">
+          <%= react_component('RemoteDropdown', {
+            name: 'mq_assessment_id',
+            remote: true,
+            url: mq_assessment_tpi_company_path(@company),
+            data: @company.mq_assessments.currently_published.order(assessment_date: :desc).map {|v| {label: v['assessment_date'].strftime('%B %Y'), value: v['id']}}
+          }) %>
+        </div>
+      </div>
 
       <div id="mq-assessment" class="management-quality__content">
 
@@ -147,25 +164,28 @@
     </section>
   <% end %>
 
+
   <% if @company.cp_assessments.currently_published.any? %>
     <section id="carbon-performance" class="carbon-performance container">
       <div class="management-quality__header">
         <h4>
           Carbon Performance <%= @company.name %> <%= react_component("BaseTooltip", { content: t('.tooltips.cp_header') }) %>
         </h4>
+        <p class="is-hidden-desktop"><%= "Carbon Performance alignment of companies in the #{@company.name} sector with the Paris agreement benchmarks." %></p>
         <div>
-          <div>
-            Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.cp_assessment_date') }) %>
-            <%= select_tag :cp_assessment_id,
-                           options_from_collection_for_select(
-                             @company.cp_assessments.currently_published.order(assessment_date: :desc), "id", "assessment_date", @cp_assessment.id
-                           ),
-                           class: 'input',
-                           data: {
-                             remote: true,
-                             url: cp_assessment_tpi_company_path(@company)
-                           }
-            %>
+          <div class="show-by-dropdown assessment-date__container">
+            <div class="caption">
+              Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.cp_assessment_date') }) %>
+            </div>
+
+            <div class="date-dropdown">
+              <%= react_component('RemoteDropdown', {
+                name: 'cp_assessment_id',
+                remote: true,
+                url: cp_assessment_tpi_company_path(@company),
+                data: @company.cp_assessments.currently_published.order(assessment_date: :desc).map {|v| {label: v['assessment_date'].strftime('%B %Y'), value: v['id']}}
+              }) %>
+            </div>
           </div>
         </div>
       </div>

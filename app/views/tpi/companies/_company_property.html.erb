@@ -5,7 +5,7 @@
       <%= react_component("BaseTooltip", { content: tooltip }) %>
     <% end %>
   </div>
-  <div class="company-property__value">
+  <div class="company-property__value<%= ' highlight' if highlight.present? %>">
     <%= yield%>
   </div>
 </div>
