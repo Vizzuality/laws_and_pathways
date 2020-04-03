@@ -76,6 +76,7 @@ class List extends Component {
   resolveStateFromQueryString() {
     const query = getQueryFilters();
     const { filterConfigs } = this.props;
+    const extraFiltersFromQuery = ['q', 'recent'];
 
     // [['geography', paramIntegerArray], ['keywords', paramIntegerArray]]
     const allParamsArray = flatten(
@@ -92,8 +93,7 @@ class List extends Component {
     return {
       filters: {
         ...filters,
-        q: query.q,
-        recent: query.recent
+        ...pick(query, extraFiltersFromQuery)
       }
     };
   }
@@ -270,9 +270,30 @@ class List extends Component {
     </Fragment>
   );
 
+  renderNoItemsMessage() {
+    const { title } = this.props;
+    const query = getQueryFilters();
+
+    if (query.from_geography_page) {
+      return (
+        <li>
+          Currently there are no {title} available for {query.from_geography_page}.
+          <br />
+          If you are aware of {title} and would like us to add them, please <a href="mailto:gri.cgl@lse.ac.uk">contact us</a>.
+        </li>
+      );
+    }
+
+    return (
+      <li>
+        No {title} match your search criteria.
+      </li>
+    );
+  }
+
   render() {
     const { items, count } = this.state;
-    const { url, deviceInfo, title } = this.props;
+    const { url, deviceInfo } = this.props;
     const { isMobile } = deviceInfo;
     const hasMore = items.length < count;
     const downloadResultsLink = `${url}.csv${this.createQueryString()}`;
@@ -314,11 +335,7 @@ class List extends Component {
                 </Fragment>
               )}
               <ul className="content-list">
-                {(items || []).length === 0 && (
-                  <li>
-                    No {title} match your search criteria.
-                  </li>
-                )}
+                {(items || []).length === 0 && this.renderNoItemsMessage()}
 
                 {items.map((legislation, i) => (
                   <li key={i} className="content-item">
