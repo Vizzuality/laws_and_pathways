@@ -43,7 +43,9 @@ describe 'Geography page', type: 'system' do
     it 'shows geography laws page' do
       geography = Geography.find_by(slug: 'china')
       expect(page).to have_current_path(
-        cclow_legislation_and_policies_path(geography: [geography.id], type: ['legislative'])
+        cclow_legislation_and_policies_path(
+          geography: [geography.id], type: ['legislative'], from_geography_page: geography.name
+        )
       )
       expect(page).to have_text('Law on the Prevention and Control of Atmospheric Pollution')
       expect(page).to have_text('Energy Conservation Law')
@@ -81,7 +83,9 @@ describe 'Geography page', type: 'system' do
     it 'shows geography policies page' do
       geography = Geography.find_by(slug: 'china')
       expect(page).to have_current_path(
-        cclow_legislation_and_policies_path(geography: [geography.id], type: ['executive'])
+        cclow_legislation_and_policies_path(
+          geography: [geography.id], type: ['executive'], from_geography_page: geography.name
+        )
       )
       expect(page).to have_text('13th Five-Year Plan')
       expect(page).to have_text('Energy Development Strategy Action Plan (2014-2020)')
