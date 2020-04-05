@@ -135,7 +135,7 @@
               name: 'mq_assessment_id',
               remote: true,
               url: mq_assessment_tpi_company_path(@company),
-              data: @company.mq_assessments.currently_published.order(assessment_date: :desc).map {|v| {label: v['assessment_date'].strftime('%B %Y'), value: v['id']}}
+              data: @company.mq_assessments.currently_published.order(assessment_date: :desc).map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}}
             }) %>
           </div>
         </div>
@@ -152,7 +152,7 @@
             name: 'mq_assessment_id',
             remote: true,
             url: mq_assessment_tpi_company_path(@company),
-            data: @company.mq_assessments.currently_published.order(assessment_date: :desc).map {|v| {label: v['assessment_date'].strftime('%B %Y'), value: v['id']}}
+            data: @company.mq_assessments.currently_published.order(assessment_date: :desc).map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}}
           }) %>
         </div>
       </div>
@@ -183,7 +183,7 @@
                 name: 'cp_assessment_id',
                 remote: true,
                 url: cp_assessment_tpi_company_path(@company),
-                data: @company.cp_assessments.currently_published.order(assessment_date: :desc).map {|v| {label: v['assessment_date'].strftime('%B %Y'), value: v['id']}}
+                data: @company.cp_assessments.currently_published.order(assessment_date: :desc).map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}}
               }) %>
             </div>
           </div>
