@@ -2,7 +2,7 @@ module CCLOW
   class TargetDecorator < Draper::Decorator
     delegate_all
     def link
-      link_title = model.description || [model.target_type.humanize, model.year].compact.join(', ')
+      link_title = model.description&.html_safe || [model.target_type.humanize, model.year].compact.join(', ')
 
       if model.sector
         h.link_to(
