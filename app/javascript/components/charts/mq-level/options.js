@@ -4,6 +4,9 @@ import hexToRgba from 'hex-to-rgba';
 
 import defaultOptions from '../default-options';
 
+const greyDark = '#595B5D';
+const dark = '#191919';
+
 export function getOptions({ chartData }) {
   return merge({}, defaultOptions, {
     chart: {
@@ -81,5 +84,33 @@ export function getOptions({ chartData }) {
       },
       data: d.data.map(x => [Date.parse(parse(x[0], 'dd/MM/yyyy', new Date())), x[1]])
     }))
+  });
+}
+
+export function getMobileOptions({ chartData }) {
+  const descktopOptions = getOptions({ chartData });
+  return merge({}, descktopOptions, {
+    chart: {
+      marginTop: 50,
+      height: '200px',
+      marginLeft: 30
+    },
+    xAxis: {
+      maxPadding: 0.03,
+      labels: {
+        style: {fontSize: '12px', color: dark}
+      },
+      lineWidth: 1,
+      lineColor: greyDark,
+      tickColor: greyDark
+    },
+    yAxis: {
+      labels: {
+        style: {fontSize: '12px', color: dark}
+      },
+      lineWidth: 1,
+      lineColor: greyDark,
+      tickColor: greyDark
+    }
   });
 }

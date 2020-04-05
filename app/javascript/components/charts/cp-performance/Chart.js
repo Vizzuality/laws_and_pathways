@@ -90,7 +90,7 @@ function getDropdownOptions(geographies, regions, marketCapGroups) {
   ];
 }
 
-function CPPerformance({ dataUrl, companySelector, unit }) {
+function CPPerformance({ dataUrl, companySelector, unit, sectorUrl }) {
   const companySelectorWrapper = useRef();
   const { isMobile } = useDeviceInfo();
 
@@ -221,6 +221,16 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
             </React.Fragment>
           )}
         </div>
+        {sectorUrl && (
+          <div className="legend-row">
+            <button
+              type="button"
+              onClick={() => { window.location.href = sectorUrl; }}
+              className="see-full-sector-btn is-hidden-desktop"
+            >See full sector chart
+            </button>
+          </div>
+        )}
         <div className="legend-row">
           <span className="legend-item">
             <span className="line line--solid" />
@@ -252,13 +262,15 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
 }
 
 CPPerformance.defaultProps = {
-  companySelector: true
+  companySelector: true,
+  sectorUrl: null
 };
 
 CPPerformance.propTypes = {
   companySelector: PropTypes.bool,
   dataUrl: PropTypes.string.isRequired,
-  unit: PropTypes.string.isRequired
+  unit: PropTypes.string.isRequired,
+  sectorUrl: PropTypes.string
 };
 
 export default CPPerformance;

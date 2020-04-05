@@ -118,8 +118,10 @@ $header-height-mobile: 60px;
 }
 
 .dropdown-selector__option {
-  font-size: 24px;
-  line-height: 30px;
+  @include desktop {
+    font-size: 24px;
+    line-height: 30px;
+  }
   color: rgba(25, 25, 25, 0.5);
   cursor: pointer;
 
@@ -130,7 +132,9 @@ $header-height-mobile: 60px;
 }
 
 .dropdown-selector__option-company {
-  padding: 8px 110px;
+  @include desktop {
+    padding: 8px 110px;
+  }
 }
 
 .dropdown-selector__buttons {
@@ -154,10 +158,10 @@ $header-height-mobile: 60px;
   font-family: $font-family-regular;
   background-color: transparent;
   color: $white;
-  font-size: $size-6;
+  font-size: $size-7;
 
   @include desktop {
-    font-size: $size-7;
+    font-size: $size-6;
   }
 }
 
@@ -166,10 +170,10 @@ $header-height-mobile: 60px;
   background-color: $blue-dark;
   color: $white;
   font-family: $font-family-bold;
-  font-size: $size-6;
+  font-size: $size-7;
 
   @include desktop {
-    font-size: $size-7;
+    font-size: $size-6;
   }
 }
 

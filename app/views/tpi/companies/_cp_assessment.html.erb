@@ -2,12 +2,13 @@
   <%= react_component('charts/cp-performance', {
     dataUrl: emissions_chart_data_tpi_company_path(assessment.company, cp_assessment_id: assessment.id),
     unit: assessment.unit,
-    companySelector: false
+    companySelector: false,
+    sectorUrl: tpi_sector_path(assessment.company.sector.slug)
     }) %>
 <% end %>
 
 <% unless assessment.assumptions.blank? %>
-  <div class="carbon-performance__assumptions">
+  <div class="carbon-performance__assumptions is-hidden-touch">
     <h6>TPI notes:</h6>
     <p>
       <%= assessment.assumptions %>
