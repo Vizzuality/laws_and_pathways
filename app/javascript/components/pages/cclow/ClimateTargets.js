@@ -65,7 +65,7 @@ function ClimateTargets(props) {
       filterConfigs={filters}
       url="/cclow/climate_targets"
       title="Climate Targets"
-      allTitle="All Climate Targets"
+      allTitle="Climate Targets"
       renderContentItem={(target) => (
         <Fragment>
           <h5 className="title" dangerouslySetInnerHTML={{__html: target.link}} />

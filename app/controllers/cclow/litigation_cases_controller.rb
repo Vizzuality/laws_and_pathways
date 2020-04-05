@@ -8,7 +8,7 @@ module CCLOW
 
       @litigations = Queries::CCLOW::LitigationQuery.new(filter_params).call
 
-      fixed_navbar('All Litigation Cases', admin_litigations_path)
+      fixed_navbar('Litigation Cases', admin_litigations_path)
 
       respond_to do |format|
         format.html do

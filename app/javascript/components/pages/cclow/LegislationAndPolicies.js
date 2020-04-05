@@ -125,7 +125,7 @@ function LegislationAndPolicies(props) {
       filterConfigs={filters}
       url="/cclow/legislation_and_policies"
       title="Laws and Policies"
-      allTitle="All laws and policies"
+      allTitle="Laws and policies"
       renderContentItem={(legislation) => (
         <Fragment>
           <h5 className="title" dangerouslySetInnerHTML={{__html: legislation.link}} />

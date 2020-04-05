@@ -157,7 +157,7 @@ function LitigationCases(props) {
       filterConfigs={filters}
       url="/cclow/litigation_cases"
       title="Litigation Cases"
-      allTitle="All Litigation Cases"
+      allTitle="Litigation Cases"
       renderContentItem={(litigation) => (
         <Fragment>
           <h5 className="title" dangerouslySetInnerHTML={{__html: litigation.link}} />
