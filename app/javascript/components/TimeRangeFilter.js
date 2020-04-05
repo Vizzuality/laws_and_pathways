@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { Range, Handle } from 'rc-slider';
@@ -51,10 +51,10 @@ class TimeRangeFilter extends Component {
 
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutside);
+  }
 
-    return () => {
-      document.removeEventListener('mousedown', this.handleClickOutside);
-    };
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
   }
 
   setShowOptions = value => this.setState({isShowOptions: value});
@@ -72,11 +72,11 @@ class TimeRangeFilter extends Component {
   handleChange = (value) => {
     const {onChange} = this.props;
     const {from_date, to_date} = this.state;
-    const result = {...value};
-    Object.keys(result).forEach((key) => (result[key] == null) && delete result[key]);
-    if (from_date && !Object.keys(value).includes('from_date')) Object.assign(result, {from_date});
-    if (to_date && !Object.keys(value).includes('to_date')) Object.assign(result, {to_date});
-    onChange(result);
+    onChange({
+      from_date,
+      to_date,
+      ...value
+    });
     this.setState(value);
   };
 
@@ -153,28 +153,27 @@ class TimeRangeFilter extends Component {
 
   render() {
     const {isShowOptions, from_date, to_date} = this.state;
-    const {filterName} = this.props;
+    const {filterName, className} = this.props;
     let selectedCount = 0;
     if (from_date) selectedCount += 1;
     if (to_date) selectedCount += 1;
 
     return (
-      <Fragment>
-        <div className="filter-container">
-          <div className="control-field" onClick={() => this.setShowOptions(true)}>
-            <div className="select-field">
-              <span>{filterName}</span><span className="toggle-indicator"><img src={plus} alt="" /></span>
-            </div>
-            {selectedCount !== 0 && <div className="selected-count">{selectedCount} selected</div>}
+      <div className={`filter-container ${className}`}>
+        <div className="control-field" onClick={() => this.setShowOptions(true)}>
+          <div className="select-field">
+            <span>{filterName}</span><span className="toggle-indicator"><img src={plus} alt="" /></span>
           </div>
-          { isShowOptions && this.renderOptions()}
+          {selectedCount !== 0 && <div className="selected-count">{selectedCount} selected</div>}
         </div>
-      </Fragment>
+        { isShowOptions && this.renderOptions()}
+      </div>
     );
   }
 }
 
 TimeRangeFilter.defaultProps = {
+  className: '',
   onChange: () => {},
   filterName: 'Time range',
   minDate: 1990,
@@ -182,6 +181,7 @@ TimeRangeFilter.defaultProps = {
 };
 
 TimeRangeFilter.propTypes = {
+  className: PropTypes.string,
   filterName: PropTypes.string,
   minDate: PropTypes.number,
   maxDate: PropTypes.number,

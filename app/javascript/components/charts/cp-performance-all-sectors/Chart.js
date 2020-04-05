@@ -8,11 +8,11 @@ import HighchartsReact from 'highcharts-react-official';
 
 import { getOptions, getMobileOptions } from './options';
 import { useChartData } from '../hooks';
-import { useMediaQuery } from 'react-responsive';
+import { useDeviceInfo } from 'components/Responsive';
 
 function CPPerformanceAllSectors({ dataUrl, sectors }) {
   const { data, error, loading } = useChartData(dataUrl);
-  const isMobile = useMediaQuery({ query: '(max-width: 1024px)' });
+  const { isMobile } = useDeviceInfo();
   const options = isMobile ? getMobileOptions(data, sectors) : getOptions(data, sectors);
 
   return (

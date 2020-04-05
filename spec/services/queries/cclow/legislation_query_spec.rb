@@ -130,6 +130,12 @@ RSpec.describe Queries::CCLOW::LegislationQuery do
       expect(results).to contain_exactly(@legislation1, @legislation3, @legislation4)
     end
 
+    it 'should filter by region and geography' do
+      results = subject.new(geography: [@geography2.id], region: 'East Asia & Pacific').call
+      expect(results.size).to eq(3)
+      expect(results).to contain_exactly(@legislation1, @legislation2, @legislation4)
+    end
+
     it 'should filter by sector' do
       results = subject.new(law_sector: [@sector1.id, @sector2.id]).call
       expect(results.size).to eq(3)

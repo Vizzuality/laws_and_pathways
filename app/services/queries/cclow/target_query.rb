@@ -14,8 +14,7 @@ module Queries
 
         scope
           .merge(full_text_filter)
-          .merge(filter_by_region)
-          .merge(filter_by_geography)
+          .merge(filter_by_geography_or_region)
           .merge(filter_by_target_sector)
           .merge(filter_by_target_year)
           .merge(filter_by_from_date)

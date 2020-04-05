@@ -10,13 +10,13 @@ import uniqBy from 'lodash/uniqBy';
 import sortBy from 'lodash/sortBy';
 import cloneDeep from 'lodash/cloneDeep';
 import get from 'lodash/get';
-import { useMediaQuery } from 'react-responsive';
 
 import PlusIcon from 'images/icons/plus.svg';
 
 import { getOptions, getMobileOptions, COLORS } from './options';
 import { useOutsideClick } from 'shared/hooks';
 import { useChartData } from '../hooks';
+import { useDeviceInfo } from 'components/Responsive';
 
 import CompanySelector from './CompanySelector';
 import CompanyTag from './CompanyTag';
@@ -92,7 +92,7 @@ function getDropdownOptions(geographies, regions, marketCapGroups) {
 
 function CPPerformance({ dataUrl, companySelector, unit }) {
   const companySelectorWrapper = useRef();
-  const isMobile = useMediaQuery({ query: '(max-width: 1024px)' });
+  const { isMobile } = useDeviceInfo();
 
   const { data, error, loading } = useChartData(dataUrl);
   const [selectedCompanies, setSelectedCompanies] = useState([]); // Array of company names

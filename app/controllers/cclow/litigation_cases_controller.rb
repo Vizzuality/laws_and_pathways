@@ -32,7 +32,7 @@ module CCLOW
         end
         format.json do
           render json: {
-            litigations: CCLOW::LitigationDecorator.decorate_collection(
+            items: CCLOW::LitigationDecorator.decorate_collection(
               @litigations.offset(params[:offset] || 0).take(10)
             ),
             count: @litigations.size

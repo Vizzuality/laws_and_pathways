@@ -23,7 +23,7 @@ module CCLOW
         end
         format.json do
           render json: {
-            climate_targets: CCLOW::TargetDecorator.decorate_collection(
+            items: CCLOW::TargetDecorator.decorate_collection(
               @climate_targets.offset(params[:offset] || 0).take(10)
             ),
             count: @climate_targets.size
