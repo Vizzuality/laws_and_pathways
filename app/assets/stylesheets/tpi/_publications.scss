@@ -6,8 +6,10 @@ $line-height: 1.5rem;
 $max-lines: 3;
 
 .publications {
+
   &__title {
-    margin-top: 80px;
+    font-size: 1.25rem !important;
+    font-family: $font-family-bold;
   }
 
   &__menu {
@@ -20,6 +22,11 @@ $max-lines: 3;
       display: flex;
       justify-content: flex-end;
     }
+  }
+
+  &__container {
+    padding: 0 0.75rem;
+    margin-top: 20px;
   }
 
   &__grid {
@@ -36,6 +43,33 @@ $max-lines: 3;
     justify-content: center;
     margin-top: 80px;
     margin-bottom: 80px;
+  }
+
+  .titel__container {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding: 0 0.75rem;
+  }
+
+  @include desktop {
+    margin-top: 50px;
+
+    .titel__container {
+      display: block;
+      padding: 0;
+    }
+
+    &__title {
+      font-size: 3rem !important;
+      padding: 0;
+    }
+
+    &__container {
+      margin-top: 0;
+      padding: 0;
+    }
   }
 }
 
@@ -208,6 +242,6 @@ $max-lines: 3;
 
   @include desktop {
     grid-template-columns: repeat(3, 1fr);
-    padding: 1.75rem;
+    padding: 1.75rem 0;
   }
 }
