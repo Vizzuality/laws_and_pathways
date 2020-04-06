@@ -30,7 +30,7 @@ $max-lines: 3;
   }
 
   &__grid {
-    margin-bottom: 60px;
+    margin-bottom: 30px;
 
     @include desktop {
       margin-bottom: 80px;
@@ -122,6 +122,24 @@ $max-lines: 3;
 
   @include desktop {
     margin-bottom: 0;
+  }
+}
+
+.tpi-home__promoted-publications {
+  &.section {
+    padding: 3rem 0.75rem;
+  }
+
+  .view-all-button {
+    border-radius: 0;
+    height: 30px;
+    width: 100%;
+  }
+
+  @include desktop {
+    &.section {
+      padding: 3rem 1.5rem 1.2rem;
+    }
   }
 }
 

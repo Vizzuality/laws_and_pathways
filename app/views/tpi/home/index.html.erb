@@ -69,10 +69,11 @@
     <div class="promoted-publications__title">
       <h4 class="promoted-publications__title-text">Publications and news</h4>
 
-      <a href="/tpi/publications" class="button is-secondary">View all publications and news</a>
+      <a href="/tpi/publications" class="button is-secondary is-hidden-touch">View all publications and news</a>
     </div>
 
     <%= render "tpi/publications/promoted" %>
+    <a href="/tpi/publications" class="view-all-button button is-secondary is-hidden-desktop">View all publications and news</a>
   </div>
 </section>
 
@@ -82,7 +83,7 @@
   <%= render "partners" %>
 </section>
 
-<hr />
+<hr class="is-hidden-touch" />
 
 <section class="section testemonials">
   <%= render "testimonials" %>

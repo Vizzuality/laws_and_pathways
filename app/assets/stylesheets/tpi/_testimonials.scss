@@ -81,9 +81,37 @@
       border: 2px solid $white;
       background-color: $blue-dark;
       margin: 0 0.5rem;
-      
+
       &.active {
         background-color: $white;
+      }
+    }
+  }
+
+  @include until($desktop) {
+    &__container {
+      margin-bottom: 0;
+    }
+
+    &.column {
+      padding: 2rem 0.75rem;
+
+      .testimonials__quote {
+        justify-content: start;
+        img {
+          margin-top: 0;
+        }
+      }
+
+      .testimonials__pagination {
+        margin-top: 25px;
+        margin-bottom: 0;
+      }
+
+      .testimonials__pagination {
+        position: relative;
+        justify-content: center;
+        right: 0;
       }
     }
   }
