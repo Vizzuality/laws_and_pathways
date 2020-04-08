@@ -1,5 +1,6 @@
 <%
   # TODO: Consider to use presenter/decorator/view-model object
+  pulications_link = "http://www.lse.ac.uk/GranthamInstitute/?s=#{@geography.slug}&post_type[]=publication&post_type[]=news"
   sidebar_links = [
     {
       label: 'Laws',
@@ -52,6 +53,17 @@
         <main class="column is-three-quarters-desktop">
           <%= yield %>
         </main>
+      </div>
+    </div>
+    <div class="publications-banner columns is-hidden-touch">
+      <div class="column is-half">
+        <div>
+          <div><a target="_blank" href="<%= pulications_link %>">Read Publications</a></div>
+          <div>from the Grantham Research Institute</div>
+        </div>
+      </div>
+      <div class="column is-half img-container">
+        <img src="<%= asset_path 'cclow/publications_banner.png' %>" alt="">
       </div>
     </div>
   </div>
