@@ -7,14 +7,6 @@
           <div class="publication__avatar" style="background-image: url(<%= url_for(publication.thumbnail) %>)"></div>
         <% end %>
 
-        <% if publication.keywords.any? || publication.tpi_sectors.any? %>
-            <div class="publication__tags is-hidden-desktop">
-              <% publication.tags_and_sectors.each do |tag| %>
-                <span class="tag"><%= tag %></span>
-              <% end %>
-            </div>
-          <% end %>
-          <p class="updated_at is-hidden-desktop"><%= publication.publication_date.strftime("%B %d, %Y") %></p>
 
         <div class="publication__content">
           <div class="content__title-wrapper">
@@ -27,7 +19,7 @@
               <% end %>
             </div>
           </div>
-          <p class="updated_at is-hidden-touch"><%= publication.publication_date.strftime('%d/%m/%Y') %></p>
+          <p class="updated_at "><%= publication.publication_date.strftime('%d/%m/%Y') %></p>
 
           <div class="content__message">
             <p>
@@ -39,7 +31,7 @@
             </p>
           </div>
           <% if publication.keywords.any? || publication.tpi_sectors.any? %>
-            <div class="publication__tags is-hidden-touch">
+            <div class="publication__tags">
               <% publication.tags_and_sectors.each do |tag| %>
                 <span class="tag"><%= tag %></span>
               <% end %>
