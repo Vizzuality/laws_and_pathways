@@ -6,8 +6,10 @@ $line-height: 1.5rem;
 $max-lines: 3;
 
 .publications {
+
   &__title {
-    margin-top: 80px;
+    font-size: 1.25rem !important;
+    font-family: $font-family-bold;
   }
 
   &__menu {
@@ -22,8 +24,13 @@ $max-lines: 3;
     }
   }
 
+  &__container {
+    padding: 0 0.75rem;
+    margin-top: 20px;
+  }
+
   &__grid {
-    margin-bottom: 60px;
+    margin-bottom: 30px;
 
     @include desktop {
       margin-bottom: 80px;
@@ -36,6 +43,33 @@ $max-lines: 3;
     justify-content: center;
     margin-top: 80px;
     margin-bottom: 80px;
+  }
+
+  .titel__container {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding: 0 0.75rem;
+  }
+
+  @include desktop {
+    margin-top: 50px;
+
+    .titel__container {
+      display: block;
+      padding: 0;
+    }
+
+    &__title {
+      font-size: 3rem !important;
+      padding: 0;
+    }
+
+    &__container {
+      margin-top: 0;
+      padding: 0;
+    }
   }
 }
 
@@ -88,6 +122,24 @@ $max-lines: 3;
 
   @include desktop {
     margin-bottom: 0;
+  }
+}
+
+.tpi-home__promoted-publications {
+  &.section {
+    padding: 3rem 0.75rem;
+  }
+
+  .view-all-button {
+    border-radius: 0;
+    height: 30px;
+    width: 100%;
+  }
+
+  @include desktop {
+    &.section {
+      padding: 3rem 1.5rem 1.2rem;
+    }
   }
 }
 
@@ -170,11 +222,11 @@ $max-lines: 3;
   }
 
   &__tags {
-    margin-top: 0;
     display: flex;
     align-items: flex-start;
     margin-bottom: 10px;
     flex-wrap: wrap;
+    margin-top: 15px;
 
     & > .tag {
       margin-right: 12px;
@@ -193,7 +245,6 @@ $max-lines: 3;
     }
 
     @include desktop {
-      margin-top: 15px;
       margin-bottom: 22px;
     }
   }
@@ -208,6 +259,6 @@ $max-lines: 3;
 
   @include desktop {
     grid-template-columns: repeat(3, 1fr);
-    padding: 1.75rem;
+    padding: 1.75rem 0;
   }
 }

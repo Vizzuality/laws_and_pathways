@@ -13,19 +13,44 @@
 .filters__button-active {
   color: $blue;
   background-color: $white;
-  border: 2px solid $blue !important;
+
+  @include desktop {
+    border: 2px solid $blue !important;
+  }
 }
 
 .filters__button {
   margin-left: auto;
 }
 
-.filters__container {
+.button {
+  &.filter-mobile-button {
+    width: 30px;
+    min-width: 30px;
+    border: none;
+    padding-right: 0;
+    padding-left: 0;
 
+    img {
+      margin: 0;
+    }
+  }
+}
+
+.filters__container {
+  padding: 0 0.75rem;
+
+  @include desktop {
+    padding: 0;
+  }
 }
 
 .filters__wrapper-margin {
-  margin-top: 30px;
+  margin-top: 10px;
+
+  @include desktop {
+    margin-top: 30px;
+  }
 }
 
 .filters__wrapper-background {
@@ -35,20 +60,45 @@
 .filters__wrapper {
   display: flex;
   justify-content: space-between;
-  padding: 30px 0;
+
+  .showing-count {
+    font-size: $size-6;
+    padding: 0 0.75rem;
+    margin-bottom: 25px;
+    margin-top: 10px;
+  }
+
+  @include desktop {
+    padding: 30px 0;
+
+    .showing-count {
+      font-size: $size-5;
+      padding: 0;
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+  }
 }
 
 .filters__title {
   font-size: 16px;
   line-height: 20px;
   color: $grey-dark;
-  margin-bottom: 18px;
+  margin-bottom: 10px;
+
+  @include desktop {
+    margin-bottom: 18px;
+  }
 }
 
 .filters__tags-container {
   display: flex;
   flex-wrap: wrap;
-  padding-bottom: 42px;
+  padding-bottom: 20px;
+
+  @include desktop {
+    padding-bottom: 42px;
+  }
 }
 
 %tag {

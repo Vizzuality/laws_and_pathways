@@ -1,15 +1,20 @@
 <% content_for :page_title, "TPI - Publications and news" %>
 
-<div class="container publications">
-  <h1 class="publications__title">Publications and news</h1>
-</div>
-<%= react_component("Filters", { tags: @tags, sectors: @sectors, resultsSize: @publications_and_articles.size }) %>
-<div id="publications" class="container publications">
-  <%= render 'promoted' %>
+<div class=" publications">
+  <div class="titel__container container">
+    <h1 class="publications__title">Publications and news</h1>
+    <button id="filter-button" type="button" class="button is-centered is-hidden-desktop filter-mobile-button filters__button-active">
+      <img src="<%= asset_path 'icons/filter-blue.svg'%>" class="filters__filter-icon">
+    </button>
+  </div>
+  <%= react_component("Filters", { tags: @tags, sectors: @sectors, resultsSize: @publications_and_articles.size }) %>
+  <div id="publications" class="publications__container container">
+    <%= render 'promoted' %>
 
-  <!-- TODO
-    <div class="publications__load-more">
-      <button class="button is-secondary is-medium">Load more</button>
-    </div>
-  -->
+    <!-- TODO
+      <div class="publications__load-more">
+        <button class="button is-secondary is-medium">Load more</button>
+      </div>
+    -->
+  </div>
 </div>

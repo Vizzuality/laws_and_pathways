@@ -13,7 +13,7 @@
     .column {
       align-items: flex-end;
     }
-    
+
     .partners__title {
       display: flex;
       justify-content: flex-end;
@@ -72,3 +72,56 @@
     }
   }
 }
+
+.partners {
+  @include until($desktop) {
+    .columns,
+    .column {
+      padding: 0;
+      margin: 0;
+    }
+
+    &.section {
+      padding: 1.2rem 0.75rem;
+    }
+
+    .partners__container {
+
+      h4 {
+        font-size: $size-5 !important;
+        margin-bottom: 30px;
+      }
+
+      p {
+        font-size: $size-6;
+      }
+    }
+
+    .logos {
+      padding: 0;
+      margin-top: 25px;
+      padding: 1.75rem;
+      grid-template-columns: repeat(2, 1fr);
+      grid-column-gap: 24px;
+      grid-row-gap: 10px;
+    }
+  }
+}
+
+.testemonials {
+  @include until($desktop) {
+    .columns {
+      margin: 0;
+      padding: 0;
+    }
+    .column {
+      padding: 0;
+      margin: 0;
+    }
+
+    padding: 0;
+    margin-top: 20px;
+  }
+}
+
+
