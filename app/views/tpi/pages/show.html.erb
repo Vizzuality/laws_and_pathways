@@ -7,19 +7,39 @@
       <%= @page.description&.html_safe %>
     </div>
     <% @page.contents.order(:created_at).each do |content| %>
-      <div class="pages__content">
-        <h4 class="pages__content-title"><%= content.title %></h4>
-        <div class="pages__description"><%= content.text.html_safe %></div>
-        <% if content.images.any? %>
-          <div class="pages__content-logos">
-            <% content.images.order(:name).each do |image| %>
-              <% if image.logo.present? %>
-                <%= link_to(image_tag(image.logo), image.link) %>
-              <% end %>
-            <% end %>
+      <% if content.content_type == 'text_description'%>
+      <h4 class="pages__content-title"><%= content.title %></h4>
+        <div class="pages__content columns text-description">
+          <% if content.images.any? %>
+            <div class="column is-half">
+              <div class=<%= 'pages__content-logos' if content.images.length > 1%>>
+                <% content.images.order(:name).each do |image| %>
+                  <% if image.logo.present? %>
+                    <%= link_to(image_tag(image.logo), image.link) %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+          <div class="column <%= 'is-half' if content.images.any? %>">
+            <div class="pages__description"><%= content.text.html_safe %></div>
           </div>
-        <% end %>
-      </div>
+        </div>
+      <% else %>
+        <div class="pages__content">
+          <h4 class="pages__content-title"><%= content.title %></h4>
+          <div class="pages__description"><%= content.text.html_safe %></div>
+          <% if content.images.any? %>
+            <div class="pages__content-logos">
+              <% content.images.order(:name).each do |image| %>
+                <% if image.logo.present? %>
+                  <%= link_to(image_tag(image.logo), image.link) %>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>

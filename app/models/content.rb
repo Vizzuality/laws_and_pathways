@@ -15,6 +15,8 @@ class Content < ApplicationRecord
   belongs_to :page
   has_many :images, dependent: :destroy
 
+  CONTENT_TYPES = %w[regular text_description].freeze
+
   with_options allow_destroy: true, reject_if: :all_blank do
     accepts_nested_attributes_for :images
   end

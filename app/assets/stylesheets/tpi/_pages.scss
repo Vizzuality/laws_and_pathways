@@ -51,7 +51,7 @@ $margin-between-list-items: 20px;
       li {
         line-height: $lists-line-height;
         margin-bottom: $margin-between-list-items;
-        
+
         &:before {
           display: inline-block;
           content: '';
@@ -98,6 +98,20 @@ $margin-between-list-items: 20px;
         text-decoration: underline;
       }
     }
+  }
+
+  &.text-description {
+    align-items: center;
+
+    .pages__content-logos {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include until($desktop) {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
   }
 }
 
