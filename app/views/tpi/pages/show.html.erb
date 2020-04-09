@@ -11,8 +11,8 @@
       <h4 class="pages__content-title"><%= content.title %></h4>
         <div class="pages__content columns text-description">
           <% if content.images.any? %>
-            <div class="column is-half">
-              <div class=<%= 'pages__content-logos' if content.images.length > 1%>>
+            <div class="column">
+              <div class=<%= content.images.length > 1 ? 'pages__content-logos' : 'pages__content-logo'%>>
                 <% content.images.order(:name).each do |image| %>
                   <% if image.logo.present? %>
                     <%= link_to(image_tag(image.logo), image.link) %>
@@ -21,7 +21,7 @@
               </div>
             </div>
           <% end %>
-          <div class="column <%= 'is-half' if content.images.any? %>">
+          <div class="column">
             <div class="pages__description"><%= content.text.html_safe %></div>
           </div>
         </div>

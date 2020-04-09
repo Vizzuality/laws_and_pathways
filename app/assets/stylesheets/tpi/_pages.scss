@@ -101,17 +101,18 @@ $margin-between-list-items: 20px;
   }
 
   &.text-description {
-    align-items: center;
-
     .pages__content-logos {
       grid-template-columns: repeat(2, 1fr);
     }
+      img {
+        max-height: 280px;
+      }
 
     @include until($desktop) {
+      align-items: center;
       display: flex;
       flex-direction: column-reverse;
     }
-
   }
 }
 
