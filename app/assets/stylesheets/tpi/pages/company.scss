@@ -360,13 +360,16 @@ $dots-space: 1.3rem;
 
     &__header {
       margin-bottom: 36px;
-      font-family: $family-sans-serif-bold;
     }
 
     &__description {
       line-height: $line-height;
       font-size: 16px;
       margin-bottom: 40px;
+
+      a {
+        color: inherit;
+      }
     }
 
     &__description--folded {
