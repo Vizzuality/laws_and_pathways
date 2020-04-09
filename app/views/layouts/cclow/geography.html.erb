@@ -55,17 +55,7 @@
         </main>
       </div>
     </div>
-    <div class="publications-banner columns is-hidden-touch">
-      <div class="column is-half">
-        <div>
-          <div><a target="_blank" href="<%= pulications_link %>">Read related publications</a></div>
-          <div>from the Grantham Research Institute</div>
-        </div>
-      </div>
-      <div class="column is-half img-container">
-        <img src="<%= asset_path 'cclow/publications_banner.png' %>" alt="">
-      </div>
-    </div>
+    <%= render "layouts/cclow/publications-banner", link: pulications_link %>
   </div>
 <% end %>
 
