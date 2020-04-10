@@ -101,12 +101,29 @@ $margin-between-list-items: 20px;
   }
 
   &.text-description {
+    display: flex;
+    font-family: $family-sans-serif;
+
     .pages__content-logos {
       grid-template-columns: repeat(2, 1fr);
-    }
+      margin-right: 30px;
+      min-width: 50%;
+
       img {
         max-height: 280px;
       }
+    }
+
+    .pages__content-logo {
+      margin-right: 30px;
+
+      > div {
+        background-position: center;
+        background-size: cover;
+        height: 280px;
+        width: 240px;
+      }
+    }
 
     @include until($desktop) {
       align-items: center;
