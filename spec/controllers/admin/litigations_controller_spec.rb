@@ -105,7 +105,7 @@ RSpec.describe Admin::LitigationsController, type: :controller do
           expect(l.laws_sectors.first.id).to eq(sector.id)
           expect(l.geography_id).to eq(geography.id)
           expect(l.jurisdiction).to eq('Court in Country')
-          expect(l.litigation_sides.pluck(:party_type)).to eq(%w[individual corporation government])
+          expect(l.litigation_sides.pluck(:party_type)).to contain_exactly('individual', 'corporation', 'government')
           expect(
             l.documents.pluck(:name, :language, :external_url).sort
           ).to eq(expected_documents_attrs)
