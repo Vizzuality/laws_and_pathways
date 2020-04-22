@@ -60,7 +60,7 @@ module Queries
       def filter_by_law_passed_to
         return scope unless params[:law_passed_to].present?
 
-        scope.passed.where('events.date <= (?)', Date.new(params[:law_passed_to].to_i, 1, 1))
+        scope.passed.where('events.date <= (?)', Date.new(params[:law_passed_to].to_i, 12, 31))
       end
     end
   end
