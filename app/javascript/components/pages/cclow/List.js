@@ -158,13 +158,24 @@ class List extends Component {
     const className = isHidden ? 'hidden' : '';
 
     if (filterConfig.timeRange) {
+      const { fromParam, toParam } = filterConfig;
+
+      const handleTimeRangeFilterChange = ({ fromDate, toDate }) => {
+        this.handleFilterChange({
+          [fromParam]: fromDate,
+          [toParam]: toDate
+        });
+      };
+
       return (
         <TimeRangeFilter
           key={`filter_${name}`}
           ref={this.filterRefs[name]}
           filterName={title}
           className={className}
-          onChange={this.handleFilterChange}
+          fromDate={filters[fromParam]}
+          toDate={filters[toParam]}
+          onChange={handleTimeRangeFilterChange}
         />
       );
     }
@@ -230,11 +241,11 @@ class List extends Component {
 
   renderTagsGroup = (filterConfig) => {
     const { filters } = this.state;
-    const { name, options, title, timeRange } = filterConfig;
+    const { name, options, timeRange } = filterConfig;
     const activeTags = pick(filters, Object.keys(filterConfig.params));
     const filterEl = this.filterRefs[name];
 
-    if (timeRange) return this.renderTimeRangeTags(activeTags, title, filterEl);
+    if (timeRange) return this.renderTimeRangeTags(activeTags, filterConfig);
 
     return Object.keys(activeTags).map((keyBlock) => (
       activeTags[keyBlock].filter(x => x).map((key, i) => (
@@ -246,30 +257,34 @@ class List extends Component {
     ));
   }
 
-  renderTimeRangeTags = (value, title, filterEl) => (
-    <Fragment key="time-range-filters">
-      {value.last_change_from && (
-        <span key="tag-time-range-from" className="tag">
-          {title} from {value.last_change_from}
-          <button
-            type="button"
-            onClick={() => filterEl.current.handleChange({last_change_from: null})}
-            className="delete"
-          />
-        </span>
-      )}
-      {value.last_change_to && (
-        <span key="tag-time-range-to" className="tag">
-          {title} to {value.last_change_to}
-          <button
-            type="button"
-            onClick={() => filterEl.current.handleChange({last_change_to: null})}
-            className="delete"
-          />
-        </span>
-      )}
-    </Fragment>
-  );
+  renderTimeRangeTags = (value, filterConfig) => {
+    const { fromParam, toParam, title } = filterConfig;
+
+    return (
+      <Fragment key="time-range-filters">
+        {value.last_change_from && (
+          <span key="tag-time-range-from" className="tag">
+            {title} from {value.last_change_from}
+            <button
+              type="button"
+              onClick={() => this.handleFilterChange({ [fromParam]: null })}
+              className="delete"
+            />
+          </span>
+        )}
+        {value.last_change_to && (
+          <span key="tag-time-range-to" className="tag">
+            {title} to {value.last_change_to}
+            <button
+              type="button"
+              onClick={() => this.handleFilterChange({ [toParam]: null })}
+              className="delete"
+            />
+          </span>
+        )}
+      </Fragment>
+    );
+  }
 
   renderNoItemsMessage() {
     const { title } = this.props;

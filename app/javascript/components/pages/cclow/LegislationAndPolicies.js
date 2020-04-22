@@ -43,6 +43,8 @@ function LegislationAndPolicies(props) {
       title: 'Date of last change',
       timeRange: true,
       mainFilter: true,
+      fromParam: 'last_change_from',
+      toParam: 'last_change_to',
       params: {
         last_change_from: paramInteger,
         last_change_to: paramInteger
