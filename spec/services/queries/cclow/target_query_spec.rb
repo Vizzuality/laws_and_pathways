@@ -85,7 +85,7 @@ RSpec.describe Queries::CCLOW::TargetQuery do
     end
 
     it 'should filter by multiple params' do
-      results = subject.new(q: 'risk', from_date: '2014').call
+      results = subject.new(q: 'risk', last_change_from: '2014').call
       expect(results).to contain_exactly(@target3)
     end
 

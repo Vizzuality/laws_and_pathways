@@ -97,7 +97,7 @@ module CCLOW
     end
 
     def filter_params
-      params.permit(:q, :from_date, :to_date, :recent, :ids,
+      params.permit(:q, :last_change_from, :last_change_to, :recent, :ids,
                     target_year: [], region: [], geography: [], jurisdiction: [],
                     status: [], type: [], keywords: [], responses: [],
                     frameworks: [], natural_hazards: [], party_type: [],

@@ -40,8 +40,8 @@ class TimeRangeFilter extends Component {
     super(props);
     this.state = {
       isShowOptions: false,
-      from_date: null,
-      to_date: null,
+      last_change_from: null,
+      last_change_to: null,
       defFromDate: minDate,
       defToDate: maxDate
     };
@@ -71,10 +71,10 @@ class TimeRangeFilter extends Component {
 
   handleChange = (value) => {
     const {onChange} = this.props;
-    const {from_date, to_date} = this.state;
+    const {last_change_from, last_change_to} = this.state;
     onChange({
-      from_date,
-      to_date,
+      last_change_from,
+      last_change_to,
       ...value
     });
     this.setState(value);
@@ -82,9 +82,9 @@ class TimeRangeFilter extends Component {
 
   renderOptions = () => {
     const {filterName, minDate, maxDate} = this.props;
-    const {from_date, to_date, defFromDate, defToDate} = this.state;
-    const currentToDate = to_date || defToDate;
-    const currentFromDate = from_date || defFromDate;
+    const {last_change_from, last_change_to, defFromDate, defToDate} = this.state;
+    const currentToDate = last_change_to || defToDate;
+    const currentFromDate = last_change_from || defFromDate;
     return (
       <div className="options-container" ref={this.optionsContainer}>
         <div className="select-field" onClick={this.handleCloseOptions}>
@@ -106,9 +106,9 @@ class TimeRangeFilter extends Component {
                 { backgroundColor: redColor, border: 'none', height: '12px', width: '12px', marginTop: '-4px' },
                 { backgroundColor: redColor, border: 'none', height: '18px', width: '18px', marginTop: '-7px' }
               ]}
-              value={[from_date || defFromDate, to_date || defToDate]}
-              onChange={(e) => this.setState({from_date: e[0], to_date: e[1]})}
-              onAfterChange={(e) => this.handleChange({from_date: e[0], to_date: e[1]})}
+              value={[last_change_from || defFromDate, last_change_to || defToDate]}
+              onChange={(e) => this.setState({last_change_from: e[0], last_change_to: e[1]})}
+              onAfterChange={(e) => this.handleChange({last_change_from: e[0], last_change_to: e[1]})}
               railStyle={{ backgroundColor: greyColor, maxHeight: '2px', marginTop: '1px' }}
               activeDotStyle={{border: 'none'}}
             />
@@ -127,8 +127,8 @@ class TimeRangeFilter extends Component {
               }
               styles={customStyles}
               isSearchable={false}
-              value={{label: from_date || defFromDate, value: from_date || defFromDate}}
-              onChange={(e) => this.handleChange({from_date: e.value})}
+              value={{label: last_change_from || defFromDate, value: last_change_from || defFromDate}}
+              onChange={(e) => this.handleChange({last_change_from: e.value})}
               components={{IndicatorSeparator: () => null}}
             />
           </div>
@@ -141,8 +141,8 @@ class TimeRangeFilter extends Component {
               }
               styles={customStyles}
               isSearchable={false}
-              value={{label: to_date || defToDate, value: to_date || defToDate}}
-              onChange={(e) => this.handleChange({to_date: e.value})}
+              value={{label: last_change_to || defToDate, value: last_change_to || defToDate}}
+              onChange={(e) => this.handleChange({last_change_to: e.value})}
               components={{IndicatorSeparator: () => null}}
             />
           </div>
@@ -152,11 +152,11 @@ class TimeRangeFilter extends Component {
   };
 
   render() {
-    const {isShowOptions, from_date, to_date} = this.state;
+    const {isShowOptions, last_change_from, last_change_to} = this.state;
     const {filterName, className} = this.props;
     let selectedCount = 0;
-    if (from_date) selectedCount += 1;
-    if (to_date) selectedCount += 1;
+    if (last_change_from) selectedCount += 1;
+    if (last_change_to) selectedCount += 1;
 
     return (
       <div className={`filter-container ${className}`}>

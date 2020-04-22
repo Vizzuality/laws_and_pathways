@@ -162,6 +162,7 @@ class List extends Component {
         <TimeRangeFilter
           key={`filter_${name}`}
           ref={this.filterRefs[name]}
+          filterName={title}
           className={className}
           onChange={this.handleFilterChange}
         />
@@ -229,11 +230,11 @@ class List extends Component {
 
   renderTagsGroup = (filterConfig) => {
     const { filters } = this.state;
-    const { name, options, timeRange } = filterConfig;
+    const { name, options, title, timeRange } = filterConfig;
     const activeTags = pick(filters, Object.keys(filterConfig.params));
     const filterEl = this.filterRefs[name];
 
-    if (timeRange) return this.renderTimeRangeTags(activeTags, filterEl);
+    if (timeRange) return this.renderTimeRangeTags(activeTags, title, filterEl);
 
     return Object.keys(activeTags).map((keyBlock) => (
       activeTags[keyBlock].filter(x => x).map((key, i) => (
@@ -245,24 +246,24 @@ class List extends Component {
     ));
   }
 
-  renderTimeRangeTags = (value, filterEl) => (
+  renderTimeRangeTags = (value, title, filterEl) => (
     <Fragment key="time-range-filters">
-      {value.from_date && (
+      {value.last_change_from && (
         <span key="tag-time-range-from" className="tag">
-          From {value.from_date}
+          {title} from {value.last_change_from}
           <button
             type="button"
-            onClick={() => filterEl.current.handleChange({from_date: null})}
+            onClick={() => filterEl.current.handleChange({last_change_from: null})}
             className="delete"
           />
         </span>
       )}
-      {value.to_date && (
+      {value.last_change_to && (
         <span key="tag-time-range-to" className="tag">
-          To {value.to_date}
+          {title} to {value.last_change_to}
           <button
             type="button"
-            onClick={() => filterEl.current.handleChange({to_date: null})}
+            onClick={() => filterEl.current.handleChange({last_change_to: null})}
             className="delete"
           />
         </span>

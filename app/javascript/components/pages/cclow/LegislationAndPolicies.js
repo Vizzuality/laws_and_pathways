@@ -39,12 +39,13 @@ function LegislationAndPolicies(props) {
       }
     },
     {
-      name: 'timeRange',
+      name: 'dateOfLastChange',
+      title: 'Date of last change',
       timeRange: true,
       mainFilter: true,
       params: {
-        from_date: paramInteger,
-        to_date: paramInteger
+        last_change_from: paramInteger,
+        last_change_to: paramInteger
       }
     },
     {

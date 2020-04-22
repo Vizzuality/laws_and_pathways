@@ -147,18 +147,18 @@ RSpec.describe Queries::CCLOW::LegislationQuery do
       expect(results).to contain_exactly(@legislation1, @legislation2, @legislation4)
     end
 
-    it 'should filter by from date' do
-      results = subject.new(from_date: '2011').call
+    it 'should filter by date of last change from' do
+      results = subject.new(last_change_from: '2011').call
       expect(results).to contain_exactly(@legislation1, @legislation2, @legislation3)
     end
 
     it 'should filter by to date' do
-      results = subject.new(to_date: '2013').call
+      results = subject.new(last_change_to: '2013').call
       expect(results).to contain_exactly(@legislation1, @legislation4)
     end
 
     it 'should filter by multiple params' do
-      results = subject.new(q: 'Nat', from_date: '2014', instrument: [@instrument3.id]).call
+      results = subject.new(q: 'Nat', last_change_from: '2014', instrument: [@instrument3.id]).call
       expect(results).to contain_exactly(@legislation3)
     end
 
