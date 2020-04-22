@@ -39,6 +39,18 @@ function LegislationAndPolicies(props) {
       }
     },
     {
+      name: 'dateOfLawPassed',
+      title: 'Date of law passed',
+      timeRange: true,
+      mainFilter: true,
+      fromParam: 'law_passed_from',
+      toParam: 'law_passed_to',
+      params: {
+        law_passed_from: paramInteger,
+        law_passed_to: paramInteger
+      }
+    },
+    {
       name: 'dateOfLastChange',
       title: 'Date of last change',
       timeRange: true,

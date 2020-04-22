@@ -98,6 +98,7 @@ module CCLOW
 
     def filter_params
       params.permit(:q, :last_change_from, :last_change_to, :recent, :ids,
+                    :law_passed_from, :law_passed_to,
                     target_year: [], region: [], geography: [], jurisdiction: [],
                     status: [], type: [], keywords: [], responses: [],
                     frameworks: [], natural_hazards: [], party_type: [],

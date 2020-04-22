@@ -1,6 +1,7 @@
 module CCLOW
   class LegislationAndPoliciesController < CCLOWController
     include FilterController
+
     def index
       add_breadcrumb('Climate Change Laws of the World', cclow_root_path)
       add_breadcrumb('Laws and policies', cclow_legislation_and_policies_path)

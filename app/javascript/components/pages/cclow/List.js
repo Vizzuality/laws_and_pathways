@@ -170,7 +170,6 @@ class List extends Component {
       return (
         <TimeRangeFilter
           key={`filter_${name}`}
-          ref={this.filterRefs[name]}
           filterName={title}
           className={className}
           fromDate={filters[fromParam]}
@@ -257,14 +256,16 @@ class List extends Component {
     ));
   }
 
-  renderTimeRangeTags = (value, filterConfig) => {
-    const { fromParam, toParam, title } = filterConfig;
+  renderTimeRangeTags = (activeFilters, filterConfig) => {
+    const { name, fromParam, toParam, title } = filterConfig;
+    const fromDate = activeFilters[fromParam];
+    const toDate = activeFilters[toParam];
 
     return (
-      <Fragment key="time-range-filters">
-        {value.last_change_from && (
-          <span key="tag-time-range-from" className="tag">
-            {title} from {value.last_change_from}
+      <Fragment key={`${name}-filter-tag`}>
+        {fromDate && (
+          <span className="tag">
+            {title} from {fromDate}
             <button
               type="button"
               onClick={() => this.handleFilterChange({ [fromParam]: null })}
@@ -272,9 +273,9 @@ class List extends Component {
             />
           </span>
         )}
-        {value.last_change_to && (
-          <span key="tag-time-range-to" className="tag">
-            {title} to {value.last_change_to}
+        {toDate && (
+          <span className="tag">
+            {title} to {toDate}
             <button
               type="button"
               onClick={() => this.handleFilterChange({ [toParam]: null })}
