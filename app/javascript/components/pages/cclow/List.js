@@ -158,7 +158,7 @@ class List extends Component {
     const className = isHidden ? 'hidden' : '';
 
     if (filterConfig.timeRange) {
-      const { fromParam, toParam } = filterConfig;
+      const { fromParam, toParam, minDate } = filterConfig;
 
       const handleTimeRangeFilterChange = ({ fromDate, toDate }) => {
         this.handleFilterChange({
@@ -172,6 +172,7 @@ class List extends Component {
           key={`filter_${name}`}
           filterName={title}
           className={className}
+          minDate={minDate}
           fromDate={filters[fromParam]}
           toDate={filters[toParam]}
           onChange={handleTimeRangeFilterChange}
