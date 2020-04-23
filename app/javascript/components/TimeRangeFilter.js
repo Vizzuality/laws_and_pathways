@@ -57,13 +57,18 @@ function TimeRangeFilter(props) {
     });
   };
 
-  let selectedCount = 0;
+  const capitalizeFirstLetter = (string) => {
+    if (typeof string !== 'string') return null;
 
-  if (fromDate) selectedCount += 1;
-  if (toDate) selectedCount += 1;
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
 
   const currentFromDate = fromDate || minDate;
   const currentToDate = toDate || maxDate;
+
+  let selectedTitle = fromDate ? `from ${fromDate} ` : '';
+  selectedTitle += toDate ? `to ${toDate}` : '';
+  if (selectedTitle) selectedTitle = capitalizeFirstLetter(selectedTitle);
 
   return (
     <div className={`filter-container ${className}`}>
@@ -71,7 +76,7 @@ function TimeRangeFilter(props) {
         <div className="select-field">
           <span>{filterName}</span><span className="toggle-indicator"><img src={plus} alt="" /></span>
         </div>
-        {selectedCount !== 0 && <div className="selected-count">{selectedCount} selected</div>}
+        {selectedTitle && <div className="selected-count">{selectedTitle}</div>}
       </div>
       {showOptions && (
         <div className="options-container" ref={optionsContainer}>
