@@ -20,6 +20,8 @@ module Queries
           .merge(filter_by_tags)
           .merge(filter_by_last_change_from)
           .merge(filter_by_last_change_to)
+          .merge(filter_by_case_started_from)
+          .merge(filter_by_case_started_to)
           .merge(filter_by_to_status)
           .merge(filter_by_litigation_sides)
           .merge(filter_by_litigation_side_party_types)
@@ -77,6 +79,18 @@ module Queries
         return scope unless params[:jurisdiction].present?
 
         scope.where(jurisdiction: params[:jurisdiction])
+      end
+
+      def filter_by_case_started_from
+        return scope unless params[:case_started_from].present?
+
+        scope.started.where('events.date >= (?)', Date.new(params[:case_started_from].to_i, 1, 1))
+      end
+
+      def filter_by_case_started_to
+        return scope unless params[:case_started_to].present?
+
+        scope.started.where('events.date <= (?)', Date.new(params[:case_started_to].to_i, 12, 31))
       end
     end
   end

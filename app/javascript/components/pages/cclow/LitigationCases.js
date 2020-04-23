@@ -40,6 +40,18 @@ function LitigationCases(props) {
       }
     },
     {
+      name: 'dateOfCaseStarted',
+      title: 'Date of case started',
+      timeRange: true,
+      mainFilter: true,
+      fromParam: 'case_started_from',
+      toParam: 'case_started_to',
+      params: {
+        case_started_from: paramInteger,
+        case_started_to: paramInteger
+      }
+    },
+    {
       name: 'dateOfLastChange',
       title: 'Date of last change',
       timeRange: true,
