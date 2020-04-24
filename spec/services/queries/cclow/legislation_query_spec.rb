@@ -31,7 +31,7 @@ RSpec.describe Queries::CCLOW::LegislationQuery do
       responses: [@adaptation],
       instruments: [@instrument1, @instrument3],
       events: [
-        build(:event, event_type: 'law_passed', date: '2010-01-01'),
+        build(:event, event_type: 'law_passed', date: '2009-01-01'),
         build(:event, event_type: 'amended', date: '2013-03-01')
       ]
     )
@@ -59,7 +59,8 @@ RSpec.describe Queries::CCLOW::LegislationQuery do
       laws_sectors: [@sector3],
       title: 'Zimbabwe: National contingency plan 2012-2013',
       events: [
-        build(:event, event_type: 'law_passed', date: '2016-12-02')
+        build(:event, event_type: 'law_passed', date: '2016-12-02'),
+        build(:event, event_type: 'amended', date: '2019-03-01')
       ]
     )
 
@@ -72,7 +73,8 @@ RSpec.describe Queries::CCLOW::LegislationQuery do
       title: 'Some natural law',
       responses: [@adaptation],
       events: [
-        build(:event, event_type: 'law_passed', date: '2010-12-02')
+        build(:event, event_type: 'law_passed', date: '2010-12-02'),
+        build(:event, event_type: 'amended', date: '2018-03-01')
       ]
     )
 
@@ -147,24 +149,39 @@ RSpec.describe Queries::CCLOW::LegislationQuery do
       expect(results).to contain_exactly(@legislation1, @legislation2, @legislation4)
     end
 
-    it 'should filter by from date' do
-      results = subject.new(from_date: '2011').call
-      expect(results).to contain_exactly(@legislation1, @legislation2, @legislation3)
+    it 'should filter by date of last change from' do
+      results = subject.new(last_change_from: '2011').call
+      expect(results).to contain_exactly(@legislation1, @legislation2, @legislation3, @legislation4)
     end
 
-    it 'should filter by to date' do
-      results = subject.new(to_date: '2013').call
+    it 'should filter by date of last change to' do
+      results = subject.new(last_change_to: '2013').call
+      expect(results).to contain_exactly(@legislation1)
+    end
+
+    it 'should filter by date of law passed from' do
+      results = subject.new(law_passed_from: '2011').call
+      expect(results).to contain_exactly(@legislation2, @legislation3)
+    end
+
+    it 'should filter by date of law passed to' do
+      results = subject.new(law_passed_to: '2013').call
       expect(results).to contain_exactly(@legislation1, @legislation4)
     end
 
+    it 'should filter by events dates' do
+      results = subject.new(law_passed_from: '2010', last_change_from: '2017').call
+      expect(results).to contain_exactly(@legislation3, @legislation4)
+    end
+
     it 'should filter by multiple params' do
-      results = subject.new(q: 'Nat', from_date: '2014', instrument: [@instrument3.id]).call
+      results = subject.new(q: 'Nat', last_change_from: '2014', instrument: [@instrument3.id]).call
       expect(results).to contain_exactly(@legislation3)
     end
 
     it 'should be ordered by last event date' do
       results = subject.new({}).call
-      expect(results.map(&:id)).to eq([@legislation3.id, @legislation2.id, @legislation1.id, @legislation4.id])
+      expect(results.map(&:id)).to eq([@legislation3.id, @legislation4.id, @legislation2.id, @legislation1.id])
     end
   end
 end

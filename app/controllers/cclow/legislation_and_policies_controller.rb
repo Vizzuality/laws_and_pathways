@@ -1,6 +1,7 @@
 module CCLOW
   class LegislationAndPoliciesController < CCLOWController
     include FilterController
+
     def index
       add_breadcrumb('Climate Change Laws of the World', cclow_root_path)
       add_breadcrumb('Laws and policies', cclow_legislation_and_policies_path)
@@ -13,6 +14,7 @@ module CCLOW
       respond_to do |format|
         format.html do
           render component: 'pages/cclow/LegislationAndPolicies', props: {
+            min_law_passed_year: Legislation.published.passed.minimum('events.date')&.year,
             geo_filter_options: region_geography_options,
             keywords_filter_options: tags_options('Legislation', 'Keyword'),
             responses_filter_options: tags_options('Legislation', 'Response'),

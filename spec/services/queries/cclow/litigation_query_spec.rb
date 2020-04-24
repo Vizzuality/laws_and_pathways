@@ -34,6 +34,7 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
       keywords: [@biodiversity, @cap_and_trade],
       events: [
         build(:event, event_type: 'case_started', date: '2010-01-01'),
+        build(:event, event_type: 'first_decision', date: '2012-03-01'),
         build(:event, event_type: 'case_decided', date: '2013-03-01')
       ]
     )
@@ -48,24 +49,28 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
       litigation_sides: [@side_a2],
       keywords: [@business_risk, @cap_and_trade],
       events: [
-        build(:event, event_type: 'case_started', date: '2014-12-02')
+        build(:event, event_type: 'case_opened', date: '2014-12-02'),
+        build(:event, event_type: 'first_decision', date: '2016-03-01')
       ]
     )
 
     @litigation3 = create(
       :litigation,
       :published,
+      title: 'Friends of Earth vs Germany',
       geography: @geography3,
       laws_sectors: [@sector3],
       litigation_sides: [@side_c2],
       events: [
-        build(:event, event_type: 'case_started', date: '2016-12-02')
+        build(:event, event_type: 'case_started', date: '2016-12-02'),
+        build(:event, event_type: 'first_decision', date: '2019-03-01')
       ]
     )
 
     @litigation4 = create(
       :litigation,
       :published,
+      title: 'Friends vs DJ BOBO',
       geography: @geography1,
       laws_sectors: [@sector2]
     )
@@ -130,14 +135,29 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
       expect(results).to contain_exactly(@litigation1)
     end
 
-    it 'should filter by from date' do
-      results = subject.new(from_date: '2011').call
+    it 'should filter by date of last change from' do
+      results = subject.new(last_change_from: '2011').call
       expect(results).to contain_exactly(@litigation1, @litigation2, @litigation3)
     end
 
-    it 'should filter by to date' do
-      results = subject.new(to_date: '2013').call
+    it 'should filter by date of last change to' do
+      results = subject.new(last_change_to: '2013').call
       expect(results).to contain_exactly(@litigation1)
+    end
+
+    it 'should filter by date of case started from' do
+      results = subject.new(case_started_from: '2011').call
+      expect(results).to contain_exactly(@litigation2, @litigation3)
+    end
+
+    it 'should filter by date of case started to' do
+      results = subject.new(case_started_to: '2014').call
+      expect(results).to contain_exactly(@litigation1, @litigation2)
+    end
+
+    it 'should filter by events dates' do
+      results = subject.new(case_started_from: '2011', last_change_from: '2017').call
+      expect(results).to contain_exactly(@litigation3)
     end
 
     it 'should filter by single litigaton side a' do
@@ -188,7 +208,7 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
     end
 
     it 'should filter by multiple params' do
-      results = subject.new(q: 'testing', from_date: '2011', side_a: ['Second Side A']).call
+      results = subject.new(q: 'testing', last_change_from: '2011', side_a: ['Second Side A']).call
       expect(results).to contain_exactly(@litigation2)
     end
 

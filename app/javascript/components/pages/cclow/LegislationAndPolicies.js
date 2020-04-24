@@ -16,6 +16,7 @@ function LegislationAndPolicies(props) {
   const {
     legislations,
     count,
+    min_law_passed_year,
     geo_filter_options,
     keywords_filter_options,
     responses_filter_options,
@@ -39,12 +40,28 @@ function LegislationAndPolicies(props) {
       }
     },
     {
-      name: 'timeRange',
+      name: 'dateOfLawPassed',
+      title: 'Date of law passed',
       timeRange: true,
       mainFilter: true,
+      fromParam: 'law_passed_from',
+      toParam: 'law_passed_to',
+      minDate: min_law_passed_year,
       params: {
-        from_date: paramInteger,
-        to_date: paramInteger
+        law_passed_from: paramInteger,
+        law_passed_to: paramInteger
+      }
+    },
+    {
+      name: 'dateOfLastChange',
+      title: 'Date of last change',
+      timeRange: true,
+      mainFilter: true,
+      fromParam: 'last_change_from',
+      toParam: 'last_change_to',
+      params: {
+        last_change_from: paramInteger,
+        last_change_to: paramInteger
       }
     },
     {
@@ -156,6 +173,7 @@ function LegislationAndPolicies(props) {
 
 LegislationAndPolicies.defaultProps = {
   count: 0,
+  min_law_passed_year: 1990,
   geo_filter_options: [],
   keywords_filter_options: [],
   responses_filter_options: [],
@@ -170,6 +188,7 @@ LegislationAndPolicies.defaultProps = {
 LegislationAndPolicies.propTypes = {
   legislations: PropTypes.array.isRequired,
   count: PropTypes.number,
+  min_law_passed_year: PropTypes.number,
   geo_filter_options: PropTypes.array,
   keywords_filter_options: PropTypes.array,
   responses_filter_options: PropTypes.array,

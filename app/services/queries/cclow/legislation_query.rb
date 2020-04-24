@@ -20,8 +20,10 @@ module Queries
           .merge(filter_by_tags)
           .merge(filter_by_instruments)
           .merge(filter_by_governances)
-          .merge(filter_by_from_date)
-          .merge(filter_by_to_date)
+          .merge(filter_by_last_change_from)
+          .merge(filter_by_last_change_to)
+          .merge(filter_by_law_passed_from)
+          .merge(filter_by_law_passed_to)
           .merge(filter_by_type)
           .merge(filter_recent)
           .merge(filter_by_sector)
@@ -47,6 +49,18 @@ module Queries
         return scope unless params[:type].present?
 
         scope.where(legislation_type: params[:type])
+      end
+
+      def filter_by_law_passed_from
+        return scope unless params[:law_passed_from].present?
+
+        scope.passed.where('events.date >= (?)', Date.new(params[:law_passed_from].to_i, 1, 1))
+      end
+
+      def filter_by_law_passed_to
+        return scope unless params[:law_passed_to].present?
+
+        scope.passed.where('events.date <= (?)', Date.new(params[:law_passed_to].to_i, 12, 31))
       end
     end
   end

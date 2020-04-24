@@ -41,16 +41,16 @@ module Queries
         scope.where(id: scope.unscoped.with_tags_by_id(tag_ids))
       end
 
-      def filter_by_from_date
-        return scope unless params[:from_date].present?
+      def filter_by_last_change_from
+        return scope unless params[:last_change_from].present?
 
-        scope.with_last_events.where('last_events.date >= (?)', Date.new(params[:from_date].to_i, 1, 1))
+        scope.with_last_events.where('last_events.date >= (?)', Date.new(params[:last_change_from].to_i, 1, 1))
       end
 
-      def filter_by_to_date
-        return scope unless params[:to_date].present?
+      def filter_by_last_change_to
+        return scope unless params[:last_change_to].present?
 
-        scope.with_last_events.where('last_events.date <= (?)', Date.new(params[:to_date].to_i, 12, 31))
+        scope.with_last_events.where('last_events.date <= (?)', Date.new(params[:last_change_to].to_i, 12, 31))
       end
 
       def filter_by_to_status

@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { Range, Handle } from 'rc-slider';
-import minus from '../../assets/images/icons/dark-minus.svg';
-import plus from '../../assets/images/icons/dark-plus.svg';
 
+import { useOutsideClick } from 'shared/hooks';
+
+import minus from 'images/icons/dark-minus.svg';
+import plus from 'images/icons/dark-plus.svg';
 
 const blueDarkColor = '#2E3152';
 const redColor = '#ED3D48';
@@ -34,147 +36,124 @@ const customStyles = {
   })
 };
 
-class TimeRangeFilter extends Component {
-  constructor(props) {
-    const {minDate, maxDate} = props;
-    super(props);
-    this.state = {
-      isShowOptions: false,
-      from_date: null,
-      to_date: null,
-      defFromDate: minDate,
-      defToDate: maxDate
-    };
+function TimeRangeFilter(props) {
+  const [showOptions, setShowOptions] = useState(false);
+  const [fromDate, setFromDate] = useState(props.fromDate);
+  const [toDate, setToDate] = useState(props.toDate);
 
-    this.optionsContainer = React.createRef();
-  }
+  const { filterName, className, minDate, maxDate } = props;
 
-  componentDidMount() {
-    document.addEventListener('mousedown', this.handleClickOutside);
-  }
+  const optionsContainer = useRef();
 
-  componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside);
-  }
+  useOutsideClick(optionsContainer, () => setShowOptions(false));
+  useEffect(() => setFromDate(props.fromDate), [props.fromDate]);
+  useEffect(() => setToDate(props.toDate), [props.toDate]);
 
-  setShowOptions = value => this.setState({isShowOptions: value});
-
-  handleCloseOptions = () => {
-    this.setShowOptions(false);
-  };
-
-  handleClickOutside = (event) => {
-    if (this.optionsContainer.current && !this.optionsContainer.current.contains(event.target)) {
-      this.handleCloseOptions();
-    }
-  };
-
-  handleChange = (value) => {
-    const {onChange} = this.props;
-    const {from_date, to_date} = this.state;
-    onChange({
-      from_date,
-      to_date,
+  const handleChange = (value) => {
+    props.onChange({
+      fromDate,
+      toDate,
       ...value
     });
-    this.setState(value);
   };
 
-  renderOptions = () => {
-    const {filterName, minDate, maxDate} = this.props;
-    const {from_date, to_date, defFromDate, defToDate} = this.state;
-    const currentToDate = to_date || defToDate;
-    const currentFromDate = from_date || defFromDate;
-    return (
-      <div className="options-container" ref={this.optionsContainer}>
-        <div className="select-field" onClick={this.handleCloseOptions}>
-          <span>{filterName}</span><span className="toggle-indicator"><img src={minus} alt="" /></span>
+  const capitalizeFirstLetter = (string) => {
+    if (typeof string !== 'string') return null;
+
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
+  const currentFromDate = fromDate || minDate;
+  const currentToDate = toDate || maxDate;
+
+  let selectedTitle = fromDate ? `from ${fromDate} ` : '';
+  selectedTitle += toDate ? `to ${toDate}` : '';
+  if (selectedTitle) selectedTitle = capitalizeFirstLetter(selectedTitle);
+
+  return (
+    <div className={`filter-container ${className}`}>
+      <div className="control-field" onClick={() => setShowOptions(true)}>
+        <div className="select-field">
+          <span>{filterName}</span><span className="toggle-indicator"><img src={plus} alt="" /></span>
         </div>
-        <div className="time-range-options">
-          <div className="slider-range-container">
-            <Range
-              className="slider-range"
-              min={minDate}
-              max={maxDate}
-              trackStyle={[{ backgroundColor: redColor }]}
-              handle={(handleProps) => (
-                <Handle {...handleProps} key={handleProps.index} dragging={handleProps.dragging.toString()}>
-                  <div className={`time-range-handle handle-${handleProps.index}`}>{handleProps.value}</div>
-                </Handle>
-              )}
-              handleStyle={[
-                { backgroundColor: redColor, border: 'none', height: '12px', width: '12px', marginTop: '-4px' },
-                { backgroundColor: redColor, border: 'none', height: '18px', width: '18px', marginTop: '-7px' }
-              ]}
-              value={[from_date || defFromDate, to_date || defToDate]}
-              onChange={(e) => this.setState({from_date: e[0], to_date: e[1]})}
-              onAfterChange={(e) => this.handleChange({from_date: e[0], to_date: e[1]})}
-              railStyle={{ backgroundColor: greyColor, maxHeight: '2px', marginTop: '1px' }}
-              activeDotStyle={{border: 'none'}}
-            />
-            <div className="values-row">
-              <span>{minDate}</span>
-              <span>{maxDate}</span>
-            </div>
+        {selectedTitle && <div className="selected-count">{selectedTitle}</div>}
+      </div>
+      {showOptions && (
+        <div className="options-container" ref={optionsContainer}>
+          <div className="select-field" onClick={() => setShowOptions(false)}>
+            <span>{filterName}</span><span className="toggle-indicator"><img src={minus} alt="" /></span>
           </div>
-          <div className="filter-item">
-            <div className="caption">From</div>
-            <Select
-              options={
+          <div className="time-range-options">
+            <div className="slider-range-container">
+              <Range
+                className="slider-range"
+                min={minDate}
+                max={maxDate}
+                trackStyle={[{ backgroundColor: redColor }]}
+                handle={(handleProps) => (
+                  <Handle {...handleProps} key={handleProps.index} dragging={handleProps.dragging.toString()}>
+                    <div className={`time-range-handle handle-${handleProps.index}`}>{handleProps.value}</div>
+                  </Handle>
+                )}
+                handleStyle={[
+                  { backgroundColor: redColor, border: 'none', height: '12px', width: '12px', marginTop: '-4px' },
+                  { backgroundColor: redColor, border: 'none', height: '18px', width: '18px', marginTop: '-7px' }
+                ]}
+                value={[currentFromDate, currentToDate]}
+                onChange={(e) => {
+                  setFromDate(e[0]);
+                  setToDate(e[1]);
+                }}
+                onAfterChange={(e) => handleChange({fromDate: e[0], toDate: e[1]})}
+                railStyle={{ backgroundColor: greyColor, maxHeight: '2px', marginTop: '1px' }}
+                activeDotStyle={{border: 'none'}}
+              />
+              <div className="values-row">
+                <span>{minDate}</span>
+                <span>{maxDate}</span>
+              </div>
+            </div>
+            <div className="filter-item">
+              <div className="caption">From</div>
+              <Select
+                options={
                 [...new Array(currentToDate - minDate + 1)].map((v, i) => (
                   {value: currentToDate - i, label: currentToDate - i}
                 ))
-              }
-              styles={customStyles}
-              isSearchable={false}
-              value={{label: from_date || defFromDate, value: from_date || defFromDate}}
-              onChange={(e) => this.handleChange({from_date: e.value})}
-              components={{IndicatorSeparator: () => null}}
-            />
-          </div>
-          <div className="filter-item">
-            <div className="caption">To</div>
-            <Select
-              options={
+                }
+                styles={customStyles}
+                isSearchable={false}
+                value={{label: currentFromDate, value: currentFromDate}}
+                onChange={(e) => handleChange({fromDate: e.value})}
+                components={{IndicatorSeparator: () => null}}
+              />
+            </div>
+            <div className="filter-item">
+              <div className="caption">To</div>
+              <Select
+                options={
                 [...new Array(maxDate - currentFromDate + 1)].map((_, i) => (
                   {value: currentFromDate + i, label: currentFromDate + i})).reverse()
-              }
-              styles={customStyles}
-              isSearchable={false}
-              value={{label: to_date || defToDate, value: to_date || defToDate}}
-              onChange={(e) => this.handleChange({to_date: e.value})}
-              components={{IndicatorSeparator: () => null}}
-            />
+                }
+                styles={customStyles}
+                isSearchable={false}
+                value={{label: currentToDate, value: currentToDate}}
+                onChange={(e) => handleChange({toDate: e.value})}
+                components={{IndicatorSeparator: () => null}}
+              />
+            </div>
           </div>
         </div>
-      </div>
-    );
-  };
-
-  render() {
-    const {isShowOptions, from_date, to_date} = this.state;
-    const {filterName, className} = this.props;
-    let selectedCount = 0;
-    if (from_date) selectedCount += 1;
-    if (to_date) selectedCount += 1;
-
-    return (
-      <div className={`filter-container ${className}`}>
-        <div className="control-field" onClick={() => this.setShowOptions(true)}>
-          <div className="select-field">
-            <span>{filterName}</span><span className="toggle-indicator"><img src={plus} alt="" /></span>
-          </div>
-          {selectedCount !== 0 && <div className="selected-count">{selectedCount} selected</div>}
-        </div>
-        { isShowOptions && this.renderOptions()}
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 }
 
 TimeRangeFilter.defaultProps = {
   className: '',
   onChange: () => {},
+  fromDate: null,
+  toDate: null,
   filterName: 'Time range',
   minDate: 1990,
   maxDate: new Date().getUTCFullYear()
@@ -185,6 +164,8 @@ TimeRangeFilter.propTypes = {
   filterName: PropTypes.string,
   minDate: PropTypes.number,
   maxDate: PropTypes.number,
+  fromDate: PropTypes.number,
+  toDate: PropTypes.number,
   onChange: PropTypes.func
 };
 
