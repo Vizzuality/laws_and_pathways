@@ -48,7 +48,7 @@ ActiveAdmin.register Legislation do
 
   publishable_resource_sidebar
 
-  data_export_sidebar 'Laws', documents: true, events: true
+  data_export_sidebar 'Legislations', display_name: 'Laws', documents: true, events: true
 
   show do
     tabs do
