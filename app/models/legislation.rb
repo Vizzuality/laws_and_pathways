@@ -109,7 +109,7 @@ class Legislation < ApplicationRecord
   end
 
   def date_passed
-    events.passed.first&.date
+    events.find_by(event_type: 'passed/approved')&.date
   end
 
   def first_event
