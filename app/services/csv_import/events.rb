@@ -49,7 +49,7 @@ module CSVImport
     end
 
     def event_date(row)
-      CSVImport::DateUtils.safe_parse(row[:date], ['%d/%m/%y', '%Y-%m-%d', '%Y']) if row[:date]
+      CSVImport::DateUtils.safe_parse(row[:date], ['%d/%m/%Y', '%Y-%m-%d', '%Y']) if row[:date]
     end
   end
 end
