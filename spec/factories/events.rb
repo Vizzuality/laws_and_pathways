@@ -29,7 +29,7 @@ FactoryBot.define do
     factory :legislation_event do
       title { 'Some law was approved' }
       description { 'Description of approved law' }
-      event_type { 'approved' }
+      event_type { 'passed/approved' }
       eventable { |e| e.association(:legislation) }
     end
 

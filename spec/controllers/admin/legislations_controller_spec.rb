@@ -74,7 +74,7 @@ RSpec.describe Admin::LegislationsController, type: :controller do
             },
             {
               date: 3.days.ago,
-              event_type: 'approved',
+              event_type: 'passed/approved',
               title: 'Event 2',
               description: 'Description 2',
               url: 'https://validurl2.com'
@@ -90,7 +90,7 @@ RSpec.describe Admin::LegislationsController, type: :controller do
 
         expected_events_attrs = [
           ['Event 1', 'amended', 'Description 1', 'https://validurl1.com'],
-          ['Event 2', 'approved', 'Description 2', 'https://validurl2.com']
+          ['Event 2', 'passed/approved', 'Description 2', 'https://validurl2.com']
         ]
 
         last_legislation_created.tap do |l|
