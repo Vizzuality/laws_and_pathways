@@ -31,7 +31,7 @@ RSpec.describe Queries::CCLOW::LegislationQuery do
       responses: [@adaptation],
       instruments: [@instrument1, @instrument3],
       events: [
-        build(:event, event_type: 'law_passed', date: '2009-01-01'),
+        build(:event, event_type: 'passed/approved', date: '2009-01-01'),
         build(:event, event_type: 'amended', date: '2013-03-01')
       ]
     )
@@ -46,7 +46,7 @@ RSpec.describe Queries::CCLOW::LegislationQuery do
       title: 'Act No. 7 of 1994 on protection against natural damage',
       keywords: [@business_risk, @cap_and_trade],
       events: [
-        build(:event, event_type: 'law_passed', date: '2014-12-02')
+        build(:event, event_type: 'passed/approved', date: '2014-12-02')
       ]
     )
 
@@ -59,7 +59,7 @@ RSpec.describe Queries::CCLOW::LegislationQuery do
       laws_sectors: [@sector3],
       title: 'Zimbabwe: National contingency plan 2012-2013',
       events: [
-        build(:event, event_type: 'law_passed', date: '2016-12-02'),
+        build(:event, event_type: 'passed/approved', date: '2016-12-02'),
         build(:event, event_type: 'amended', date: '2019-03-01')
       ]
     )
@@ -73,7 +73,7 @@ RSpec.describe Queries::CCLOW::LegislationQuery do
       title: 'Some natural law',
       responses: [@adaptation],
       events: [
-        build(:event, event_type: 'law_passed', date: '2010-12-02'),
+        build(:event, event_type: 'passed/approved', date: '2010-12-02'),
         build(:event, event_type: 'amended', date: '2018-03-01')
       ]
     )
