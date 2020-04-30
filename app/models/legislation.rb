@@ -33,31 +33,10 @@ class Legislation < ApplicationRecord
   LEGISLATION_TYPES = %w[executive legislative].freeze
   EVENT_TYPES = %w[
     amended
-    approved
-    deadline_for_regulation
-    decree_passed
-    document_amended
-    document_passed
-    document_approved
-    endorsement
-    entry_into_force
-    executive_decree_issued
-    federal_decree_issued
-    first_phase_approved
-    last_amended
-    last_amendment
-    law_amended
-    law_passed
-    law_published
-    law_adopted
-    ordinance_issued
-    plan_adopted
-    policy_revised
-    regulation_issued
-    repealed_and_replaced
-    replaced
-    start_of_reporting_period
-    wholly_amended
+    entered_into_force
+    implementation_details
+    passed/approved
+    repealed/replaced
   ].freeze
 
   tag_with :frameworks
@@ -79,7 +58,7 @@ class Legislation < ApplicationRecord
 
   scope :laws, -> { legislative }
   scope :policies, -> { executive }
-  scope :passed, -> { joins(:events).where(events: {event_type: 'law_passed'}) }
+  scope :passed, -> { joins(:events).where(events: {event_type: 'passed/approved'}) }
   scope :recent, ->(date = 1.month.ago) { passed.where('events.date > ?', date) }
 
   pg_search_scope :full_text_search,
@@ -130,7 +109,7 @@ class Legislation < ApplicationRecord
   end
 
   def date_passed
-    events.where(event_type: 'law_passed').first&.date
+    events.where(event_type: 'passed/approved').first&.date
   end
 
   def first_event
