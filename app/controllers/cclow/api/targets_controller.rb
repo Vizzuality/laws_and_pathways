@@ -23,7 +23,7 @@ module CCLOW
         end
 
         result[:country_meta] = {
-          'BRA': {
+          "#{geography.iso}": {
             country_profile: cclow_geography_url(geography),
             lnp_count: geography.legislations.count
           }
