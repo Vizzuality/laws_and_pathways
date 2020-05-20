@@ -2,6 +2,18 @@ module CCLOW
   module Api
     class TargetsController < CCLOWController
       def index
+        results = ::Geography.order(:name).find_each.map do |g|
+          [g.iso, {
+            in_laws: g.targets.joins(:legislations)
+              .where(legislations: {legislation_type: 'legislative'}).any?,
+            in_policies: g.targets.joins(:legislations)
+              .where(legislations: {legislation_type: 'executive'}).any?
+          }]
+        end.to_h
+        render json: results
+      end
+
+      def show
         geography = ::Geography.find_by(iso: params[:iso])
         if geography
           render json: targets_as_json(geography)
