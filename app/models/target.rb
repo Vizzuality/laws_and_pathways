@@ -108,6 +108,7 @@ class Target < ApplicationRecord
         {
           id: l.id,
           title: l.title,
+          type: l.law? ? 'law' : 'policy',
           link: l.url
         }
       end
