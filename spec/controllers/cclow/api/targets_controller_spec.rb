@@ -4,16 +4,24 @@ RSpec.describe CCLOW::Api::TargetsController, type: :controller do
   let_it_be(:geography) { create(:geography, iso: 'ABC') }
   let_it_be(:geography2) { create(:geography, iso: 'DEF') }
   let_it_be(:geography3) { create(:geography, iso: 'GHI') }
+  let_it_be(:geography4) { create(:geography, iso: 'JKL') }
   let_it_be(:sector1) { create(:laws_sector) }
   let_it_be(:sector2) { create(:laws_sector) }
   let_it_be(:sector3) { create(:laws_sector) }
   let_it_be(:legislation) do
+    leg = create(:legislation, legislation_type: 'executive',
+                               laws_sectors: [], geography_id: geography2.id)
+    leg.frameworks_list = 'Mitigation'
+    leg
+  end
+  let_it_be(:legislation2) do
     create(:legislation, legislation_type: 'executive',
-                         laws_sectors: [], geography_id: geography2.id)
+                         laws_sectors: [sector1], geography_id: geography4.id)
   end
   let_it_be(:target1) { create(:target, year: 2025, geography_id: geography.id, sector: sector1) }
   let_it_be(:target2) { create(:target, year: 2020, geography_id: geography.id, sector: sector1) }
   let_it_be(:target3) { create(:target, geography_id: geography2.id, sector: sector2, legislations: [legislation]) }
+  let_it_be(:target4) { create(:target, geography_id: geography4.id, sector: sector2, legislations: [legislation2]) }
 
   describe 'Get index with geography iso as param' do
     subject { get :show, params: {iso: geography.iso} }
@@ -59,14 +67,21 @@ RSpec.describe CCLOW::Api::TargetsController, type: :controller do
     it('should return an array with three objects') do
       subject
       result = JSON.parse(response.body)
-      expect(result.size).to eq(3)
+      expect(result.size).to eq(4)
     end
 
-    it('should return true to in_policies for geography2') do
+    it('should return true to in_framework for geography2') do
       subject
       result = JSON.parse(response.body)
-      expect(result[geography2.iso]['in_policies']).to eq(true)
-      expect(result[geography2.iso]['in_laws']).to eq(false)
+      expect(result[geography2.iso]['in_framework']).to eq(true)
+      expect(result[geography2.iso]['in_sectoral']).to eq(false)
+    end
+
+    it('should return true to in_sectoral for geography4') do
+      subject
+      result = JSON.parse(response.body)
+      expect(result[geography4.iso]['in_framework']).to eq(false)
+      expect(result[geography4.iso]['in_sectoral']).to eq(true)
     end
   end
 end

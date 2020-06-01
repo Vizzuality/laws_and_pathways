@@ -2,12 +2,13 @@ module CCLOW
   module Api
     class TargetsController < CCLOWController
       def index
+        # in framework climate laws or policies;
+        # in sectoral laws or policies
         results = ::Geography.order(:name).find_each.map do |g|
           [g.iso, {
-            in_laws: g.targets.joins(:legislations)
-              .where(legislations: {legislation_type: 'legislative'}).any?,
-            in_policies: g.targets.joins(:legislations)
-              .where(legislations: {legislation_type: 'executive'}).any?
+            in_framework: g.targets.joins(legislations: :tags)
+              .where(tags: {type: 'Framework'}).any?,
+            in_sectoral: g.targets.joins(legislations: :laws_sectors).any?
           }]
         end.to_h
         render json: results
