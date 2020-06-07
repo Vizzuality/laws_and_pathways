@@ -64,7 +64,7 @@ describe 'Geography page', type: 'system' do
         expect(page).to have_text('Legislative')
         expect(page).to have_text('Action plan')
         expect(page).to have_text('Mitigation Framework')
-        expect(page).to have_text('Passed in 1987')
+        expect(page).to have_text('Passed in')
 
         within('.timeline-events-container') do
           expect(page).to have_text('Law passed')
@@ -102,7 +102,7 @@ describe 'Geography page', type: 'system' do
         expect(page).to have_text('Executive')
         expect(page).to have_text('Action plan')
         expect(page).to have_text('Mitigation Framework')
-        expect(page).to have_text('Passed in 2016')
+        expect(page).to have_text('Passed in')
 
         within('.timeline-events-container') do
           expect(page).to have_text('Law passed')
