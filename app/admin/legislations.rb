@@ -173,5 +173,9 @@ ActiveAdmin.register Legislation do
         :updated_by
       )
     end
+
+    def apply_filtering(chain)
+      super(chain).distinct
+    end
   end
 end
