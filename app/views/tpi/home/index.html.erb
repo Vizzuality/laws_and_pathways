@@ -6,11 +6,11 @@
     <div class="columns">
       <div class="column is-4 left-size">
         <div class="title">
-          <h1>The TPI tool</h1>
+          <h1><%= @home_content[:intro][:title] %></h1>
         </div>
         <div class="description">
           <p class="content">
-            The Transition Pathway Initiative (TPI) is a global, asset-owner led initiative which assesses companies' preparedness for the transition to a low carbon economy. Rapidly becoming the go-to corporate climate action benchmark, the TPI tool is available here.
+            <%= @home_content[:intro][:description] %>
           </p>
         </div>
         <div class="button__container">
@@ -29,10 +29,12 @@
     <div class="columns">
       <%= link_to '/tpi/investors', class: "column is-5 section-clickable" do %>
         <div class="subsection-content__container">
-          <h4 class="section-title">How investors can use the TPI</h4>
+          <h4 class="section-title">
+            <%= @home_content[:investors][:title] %>
+          </h4>
 
           <p class="section-description">
-            The TPI is designed to support investors. Find out how they can use its findings.
+            <%= @home_content[:investors][:description] %>
           </p>
         </div>
 
@@ -48,10 +50,12 @@
 
       <%= link_to '/tpi/supporters', class: "column is-5 section-clickable" do %>
         <div class="subsection-content__container">
-          <h4 class="section-title">Supporters</h4>
+          <h4 class="section-title">
+            <%= @home_content[:supporters][:title] %>
+          </h4>
 
           <p class="section-description">
-            The TPI is supported globally by more than 75 investors with over $20.5 trillion combined Assets Under Management and Advice.
+            <%= @home_content[:supporters][:description] %>
           </p>
         </div>
 
