@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_10_163503) do
+ActiveRecord::Schema.define(version: 2020_06_22_151708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -204,8 +204,7 @@ ActiveRecord::Schema.define(version: 2020_03_10_163503) do
   create_table "external_legislations_litigations", id: false, force: :cascade do |t|
     t.bigint "litigation_id", null: false
     t.bigint "external_legislation_id", null: false
-    t.index ["external_legislation_id"], name: "index_external_legislations_litigations", unique: true
-    t.index ["litigation_id"], name: "index_external_legislations_litigations_on_litigation_id"
+    t.index ["litigation_id", "external_legislation_id"], name: "index_external_legislations_and_litigations_ids", unique: true
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -403,6 +402,23 @@ ActiveRecord::Schema.define(version: 2020_03_10_163503) do
     t.index ["updated_by_id"], name: "index_litigations_on_updated_by_id"
   end
 
+  create_table "locations", force: :cascade do |t|
+    t.string "location_type", null: false
+    t.string "iso", null: false
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.string "region", null: false
+    t.boolean "federal", default: false, null: false
+    t.text "federal_details"
+    t.text "approach_to_climate_change"
+    t.text "legislative_process"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["iso"], name: "index_locations_on_iso", unique: true
+    t.index ["region"], name: "index_locations_on_region"
+    t.index ["slug"], name: "index_locations_on_slug", unique: true
+  end
+
   create_table "mq_assessments", force: :cascade do |t|
     t.bigint "company_id"
     t.string "level", null: false
@@ -466,6 +482,15 @@ ActiveRecord::Schema.define(version: 2020_03_10_163503) do
     t.bigint "tpi_sector_id", null: false
     t.index ["publication_id"], name: "index_publications_tpi_sectors_on_publication_id"
     t.index ["tpi_sector_id"], name: "index_publications_tpi_sectors_on_tpi_sector_id"
+  end
+
+  create_table "sectors", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_sectors_on_name", unique: true
+    t.index ["slug"], name: "index_sectors_on_slug", unique: true
   end
 
   create_table "taggings", force: :cascade do |t|
