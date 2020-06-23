@@ -18,7 +18,7 @@ ActiveAdmin.register Geography do
                 events_attributes: permit_params_for(:events)
 
   filter :federal
-  filter :iso_equals, label: 'ISO'
+  filter :iso_contains, label: 'ISO'
   filter :name_contains, label: 'Name'
   filter :region, as: :check_boxes, collection: proc { Geography::REGIONS }
   filter :political_groups,
