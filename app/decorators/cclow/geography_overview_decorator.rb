@@ -19,7 +19,7 @@ module CCLOW
     end
 
     def legislative_process_preview
-      h.truncate(legislative_process,
+      h.truncate(h.strip_tags(legislative_process),
                  length: 645,
                  omission: h.content_tag(:label,
                                          for: 'legislative-process-toggle',
