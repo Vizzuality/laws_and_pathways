@@ -5,7 +5,7 @@
     <% end %>
   </template>
 
-  <%= form.semantic_fields_for :contents do |content| %>
+  <%= form.semantic_fields_for :contents, form.object.contents.order(:created_at) do |content| %>
     <%= render "admin/pages/content_fields", form: content %>
   <% end %>
 
