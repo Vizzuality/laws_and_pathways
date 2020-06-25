@@ -38,7 +38,8 @@ module TPI
     end
 
     def home_content
-      contents = Content.joins(:page).where(pages: {slug: 'homepage-content'}).order(:created_at)
+      contents = Content.joins(:page).where(pages: {slug: 'homepage-content'})
+        .order(:created_at).to_a
       {
         intro: {
           title: contents&.first&.title || 'The TPI tool',
