@@ -30,6 +30,10 @@
         font-size: 12px;
         height: $legend-item-height;
       }
+
+      @include until($desktop) {
+        margin-bottom: 10px;
+      }
     }
 
     .legend-item {
@@ -70,6 +74,24 @@
           vertical-align: middle;
         }
       }
+
+      @include until($desktop) {
+        border: none;
+        padding: 0;
+
+        &__remove {
+          display: none;
+        }
+
+      }
+    }
+
+    .see-full-sector-btn {
+      background-color: $blue;
+      border: none;
+      color: $white;
+      font-family: $family-sans-serif-bold;
+      width: 160px;
     }
   }
 

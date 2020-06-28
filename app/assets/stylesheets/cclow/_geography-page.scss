@@ -617,7 +617,9 @@ $count-description-lines: 2;
   }
 
   .filter-column {
-    margin-top: 1.5rem;
+    @include from($desktop) {
+      margin-top: 1.5rem;
+    }
 
     .search-by {
       color: $grey-text;
@@ -634,15 +636,12 @@ $count-description-lines: 2;
       margin-top: 25px;
       border: none;
       background-color: transparent;
+      outline: none;
 
       @include until($desktop) {
         margin: 0;
         padding: 0;
       }
-    }
-
-    .more-filters {
-      margin-top: 1rem;
     }
   }
 
@@ -714,6 +713,73 @@ $count-description-lines: 2;
 
     .load-more-container {
       text-align: center;
+    }
+  }
+}
+
+.publications-banner {
+  align-items: center;
+  background: $border-cl;
+  color: $blue-dark;
+  font-family: $family-sans-serif-bold;
+  font-size: $size-5;
+  height: 140px;
+  margin: 120px 0 100px 0;
+
+  .columns {
+    height: 100%;
+    align-items: center;
+    margin: 0;
+  }
+
+  a {
+    color: $red;
+  }
+
+  .img-container {
+    height: 100%;
+    position: relative;
+  }
+
+  .column {
+    text-align: center;
+    padding: 0;
+
+    > div {
+      display: inline-block;
+      text-align: start;
+    }
+  }
+
+  img {
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 460px;
+    top: -63px;
+    position: absolute;
+  }
+
+  @include until($desktop) {
+    height: 240px;
+    margin: 66px 0 115px 0;
+
+    .column {
+      text-align: left;
+    }
+
+    .captions-block {
+      margin: 20px 37px 15px;
+      width: 75%;
+    }
+
+    img {
+      top: -35px;
+    }
+
+    &:last-child {
+      margin-bottom: 100px;
     }
   }
 }
@@ -801,4 +867,16 @@ mark {
 .flex-container {
   display: flex;
   align-items: center;
+}
+
+.list-component {
+  hr {
+    @include until($desktop) {
+      margin: 1.5rem 0;
+    }
+  }
+
+  .list-count {
+    font-size: 14px;
+  }
 }

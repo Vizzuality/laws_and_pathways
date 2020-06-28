@@ -1,7 +1,8 @@
+@import "../variables";
+
 .sectors-index-page {
   .sectors-header {
     background: $blue;
-
     height: 100px;
     display: flex;
     align-items: center;
@@ -13,6 +14,13 @@
     a + a {
       margin-left: 20px;
     }
+
+    @include until($desktop) {
+      padding: 0 0.75rem;
+      font-size: $size-7;
+      height: 60px;
+      font-family: $font-family-regular;
+    }
   }
 
   section {
@@ -20,6 +28,21 @@
 
     > p {
       margin-top: 30px;
+    }
+
+    @include until($desktop) {
+      margin-top: 40px;
+      padding: 0 0.75rem;
+
+      h4 {
+        font-size: $size-5 !important;
+      }
+
+      > p {
+        margin-top: 15px;
+        font-size: $size-6;
+        color: $grey-dark;
+      }
     }
   }
 }

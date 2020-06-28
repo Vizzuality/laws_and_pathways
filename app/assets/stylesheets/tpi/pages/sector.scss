@@ -1,9 +1,15 @@
+@import "../variables";
+
 $tape-color: rgba(25,25,25,0.1);
 
 .sector-page {
   .dropdown-selector-sector-page-wrapper {
     height: 335px;
     background-color: $blue;
+
+    @include until($desktop) {
+      height: auto;
+    }
   }
 
   .sectors-header {
@@ -20,6 +26,13 @@ $tape-color: rgba(25,25,25,0.1);
     a + a {
       margin-left: 20px;
     }
+
+    @include until($desktop) {
+      padding: 0 0.75rem;
+      font-size: $size-7;
+      height: 60px;
+      font-family: $font-family-regular;
+    }
   }
 
   section {
@@ -27,6 +40,25 @@ $tape-color: rgba(25,25,25,0.1);
 
     > p {
       margin-top: 30px;
+    }
+
+    &__title {
+      font-size: $size-4;
+    }
+
+    @include until($desktop) {
+      margin-top: 40px;
+      padding: 0 0.75rem;
+
+      h4 {
+        font-size: $size-5 !important;
+      }
+
+      > p {
+        margin-top: 15px;
+        font-size: $size-6;
+        color: $grey-dark;
+      }
     }
   }
 
@@ -94,6 +126,36 @@ $tape-color: rgba(25,25,25,0.1);
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
+
+    >p {
+      display: none;
+    }
+
+    @include until($desktop) {
+      display: block;
+
+      >p {
+        display: block;
+        margin-top: 15px;
+        font-size: $size-6;
+        color: $grey-dark;
+      }
+
+      .show-by-dropdown {
+        display: block;
+        color: $grey-dark;
+        font-size: $size-5;
+        margin-top:  20px;
+        max-width: 280px;
+
+        #show-by-dropdown-placeholder {
+          margin-left: 0;
+          margin-top: 10px;
+          font-size: $size-6;
+          color: $dark;
+        }
+      }
+    }
   }
 
   .show-by-dropdown {

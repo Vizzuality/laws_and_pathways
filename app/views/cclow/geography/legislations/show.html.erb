@@ -49,14 +49,21 @@
       <img src=<%= asset_path "icons/legislation_types/#{@legislation.legislation_type}.svg"%> alt="">
       <%= @legislation.legislation_type&.humanize %>
     </div>
-    <div>
-      <span>Action plan</span>
-      <!--<span class="icon"><i class="fa fa-question"></i></span>-->
-    </div>
-    <div>
-      <span>Mitigation Framework</span>
-      <!--<span class="icon"><i class="fa fa-question"></i></span>-->
-    </div>
+    <% if @legislation.document_types.any? %>
+      <% @legislation.document_types.distinct.each do |doc| %>
+        <div>
+          <span><%= doc.name %></span>
+        </div>
+      <% end %>
+    <% end %>
+    <% if @legislation.frameworks.any? %>
+      <% @legislation.frameworks.each do |frame| %>
+      <div>
+        <span><%= frame.name %> Framework</span>
+        <!--<span class="icon"><i class="fa fa-question"></i></span>-->
+      </div>
+      <% end %>
+    <% end %>
     <div>Passed in <%= @legislation.date_passed&.year %></div>
   </div>
   <section class="section is-medium">

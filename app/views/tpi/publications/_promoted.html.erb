@@ -7,6 +7,7 @@
           <div class="publication__avatar" style="background-image: url(<%= url_for(publication.thumbnail) %>)"></div>
         <% end %>
 
+
         <div class="publication__content">
           <div class="content__title-wrapper">
             <div class="content__title">
@@ -18,7 +19,7 @@
               <% end %>
             </div>
           </div>
-          <p class="updated_at"><%= publication.publication_date.strftime('%d/%m/%Y') %></p>
+          <p class="updated_at "><%= publication.publication_date.strftime('%d/%m/%Y') %></p>
 
           <div class="content__message">
             <p>

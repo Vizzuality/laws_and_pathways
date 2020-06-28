@@ -8,7 +8,7 @@ module CCLOW
 
       @litigations = Queries::CCLOW::LitigationQuery.new(filter_params).call
 
-      fixed_navbar('All Litigation Cases', admin_litigations_path)
+      fixed_navbar('Litigation Cases', admin_litigations_path)
 
       respond_to do |format|
         format.html do
@@ -32,7 +32,7 @@ module CCLOW
         end
         format.json do
           render json: {
-            litigations: CCLOW::LitigationDecorator.decorate_collection(
+            items: CCLOW::LitigationDecorator.decorate_collection(
               @litigations.offset(params[:offset] || 0).take(10)
             ),
             count: @litigations.size

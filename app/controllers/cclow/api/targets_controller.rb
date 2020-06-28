@@ -2,6 +2,19 @@ module CCLOW
   module Api
     class TargetsController < CCLOWController
       def index
+        # in framework climate laws or policies;
+        # in sectoral laws or policies
+        results = ::Geography.order(:name).find_each.map do |g|
+          [g.iso, {
+            in_framework: g.targets.joins(legislations: :tags)
+              .where(tags: {type: 'Framework'}).any?,
+            in_sectoral: g.targets.joins(legislations: :laws_sectors).any?
+          }]
+        end.to_h
+        render json: results
+      end
+
+      def show
         geography = ::Geography.find_by(iso: params[:iso])
         if geography
           render json: targets_as_json(geography)
@@ -23,7 +36,7 @@ module CCLOW
         end
 
         result[:country_meta] = {
-          'BRA': {
+          "#{geography.iso}": {
             country_profile: cclow_geography_url(geography),
             lnp_count: geography.legislations.count
           }

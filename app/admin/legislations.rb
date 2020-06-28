@@ -48,7 +48,7 @@ ActiveAdmin.register Legislation do
 
   publishable_resource_sidebar
 
-  data_export_sidebar 'Laws', documents: true, events: true
+  data_export_sidebar 'Legislations', display_name: 'Laws', documents: true, events: true
 
   show do
     tabs do
@@ -172,6 +172,10 @@ ActiveAdmin.register Legislation do
         :created_by,
         :updated_by
       )
+    end
+
+    def apply_filtering(chain)
+      super(chain).distinct
     end
   end
 end

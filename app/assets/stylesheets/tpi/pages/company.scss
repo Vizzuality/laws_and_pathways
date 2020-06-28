@@ -17,16 +17,27 @@ $dots-space: 1.3rem;
     a + a {
       margin-left: 20px;
     }
+
+    @include until($desktop) {
+      padding: 0 0.75rem;
+      font-size: $size-7;
+      height: 60px;
+      font-family: $font-family-regular;
+    }
   }
 
   .dropdown-selector-company-page-wrapper {
-    height: 335px;
     background-color: $blue;
+
+    @include desktop {
+      height: 335px;
+    }
   }
 
   .summary-box {
     background: $grey;
     padding: 40px;
+    border-bottom: none;
 
     h3 {
       font-size: 16px;
@@ -39,12 +50,15 @@ $dots-space: 1.3rem;
     }
 
     &--assessment {
-      height: 280px;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
       justify-content: center;
+
+      @include desktop {
+        height: 280px;
+      }
     }
 
     .cp-alignment {
@@ -61,10 +75,39 @@ $dots-space: 1.3rem;
         margin-right: 10px;
         margin-top: 3px;
       }
+
+      @include until($desktop) {
+        display: flex;
+        padding-top: 1.5rem;
+        padding-bottom: 0;
+
+        &__circle {
+          margin-top: 0;
+        }
+      }
     }
 
     .mq-level {
       @include mq-level(80px);
+    }
+
+    @include until($desktop) {
+      padding: 1.5rem 0.75rem;
+
+      .mq-level {
+        font-size: 1.5rem;
+      }
+    }
+
+    @include until($desktop) {
+      .columns {
+        display: table;
+
+        .column {
+          display: inline-flex;
+          width: 50%;
+        }
+      }
     }
   }
 
@@ -92,6 +135,10 @@ $dots-space: 1.3rem;
       font-size: 16px;
       line-height: 20px;
     }
+
+    .highlight, a {
+      color: $blue-ribbon;
+    }
   }
 
   .management-quality {
@@ -104,10 +151,29 @@ $dots-space: 1.3rem;
       align-items: center;
 
       margin-bottom: 40px;
+
+      .show-by-dropdown {
+        align-items: center;
+        display: flex;
+
+        .show-by-dropdown-select {
+          margin-top: 0;
+          margin-left: 10px;
+        }
+      }
     }
 
     &__content {
       margin-top: 20px;
+
+      @include until($desktop) {
+        margin-top: 0;
+
+        .columns,
+        .column {
+          margin: 0;
+        }
+      }
     }
 
     .column {
@@ -124,6 +190,20 @@ $dots-space: 1.3rem;
 
       .mq-level {
         @include mq-level(160px, $size-2);
+      }
+
+      @include until($desktop) {
+        margin-top: 20px;
+
+        .level-description {
+          color: $dark;
+          font-family: $family-sans-serif-bold;
+          padding: 0 30px;
+        }
+
+        .assessment-count {
+          font-family: $family-sans-serif-bold;
+        }
       }
     }
 
@@ -142,6 +222,10 @@ $dots-space: 1.3rem;
 
         &:not(:last-child) {
           border-bottom: 2px solid $hawkes-blue;
+
+          @include until($desktop) {
+            border-bottom: 4px solid $hawkes-blue;
+          }
         }
 
         .mq-assessment-question {
@@ -180,8 +264,83 @@ $dots-space: 1.3rem;
               background-color: #C0C2C3;
               background-size: 8px;
             }
+
+            @include until($desktop) {
+              top: 0;
+              left: -45px;
+            }
           }
         }
+
+        @include until($desktop) {
+          border-left: 4px solid $hawkes-blue;
+          padding: 25px;
+          margin: 0 0 0 25px;
+          line-height: 20px;
+
+          .mq-assessment-question {
+            margin: 22px 0;
+          }
+        }
+      }
+    }
+
+
+
+    @include until($desktop) {
+      padding: 0 0.75rem;
+
+      &__header {
+        margin-bottom: 15px;
+        display: block;
+
+        >p {
+          display: block;
+          margin-top: 15px;
+          font-size: $size-6;
+          color: $grey-dark;
+        }
+
+        .show-by-dropdown {
+          display: block;
+          color: $grey-dark;
+          font-size: $size-5;
+          margin-top:  20px;
+          max-width: 280px;
+
+          .show-by-dropdown-select {
+            margin-left: 0;
+            margin-top: 5px;
+            font-size: $size-6;
+            color: $dark;
+          }
+        }
+
+      }
+
+      .mq-assessment-questions {
+        margin-top: 35px;
+      }
+    }
+  }
+
+  .assessment-date__container {
+    .date-dropdown {
+      margin-left: 10px;
+      max-width: 280px;
+    }
+
+    @include until($desktop) {
+      margin-top: 20px;
+
+      .caption {
+        color: $grey-dark;
+      }
+
+      .date-dropdown {
+        margin-top: 10px;
+        max-width: 200px;
+        margin-left: 0;
       }
     }
   }
@@ -208,6 +367,10 @@ $dots-space: 1.3rem;
       line-height: $line-height;
       font-size: 16px;
       margin-bottom: 40px;
+
+      a {
+        color: inherit;
+      }
     }
 
     &__description--folded {
@@ -216,7 +379,7 @@ $dots-space: 1.3rem;
       position: relative;
       margin-right: calc(-1 * #{$dots-space});
       padding-right: $dots-space;
-  
+
       &::before {
         content: "[...]";
         font-size: 12px;
@@ -224,7 +387,7 @@ $dots-space: 1.3rem;
         bottom: 0;
         right: 0;
       }
-  
+
       &::after {
         content: "";
         position: absolute;
@@ -265,6 +428,27 @@ $dots-space: 1.3rem;
         outline-width: 2px;
       }
     }
+
+    @include until($desktop) {
+      &__wrapper {
+        padding: 1.5rem 0.75rem 2rem;
+      }
+
+      &__header {
+        margin-bottom: 20px;
+      }
+
+      &__description,
+      &__description--folded {
+        margin-bottom: 25px;
+        font-size: $size-6;
+        line-height: 24px;
+
+        &::before {
+          content: ''
+        }
+      }
+    }
   }
 
   .carbon-performance {
@@ -289,6 +473,41 @@ $dots-space: 1.3rem;
 
       p {
         font-size: 16px;
+      }
+    }
+
+    @include until($desktop) {
+      padding: 0 0.75rem;
+    }
+  }
+
+  section {
+    @include until($desktop) {
+      &.summary-boxes {
+        > .columns {
+          &:not(:last-child) {
+            > .column {
+              border-bottom: solid 1px rgba(89, 91, 93, 0.2);
+            }
+          }
+
+          > .column {
+            padding: 0;
+          }
+        }
+
+        .columns {
+          margin: 0;
+        }
+      }
+
+      h4 {
+        font-size: $size-5 !important;
+      }
+
+      > p {
+        font-size: $size-6;
+        color: $grey-dark;
       }
     }
   }

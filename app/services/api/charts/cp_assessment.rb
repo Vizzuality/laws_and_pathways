@@ -39,10 +39,33 @@ module Api
 
       private
 
+      # Data format for emissions
+      #
+      # If there are more than one data point:
+      # [[x,y], [x1,y1], ...]
+      #
+      # If there's only one point we change the format so that we can control
+      # the marker symbol, to ensure that it's visible on the chart
+      # [
+      #   {
+      #     y: yvalue,
+      #     x: xvalue,
+      #     marker: {
+      #       symbol: 'circle',
+      #       enabled: true,
+      #       radius: 3
+      #     }
+      #   }
+      # ]
       def emissions_data_from_company
+        data = if assessment&.emissions&.size == 1
+                 data_with_marker_settings
+               else
+                 assessment&.emissions&.transform_keys(&:to_i)
+               end
         {
           name: company.name,
-          data: assessment&.emissions&.transform_keys(&:to_i),
+          data: data,
           zoneAxis: 'x',
           zones: [{
             value: assessment.last_reported_year&.to_i
@@ -50,6 +73,18 @@ module Api
             dashStyle: 'dot'
           }]
         }
+      end
+
+      def data_with_marker_settings
+        [{
+          y: assessment&.emissions&.first&.second,
+          x: assessment&.emissions&.first&.first&.to_i,
+          marker: {
+            symbol: 'circle',
+            enabled: true,
+            radius: 3
+          }
+        }]
       end
 
       def emissions_data_from_sector

@@ -35,12 +35,12 @@ const Controls = ({changePage}) => (
   <>
     <a
       onClick={() => changePage(previousPage)}
-      className="testimonials__control left"
+      className="is-hidden-touch testimonials__control left"
     >&#8592;
     </a>
     <a
       onClick={() => changePage(nextPage)}
-      className="testimonials__control right"
+      className="is-hidden-touch testimonials__control right"
     >&#8594;
     </a>
   </>

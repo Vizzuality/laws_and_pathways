@@ -78,7 +78,7 @@ ActiveAdmin.register Target do
     column :source
     column(:geography) { |t| t.geography.name }
     column(:geography_iso) { |t| t.geography.iso }
-    column(:sector) { |t| t.sector.name }
+    column(:sector) { |t| t.sector&.name }
     column :scopes, &:scopes_string
     column :visibility_status
   end
@@ -125,5 +125,13 @@ ActiveAdmin.register Target do
 
   controller do
     include DiscardableController
+
+    def scoped_collection
+      super.includes(
+        :geography,
+        :scopes,
+        :sector
+      )
+    end
   end
 end

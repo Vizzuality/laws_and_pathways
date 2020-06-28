@@ -41,15 +41,17 @@
   }
 
   &__item {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 20px;
-    cursor: pointer;
-    background: $white;
-    color: $black;
-    line-height: 40px;
-    white-space: nowrap;
+    > div {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      cursor: pointer;
+      background: $white;
+      color: $black;
+      line-height: 40px;
+      white-space: nowrap;
+    }
 
     img {
       transform: rotate(-90deg);
@@ -60,6 +62,14 @@
       color: $white;
     }
 
+    @include until($desktop) {
+      &.open {
+        img {
+          transform: none;
+        }
+      }
+    }
+
     > .nested-dropdown__list {
       top: 0;
       left: 100%;
@@ -67,6 +77,18 @@
       &.left {
         left: unset;
         right: 100%;
+      }
+
+      @include until($desktop) {
+        border-left: none;
+        border-right: none;
+        flex-direction: column;
+        left: 0;
+        position: relative;
+
+        &.left {
+          right: 0;
+        }
       }
     }
   }

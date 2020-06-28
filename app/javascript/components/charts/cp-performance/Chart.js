@@ -13,9 +13,10 @@ import get from 'lodash/get';
 
 import PlusIcon from 'images/icons/plus.svg';
 
-import { getOptions, COLORS } from './options';
+import { getOptions, getMobileOptions, COLORS } from './options';
 import { useOutsideClick } from 'shared/hooks';
 import { useChartData } from '../hooks';
+import { useDeviceInfo } from 'components/Responsive';
 
 import CompanySelector from './CompanySelector';
 import CompanyTag from './CompanyTag';
@@ -89,8 +90,9 @@ function getDropdownOptions(geographies, regions, marketCapGroups) {
   ];
 }
 
-function CPPerformance({ dataUrl, companySelector, unit }) {
+function CPPerformance({ dataUrl, companySelector, unit, sectorUrl }) {
   const companySelectorWrapper = useRef();
+  const { isMobile } = useDeviceInfo();
 
   const { data, error, loading } = useChartData(dataUrl);
   const [selectedCompanies, setSelectedCompanies] = useState([]); // Array of company names
@@ -178,7 +180,7 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
     );
   };
 
-  const options = getOptions({ chartData, unit });
+  const options = isMobile ? getMobileOptions({ chartData, unit }) : getOptions({ chartData, unit });
 
   return (
     <div className="chart chart--cp-performance">
@@ -199,9 +201,9 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
 
           {companySelector && (
             <React.Fragment>
-              <span className="separator" />
+              <span className="separator is-hidden-touch" />
 
-              <div className="chart-company-selector-wrapper" ref={companySelectorWrapper}>
+              <div className="chart-company-selector-wrapper is-hidden-touch" ref={companySelectorWrapper}>
                 <button type="button" className="button is-primary with-icon" onClick={handleAddCompaniesClick}>
                   <img src={PlusIcon} />
                   Add companies to the chart
@@ -219,6 +221,16 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
             </React.Fragment>
           )}
         </div>
+        {sectorUrl && (
+          <div className="legend-row">
+            <button
+              type="button"
+              onClick={() => { window.location.href = sectorUrl; }}
+              className="see-full-sector-btn is-hidden-desktop"
+            >See full sector chart
+            </button>
+          </div>
+        )}
         <div className="legend-row">
           <span className="legend-item">
             <span className="line line--solid" />
@@ -250,13 +262,15 @@ function CPPerformance({ dataUrl, companySelector, unit }) {
 }
 
 CPPerformance.defaultProps = {
-  companySelector: true
+  companySelector: true,
+  sectorUrl: null
 };
 
 CPPerformance.propTypes = {
   companySelector: PropTypes.bool,
   dataUrl: PropTypes.string.isRequired,
-  unit: PropTypes.string.isRequired
+  unit: PropTypes.string.isRequired,
+  sectorUrl: PropTypes.string
 };
 
 export default CPPerformance;

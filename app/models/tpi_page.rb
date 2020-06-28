@@ -16,6 +16,7 @@ class TPIPage < Page
   MENU_HEADERS = %w[
     tpi_tool
     about
+    no_menu_entry
   ].freeze
   enum menu: array_to_enum_hash(MENU_HEADERS)
   validates :slug, uniqueness: true, presence: true

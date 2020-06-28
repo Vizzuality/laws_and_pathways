@@ -10,7 +10,6 @@ class SearchFilter extends Component {
     super(props);
     this.state = {
       isShowOptions: false,
-      selectedList: {},
       searchValue: ''
     };
 
@@ -19,15 +18,13 @@ class SearchFilter extends Component {
 
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutside);
+  }
 
-    return () => {
-      document.removeEventListener('mousedown', this.handleClickOutside);
-    };
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
   }
 
   setShowOptions = value => this.setState({isShowOptions: value});
-
-  setSelectedList = value => this.setState({selectedList: value});
 
   setSearchValue = value => this.setState({searchValue: value});
 
@@ -43,23 +40,20 @@ class SearchFilter extends Component {
   };
 
   handleCheckItem = (blockName, value) => {
-    const {selectedList} = this.state;
-    const {onChange} = this.props;
+    const {onChange, selectedList} = this.props;
     const blocks = Object.assign({}, selectedList);
     if ((blocks[blockName] || []).includes(value)) {
       blocks[blockName] = blocks[blockName].filter(item => item !== value);
-      if (blocks[blockName].length === 0) delete blocks[blockName];
     } else {
       if (!blocks[blockName]) blocks[blockName] = [];
       blocks[blockName].push(value);
     }
     onChange(blocks);
-    this.setSelectedList(blocks);
   };
 
   handleSearchInput = e => this.setSearchValue(e.target.value);
 
-  itemIsSelected = (fieldName, value) => this.state.selectedList[fieldName] && this.state.selectedList[fieldName].includes(value);
+  itemIsSelected = (fieldName, value) => this.props.selectedList[fieldName] && this.props.selectedList[fieldName].includes(value);
 
   renderBlocksList = (blocks) => {
     const options = blocks.map((o) => {
@@ -70,19 +64,17 @@ class SearchFilter extends Component {
     const sortedOptions = sortBy(options.flat(), 'label');
 
     return (
-      <Fragment>
-        <ul>
-          {sortedOptions.map(option => (
-            <li key={option.value} onClick={() => this.handleCheckItem(option.fieldName, option.value)}>
-              <input type="checkbox" hidden checked={this.itemIsSelected(option.fieldName, option.value) || false} onChange={() => {}} />
-              <div className={`${this.itemIsSelected(option.fieldName, option.value) ? 'checked' : 'unchecked'} select-checkbox`}>
-                {this.itemIsSelected(option.fieldName, option.value) && <i className="fa fa-check" />}
-              </div>
-              <label>{option.label}</label>
-            </li>
-          ))}
-        </ul>
-      </Fragment>
+      <ul>
+        {sortedOptions.map(option => (
+          <li key={option.value} onClick={() => this.handleCheckItem(option.fieldName, option.value)}>
+            <input type="checkbox" hidden checked={this.itemIsSelected(option.fieldName, option.value) || false} onChange={() => {}} />
+            <div className={`${this.itemIsSelected(option.fieldName, option.value) ? 'checked' : 'unchecked'} select-checkbox`}>
+              {this.itemIsSelected(option.fieldName, option.value) && <i className="fa fa-check" />}
+            </div>
+            <label>{option.label}</label>
+          </li>
+        ))}
+      </ul>
     );
   }
 
@@ -109,10 +101,10 @@ class SearchFilter extends Component {
 
   renderOptions = () => {
     const {searchValue} = this.state;
-    const {filterName, params, isSearchable} = this.props;
+    const {filterName, items, isSearchable} = this.props;
     const listBlocks = [];
-    for (let i = 0; i < params.length; i += 1) {
-      listBlocks[i] = Object.assign({}, params[i]);
+    for (let i = 0; i < items.length; i += 1) {
+      listBlocks[i] = Object.assign({}, items[i]);
       if (searchValue) {
         listBlocks[i].options = listBlocks[i]
           .options.concat().filter(item => item.label.toLowerCase().includes(searchValue.toLowerCase()));
@@ -145,46 +137,48 @@ class SearchFilter extends Component {
   };
 
   isEmpty = () => {
-    const {params} = this.props;
-    for (let i = 0; i < params.length; i = 1) {
-      if ((params[i].options || []).length !== 0) return false;
+    const {items} = this.props;
+    for (let i = 0; i < items.length; i = 1) {
+      if ((items[i].options || []).length !== 0) return false;
     }
     return true;
   };
 
   render() {
-    const {selectedList, isShowOptions} = this.state;
-    const {filterName} = this.props;
+    const {isShowOptions} = this.state;
+    const {filterName, selectedList, className} = this.props;
     if (this.isEmpty()) return null;
 
     let selectedCount = 0;
     Object.values(selectedList).forEach(list => { selectedCount += list.length; });
 
     return (
-      <Fragment>
-        <div className="filter-container">
-          <div className="control-field" onClick={() => this.setShowOptions(true)}>
-            <div className="select-field">
-              <span>{filterName}</span><span className="toggle-indicator"><img src={plus} alt="" /></span>
-            </div>
-            {selectedCount !== 0 && <div className="selected-count">{selectedCount} selected</div>}
+      <div className={`filter-container ${className}`}>
+        <div className="control-field" onClick={() => this.setShowOptions(true)}>
+          <div className="select-field">
+            <span>{filterName}</span><span className="toggle-indicator"><img src={plus} alt="" /></span>
           </div>
-          { isShowOptions && this.renderOptions()}
+          {selectedCount !== 0 && <div className="selected-count">{selectedCount} selected</div>}
         </div>
-      </Fragment>
+        { isShowOptions && this.renderOptions()}
+      </div>
     );
   }
 }
 
 SearchFilter.defaultProps = {
+  className: '',
   onChange: () => {},
+  selectedList: {},
   isSearchable: true
 };
 
 SearchFilter.propTypes = {
+  className: PropTypes.string,
   filterName: PropTypes.string.isRequired,
-  params: PropTypes.array.isRequired,
+  items: PropTypes.array.isRequired,
   onChange: PropTypes.func,
+  selectedList: PropTypes.object,
   isSearchable: PropTypes.bool
 };
 

@@ -10,7 +10,9 @@ module Queries
       def filter_by_region
         return scope unless params[:region].present?
 
-        scope.includes(:geography).where(geographies: {region: params[:region]})
+        # to be able to use 'or'
+        ids = scope.joins(:geography).where(geographies: {region: params[:region]}).pluck(:id)
+        scope.where(id: ids)
       end
 
       def filter_by_sector
@@ -25,6 +27,13 @@ module Queries
         scope.where(geography_id: params[:geography])
       end
 
+      def filter_by_geography_or_region
+        return filter_by_geography if params[:geography].present? && params[:region].nil?
+        return filter_by_region if params[:region].present? && params[:geography].nil?
+
+        filter_by_geography.or(filter_by_region)
+      end
+
       def filter_by_tags
         return scope unless tag_params.any? { |p| params[p.to_sym].present? }
 
@@ -32,16 +41,16 @@ module Queries
         scope.where(id: scope.unscoped.with_tags_by_id(tag_ids))
       end
 
-      def filter_by_from_date
-        return scope unless params[:from_date].present?
+      def filter_by_last_change_from
+        return scope unless params[:last_change_from].present?
 
-        scope.with_last_events.where('last_events.date >= (?)', Date.new(params[:from_date].to_i, 1, 1))
+        scope.with_last_events.where('last_events.date >= (?)', Date.new(params[:last_change_from].to_i, 1, 1))
       end
 
-      def filter_by_to_date
-        return scope unless params[:to_date].present?
+      def filter_by_last_change_to
+        return scope unless params[:last_change_to].present?
 
-        scope.with_last_events.where('last_events.date <= (?)', Date.new(params[:to_date].to_i, 12, 31))
+        scope.with_last_events.where('last_events.date <= (?)', Date.new(params[:last_change_to].to_i, 12, 31))
       end
 
       def filter_by_to_status

@@ -10,11 +10,12 @@ module ActiveAdminCsvDownload
   def data_export_sidebar(resource_name, options = {}, &block)
     export_link_for_documents = options.fetch(:documents) { false }
     export_link_for_events = options.fetch(:events) { false }
+    display_name = options.fetch(:display_name) { resource_name }
 
     sidebar 'Export / Import', if: -> { collection.any? }, only: :index do
       ul do
         li do
-          link_to "Download #{resource_name} CSV",
+          link_to "Download #{display_name} CSV",
                   params: request.query_parameters.except(:commit, :format),
                   format: 'csv'
         end
@@ -46,7 +47,7 @@ module ActiveAdminCsvDownload
         instance_eval(&block) if block_given?
 
         li do
-          upload_label = "<strong>Upload</strong> #{resource_name}".html_safe
+          upload_label = "<strong>Upload</strong> #{display_name}".html_safe
           upload_path = new_admin_data_upload_path(data_upload: {uploader: resource_name})
 
           link_to upload_label, upload_path

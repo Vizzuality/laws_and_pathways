@@ -5,7 +5,7 @@
         Current level
       </p>
       <%= render 'mq_level', level: assessment.level, status: assessment.status %>
-      <p>
+      <p class="level-description">
         <%= t("tpi.company.level_description.#{assessment.level.to_i}") %></h3>
       </p>
 
@@ -15,7 +15,10 @@
 
   <div class="column">
     <div class="mq-assessment-box">
-      <div>Nr of assessments: <%= assessment.previous_assessments.size + 1 %></div>
+      <div class="is-hidden-touch">Nr of assessments: <%= assessment.previous_assessments.size + 1 %></div>
+      <div class="is-hidden-desktop">
+        Number of assessments: <span class="assessment-count"><%= assessment.previous_assessments.size + 1 %></span>
+      </div>
 
       <%= react_component('charts/mq-level', { dataUrl: assessments_levels_chart_data_tpi_company_path(@company.id, mq_assessment_id: assessment.id) }) %>
     </div>

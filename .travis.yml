@@ -7,7 +7,7 @@ cache:
     - node_modules
     - /home/travis/.rvm/
 services:
-  - postgres
+  - postgresql
 addons:
   postgresql: 11
   hosts:

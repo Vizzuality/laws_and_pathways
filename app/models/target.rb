@@ -104,10 +104,17 @@ class Target < ApplicationRecord
       scope: scopes&.map(&:name)&.join(', '),
       sector: sector&.name&.parameterize,
       description: description,
+      ghg_target: ghg_target,
+      single_year: single_year,
+      base_year_period: base_year_period,
+      year: year,
       sources: legislations.map do |l|
         {
           id: l.id,
           title: l.title,
+          type: l.law? ? 'law' : 'policy',
+          framework: l.frameworks.any?,
+          sectoral: l.laws_sectors.any?,
           link: l.url
         }
       end

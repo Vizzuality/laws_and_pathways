@@ -6,26 +6,35 @@ $container-top-padding: 40px; // top
 $container-side-padding: 96px; // right and left padding
 $box-shadow: 30px;
 $header-height: 120px;
+$header-height-mobile: 60px;
 
 .dropdown-selector__container {
   background-color: $blue;
-  min-width: 800px;
   max-width: 880px;
-  padding: $container-top-padding $container-side-padding 140px $container-side-padding;
+  padding: 2rem 0.75rem 1.5rem;
   position: relative;
 
   &--active {
     background-color: $white;
   }
+
+  @include desktop {
+    min-width: 800px;
+    padding: $container-top-padding $container-side-padding 140px $container-side-padding;
+  }
 }
 
 .dropdown-selector__input {
   color: $dark;
-  font-size: 48px;
+  font-size: 30px;
   font-family: $font-family-regular;
   border: none;
   width: 100%;
   outline: none;
+
+  @include desktop {
+    font-size: 48px;
+  }
 }
 
 ::placeholder { /* Edge */
@@ -34,18 +43,25 @@ $header-height: 120px;
 
 .dropdown-selector__header {
   color: $white;
-  font-size: 48px;
+  font-size: 30px;
   font-family: $font-family-bold;
   border-bottom: 2px solid $white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  height: $header-height;
+  height: $header-height-mobile;
   width: 100%;
+  margin-top: 10px;
 
   &--active {
     border-bottom: 2px solid $black;
+  }
+
+  @include desktop {
+    font-size: 48px;
+    margin-top: 0;
+    height: $header-height;
   }
 }
 
@@ -62,8 +78,11 @@ $header-height: 120px;
 .dropdown-selector__wrapper {
   background-color: $blue;
   width: 100%;
-  display: flex;
-  justify-content: center;
+
+  @include desktop {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .dropdown-selector__options-wrapper {
@@ -81,18 +100,28 @@ $header-height: 120px;
   margin: 0 $box-shadow $box-shadow $box-shadow;
   background-color: $white;
   padding-bottom: 20px;
-  min-height: $header-height;
+  min-height: $header-height-mobile;
   max-height: 290px;
   overflow-y: scroll;
 
   & > * {
-    padding: 8px $container-side-padding;
+    padding: 0.5rem 0.75rem;
+  }
+
+  @include desktop {
+    min-height: $header-height;
+
+    & > * {
+      padding: 8px $container-side-padding;
+    }
   }
 }
 
 .dropdown-selector__option {
-  font-size: 24px;
-  line-height: 30px;
+  @include desktop {
+    font-size: 24px;
+    line-height: 30px;
+  }
   color: rgba(25, 25, 25, 0.5);
   cursor: pointer;
 
@@ -103,7 +132,9 @@ $header-height: 120px;
 }
 
 .dropdown-selector__option-company {
-  padding: 8px 110px;
+  @include desktop {
+    padding: 8px 110px;
+  }
 }
 
 .dropdown-selector__buttons {
@@ -127,6 +158,11 @@ $header-height: 120px;
   font-family: $font-family-regular;
   background-color: transparent;
   color: $white;
+  font-size: $size-7;
+
+  @include desktop {
+    font-size: $size-6;
+  }
 }
 
 .dropdown-selector__active-button {
@@ -134,6 +170,11 @@ $header-height: 120px;
   background-color: $blue-dark;
   color: $white;
   font-family: $font-family-bold;
+  font-size: $size-7;
+
+  @include desktop {
+    font-size: $size-6;
+  }
 }
 
 .dropdown-selector__not-active-opened {

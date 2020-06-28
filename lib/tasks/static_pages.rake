@@ -43,6 +43,48 @@ namespace :static_pages do
     end
   end
 
+  desc 'Create TPI homepage content'
+  task generate_tpi_homepage: :environment do
+    home_title = 'Homepage content'
+    if TPIPage.find_by(title: home_title)
+      puts 'Homepage content for TPI already exists, aborting. To edit use admin interface'
+      next
+    end
+
+    homepage = {
+      title: home_title,
+      menu: 'no_menu_entry',
+      description: 'This page holds information that is shown on the homepage of TPI.
+        Each of the content pieces are used on the homepage.
+        This content is tied by the title of this page "Homepage content" which shouldn\'t change,
+        as well as the order of the three content pieces available on the Content tab.',
+      contents: [
+        ['The TPI tool', 'The Transition Pathway Initiative (TPI) is a global, asset-owner led
+          initiative which assesses companies\' preparedness for the transition to
+          low carbon economy. Rapidly becoming the go-to corporate climate action benchmark,
+          the TPI tool is available here.'],
+        ['How investors can use the TPI', 'The TPI is designed to support investors.
+          Find out how they can use its findings.'],
+        ['Supporters', 'The TPI is supported globally by more than 75 investors with over
+            $20.5 trillion combined Assets Under Management and Advice.']
+      ]
+    }
+    page = TPIPage.create(
+      title: homepage[:title],
+      menu: homepage[:menu],
+      description: homepage[:description]
+    )
+
+    homepage[:contents].each do |title, text|
+      Content.create(
+        title: title,
+        page: page,
+        text: text
+      )
+    end
+    puts 'All done!'
+  end
+
   desc 'Scaffold static pages for CCLOW'
   task generate_cclow: :environment do
     pages = %w[

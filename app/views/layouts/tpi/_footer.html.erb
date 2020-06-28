@@ -1,13 +1,18 @@
 <% unless action_name == "newsletter" %>
   <section class="footer__subscribe">
     <div class="container">
-      <div class="columns">
-        <div class="column is-5 subscribe__logo">
+      <div class="columns" >
+        <div class="column is-5 subscribe__logo is-hidden-touch">
           <img src="<%= asset_path 'newsletter_background/newsletter img@2x.png' %>" alt="tpi newsletter logo">
         </div>
 
-        <div class="column is-5 subscribe__container">
-          <h4>Subscribe to the TPI newsletter</h4>
+        <div class="column is-5-desktop subscribe__container">
+          <h4 class="is-hidden-touch">Subscribe to the TPI newsletter</h4>
+          <div class="subscribe-title is-hidden-desktop">
+            <div>Subscribe to the TPI newsletter</div>
+            <img src="<%= asset_path 'newsletter_background/newsletter img@2x.png' %>" alt="tpi newsletter logo">
+          </div>
+
 
           <p class="content">
             Receive updates on the TPI, including on latest developments and research findings, by signing-up to our newsletter.
@@ -69,10 +74,12 @@
             <%= link_to 'TPI tool', tpi_sectors_path, class: 'link is-large' %>
           </div>
           <div class="column">
-            <a href="https://www.lse.ac.uk/lse-information/terms-of-use" class="link is-large">LSE Terms of use</a>
+            <a href="https://www.lse.ac.uk/lse-information/terms-of-use" class="link is-large is-hidden-touch">LSE Terms of use</a>
+            <a href="https://www.lse.ac.uk/lse-information/terms-of-use" class="link is-large is-hidden-desktop">Terms of use</a>
           </div>
           <div class="column">
-            <a href="https://www.lse.ac.uk/lse-information/privacy-policy" class="link is-large">LSE Privacy policy</a>
+            <a href="https://www.lse.ac.uk/lse-information/privacy-policy" class="link is-large is-hidden-touch">LSE Privacy policy</a>
+            <a href="https://www.lse.ac.uk/lse-information/privacy-policy" class="link is-large is-hidden-desktop">Privacy policy</a>
           </div>
           <div class="column">
             <a href="https://www.lse.ac.uk/lse-information/cookies" class="link is-large">Cookies</a>

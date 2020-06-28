@@ -1,14 +1,33 @@
 <%
-  sidebar_links = [{label: 'Laws', path: cclow_geography_laws_path(@geography.slug), count: @geography_overview.number_of_laws},
-                   {label: 'Policies', path: cclow_geography_policies_path(@geography.slug), count: @geography_overview.number_of_policies},
-                   {label: 'Litigation cases',
-                    path: cclow_geography_litigation_cases_path(@geography.slug),
-                    count: @geography_overview.number_of_litigation_cases},
-                   {label: 'Climate targets',
-                    path: cclow_geography_climate_targets_path(@geography.slug),
-                    count: @geography_overview.number_of_targets}]
-  mobile_links = [{label: 'Overview and context', value: cclow_geography_path(@geography.slug)}] +
-                  sidebar_links.map {|v| {label: "#{v[:label]} (#{v[:count]})", value: v[:path]}}
+  # TODO: Consider to use presenter/decorator/view-model object
+  pulications_link = "http://www.lse.ac.uk/GranthamInstitute/?s=#{@geography.slug}&post_type[]=publication&post_type[]=news"
+  sidebar_links = [
+    {
+      label: 'Laws',
+      path: cclow_legislation_and_policies_path(geography: [@geography.id], type: ['legislative'], from_geography_page: @geography.name),
+      count: @geography_overview.number_of_laws
+    },
+    {
+      label: 'Policies',
+      path: cclow_legislation_and_policies_path(geography: [@geography.id], type: ['executive'], from_geography_page: @geography.name),
+      count: @geography_overview.number_of_policies
+    },
+    {
+      label: 'Litigation cases',
+      path: cclow_litigation_cases_path(geography: [@geography.id], from_geography_page: @geography.name),
+      count: @geography_overview.number_of_litigation_cases},
+    {
+      label: 'Climate targets',
+      path: cclow_geography_climate_targets_path(@geography.slug, from_geography_page: @geography.name),
+      count: @geography_overview.number_of_targets
+    }
+  ]
+  mobile_links = [
+    {
+      label: 'Overview and context',
+      value: cclow_geography_path(@geography.slug)
+    }
+  ] + sidebar_links.map {|v| {label: "#{v[:label]} (#{v[:count]})", value: v[:path]}}
 %>
 
 <% content_for :content do %>
@@ -36,6 +55,7 @@
         </main>
       </div>
     </div>
+    <%= render "layouts/cclow/publications-banner", link: pulications_link %>
   </div>
 <% end %>
 

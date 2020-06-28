@@ -126,7 +126,7 @@ $search-field-height: 3.75rem;
         grid-column-gap: 10px;
         grid-template-columns: repeat(2, 1fr);
         margin-top: 0.25rem;
-  
+
         li {
           align-items: center;
           display: flex;
@@ -252,5 +252,5 @@ button {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }

@@ -52,14 +52,16 @@ const Filters = ({ tags, sectors, resultsSize }) => {
   useEffect(() => {
     const activeTagsQueryParam = activeTags
       .filter(t => t.active && t.name !== ALL_OPTION_NAME)
-      .map(t => t.name)
+      .map(t => encodeURIComponent(t.name))
       .join(', ');
     const activeSectorsQueryParam = activeSectors
       .filter(s => s.active && s.name !== ALL_OPTION_NAME)
-      .map(s => s.name)
+      .map(s => encodeURIComponent(s.name))
       .join(', ');
     refreshPublicationsHtml(`tags=${activeTagsQueryParam}&sectors=${activeSectorsQueryParam}`);
-  }, [activeTags, activeSectors]);
+
+    document.getElementById('filter-button').addEventListener('click', handleButtonClick);
+  }, [activeTags, activeSectors, handleButtonClick]);
 
   const handleTagClick = (tag) => {
     const otherOptions = optionsWithoutALL(activeTags);
@@ -107,13 +109,13 @@ const Filters = ({ tags, sectors, resultsSize }) => {
     <div className={cx('filters__wrapper-margin', { 'filters__wrapper-background': isFilterOpen })}>
       <div className="container publications">
         <div className="filters__wrapper">
-          <div className="">
+          <div className="showing-count">
             <p>Showing <strong>{resultsCount}</strong> items in <strong>All Publications and news</strong></p>
           </div>
-          <div className="filters__button">
+          <div className="filters__button is-hidden-touch">
             <button
               type="button"
-              className={cx('button is-centered', { 'filters__button-active': !isFilterOpen, 'filters__button-notactive': isFilterOpen})}
+              className={cx('button is-centered is-hidden-touch', { 'filters__button-active': !isFilterOpen, 'filters__button-notactive': isFilterOpen})}
               onClick={handleButtonClick}
             >
               <img

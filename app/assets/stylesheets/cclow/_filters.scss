@@ -106,6 +106,10 @@ $time-slider-right-handle-width: 18px;
         &:not(:first-child) {
           margin-top: 1rem;
         }
+
+        label {
+          cursor: pointer;
+        }
       }
     }
   }

@@ -165,5 +165,9 @@ ActiveAdmin.register Litigation do
       super.includes(:geography, :laws_sectors, :responses,
                      :created_by, :updated_by)
     end
+
+    def apply_filtering(chain)
+      super(chain).distinct
+    end
   end
 end

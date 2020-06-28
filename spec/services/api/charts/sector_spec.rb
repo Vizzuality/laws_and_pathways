@@ -41,12 +41,12 @@ RSpec.describe Api::Charts::Sector do
       expect(subject.companies_summaries_by_level).to eq(
         '0' => [],
         '1' => [
-          {id: company.id, name: company.name, status: 'down', level: '1'}
+          {id: company.id, name: company.name, status: 'down', level: '1', slug: company.slug}
         ],
         '2' => [],
         '3' => [],
         '4' => [
-          {id: company2.id, name: company2.name, status: 'new', level: '4STAR'}
+          {id: company2.id, name: company2.name, status: 'new', level: '4STAR', slug: company2.slug}
         ]
       )
     end
@@ -106,7 +106,8 @@ RSpec.describe Api::Charts::Sector do
               sector: company.sector.name,
               market_cap_group: company.market_cap_group,
               level: company.mq_level.to_i.to_s,
-              level4STAR: false
+              level4STAR: false,
+              status: company.mq_status
             }
           ],
           '2' => [],
@@ -126,7 +127,8 @@ RSpec.describe Api::Charts::Sector do
               sector: company2.sector.name,
               market_cap_group: company2.market_cap_group,
               level: company2.mq_level.to_i.to_s,
-              level4STAR: true
+              level4STAR: true,
+              status: company2.mq_status
             }
           ]
         }

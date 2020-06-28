@@ -169,6 +169,7 @@ module Api
             id: company.id,
             name: company.name,
             status: company.mq_status,
+            slug: company.slug,
             level: company.mq_level
           }
         end
@@ -183,7 +184,8 @@ module Api
             slug: company.slug,
             path: company.path,
             level4STAR: company.is_4_star?,
-            level: company.mq_level.to_i.to_s
+            level: company.mq_level.to_i.to_s,
+            status: company.mq_status
           }
         end
       end

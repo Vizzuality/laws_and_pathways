@@ -63,7 +63,7 @@ const BubbleChart = ({ levels, sectors }) => {
   const levelsSignature = levels && Object.keys(levels[Object.keys(levels)[0]]);
 
   return (
-    <div className="bubble-chart__container" style={{ gridTemplateColumns: `repeat(${levelsSignature.length + 1}, 1fr)` }}>
+    <div className="bubble-chart__container is-hidden-touch" style={{ gridTemplateColumns: `repeat(${levelsSignature.length + 1}, 1fr)` }}>
       <div className="bubble-chart__legend-container">
         <div className="bubble-chart__title-container">
           <span className="bubble-chart__title">Market cap</span>
