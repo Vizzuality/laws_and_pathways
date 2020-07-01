@@ -1,0 +1,33 @@
+.collaborators__container {
+    text-align: center;
+
+    & h5 {
+        font-size: 18px;
+        color: $grey-text;
+        margin-bottom: 32px;
+    }
+
+    & .collaborators__img {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        & img {
+            height: auto;
+            margin: 0 48px 40px 0;
+
+        }
+
+        & a {
+            align-self: center;
+
+            & :last-child img {
+                margin-right: 0;
+            }
+        }
+
+
+
+    }
+
+}
