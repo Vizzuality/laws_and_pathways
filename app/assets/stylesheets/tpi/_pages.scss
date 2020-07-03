@@ -34,6 +34,12 @@ $margin-between-list-items: 20px;
     margin-bottom: 15px;
   }
 
+  @include from($desktop) {
+    h4.pages__content-subtitle {
+      margin-top: 0;
+    }
+  }
+
   img {
     margin-top: 30px;
     margin-bottom: 30px;
@@ -115,25 +121,33 @@ $margin-between-list-items: 20px;
     }
 
     .pages__content-logo {
-      margin-right: 30px;
+      margin-right: 60px;
 
       > div {
         background-position: center;
         background-size: cover;
-        height: 280px;
+        height: 240px;
         width: 240px;
+        border-radius: 50%;
       }
     }
 
     @include until($desktop) {
       align-items: center;
       display: flex;
-      flex-direction: column-reverse;
+      flex-direction: column;
     }
   }
 }
 
 .pages__content-title {
+  margin-bottom: 30px;
+  font-family: $font-family-bold;
+  font-size: 20px;
+  color: $dark;
+}
+
+.pages__content-subtitle {
   margin-bottom: 30px;
   font-family: $font-family-bold;
   font-size: 20px;
