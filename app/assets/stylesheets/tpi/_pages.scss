@@ -138,6 +138,35 @@ $margin-between-list-items: 20px;
       flex-direction: column;
     }
   }
+
+  &.logo-description {
+    display: block;
+    font-family: $family-sans-serif;
+
+    .pages__content-logos {
+      grid-template-columns: repeat(2, 1fr);
+      margin-right: 30px;
+      min-width: 50%;
+
+      img {
+        max-height: 280px;
+      }
+    }
+
+    .pages__content-logo {
+      margin-bottom: 24px;
+
+      img {
+        max-width: 240px;
+      }
+    }
+
+    @include until($desktop) {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+    }
+  }
 }
 
 .pages__content-title {

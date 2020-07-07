@@ -7,41 +7,7 @@
       <%= @page.description&.html_safe %>
     </div>
     <% @page.contents.order(:created_at).each do |content| %>
-      <% if content.content_type == 'text_description'%>
-        <div class="pages__content text-description">
-          <% if content.images.any? %>
-            <div class=<%= content.images.length > 1 ? 'pages__content-logos' : 'pages__content-logo'%>>
-              <% content.images.order(:name).each do |image| %>
-                <% if image.logo.present? %>
-                  <% if content.images.length > 1 %>
-                    <%= link_to(image_tag(image.logo), image.link) %>
-                  <% else %>
-                    <div style="background-image: url(<%= url_for(image.logo) %>)"></div>
-                  <% end %>
-                <% end %>
-              <% end %>
-            </div>
-          <% end %>
-          <div class="pages__description">
-            <h4 class="pages__content-subtitle"><%= content.title %></h4>
-            <%= content.text.html_safe %>
-          </div>
-        </div>
-      <% else %>
-        <div class="pages__content">
-          <h4 class="pages__content-title"><%= content.title %></h4>
-          <div class="pages__description"><%= content.text.html_safe %></div>
-          <% if content.images.any? %>
-            <div class="pages__content-logos">
-              <% content.images.order(:name).each do |image| %>
-                <% if image.logo.present? %>
-                  <%= link_to(image_tag(image.logo), image.link) %>
-                <% end %>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
+      <%= render content.content_type.presence || 'default', content: content %>
     <% end %>
   </div>
 </div>
