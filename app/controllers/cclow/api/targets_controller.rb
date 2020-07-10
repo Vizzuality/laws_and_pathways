@@ -5,9 +5,11 @@ module CCLOW
         # in framework climate laws or policies;
         # in sectoral laws or policies
         results = ::Geography.order(:name).find_each.map do |g|
-          framework = g.targets.joins(legislations: :tags)
-            .where(tags: {type: 'Framework'}).any?
-          [g.iso, {in_framework: framework, in_sectoral: !framework}]
+          [g.iso, {
+            in_framework: g.targets.joins(legislations: :tags)
+              .where(tags: {type: 'Framework'}).any?,
+            in_sectoral: g.targets.joins(legislations: :laws_sectors).any?
+          }]
         end.to_h
         render json: results
       end
