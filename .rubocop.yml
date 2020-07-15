@@ -97,3 +97,20 @@ Lint/StructNewOverride:
 Style/ExponentialNotation:
   Enabled: true
 
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: false
+
+Lint/DeprecatedOpenSSLConstant:
+  Enabled: true
+
+Style/RedundantFetchBlock:
+  Enabled: true
+
+Style/RedundantRegexpCharacterClass:
+  Enabled: true
+
+Style/RedundantRegexpEscape:
+  Enabled: true
+
+Style/SlicingWithRange:
+  Enabled: true

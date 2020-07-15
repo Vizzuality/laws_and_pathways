@@ -64,6 +64,7 @@ Rails.application.routes.draw do
       get :search, to: 'search#index'
       get :search_counts, to: 'search#counts'
       get 'targets', to: 'targets#index'
+      get 'targets/economy-wide-countries', to: 'targets#economy_wide_countries'
       get 'targets/:iso', to: 'targets#show'
     end
   end

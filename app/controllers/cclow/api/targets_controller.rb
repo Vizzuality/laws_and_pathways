@@ -23,6 +23,17 @@ module CCLOW
         end
       end
 
+      def economy_wide_countries
+        geographies = ::Geography.joins(targets: [:sector, :tags])
+          .where.not(targets: {source: 'ndc'})
+          .where(laws_sectors: {name: 'Economy-wide'})
+          .where(tags: {type: 'Scope', name: 'Economy Wide'})
+          .where(geography_type: 'national')
+          .distinct
+          .count
+        render json: {total_parties: geographies}
+      end
+
       private
 
       def targets_as_json(geography)
