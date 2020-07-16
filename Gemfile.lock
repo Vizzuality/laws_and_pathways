@@ -309,6 +309,8 @@ GEM
     puma (4.3.5)
       nio4r (~> 2.0)
     rack (2.2.3)
+    rack-cors (1.1.1)
+      rack (>= 2.0.0)
     rack-proxy (0.6.5)
       rack
     rack-test (1.1.0)
@@ -548,6 +550,7 @@ DEPENDENCIES
   pry
   public_activity
   puma (~> 4.3)
+  rack-cors
   rails (~> 6.0.1)
   rails-controller-testing
   react-rails

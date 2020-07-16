@@ -114,3 +114,6 @@ Style/RedundantRegexpEscape:
 
 Style/SlicingWithRange:
   Enabled: true
+
+Lint/MixedRegexpCaptureTypes:
+  Enabled: true
