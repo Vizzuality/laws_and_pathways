@@ -21,13 +21,15 @@ module LawsAndPathways
 
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
 
-    config.middleware.insert_before 0, "Rack::Cors" do
+    config.middleware.insert_before 0, Rack::Cors, debug: !Rails.env.production?,
+      logger: (-> { Rails.logger }) do
       allow do
         origins '*'
         resource(
           '/cclow/api/*',
           headers: :any,
-          methods: [:get, :options]
+          methods: [:get, :options],
+          max_age: 600
         )
       end
     end
