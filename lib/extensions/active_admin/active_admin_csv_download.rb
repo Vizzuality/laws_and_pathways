@@ -8,8 +8,8 @@ module ActiveAdminCsvDownload
   # - related Event list (optional, if :events options is passed)
   #
   def data_export_sidebar(resource_name, options = {}, &block)
-    export_link_for_documents = options.fetch(:documents) { false }
-    export_link_for_events = options.fetch(:events) { false }
+    export_link_for_documents = options.fetch(:documents, false)
+    export_link_for_events = options.fetch(:events, false)
     display_name = options.fetch(:display_name) { resource_name }
 
     sidebar 'Export / Import', if: -> { collection.any? }, only: :index do
