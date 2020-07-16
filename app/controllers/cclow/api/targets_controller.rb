@@ -30,8 +30,8 @@ module CCLOW
           .where(tags: {type: 'Scope', name: 'Economy Wide'})
           .where(geography_type: 'national')
           .distinct
-          .count
-        render json: {total_parties: geographies}
+          .pluck(:iso)
+        render json: {countries: geographies, total_countries: geographies.size}
       end
 
       private
