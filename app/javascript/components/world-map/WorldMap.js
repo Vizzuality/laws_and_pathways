@@ -271,14 +271,16 @@ function WorldMap({ zoomToGeographyIso }) {
               width="300px"
             />
           </div>
-          <div className="world-map__eu-aggregation-button-container">
-            <button type="button" onClick={toggleIsEUAggregated} className="world-map__eu-aggregation-button">
-              <input type="checkbox" hidden checked={isEUAggregated} onChange={() => {}} />
-              {isEUAggregated && <div className="checked select-checkbox"><i className="fa fa-check" /></div>}
-              {!isEUAggregated && <div className="unchecked select-checkbox" />}
-              Show EU aggregated data
-            </button>
-          </div>
+          { !zoomToGeographyIso &&
+            <div className="world-map__eu-aggregation-button-container">
+              <button type="button" onClick={toggleIsEUAggregated} className="world-map__eu-aggregation-button">
+                <input type="checkbox" hidden checked={isEUAggregated} onChange={() => {}} />
+                {isEUAggregated && <div className="checked select-checkbox"><i className="fa fa-check" /></div>}
+                {!isEUAggregated && <div className="unchecked select-checkbox" />}
+                Show EU aggregated data
+              </button>
+            </div>
+          }
         </div>
         <ComposableMap
           projection={projection}
