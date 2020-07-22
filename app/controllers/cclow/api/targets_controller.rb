@@ -27,7 +27,7 @@ module CCLOW
         geographies = ::Geography.joins(targets: [:sector, :tags])
           .where.not(targets: {source: 'ndc'})
           .where(laws_sectors: {name: 'Economy-wide'})
-          .where(tags: {type: 'Scope', name: 'Economy Wide'})
+          .where(tags: {type: 'Scope', name: 'Economy-Wide'})
           .where(geography_type: 'national')
           .distinct
           .pluck(:iso)
