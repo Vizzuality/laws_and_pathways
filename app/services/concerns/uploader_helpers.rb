@@ -90,6 +90,8 @@ module UploaderHelpers
   end
 
   def find_or_create_laws_sector(sector_name)
+    return nil unless sector_name.present?
+
     sector_name = sector_name.strip
     LawsSector.where('lower(name) = ?', sector_name.downcase).first ||
       LawsSector.new(name: sector_name.titleize)
