@@ -61,7 +61,7 @@ class Target < ApplicationRecord
   enum source: array_to_enum_hash(SOURCES)
 
   belongs_to :geography
-  belongs_to :sector, class_name: 'LawsSector', foreign_key: 'sector_id', optional: true
+  belongs_to :sector, class_name: 'LawsSector', foreign_key: 'sector_id'
   has_and_belongs_to_many :legislations
 
   scope :recent, ->(date = 1.month.ago) {
