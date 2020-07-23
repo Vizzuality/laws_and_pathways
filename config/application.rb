@@ -29,7 +29,7 @@ module LawsAndPathways
       allow do
         origins '*'
         resource(
-          '/cclow/api/*',
+          '*',
           headers: :any,
           methods: [:get, :options],
           max_age: 600
