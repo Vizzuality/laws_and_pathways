@@ -1,4 +1,4 @@
-"Id","Target type","Description","Ghg target","Year","Base year period","Single year","Country","Geography iso","Sector","Target scope","Visibility status"
+"Id","Target type","Description","Ghg target","Year","Base year period","Single year","Geography","Geography iso","Sector","Target scope","Visibility status"
 "201","no_document_submitted","description","true","1995","1998","false","Japan","JPN","Airlines","High","draft"
 "202","base_year_target","description","true","1994","1994","false","Poland","POL","Cement","Default Scope","published"
 "203","intensity_target_and_trajectory_target","description","false","2003","2001","true","Poland","POL","Electricity Utilities","Default Scope","pending"
