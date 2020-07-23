@@ -83,6 +83,11 @@ $search-field-height: 3.75rem;
     padding: 0 18px 0 18px !important;
   }
 
+  & h5 + p {
+    margin-top: -20px;
+    color: $storm-gray;
+  }
+
   @include desktop {
     margin-top: 110px;
     padding: unset;

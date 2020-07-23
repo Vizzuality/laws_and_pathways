@@ -114,7 +114,7 @@ class Target < ApplicationRecord
           title: l.title,
           type: l.law? ? 'law' : 'policy',
           framework: l.frameworks.any?,
-          sectoral: l.laws_sectors.any?,
+          sectoral: l.frameworks.none?,
           link: l.url
         }
       end

@@ -25,7 +25,7 @@ function TooltipContent({ content, context, iso, geographiesDB }) {
           <p className="world-map__tooltip-text">{context && context.name}</p>
           <p className="world-map__tooltip-number">{contextValue && format(',')(contextValue.value)} {context.unit}</p>
         </div>
-        <a href={geography.link} target="_blank" rel="noopener noreferrer" className="world-map__tooltip-link">Go to full profile</a>
+        <a href={geography.link} className="world-map__tooltip-link">Go to full profile</a>
       </>
       )}
 

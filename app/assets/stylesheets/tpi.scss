@@ -45,6 +45,7 @@ html {
 
 body {
   overflow-x: hidden;
+  font-family: $family-sans-serif;
 
   @include desktop {
     overflow-x: visible;

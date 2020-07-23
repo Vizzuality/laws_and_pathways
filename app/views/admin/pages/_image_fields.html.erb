@@ -1,9 +1,8 @@
 <% is_new_record = form.object.new_record? %>
 
 <%= content_tag :div, class: 'nested-fields inline-fields', data: { controller: 'image', new_record: is_new_record } do %>
-  <% if is_new_record || !form.object.logo.present? %>
-    <%= form.input :logo, as: :file, input_html: {accept: 'image/*'} %>
-  <% else %>
+  <%= form.input :logo, as: :file, input_html: {accept: 'image/*'} %>
+  <% if form.object.logo.present? %>
     <%= image_tag form.object.logo, style: 'height: 100px; width: 100px;' %>
   <% end %>
   <%= form.input :link %>

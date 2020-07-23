@@ -29,9 +29,19 @@ $margin-between-list-items: 20px;
   line-height: 30px;
   margin-bottom: 40px;
 
+  h1 {
+    font-size: 20px !important;
+  }
+
   h1, h2, h3, h4, h5 {
     margin-top: 45px;
     margin-bottom: 15px;
+  }
+
+  @include from($desktop) {
+    h4.pages__content-subtitle {
+      margin-top: 0;
+    }
   }
 
   img {
@@ -115,25 +125,62 @@ $margin-between-list-items: 20px;
     }
 
     .pages__content-logo {
-      margin-right: 30px;
+      margin-right: 60px;
 
       > div {
         background-position: center;
         background-size: cover;
-        height: 280px;
+        height: 240px;
         width: 240px;
+        border-radius: 50%;
       }
     }
 
     @include until($desktop) {
       align-items: center;
       display: flex;
-      flex-direction: column-reverse;
+      flex-direction: column;
+    }
+  }
+
+  &.logo-description {
+    display: block;
+    font-family: $family-sans-serif;
+
+    .pages__content-logos {
+      grid-template-columns: repeat(2, 1fr);
+      margin-right: 30px;
+      min-width: 50%;
+
+      img {
+        max-height: 280px;
+      }
+    }
+
+    .pages__content-logo {
+      margin-bottom: 24px;
+
+      img {
+        max-width: 240px;
+      }
+    }
+
+    @include until($desktop) {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
     }
   }
 }
 
 .pages__content-title {
+  margin-bottom: 30px;
+  font-family: $font-family-bold;
+  font-size: 20px;
+  color: $dark;
+}
+
+.pages__content-subtitle {
   margin-bottom: 30px;
   font-family: $font-family-bold;
   font-size: 20px;

@@ -62,8 +62,6 @@ describe 'Geography page', type: 'system', site: 'cclow' do
         )
         expect(page).to have_text('The 2015 revisions provide that China should promote clean and efficient')
         expect(page).to have_text('Legislative')
-        expect(page).to have_text('Action plan')
-        expect(page).to have_text('Mitigation Framework')
         expect(page).to have_text('Passed in')
 
         within('.timeline-events-container') do
@@ -100,7 +98,6 @@ describe 'Geography page', type: 'system', site: 'cclow' do
         expect(page).to have_current_path('/geographies/china/policies/13th-five-year-plan')
         expect(page).to have_text('The 13th Five Year Plan lays down the strategy and pathway')
         expect(page).to have_text('Executive')
-        expect(page).to have_text('Action plan')
         expect(page).to have_text('Mitigation Framework')
         expect(page).to have_text('Passed in')
 

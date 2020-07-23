@@ -42,13 +42,13 @@ module CSVImport
     #
     def target_attributes(row)
       {
-        target_type: row[:type]&.downcase&.gsub(' ', '_'),
+        target_type: row[:target_type]&.downcase&.gsub(' ', '_'),
         description: row[:full_description],
         ghg_target: (row[:ghg_target] == 'ghg'),
         year: row[:year],
         base_year_period: row[:base_year_period],
-        single_year: (row[:single_year] == 'single year'),
-        geography: geographies_names[row[:country]],
+        single_year: row[:single_year],
+        geography: geographies_names[row[:geography]],
         sector: find_or_create_laws_sector(row[:sector]),
         source: row[:source]&.downcase,
         visibility_status: row[:visibility_status]

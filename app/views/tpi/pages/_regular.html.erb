@@ -1,0 +1,13 @@
+<div class="pages__content">
+  <h4 class="pages__content-title"><%= content.title %></h4>
+  <div class="pages__description"><%= content.text.html_safe %></div>
+  <% if content.images.any? %>
+    <div class="pages__content-logos">
+      <% content.images.order(:name).each do |image| %>
+        <% if image.logo.present? %>
+          <%= link_to(image_tag(image.logo), image.link) %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

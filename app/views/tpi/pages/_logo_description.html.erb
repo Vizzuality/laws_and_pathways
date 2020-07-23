@@ -1,0 +1,19 @@
+<div class="pages__content logo-description">
+  <% if content.images.any? %>
+    <div class=<%= content.images.length > 1 ? 'pages__content-logos' : 'pages__content-logo'%>>
+      <% content.images.order(:name).each do |image| %>
+        <% if image.logo.present? %>
+          <% if content.images.length > 1 %>
+            <%= link_to(image_tag(image.logo), image.link) %>
+          <% else %>
+            <%= image_tag(image.logo) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="pages__description">
+    <h4 class="pages__content-subtitle"><%= content.title %></h4>
+    <%= content.text.html_safe %>
+  </div>
+</div>

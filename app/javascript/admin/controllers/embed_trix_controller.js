@@ -20,11 +20,12 @@ export default class extends Controller {
           </div>
         </div>
       </div>`;
-
     toolbar.querySelector('.trix-button-group--block-tools').insertAdjacentHTML('beforeend', embedButton);
     toolbar.querySelector('[data-trix-dialogs]').insertAdjacentHTML('beforeend', videoDialog);
-    toolbar.querySelector('[data-trix-dialog-submit--video]').addEventListener('click', () => {
-      const videoElement = document.querySelector('[data-trix-dialog=video] input[name=video]');
+    toolbar.querySelector('[data-trix-dialog-submit--video]').addEventListener('click', (event) => {
+      // Expecting to have input[name=video] in this position. If dialog changes
+      // make sure to update this reference!
+      const videoElement = event.target.parentElement.previousElementSibling;
       if (videoElement.value) {
         const youtubeId = this.getYoutubeId(videoElement.value);
         const videoEmbed = `<iframe width="420" height="315" src="https://www.youtube.com/embed/${youtubeId}"

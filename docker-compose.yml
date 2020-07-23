@@ -9,4 +9,3 @@ services:
       - 5432:5432
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
-
