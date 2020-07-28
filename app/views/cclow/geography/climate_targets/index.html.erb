@@ -27,7 +27,7 @@
             <div class="columns">
               <div class="column is-half">Targets in NDC content</div>
               <div class="column is-half value">
-                <% if !data[:ndc_targets_count].zero? %>
+                <% unless data[:ndc_targets_count].zero? %>
                   <div class="current-circle">
                     <%= data[:ndc_targets_count] %>
                   </div>
@@ -39,7 +39,7 @@
             <div class="columns">
             <div class="column is-half">Targets in national laws and policies</div>
               <div class="column is-half value">
-                <% if data[:law_targets_count] + data[:policy_targets_count] %>
+                <% unless (data[:law_targets_count] + data[:policy_targets_count]).zero? %>
                   <div class="current-circle">
                     <%= data[:law_targets_count] + data[:policy_targets_count] %>
                   </div>
@@ -56,7 +56,7 @@
           <a href="<%= "/cclow/geographies/#{@geography.slug}/climate_targets/#{data[:sector]}" %>" class="columns item active is-hidden-touch">
             <div class="column is-one-thirds sector-name"><%= data[:sector] %></div>
             <div class="column is-one-thirds value">
-              <% if !data[:ndc_targets_count].zero? %>
+              <% unless data[:ndc_targets_count].zero? %>
                 <div class="current-circle">
                   <%= data[:ndc_targets_count] %>
                 </div>
@@ -65,7 +65,7 @@
               <% end %>
             </div>
             <div class="column is-one-thirds value">
-              <% if data[:law_targets_count] + data[:policy_targets_count] %>
+              <% unless (data[:law_targets_count] + data[:policy_targets_count]).zero? %>
                 <div class="current-circle">
                   <%= data[:law_targets_count] + data[:policy_targets_count] %>
                 </div>

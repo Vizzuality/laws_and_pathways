@@ -43,7 +43,7 @@ module CSVImport
     def target_attributes(row)
       {
         target_type: row[:target_type]&.downcase&.gsub(' ', '_'),
-        description: row[:full_description],
+        description: row[:description],
         ghg_target: (row[:ghg_target] == 'ghg'),
         year: row[:year],
         base_year_period: row[:base_year_period],
