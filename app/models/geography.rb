@@ -148,8 +148,7 @@ class Geography < ApplicationRecord
           else
             targets.select { |t| t.source && t.source.downcase == 'ndc' }.count
           end,
-        law_targets_count: targets.select { |t| t.source && t.source.downcase == 'law' }.count,
-        policy_targets_count: targets.select { |t| t.source && t.source.downcase == 'policy' }.count
+        non_ndc_targets_count: targets.select { |t| t.source && t.source.downcase != 'ndc' }.count
       }
     end
   end

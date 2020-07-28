@@ -39,9 +39,9 @@
             <div class="columns">
             <div class="column is-half">Targets in national laws and policies</div>
               <div class="column is-half value">
-                <% unless (data[:law_targets_count] + data[:policy_targets_count]).zero? %>
+                <% unless data[:non_ndc_targets_count].zero? %>
                   <div class="current-circle">
-                    <%= data[:law_targets_count] + data[:policy_targets_count] %>
+                    <%= data[:non_ndc_targets_count] %>
                   </div>
                 <% else %>
                   <div class="empty-circle"></div>
@@ -65,9 +65,9 @@
               <% end %>
             </div>
             <div class="column is-one-thirds value">
-              <% unless (data[:law_targets_count] + data[:policy_targets_count]).zero? %>
+              <% unless data[:non_ndc_targets_count].zero? %>
                 <div class="current-circle">
-                  <%= data[:law_targets_count] + data[:policy_targets_count] %>
+                  <%= data[:non_ndc_targets_count] %>
                 </div>
               <% else %>
                 <div class="empty-circle"></div>
