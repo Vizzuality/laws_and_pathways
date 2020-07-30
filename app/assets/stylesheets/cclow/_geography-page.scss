@@ -57,6 +57,10 @@ $count-description-lines: 2;
       width: 1rem;
     }
 
+    > a {
+      white-space: nowrap;
+    }
+
     &> * {
       align-items: center;
       color: $grey-text;
@@ -275,8 +279,8 @@ $count-description-lines: 2;
       border-radius: 50%;
       display: flex;
       justify-content: center;
-      min-height: 3rem;
-      min-width: 3rem;
+      height: 3rem;
+      width: 3rem;
     }
   }
 

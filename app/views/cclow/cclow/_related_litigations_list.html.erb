@@ -12,7 +12,7 @@
           <span><%= litigation.events.last&.event_type.humanize %></span>
         <% end %>
       <p>
-        <%= litigation.summary.html_safe %>
+        <%= litigation.short_summary %>
       </p>
     </li>
   <% end %>
