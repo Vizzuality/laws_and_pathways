@@ -17,7 +17,9 @@ module CSVImport
 
         target.save!
         target.scopes = parse_tags(row[:scopes], scopes)
-        target.legislations = connect_laws(row[:source_documents])
+        # TODO: fix this import here and test it, for now I'm just
+        # commenting this out to not have missing data anymore
+        # target.legislations = connect_laws(row[:source_documents])
 
         update_import_results(was_new_record, any_changes)
       end
