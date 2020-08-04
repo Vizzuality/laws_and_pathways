@@ -114,7 +114,7 @@ function LegislationAndPolicies(props) {
       title: 'Instruments',
       options: instruments_filter_options,
       params: {
-        instruments: paramIntegerArray
+        instrument: paramIntegerArray
       }
     },
     {
@@ -130,7 +130,7 @@ function LegislationAndPolicies(props) {
       title: 'Governances',
       options: governances_filter_options,
       params: {
-        governances: paramIntegerArray
+        governance: paramIntegerArray
       }
     }
   ];
