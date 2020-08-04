@@ -31,6 +31,7 @@ module CCLOW
         @sectors = @legislation.laws_sectors.order(:name)
         @keywords = @legislation.keywords.order(:name)
         @responses = @legislation.responses.order(:name)
+        @instruments = @legislation.instruments.order(:name)
         legislation_events = @legislation.events.order(:date)
         @legislation_events_with_links = legislation_events.map do |e|
           ::Api::Presenters::Event.call(e, :legislation)

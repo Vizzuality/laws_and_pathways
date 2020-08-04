@@ -16,7 +16,7 @@
           <%= f.input :title %>
           <%= f.input :description, as: :trix %>
           <%= f.input :parent_id, as: :select, label: 'Parent Legislation',
-            collection: Legislation.where(parent_id: nil).order(:title) %>
+            collection: Legislation.includes(:geography).where(parent_id: nil).order(:title) %>
           <%= f.input :legislation_type, as: :select %>
           <%= f.input :laws_sector_ids, label: 'Sectors', as: :select,
             collection: LawsSector.order(:name), input_html: { multiple: true } %>

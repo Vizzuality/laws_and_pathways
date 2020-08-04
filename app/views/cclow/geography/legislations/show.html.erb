@@ -28,6 +28,18 @@
     </div>
   <% end %>
 
+  <% if @instruments.count > 0 %>
+    <div class="categories__container">
+      <p class="categories__title">Instruments</p>
+
+      <div class="categories__tags">
+        <% @instruments.each do |instrument| %>
+          <span class="tag categories__tag"><%= instrument.name %></span>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
   <% if @keywords.count > 0 %>
     <div class="categories__container">
       <p class="categories__title">Keywords</p>
