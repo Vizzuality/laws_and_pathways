@@ -19,7 +19,7 @@ class List extends Component {
       items: this.props.items,
       count: this.props.count,
       offset: 0,
-      showMoreFilters: false,
+      showMoreFilters: props.deviceInfo.isMobile ? false : true,
       ...this.resolveStateFromQueryString()
     };
 
