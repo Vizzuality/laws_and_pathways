@@ -29,8 +29,16 @@
     &.col-title {
       min-width: 120px;
     }
+    &.col-eventable {
+      min-width: 150px;
+      max-width: 500px;
+    }
     &.col-date {
       min-width: 100px;
+      white-space: nowrap;
+    }
+    &.col-event_type {
+      white-space: nowrap;
     }
   }
 }

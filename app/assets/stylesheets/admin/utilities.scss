@@ -10,6 +10,14 @@
   max-width: 300px;
 }
 
+.max-width-50p {
+  max-width: 50%;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}
+
 table.cell-padding-sm {
   td, th {
     padding: 5px;
