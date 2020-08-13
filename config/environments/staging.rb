@@ -92,6 +92,6 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.cclow_domain = 'cclow.laws-pathways-staging.vizzuality.com'
-  config.tpi_domain = 'tpi.laws-pathways-staging.vizzuality.com'
+  config.cclow_domain = 'cclow-staging.vizzuality.com'
+  config.tpi_domain = 'tpi-staging.vizzuality.com'
 end
