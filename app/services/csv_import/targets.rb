@@ -17,7 +17,9 @@ module CSVImport
 
         target.save!
         target.scopes = parse_tags(row[:scopes], scopes)
-        target.legislations = connect_laws(row[:source_documents])
+        # TODO: fix this import here and test it, for now I'm just
+        # commenting this out to not have missing data anymore
+        # target.legislations = connect_laws(row[:source_documents])
 
         update_import_results(was_new_record, any_changes)
       end
@@ -43,7 +45,7 @@ module CSVImport
     def target_attributes(row)
       {
         target_type: row[:target_type]&.downcase&.gsub(' ', '_'),
-        description: row[:full_description],
+        description: row[:description],
         ghg_target: (row[:ghg_target] == 'ghg'),
         year: row[:year],
         base_year_period: row[:base_year_period],

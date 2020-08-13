@@ -43,10 +43,10 @@
                 'No Contents added'
               end
             else
-              table_for resource.contents do
+              table_for resource.contents.decorate, id: 'page_show_contents_table' do
                 column :title
                 column :content_type
-                column :text
+                column :text, &:text_html
                 column :images do |content|
                   if content.images.any?
                     span do

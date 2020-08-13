@@ -28,7 +28,7 @@ class DataUpload < ApplicationRecord
 
   belongs_to :uploaded_by, class_name: 'AdminUser', optional: true
 
-  validates :file, attached: true, content_type: {in: ['text/csv']}
+  validates :file, attached: true, content_type: {in: ['text/csv', 'application/vnd.ms-excel']}
   validates :uploader, inclusion: {in: UPLOADERS}
 
   before_create :set_uploaded_by

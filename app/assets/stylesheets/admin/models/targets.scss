@@ -5,13 +5,15 @@
     }
     &.col-geography {
       min-width: 110px;
+      white-space: nowrap;
     }
     &.col-sector {
       min-width: 100px;
+      white-space: nowrap;
     }
     &.col-year {
       min-width: 85px;
+      white-space: nowrap;
     }
   }
 }
-

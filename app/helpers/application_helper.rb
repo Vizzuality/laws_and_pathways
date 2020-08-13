@@ -10,7 +10,7 @@ module ApplicationHelper
       content_tag :ul do
         @breadcrumb.each_with_index.map do |item, i|
           content_tag :li, class: i.eql?(@breadcrumb.count - 1) ? 'is-active' : '' do
-            link_to item.title, item.path
+            link_to item.short_title, item.path, title: item.title
           end
         end.join.html_safe
       end

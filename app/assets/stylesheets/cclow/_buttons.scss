@@ -93,4 +93,8 @@ $button-border-width: 4px;
       vertical-align: middle;
     }
   }
+
+  &.no-anchor {
+    overflow-anchor: none;
+  }
 }

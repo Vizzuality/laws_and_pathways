@@ -210,6 +210,10 @@ main {
   ul {
     li {
       display: inline-flex;
+
+      a {
+        pointer-events: unset !important;
+      }
     }
   }
 }

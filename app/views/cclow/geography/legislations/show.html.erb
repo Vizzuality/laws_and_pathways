@@ -28,6 +28,18 @@
     </div>
   <% end %>
 
+  <% if @instruments.count > 0 %>
+    <div class="categories__container">
+      <p class="categories__title">Instruments</p>
+
+      <div class="categories__tags">
+        <% @instruments.each do |instrument| %>
+          <span class="tag categories__tag"><%= instrument.name %></span>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
   <% if @keywords.count > 0 %>
     <div class="categories__container">
       <p class="categories__title">Keywords</p>
@@ -86,17 +98,10 @@
       <%= render 'cclow/geography/legislations/climate_targets', targets: @legislation.targets %>
     </section>
   <% end %>
-  <% if false %>
-    <section>
-      <h5>Related laws and policies</h5>
-      <%= render 'related_laws_list', legislations: Legislation.first(2) %>
-    </section>
-    <hr>
-  <% end %>
   <% if @legislation.litigations.any? %>
     <section>
       <h5>Related litigation cases</h5>
-      <%= render 'related_litigations_list', litigations: @legislation.litigations %>
+      <%= render 'related_litigations_list', litigations: CCLOW::LitigationDecorator.decorate_collection(@legislation.litigations) %>
     </section>
   <% end %>
 </div>

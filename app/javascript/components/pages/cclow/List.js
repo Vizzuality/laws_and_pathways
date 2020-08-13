@@ -19,7 +19,7 @@ class List extends Component {
       items: this.props.items,
       count: this.props.count,
       offset: 0,
-      showMoreFilters: false,
+      showMoreFilters: props.deviceInfo.isMobile ? false : true,
       ...this.resolveStateFromQueryString()
     };
 
@@ -363,7 +363,7 @@ class List extends Component {
               </ul>
               {hasMore && (
                 <div className={`column load-more-container${!isMobile ? ' is-offset-5' : ''}`}>
-                  <button type="button" className="button is-primary load-more-btn" onClick={this.handleLoadMore}>
+                  <button type="button" className="button is-primary no-anchor load-more-btn" onClick={this.handleLoadMore}>
                     Load 10 more entries
                   </button>
                 </div>
