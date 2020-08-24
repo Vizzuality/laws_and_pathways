@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import orderBy from 'lodash/orderBy';
 import hexToRgba from 'hex-to-rgba';
 
-function Tooltip({ xValue, yValues, unit }) {
+function Tooltip({ xValue, yValues, unit, onClose }) {
   const companyValues = yValues.filter(v => !v.isBenchmark);
   const benchmarkValues = yValues.filter(v => v.isBenchmark);
   const companyValuesSorted = orderBy(companyValues, 'value', 'desc');
@@ -13,6 +13,8 @@ function Tooltip({ xValue, yValues, unit }) {
       <div className="cp-tooltip__header">
         <span>{xValue}</span>
         <span className="cp-tooltip__value">{unit}</span>
+
+        <span className="cp-tooltip__close" onClick={onClose} />
       </div>
 
       {companyValuesSorted.map(y => (
@@ -52,7 +54,8 @@ function Tooltip({ xValue, yValues, unit }) {
 Tooltip.propTypes = {
   xValue: PropTypes.number.isRequired,
   yValues: PropTypes.array.isRequired,
-  unit: PropTypes.string.isRequired
+  unit: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired
 };
 
 export default Tooltip;
