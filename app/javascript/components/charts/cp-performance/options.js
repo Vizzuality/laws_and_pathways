@@ -88,8 +88,13 @@ export function getOptions({ chartData, unit }) {
           isTargeted: p.point.zone.dashStyle === 'dot',
           isBenchmark: p.series.type === 'area'
         }));
+
+        const closeTooltip = () => {
+          this.chart.tooltip.close();
+        };
+
         return renderToString(
-          <Tooltip xValue={xValue} yValues={yValues} unit={unit} />
+          <Tooltip xValue={xValue} yValues={yValues} unit={unit} onClose={closeTooltip} />
         );
       }
     },
