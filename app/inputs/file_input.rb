@@ -3,7 +3,7 @@ class FileInput < Formtastic::Inputs::FileInput
     input_wrapping do
       label_html <<
         file_cache_tag <<
-        builder.file_field(method, input_html_options)
+        builder.file_field(method, input_html_options.merge(direct_upload: true))
     end
   end
 
