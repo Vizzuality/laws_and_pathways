@@ -145,32 +145,7 @@
     padding: 20px;
 
     @include mobile {
-      padding-top: 30px;
-      opacity: .8;
-    }
-
-    &__close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-
-      cursor: pointer;
-
-      background-image: image-url('icons/dark-x.svg');
-      background-position: center;
-      background-repeat: no-repeat;
-      height: 14px;
-      width: 14px;
-
-      opacity: .3;
-
-      &:hover {
-        opacity: 1;
-      }
-
-      @include from($desktop) {
-        opacity: 0;
-      }
+      opacity: .85;
     }
 
     &__row {

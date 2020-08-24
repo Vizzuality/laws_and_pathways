@@ -89,12 +89,8 @@ export function getOptions({ chartData, unit }) {
           isBenchmark: p.series.type === 'area'
         }));
 
-        const closeTooltip = () => {
-          this.chart.tooltip.close();
-        };
-
         return renderToString(
-          <Tooltip xValue={xValue} yValues={yValues} unit={unit} onClose={closeTooltip} />
+          <Tooltip xValue={xValue} yValues={yValues} unit={unit} />
         );
       }
     },
