@@ -10,7 +10,7 @@
       </span>
       <a href="<%= document.url %>" class="column is-11">
         <%= document.name %>
-        <%= "(#{::Language.find(document.language).name})" if document.language %>
+        <%= "(#{::Language.find(document.language).name})" if document.language.present? %>
       </a>
     </li>
   <% end %>
