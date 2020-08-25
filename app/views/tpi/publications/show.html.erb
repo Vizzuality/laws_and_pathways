@@ -1,4 +1,9 @@
-<% content_for :page_title, "TPI - #{@publication.title}" %>
+<% content_for :page_title, "#{@publication.title} - Transition Pathway Initiative" %>
+<% if @publication.class.name.eql?("NewsArticle") %>
+  <% content_for :page_description, strip_tags(@publication.content).first(160) if @publication.content.present? %>
+<% else %>
+  <% content_for :page_description, @publication.short_description&.first(160) %>
+<% end %>
 
 <div class="container">
   <div class="pages__grid">
