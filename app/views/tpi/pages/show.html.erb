@@ -1,4 +1,5 @@
-<% content_for :page_title, "TPI - #{@page.title}" %>
+<% content_for :page_title, "#{@page.title} - Transition Pathway Initiative" %>
+<% content_for :page_description, strip_tags(@page.description).first(160) if @page.description.present? %>
 
 <div class="container">
   <div class="pages__grid">

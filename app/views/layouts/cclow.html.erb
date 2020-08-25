@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= yield(:page_title) %></title>
+    <% title = content_for?(:page_title) ? content_for(:page_title) : 'Climate Change Laws of the World' %>
+    <% description = content_for?(:page_description) ? content_for(:page_description) : "Climate Change Laws of the World is a global database of climate change laws, policies, climate targets and litigation cases" %>
+
+    <title><%= title %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <% title = 'Climate Change Laws of the World' %>
-    <% description = "Climate change Laws of the World and Climate Change Litigation of the World build on several years of data collection by both the Grantham Research Institute and the Sabin Center, including the collaboration of Grantham Institute with GLOBE International on a series of Climate Legislation Studies."%>
     <% img_src = image_url('cclow.png', skip_pipeline: true) %>
 
     <meta itemprop="name" content="<%= title %>">
