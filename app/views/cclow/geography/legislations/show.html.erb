@@ -79,7 +79,7 @@
     <% end %>
     <div>Passed in <%= @legislation.date_passed&.year %></div>
   </div>
-  <section class="section is-medium">
+  <section class="html-content section is-medium">
     <%= @legislation.description&.html_safe %>
   </section>
   <% if @legislation_events_with_links.any? %>

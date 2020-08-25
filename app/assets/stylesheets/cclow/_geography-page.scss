@@ -248,6 +248,45 @@ $count-description-lines: 2;
       margin-bottom: 0.875rem;
     }
 
+    $text-indent: 25px;
+    $text-indent-numbers: 18px;
+
+    .html-content {
+      ul {
+        margin-top: 20px;
+        margin-left: $text-indent;
+
+        // well sometimes html content is weird/broken
+        > br {
+          display: none;
+        }
+
+        li {
+          list-style-type: disc;
+          list-style-position: inside;
+          line-height: 32px;
+          text-indent: calc(-1 * #{$text-indent});
+        }
+      }
+
+      ol {
+        margin-top: 20px;
+        margin-left: $text-indent-numbers;
+
+        // well sometimes html content is weird/broken
+        > br {
+          display: none;
+        }
+
+        li {
+          list-style-type: decimal;
+          list-style-position: inside;
+          line-height: 32px;
+          text-indent: calc(-1 * #{$text-indent-numbers});
+        }
+      }
+    }
+
     .documents-list {
       margin: 2.75rem 0.75rem;
 
