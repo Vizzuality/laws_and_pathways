@@ -33,6 +33,10 @@ ActiveAdmin.register Company do
     end
   end
 
+  action_item :preview, priority: 0, only: :show do
+    link_to 'Preview', tpi_company_path(resource.slug) if resource.published?
+  end
+
   show do
     tabs do
       tab :details do

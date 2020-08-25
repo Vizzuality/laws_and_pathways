@@ -73,6 +73,10 @@ ActiveAdmin.register Litigation do
     column(:legislation_ids) { |l| l.legislation_ids.join('; ') }
   end
 
+  action_item :preview, priority: 0, only: :show do
+    link_to 'Preview', cclow_geography_litigation_case_path(resource.geography.slug, resource.slug)
+  end
+
   show do
     tabs do
       tab :details do

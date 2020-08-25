@@ -14,6 +14,10 @@ ActiveAdmin.register NewsArticle do
   filter :content
   filter :publication_date
 
+  action_item :preview, priority: 0, only: :show do
+    link_to 'Preview', tpi_publication_path(resource, type: 'NewsArticle')
+  end
+
   show do
     tabs do
       tab :details do
