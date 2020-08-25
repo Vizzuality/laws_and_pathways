@@ -68,4 +68,10 @@ class LitigationDecorator < Draper::Decorator
                 title: laws_sector.name
     end
   end
+
+  def preview_url
+    h.cclow_geography_litigation_case_url(
+      model.geography.slug, model.slug, {host: Rails.configuration.try(:cclow_domain)}.compact
+    )
+  end
 end

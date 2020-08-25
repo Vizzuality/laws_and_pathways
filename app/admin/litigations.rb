@@ -74,7 +74,7 @@ ActiveAdmin.register Litigation do
   end
 
   action_item :preview, priority: 0, only: :show do
-    link_to 'Preview', cclow_geography_litigation_case_path(resource.geography.slug, resource.slug)
+    link_to 'Preview', resource.preview_url
   end
 
   show do

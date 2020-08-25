@@ -15,7 +15,7 @@ ActiveAdmin.register NewsArticle do
   filter :publication_date
 
   action_item :preview, priority: 0, only: :show do
-    link_to 'Preview', tpi_publication_path(resource, type: 'NewsArticle')
+    link_to 'Preview', resource.preview_url
   end
 
   show do

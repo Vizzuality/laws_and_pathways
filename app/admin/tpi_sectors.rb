@@ -19,7 +19,7 @@ ActiveAdmin.register TPISector do
   end
 
   action_item :preview, priority: 0, only: :show do
-    link_to 'Preview', tpi_sector_path(resource.slug)
+    link_to 'Preview', resource.preview_url
   end
 
   show do

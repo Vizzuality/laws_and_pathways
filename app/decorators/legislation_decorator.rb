@@ -72,9 +72,15 @@ class LegislationDecorator < Draper::Decorator
   end
 
   def preview_url
-    return h.cclow_geography_law_path(model.geography.slug, model.slug) if model.law?
+    if model.law?
+      return h.cclow_geography_law_url(
+        model.geography.slug, model.slug, {host: Rails.configuration.try(:cclow_domain)}.compact
+      )
+    end
 
-    h.cclow_geography_policy_path(model.geography.slug, model.slug)
+    h.cclow_geography_policy_url(
+      model.geography.slug, model.slug, {host: Rails.configuration.try(:cclow_domain)}.compact
+    )
   end
 
   def as_json(_ = {})

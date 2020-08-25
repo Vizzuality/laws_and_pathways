@@ -10,4 +10,8 @@ class CompanyDecorator < Draper::Decorator
 
     model.latest_mq_assessment.decorate.level_tag
   end
+
+  def preview_url
+    h.tpi_company_url(model.slug, {host: Rails.configuration.try(:tpi_domain)}.compact)
+  end
 end

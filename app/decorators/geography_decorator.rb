@@ -38,4 +38,8 @@ class GeographyDecorator < Draper::Decorator
   def percent_global_emissions
     model.percent_global_emissions ? "#{model.percent_global_emissions} %" : '-'
   end
+
+  def preview_url
+    h.cclow_geography_url(model.slug, {host: Rails.configuration.try(:cclow_domain)}.compact)
+  end
 end

@@ -28,7 +28,7 @@ ActiveAdmin.register Geography do
   data_export_sidebar 'Geographies', events: true
 
   action_item :preview, priority: 0, only: :show do
-    link_to 'Preview', cclow_geography_path(resource.slug)
+    link_to 'Preview', resource.preview_url
   end
 
   show do

@@ -8,4 +8,8 @@ class TPISectorDecorator < Draper::Decorator
   def cp_units_list
     model.cp_units.order('valid_since DESC NULLS LAST').map(&:to_s)
   end
+
+  def preview_url
+    h.tpi_sector_url(model.slug, {host: Rails.configuration.try(:tpi_domain)}.compact)
+  end
 end
