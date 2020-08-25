@@ -8,4 +8,10 @@ class PageDecorator < Draper::Decorator
   def description
     model.description&.html_safe
   end
+
+  def preview_url
+    return "/tpi/#{slug}" if model.is_a?(TPIPage)
+
+    "/cclow/#{slug}"
+  end
 end
