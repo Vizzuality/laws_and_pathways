@@ -8,13 +8,13 @@ module CCLOW
 
     def static_pages
       @header_pages = CCLOWPage.header.map do |p|
-        {slug: p.slug_path, title: p.title}
+        {slug: p.path, title: p.title}
       end
       @footer_pages = CCLOWPage.footer.map do |p|
-        {slug: p.slug_path, title: p.title}
+        {slug: p.path, title: p.title}
       end
       @both = CCLOWPage.both.map do |p|
-        {slug: p.slug_path, title: p.title}
+        {slug: p.path, title: p.title}
       end
     end
   end
