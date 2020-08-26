@@ -152,4 +152,10 @@ class Geography < ApplicationRecord
       }
     end
   end
+
+  def as_json(options = {})
+    h = super(options)
+    h[:eu_member] = eu_member?
+    h
+  end
 end

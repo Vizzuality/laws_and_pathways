@@ -11,11 +11,13 @@ import {
 
 import ExecutiveSVG from 'images/icons/legislation_types/executive.svg';
 import LegislativeSVG from 'images/icons/legislation_types/legislative.svg';
+import EUFlag from 'images/flags/EUR.svg';
 
 function LegislationAndPolicies(props) {
   const {
     legislations,
     count,
+    eu_members,
     min_law_passed_year,
     geo_filter_options,
     keywords_filter_options,
@@ -28,7 +30,7 @@ function LegislationAndPolicies(props) {
     sectors_options
   } = props;
 
-  const filters = [
+  const filterConfigs = [
     {
       name: 'geo',
       title: 'Regions and countries',
@@ -135,14 +137,32 @@ function LegislationAndPolicies(props) {
     }
   ];
 
+  const renderExtraMessage = ({ filters }) => { /* eslint-disable-line react/prop-types */
+    if (filters.geography && filters.geography.length > 0
+        && filters.geography.some((gId) => eu_members.includes(gId))) {
+      return (
+        <div className="extra-message eu-member">
+          <img className="flag" src={EUFlag} alt="European Union flag" />
+          <div>
+            Your selection includes EU members and so EU legislation also applies.
+            For further information, please see the <a href="/cclow/geographies/european-union" title="EU profile link">EU profile</a>.
+          </div>
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <List
       items={legislations}
       count={count}
-      filterConfigs={filters}
+      filterConfigs={filterConfigs}
       url="/cclow/legislation_and_policies"
       title="Laws and Policies"
       allTitle="Laws and policies"
+      renderExtraMessage={renderExtraMessage}
       renderContentItem={(legislation) => (
         <Fragment>
           <h5 className="title" dangerouslySetInnerHTML={{__html: legislation.link}} />
@@ -174,6 +194,7 @@ function LegislationAndPolicies(props) {
 LegislationAndPolicies.defaultProps = {
   count: 0,
   min_law_passed_year: 1990,
+  eu_members: [],
   geo_filter_options: [],
   keywords_filter_options: [],
   responses_filter_options: [],
@@ -188,6 +209,7 @@ LegislationAndPolicies.defaultProps = {
 LegislationAndPolicies.propTypes = {
   legislations: PropTypes.array.isRequired,
   count: PropTypes.number,
+  eu_members: PropTypes.array,
   min_law_passed_year: PropTypes.number,
   geo_filter_options: PropTypes.array,
   keywords_filter_options: PropTypes.array,
