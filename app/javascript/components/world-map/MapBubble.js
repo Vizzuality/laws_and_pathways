@@ -1,9 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Marker } from 'react-simple-maps';
 
-function MapBubble(props) {
-  const { weight, color, onMouseDown, currentZoom, clicked, iso, ...markerProps } = props;
-
+function MapBubble({ weight, color, onMouseDown, currentZoom, clicked, ...markerProps }) {
   const newScale = 1 / currentZoom;
 
   return (
@@ -19,5 +18,13 @@ function MapBubble(props) {
     </Marker>
   );
 }
+
+MapBubble.propTypes = {
+  weight: PropTypes.number.isRequired,
+  color: PropTypes.string.isRequired,
+  currentZoom: PropTypes.number.isRequired,
+  clicked: PropTypes.bool.isRequired,
+  onMouseDown: PropTypes.func.isRequired
+};
 
 export default MapBubble;

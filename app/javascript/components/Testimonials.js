@@ -60,9 +60,7 @@ const Quote = ({message, author, role, handleClick}) => (
 
     <div className="testimonials__author">
       <p>{author}</p>
-      { role
-        && <p>{role}</p>
-      }
+      {role && <p>{role}</p>}
     </div>
   </div>
 );

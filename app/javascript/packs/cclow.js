@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* import Turbolinks from "turbolinks"; */
 import Slick from 'slick-carousel';
 import Rails from '@rails/ujs';

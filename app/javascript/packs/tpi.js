@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* import Turbolinks from "turbolinks"; */
 import Rails from '@rails/ujs';
 import ReactRailsUJS from 'react_ujs';

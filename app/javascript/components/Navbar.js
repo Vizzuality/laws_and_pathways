@@ -69,7 +69,6 @@ SearchComponent.propTypes = {
   closeSearchMode: PropTypes.func.isRequired
 };
 
-
 const NavbarComponent = ({ items, openSearchMode }) => {
   const [tpi, publications, about, newsletter, login, search] = items;
   const [isOpen, setIsOpen] = useState(false);
@@ -222,7 +221,7 @@ NavbarComponent.propTypes = {
   openSearchMode: PropTypes.func.isRequired
 };
 
-const Navbar = ({ items, controls, active }) => {
+const Navbar = ({ items, controls }) => {
   const [searchMode, setSearchMode] = useState(false);
   const { search } = controls;
 
@@ -242,7 +241,6 @@ const Navbar = ({ items, controls, active }) => {
       <NavbarComponent
         items={items}
         openSearchMode={openSearchMode}
-        active={active}
       />
     </header>
   );

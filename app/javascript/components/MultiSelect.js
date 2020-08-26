@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Select, {components} from 'react-select';
 
 const Option = props => (
@@ -12,6 +13,11 @@ const Option = props => (
   </div>
 );
 
+Option.propTypes = {
+  isSelected: PropTypes.bool.isRequired,
+  label: PropTypes.string.isRequired
+};
+
 const ValueContainer = ({children, ...props}) => {
   const controls = React.Children.toArray(children).filter(item => ['Input', 'Placeholder'].includes(item.type.name));
   return (
@@ -20,6 +26,11 @@ const ValueContainer = ({children, ...props}) => {
       {controls}
     </components.ValueContainer>
   );
+};
+
+ValueContainer.propTypes = {
+  selectProps: PropTypes.object.isRequired,
+  children: PropTypes.any.isRequired
 };
 
 const MultiSelect = (props) => (

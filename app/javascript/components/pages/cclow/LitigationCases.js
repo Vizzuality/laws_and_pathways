@@ -193,7 +193,6 @@ function LitigationCases(props) {
   );
 }
 
-
 LitigationCases.defaultProps = {
   count: 0,
   geo_filter_options: [],

@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
+
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
@@ -19,7 +21,7 @@ class List extends Component {
       items: this.props.items,
       count: this.props.count,
       offset: 0,
-      showMoreFilters: props.deviceInfo.isMobile ? false : true,
+      showMoreFilters: !props.deviceInfo.isMobile,
       ...this.resolveStateFromQueryString()
     };
 

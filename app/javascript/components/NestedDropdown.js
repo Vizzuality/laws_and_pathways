@@ -61,7 +61,11 @@ function Item({ item, onSelect }) {
 Item.propTypes = {
   item: PropTypes.shape({
     label: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired
+    value: PropTypes.string.isRequired,
+    items: PropTypes.arrayOf(PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired
+    }))
   }).isRequired,
   onSelect: PropTypes.func.isRequired
 };

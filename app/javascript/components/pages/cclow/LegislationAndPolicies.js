@@ -190,7 +190,6 @@ function LegislationAndPolicies(props) {
   );
 }
 
-
 LegislationAndPolicies.defaultProps = {
   count: 0,
   min_law_passed_year: 1990,
