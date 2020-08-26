@@ -7,22 +7,10 @@ module CCLOW
       before_action :set_common_breadcrumb
 
       def index
-        @legislations = if show_laws?
-                          @geography.legislations.laws
-                        else
-                          @geography.legislations.policies
-                        end
-        @legislations = @legislations.published
-          .includes(:events)
-          .joins(:events).order('events.date DESC')
-        @legislations = CCLOW::LegislationDecorator.decorate_collection(@legislations)
+        type = show_laws? ? 'legislative' : 'executive'
 
-        fixed_navbar(
-          "Climate Laws and Policies - #{@geography.name}",
-          admin_legislations_path(
-            'q[geography_id_eq]': @geography,
-            'q[legislation_type_eq]': params[:scope] == :laws ? 'legislative' : 'executive'
-          )
+        redirect_to cclow_legislation_and_policies_path(
+          geography: [@geography.id], type: [type], from_geography_page: @geography.name
         )
       end
 
