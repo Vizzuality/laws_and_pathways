@@ -14,6 +14,12 @@
   }
 }
 
+table {
+  th, td {
+    word-break: keep-all;
+  }
+}
+
 .panel {
   > h3 {
     font-size: 18px;
