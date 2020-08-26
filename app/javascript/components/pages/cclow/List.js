@@ -310,7 +310,7 @@ class List extends Component {
   }
 
   render() {
-    const { items, count } = this.state;
+    const { items, count, filters } = this.state;
     const { url, deviceInfo } = this.props;
     const { isMobile } = deviceInfo;
     const hasMore = items.length < count;
@@ -353,6 +353,7 @@ class List extends Component {
                 </Fragment>
               )}
               <ul className="content-list">
+                {this.props.renderExtraMessage({ filters })}
                 {(items || []).length === 0 && this.renderNoItemsMessage()}
 
                 {items.map((legislation, i) => (
@@ -376,7 +377,9 @@ class List extends Component {
   }
 }
 
-List.defaultProps = {};
+List.defaultProps = {
+  renderExtraMessage: () => null
+};
 
 List.propTypes = {
   filterConfigs: PropTypes.array.isRequired,
@@ -385,6 +388,7 @@ List.propTypes = {
   title: PropTypes.string.isRequired,
   allTitle: PropTypes.string.isRequired,
   renderContentItem: PropTypes.func.isRequired,
+  renderExtraMessage: PropTypes.func,
   count: PropTypes.number.isRequired,
   deviceInfo: PropTypes.object.isRequired
 };

@@ -918,4 +918,24 @@ mark {
   .list-count {
     font-size: 14px;
   }
+
+  .extra-message {
+    border: 1px solid $grey;
+    padding: 20px;
+    font-size: 12px;
+    line-height: 22px;
+
+    &.eu-member {
+      display: flex;
+
+      img {
+        margin-right: 15px;
+        height: 20px;
+      }
+
+      a {
+        color: $red;
+      }
+    }
+  }
 }
