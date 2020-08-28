@@ -47,6 +47,12 @@ module CCLOW
 
       def set_legislation
         @legislation = CCLOW::LegislationDecorator.new(::Legislation.friendly.find(params[:id]))
+      rescue ActiveRecord::RecordNotFound
+        if show_laws?
+          redirect_to cclow_geography_laws_path(@geography.slug)
+        else
+          redirect_to cclow_geography_policies_path(@geography.slug)
+        end
       end
 
       def redirect_if_numeric_or_historic_slug

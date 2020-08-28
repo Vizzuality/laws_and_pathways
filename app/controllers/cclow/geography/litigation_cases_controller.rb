@@ -31,6 +31,8 @@ module CCLOW
 
       def set_litigation
         @litigation = @geography.litigations.friendly.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        redirect_to cclow_geography_litigation_cases_path(@geography.slug)
       end
 
       def redirect_if_numeric_or_historic_slug
