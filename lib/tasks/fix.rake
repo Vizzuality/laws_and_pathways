@@ -23,10 +23,10 @@ namespace :fix do
       'â€'  => '”'
     }
 
-    chars_map.each do |wrong, right|
-      puts "Searching for #{wrong} and replacing with #{right}"
+    ActiveRecord::Base.transaction do
+      chars_map.each do |wrong, right|
+        puts "Searching for #{wrong} and replacing with #{right}"
 
-      ActiveRecord::Base.transaction do
         update_all(Company, :name, wrong, right)
         update_all(Company, :latest_information, wrong, right)
         update_all(Geography, :federal_details, wrong, right)
@@ -41,9 +41,9 @@ namespace :fix do
         update_all(Document, :name, wrong, right)
         update_all(ExternalLegislation, :name, wrong, right)
         update_all(Event, :title, wrong, right)
-
-        raise ActiveRecord::Rollback if ENV['DRY_RUN']
       end
+
+      raise ActiveRecord::Rollback if ENV['DRY_RUN']
     end
   end
   # rubocop:enable Layout/HashAlignment
