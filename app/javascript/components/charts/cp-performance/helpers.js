@@ -92,7 +92,6 @@ export function renderBenchmarksLabels(chart, isMobile = false) {
     const line = createSVGLine(lastPointX, lastPointY, textX, textY);
     g.appendChild(text);
 
-
     if (isMobile) {
       const textWidth = text.getBBox().width;
       const transformAttr = ` translate(-${textWidth + labelToAreaSpacing + 5},0)`;

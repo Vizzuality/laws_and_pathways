@@ -44,6 +44,15 @@ class LegislationDecorator < Draper::Decorator
     end
   end
 
+  def target_links
+    model.targets.map do |target|
+      h.link_to target.description,
+                h.admin_target_path(target),
+                target: '_blank',
+                title: target.description
+    end
+  end
+
   def instrument_links
     model.instruments.map do |instrument|
       h.link_to instrument.name,
@@ -69,6 +78,18 @@ class LegislationDecorator < Draper::Decorator
                 target: '_blank',
                 title: laws_sector.name
     end
+  end
+
+  def preview_url
+    if model.law?
+      return h.cclow_geography_law_url(
+        model.geography.slug, model.slug, {host: Rails.configuration.try(:cclow_domain)}.compact
+      )
+    end
+
+    h.cclow_geography_policy_url(
+      model.geography.slug, model.slug, {host: Rails.configuration.try(:cclow_domain)}.compact
+    )
   end
 
   def as_json(_ = {})

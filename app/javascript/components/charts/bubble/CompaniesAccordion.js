@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import Select, { components } from 'react-select';
 import PropTypes from 'prop-types';
+import Select, { components } from 'react-select';
+
 import chevronDownIconBlack from '../../../../assets/images/icon_chevron_dark/chevron_down_black-1.svg';
 import chevronUpIconBlack from '../../../../assets/images/icon_chevron_dark/chevron-up.svg';
-
 
 const LEVELS_SUBTITLES = {
   0: 'Unaware',
@@ -57,6 +57,9 @@ const DropdownIndicator = (props) => (
   </components.DropdownIndicator>
 );
 
+DropdownIndicator.propTypes = {
+  selectProps: PropTypes.object.isRequired
+};
 
 const CompaniesAccordion = ({ levels, by_sector }) => {
   const selectOptions = Object.keys(levels).map((level) => ({label: level, value: level}));
@@ -81,8 +84,8 @@ const CompaniesAccordion = ({ levels, by_sector }) => {
           styles={customSelectStyles}
           components={{DropdownIndicator}}
           theme={customSelectTheme}
-        />)
-      }
+        />
+      )}
 
       <div className="accordions-list">
         {levelsSignature.map((el, i) => (
@@ -102,8 +105,9 @@ const CompaniesAccordion = ({ levels, by_sector }) => {
                   {activeSector[el].map((company, index) => (
                     <li
                       key={`chart-companies-${index}`}
-                      onClick={() => { window.location.href = `/tpi/companies/${company.slug}`; }}
-                    >{company.name}
+                      onClick={() => { window.location.href = `/companies/${company.slug}`; }}
+                    >
+                      {company.name}
                       <span className={`mq-level-trend mq-level-trend--${company.status}`} />
                     </li>
                   ))}
@@ -115,9 +119,9 @@ const CompaniesAccordion = ({ levels, by_sector }) => {
       </div>
       {by_sector && (
         <div className="go-to-button__container">
-          <a href={`/tpi/sectors/${activeOption.value.toLowerCase()}`} className="button is-primary is-outlined">Go to sector</a>
-        </div>)
-      }
+          <a href={`/sectors/${activeOption.value.toLowerCase()}`} className="button is-primary is-outlined">Go to sector</a>
+        </div>
+      )}
     </div>
   );
 };

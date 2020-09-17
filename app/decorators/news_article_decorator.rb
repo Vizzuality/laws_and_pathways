@@ -13,4 +13,10 @@ class NewsArticleDecorator < Draper::Decorator
                 title: sector.name
     end
   end
+
+  def preview_url
+    h.tpi_publication_url(
+      model, {type: 'NewsArticle', host: Rails.configuration.try(:tpi_domain)}.compact
+    )
+  end
 end

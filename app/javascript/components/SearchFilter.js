@@ -41,7 +41,7 @@ class SearchFilter extends Component {
 
   handleCheckItem = (blockName, value) => {
     const {onChange, selectedList} = this.props;
-    const blocks = Object.assign({}, selectedList);
+    const blocks = {...selectedList};
     if ((blocks[blockName] || []).includes(value)) {
       blocks[blockName] = blocks[blockName].filter(item => item !== value);
     } else {
@@ -104,7 +104,7 @@ class SearchFilter extends Component {
     const {filterName, items, isSearchable} = this.props;
     const listBlocks = [];
     for (let i = 0; i < items.length; i += 1) {
-      listBlocks[i] = Object.assign({}, items[i]);
+      listBlocks[i] = {...items[i]};
       if (searchValue) {
         listBlocks[i].options = listBlocks[i]
           .options.concat().filter(item => item.label.toLowerCase().includes(searchValue.toLowerCase()));
@@ -113,7 +113,10 @@ class SearchFilter extends Component {
     return (
       <div className="options-container" ref={this.optionsContainer}>
         <div className="select-field" onClick={this.handleCloseOptions}>
-          <span>{filterName}</span><span className="toggle-indicator"><img src={minus} alt="" /></span>
+          <span>{filterName}</span>
+          <span className="toggle-indicator">
+            <img src={minus} alt="" />
+          </span>
         </div>
         <div>
           {isSearchable && (

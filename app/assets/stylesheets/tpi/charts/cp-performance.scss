@@ -5,6 +5,8 @@
   justify-content: unset;
   flex-flow: column;
 
+  z-index: 1;
+
   svg {
     overflow: unset !important;
   }
@@ -141,6 +143,10 @@
     border: 1px solid $dark;
     min-width: 300px;
     padding: 20px;
+
+    @include mobile {
+      opacity: .85;
+    }
 
     &__row {
       display: flex;

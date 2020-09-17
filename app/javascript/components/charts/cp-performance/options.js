@@ -88,6 +88,7 @@ export function getOptions({ chartData, unit }) {
           isTargeted: p.point.zone.dashStyle === 'dot',
           isBenchmark: p.series.type === 'area'
         }));
+
         return renderToString(
           <Tooltip xValue={xValue} yValues={yValues} unit={unit} />
         );

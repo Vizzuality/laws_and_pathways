@@ -1,4 +1,6 @@
-<% content_for :page_title, "Climate Laws - #{@page.title}" %>
+<% content_for :page_title, "#{@page.title} - Climate Change Laws of the World" %>
+<% content_for :page_description, strip_tags(@page.description).first(160) %>
+
 <div class="pages__content">
   <div class="pages__title"><%= @page.title %></div>
   <div class="pages__description">

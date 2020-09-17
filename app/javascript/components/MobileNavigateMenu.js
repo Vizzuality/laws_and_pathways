@@ -47,7 +47,6 @@ class MobileNavigateMenu extends Component {
     </components.DropdownIndicator>
   );
 
-
   customTheme = theme => ({
     ...theme,
     colors: {

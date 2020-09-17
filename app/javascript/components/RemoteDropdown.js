@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useOutsideClick } from 'shared/hooks';
 import chevronIconBlack from 'images/icon_chevron_dark/chevron_down_black-1.svg';
 
-
 function List({data, onSelect}) {
   return (
     <ul className="nested-dropdown__list">
@@ -33,7 +32,6 @@ function RemoteDropdown({ url, data, name }) {
   const Select = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [label, setLabel] = useState(false);
-
 
   useOutsideClick(Dropdown, () => setIsOpen(false));
 
@@ -68,7 +66,7 @@ RemoteDropdown.propTypes = {
       label: PropTypes.string.isRequired,
       value: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.number.isRequired])
     }).isRequired
-  ),
+  ).isRequired,
   url: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired
 };

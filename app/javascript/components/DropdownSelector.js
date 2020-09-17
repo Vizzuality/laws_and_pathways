@@ -224,8 +224,7 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
                     </Fragment>
                   ))) || (searchValue.length && !options.length && (
                     <div>No results found.</div>
-                  ))
-                }
+                  ))}
                 </div>
               )}
             </div>

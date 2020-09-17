@@ -1,4 +1,5 @@
-<% content_for :page_title, "Climate Laws - #{@geography.name}" %>
+<% content_for :page_title, "#{@geography.name} - Climate Change Laws of the World" %>
+<% content_for :page_description, "Climate change laws, policies, litigation cases, targets and other climate policy data and indicators for #{@geography.name}" %>
 
 <div class="content-show overview-page">
   <h3>Overview and context</h3>
@@ -56,7 +57,7 @@
         <div class="legislative-process-preview">
           <%= @geography_overview.legislative_process_preview %>
         </div>
-        <div class="legislative-process">
+        <div class="legislative-process html-content">
           <%= @geography_overview.legislative_process.html_safe %>
         </div>
       <% else %>

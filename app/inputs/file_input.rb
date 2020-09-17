@@ -2,7 +2,7 @@ class FileInput < Formtastic::Inputs::FileInput
   def to_html
     input_wrapping do
       label_html <<
-        file_cache_tag <<
+        # file_cache_tag << # TODO: when uploading first using direct upload we can re-add this
         builder.file_field(method, input_html_options)
     end
   end

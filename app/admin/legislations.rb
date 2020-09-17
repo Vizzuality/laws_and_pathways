@@ -50,6 +50,10 @@ ActiveAdmin.register Legislation do
 
   data_export_sidebar 'Legislations', display_name: 'Laws', documents: true, events: true
 
+  action_item :preview, priority: 0, only: :show do
+    link_to 'Preview', resource.preview_url
+  end
+
   show do
     tabs do
       tab :details do
@@ -66,6 +70,7 @@ ActiveAdmin.register Legislation do
           row 'Responses (e.g. adaptation or mitigation)', &:responses_string
           row 'Natural Hazards', &:natural_hazards_string
           row 'Keywords', &:keywords_string
+          list_row 'Targets', :target_links
           list_row 'Documents', :document_links
           list_row 'Instruments', :instrument_links
           list_row 'Governances', :governance_links

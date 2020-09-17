@@ -1,4 +1,5 @@
-<% content_for :page_title, "Climate Laws - #{@geography.name} - #{@legislation.title}" %>
+<% content_for :page_title, "#{@legislation.title.truncate(30)} - #{@geography.name} - Climate Change Laws of the World" %>
+<% content_for :page_description, strip_tags(@legislation.description).first(160) %>
 
 <% content_for :sidebar do %>
 <div class="sidebar__categories">
@@ -78,7 +79,7 @@
     <% end %>
     <div>Passed in <%= @legislation.date_passed&.year %></div>
   </div>
-  <section class="section is-medium">
+  <section class="html-content section is-medium">
     <%= @legislation.description&.html_safe %>
   </section>
   <% if @legislation_events_with_links.any? %>

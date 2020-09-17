@@ -1,6 +1,8 @@
 class Language
   def self.common
-    ::LanguageList::COMMON_LANGUAGES.sort_by(&:name)
+    (::LanguageList::COMMON_LANGUAGES + [
+      ::LanguageList::LanguageInfo.find('Burmese')
+    ]).sort_by(&:name)
   end
 
   def self.find(language_code)

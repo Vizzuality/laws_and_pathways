@@ -8,4 +8,10 @@ class PageDecorator < Draper::Decorator
   def description
     model.description&.html_safe
   end
+
+  def preview_url
+    return "#{Rails.configuration.try(:tpi_domain)&.prepend('https://')}/#{slug}" if model.is_a?(TPIPage)
+
+    "#{Rails.configuration.try(:cclow_domain)&.prepend('https://')}/#{slug}"
+  end
 end

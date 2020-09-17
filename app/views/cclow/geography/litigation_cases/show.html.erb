@@ -1,4 +1,5 @@
-<% content_for :page_title, "Climate Laws - #{@geography.name} - #{@litigation.title}" %>
+<% content_for :page_title, "#{@litigation.title.truncate(30)} - #{@geography.name} - Climate Change Laws of the World" %>
+<% content_for :page_description, strip_tags(@litigation.summary).first(160) %>
 
 <% content_for :sidebar do %>
 <div class="sidebar__categories">
@@ -55,7 +56,7 @@
     </section>
   <% end %>
   <hr>
-  <section class="section is-medium">
+  <section class="section is-medium html-content">
     <h5>Summary</h5>
     <%= @litigation.summary&.html_safe %>
   </section>

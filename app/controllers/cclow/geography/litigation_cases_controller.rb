@@ -5,14 +5,7 @@ module CCLOW
       before_action :set_litigation, :redirect_if_numeric_or_historic_slug, only: [:show]
 
       def index
-        add_breadcrumb('Litigation cases', request.path)
-        @litigations = @geography.litigations.published.includes(:events)
-        @litigations = CCLOW::LitigationDecorator.decorate_collection(@litigations)
-
-        fixed_navbar(
-          "Litigation cases - #{@geography.name}",
-          admin_litigations_path('q[geography_id_eq]': @geography)
-        )
+        redirect_to cclow_litigation_cases_path(geography: [@geography.id], from_geography_page: @geography.name)
       end
 
       def show
@@ -38,6 +31,8 @@ module CCLOW
 
       def set_litigation
         @litigation = @geography.litigations.friendly.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        redirect_to cclow_geography_litigation_cases_path(@geography.slug)
       end
 
       def redirect_if_numeric_or_historic_slug

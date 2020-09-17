@@ -18,6 +18,10 @@ ActiveAdmin.register TPISector do
     actions
   end
 
+  action_item :preview, priority: 0, only: :show do
+    link_to 'Preview', resource.preview_url
+  end
+
   show do
     tabs do
       tab :details do

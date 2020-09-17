@@ -1,4 +1,5 @@
-<% content_for :page_title, "TPI - Sector #{@sector.name}" %>
+<% content_for :page_title, "#{@sector.name} - Transition Pathway Initiative" %>
+<% content_for :page_description, "Description: Compare and assess how prepared the world’s top companies in the #{@sector.name} sector are for the transition to a low-carbon economy." %>
 
 <div class="sector-page">
   <div class="dropdown-selector-sector-page-wrapper">
@@ -100,7 +101,7 @@
 
         <%= render "tpi/publications/promoted" %>
         <div class="view-all-btn__container">
-          <a href="/tpi/publications" class="button is-secondary is-hidden-desktop">View all news</a>
+          <a href="/publications" class="button is-secondary is-hidden-desktop">View all news</a>
         </div>
       </div>
     </section>

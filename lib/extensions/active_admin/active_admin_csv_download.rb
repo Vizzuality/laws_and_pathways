@@ -6,11 +6,12 @@ module ActiveAdminCsvDownload
   # - current resource list
   # - related Document list (optional, if :documents option is passed)
   # - related Event list (optional, if :events options is passed)
-  #
+  # Link to uploader could be removed passing :upload option false
   def data_export_sidebar(resource_name, options = {}, &block)
     export_link_for_documents = options.fetch(:documents, false)
     export_link_for_events = options.fetch(:events, false)
     display_name = options.fetch(:display_name) { resource_name }
+    show_upload = options.fetch(:upload, true)
 
     sidebar 'Export / Import', if: -> { collection.any? }, only: :index do
       ul do
@@ -46,11 +47,13 @@ module ActiveAdminCsvDownload
 
         instance_eval(&block) if block_given?
 
-        li do
-          upload_label = "<strong>Upload</strong> #{display_name}".html_safe
-          upload_path = new_admin_data_upload_path(data_upload: {uploader: resource_name})
+        if show_upload
+          li do
+            upload_label = "<strong>Upload</strong> #{display_name}".html_safe
+            upload_path = new_admin_data_upload_path(data_upload: {uploader: resource_name})
 
-          link_to upload_label, upload_path
+            link_to upload_label, upload_path
+          end
         end
       end
       hr
