@@ -58,7 +58,7 @@ describe 'Geography page', type: 'system', site: 'cclow' do
 
       it 'shows the page' do
         expect(page).to have_current_path(
-          '/cclow/geographies/china/laws/law-on-the-prevention-and-control-of-atmospheric-pollution'
+          '/geographies/china/laws/law-on-the-prevention-and-control-of-atmospheric-pollution'
         )
         expect(page).to have_text('The 2015 revisions provide that China should promote clean and efficient')
         expect(page).to have_text('Legislative')
