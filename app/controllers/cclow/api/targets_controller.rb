@@ -6,9 +6,10 @@ module CCLOW
         # in sectoral laws or policies
         results = ::Geography.order(:name).find_each.map do |g|
           [g.iso, {
-            in_framework: g.targets.joins(legislations: :tags)
-              .where(tags: {type: 'Framework'}).any?,
-            in_sectoral: g.targets.joins(legislations: :laws_sectors).any?
+            in_framework: g.targets.published.joins(:legislations)
+              .where(legislations: {id: Legislation.framework.published}).any?,
+            in_sectoral: g.targets.published.joins(:legislations)
+              .where(legislations: {id: Legislation.sectoral.published}).any?
           }]
         end.to_h
         render json: results
@@ -38,7 +39,7 @@ module CCLOW
 
       def targets_as_json(geography)
         result = {}
-        result[:targets] = geography.targets.order(:year).map(&:to_api_format)
+        result[:targets] = geography.targets.published.order(:year).map(&:to_api_format)
         result[:sectors] = LawsSector.order(:name).map do |s|
           {
             key: s.name.parameterize,
@@ -49,7 +50,7 @@ module CCLOW
         result[:country_meta] = {
           "#{geography.iso}": {
             country_profile: cclow_geography_url(geography),
-            lnp_count: geography.legislations.count
+            lnp_count: geography.legislations.published.count
           }
         }
         result

@@ -61,6 +61,14 @@ class Legislation < ApplicationRecord
   scope :passed, -> { joins(:events).where(events: {event_type: 'passed/approved'}) }
   scope :recent, ->(date = 1.month.ago) { passed.where('events.date > ?', date) }
 
+  scope :framework, -> { joins(:tags).where(tags: {type: 'Framework'}) }
+  scope :sectoral, -> {
+    where.not(id: framework)
+      .joins(:laws_sectors)
+      .where.not(laws_sectors: {name: 'Economy-wide'})
+      .distinct
+  }
+
   pg_search_scope :full_text_search,
                   associated_against: {
                     tags: [:name],
@@ -96,6 +104,14 @@ class Legislation < ApplicationRecord
 
   def policy?
     executive?
+  end
+
+  def framework?
+    Legislation.framework.pluck(:id).include?(id)
+  end
+
+  def sectoral?
+    Legislation.sectoral.pluck(:id).include?(id)
   end
 
   def display_name
