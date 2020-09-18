@@ -53,6 +53,9 @@ Rails.application.routes.draw do
 
       # maybe temporary redirects to remove /cclow part
       get '/cclow', to: redirect('/')
+      get '/cclow/api/targets', to: 'api/targets#index'
+      get '/cclow/api/targets/economy-wide-countries', to: 'api/targets#economy_wide_countries'
+      get '/cclow/api/targets/:iso', to: 'api/targets#show'
       get '/cclow/*rest', to: redirect('%{rest}')
 
       get '/sandbox', to: 'home#sandbox' if Rails.env.development?
