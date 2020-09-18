@@ -5,23 +5,42 @@ RSpec.describe CCLOW::Api::TargetsController, type: :controller do
   let_it_be(:geography2) { create(:geography, iso: 'DEF') }
   let_it_be(:geography3) { create(:geography, iso: 'GHI') }
   let_it_be(:geography4) { create(:geography, iso: 'JKL') }
+  let_it_be(:geography5) { create(:geography, iso: 'TTT') }
   let_it_be(:sector1) { create(:laws_sector) }
   let_it_be(:sector2) { create(:laws_sector) }
   let_it_be(:sector3) { create(:laws_sector) }
+  let_it_be(:sector_economy) { create(:laws_sector, name: 'Economy-wide') }
   let_it_be(:legislation) do
-    leg = create(:legislation, legislation_type: 'executive',
-                               laws_sectors: [], geography_id: geography2.id)
+    leg = create(
+      :legislation, :published,
+      legislation_type: 'executive', laws_sectors: [], geography_id: geography2.id
+    )
     leg.frameworks_list = 'Mitigation'
     leg
   end
   let_it_be(:legislation2) do
-    create(:legislation, legislation_type: 'executive',
-                         laws_sectors: [sector1], geography_id: geography4.id)
+    create(
+      :legislation, :published,
+      legislation_type: 'executive', laws_sectors: [sector1, sector_economy], geography_id: geography4.id
+    )
   end
-  let_it_be(:target1) { create(:target, year: 2025, geography_id: geography.id, sector: sector1) }
-  let_it_be(:target2) { create(:target, year: 2020, geography_id: geography.id, sector: sector1) }
-  let_it_be(:target3) { create(:target, geography_id: geography2.id, sector: sector2, legislations: [legislation]) }
-  let_it_be(:target4) { create(:target, geography_id: geography4.id, sector: sector2, legislations: [legislation2]) }
+  let_it_be(:legislation3) do
+    create(
+      :legislation, :published,
+      legislation_type: 'executive', laws_sectors: [sector_economy], geography_id: geography5.id
+    )
+  end
+  let_it_be(:target1) { create(:target, :published, year: 2025, geography_id: geography.id, sector: sector1) }
+  let_it_be(:target2) { create(:target, :published, year: 2020, geography_id: geography.id, sector: sector1) }
+  let_it_be(:target3) {
+    create(:target, :published, geography_id: geography2.id, sector: sector2, legislations: [legislation])
+  }
+  let_it_be(:target4) {
+    create(:target, :published, geography_id: geography4.id, sector: sector2, legislations: [legislation2])
+  }
+  let_it_be(:target5) {
+    create(:target, :published, geography_id: geography5.id, sector: sector2, legislations: [legislation3])
+  }
 
   describe 'Get index with geography iso as param' do
     subject { get :show, params: {iso: geography.iso} }
@@ -34,7 +53,7 @@ RSpec.describe CCLOW::Api::TargetsController, type: :controller do
       expect(result['targets'].size).to eq(2)
       expect(result['targets'].first['iso_code3']).to eq(geography.iso)
       expect(result['targets'].first['sector']).to eq(target2.sector.name.downcase)
-      expect(result['sectors'].size).to eq(3)
+      expect(result['sectors'].size).to eq(4)
     end
   end
 
@@ -47,7 +66,7 @@ RSpec.describe CCLOW::Api::TargetsController, type: :controller do
       subject
       result = JSON.parse(response.body)
       expect(result['targets'].size).to eq(0)
-      expect(result['sectors'].size).to eq(3)
+      expect(result['sectors'].size).to eq(4)
     end
   end
 
@@ -64,10 +83,10 @@ RSpec.describe CCLOW::Api::TargetsController, type: :controller do
   describe 'get info about targets in laws and policies' do
     subject { get :index }
 
-    it('should return an array with three objects') do
+    it('should return an array') do
       subject
       result = JSON.parse(response.body)
-      expect(result.size).to eq(4)
+      expect(result.size).to eq(5)
     end
 
     it('should return true to in_framework for geography2') do
@@ -82,6 +101,13 @@ RSpec.describe CCLOW::Api::TargetsController, type: :controller do
       result = JSON.parse(response.body)
       expect(result[geography4.iso]['in_framework']).to eq(false)
       expect(result[geography4.iso]['in_sectoral']).to eq(true)
+    end
+
+    it('should return false for sectoral and framework for geography5') do
+      subject
+      result = JSON.parse(response.body)
+      expect(result[geography5.iso]['in_framework']).to eq(false)
+      expect(result[geography5.iso]['in_sectoral']).to eq(false)
     end
   end
 end
