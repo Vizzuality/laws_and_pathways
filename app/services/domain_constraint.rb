@@ -4,6 +4,7 @@ class DomainConstraint
   end
 
   def matches?(request)
-    @domains.include? request.host
+    host = request.host.start_with?('www.') ? request.host[4..] : request.host
+    @domains.include? host
   end
 end
