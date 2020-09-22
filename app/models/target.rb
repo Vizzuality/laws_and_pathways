@@ -108,13 +108,13 @@ class Target < ApplicationRecord
       single_year: single_year,
       base_year_period: base_year_period,
       year: year,
-      sources: legislations.map do |l|
+      sources: legislations.published.map do |l|
         {
           id: l.id,
           title: l.title,
           type: l.law? ? 'law' : 'policy',
-          framework: l.frameworks.any?,
-          sectoral: l.frameworks.none?,
+          framework: l.framework?,
+          sectoral: l.sectoral?,
           link: l.url
         }
       end
