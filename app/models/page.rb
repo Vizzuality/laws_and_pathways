@@ -32,6 +32,10 @@ class Page < ApplicationRecord
     title_changed? || super
   end
 
+  def path
+    "/#{slug}"
+  end
+
   def reload_routes
     DynamicRouter.reload
   end
