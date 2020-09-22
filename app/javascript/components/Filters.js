@@ -38,7 +38,7 @@ const Filters = ({ tags, sectors, resultsSize }) => {
   };
 
   const refreshPublicationsHtml = (query) => {
-    const url = `/tpi/publications/partial?${query}`;
+    const url = `/publications/partial?${query}`;
 
     fetch(url)
       .then(response => response.text())

@@ -21,16 +21,15 @@ module LawsAndPathways
 
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
 
-    # not ready yet
-    # config.cclow_domain = 'cclow.localhost'
-    # config.tpi_domain = 'tpi.localhost'
+    config.cclow_domain = 'cclow.localhost'
+    config.tpi_domain = 'tpi.localhost'
 
     config.middleware.insert_before 0, Rack::Cors, debug: !Rails.env.production?,
       logger: (-> { Rails.logger }) do
       allow do
         origins '*'
         resource(
-          '/cclow/api/*',
+          '*',
           headers: :any,
           methods: [:get, :options],
           max_age: 600

@@ -10,6 +10,9 @@ services:
   - postgresql
 addons:
   postgresql: 11
+  hosts:
+    - tpi.localhost
+    - cclow.localhost
 before_install:
   - nvm install
   - node -v

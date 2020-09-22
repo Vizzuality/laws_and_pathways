@@ -145,7 +145,7 @@ function LegislationAndPolicies(props) {
           <img className="flag" src={EUFlag} alt="European Union flag" />
           <div>
             Your selection includes EU members and so EU legislation also applies.
-            For further information, please see the <a href="/cclow/geographies/european-union" title="EU profile link">EU profile</a>.
+            For further information, please see the <a href="/geographies/european-union" title="EU profile link">EU profile</a>.
           </div>
         </div>
       );
@@ -159,7 +159,7 @@ function LegislationAndPolicies(props) {
       items={legislations}
       count={count}
       filterConfigs={filterConfigs}
-      url="/cclow/legislation_and_policies"
+      url="/legislation_and_policies"
       title="Laws and Policies"
       allTitle="Laws and policies"
       renderExtraMessage={renderExtraMessage}

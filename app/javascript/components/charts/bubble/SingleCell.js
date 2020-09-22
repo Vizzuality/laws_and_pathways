@@ -12,7 +12,7 @@ const SingleCell = ({ width, height, handleNodeClick, data, uniqueKey, showToolt
     return {
       color: data[index].color,
       tooltipContent: data[index].tooltipContent,
-      slug: data[index].slug,
+      path: data[index].path,
       radius: data[index].value
     };
   });

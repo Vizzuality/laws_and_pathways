@@ -10,8 +10,8 @@ class PageDecorator < Draper::Decorator
   end
 
   def preview_url
-    return "#{Rails.configuration.try(:tpi_domain)&.prepend('https://')}/tpi/#{slug}" if model.is_a?(TPIPage)
+    return "#{Rails.configuration.try(:tpi_domain)&.prepend('https://')}/#{slug}" if model.is_a?(TPIPage)
 
-    "#{Rails.configuration.try(:cclow_domain)&.prepend('https://')}/cclow/#{slug}"
+    "#{Rails.configuration.try(:cclow_domain)&.prepend('https://')}/#{slug}"
   end
 end

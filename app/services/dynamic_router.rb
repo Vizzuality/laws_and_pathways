@@ -5,10 +5,16 @@ class DynamicRouter
 
       LawsAndPathways::Application.routes.draw do
         TPIPage.all.each do |page|
-          get "/tpi/#{page.slug}", to: 'tpi/pages#show', defaults: {id: page.id}
+          get "/#{page.slug}",
+              to: 'tpi/pages#show',
+              defaults: {id: page.id},
+              constraints: DomainConstraint.new(Rails.configuration.tpi_domain)
         end
         CCLOWPage.all.each do |page|
-          get "/cclow/#{page.slug}", to: 'cclow/pages#show', defaults: {id: page.id}
+          get "/#{page.slug}",
+              to: 'cclow/pages#show',
+              defaults: {id: page.id},
+              constraints: DomainConstraint.new(Rails.configuration.cclow_domain)
         end
       end
     rescue PG::ConnectionBad, ActiveRecord::NoDatabaseError

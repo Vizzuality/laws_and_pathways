@@ -22,8 +22,8 @@ class CCLOWPage < Page
   validates :title, uniqueness: true, presence: true
   validates :slug, uniqueness: true, presence: true
 
-  def slug_path
-    "/cclow/#{slug}"
+  def path
+    "/#{slug}"
   end
 
   def admin_path

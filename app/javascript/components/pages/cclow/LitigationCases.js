@@ -170,7 +170,7 @@ function LitigationCases(props) {
       items={litigations}
       count={count}
       filterConfigs={filters}
-      url="/cclow/litigation_cases"
+      url="/litigation_cases"
       title="Litigation Cases"
       allTitle="Litigation Cases"
       renderContentItem={(litigation) => (

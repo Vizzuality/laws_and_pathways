@@ -80,6 +80,10 @@ class TPISector < ApplicationRecord
     cp_benchmarks.where(release_date: release_date)
   end
 
+  def path
+    Rails.application.routes.url_helpers.tpi_sector_path(slug)
+  end
+
   def self.search(query)
     where('name ilike ?', "%#{query}%")
   end

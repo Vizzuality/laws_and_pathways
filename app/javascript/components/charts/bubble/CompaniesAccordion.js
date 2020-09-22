@@ -105,7 +105,7 @@ const CompaniesAccordion = ({ levels, by_sector }) => {
                   {activeSector[el].map((company, index) => (
                     <li
                       key={`chart-companies-${index}`}
-                      onClick={() => { window.location.href = `/tpi/companies/${company.slug}`; }}
+                      onClick={() => { window.location.href = `/companies/${company.slug}`; }}
                     >
                       {company.name}
                       <span className={`mq-level-trend mq-level-trend--${company.status}`} />
@@ -119,7 +119,7 @@ const CompaniesAccordion = ({ levels, by_sector }) => {
       </div>
       {by_sector && (
         <div className="go-to-button__container">
-          <a href={`/tpi/sectors/${activeOption.value.toLowerCase()}`} className="button is-primary is-outlined">Go to sector</a>
+          <a href={`/sectors/${activeOption.value.toLowerCase()}`} className="button is-primary is-outlined">Go to sector</a>
         </div>
       )}
     </div>

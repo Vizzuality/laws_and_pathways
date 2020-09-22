@@ -99,7 +99,7 @@ const BubbleChart = ({ levels, sectors }) => {
 };
 
 const ForceLayoutBubbleChart = (companiesBubbles, uniqueKey) => {
-  const handleBubbleClick = (company) => window.open(`/tpi/companies/${company.slug}`, '_blank');
+  const handleBubbleClick = (company) => window.open(company.path, '_blank');
 
   return (
     <SingleCell
@@ -139,18 +139,18 @@ const hideTooltip = () => {
 };
 
 const createRow = (dataRow, title, sectors) => {
-  const sectorSlug = sectors.find(s => s.name === title).slug;
+  const sector = sectors.find(s => s.name === title);
 
   return (
     <React.Fragment key={Math.random()}>
       <div className="bubble-chart__sector-link">
-        <a href={`/tpi/sectors/${sectorSlug}`}>{title}</a>
+        <a href={sector.path}>{title}</a>
       </div>
       {dataRow.map((el, i) => {
         const companiesBubbles = el.map(company => ({
           value: COMPANIES_MARKET_CAP_GROUPS[company.market_cap_group],
           tooltipContent: [company.name, `Level ${company.level}`],
-          slug: company.slug,
+          path: company.path,
           color: LEVELS_COLORS[i]
         }));
 

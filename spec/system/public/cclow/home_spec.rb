@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe 'Home', type: 'system' do
+describe 'Home', type: 'system', site: 'cclow' do
   before do
-    visit 'cclow'
+    visit '/'
   end
 
   it 'loads the page' do
@@ -25,7 +25,7 @@ describe 'Home', type: 'system' do
         end
 
         click_link 'Poland'
-        expect(page).to have_current_path('/cclow/geographies/poland')
+        expect(page).to have_current_path('/geographies/poland')
       end
     end
   end

@@ -96,12 +96,12 @@
         <div class="promoted-publications__title">
           <div class="promoted-publications__title-text">Publications and news</div>
 
-          <a href="/tpi/publications" class="button is-secondary is-hidden-touch">View all publications and news</a>
+          <%= link_to 'View all publications and news', tpi_publications_path, class: 'button is-secondary is-hidden-touch' %>
         </div>
 
         <%= render "tpi/publications/promoted" %>
         <div class="view-all-btn__container">
-          <a href="/tpi/publications" class="button is-secondary is-hidden-desktop">View all news</a>
+          <a href="/publications" class="button is-secondary is-hidden-desktop">View all news</a>
         </div>
       </div>
     </section>

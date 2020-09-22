@@ -5,7 +5,7 @@ module CCLOW
 
       @breadcrumb = [
         Site::Breadcrumb.new('Home', cclow_root_path),
-        Site::Breadcrumb.new(@page.title, @page.slug_path)
+        Site::Breadcrumb.new(@page.title, @page.path)
       ]
 
       fixed_navbar(@page.title, admin_cclow_page_path(@page))

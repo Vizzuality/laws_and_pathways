@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe 'Geography page', type: 'system' do
+describe 'Geography page', type: 'system', site: 'cclow' do
   before do
-    visit 'cclow/geographies/china'
+    visit '/geographies/china'
   end
 
   it 'loads the page' do
@@ -58,7 +58,7 @@ describe 'Geography page', type: 'system' do
 
       it 'shows the page' do
         expect(page).to have_current_path(
-          '/cclow/geographies/china/laws/law-on-the-prevention-and-control-of-atmospheric-pollution'
+          '/geographies/china/laws/law-on-the-prevention-and-control-of-atmospheric-pollution'
         )
         expect(page).to have_text('The 2015 revisions provide that China should promote clean and efficient')
         expect(page).to have_text('Legislative')
@@ -95,7 +95,7 @@ describe 'Geography page', type: 'system' do
       end
 
       it 'shows the page' do
-        expect(page).to have_current_path('/cclow/geographies/china/policies/13th-five-year-plan')
+        expect(page).to have_current_path('/geographies/china/policies/13th-five-year-plan')
         expect(page).to have_text('The 13th Five Year Plan lays down the strategy and pathway')
         expect(page).to have_text('Executive')
         expect(page).to have_text('Mitigation Framework')

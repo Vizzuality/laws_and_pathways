@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe 'Home', type: 'system' do
+describe 'Home', type: 'system', site: 'tpi' do
   before do
-    visit 'tpi'
+    visit '/'
   end
 
   it 'loads the page' do

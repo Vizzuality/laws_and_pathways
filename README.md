@@ -27,6 +27,17 @@ On the project's root run `bundle install`.
 
 `bundle exec rails db:setup` to setup the database
 
+### Setting up local subdomains
+
+This project contains two different websites and admin panel. That's why to make it work we need to make changes to /etc/hosts in development env
+
+Add those 2 entries to your `/etc/hosts` file
+
+```
+127.0.0.1        tpi.localhost
+127.0.0.1        cclow.localhost
+```
+
 ### Run the server
 
 `yarn start'` and access the project on `http://localhost:3000`

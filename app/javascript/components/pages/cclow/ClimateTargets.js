@@ -63,7 +63,7 @@ function ClimateTargets(props) {
       items={climate_targets}
       count={count}
       filterConfigs={filters}
-      url="/cclow/climate_targets"
+      url="/climate_targets"
       title="Climate Targets"
       allTitle="Climate Targets"
       renderContentItem={(target) => (

@@ -103,7 +103,7 @@ const LawsDropdown = () => {
 
   // just for initial load
   useEffect(() => {
-    fetch('/cclow/api/search_counts')
+    fetch('/api/search_counts')
       .then((r) => r.json())
       .then((data) => {
         setCounts(data);
@@ -119,7 +119,7 @@ const LawsDropdown = () => {
 
     setSearching(true);
 
-    fetch(`/cclow/api/search?q=${encodeURIComponent(searchValue)}`)
+    fetch(`/api/search?q=${encodeURIComponent(searchValue)}`)
       .then((r) => r.json())
       .then((data) => {
         setResults(data);
@@ -139,7 +139,7 @@ const LawsDropdown = () => {
 
       <LawsDropdownCategory title="Countries and territories" icon={countryFlag}>
         {(counts.geographies || []).map(geography => (
-          <a href={`/cclow/geographies/${geography.slug}`} key={geography.slug} className="laws-dropdown__option">
+          <a href={`/geographies/${geography.slug}`} key={geography.slug} className="laws-dropdown__option">
             <span>{geography.name}</span>
             <span className="laws-dropdown__disclaimer">{GEOGRAPHY_TYPES[geography.geography_type]}</span>
           </a>
@@ -147,33 +147,33 @@ const LawsDropdown = () => {
       </LawsDropdownCategory>
 
       <LawsDropdownCategory title="Laws and policies" icon={laws}>
-        <a href="/cclow/legislation_and_policies" className="laws-dropdown__option">
+        <a href="/legislation_and_policies" className="laws-dropdown__option">
           <span>All Laws and policies</span>
           <span className="laws-dropdown__disclaimer">{counts.legislationCount}</span>
         </a>
-        <a href="/cclow/legislation_and_policies?recent=true" className="laws-dropdown__option">
+        <a href="/legislation_and_policies?recent=true" className="laws-dropdown__option">
           <span>Most recent additions in Laws and policies</span>
           <span className="laws-dropdown__disclaimer">{counts.recentLegislationCount}</span>
         </a>
       </LawsDropdownCategory>
 
       <LawsDropdownCategory title="Litigation cases" icon={legalScale}>
-        <a href="/cclow/litigation_cases" className="laws-dropdown__option">
+        <a href="/litigation_cases" className="laws-dropdown__option">
           <span>All litigation entries</span>
           <span className="laws-dropdown__disclaimer">{counts.litigationCount}</span>
         </a>
-        <a href="/cclow/litigation_cases?recent=true" className="laws-dropdown__option">
+        <a href="/litigation_cases?recent=true" className="laws-dropdown__option">
           <span>Most recent additions in Litigation</span>
           <span className="laws-dropdown__disclaimer">{counts.recentLitigationCount}</span>
         </a>
       </LawsDropdownCategory>
 
       <LawsDropdownCategory title="Climate targets" icon={target}>
-        <a href="/cclow/climate_targets" className="laws-dropdown__option">
+        <a href="/climate_targets" className="laws-dropdown__option">
           <span>All Climate targets</span>
           <span className="laws-dropdown__disclaimer">{counts.targetCount}</span>
         </a>
-        <a href="/cclow/climate_targets?recent=true" className="laws-dropdown__option">
+        <a href="/climate_targets?recent=true" className="laws-dropdown__option">
           <span>Most recent additions in Climate targets</span>
           <span className="laws-dropdown__disclaimer">{counts.recentTargetCount}</span>
         </a>
@@ -213,8 +213,8 @@ const LawsDropdown = () => {
           <LawsDropdownCategory title={CATEGORIES.countries} icon={countryFlag}>
             {searchGeographiesResults.map(geography => (
               <a
-                href={`/cclow/geographies/${geography.slug}`}
-                onClick={() => setLastSearch(searchValue, CATEGORIES.countries, `/cclow/geographies/${geography.slug}`)}
+                href={`/geographies/${geography.slug}`}
+                onClick={() => setLastSearch(searchValue, CATEGORIES.countries, `/geographies/${geography.slug}`)}
                 key={geography.slug}
                 className="laws-dropdown__option"
               >
@@ -227,8 +227,8 @@ const LawsDropdown = () => {
         {!!results.legislationCount && (
           <LawsDropdownCategory title={CATEGORIES.laws} icon={laws}>
             <a
-              href={`/cclow/legislation_and_policies?q=${searchValue}`}
-              onClick={() => setLastSearch(searchValue, CATEGORIES.laws, `/cclow/legislation_and_policies?q=${searchValue}`)}
+              href={`/legislation_and_policies?q=${searchValue}`}
+              onClick={() => setLastSearch(searchValue, CATEGORIES.laws, `/legislation_and_policies?q=${searchValue}`)}
               className="laws-dropdown__option"
             >
               <span>Search&nbsp;</span>
@@ -240,8 +240,8 @@ const LawsDropdown = () => {
         {!!results.litigationCount && (
           <LawsDropdownCategory title={CATEGORIES.litigations} icon={legalScale}>
             <a
-              href={`/cclow/litigation_cases?q=${searchValue}`}
-              onClick={() => setLastSearch(searchValue, CATEGORIES.litigations, `/cclow/litigation_cases?q=${searchValue}`)}
+              href={`/litigation_cases?q=${searchValue}`}
+              onClick={() => setLastSearch(searchValue, CATEGORIES.litigations, `/litigation_cases?q=${searchValue}`)}
               className="laws-dropdown__option"
             >
               <span>Search&nbsp;</span>
@@ -253,8 +253,8 @@ const LawsDropdown = () => {
         {!!results.targetCount && (
           <LawsDropdownCategory title={CATEGORIES.targets} icon={target}>
             <a
-              href={`/cclow/climate_targets?q=${searchValue}`}
-              onClick={() => setLastSearch(searchValue, CATEGORIES.targets, `/cclow/climate_targets?q=${searchValue}`)}
+              href={`/climate_targets?q=${searchValue}`}
+              onClick={() => setLastSearch(searchValue, CATEGORIES.targets, `/climate_targets?q=${searchValue}`)}
               className="laws-dropdown__option"
             >
               <span>Search&nbsp;</span>
