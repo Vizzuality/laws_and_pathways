@@ -5,7 +5,6 @@ require 'rails_helper'
 describe 'CSVDataUpload (integration)' do
   let(:legislations_csv) { fixture_file('legislations.csv') }
   let(:companies_csv) { fixture_file('companies.csv') }
-  let(:targets_csv) { fixture_file('targets.csv') }
   let(:cp_benchmarks_csv) { fixture_file('cp_benchmarks.csv') }
   let(:cp_assessments_csv) { fixture_file('cp_assessments.csv') }
   let(:mq_assessments_csv) { fixture_file('mq_assessments.csv') }
@@ -238,11 +237,56 @@ describe 'CSVDataUpload (integration)' do
   end
 
   it 'imports CSV files with Target data' do
+    updated_target = create(:target, source: 'plan')
+
+    csv_content = <<-CSV
+      Id,Target type,Description,Ghg target,Year,Base year period,Single year,Geography,Geography iso,Sector,Scopes,source,Visibility status
+      ,no_document_submitted,description,true,1995,1998,false,Japan,JPN,Airlines,"Scope2",law,draft
+      #{updated_target.id},base_year_target,updated description,true,1994,1994,false,Poland,POL,Cement,"Scope1,Scope2",ndc,draft
+      ,intensity_target_and_trajectory_target,description,false,2003,2001,true,Poland,POL,Electricity Utilities,"Scope1",plan,pending
+    CSV
+
+    targets_csv = fixture_file('targets.csv', content: csv_content)
+
     expect_data_upload_results(
       Target,
       targets_csv,
-      new_records: 3, not_changed_records: 0, rows: 3, updated_records: 0
+      new_records: 2, not_changed_records: 0, rows: 3, updated_records: 1
     )
+
+    updated_target.reload
+
+    expect(updated_target).to have_attributes(
+      target_type: 'base_year_target',
+      description: 'updated description',
+      ghg_target: true,
+      year: 1994,
+      base_year_period: '1994',
+      single_year: false,
+      source: 'ndc',
+      visibility_status: 'draft'
+    )
+    expect(updated_target.geography.name).to eq('Poland')
+    expect(updated_target.sector.name).to eq('Cement')
+    expect(updated_target.scopes.size).to eq(2)
+    expect(updated_target.scopes_list).to include('Scope1', 'Scope2')
+
+    latest = Target.last
+
+    expect(latest).to have_attributes(
+      target_type: 'intensity_target_and_trajectory_target',
+      description: 'description',
+      ghg_target: false,
+      year: 2003,
+      base_year_period: '2001',
+      single_year: true,
+      source: 'plan',
+      visibility_status: 'pending'
+    )
+    expect(latest.geography.name).to eq('Poland')
+    expect(latest.sector.name).to eq('Electricity Utilities')
+    expect(latest.scopes_list).to include('Scope1')
+    expect(latest.scopes.size).to eq(1)
   end
 
   it 'imports CSV files with CP Benchmarks data' do
