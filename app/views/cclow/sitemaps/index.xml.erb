@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <url>
+    <loc><%= @host %></loc>
+  </url>
+  <% CCLOWPage.all.each do |page| %>
+    <url>
+      <loc><%= "#{@host}/#{page.slug}" %></loc>
+    </url>
+  <% end %>
+
+  <% @geographies.each do |geography| %>
+    <url>
+      <loc><%= "#{@host}#{cclow_geography_path(geography.slug)}" %></loc>
+    </url>
+    <url>
+      <loc><%= "#{@host}#{cclow_geography_litigation_cases_path(geography.slug)}" %></loc>
+    </url>
+    <% (@cases_by_geo_id[geography.id] || []).each do |litigation_case| %>
+      <url>
+        <loc><%= "#{@host}#{cclow_geography_litigation_case_path(geography.slug, litigation_case.slug)}" %></loc>
+      </url>
+    <% end %>
+    <url>
+      <loc><%= "#{@host}#{cclow_geography_laws_path(geography.slug)}" %></loc>
+    </url>
+    <% (@laws_by_geo_id[geography.id] || []).each do |law| %>
+      <url>
+        <loc><%= "#{@host}#{cclow_geography_law_path(geography.slug, law.slug)}" %></loc>
+      </url>
+    <% end %>
+    <url>
+      <loc><%= "#{@host}#{cclow_geography_policies_path(geography.slug)}" %></loc>
+    </url>
+    <% (@policies_by_geo_id[geography.id] || []).each do |policy| %>
+      <url>
+        <loc><%= "#{@host}#{cclow_geography_policy_path(geography.slug, policy.slug)}" %></loc>
+      </url>
+    <% end %>
+    <url>
+      <loc><%= "#{@host}#{cclow_geography_climate_targets_path(geography.slug)}" %></loc>
+    </url>
+    <% (@target_sectors_by_geo_id[geography.id] || []).each do |target_sector| %>
+      <url>
+        <loc><%= "#{@host}#{cclow_geography_geography_climate_targets_sector_path(geography.slug, target_sector.sector_name)}" %></loc>
+      </url>
+    <% end %>
+  <% end %>
+</urlset>

@@ -59,6 +59,8 @@ Rails.application.routes.draw do
 
       get '/sandbox', to: 'home#sandbox' if Rails.env.development?
 
+      get '/sitemap', to: 'sitemaps#index'
+
       resources :geographies, only: [:show] do
         resources :laws, controller: 'geography/legislations', only: [:show, :index], defaults: {scope: :laws}
         resources :policies, controller: 'geography/legislations', only: [:show, :index], defaults: {scope: :policies}
