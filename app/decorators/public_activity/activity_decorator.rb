@@ -5,7 +5,8 @@ class PublicActivity::ActivityDecorator < Draper::Decorator
     'Litigation' => :title,
     'Legislation' => :title,
     'Company' => :name,
-    'Geography' => :name
+    'Geography' => :name,
+    'NewsArticle' => :title
   }.freeze
 
   TRACKABLE_ACTION_KEYS_MAPPING = {
