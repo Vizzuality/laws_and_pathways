@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'robots.:format' => 'robots#index'
+
   constraints DomainConstraint.new(Rails.configuration.tpi_domain) do
     scope module: 'tpi', as: 'tpi' do
       root to: 'home#index'
