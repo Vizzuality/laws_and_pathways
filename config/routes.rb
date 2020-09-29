@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       get '/sandbox', to: 'home#sandbox' if Rails.env.development?
 
       get '/search', to: 'search#index'
+      get '/sitemap', to: 'sitemaps#index'
 
       resources :sectors, only: [:show, :index] do
         collection do
