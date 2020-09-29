@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <url>
+    <loc><%= @host %></loc>
+  </url>
+  <url>
+    <loc><%= "#{@host}/about" %></loc>
+  </url>
+  <url>
+    <loc><%= "#{@host}/newsletter" %></loc>
+  </url>
+  <url>
+    <loc><%= "#{@host}/register" %></loc>
+  </url>
+  <% TPIPage.all.each do |page| %>
+    <url>
+      <loc><%= "#{@host}/#{page.slug}" %></loc>
+    </url>
+  <% end %>
+  <url>
+    <loc><%= "#{@host}#{tpi_sectors_path}" %></loc>
+  </url>
+  <% @sectors.each do |sector| %>
+    <url>
+      <loc><%= "#{@host}#{tpi_sector_path(sector.slug)}" %></loc>
+    </url>
+  <% end %>
+  <% @companies.each do |company| %>
+    <url>
+      <loc><%= "#{@host}#{tpi_company_path(company.slug)}" %></loc>
+    </url>
+  <% end %>
+  <url>
+    <loc><%= "#{@host}#{tpi_publications_path}" %></loc>
+  </url>
+  <% @publications.each do |publication| %>
+    <url>
+      <loc><%= "#{@host}#{tpi_publication_path(publication, type: 'Publication', format: 'pdf')}" %></loc>
+    </url>
+  <% end %>
+  <% @news.each do |news| %>
+    <url>
+      <loc><%= "#{@host}#{tpi_publication_path(news, type: 'NewsArticle')}" %></loc>
+    </url>
+  <% end %>
+</urlset>

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'robots.:format' => 'robots#index'
+
   constraints DomainConstraint.new(Rails.configuration.tpi_domain) do
     scope module: 'tpi', as: 'tpi' do
       root to: 'home#index'
@@ -14,6 +16,7 @@ Rails.application.routes.draw do
       get '/sandbox', to: 'home#sandbox' if Rails.env.development?
 
       get '/search', to: 'search#index'
+      get '/sitemap', to: 'sitemaps#index'
 
       resources :sectors, only: [:show, :index] do
         collection do
@@ -58,6 +61,8 @@ Rails.application.routes.draw do
       get '/cclow/*rest', to: redirect('%{rest}')
 
       get '/sandbox', to: 'home#sandbox' if Rails.env.development?
+
+      get '/sitemap', to: 'sitemaps#index'
 
       resources :geographies, only: [:show] do
         resources :laws, controller: 'geography/legislations', only: [:show, :index], defaults: {scope: :laws}
