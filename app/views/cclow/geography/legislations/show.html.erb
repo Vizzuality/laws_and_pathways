@@ -33,11 +33,18 @@
     <div class="categories__container">
       <p class="categories__title">Instruments</p>
 
-      <div class="categories__tags">
-        <% @instruments.each do |instrument| %>
-          <span class="tag categories__tag"><%= instrument.name %></span>
-        <% end %>
-      </div>
+      <% @instrument_types.each do |instrument_type| %>
+        <div class="categories__group">
+          <input id="instrument_type_<%= instrument_type.id %>" type="checkbox" class="toggle">
+          <label for="instrument_type_<%= instrument_type.id %>" class="categories__group-title"><%= instrument_type.name %></label>
+          <div class="categories__tags">
+            <% @instruments.select { |i| i.instrument_type == instrument_type }.each do |instrument| %>
+              <span class="tag categories__tag"><%= instrument.name %></span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
     </div>
   <% end %>
 

@@ -872,6 +872,57 @@ mark {
       letter-spacing: 1.5px;
     }
 
+    &__group {
+      margin-top: 10px;
+
+      .toggle {
+        display: none;
+      }
+
+      label {
+        cursor: pointer;
+
+        padding-left: 15px;
+        font-size: 11px;
+        line-height: 15px;
+        letter-spacing: 1px;
+
+        &::before {
+          content: ' ';
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          margin-left: -15px;
+          margin-top: 6px;
+          opacity: .5;
+          transform: rotate(-90deg);
+          background-image: image-url('icon_chevron_dark/chevron_down_black-1.svg');
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain;
+        }
+      }
+
+      .categories__tags {
+        max-height: 0px;
+        overflow: hidden;
+      }
+
+      .toggle:checked + label {
+        &::before {
+          transform: rotate(0deg);
+        }
+      }
+
+      .toggle:checked + label + .categories__tags {
+        max-height: 100vh;
+      }
+    }
+
+    &__group-title {
+
+    }
+
     &__tags {
       line-height: 36px;
     }
