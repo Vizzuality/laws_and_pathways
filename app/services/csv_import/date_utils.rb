@@ -4,6 +4,8 @@ module CSVImport
       TWO_DIGIT_YEAR_CUTOFF = 2040
 
       def safe_parse(date, expected_date_formats)
+        return if date.nil?
+
         expected_date_formats.map { |format| parse_date(date, format) }.compact.first
       end
 
