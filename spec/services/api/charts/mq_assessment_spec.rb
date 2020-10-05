@@ -8,12 +8,12 @@ RSpec.describe Api::Charts::MQAssessment do
       let(:company) { create(:company) }
 
       before do
-        create(:mq_assessment, company: company, assessment_date: '2016-01-01', level: '1')
-        create(:mq_assessment, company: company, assessment_date: '2017-01-01', level: '2')
-        create(:mq_assessment, company: company, assessment_date: '2018-01-01', level: '3')
-        create(:mq_assessment, company: company, assessment_date: '2018-08-08', level: '2')
-        create(:mq_assessment, company: company, assessment_date: '2019-02-02', level: '4')
-        create(:mq_assessment, company: company, assessment_date: '2020-03-03', level: '3')
+        create(:mq_assessment, company: company, assessment_date: '2016-01-01', publication_date: '2016-01-01', level: '1')
+        create(:mq_assessment, company: company, assessment_date: '2017-01-01', publication_date: '2017-01-01', level: '2')
+        create(:mq_assessment, company: company, assessment_date: '2018-01-01', publication_date: '2018-01-01', level: '3')
+        create(:mq_assessment, company: company, assessment_date: '2018-08-08', publication_date: '2018-08-08', level: '2')
+        create(:mq_assessment, company: company, assessment_date: '2019-02-02', publication_date: '2019-02-02', level: '4')
+        create(:mq_assessment, company: company, assessment_date: '2020-03-03', publication_date: '2020-03-03', level: '3')
         # should be ignored
         create(:mq_assessment,
                company: company,
@@ -54,7 +54,7 @@ RSpec.describe Api::Charts::MQAssessment do
       let(:company) { create(:company) }
 
       before do
-        create(:mq_assessment, company: company, assessment_date: '2018-08-08', level: '2')
+        create(:mq_assessment, company: company, assessment_date: '2018-08-08', publication_date: '2018-08-08', level: '2')
       end
 
       it 'returns [year, level] pairs from begining of first year to present year' do
