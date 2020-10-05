@@ -125,8 +125,10 @@ module Api
       end
 
       def emissions_data_from_sector_benchmarks
-        @company_scope
-          .first
+        company = @company_scope.first
+        return if company.nil?
+
+        company
           .latest_sector_benchmarks
           .sort_by(&:average_emission)
           .map.with_index do |benchmark, index|
