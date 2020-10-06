@@ -18,6 +18,7 @@ ActiveAdmin.register Company do
   filter :geography
   filter :sector
   filter :headquarters_geography
+  filter :created_at
   filter :market_cap_group,
          as: :check_boxes,
          collection: proc { array_to_select_collection(Company::MARKET_CAP_GROUPS) }
