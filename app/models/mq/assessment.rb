@@ -81,7 +81,7 @@ module MQ
     end
 
     def find_answer_by_key(key)
-      questions.find { |q| q.key == key }.answer
+      questions.find { |q| q.key == key }&.answer
     end
 
     def questions_by_level
