@@ -3,6 +3,8 @@ module CCLOW
     class ClimateTargetsController < CCLOWController
       include GeographyController
 
+      before_action :set_sector, only: [:laws_sector]
+
       def index
         add_breadcrumb('Climate targets', request.path)
         @list = targets_list_by_sector
@@ -26,7 +28,6 @@ module CCLOW
       end
 
       def laws_sector
-        @sector = LawsSector.find_by(name: params[:law_sector])
         @ndc_targets = if @geography.eu_member?
                          eu_sector_ndc_targets
                        else
@@ -47,6 +48,12 @@ module CCLOW
       end
 
       private
+
+      def set_sector
+        @sector = LawsSector.find_by(name: params[:law_sector])
+
+        redirect_to cclow_geography_climate_targets_path(@geography.slug) unless @sector.present?
+      end
 
       def targets_list_by_sector
         @geography.object.laws_per_sector
