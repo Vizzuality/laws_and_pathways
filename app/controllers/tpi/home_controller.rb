@@ -27,10 +27,8 @@ module TPI
     private
 
     def publications_and_articles
-      publications = Publication.where.not(publication_date: nil)
-        .order(publication_date: :desc).limit(3)
-      news = NewsArticle.where.not(publication_date: nil)
-        .order(publication_date: :desc).limit(3)
+      publications = Publication.published.order(publication_date: :desc).limit(3)
+      news = NewsArticle.published.order(publication_date: :desc).limit(3)
 
       (publications + news).sort do |a, b|
         b.publication_date <=> a.publication_date
