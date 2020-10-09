@@ -31,7 +31,7 @@ gem 'discard'
 gem 'public_activity'
 gem 'friendly_id'
 gem 'language_list'
-gem 'pg_search'
+gem 'pg_search', '2.3.2' # TODO: wait until this issue https://github.com/Casecommons/pg_search/issues/446 is resolved
 
 gem 'simplecov', require: false, group: :test
 gem 'dotenv-rails'
