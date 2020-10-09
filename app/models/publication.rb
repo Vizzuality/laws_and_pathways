@@ -26,6 +26,8 @@ class Publication < ApplicationRecord
 
   has_and_belongs_to_many :tpi_sectors
 
+  scope :published, -> { where('publication_date <= ?', DateTime.now) }
+
   validates :file, attached: true
   validates_presence_of :title, :short_description, :publication_date
 

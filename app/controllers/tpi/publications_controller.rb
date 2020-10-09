@@ -7,8 +7,7 @@ module TPI
     before_action :fetch_publication, only: [:show]
 
     def index
-      @publications_and_articles = Queries::TPI::NewsPublicationsQuery
-        .new(filter_params).call
+      @publications_and_articles = Queries::TPI::NewsPublicationsQuery.new(filter_params).call
 
       fixed_navbar('Publications', admin_publications_path)
     end
@@ -52,7 +51,11 @@ module TPI
     end
 
     def fetch_publication
-      @publication = params[:type].eql?('NewsArticle') ? NewsArticle.find(params[:id]) : Publication.find(params[:id])
+      @publication = if params[:type].eql?('NewsArticle')
+                       NewsArticle.published.find(params[:id])
+                     else
+                       Publication.published.find(params[:id])
+                     end
     end
 
     def fetch_tags

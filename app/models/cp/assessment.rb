@@ -30,6 +30,8 @@ module CP
     scope :currently_published, -> { where('publication_date <= ?', DateTime.now) }
 
     validates_presence_of :publication_date
+    validates :assessment_date, date_after: Date.new(2010, 12, 31)
+    validates :publication_date, date_after: Date.new(2010, 12, 31)
 
     def unit
       company.sector.cp_unit_valid_for_date(publication_date)&.unit

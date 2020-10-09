@@ -22,5 +22,9 @@ FactoryBot.define do
 
     association :created_by, factory: :admin_user
     association :updated_by, factory: :admin_user
+
+    trait :published do
+      publication_date { 20.days.ago }
+    end
   end
 end

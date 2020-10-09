@@ -13,18 +13,17 @@ module Queries
       private
 
       def publications
-        filter_scope(Publication.where.not(publication_date: nil))
+        filter_scope(Publication.published)
       end
 
       def news
-        filter_scope(NewsArticle.where.not(publication_date: nil))
+        filter_scope(NewsArticle.published)
       end
 
       def filter_scope(scope)
         scope
           .merge(filter_by_tags(scope))
           .merge(filter_by_sectors(scope))
-          .where('publication_date <= NOW()')
           .includes([:image_attachment])
           .order(publication_date: :desc)
       end

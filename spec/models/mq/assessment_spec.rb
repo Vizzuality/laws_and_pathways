@@ -39,6 +39,16 @@ RSpec.describe MQ::Assessment, type: :model do
     expect(subject).to have(1).errors_on(:assessment_date)
   end
 
+  it 'should be invalid if assessment date is before 2010' do
+    subject.assessment_date = '2001-02-15'
+    expect(subject).to have(1).errors_on(:assessment_date)
+  end
+
+  it 'should be invalid if publication date is before 2010' do
+    subject.publication_date = '2001-02-15'
+    expect(subject).to have(1).errors_on(:publication_date)
+  end
+
   describe 'previous' do
     it 'should return previous assessment for the same company' do
       assessments = [
