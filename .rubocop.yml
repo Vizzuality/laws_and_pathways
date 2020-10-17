@@ -1,4 +1,7 @@
+require: rubocop-performance
+
 AllCops:
+  NewCops: enable
   TargetRubyVersion: 2.6
   Exclude:
     - 'bin/*'
@@ -23,6 +26,12 @@ Layout/DotPosition:
   EnforcedStyle: leading
 
 Naming/HeredocDelimiterNaming:
+  Enabled: false
+
+Style/AccessorGrouping:
+  Enabled: false
+
+Style/HashAsLastArrayItem:
   Enabled: false
 
 Style/SymbolArray:
@@ -76,6 +85,9 @@ Metrics:
 Bundler/OrderedGems:
   Enabled: false
 
+Style/CaseLikeIf:
+  Enabled: false
+
 Style/HashEachMethods:
   Enabled: false
 
@@ -112,8 +124,23 @@ Style/RedundantRegexpCharacterClass:
 Style/RedundantRegexpEscape:
   Enabled: true
 
+Style/StringConcatenation:
+  Enabled: false
+
 Style/SlicingWithRange:
   Enabled: true
 
 Lint/MixedRegexpCaptureTypes:
   Enabled: true
+
+Performance/Casecmp:
+  Enabled: false
+
+Performance/Detect:
+  Enabled: false
+
+Performance/RangeInclude:
+  Enabled: false
+
+Performance/CollectionLiteralInLoop:
+  Enabled: false
