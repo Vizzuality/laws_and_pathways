@@ -66,6 +66,7 @@ ActiveAdmin.register Litigation do
     column :jurisdiction
     column :citation_reference_number
     column :summary
+    column(:sector) { |l| l.laws_sectors.map(&:name).join(';') }
     column :responses, &:responses_string
     column :keywords, &:keywords_string
     column :at_issue

@@ -152,6 +152,7 @@ ActiveAdmin.register Company do
     column(:headquarters_geography_iso) { |c| c.headquarters_geography.iso }
     column(:headquarters_geography) { |c| c.headquarters_geography.name }
     column :latest_information
+    column :company_comments_internal
     column :ca100
     column :active
     column :visibility_status
