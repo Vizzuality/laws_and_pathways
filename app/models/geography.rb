@@ -144,11 +144,11 @@ class Geography < ApplicationRecord
         sector: sector&.name,
         ndc_targets_count:
           if eu_member?
-            Geography.eu_ndc_targets.select { |target| target.sector.eql?(sector) }.count
+            Geography.eu_ndc_targets.count { |target| target.sector.eql?(sector) }
           else
-            targets.select { |t| t.source && t.source.downcase == 'ndc' }.count
+            targets.count { |t| t.source&.downcase == 'ndc' }
           end,
-        non_ndc_targets_count: targets.reject { |t| t.source&.downcase == 'ndc' }.count
+        non_ndc_targets_count: targets.count { |t| t.source&.downcase != 'ndc' }
       }
     end
   end

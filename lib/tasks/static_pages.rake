@@ -1,19 +1,19 @@
 namespace :static_pages do
   desc 'Scaffold static pages for TPI'
   task generate_tpi: :environment do
-    MENU_HEADERS = OpenStruct.new(Hash[Page::MENU_HEADERS.map { |el| [el, el] }])
+    menu_headers = OpenStruct.new(Hash[Page::MENU_HEADERS.map { |el| [el, el] }])
 
     pages = [
-      ['Overview of the TPI', MENU_HEADERS.about],
-      ['Strategic Relationships', MENU_HEADERS.about],
-      ['Technical Advisory Group', MENU_HEADERS.about],
-      ['Supporters', MENU_HEADERS.about],
-      ['How Investors can use TPI', MENU_HEADERS.about],
-      ['Endorsements', MENU_HEADERS.about],
-      ['Team', MENU_HEADERS.about],
-      ['FAQ', MENU_HEADERS.about],
-      ['Methodology', MENU_HEADERS.tpi_tool],
-      ['Data Background', MENU_HEADERS.tpi_tool]
+      ['Overview of the TPI', menu_headers.about],
+      ['Strategic Relationships', menu_headers.about],
+      ['Technical Advisory Group', menu_headers.about],
+      ['Supporters', menu_headers.about],
+      ['How Investors can use TPI', menu_headers.about],
+      ['Endorsements', menu_headers.about],
+      ['Team', menu_headers.about],
+      ['FAQ', menu_headers.about],
+      ['Methodology', menu_headers.tpi_tool],
+      ['Data Background', menu_headers.tpi_tool]
     ]
 
     supporters_content = %w(partners supporters)

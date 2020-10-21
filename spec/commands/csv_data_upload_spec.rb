@@ -64,7 +64,7 @@ describe 'CSVDataUpload (integration)' do
             Legislation,
             fixture_file('legislations.csv', content: csv_content),
             {new_records: 0, not_changed_records: 0, rows: 3, updated_records: 0},
-            false
+            expected_success: false
           )
 
           expect(command.errors.messages[:base])
@@ -82,7 +82,7 @@ describe 'CSVDataUpload (integration)' do
             Legislation,
             fixture_file('legislations.csv', content: csv_content),
             {new_records: 0, not_changed_records: 0, rows: 3, updated_records: 0},
-            false
+            expected_success: false
           )
 
           expect(command.errors.messages[:base])
@@ -322,7 +322,7 @@ describe 'CSVDataUpload (integration)' do
     assessment = acme_company.cp_assessments.last
 
     expect(assessment.assessment_date).to eq(Date.parse('2019-01-04'))
-    expect(assessment.publication_date).to eq(Date.parse('2019-02-01'))
+    expect(assessment.publication_date).to eq(Date.strptime('2019-02', '%Y-%m'))
     expect(assessment.last_reported_year).to eq(2018)
     expect(assessment.emissions).to eq(
       '2014' => 101,
@@ -392,16 +392,16 @@ describe 'CSVDataUpload (integration)' do
     expect(geography.federal_details).to be
   end
 
-  def expect_data_upload_results(uploaded_resource_klass, csv, expected_details, expected_sucess = true)
+  def expect_data_upload_results(uploaded_resource_klass, csv, expected_details, expected_success: true)
     uploader_name = uploaded_resource_klass.name.tr('::', '').pluralize
     command = Command::CSVDataUpload.new(uploader: uploader_name, file: csv)
 
     expect do
       expect(command).to be_valid
       expect(command.call).to(
-        eq(expected_sucess),
+        eq(expected_success),
         %(
-          Expected import command to #{expected_sucess ? 'succeed' : 'fail'}, but it did not.
+          Expected import command to #{expected_success ? 'succeed' : 'fail'}, but it did not.
           error message: #{command.full_error_messages}
         )
       )

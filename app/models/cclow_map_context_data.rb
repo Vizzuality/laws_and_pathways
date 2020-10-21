@@ -43,9 +43,9 @@ class CCLOWMapContextData
 
         eu_aggregated_value = case metadata['eu_method']
                               when 'avg'
-                                (eu_countries_data.pluck(:value).reduce(:+) / eu_countries_data.size).round(2)
+                                (eu_countries_data.pluck(:value).sum / eu_countries_data.size).round(2)
                               else
-                                eu_countries_data.pluck(:value).reduce(:+)
+                                eu_countries_data.pluck(:value).sum
                               end
 
         data << {geography_iso: 'EUR', value: eu_aggregated_value}

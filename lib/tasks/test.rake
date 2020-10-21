@@ -1,7 +1,7 @@
 namespace :test do
   desc 'Recreate DB dump used in system tests by running seeds and dumping database'
   task :db_dump do
-    abort 'Run recreatedb task only in test env! RAILS_ENV=test bin/rails test:db_dump' unless Rails.env.test?
+    abort 'Run db_dump task only in test env! RAILS_ENV=test bin/rails test:db_dump' unless Rails.env.test?
 
     Rake::Task['db:test:prepare'].invoke
     Rails.application.load_seed
@@ -10,6 +10,8 @@ namespace :test do
   end
 
   task :db_load do
+    abort 'Run db_load task only in test env! RAILS_ENV=test bin/rails test:db_load' unless Rails.env.test?
+
     unless File.exist?(dump_path)
       puts "Dump file #{dump_path} does not existing. Invoking db_dump task to create it"
       Rake::Task['test:db_dump'].invoke

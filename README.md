@@ -4,8 +4,8 @@ The backoffice for laws and pathways
 
 ## Dependencies:
 
-- Ruby v2.6.3
-- Rails v5.2.3
+- Ruby v2.6.5
+- Rails v6.0.3
 - Node v10
 - PostgreSQL v11
 
@@ -45,6 +45,19 @@ Add those 2 entries to your `/etc/hosts` file
 ### Run the tests
 
 `yarn test`
+
+#### System tests
+
+For speed and simplicity to not have to create complicated scenarios using factories, for system testing we are always loading complete db dump.
+
+DB was created by seeding the database and its stored in `db/test-dump.sql` file.
+To recreate dump use dedicated rake task `RAILS_ENV=test bin/rails test:db_dump`
+
+### Run linters
+
+`yarn lint`
+`yarn lint:rails`
+`yarn lint:js`
 
 ## Docker
 
