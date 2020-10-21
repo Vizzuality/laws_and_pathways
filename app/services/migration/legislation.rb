@@ -61,7 +61,7 @@ module Migration
             if for_real
               begin
                 filename = File.basename(URI.parse(source).path)
-                file = URI.open(source)
+                file = URI.parse(source).open
               rescue URI::InvalidURIError, OpenURI::HTTPError, OpenSSL::SSL::SSLError
                 puts "File for #{row['law_id']} and #{row['url']} not working"
                 next

@@ -23,7 +23,7 @@ namespace :flags do
       if alpha3.nil?
         puts "Couldn't find country by alpha2: #{alpha2}"
       else
-        URI.open(download_url) do |image|
+        URI.parse(download_url).open do |image|
           File.open("#{destination_dir}/#{alpha3}.#{extension}", 'wb') do |file|
             file.write(image.read)
           end

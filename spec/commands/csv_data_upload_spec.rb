@@ -322,7 +322,7 @@ describe 'CSVDataUpload (integration)' do
     assessment = acme_company.cp_assessments.last
 
     expect(assessment.assessment_date).to eq(Date.parse('2019-01-04'))
-    expect(assessment.publication_date).to eq(Date.parse('2019-02-01'))
+    expect(assessment.publication_date).to eq(Date.strptime('2019-02', '%Y-%m'))
     expect(assessment.last_reported_year).to eq(2018)
     expect(assessment.emissions).to eq(
       '2014' => 101,
