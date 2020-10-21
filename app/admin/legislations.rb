@@ -106,7 +106,7 @@ ActiveAdmin.register Legislation do
 
   csv do
     column :id
-    column :law_id
+    column 'Law Id', humanize_name: false, &:law_id
     column :title
     column(:legislation_type) { |l| l.legislation_type.downcase }
     column :description

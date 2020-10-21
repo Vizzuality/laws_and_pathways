@@ -43,7 +43,7 @@ module CSVImport
 
     def legislation_attributes(row)
       {
-        law_id: row[:law],
+        law_id: row[:law_id],
         title: row[:title],
         description: row[:description],
         geography: geographies[row[:geography_iso]],

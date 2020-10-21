@@ -44,13 +44,30 @@ describe 'CSVDataUpload (integration)' do
       expect(command.errors.to_a).to include('File is not attached')
     end
 
+    it 'sets error when accessing missing header data' do
+      csv_content = <<-CSV
+        Id,Title,Document type,Geography iso,Jurisdiction,Sector,Citation reference number,Summary wrong header,responses,Keywords,At issue,Visibility status,Legislation ids
+        ,Litigation number 1,administrative_case,GBR,GBR,Transport,EWHC 2752,Lyle requested judicial review,"response1,response2","keyword1,keyword2",At issues,pending,
+      CSV
+
+      command = expect_data_upload_results(
+        Litigation,
+        fixture_file('litigations.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base])
+        .to eq(['CSV missing header: summary'])
+    end
+
     describe 'authorization errors' do
       let(:csv_content) do
         <<-CSV
-          Id,Law,Legislation type,Title,Date passed,Description,Geography,Geography iso,Sector,Frameworks,Document types,Keywords,Natural hazards,Visibility status
-          10,101,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,"keyword1,keyword2",tsunami,draft
-          20,102,legislative,Climate Law,15 Jan 2015,Desc,Poland,POL,Waste,"Mitigation",Law,"keyword1","flooding",published
-          30,103,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,"keyword1,keyword2",tsunami,pending
+          Id,Law Id,Legislation type,Title,Date passed,Description,Geography,Geography iso,Sector,Frameworks,Document types,Keywords,Responses,Natural hazards,Visibility status
+          10,101,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,"keyword1,keyword2",response1,tsunami,draft
+          20,102,legislative,Climate Law,15 Jan 2015,Desc,Poland,POL,Waste,"Mitigation",Law,"keyword1",response2,"flooding",published
+          30,103,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,"keyword1,keyword2",response1,tsunami,pending
         CSV
       end
 
@@ -113,6 +130,8 @@ describe 'CSVDataUpload (integration)' do
     expect(legislation.frameworks_list).to include('Mitigation', 'Adaptation')
     expect(legislation.keywords.size).to eq(2)
     expect(legislation.keywords_list).to include('Keyword1', 'Keyword3')
+    expect(legislation.responses.size).to eq(2)
+    expect(legislation.responses_list).to include('Response1', 'Response3')
     expect(legislation.natural_hazards.size).to eq(2)
     expect(legislation.natural_hazards_list).to include('Sharkinados', 'Flooding')
   end
@@ -123,9 +142,9 @@ describe 'CSVDataUpload (integration)' do
     updated_litigation = create(:litigation)
 
     csv_content = <<-CSV
-      Id,Title,Document type,Geography iso,Jurisdiction,Sector,Citation reference number,Summary,Keywords,At issue,Visibility status,Legislation ids
-      ,Litigation number 1,administrative_case,GBR,GBR,Transport,EWHC 2752,Lyle requested judicial review,"keyword1,keyword2",At issues,pending,"#{legislation1.id}, #{legislation2.id}"
-      #{updated_litigation.id},Litigation number 2,administrative_case,GBR,GBR,,[2013] NIQB 24,The applicants were brothers ...,,,Draft,
+      Id,Title,Document type,Geography iso,Jurisdiction,Sector,Citation reference number,Summary,responses,Keywords,At issue,Visibility status,Legislation ids
+      ,Litigation number 1,administrative_case,GBR,GBR,Transport,EWHC 2752,Lyle requested judicial review,"response1,response2","keyword1,keyword2",At issues,pending,"#{legislation1.id}, #{legislation2.id}"
+      #{updated_litigation.id},Litigation number 2,administrative_case,GBR,GBR,,[2013] NIQB 24,The applicants were brothers ...,,,,Draft,
     CSV
 
     litigations_csv = fixture_file('litigations.csv', content: csv_content)
@@ -149,6 +168,8 @@ describe 'CSVDataUpload (integration)' do
     expect(litigation.laws_sectors.first.name).to eq('Transport')
     expect(litigation.keywords.size).to eq(2)
     expect(litigation.keywords_list).to include('Keyword1', 'Keyword2')
+    expect(litigation.responses.size).to eq(2)
+    expect(litigation.responses_list).to include('Response1', 'Response2')
     expect(litigation.legislation_ids).to include(legislation1.id, legislation2.id)
   end
 
@@ -356,6 +377,7 @@ describe 'CSVDataUpload (integration)' do
 
     expect(assessment.notes).to eq('notes')
     expect(assessment.level).to eq('2')
+    expect(assessment.methodology_version).to eq(1)
     expect(assessment.assessment_date).to eq(Date.parse('2018-01-25'))
     expect(assessment.questions[0].question).to eq('Question one, level 0?')
     expect(assessment.questions[0].level).to eq('0')
