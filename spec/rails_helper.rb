@@ -9,6 +9,7 @@ require 'rspec/rails'
 require 'cancan/matchers'
 
 require 'test_prof/recipes/rspec/let_it_be'
+require 'super_diff/rspec-rails'
 
 require 'rake'
 Rails.application.load_tasks

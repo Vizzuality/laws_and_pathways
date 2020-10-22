@@ -17,7 +17,7 @@ module CSVImport
         litigation.save!
         litigation.responses = parse_tags(row[:responses], responses)
         litigation.keywords = parse_tags(row[:keywords], keywords)
-        litigation.laws_sectors = find_or_create_laws_sectors(row[:sector]&.split(','))
+        litigation.laws_sectors = find_or_create_laws_sectors(row[:sector]&.split(';'))
 
         update_import_results(was_new_record, any_changes)
       end

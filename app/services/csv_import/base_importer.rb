@@ -18,15 +18,15 @@ module CSVImport
     end
 
     def call
+      reset_import_results
       return false unless csv
 
-      reset_import_results
       import_results[:rows] = csv.count
 
       return false unless valid?
 
       ActiveRecord::Base.transaction(requires_new: true) do
-        import
+        perform_import
         reset_id_seq if override_id
 
         rollback if rollback_on_error && errors.any?
@@ -71,6 +71,13 @@ module CSVImport
     end
 
     private
+
+    def perform_import
+      import
+    rescue CSVImport::MissingHeader => e
+      warn e.message
+      errors.add(:base, e.message)
+    end
 
     def rollback
       import_results[:new_records] = 0
@@ -127,7 +134,7 @@ module CSVImport
     def import_each_csv_row(csv)
       csv.each.with_index(2) do |row, row_index|
         handle_row_errors(row_index) do
-          yield row
+          yield Row.new(row)
         end
       end
     end
@@ -138,16 +145,11 @@ module CSVImport
       handle_row_error(row_index, e, "for data: #{e.record.attributes}")
     rescue ActiveRecord::RecordNotFound, ArgumentError => e
       handle_row_error(row_index, e)
-    end
-
-    def update_import_results(was_new_record, any_changes)
-      if was_new_record
-        import_results[:new_records] += 1
-      elsif any_changes
-        import_results[:updated_records] += 1
-      else
-        import_results[:not_changed_records] += 1
-      end
+    rescue CSVImport::MissingHeader
+      raise
+    rescue StandardError => e
+      Appsignal.set_error(e)
+      handle_row_error(row_index, e)
     end
 
     def handle_row_error(row_index, exception, context_message = nil)
@@ -158,6 +160,16 @@ module CSVImport
 
       # add import error
       errors.add(:base, :invalid_row, message: readable_error_message, row: row_index)
+    end
+
+    def update_import_results(was_new_record, any_changes)
+      if was_new_record
+        import_results[:new_records] += 1
+      elsif any_changes
+        import_results[:updated_records] += 1
+      else
+        import_results[:not_changed_records] += 1
+      end
     end
   end
 end

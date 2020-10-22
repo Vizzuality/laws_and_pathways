@@ -20,7 +20,7 @@ module CSVImport
         any_changes = legislation.changed?
 
         legislation.save!
-        legislation.laws_sectors = find_or_create_laws_sectors(row[:sector].split(',')) if row[:sector]
+        legislation.laws_sectors = find_or_create_laws_sectors(row[:sector].split(';')) if row[:sector]
 
         update_import_results(was_new_record, any_changes)
       end
@@ -43,7 +43,7 @@ module CSVImport
 
     def legislation_attributes(row)
       {
-        law_id: row[:law],
+        law_id: row[:law_id],
         title: row[:title],
         description: row[:description],
         geography: geographies[row[:geography_iso]],

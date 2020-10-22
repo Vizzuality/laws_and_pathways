@@ -106,13 +106,14 @@ ActiveAdmin.register Legislation do
 
   csv do
     column :id
-    column :law_id
+    column 'Law Id', humanize_name: false, &:law_id
     column :title
     column(:legislation_type) { |l| l.legislation_type.downcase }
     column :description
     column(:parent) { |l| l.parent&.title }
     column(:geography) { |l| l.geography.name }
     column(:geography_iso) { |l| l.geography.iso }
+    column(:sector) { |l| l.laws_sectors.map(&:name).join(';') }
     column :frameworks, &:frameworks_string
     column :responses, &:responses_string
     column :document_types, &:document_types_string
