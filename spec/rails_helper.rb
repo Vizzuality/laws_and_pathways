@@ -48,6 +48,7 @@ RSpec.configure do |config|
   config.snapshot_dir = 'spec/snapshots'
 
   config.include Devise::Test::ControllerHelpers, type: :controller
+  # config.include Rails.application.routes.url_helpers, type: :controller
   config.include FactoryBot::Syntax::Methods
   config.include CapybaraHelpers, type: :system
 

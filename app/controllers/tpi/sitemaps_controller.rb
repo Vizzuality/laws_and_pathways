@@ -4,8 +4,8 @@ module TPI
       @host = "https://#{request.host_with_port}"
       @sectors = TPISector.order(:name)
       @companies = Company.published.select(:id, :slug).order(:name)
-      @publications = Publication.select(:id)
-      @news = NewsArticle.select(:id)
+      @publications = Publication.published.select(:id)
+      @news = NewsArticle.published.select(:id)
     end
   end
 end

@@ -41,5 +41,13 @@ FactoryBot.define do
     trait :legislative do
       legislation_type { 'legislative' }
     end
+
+    trait :policy do
+      legislation_type { 'executive' }
+    end
+
+    trait :law do
+      legislation_type { 'legislative' }
+    end
   end
 end

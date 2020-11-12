@@ -26,5 +26,9 @@ FactoryBot.define do
     trait :published do
       publication_date { 20.days.ago }
     end
+
+    trait :not_published do
+      publication_date { 12.days.from_now }
+    end
   end
 end
