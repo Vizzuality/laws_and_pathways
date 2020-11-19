@@ -32,7 +32,7 @@ class Litigation < ApplicationRecord
   friendly_id :title, use: :slugged, routes: :default
 
   DOCUMENT_TYPES = %w[case administrative_case judicial_case inquiry].freeze
-  EVENT_TYPES = %w[
+  OLD_EVENT_TYPES = %w[
     administrative_objection_dismissed
     administrative_review_dismissed
     alleged_offense_occurred
@@ -84,7 +84,13 @@ class Litigation < ApplicationRecord
     tax_abolished
     withdrawn
   ].freeze
-  EVENT_STARTED_TYPES = %w[case_filed case_opened case_started].freeze
+  OLD_EVENT_STARTED_TYPES = %w[case_filed case_opened case_started].freeze
+
+  NEW_EVENT_TYPES = %w[filing dismissed granted appealed settled closed other].freeze
+  NEW_EVENT_STARTED_TYPES = %w[filing].freeze
+
+  EVENT_TYPES = OLD_EVENT_TYPES + NEW_EVENT_TYPES
+  EVENT_STARTED_TYPES = OLD_EVENT_STARTED_TYPES + NEW_EVENT_STARTED_TYPES
 
   enum document_type: array_to_enum_hash(DOCUMENT_TYPES)
 

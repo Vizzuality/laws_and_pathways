@@ -19,6 +19,7 @@ class Event < ApplicationRecord
   belongs_to :eventable, polymorphic: true
 
   validates_presence_of :title, :date
+  validates :date, date_after: Date.new(1900, 1, 1)
   validates :url, url: true
 
   validates :event_type, presence: true, inclusion: {in: :event_types}
