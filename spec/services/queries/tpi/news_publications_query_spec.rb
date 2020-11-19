@@ -1,45 +1,48 @@
 require 'rails_helper'
 
 RSpec.describe Queries::TPI::NewsPublicationsQuery do
-  let_it_be(:keyword_1) { create(:keyword, name: 'keyword1') }
-  let_it_be(:keyword_2) { create(:keyword, name: 'keyword2') }
-  let_it_be(:sector_1) { create(:tpi_sector, name: 'sector1') }
-  let_it_be(:sector_2) { create(:tpi_sector, name: 'sector2') }
+  before(:all) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.start
 
-  let_it_be(:news_1) {
+    keyword1 = create(:keyword, name: 'keyword1')
+    keyword2 = create(:keyword, name: 'keyword2')
+
+    sector1 = create(:tpi_sector, name: 'sector1')
+    sector2 = create(:tpi_sector, name: 'sector2')
+
     create(
       :news_article,
       :published,
       keywords: [
-        keyword_1,
-        keyword_2
+        keyword1,
+        keyword2
       ]
     )
-  }
-  let_it_be(:news_2) {
     create(
       :news_article,
       :published,
       keywords: [
-        keyword_1
+        keyword1
       ]
     )
-  }
-  let_it_be(:news_3) {
     create(
       :news_article,
       keywords: [
-        keyword_1,
-        keyword_2
+        keyword1,
+        keyword2
       ],
       publication_date: 3.days.from_now
     )
-  }
-  let_it_be(:publication_1) { create(:publication, :published, tpi_sectors: [sector_1], keywords: [keyword_1]) }
-  let_it_be(:publication_2) { create(:publication, :published, tpi_sectors: [sector_2]) }
-  let_it_be(:publication_3) {
-    create(:publication, tpi_sectors: [sector_1], keywords: [keyword_1], publication_date: 3.days.from_now)
-  }
+
+    create(:publication, :published, tpi_sectors: [sector1], keywords: [keyword1])
+    create(:publication, :published, tpi_sectors: [sector2])
+    create(:publication, tpi_sectors: [sector1], keywords: [keyword1], publication_date: 3.days.from_now)
+  end
+
+  after(:all) do
+    DatabaseCleaner.clean
+  end
 
   subject { described_class }
 
