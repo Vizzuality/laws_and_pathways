@@ -3,6 +3,15 @@ module CSVImport
     class << self
       TWO_DIGIT_YEAR_CUTOFF = 2040
 
+      DateParseError = Class.new(StandardError)
+
+      def safe_parse!(date, expected_date_formats)
+        return if date.nil?
+
+        safe_parse(date, expected_date_formats) or
+          raise DateParseError, "Cannot parse date: #{date}, expected formats: #{expected_date_formats.join(', ')}"
+      end
+
       def safe_parse(date, expected_date_formats)
         return if date.nil?
 
