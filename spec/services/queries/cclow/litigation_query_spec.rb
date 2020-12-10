@@ -33,9 +33,9 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
       litigation_sides: [@side_a1, @side_a11, @side_a12, @side_b1, @side_c1],
       keywords: [@biodiversity, @cap_and_trade],
       events: [
-        build(:event, event_type: 'case_started', date: '2010-01-01'),
-        build(:event, event_type: 'first_decision', date: '2012-03-01'),
-        build(:event, event_type: 'case_decided', date: '2013-03-01')
+        build(:event, event_type: 'filing', date: '2010-01-01'),
+        build(:event, event_type: 'other', date: '2012-03-01'),
+        build(:event, event_type: 'closed', date: '2013-03-01')
       ]
     )
 
@@ -49,8 +49,8 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
       litigation_sides: [@side_a2],
       keywords: [@business_risk, @cap_and_trade],
       events: [
-        build(:event, event_type: 'case_opened', date: '2014-12-02'),
-        build(:event, event_type: 'first_decision', date: '2016-03-01')
+        build(:event, event_type: 'filing', date: '2014-12-02'),
+        build(:event, event_type: 'other', date: '2016-03-01')
       ]
     )
 
@@ -62,8 +62,8 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
       laws_sectors: [@sector3],
       litigation_sides: [@side_c2],
       events: [
-        build(:event, event_type: 'case_started', date: '2016-12-02'),
-        build(:event, event_type: 'first_decision', date: '2019-03-01')
+        build(:event, event_type: 'filing', date: '2016-12-02'),
+        build(:event, event_type: 'other', date: '2019-03-01')
       ]
     )
 
@@ -203,7 +203,7 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
     end
 
     it 'should filter by status' do
-      results = subject.new(status: ['case_decided']).call
+      results = subject.new(status: ['closed']).call
       expect(results).to contain_exactly(@litigation1)
     end
 

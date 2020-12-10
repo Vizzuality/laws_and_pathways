@@ -68,14 +68,14 @@ RSpec.describe Admin::LitigationsController, type: :controller do
           events_attributes: [
             {
               date: 5.days.ago,
-              event_type: 'case_started',
+              event_type: 'filing',
               title: 'Event 1',
               description: 'Description 1',
               url: 'https://validurl1.com'
             },
             {
               date: 3.days.ago,
-              event_type: 'case_dismissed',
+              event_type: 'dismissed',
               title: 'Event 2',
               description: 'Description 2',
               url: 'https://validurl2.com'
@@ -93,8 +93,8 @@ RSpec.describe Admin::LitigationsController, type: :controller do
           ['doc 1', 'en', 'https://test.com'], ['doc 2', 'en', '']
         ]
         expected_events_attrs = [
-          ['Event 1', 'case_started', 'Description 1', 'https://validurl1.com'],
-          ['Event 2', 'case_dismissed', 'Description 2', 'https://validurl2.com']
+          ['Event 1', 'filing', 'Description 1', 'https://validurl1.com'],
+          ['Event 2', 'dismissed', 'Description 2', 'https://validurl2.com']
         ]
 
         last_litigation_created.tap do |l|

@@ -32,65 +32,9 @@ class Litigation < ApplicationRecord
   friendly_id :title, use: :slugged, routes: :default
 
   DOCUMENT_TYPES = %w[case administrative_case judicial_case inquiry].freeze
-  OLD_EVENT_TYPES = %w[
-    administrative_objection_dismissed
-    administrative_review_dismissed
-    alleged_offense_occurred
-    amici_curiae_brief_filed
-    appeal_dismissed
-    application_denied
-    application_received
-    case_appealed
-    case_argued
-    case_closed
-    case_decided
-    case_filed
-    case_on_appeal
-    case_open
-    case_opened
-    case_started
-    case_dismissed
-    case_overruled
-    case_referred
-    claim_filed
-    complaint_amended
-    complaint_filed
-    contested_policy_adopted
-    contested_regulation_issued
-    decision_adopted
-    disputed_license_is_granted
-    exempt_resolution_issued
-    external_contribution_filed
-    fine_imposed
-    first_decision
-    first_hearing
-    formal_opinion_issued
-    license_awarded
-    license_denied
-    motion_denied
-    objection_rejected
-    permit_denied
-    permit_granted
-    permit_requested
-    related_law_passed
-    related_policy_amended
-    request_made
-    request_rejected
-    retraction_and_apology_issued
-    second_appeal_filed
-    appeal_filed
-    license_issued
-    site_visit
-    tax_abolished
-    withdrawn
-  ].freeze
-  OLD_EVENT_STARTED_TYPES = %w[case_filed case_opened case_started].freeze
 
-  NEW_EVENT_TYPES = %w[filing dismissed granted appealed settled closed other].freeze
-  NEW_EVENT_STARTED_TYPES = %w[filing].freeze
-
-  EVENT_TYPES = OLD_EVENT_TYPES + NEW_EVENT_TYPES
-  EVENT_STARTED_TYPES = OLD_EVENT_STARTED_TYPES + NEW_EVENT_STARTED_TYPES
+  EVENT_TYPES = %w[filing dismissed granted appealed settled closed other].freeze
+  EVENT_STARTED_TYPES = %w[filing].freeze
 
   enum document_type: array_to_enum_hash(DOCUMENT_TYPES)
 

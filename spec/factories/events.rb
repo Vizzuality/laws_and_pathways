@@ -22,7 +22,7 @@ FactoryBot.define do
     factory :litigation_event do
       title { 'Some case was started' }
       description { 'Description of starting the case' }
-      event_type { 'case_started' }
+      event_type { 'filing' }
       eventable { |e| e.association(:litigation) }
     end
 
