@@ -214,7 +214,7 @@ describe 'CSVDataUpload (integration)' do
 
     csv_content = <<-CSV
       Id,Eventable type,Eventable,Event type,Title,Description,Date,Url
-      #{litigation_event.id},Litigation,#{litigation_event.eventable_id},case_decided,Changed title,Changed description,2020-12-30,https://example.com
+      #{litigation_event.id},Litigation,#{litigation_event.eventable_id},closed,Changed title,Changed description,2020-12-30,https://example.com
       ,Legislation,#{legislation.id},passed/approved,title,description,2019-02-20,
     CSV
     events_csv = fixture_file('events.csv', content: csv_content)
@@ -234,7 +234,7 @@ describe 'CSVDataUpload (integration)' do
     created_event = legislation.events.first
 
     expect(litigation_event).to have_attributes(
-      event_type: 'case_decided',
+      event_type: 'closed',
       title: 'Changed title',
       description: 'Changed description',
       date: Date.parse('2020-12-30'),
