@@ -3,7 +3,7 @@ env:
   POSTGRES_PASSWORD: postgres
 
 name: Tests
-on: [push, pull_request]
+on: push
 
 jobs:
   tests:
