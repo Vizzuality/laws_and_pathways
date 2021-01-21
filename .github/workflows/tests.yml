@@ -2,8 +2,8 @@ env:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
 
-name: Rails
-on: push
+name: Tests
+on: [push, pull_request]
 
 jobs:
   tests:
