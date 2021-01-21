@@ -36,7 +36,7 @@ jobs:
         run: |
           sudo apt-get -yqq install libpq-dev build-essential libcurl4-openssl-dev
       - name: Install npm dependencies
-        run: yarn install
+        uses: bahmutov/npm-install@v1
       - name: Setup test database
         env:
           RAILS_ENV: test
