@@ -6,7 +6,7 @@ name: Rails
 on: push
 
 jobs:
-  verify:
+  tests:
     name: Tests
     runs-on: ubuntu-20.04
 
