@@ -1,0 +1,54 @@
+env:
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+
+name: Rails
+on: push
+
+jobs:
+  verify:
+    name: Tests
+    runs-on: ubuntu-20.04
+
+    services:
+      postgres:
+        image: postgres:11-alpine
+        env:
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+        ports: ["5432:5432"]
+        # options: >-
+        #   --health-cmd pg_isready
+        #   --health-interval 10s
+        #   --health-timeout 5s
+        #   --health-retries 5
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '10'
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          ruby-version: 2.6.5
+      - name: Install dependencies
+        run: |
+          sudo apt-get -yqq install libpq-dev build-essential libcurl4-openssl-dev
+      - name: Install npm dependencies
+        run: yarn install
+      - name: Setup test database
+        env:
+          RAILS_ENV: test
+          PGHOST: localhost
+          PGUSER: ${{ env.POSTGRES_USER }}
+          PGPASSWORD: ${{ env.POSTGRES_PASSWORD }}
+        run: |
+          bin/rails db:drop db:create db:schema:load
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+          PGHOST: localhost
+          PGUSER: ${{ env.POSTGRES_USER }}
+          PGPASSWORD: ${{ env.POSTGRES_PASSWORD }}
+        run: yarn test:rails
