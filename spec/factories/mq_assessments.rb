@@ -15,6 +15,16 @@
 #  methodology_version :integer
 #
 
+class QuestionFactoryHelper
+  def self.get_question_level(num)
+    return '0' if (0..1).include?(num)
+    return '1' if (2..4).include?(num)
+    return '3' if (5..8).include?(num)
+
+    '4'
+  end
+end
+
 FactoryBot.define do
   factory :mq_assessment, class: MQ::Assessment do
     association :company
@@ -26,17 +36,9 @@ FactoryBot.define do
     notes { 'Some notes' }
 
     questions do
-      get_question_level = lambda do |nr|
-        return '0' if (0..1).include?(nr)
-        return '1' if (2..4).include?(nr)
-        return '3' if (5..8).include?(nr)
-
-        '4'
-      end
-
       (1..14).map do |nr|
         {
-          level: get_question_level.call(nr),
+          level: QuestionFactoryHelper.get_question_level(nr),
           question: "Question nr #{nr}",
           answer: %w[Yes No].sample
         }
