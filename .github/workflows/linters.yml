@@ -1,0 +1,24 @@
+name: Linters
+
+on: push
+
+jobs:
+  linters:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '10'
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          ruby-version: 2.6.5
+      - name: Install npm dependencies
+        uses: bahmutov/npm-install@v1
+      - name: Run RuboCop
+        run: yarn lint:rails
+      - name: Run Eslint
+        run: yarn lint:js
