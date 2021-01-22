@@ -11,6 +11,7 @@
     "lint:rails:fix": "yarn rails:lint -a",
     "test": "run-p test:rails test:sast lint:rails rails:bundle-audit",
     "test:rails": "bundle exec rspec -p",
+    "test:rails-parallel": "bundle exec rake ",
     "test:sast": "bundle exec brakeman",
     "js:server": "yarn install && ./bin/webpack-dev-server",
     "rails:server": "bundle exec rails s --binding=0.0.0.0",
