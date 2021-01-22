@@ -12,7 +12,6 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-          ruby-version: 2.6.5
       - name: Run Brakeman
         run: yarn test:sast
       - name: Run Bundle Audit
