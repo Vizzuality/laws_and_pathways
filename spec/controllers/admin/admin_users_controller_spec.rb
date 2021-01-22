@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Admin::AdminUsersController, type: :controller do
-  let(:admin) { create(:admin_user) }
+  let_it_be(:admin) { create(:admin_user) }
   let(:valid_attributes) { attributes_for(:admin_user) }
 
   before { sign_in admin }

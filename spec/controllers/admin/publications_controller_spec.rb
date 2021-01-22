@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Admin::PublicationsController, type: :controller do
-  let(:admin) { create(:admin_user) }
-  let!(:publication) { create(:publication) }
+  let_it_be(:admin) { create(:admin_user) }
+  let_it_be(:publication) { create(:publication) }
 
   before { sign_in admin }
 

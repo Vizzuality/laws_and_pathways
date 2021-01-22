@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Admin::ExternalLegislationsController, type: :controller do
-  let(:admin) { create(:admin_user) }
+  let_it_be(:admin) { create(:admin_user) }
   let(:geography) { create(:geography) }
 
-  let!(:external_legislation) { create(:external_legislation) }
+  let_it_be(:external_legislation) { create(:external_legislation) }
 
   before { sign_in admin }
 

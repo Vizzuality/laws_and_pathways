@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Admin::TPISectorsController, type: :controller do
-  let(:admin) { create(:admin_user) }
+  let_it_be(:admin) { create(:admin_user) }
   let(:cluster) { create(:tpi_sector_cluster) }
-  let!(:sector) { create(:tpi_sector, :with_benchmarks) }
+  let_it_be(:sector) { create(:tpi_sector, :with_benchmarks) }
   let(:valid_attributes) {
     attributes_for(
       :tpi_sector,

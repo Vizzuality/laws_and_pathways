@@ -28,6 +28,9 @@ Layout/DotPosition:
 Naming/HeredocDelimiterNaming:
   Enabled: false
 
+Naming/VariableNumber:
+  Enabled: false
+
 Style/AccessorGrouping:
   Enabled: false
 

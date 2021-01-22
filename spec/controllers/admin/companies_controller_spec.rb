@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Admin::CompaniesController, type: :controller do
-  let(:admin) { create(:admin_user) }
-  let!(:company) { create(:company, :with_mq_assessments, :with_cp_assessments) }
-  let(:sector) { create(:tpi_sector) }
-  let(:geography) { create(:geography) }
+  let_it_be(:admin) { create(:admin_user) }
+  let_it_be(:company) { create(:company, :with_mq_assessments, :with_cp_assessments) }
+  let_it_be(:sector) { create(:tpi_sector) }
+  let_it_be(:geography) { create(:geography) }
   let(:valid_attributes) {
     attributes_for(:company).merge(
       geography_id: geography.id, headquarters_geography_id: geography.id, sector_id: sector.id

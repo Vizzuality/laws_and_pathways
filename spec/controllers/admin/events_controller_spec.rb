@@ -3,15 +3,15 @@ require 'csv'
 
 RSpec.describe Admin::EventsController, type: :controller do
   let(:admin) { create(:admin_user) }
-  let!(:legislation1) { create(:legislation, visibility_status: 'published') }
-  let!(:legislation2) { create(:legislation, visibility_status: 'pending') }
-  let!(:litigation1) { create(:litigation, visibility_status: 'published') }
-  let!(:litigation2) { create(:litigation, visibility_status: 'draft') }
+  let_it_be(:legislation1) { create(:legislation, visibility_status: 'published') }
+  let_it_be(:legislation2) { create(:legislation, visibility_status: 'pending') }
+  let_it_be(:litigation1) { create(:litigation, visibility_status: 'published') }
+  let_it_be(:litigation2) { create(:litigation, visibility_status: 'draft') }
 
-  let!(:event1) { create(:legislation_event, title: 'Event1', eventable: legislation1) } # with published documentable
-  let!(:event2) { create(:legislation_event, title: 'Event2', eventable: legislation2) }
-  let!(:event3) { create(:litigation_event, title: 'Event3', eventable: litigation1) } # with published documentable
-  let!(:event4) { create(:litigation_event, title: 'Event4', eventable: litigation2) }
+  let_it_be(:event1) { create(:legislation_event, title: 'Event1', eventable: legislation1) } # with published documentable
+  let_it_be(:event2) { create(:legislation_event, title: 'Event2', eventable: legislation2) }
+  let_it_be(:event3) { create(:litigation_event, title: 'Event3', eventable: litigation1) } # with published documentable
+  let_it_be(:event4) { create(:litigation_event, title: 'Event4', eventable: litigation2) }
 
   before { sign_in admin }
 

@@ -54,21 +54,21 @@ RSpec.describe Legislation, type: :model do
   end
 
   context 'full_text_search' do
-    let!(:legislation_1) {
+    let_it_be(:legislation_1) {
       create(
         :legislation,
         title: 'Presidential decree declaring rational and efficient energy use a national priority',
         description: 'This decree has far-reaching and ambitious goals to reduce energy consumption'
       )
     }
-    let!(:legislation_2) {
+    let_it_be(:legislation_2) {
       create(
         :legislation,
         title: 'Energy Policy of Poland until 2030',
         description: 'Grzegorz Brzęczyszczykiewicz'
       )
     }
-    let!(:legislation_3) {
+    let_it_be(:legislation_3) {
       create(
         :legislation,
         title: 'The Mother Earth Law and Integral Development',

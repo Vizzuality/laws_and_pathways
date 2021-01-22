@@ -2,13 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Api::Charts::CPPerformance do
   subject { described_class.new }
-  let(:cluster_1) { create(:tpi_sector_cluster, name: 'Transport') }
-  let(:cluster_2) { create(:tpi_sector_cluster, name: 'Materials') }
-  let!(:sector_autos) { create(:tpi_sector, name: 'Autos', cluster: cluster_1) }
-  let!(:sector_airlines) { create(:tpi_sector, name: 'Airlines', cluster: cluster_1) }
-  let!(:sector_steel) { create(:tpi_sector, name: 'Steel', cluster: cluster_2) }
-  let!(:sector_no_cluster) { create(:tpi_sector, name: 'Cement') }
-  let!(:sector_no_cp) { create(:tpi_sector, name: 'No CP') }
 
   describe 'cp_performance' do
     context 'sector has no cp assessments' do
@@ -18,6 +11,14 @@ RSpec.describe Api::Charts::CPPerformance do
     end
 
     context 'sector has cp_assessments' do
+      let(:cluster_1) { create(:tpi_sector_cluster, name: 'Transport') }
+      let(:cluster_2) { create(:tpi_sector_cluster, name: 'Materials') }
+      let(:sector_autos) { create(:tpi_sector, name: 'Autos', cluster: cluster_1) }
+      let(:sector_airlines) { create(:tpi_sector, name: 'Airlines', cluster: cluster_1) }
+      let(:sector_steel) { create(:tpi_sector, name: 'Steel', cluster: cluster_2) }
+      let(:sector_no_cluster) { create(:tpi_sector, name: 'Cement') }
+      let(:sector_no_cp) { create(:tpi_sector, name: 'No CP') }
+
       before do
         create(
           :company, :published,

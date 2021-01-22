@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Admin::MQAssessmentsController, type: :controller do
-  let(:admin) { create(:admin_user) }
-  let(:company) { create(:company) }
-  let!(:mq_assessment) { create(:mq_assessment) }
+  let_it_be(:admin) { create(:admin_user) }
+  let_it_be(:company) { create(:company) }
+  let_it_be(:mq_assessment) { create(:mq_assessment) }
 
   before { sign_in admin }
 

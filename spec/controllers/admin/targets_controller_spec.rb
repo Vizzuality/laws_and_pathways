@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Admin::TargetsController, type: :controller do
-  let(:admin) { create(:admin_user) }
-  let!(:target) { create(:target, year: 2030) }
-  let!(:target2) { create(:target, year: 2040) }
-  let!(:target3) { create(:target, year: 2050) }
+  let_it_be(:admin) { create(:admin_user) }
+  let_it_be(:target) { create(:target, year: 2030) }
+  let_it_be(:target2) { create(:target, year: 2040) }
+  let_it_be(:target3) { create(:target, year: 2050) }
   let(:sector) { create(:laws_sector) }
   let(:geography) { create(:geography) }
   let(:legislations) { create_list(:legislation, 2) }
