@@ -53,14 +53,14 @@ rules:
   react/prefer-stateless-function: 0
   react-hooks/rules-of-hooks: error
   react-hooks/exhaustive-deps: warn
-parser: babel-eslint
+parser: "@babel/eslint-parser"
 parserOptions:
   ecmaVersion: 7
   ecmaFeatures:
     jsx: true
   sourceType: module
 plugins:
-  - babel
+  - "@babel"
   - react-hooks
 settings:
   react:
