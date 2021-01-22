@@ -45,7 +45,7 @@ module ActiveAdminCsvDownload
           end
         end
 
-        instance_eval(&block) if block
+        instance_eval(&block) if block_given?
 
         if show_upload
           li do
