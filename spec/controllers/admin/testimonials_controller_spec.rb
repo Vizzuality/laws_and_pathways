@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Admin::TestimonialsController, type: :controller do
-  let(:admin) { create(:admin_user) }
-  let!(:testimonial) { create(:testimonial) }
+  let_it_be(:admin) { create(:admin_user) }
+  let_it_be(:testimonial) { create(:testimonial) }
 
   before { sign_in admin }
 

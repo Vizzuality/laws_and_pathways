@@ -9,7 +9,7 @@ module HasEmissions
     none_empty_values = emissions.values.compact
     return 0 if none_empty_values.empty?
 
-    none_empty_values.map(&:to_f).sum / none_empty_values.length
+    none_empty_values.sum(&:to_f) / none_empty_values.length
   end
 
   def emissions=(value)

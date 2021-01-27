@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe Admin::LitigationsController, type: :controller do
   before(:each) { sign_in admin }
 
-  let(:admin) { create(:admin_user) }
-  let!(:litigation) { create(:litigation, :with_sides) }
+  let_it_be(:admin) { create(:admin_user) }
+  let_it_be(:litigation) { create(:litigation, :with_sides) }
   let(:side_geography) { create(:geography) }
   let(:side_company) { create(:company) }
   let(:geography) { create(:geography) }

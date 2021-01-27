@@ -49,14 +49,14 @@ RSpec.describe Litigation, type: :model do
   end
 
   context 'full_text_search' do
-    let!(:litigation_1) {
+    let_it_be(:litigation_1) {
       create(
         :litigation,
         title: 'Charles & Howard Pty. Ltd. v. Redland Shire Council',
         summary: "The owner of property located on Australia's northwest coast. Łąka"
       )
     }
-    let!(:litigation_2) {
+    let_it_be(:litigation_2) {
       create(
         :litigation,
         title: 'Able Lott Holdings Pty. Ltd. v. City of Fremantle',
@@ -66,7 +66,7 @@ RSpec.describe Litigation, type: :model do
         ]
       )
     }
-    let!(:litigation_3) {
+    let_it_be(:litigation_3) {
       create(
         :litigation,
         title: 'Anvil Hill Project Watch Association v. Minister for the Environment',

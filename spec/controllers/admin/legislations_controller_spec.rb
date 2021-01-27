@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Admin::LegislationsController, type: :controller do
-  let(:admin) { create(:admin_user) }
-  let(:geography) { create(:geography) }
-  let(:sector) { create(:laws_sector) }
+  let_it_be(:admin) { create(:admin_user) }
+  let_it_be(:geography) { create(:geography) }
+  let_it_be(:sector) { create(:laws_sector) }
 
-  let!(:legislation) { create(:legislation, visibility_status: 'published') }
-  let!(:legislation_archived) { create(:legislation, visibility_status: 'archived') }
-  let!(:legislation_discarded) { create(:legislation, discarded_at: 10.days.ago) }
+  let_it_be(:legislation) { create(:legislation, visibility_status: 'published') }
+  let_it_be(:legislation_archived) { create(:legislation, visibility_status: 'archived') }
+  let_it_be(:legislation_discarded) { create(:legislation, discarded_at: 10.days.ago) }
 
   before { sign_in admin }
 

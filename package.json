@@ -17,11 +17,17 @@
     "rails:bundle-audit": "bundle exec bundle-audit check --update"
   },
   "dependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/eslint-parser": "^7.12.1",
+    "@babel/eslint-plugin": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.10.4",
     "@rails/actioncable": "^6.0.3-3",
     "@rails/activestorage": "^6.0.3-3",
     "@rails/ujs": "^6.0.3-3",
     "@rails/webpacker": "^5.2.1",
+    "babel-loader": "^8.2.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "bulma": "^0.8.0",
     "classnames": "^2.2.6",
@@ -56,7 +62,6 @@
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.3",
     "eslint": "7.9.0",
     "eslint-config-airbnb": "18.2.0",
     "eslint-loader": "^4.0.2",

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Admin::TPISectorClustersController, type: :controller do
-  let(:admin) { create(:admin_user) }
-  let!(:cluster) { create(:tpi_sector_cluster) }
+  let_it_be(:admin) { create(:admin_user) }
+  let_it_be(:cluster) { create(:tpi_sector_cluster) }
   let(:valid_attributes) { attributes_for(:tpi_sector_cluster) }
   let(:invalid_attributes) { valid_attributes.merge(name: nil) }
   let(:page) { Capybara::Node::Simple.new(response.body) }

@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Api::Charts::Sector do
-  let(:sector) { create(:tpi_sector, name: 'Airlines') }
-  let(:sector2) { create(:tpi_sector, name: 'Autos') }
-  let(:company) { create(:company, sector: sector) }
-  let(:company2) { create(:company, sector: sector2) }
+  let_it_be(:sector) { create(:tpi_sector, name: 'Airlines') }
+  let_it_be(:sector2) { create(:tpi_sector, name: 'Autos') }
+  let_it_be(:company) { create(:company, sector: sector) }
+  let_it_be(:company2) { create(:company, sector: sector2) }
 
   subject { described_class.new(Company) }
 

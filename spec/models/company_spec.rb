@@ -69,10 +69,10 @@ RSpec.describe Company, type: :model do
   describe '#latest_cp_assessment' do
     it 'returns last CP assessments with most recent assessment date' do
       company = create(:company, cp_assessments: [
-                         create(:cp_assessment, assessment_date: '2012-05-01'),
-                         create(:cp_assessment, assessment_date: '2019-05-01'),
-                         create(:cp_assessment, assessment_date: '2013-05-01'),
-                         create(:cp_assessment, assessment_date: '2020-01-01', publication_date: 1.year.from_now)
+                         build(:cp_assessment, assessment_date: '2012-05-01'),
+                         build(:cp_assessment, assessment_date: '2019-05-01'),
+                         build(:cp_assessment, assessment_date: '2013-05-01'),
+                         build(:cp_assessment, assessment_date: '2020-01-01', publication_date: 1.year.from_now)
                        ])
 
       expect(company.latest_cp_assessment.assessment_date.to_s).to eq('01/05/2019')
@@ -82,11 +82,11 @@ RSpec.describe Company, type: :model do
   describe '#latest_mq_assessment' do
     it 'returns last MQ assessments with most recent assessment date' do
       company = create(:company, mq_assessments: [
-                         create(:mq_assessment, assessment_date: '2012-05-01'),
-                         create(:mq_assessment, assessment_date: '2019-05-01'),
-                         create(:mq_assessment, assessment_date: '2013-05-01'),
-                         create(:mq_assessment, assessment_date: '2018-05-01'),
-                         create(:mq_assessment, assessment_date: '2020-01-01', publication_date: 1.year.from_now)
+                         build(:mq_assessment, assessment_date: '2012-05-01'),
+                         build(:mq_assessment, assessment_date: '2019-05-01'),
+                         build(:mq_assessment, assessment_date: '2013-05-01'),
+                         build(:mq_assessment, assessment_date: '2018-05-01'),
+                         build(:mq_assessment, assessment_date: '2020-01-01', publication_date: 1.year.from_now)
                        ])
 
       expect(company.latest_mq_assessment.assessment_date.to_s).to eq('01/05/2019')
@@ -94,7 +94,7 @@ RSpec.describe Company, type: :model do
   end
 
   describe '#latest_sector_benchmarks_before_last_assessment' do
-    let(:sector_cp_benchmarks) do
+    let_it_be(:sector_cp_benchmarks) do
       [
         create(:cp_benchmark, release_date: '2013-05-01', scenario: 'Below 2'),    # previous benchmarks
         create(:cp_benchmark, release_date: '2013-05-01', scenario: 'Paris'),      # - should be ignored
@@ -109,14 +109,14 @@ RSpec.describe Company, type: :model do
         create(:cp_benchmark, release_date: '2019-05-01', scenario: '2 degrees')   # - should be ignored
       ]
     end
-    let(:company_assessments) do
+    let_it_be(:company_assessments) do
       [
         create(:cp_assessment, assessment_date: '2012-05-01', publication_date: '2012-05-01'),
         create(:cp_assessment, assessment_date: '2013-05-01', publication_date: '2013-05-01'),
         create(:cp_assessment, assessment_date: '2018-05-01', publication_date: '2018-05-01') # <- last assessment date
       ]
     end
-    let(:older_company_assessments) do
+    let_it_be(:older_company_assessments) do
       [
         create(:cp_assessment, assessment_date: '2011-05-01', publication_date: '2011-05-01'),
         create(:cp_assessment, assessment_date: '2012-05-01', publication_date: '2012-05-01')

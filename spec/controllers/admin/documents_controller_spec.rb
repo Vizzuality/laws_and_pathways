@@ -2,16 +2,16 @@ require 'rails_helper'
 require 'csv'
 
 RSpec.describe Admin::DocumentsController, type: :controller do
-  let(:admin) { create(:admin_user) }
-  let!(:legislation1) { create(:legislation, visibility_status: 'published') }
-  let!(:legislation2) { create(:legislation, visibility_status: 'pending') }
-  let!(:litigation1) { create(:litigation, visibility_status: 'published') }
-  let!(:litigation2) { create(:litigation, visibility_status: 'draft') }
+  let_it_be(:admin) { create(:admin_user) }
+  let_it_be(:legislation1) { create(:legislation, visibility_status: 'published') }
+  let_it_be(:legislation2) { create(:legislation, visibility_status: 'pending') }
+  let_it_be(:litigation1) { create(:litigation, visibility_status: 'published') }
+  let_it_be(:litigation2) { create(:litigation, visibility_status: 'draft') }
 
-  let!(:document1) { create(:document, name: 'Doc1', documentable: legislation1) } # with published documentable
-  let!(:document2) { create(:document, name: 'Doc2', documentable: legislation2) }
-  let!(:document3) { create(:document, name: 'Doc3', documentable: litigation1) }  # with published documentable
-  let!(:document4) { create(:document, name: 'Doc4', documentable: litigation2) }
+  let_it_be(:document1) { create(:document, name: 'Doc1', documentable: legislation1) } # with published documentable
+  let_it_be(:document2) { create(:document, name: 'Doc2', documentable: legislation2) }
+  let_it_be(:document3) { create(:document, name: 'Doc3', documentable: litigation1) }  # with published documentable
+  let_it_be(:document4) { create(:document, name: 'Doc4', documentable: litigation2) }
 
   before { sign_in admin }
 

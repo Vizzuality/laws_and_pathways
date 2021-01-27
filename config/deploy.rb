@@ -39,7 +39,7 @@ set :init_system, :systemd
 set :rvm_custom_path, '/usr/share/rvm'
 
 set :nvm_type, :user
-set :nvm_node, 'v10.22.0'
+set :nvm_node, 'v14.15.4'
 set :nvm_map_bins, %w{node npm yarn}
 
 # Temporary workaround for https://github.com/koenpunt/capistrano-nvm/issues/25

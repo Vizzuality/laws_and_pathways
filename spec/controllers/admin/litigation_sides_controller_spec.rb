@@ -2,12 +2,12 @@ require 'rails_helper'
 require 'csv'
 
 RSpec.describe Admin::LitigationSidesController, type: :controller do
-  let(:admin) { create(:admin_user) }
-  let!(:litigation1) { create(:litigation, title: 'Litigation1') }
-  let!(:litigation2) { create(:litigation, title: 'Litigation2') }
+  let_it_be(:admin) { create(:admin_user) }
+  let_it_be(:litigation1) { create(:litigation, title: 'Litigation1') }
+  let_it_be(:litigation2) { create(:litigation, title: 'Litigation2') }
 
-  let!(:side1) { create(:litigation_side, name: 'Side1', litigation: litigation1) }
-  let!(:side2) { create(:litigation_side, name: 'Side2', litigation: litigation2) }
+  let_it_be(:side1) { create(:litigation_side, name: 'Side1', litigation: litigation1) }
+  let_it_be(:side2) { create(:litigation_side, name: 'Side2', litigation: litigation2) }
 
   before { sign_in admin }
 
