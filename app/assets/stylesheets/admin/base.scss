@@ -98,6 +98,17 @@ fieldset.actions .cancel a {
   }
 }
 
+// fix wrap of action items
+#titlebar_right {
+  .action_items {
+    white-space: nowrap;
+  }
+}
+
+.title_bar {
+  line-height: 1.5rem;
+}
+
 #index_footer {
   .download_links {
     display: none;

@@ -44,6 +44,7 @@ export default class extends Controller {
 
     // very nasty trick, using dynamic list instead of AA has_many forms
     // many plugins listen to this event to reinitialize, for example select2 from activeadmin addons
+    // this takes a lot of time in development environment !!!!
     document.dispatchEvent(new Event('has_many_add:after'));
   }
 
