@@ -92,6 +92,10 @@ fieldset.actions .cancel a {
   #current_user, #logout {
     width: auto;
   }
+
+  #current_user > a {
+    white-space: nowrap;
+  }
 }
 
 #index_footer {
