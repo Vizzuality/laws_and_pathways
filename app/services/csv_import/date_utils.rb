@@ -19,7 +19,7 @@ module CSVImport
       end
 
       def parse_date(date_text, format)
-        date = Date.strptime(date_text, format)
+        date = DateTime.strptime(date_text.strip, format).to_date
         return date.prev_year(100) if two_digit_year?(format) && date.year > TWO_DIGIT_YEAR_CUTOFF
 
         date
