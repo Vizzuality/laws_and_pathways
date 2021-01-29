@@ -1,7 +1,11 @@
-module TestFiles
-  module_function
+class TestFiles
+  include Singleton
+  include ActionDispatch::TestProcess
+  include ActiveSupport::Testing::FileFixtures
 
-  extend ActionDispatch::TestProcess
+  class << self
+    delegate :pdf, to: :instance
+  end
 
   def pdf
     fixture_file_upload(
