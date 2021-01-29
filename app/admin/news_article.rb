@@ -55,7 +55,7 @@ ActiveAdmin.register NewsArticle do
   end
 
   form html: {'data-controller' => 'check-modified'} do |f|
-    f.semantic_errors(*f.object.errors.keys)
+    f.semantic_errors(*f.object.errors.attribute_names)
 
     f.inputs do
       f.input :title

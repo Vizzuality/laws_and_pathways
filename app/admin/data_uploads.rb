@@ -40,7 +40,7 @@ ActiveAdmin.register DataUpload do
   end
 
   form html: {'data-controller' => 'check-modified'} do |f|
-    f.semantic_errors(*f.object.errors.keys)
+    f.semantic_errors(*f.object.errors.attribute_names)
 
     div class: 'padding-20' do
       'Only CSV files are allowed. Please make sure that imported file is UTF-8 encoded.
