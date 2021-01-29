@@ -62,7 +62,7 @@ module Seed
     private
 
     def seed_file(filename)
-      File.open(Rails.root.join('db', 'seeds', filename), 'r')
+      File.open(Rails.root.join('db', 'seeds', 'tpi', filename), 'r')
     end
 
     def import_sectors

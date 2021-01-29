@@ -9,6 +9,8 @@ ActiveAdmin.register Event do
 
   actions :all, except: [:new, :create]
 
+  data_export_sidebar 'Events'
+
   show do
     attributes_table do
       row :id

@@ -6,26 +6,7 @@ module Seed
 
     class << self
       delegate :call, to: :instance
-      delegate :call_sources_import, to: :instance
       delegate :import_litigation_sides, to: :instance
-      delegate :call_litigation_sources_import, to: :instance
-      delegate :import_geographies_metadata, to: :instance
-    end
-
-    def call_sources_import
-      TimedLogger.log('Migrate source files') do
-        Migration::Legislation.migrate_source_files(seed_file('legislation-sources.csv'))
-      end
-
-      TimedLogger.log('Migrate litigations source files') do
-        Migration::Litigation.migrate_source_files(seed_file('litigation-sources.csv'))
-      end
-    end
-
-    def call_litigation_sources_import
-      TimedLogger.log('Migrate litigations source files') do
-        Migration::Litigation.migrate_source_files(seed_file('litigation-sources.csv'))
-      end
     end
 
     def call
@@ -33,12 +14,6 @@ module Seed
       TimedLogger.log('Import legislation') do
         CSVImport::Legislations.new(seed_file('legislation.csv'), override_id: true).call
       end
-      TimedLogger.log('Fill in responses for laws') do
-        Migration::Legislation.fill_responses
-      end
-      # import instruments
-      # import hazards
-
       ### import Litigations ###
       TimedLogger.log('Import Litigations') do
         CSVImport::Litigations.new(seed_file('litigations.csv'), override_id: true).call
@@ -66,16 +41,10 @@ module Seed
       end
     end
 
-    def import_geographies_metadata
-      TimedLogger.log('Import Geographies Metadata') do
-        Migration::Geographies.migrate_metadata_file(seed_file('geographies_metadata.csv'))
-      end
-    end
-
     private
 
     def seed_file(filename)
-      File.open(Rails.root.join('db', 'seeds', 'laws_migration', filename), 'r')
+      File.open(Rails.root.join('db', 'seeds', 'cclow', filename), 'r')
     end
   end
 end
