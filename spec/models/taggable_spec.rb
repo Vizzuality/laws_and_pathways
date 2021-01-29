@@ -58,5 +58,22 @@ RSpec.describe Taggable do
         expect(legislation.keywords_string).to eq('sport, holiday, travel')
       end
     end
+
+    describe 'keyword_ids' do
+      let(:keyword1) { create(:keyword, name: 'sport') }
+      let(:keyword2) { create(:keyword, name: 'holiday') }
+
+      it 'should set keywords list using ids properly' do
+        legislation.keyword_ids = [keyword1.id, keyword2.id]
+        expect(legislation.keywords.pluck(:name)).to include(keyword1.name, keyword2.name)
+        expect(legislation.keywords.count).to be(2)
+      end
+
+      it 'should not set keywords duplicates' do
+        legislation.keyword_ids = [keyword1.id, keyword1.id, keyword1.id, keyword2.id, keyword2.id]
+        expect(legislation.keywords.pluck(:name)).to include(keyword1.name, keyword2.name)
+        expect(legislation.keywords.count).to be(2)
+      end
+    end
   end
 end

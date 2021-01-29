@@ -31,8 +31,13 @@ module Taggable
 
   class_methods do
     def tag_with(name, **attrs)
-      class_name = attrs[:class_name] || name.to_s.singularize.camelize
+      singular_name = name.to_s.singularize
+      class_name = attrs[:class_name] || singular_name.camelize
       has_many name, -> { order(:id) }, through: :taggings, source: :tag, class_name: class_name
+
+      define_method("#{singular_name}_ids=") do |value|
+        super(value&.uniq)
+      end
 
       define_method("#{name}_list") do
         send(name).map(&:name)
