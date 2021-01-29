@@ -1745,21 +1745,21 @@
     mkdirp "^1.0.4"
 
 "@rails/actioncable@^6.0.3-3":
-  version "6.0.3-3"
-  resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-6.0.3-3.tgz#fb1a46d3d353512764d5fa3cea2f492391601b7a"
-  integrity sha512-+DEbtzvD2ITPKOGBAV0lLdUvImCsHtUYfxwW7TDKOrGNEFqgbVJij7aO6ZE8a3aDPQ7NnO/MlyrPwLVeiIZRSw==
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-6.1.1.tgz#e980b2ea1c62cae17bcddad37deb6ba88d498b63"
+  integrity sha512-A8toxvSuzK/wX9uMwyV6T1EYzlqzIJNrO8XiNCSNsmKresdX2cbAjxFdMu9haaPJPjl3aC2FKRJeVCUWVtLPAQ==
 
 "@rails/activestorage@^6.0.3-3":
-  version "6.0.3-3"
-  resolved "https://registry.yarnpkg.com/@rails/activestorage/-/activestorage-6.0.3-3.tgz#0e1cb0f9e10ae5a043196d3a8f41e07062592fae"
-  integrity sha512-39ydo2XOZt380fMU5DbLHXYuD8Gy0qK1YYqVPM+cL9QBI6lm//dsOLUgooQtvHow+n3yF4B3Hoc6PWD2VrSp/A==
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/@rails/activestorage/-/activestorage-6.1.1.tgz#c7e9c849ab9487c9914bd0bb447467cb4520bc56"
+  integrity sha512-eSVffvzY0MrC4bGP6RrqvlHM06HZ1kc/4XM3XkoL8pAObDANREfd9Dstm7mYpsgPLyhtJ96QxYLV27IoFiVTbQ==
   dependencies:
     spark-md5 "^3.0.0"
 
 "@rails/ujs@^6.0.3-3":
-  version "6.0.3-3"
-  resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-6.0.3-3.tgz#5cf1e99c6fa1beaf73d4bcac6ab9b05702e92713"
-  integrity sha512-bXCbtpSwCtqhBXxxoD5FGiyeqJU1smf4DS15SCXRzzSaoee2Kk+lVV5q2dEIBdj0NBDiK/G1ShoM2wlPy7Tu5w==
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-6.1.1.tgz#25c4e60018274b37e5ba0850134f6445429de2f5"
+  integrity sha512-uF6zEbXpGkNa7Vvxrd9Yqas8xsbc3lsC733V6I7fXgPuj8xXiuZakdE4uIyQSFRVmZKe12qmC6CNJNtIEvt4bA==
 
 "@rails/webpacker@^5.2.1":
   version "5.2.1"
@@ -3656,10 +3656,17 @@ d3-array@1:
   resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-1.2.4.tgz#635ce4d5eea759f6f605863dbcfc30edc737f71f"
   integrity sha512-KHW6M86R+FUPYGb3R5XiYjXPq7VzwxZ22buHhAEVG5ztoEcZZMLov530mmccaqA1GghZArjQV46fuc8kUqhhHw==
 
-d3-array@^2.3.0, d3-array@^2.5.0:
+d3-array@^2.3.0:
   version "2.9.1"
   resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-2.9.1.tgz#f355cc72b46c8649b3f9212029e2d681cb5b9643"
   integrity sha512-Ob7RdOtkqsjx1NWyQHMFLtCSk6/aKTxDdC4ZIolX+O+mDD2RzrsYgAyc0WGAlfYFVELLSilS7w8BtE3PKM8bHg==
+
+d3-array@^2.5.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-2.11.0.tgz#5ed6a2869bc7d471aec8df9ff6ed9fef798facc4"
+  integrity sha512-26clcwmHQEdsLv34oNKq5Ia9tQ26Y/4HqS3dQzF42QBUqymZJ+9PORcN1G52bt37NsL2ABoX4lvyYZc+A9Y0zw==
+  dependencies:
+    internmap "^1.0.0"
 
 "d3-color@1 - 2":
   version "2.0.0"
@@ -5556,6 +5563,11 @@ internal-slot@^1.0.2:
     es-abstract "^1.17.0-next.1"
     has "^1.0.3"
     side-channel "^1.0.2"
+
+internmap@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/internmap/-/internmap-1.0.0.tgz#3c6bf0944b0eae457698000412108752bbfddb56"
+  integrity sha512-SdoDWwNOTE2n4JWUsLn4KXZGuZPjPF9yyOGc8bnfWnBQh7BD/l80rzSznKc/r4Y0aQ7z3RTk9X+tV4tHBpu+dA==
 
 interpret@^1.4.0:
   version "1.4.0"
