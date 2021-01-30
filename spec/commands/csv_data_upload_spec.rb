@@ -307,12 +307,14 @@ describe 'CSVDataUpload (integration)' do
 
   it 'imports CSV files with Target data' do
     updated_target = create(:target, source: 'plan')
+    law = create(:legislation)
+    law2 = create(:legislation)
 
     csv_content = <<-CSV
-      Id,Target type,Description,Ghg target,Year,Base year period,Single year,Geography,Geography iso,Sector,Scopes,source,Visibility status
-      ,no_document_submitted,description,true,1995,1998,false,Japan,JPN,Airlines,"Scope2",law,draft
-      #{updated_target.id},base_year_target,updated description,true,1994,1994,false,Poland,POL,Cement,"Scope1,Scope2",ndc,draft
-      ,intensity_target_and_trajectory_target,description,false,2003,2001,true,Poland,POL,Electricity Utilities,"Scope1",plan,pending
+      Id,Target type,Description,Ghg target,Year,Base year period,Single year,Geography,Geography iso,Sector,Scopes,source,Connected law ids,Visibility status
+      ,no_document_submitted,description,true,1995,1998,false,Japan,JPN,Airlines,"Scope2",law,,draft
+      #{updated_target.id},base_year_target,updated description,true,1994,1994,false,Poland,POL,Cement,"Scope1,Scope2",ndc,"#{law.id},#{law2.id}",draft
+      ,intensity_target_and_trajectory_target,description,false,2003,2001,true,Poland,POL,Electricity Utilities,"Scope1",plan,#{law.id},pending
     CSV
 
     targets_csv = fixture_file('targets.csv', content: csv_content)
@@ -339,6 +341,8 @@ describe 'CSVDataUpload (integration)' do
     expect(updated_target.sector.name).to eq('Cement')
     expect(updated_target.scopes.size).to eq(2)
     expect(updated_target.scopes_list).to include('Scope1', 'Scope2')
+    expect(updated_target.legislations.size).to eq(2)
+    expect(updated_target.legislation_ids).to include(law.id, law2.id)
 
     latest = Target.last
 
@@ -356,6 +360,8 @@ describe 'CSVDataUpload (integration)' do
     expect(latest.sector.name).to eq('Electricity Utilities')
     expect(latest.scopes_list).to include('Scope1')
     expect(latest.scopes.size).to eq(1)
+    expect(latest.legislations.size).to eq(1)
+    expect(latest.legislation_ids).to include(law.id)
   end
 
   it 'imports CSV files with CP Benchmarks data' do

@@ -20,7 +20,7 @@ module CSVImport
         any_changes = legislation.changed?
 
         legislation.save!
-        legislation.laws_sectors = find_or_create_laws_sectors(row[:sector].split(';')) if row[:sector]
+        legislation.laws_sectors = find_or_create_laws_sectors(row[:sector].split(/\s'|;/)) if row[:sector]
 
         update_import_results(was_new_record, any_changes)
       end

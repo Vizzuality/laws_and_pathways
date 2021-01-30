@@ -113,7 +113,7 @@ ActiveAdmin.register Legislation do
     column(:parent) { |l| l.parent&.title }
     column(:geography) { |l| l.geography.name }
     column(:geography_iso) { |l| l.geography.iso }
-    column(:sector) { |l| l.laws_sectors.map(&:name).join(';') }
+    column(:sector) { |l| l.laws_sectors.map(&:name).join(',') }
     column :frameworks, &:frameworks_string
     column :responses, &:responses_string
     column :document_types, &:document_types_string

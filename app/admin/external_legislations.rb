@@ -37,7 +37,7 @@ ActiveAdmin.register ExternalLegislation do
     column :url
     column(:geography) { |l| l.geography.name }
     column(:geography_iso) { |l| l.geography.iso }
-    column(:litigation_ids) { |l| l.litigation_ids.join('; ') }
+    column(:litigation_ids) { |l| l.litigation_ids.join(',') }
   end
 
   form html: {'data-controller' => 'check-modified'} do |f|
