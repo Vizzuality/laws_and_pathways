@@ -7,6 +7,6 @@ describe 'Laws and policies search', type: 'system', site: 'cclow' do
 
   it 'loads the page' do
     expect(page).to have_text('Laws and policies')
-    expect(page).to have_text('Showing 1803 results')
+    expect(page).to have_text('Showing 308 results')
   end
 end

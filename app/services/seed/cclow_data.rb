@@ -11,34 +11,39 @@ module Seed
 
     def call
       TimedLogger.log('Import legislation') do
-        CSVImport::Legislations.new(seed_file('legislations.csv'), override_id: true).call
+        run_importer CSVImport::Legislations.new(seed_file('legislations.csv'), override_id: true)
       end
       TimedLogger.log('Import Litigations') do
-        CSVImport::Litigations.new(seed_file('litigations.csv'), override_id: true).call
+        run_importer CSVImport::Litigations.new(seed_file('litigations.csv'), override_id: true)
       end
       import_litigation_sides
       TimedLogger.log('Import External Laws') do
-        CSVImport::ExternalLegislations.new(seed_file('external-legislations.csv'), override_id: true).call
+        run_importer CSVImport::ExternalLegislations.new(seed_file('external-legislations.csv'), override_id: true)
       end
       TimedLogger.log('Import documents') do
-        CSVImport::Documents.new(seed_file('documents.csv'), override_id: true).call
+        run_importer CSVImport::Documents.new(seed_file('documents.csv'))
       end
 
       TimedLogger.log('Import targets') do
-        CSVImport::Targets.new(seed_file('targets.csv'), override_id: true).call
+        run_importer CSVImport::Targets.new(seed_file('targets.csv'), override_id: true)
       end
       TimedLogger.log('Import events') do
-        CSVImport::Events.new(seed_file('events.csv'), override_id: true).call
+        run_importer CSVImport::Events.new(seed_file('events.csv'))
       end
     end
 
     def import_litigation_sides
       TimedLogger.log('Import Litigations Sides') do
-        CSVImport::LitigationSides.new(seed_file('litigation-sides.csv')).call
+        run_importer CSVImport::LitigationSides.new(seed_file('litigation-sides.csv'))
       end
     end
 
     private
+
+    def run_importer(importer)
+      importer.call
+      puts importer.import_results
+    end
 
     def seed_file(filename)
       File.open(Rails.root.join('db', 'seeds', 'cclow', filename), 'r')

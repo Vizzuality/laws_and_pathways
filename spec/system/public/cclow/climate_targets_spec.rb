@@ -7,6 +7,6 @@ describe 'Climate Targets search', type: 'system', site: 'cclow' do
 
   it 'loads the page' do
     expect(page).to have_text('Climate Targets')
-    expect(page).to have_text('Showing 1993 results')
+    expect(page).to have_text('Showing 243 results')
   end
 end

@@ -19,9 +19,9 @@ describe 'Home', type: 'system', site: 'cclow' do
         find('input#search-input').set('Polan')
 
         Capybara.using_wait_time(5) do
-          expect(page).to have_text("Search \nPolan\n in Laws and policies\n11")
-          expect(page).to have_text("Search \nPolan\n in Litigation\n5")
-          expect(page).to have_text("Search \nPolan\n in Climate targets\n11")
+          expect(page).to have_text("Search \nPolan\n in Laws and policies\n16")
+          expect(page).to have_text("Search \nPolan\n in Litigation\n8")
+          expect(page).to have_text("Search \nPolan\n in Climate targets\n15")
         end
 
         click_link 'Poland'

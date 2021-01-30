@@ -2,31 +2,31 @@ require 'rails_helper'
 
 describe 'Company Page', type: 'system', site: 'tpi' do
   before(:each) do
-    visit '/companies/wizz-air'
+    visit '/companies/japan-airlines'
   end
 
   it 'loads the page' do
-    expect(page).to have_text('Wizz Air')
+    expect(page).to have_text('Japan Airlines')
   end
 
   it 'shows management quality box' do
     within 'a.summary-box-link[href="#management-quality"]' do
-      expect(page).to have_text('Acknowledging Climate Change as a Business Issue')
+      expect(page).to have_text('Integrating into Operational Decision Making')
     end
   end
 
   it 'shows carbon performance box' do
     within 'a.summary-box-link[href="#carbon-performance"]' do
-      expect(page).to have_text('2 Degrees (Shift-Improve)')
+      expect(page).to have_text('Not aligned')
     end
   end
 
   it 'shows company details' do
-    expect_company_property('Geography', 'United Kingdom')
+    expect_company_property('Geography', 'Japan')
     expect_company_property('Sector', 'Airlines')
-    expect_company_property('Market cap', 'small')
-    expect_company_property('ISIN', 'JE00BN574F90')
-    expect_company_property('SEDOL', 'BN574F9')
+    expect_company_property('Market cap', 'large')
+    expect_company_property('ISIN', 'JP3705200008')
+    expect_company_property('SEDOL', 'B8BRV46')
   end
 
   it 'shows mq level assessment chart' do
