@@ -13,7 +13,8 @@
 class DataUpload < ApplicationRecord
   has_one_attached :file
 
-  UPLOADERS = %w[
+  DEV_UPLOADERS = Rails.env.development? || Rails.env.test? ? %w[Documents ExternalLegislations] : []
+  UPLOADERS = (%w[
     CPAssessments
     CPBenchmarks
     Companies
@@ -24,7 +25,7 @@ class DataUpload < ApplicationRecord
     Litigations
     MQAssessments
     Targets
-  ].freeze
+  ] + DEV_UPLOADERS).freeze
 
   belongs_to :uploaded_by, class_name: 'AdminUser', optional: true
 
