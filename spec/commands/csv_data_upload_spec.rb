@@ -143,7 +143,7 @@ describe 'CSVDataUpload (integration)' do
 
     csv_content = <<-CSV
       Id,Title,Document type,Geography iso,Jurisdiction,Sector,Citation reference number,Summary,responses,Keywords,At issue,Visibility status,Legislation ids
-      ,Litigation number 1,administrative_case,GBR,GBR,Transport,EWHC 2752,Lyle requested judicial review,"response1,response2","keyword1,keyword2",At issues,pending,"#{legislation1.id}, #{legislation2.id}"
+      ,Litigation number 1,administrative_case,GBR,GBR,"Transport,Energy;Urban",EWHC 2752,Lyle requested judicial review,"response1,response2","keyword1,keyword2",At issues,pending,"#{legislation1.id}, #{legislation2.id}"
       #{updated_litigation.id},Litigation number 2,administrative_case,GBR,GBR,,[2013] NIQB 24,The applicants were brothers ...,,,,Draft,
     CSV
 
@@ -165,7 +165,7 @@ describe 'CSVDataUpload (integration)' do
       document_type: 'administrative_case'
     )
     expect(litigation.geography.iso).to eq('GBR')
-    expect(litigation.laws_sectors.first.name).to eq('Transport')
+    expect(litigation.laws_sectors.pluck(:name)).to include('Transport', 'Energy', 'Urban')
     expect(litigation.keywords.size).to eq(2)
     expect(litigation.keywords_list).to include('Keyword1', 'Keyword2')
     expect(litigation.responses.size).to eq(2)
