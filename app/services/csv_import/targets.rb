@@ -53,24 +53,5 @@ module CSVImport
         visibility_status: row[:visibility_status]
       }
     end
-
-    def connect_laws(documents)
-      return [] unless documents
-
-      laws = []
-      documents.split(';').each do |doc|
-        contents = doc.split('|')
-        id = if contents.size == 3 && contents[1].to_i != 0
-               contents[1].to_i
-             elsif contents.size == 1 && contents[0].to_i != 0
-               contents[0].to_i
-             end
-        next unless id
-
-        find_it = Legislation.find(id)
-        laws << find_it
-      end
-      laws
-    end
   end
 end
