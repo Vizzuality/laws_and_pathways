@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'csv'
 
 RSpec.describe Admin::LitigationSidesController, type: :controller do
-  let_it_be(:admin) { create(:admin_user) }
+  let(:admin) { create(:admin_user) }
   let_it_be(:litigation1) { create(:litigation, title: 'Litigation1') }
   let_it_be(:litigation2) { create(:litigation, title: 'Litigation2') }
 

@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'csv'
 
 RSpec.describe Admin::DocumentsController, type: :controller do
-  let_it_be(:admin) { create(:admin_user) }
+  let(:admin) { create(:admin_user) }
   let_it_be(:legislation1) { create(:legislation, visibility_status: 'published') }
   let_it_be(:legislation2) { create(:legislation, visibility_status: 'pending') }
   let_it_be(:litigation1) { create(:litigation, visibility_status: 'published') }

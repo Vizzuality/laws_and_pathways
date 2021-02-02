@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Admin::GeographiesController, type: :controller do
-  let_it_be(:admin) { create(:admin_user) }
+  let(:admin) { create(:admin_user) }
   let_it_be(:geography) { create(:geography) }
 
   before { sign_in admin }

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Admin::CPBenchmarksController, type: :controller do
-  let_it_be(:admin) { create(:admin_user) }
+  let(:admin) { create(:admin_user) }
   let_it_be(:sector) { create(:tpi_sector, :with_benchmarks) }
   let(:benchmark) { sector.cp_benchmarks.first }
   let(:valid_attributes) { attributes_for(:cp_benchmark, sector_id: sector.id) }

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Admin::TargetsController, type: :controller do
-  let_it_be(:admin) { create(:admin_user) }
+  let(:admin) { create(:admin_user) }
   let_it_be(:target) { create(:target, year: 2030) }
   let_it_be(:target2) { create(:target, year: 2040) }
   let_it_be(:target3) { create(:target, year: 2050) }
