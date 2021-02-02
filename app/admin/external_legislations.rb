@@ -11,7 +11,7 @@ ActiveAdmin.register ExternalLegislation do
   filter :url_contains, label: 'URL'
   filter :geography
 
-  data_export_sidebar 'External Laws'
+  data_export_sidebar 'External Laws', upload: false
 
   show do
     attributes_table do
@@ -29,6 +29,15 @@ ActiveAdmin.register ExternalLegislation do
     column :name, &:name_summary_link
     column 'URL', :url
     column :geography
+  end
+
+  csv do
+    column :id
+    column :name
+    column :url
+    column(:geography) { |l| l.geography.name }
+    column(:geography_iso) { |l| l.geography.iso }
+    column(:litigation_ids) { |l| l.litigation_ids.join(',') }
   end
 
   form html: {'data-controller' => 'check-modified'} do |f|

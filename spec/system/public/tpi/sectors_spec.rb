@@ -11,7 +11,7 @@ describe 'Sector', type: 'system', site: 'tpi' do
 
       # pie chart
       within '.chart--mq-sector-pie-chart' do
-        expect(page).to have_selector('.companies-size', text: '323')
+        expect(page).to have_selector('.companies-size', text: '111')
       end
 
       # bubble chart loads
@@ -38,8 +38,8 @@ describe 'Sector', type: 'system', site: 'tpi' do
     it 'loads all elements' do
       # bubble chart loads
       within '.chart--mq-sector-pie-chart' do
-        expect(page).to have_text('Level 36 companies') # Level 3 6 companies
-        expect(page).to have_selector('.companies-size', text: '22')
+        expect(page).to have_text('Level 32 companies') # Level 3 2 companies
+        expect(page).to have_selector('.companies-size', text: '5')
       end
     end
   end

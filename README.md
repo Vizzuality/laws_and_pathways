@@ -27,6 +27,12 @@ On the project's root run `bundle install`.
 
 `bundle exec rails db:setup` to setup the database
 
+#### Database seeds for development
+
+To seed the database subset of selected production data is being used. The data was taken just for only a few countries and it's being
+imported using import services. If you for some reason don't want to import this data just set `SEED_DATA=false` env variable
+before running `db:setup` command.
+
 ### Setting up local subdomains
 
 This project contains two different websites and admin panel. That's why to make it work we need to make changes to /etc/hosts in development env

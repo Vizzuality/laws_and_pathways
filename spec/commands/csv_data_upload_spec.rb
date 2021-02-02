@@ -143,7 +143,7 @@ describe 'CSVDataUpload (integration)' do
 
     csv_content = <<-CSV
       Id,Title,Document type,Geography iso,Jurisdiction,Sector,Citation reference number,Summary,responses,Keywords,At issue,Visibility status,Legislation ids
-      ,Litigation number 1,administrative_case,GBR,GBR,Transport,EWHC 2752,Lyle requested judicial review,"response1,response2","keyword1,keyword2",At issues,pending,"#{legislation1.id}, #{legislation2.id}"
+      ,Litigation number 1,administrative_case,GBR,GBR,"Transport,Energy;Urban",EWHC 2752,Lyle requested judicial review,"response1,response2","keyword1,keyword2",At issues,pending,"#{legislation1.id}, #{legislation2.id}"
       #{updated_litigation.id},Litigation number 2,administrative_case,GBR,GBR,,[2013] NIQB 24,The applicants were brothers ...,,,,Draft,
     CSV
 
@@ -165,7 +165,7 @@ describe 'CSVDataUpload (integration)' do
       document_type: 'administrative_case'
     )
     expect(litigation.geography.iso).to eq('GBR')
-    expect(litigation.laws_sectors.first.name).to eq('Transport')
+    expect(litigation.laws_sectors.pluck(:name)).to include('Transport', 'Energy', 'Urban')
     expect(litigation.keywords.size).to eq(2)
     expect(litigation.keywords_list).to include('Keyword1', 'Keyword2')
     expect(litigation.responses.size).to eq(2)
@@ -206,6 +206,54 @@ describe 'CSVDataUpload (integration)' do
     expect(created_side.name).to eq(company.name)
     expect(created_side.party_type).to eq('corporation')
     expect(created_side.side_type).to eq('a')
+  end
+
+  it 'imports CSV files with Documents data' do
+    legislation = create(:legislation)
+
+    csv_content = <<-CSV
+      Id,Name,External url,Language,Last verified on,Documentable id,Documentable type
+      ,Document name,http://example.com,English,03/12/2020,#{legislation.id},Legislation
+    CSV
+    documents_csv = fixture_file('documents.csv', content: csv_content)
+
+    expect_data_upload_results(
+      Document,
+      documents_csv,
+      new_records: 1, not_changed_records: 0, rows: 1, updated_records: 0
+    )
+
+    created = Document.last
+
+    expect(created.name).to eq('Document name')
+    expect(created.external_url).to eq('http://example.com')
+    expect(created.last_verified_on).to eq(Date.parse('2020-12-03'))
+    expect(legislation.documents.first).to eq(created)
+  end
+
+  it 'imports CSV files with External Legislation data' do
+    litigation1 = create(:litigation)
+    litigation2 = create(:litigation)
+
+    csv_content = <<-CSV
+      Id,Name,url,Geography iso,Litigation ids
+      ,External law 1,http://example.com,POL,"#{litigation1.id},#{litigation2.id}"
+    CSV
+    external_laws_csv = fixture_file('external_laws.csv', content: csv_content)
+
+    expect_data_upload_results(
+      ExternalLegislation,
+      external_laws_csv,
+      new_records: 1, not_changed_records: 0, rows: 1, updated_records: 0
+    )
+
+    created = ExternalLegislation.last
+
+    expect(created.name).to eq('External law 1')
+    expect(created.url).to eq('http://example.com')
+    expect(created.geography.iso).to eq('POL')
+    expect(litigation1.external_legislation_ids).to include(created.id)
+    expect(litigation2.external_legislation_ids).to include(created.id)
   end
 
   it 'imports CSV file with Event data' do
@@ -259,12 +307,14 @@ describe 'CSVDataUpload (integration)' do
 
   it 'imports CSV files with Target data' do
     updated_target = create(:target, source: 'plan')
+    law = create(:legislation)
+    law2 = create(:legislation)
 
     csv_content = <<-CSV
-      Id,Target type,Description,Ghg target,Year,Base year period,Single year,Geography,Geography iso,Sector,Scopes,source,Visibility status
-      ,no_document_submitted,description,true,1995,1998,false,Japan,JPN,Airlines,"Scope2",law,draft
-      #{updated_target.id},base_year_target,updated description,true,1994,1994,false,Poland,POL,Cement,"Scope1,Scope2",ndc,draft
-      ,intensity_target_and_trajectory_target,description,false,2003,2001,true,Poland,POL,Electricity Utilities,"Scope1",plan,pending
+      Id,Target type,Description,Ghg target,Year,Base year period,Single year,Geography,Geography iso,Sector,Scopes,source,Connected law ids,Visibility status
+      ,no_document_submitted,description,true,1995,1998,false,Japan,JPN,Airlines,"Scope2",law,,draft
+      #{updated_target.id},base_year_target,updated description,true,1994,1994,false,Poland,POL,Cement,"Scope1,Scope2",ndc,"#{law.id},#{law2.id}",draft
+      ,intensity_target_and_trajectory_target,description,false,2003,2001,true,Poland,POL,Electricity Utilities,"Scope1",plan,#{law.id},pending
     CSV
 
     targets_csv = fixture_file('targets.csv', content: csv_content)
@@ -291,6 +341,8 @@ describe 'CSVDataUpload (integration)' do
     expect(updated_target.sector.name).to eq('Cement')
     expect(updated_target.scopes.size).to eq(2)
     expect(updated_target.scopes_list).to include('Scope1', 'Scope2')
+    expect(updated_target.legislations.size).to eq(2)
+    expect(updated_target.legislation_ids).to include(law.id, law2.id)
 
     latest = Target.last
 
@@ -308,6 +360,8 @@ describe 'CSVDataUpload (integration)' do
     expect(latest.sector.name).to eq('Electricity Utilities')
     expect(latest.scopes_list).to include('Scope1')
     expect(latest.scopes.size).to eq(1)
+    expect(latest.legislations.size).to eq(1)
+    expect(latest.legislation_ids).to include(law.id)
   end
 
   it 'imports CSV files with CP Benchmarks data' do

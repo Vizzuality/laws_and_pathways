@@ -14,24 +14,24 @@ module Seed
 
       # import companies
       TimedLogger.log('Import companies') do
-        CSVImport::Companies.new(seed_file('tpi-companies.csv'), override_id: true).call
+        run_importer CSVImport::Companies.new(seed_file('tpi-companies.csv'), override_id: true)
       end
 
       # import CP Benchmarks
       TimedLogger.log('Import CP Benchmarks') do
-        CSVImport::CPBenchmarks.new(seed_file('cp-benchmarks.csv')).call
+        run_importer CSVImport::CPBenchmarks.new(seed_file('cp-benchmarks.csv'))
       end
 
       # import CP Assessments
       TimedLogger.log('Import CP Assessments') do
-        CSVImport::CPAssessments.new(seed_file('cp-assessments.csv')).call
+        run_importer CSVImport::CPAssessments.new(seed_file('cp-assessments.csv'))
       end
 
       # import MQ Assessments
       TimedLogger.log('Import MQ Assessments') do
-        CSVImport::MQAssessments.new(seed_file('mq-assessments-M1.csv')).call
-        CSVImport::MQAssessments.new(seed_file('mq-assessments-M2.csv')).call
-        CSVImport::MQAssessments.new(seed_file('mq-assessments-M3.csv')).call
+        run_importer CSVImport::MQAssessments.new(seed_file('mq-assessments-M1.csv'))
+        run_importer CSVImport::MQAssessments.new(seed_file('mq-assessments-M2.csv'))
+        run_importer CSVImport::MQAssessments.new(seed_file('mq-assessments-M3.csv'))
       end
     end
 
@@ -61,8 +61,13 @@ module Seed
 
     private
 
+    def run_importer(importer)
+      importer.call
+      puts importer.import_results
+    end
+
     def seed_file(filename)
-      File.open(Rails.root.join('db', 'seeds', filename), 'r')
+      File.open(Rails.root.join('db', 'seeds', 'tpi', filename), 'r')
     end
 
     def import_sectors

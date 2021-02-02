@@ -8,9 +8,9 @@ describe 'Company Selector', type: 'system', site: 'tpi' do
   it 'filters by company' do
     click_button 'Filter by company'
     find('.dropdown-selector__header').click
-    find('input.dropdown-selector__input').set('Renault')
+    find('input.dropdown-selector__input').set('Toyota')
     find('input.dropdown-selector__input').native.send_keys(:return)
-    expect(page).to have_current_path('/companies/renault')
+    expect(page).to have_current_path('/companies/toyota')
   end
 
   it 'filters by sector' do

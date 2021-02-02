@@ -50,27 +50,15 @@ module CSVImport
         geography: geographies_names[row[:geography]],
         sector: find_or_create_laws_sector(row[:sector]),
         source: row[:source]&.downcase,
-        visibility_status: row[:visibility_status]
+        visibility_status: row[:visibility_status],
+        legislation_ids: legislation_ids(row)
       }
     end
 
-    def connect_laws(documents)
-      return [] unless documents
+    def legislation_ids(row)
+      return [] unless row[:connected_law_ids].present?
 
-      laws = []
-      documents.split(';').each do |doc|
-        contents = doc.split('|')
-        id = if contents.size == 3 && contents[1].to_i != 0
-               contents[1].to_i
-             elsif contents.size == 1 && contents[0].to_i != 0
-               contents[0].to_i
-             end
-        next unless id
-
-        find_it = Legislation.find(id)
-        laws << find_it
-      end
-      laws
+      row[:connected_law_ids].split(',').map(&:to_i)
     end
   end
 end

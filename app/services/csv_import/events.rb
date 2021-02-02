@@ -27,6 +27,7 @@ module CSVImport
         Event.find_or_initialize_by(
           eventable_id: row[:eventable],
           eventable_type: row[:eventable_type],
+          event_type: row[:event_type]&.downcase&.gsub(' ', '_'),
           title: row[:title]
         )
     end
