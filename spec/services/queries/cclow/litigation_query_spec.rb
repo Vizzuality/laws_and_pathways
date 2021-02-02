@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Queries::CCLOW::LitigationQuery do
-  before_all do
+  before(:all) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.start
+
     @side_a1 = create(:litigation_side, name: 'Side A', side_type: 'a', party_type: 'corporation')
     @side_a11 = create(:litigation_side, name: 'Side A 2', side_type: 'a', party_type: 'corporation')
     @side_a12 = create(:litigation_side, name: 'Side A 3', side_type: 'a', party_type: 'government')
@@ -73,6 +76,10 @@ RSpec.describe Queries::CCLOW::LitigationQuery do
     )
 
     @unpublished_litigation = create(:litigation, :draft)
+  end
+
+  after(:all) do
+    DatabaseCleaner.clean
   end
 
   # It shouldn't show, so total is 4 not 5 at max!

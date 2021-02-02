@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Queries::CCLOW::LegislationQuery do
-  before_all do
+  before(:all) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.start
+
     @biodiversity = create(:keyword, name: 'Biodiversity')
     @business_risk = create(:keyword, name: 'Business risk')
     @cap_and_trade = create(:keyword, name: 'Cap and Trade')
@@ -77,6 +80,10 @@ RSpec.describe Queries::CCLOW::LegislationQuery do
 
     # It shouldn't show, so total is 4 not 5 at max!
     @unpublished_legislation = create(:legislation, :legislative, :draft)
+  end
+
+  after(:all) do
+    DatabaseCleaner.clean
   end
 
   subject { described_class }

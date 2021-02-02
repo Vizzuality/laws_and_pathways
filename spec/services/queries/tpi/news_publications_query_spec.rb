@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Queries::TPI::NewsPublicationsQuery do
-  before_all do
+  before(:all) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.start
+
     keyword1 = create(:keyword, name: 'keyword1')
     keyword2 = create(:keyword, name: 'keyword2')
 
@@ -35,6 +38,10 @@ RSpec.describe Queries::TPI::NewsPublicationsQuery do
     create(:publication, :published, tpi_sectors: [sector1], keywords: [keyword1])
     create(:publication, :published, tpi_sectors: [sector2])
     create(:publication, tpi_sectors: [sector1], keywords: [keyword1], publication_date: 3.days.from_now)
+  end
+
+  after(:all) do
+    DatabaseCleaner.clean
   end
 
   subject { described_class }
