@@ -70,6 +70,8 @@ class Target < ApplicationRecord
       .where(events: {event_type: %w[set updated]})
   }
 
+  #  WARNING: make sure you update tsv column when changing against
+  #           (against are actually not used when column is in use)
   pg_search_scope :full_text_search,
                   associated_against: {
                     tags: [:name],
@@ -79,6 +81,7 @@ class Target < ApplicationRecord
                   using: {
                     tsearch: {
                       prefix: true,
+                      tsvector_column: 'tsv',
                       dictionary: 'english'
                     }
                   },
