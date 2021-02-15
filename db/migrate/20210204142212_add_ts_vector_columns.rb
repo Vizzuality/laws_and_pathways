@@ -7,8 +7,8 @@ class AddTsVectorColumns < ActiveRecord::Migration[6.0]
       CREATE FUNCTION legislation_tsv_trigger() RETURNS trigger AS $$
       begin
         new.tsv :=
-           setweight(to_tsvector(coalesce(new.title,'')), 'A') ||
-           setweight(to_tsvector(coalesce(new.description,'')), 'B');
+           setweight(to_tsvector(unaccent(coalesce(new.title,''))), 'A') ||
+           setweight(to_tsvector(unaccent(coalesce(new.description,''))), 'B');
         return new;
       end
       $$ LANGUAGE plpgsql;
@@ -27,8 +27,8 @@ class AddTsVectorColumns < ActiveRecord::Migration[6.0]
       CREATE FUNCTION litigation_tsv_trigger() RETURNS trigger AS $$
       begin
         new.tsv :=
-           setweight(to_tsvector(coalesce(new.title,'')), 'A') ||
-           setweight(to_tsvector(coalesce(new.summary,'')), 'B');
+           setweight(to_tsvector(unaccent(coalesce(new.title,''))), 'A') ||
+           setweight(to_tsvector(unaccent(coalesce(new.summary,''))), 'B');
         return new;
       end
       $$ LANGUAGE plpgsql;
@@ -44,11 +44,17 @@ class AddTsVectorColumns < ActiveRecord::Migration[6.0]
     add_index :targets, :tsv, using: :gin
 
     execute <<-SQL
+      CREATE FUNCTION target_tsv_trigger() RETURNS trigger AS $$
+      begin
+        new.tsv := to_tsvector(unaccent(coalesce(new.description)));
+        return new;
+      end
+      $$ LANGUAGE plpgsql;
+    SQL
+    execute <<-SQL
       CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE
       ON targets FOR EACH ROW EXECUTE PROCEDURE
-      tsvector_update_trigger(
-        tsv, 'pg_catalog.english', description
-      );
+      target_tsv_trigger()
     SQL
     execute 'UPDATE targets SET updated_at = updated_at'
   end
@@ -65,6 +71,7 @@ class AddTsVectorColumns < ActiveRecord::Migration[6.0]
     remove_column :litigations, :tsv
 
     execute 'DROP TRIGGER tsvectorupdate ON targets'
+    execute 'DROP FUNCTION target_tsv_trigger'
     remove_index :targets, :tsv
     remove_column :targets, :tsv
   end

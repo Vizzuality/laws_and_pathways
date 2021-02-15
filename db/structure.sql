@@ -46,8 +46,8 @@ CREATE FUNCTION public.legislation_tsv_trigger() RETURNS trigger
     AS $$
       begin
         new.tsv :=
-           setweight(to_tsvector(coalesce(new.title,'')), 'A') ||
-           setweight(to_tsvector(coalesce(new.description,'')), 'B');
+           setweight(to_tsvector(unaccent(coalesce(new.title,''))), 'A') ||
+           setweight(to_tsvector(unaccent(coalesce(new.description,''))), 'B');
         return new;
       end
       $$;
@@ -62,8 +62,22 @@ CREATE FUNCTION public.litigation_tsv_trigger() RETURNS trigger
     AS $$
       begin
         new.tsv :=
-           setweight(to_tsvector(coalesce(new.title,'')), 'A') ||
-           setweight(to_tsvector(coalesce(new.summary,'')), 'B');
+           setweight(to_tsvector(unaccent(coalesce(new.title,''))), 'A') ||
+           setweight(to_tsvector(unaccent(coalesce(new.summary,''))), 'B');
+        return new;
+      end
+      $$;
+
+
+--
+-- Name: target_tsv_trigger(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.target_tsv_trigger() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+      begin
+        new.tsv := to_tsvector(unaccent(coalesce(new.description)));
         return new;
       end
       $$;
@@ -2884,7 +2898,7 @@ CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.litigations FOR 
 -- Name: targets tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.targets FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('tsv', 'pg_catalog.english', 'description');
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.targets FOR EACH ROW EXECUTE PROCEDURE public.target_tsv_trigger();
 
 
 --
