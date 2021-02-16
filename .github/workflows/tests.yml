@@ -43,7 +43,7 @@ jobs:
           PGUSER: ${{ env.POSTGRES_USER }}
           PGPASSWORD: ${{ env.POSTGRES_PASSWORD }}
         run: |
-          bin/rails db:drop db:create db:schema:load
+          bin/rails db:drop db:create db:structure:load
       - name: Run tests
         env:
           RAILS_ENV: test

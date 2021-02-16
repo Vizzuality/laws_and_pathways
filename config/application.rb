@@ -18,6 +18,7 @@ module LawsAndPathways
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    config.active_record.schema_format = :sql
 
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
 
