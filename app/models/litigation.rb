@@ -41,6 +41,8 @@ class Litigation < ApplicationRecord
   scope :started, -> { joins(:events).where(events: {event_type: EVENT_STARTED_TYPES}) }
   scope :recent, ->(date = 1.month.ago) { started.where('events.date > ?', date) }
 
+  #  WARNING: make sure you update tsv column when changing against
+  #           (against are actually not used when column is in use)
   pg_search_scope :full_text_search,
                   associated_against: {
                     tags: [:name],
@@ -53,6 +55,7 @@ class Litigation < ApplicationRecord
                   },
                   using: {
                     tsearch: {
+                      tsvector_column: 'tsv',
                       prefix: true,
                       dictionary: 'english'
                     }

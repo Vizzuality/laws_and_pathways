@@ -69,6 +69,8 @@ class Legislation < ApplicationRecord
       .distinct
   }
 
+  #  WARNING: make sure you update tsv column when changing against
+  #           (against are actually not used when column is in use)
   pg_search_scope :full_text_search,
                   associated_against: {
                     tags: [:name],
@@ -80,6 +82,7 @@ class Legislation < ApplicationRecord
                   },
                   using: {
                     tsearch: {
+                      tsvector_column: 'tsv',
                       prefix: true,
                       dictionary: 'english'
                     }
