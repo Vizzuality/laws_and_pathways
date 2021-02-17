@@ -41,6 +41,9 @@ export function getOptions({ chartData }) {
         day: '%m/%Y',
         hour: '%m/%Y',
         minute: '%m/%Y',
+        second: '%m/%Y',
+        week: '%m/%Y',
+        millisecond: '%m/%Y',
         month: '%m/%Y',
         year: '%Y'
       }
