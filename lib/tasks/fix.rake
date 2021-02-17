@@ -53,24 +53,29 @@ namespace :fix do
       'Ã '  => 'à'
     }
 
+    model_attributes_map = {
+      'Company' => [:name, :latest_information],
+      'MQ::Assessment' => [:notes],
+      'CP::Assessment' => [:assumptions],
+      'Geography' => [:federal_details, :legislative_process],
+      'Litigation' => [:title, :summary, :at_issue],
+      'Legislation' => [:title, :description],
+      'Target' => [:description],
+      'Document' => [:name],
+      'ExternalLegislation' => [:name],
+      'Event' => [:title, :description]
+    }
+
     ActiveRecord::Base.transaction do
       chars_map.each do |wrong, right|
         puts "Searching for #{wrong} and replacing with #{right}"
 
-        update_all(Company, :name, wrong, right)
-        update_all(Company, :latest_information, wrong, right)
-        update_all(Geography, :federal_details, wrong, right)
-        update_all(Geography, :legislative_process, wrong, right)
-
-        update_all(Litigation, :title, wrong, right)
-        update_all(Litigation, :summary, wrong, right)
-        update_all(Litigation, :at_issue, wrong, right)
-        update_all(Legislation, :title, wrong, right)
-        update_all(Legislation, :description, wrong, right)
-        update_all(Target, :description, wrong, right)
-        update_all(Document, :name, wrong, right)
-        update_all(ExternalLegislation, :name, wrong, right)
-        update_all(Event, :title, wrong, right)
+        model_whitelist = ENV['MODELS']&.split(',') || model_attributes_map.keys
+        model_attributes_map
+          .select { |model| model_whitelist.include?(model) }
+          .map do |model, attributes|
+            attributes.each { |attribute| update_all(model, attribute, wrong, right) }
+          end
       end
 
       raise ActiveRecord::Rollback if ENV['DRY_RUN']
@@ -80,7 +85,8 @@ namespace :fix do
 
   private
 
-  def update_all(klass, attribute, wrong, right)
+  def update_all(model, attribute, wrong, right)
+    klass = model.constantize
     found = klass.where("#{attribute} LIKE '%#{wrong}%'").pluck(:id)
     puts "Found #{found.count} #{klass}:#{attribute}, ids: #{found}" if found.count.positive?
     klass.update_all("#{attribute} = REPLACE(#{attribute}, '#{wrong}', '#{right}')")
