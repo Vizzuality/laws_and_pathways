@@ -1,6 +1,6 @@
 module CSVImport
   class Events < BaseImporter
-    include UploaderHelpers
+    include Helpers
 
     def import
       import_each_csv_row(csv) do |row|

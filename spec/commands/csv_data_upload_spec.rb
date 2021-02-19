@@ -136,6 +136,25 @@ describe 'CSVDataUpload (integration)' do
     expect(legislation.natural_hazards_list).to include('Sharkinados', 'Flooding')
   end
 
+  it 'fixes wrong unicode characters' do
+    csv_content = <<-CSV
+      Id,Title,Document type,Geography iso,Jurisdiction,Sector,Citation reference number,Summary,responses,Keywords,At issue,Visibility status,Legislation ids
+      ,Litigation number 1 â€žquoteâ€,administrative_case,GBR,GBR,"Transport,Energy;Urban",EWHC 2752,Lyle requested judicial review,"response1,response2","keyword1,keyword2",At issues,pending,
+    CSV
+
+    litigations_csv = fixture_file('litigations.csv', content: csv_content)
+
+    expect_data_upload_results(
+      Litigation,
+      litigations_csv,
+      new_records: 1, not_changed_records: 0, rows: 1, updated_records: 0
+    )
+
+    litigation = Litigation.find_by(citation_reference_number: 'EWHC 2752')
+
+    expect(litigation.title).to eq('Litigation number 1 „quote”')
+  end
+
   it 'imports CSV files with Litigation data' do
     legislation1 = create(:legislation)
     legislation2 = create(:legislation)

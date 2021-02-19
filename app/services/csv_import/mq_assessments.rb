@@ -1,6 +1,6 @@
 module CSVImport
   class MQAssessments < BaseImporter
-    include UploaderHelpers
+    include Helpers
 
     QUESTION_PATTERN = /Q\d+L(\d+)\|(.+)/.freeze
 

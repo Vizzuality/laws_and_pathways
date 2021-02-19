@@ -1,3 +1,5 @@
+require "#{Rails.root}/lib/unicode_fixer"
+
 module CSVImport
   class BaseImporter
     include ActiveModel::Model
@@ -66,8 +68,9 @@ module CSVImport
     def csv_converters
       hard_space_converter = ->(f) { f&.gsub(160.chr('UTF-8'), 32.chr) }
       strip_converter = ->(field, _) { field&.strip }
+      unicode_fixer = ->(field) { UnicodeFixer.fix_unicode_characters(field) }
 
-      [hard_space_converter, strip_converter]
+      [hard_space_converter, strip_converter, unicode_fixer]
     end
 
     private
