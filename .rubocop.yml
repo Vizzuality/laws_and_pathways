@@ -2,7 +2,8 @@ require: rubocop-performance
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 2.6
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7.2
   Exclude:
     - 'bin/*'
     - 'db/schema.rb'

@@ -1,7 +1,7 @@
 module CSVImport
   # only for development purporses, only external documents
   class Documents < BaseImporter
-    include UploaderHelpers
+    include Helpers
 
     def import
       import_each_csv_row(csv) do |row|

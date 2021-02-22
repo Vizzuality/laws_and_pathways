@@ -1,6 +1,7 @@
 module CSVImport
   class Legislations < BaseImporter
-    include UploaderHelpers
+    include Helpers
+
     def import
       import_each_csv_row(csv) do |row|
         if override_id && Legislation.where(id: row[:id]).any?
