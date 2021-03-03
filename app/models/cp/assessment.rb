@@ -19,6 +19,7 @@ module CP
   class Assessment < ApplicationRecord
     include HasEmissions
     include DiscardableModel
+    include TPICache
 
     belongs_to :company
 

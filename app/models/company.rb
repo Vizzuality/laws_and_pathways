@@ -25,6 +25,7 @@ class Company < ApplicationRecord
   include VisibilityStatus
   include DiscardableModel
   include PublicActivityTrackable
+  include TPICache
   extend FriendlyId
 
   friendly_id :name, use: [:slugged, :history], routes: :default

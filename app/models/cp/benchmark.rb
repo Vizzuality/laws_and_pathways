@@ -14,6 +14,7 @@
 module CP
   class Benchmark < ApplicationRecord
     include HasEmissions
+    include TPICache
 
     belongs_to :sector, class_name: 'TPISector', foreign_key: 'sector_id'
 

@@ -8,7 +8,9 @@ module TPI
     before_action :redirect_if_numeric_or_historic_slug, only: [:show]
 
     def index
-      @companies_by_sectors = ::Api::Charts::Sector.new(companies_scope(params)).companies_market_cap_by_sector
+      @companies_by_sectors = Rails.cache.fetch(TPICache::KEY, expires_in: 20.minutes) do
+        ::Api::Charts::Sector.new(companies_scope(params)).companies_market_cap_by_sector
+      end
 
       fixed_navbar('Sectors', admin_tpi_sectors_path)
     end

@@ -11,7 +11,9 @@
 #
 
 class TPISector < ApplicationRecord
+  include TPICache
   extend FriendlyId
+
   friendly_id :name, use: [:slugged, :history], routes: :default
 
   belongs_to :cluster, class_name: 'TPISectorCluster', foreign_key: 'cluster_id', optional: true
