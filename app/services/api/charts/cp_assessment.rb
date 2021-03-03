@@ -137,7 +137,7 @@ module Api
       def years_with_reported_emissions
         return [] if sector_all_emission_years.empty?
 
-        (sector_all_emission_years.min..sector_last_reported_year).map.to_a
+        (sector_all_emission_years.min..assessment_last_reported_year).map.to_a
       end
 
       # @return [Array] unique array of years as numbers
@@ -163,8 +163,14 @@ module Api
       end
 
       # @return [Integer]
-      def sector_last_reported_year
-        assessment.last_reported_year
+      def assessment_last_reported_year
+        # fixing bug when last_reported year is nil we will guess it
+        # the validation will be added to always have last reported year if emissions present
+        assessment.last_reported_year ||
+          [
+            assessment&.emissions&.transform_keys(&:to_i)&.keys&.max || current_year,
+            current_year
+          ].min
       end
 
       # @return [Integer]

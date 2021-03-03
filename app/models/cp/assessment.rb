@@ -31,6 +31,7 @@ module CP
     scope :currently_published, -> { where('publication_date <= ?', DateTime.now) }
 
     validates_presence_of :publication_date
+    validates_presence_of :last_reported_year, if: -> { emissions&.keys&.any? }
     validates :assessment_date, date_after: Date.new(2010, 12, 31)
     validates :publication_date, date_after: Date.new(2010, 12, 31)
 

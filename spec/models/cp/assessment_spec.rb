@@ -38,4 +38,10 @@ RSpec.describe CP::Assessment, type: :model do
     subject.publication_date = '2001-02-15'
     expect(subject).to have(1).errors_on(:publication_date)
   end
+
+  it 'should be invalid if emissions present but last reported year not' do
+    subject.emissions = {'2019': 344}
+    subject.last_reported_year = nil
+    expect(subject).to have(1).errors_on(:last_reported_year)
+  end
 end
