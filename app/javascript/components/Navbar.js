@@ -70,7 +70,7 @@ SearchComponent.propTypes = {
 };
 
 const NavbarComponent = ({ items, openSearchMode }) => {
-  const [tpi, publications, about, newsletter, login, search] = items;
+  const [tpi, publications, about, newsletter, search] = items;
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -176,14 +176,6 @@ const NavbarComponent = ({ items, openSearchMode }) => {
               })}
             >
               {newsletter.entry}
-            </a>
-            <a
-              href={login.path}
-              className={classnames('navbar-item', {
-                'is-active': login.active
-              })}
-            >
-              {login.entry}
             </a>
             <a
               className="navbar-item is-hidden-touch"

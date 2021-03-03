@@ -11,7 +11,6 @@ Rails.application.routes.draw do
 
       get '/about', to: 'home#about'
       get '/newsletter', to: 'home#newsletter'
-      get '/register', to: 'home#register'
 
       get '/sandbox', to: 'home#sandbox' if Rails.env.development?
 
