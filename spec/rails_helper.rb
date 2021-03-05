@@ -11,9 +11,6 @@ require 'cancan/matchers'
 require 'test_prof/recipes/rspec/let_it_be'
 require 'super_diff/rspec-rails'
 
-require 'rake'
-Rails.application.load_tasks
-
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -97,6 +94,8 @@ RSpec.configure do |config|
   end
 
   config.before(:all, type: :system) do
+    require 'rake'
+    Rails.application.load_tasks if Rake::Task.tasks.empty?
     Rake::Task['test:db_load'].execute
   end
 
