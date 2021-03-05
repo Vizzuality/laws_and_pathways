@@ -7,9 +7,17 @@ module CSVImport
       return [] if row_tags.nil?
 
       row_tags
-        .split(',')
+        .split(Rails.application.config.csv_options[:entity_sep])
         .map(&:strip)
         .map { |tag| tag_collection[tag] }
+    end
+
+    def parse_ids(row_ids)
+      return [] unless row_ids.present?
+
+      row_ids
+        .split(Rails.application.config.csv_options[:entity_sep])
+        .map(&:to_i)
     end
 
     def find_or_create_tpi_sector(sector_name)

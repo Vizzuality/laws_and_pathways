@@ -79,7 +79,7 @@ ActiveAdmin.register Target do
     column(:geography) { |t| t.geography.name }
     column(:geography_iso) { |t| t.geography.iso }
     column(:sector) { |t| t.sector&.name }
-    column(:connected_law_ids) { |t| t.legislation_ids.join(',') }
+    column(:connected_law_ids) { |t| t.legislation_ids.join(Rails.application.config.csv_options[:entity_sep]) }
     column :scopes, &:scopes_string
     column :visibility_status
   end

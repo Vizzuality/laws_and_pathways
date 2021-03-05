@@ -25,6 +25,8 @@ module LawsAndPathways
     config.cclow_domain = 'cclow.localhost'
     config.tpi_domain = 'tpi.localhost'
 
+    config.csv_options = { entity_sep: ',' }
+
     config.middleware.insert_before 0, Rack::Cors, debug: !Rails.env.production?,
       logger: (-> { Rails.logger }) do
       allow do
