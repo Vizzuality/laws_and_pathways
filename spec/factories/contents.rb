@@ -9,6 +9,7 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  content_type :string
+#  position     :integer
 #
 
 FactoryBot.define do

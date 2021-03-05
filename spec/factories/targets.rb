@@ -18,6 +18,7 @@
 #  discarded_at      :datetime
 #  sector_id         :bigint
 #  source            :string
+#  tsv               :tsvector
 #
 
 FactoryBot.define do

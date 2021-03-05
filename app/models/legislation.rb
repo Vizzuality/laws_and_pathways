@@ -16,6 +16,7 @@
 #  discarded_at      :datetime
 #  legislation_type  :string           not null
 #  parent_id         :bigint
+#  tsv               :tsvector
 #
 
 class Legislation < ApplicationRecord
