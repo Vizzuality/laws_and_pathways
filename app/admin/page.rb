@@ -48,6 +48,7 @@
               end
             else
               table_for resource.contents.decorate, id: 'page_show_contents_table' do
+                orderable_handle_column name: 'Order', url: :sort_admin_content_path if current_user.can?(:update, resource)
                 column :title
                 column :content_type
                 column :text, &:text_html

@@ -12,6 +12,8 @@
 #
 
 class Content < ApplicationRecord
+  acts_as_list scope: [:page_id]
+
   belongs_to :page
   has_many :images, dependent: :destroy
 
