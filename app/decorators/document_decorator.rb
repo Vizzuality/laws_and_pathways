@@ -6,7 +6,7 @@ class DocumentDecorator < Draper::Decorator
   end
 
   def document_url_link
-    h.link_to model.name, model.url, target: '_blank'
+    h.link_to model.name, model.url, target: '_blank', rel: 'noopener noreferrer'
   end
 
   def last_verified_on
