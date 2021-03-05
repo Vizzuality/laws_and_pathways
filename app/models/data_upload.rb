@@ -13,12 +13,13 @@
 class DataUpload < ApplicationRecord
   has_one_attached :file
 
-  DEV_UPLOADERS = Rails.env.development? || Rails.env.test? ? %w[Documents ExternalLegislations] : []
+  DEV_UPLOADERS = Rails.env.development? || Rails.env.test? ? %w[Documents] : []
   UPLOADERS = (%w[
     CPAssessments
     CPBenchmarks
     Companies
     Events
+    ExternalLegislations
     Geographies
     Legislations
     LitigationSides

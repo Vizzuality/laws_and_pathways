@@ -17,6 +17,7 @@ module CSVImport
         litigation.save!
         litigation.responses = parse_tags(row[:responses], responses)
         litigation.keywords = parse_tags(row[:keywords], keywords)
+        # TODO: decide if only one separator or many possible
         litigation.laws_sectors = find_or_create_laws_sectors(row[:sector]&.split(/,|;/))
 
         update_import_results(was_new_record, any_changes)
@@ -48,14 +49,8 @@ module CSVImport
         at_issue: row[:at_issue],
         summary: row[:summary],
         visibility_status: row[:visibility_status]&.downcase,
-        legislation_ids: legislation_ids(row)
+        legislation_ids: parse_ids(row[:legislation_ids])
       }
-    end
-
-    def legislation_ids(row)
-      return [] unless row[:legislation_ids].present?
-
-      row[:legislation_ids].split(',').map(&:to_i)
     end
   end
 end

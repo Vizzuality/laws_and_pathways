@@ -36,17 +36,11 @@ module CSVImport
 
     def legislation_attributes(row)
       {
-        litigation_ids: litigation_ids(row),
+        litigation_ids: parse_ids(row[:litigation_ids]),
         name: row[:name],
         url: row[:url],
         geography: geographies[row[:geography_iso]]
       }
-    end
-
-    def litigation_ids(row)
-      return [] unless row[:litigation_ids].present?
-
-      row[:litigation_ids].split(',').map(&:to_i)
     end
   end
 end
