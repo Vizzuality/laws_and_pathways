@@ -8,7 +8,7 @@ class EventDecorator < Draper::Decorator
   def url_link
     return unless model.url.present?
 
-    h.link_to model.url, model.url, target: '_blank'
+    h.link_to model.url, model.url, target: '_blank', rel: 'noopener noreferrer'
   end
 
   def event_type

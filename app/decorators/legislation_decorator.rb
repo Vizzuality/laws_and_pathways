@@ -40,6 +40,7 @@ class LegislationDecorator < Draper::Decorator
       h.link_to document.name,
                 document.url,
                 target: '_blank',
+                rel: 'noopener noreferrer',
                 title: document.external? ? document.url : nil
     end
   end

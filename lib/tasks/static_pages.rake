@@ -1,7 +1,7 @@
 namespace :static_pages do
   desc 'Scaffold static pages for TPI'
   task generate_tpi: :environment do
-    menu_headers = OpenStruct.new(Hash[Page::MENU_HEADERS.map { |el| [el, el] }])
+    menu_headers = OpenStruct.new(Page::MENU_HEADERS.map { |el| [el, el] }.to_h)
 
     pages = [
       ['Overview of the TPI', menu_headers.about],
