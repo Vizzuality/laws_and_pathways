@@ -79,7 +79,7 @@ class TPISector < ApplicationRecord
     release_date =
       last_release_date_before_given_date || sector_benchmarks_dates.last
 
-    cp_benchmarks.where(release_date: release_date)
+    cp_benchmarks.where(release_date: release_date).order(:created_at)
   end
 
   def path

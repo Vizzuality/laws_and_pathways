@@ -37,6 +37,6 @@ FactoryBot.define do
     wb_income_group { 'Rich' }
 
     association :created_by, factory: :admin_user
-    association :updated_by, factory: :admin_user
+    updated_by { created_by }
   end
 end

@@ -11,7 +11,7 @@ describe 'CSVDataUpload (integration)' do
   let(:geographies_csv) { fixture_file('geographies.csv') }
   let(:current_user_role) { 'super_user' }
   let(:current_user) { build(:admin_user, role: current_user_role) }
-  let(:countries) do
+  let_it_be(:countries) do
     [
       create(:geography, iso: 'POL', name: 'Poland'),
       create(:geography, iso: 'GBR', name: 'United Kingdom'),
@@ -21,7 +21,7 @@ describe 'CSVDataUpload (integration)' do
   end
 
   before do
-    countries
+    # countries
     ::Current.admin_user = current_user
   end
 
@@ -94,6 +94,7 @@ describe 'CSVDataUpload (integration)' do
         let(:current_user_role) { 'editor_laws' }
 
         it 'does not at all if one row is not valid' do
+          allow_any_instance_of(Kernel).to receive(:warn) # suppress warning message
           # 2nd record (ID=20) should fail with auth error
           command = expect_data_upload_results(
             Legislation,

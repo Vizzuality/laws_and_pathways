@@ -6,10 +6,13 @@ require File.expand_path('../config/environment', __dir__)
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 
 require 'rspec/rails'
+require 'super_diff/rspec-rails'
 require 'cancan/matchers'
 
+# workaround to use factory defaults in let_it_be https://github.com/test-prof/test-prof/issues/125#issuecomment-471706752
+require 'test_prof/factory_default'
+TestProf::FactoryDefault.init
 require 'test_prof/recipes/rspec/let_it_be'
-require 'super_diff/rspec-rails'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -42,6 +45,7 @@ FactoryBot::SyntaxRunner.class_eval do
 end
 
 RSpec.configure do |config|
+  config.example_status_persistence_file_path = Rails.root.join('tmp/examples.txt')
   config.snapshot_dir = 'spec/snapshots'
 
   config.include Devise::Test::ControllerHelpers, type: :controller
@@ -49,6 +53,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include CapybaraHelpers, type: :system
 
+  config.filter_run_when_matching focus: true
   config.render_views
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   # config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -79,6 +84,14 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
   config.after :each, type: :controller do
     ActiveSupport::CurrentAttributes.reset_all
+  end
+
+  config.after(:each) do |ex|
+    TestProf::FactoryDefault.reset unless ex.metadata[:factory_default] == :keep
+  end
+
+  config.after(:all) do
+    TestProf::FactoryDefault.reset
   end
 
   config.before(:each, type: :system) do

@@ -30,7 +30,7 @@ FactoryBot.define do
     discarded_at { nil }
 
     association :created_by, factory: :admin_user
-    association :updated_by, factory: :admin_user
+    updated_by { created_by }
 
     association :geography
     laws_sectors { |a| [a.association(:laws_sector)] }

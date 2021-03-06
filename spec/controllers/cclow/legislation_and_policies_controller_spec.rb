@@ -1,16 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
-  let_it_be(:geography) { create(:geography, name: 'Poland', iso: 'POL') }
+  let_it_be(:user) { create(:admin_user) }
+  let_it_be(:geography) { create(:geography, created_by: user, name: 'Poland', iso: 'POL') }
   let_it_be(:sector1) { create(:laws_sector, name: 'sector1') }
   let_it_be(:sector2) { create(:laws_sector, name: 'sector2') }
   let_it_be(:keyword) { create(:keyword, name: 'climate') }
-  let_it_be(:parent_legislation) { create(:legislation, title: 'Parent Legislation') }
+  let_it_be(:parent_legislation) { create(:legislation, created_by: user, title: 'Parent Legislation') }
   let_it_be(:instrument_type) { create(:instrument_type, name: 'instrument_type_test') }
   let_it_be(:legislation1) {
     create(
       :legislation,
       :published,
+      created_by: user,
       geography: geography,
       title: 'Super Legislation',
       parent: parent_legislation,
@@ -64,6 +66,7 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
     create(
       :legislation,
       :published,
+      created_by: user,
       geography: geography,
       laws_sectors: [sector1],
       title: 'Legislation Example',
@@ -78,6 +81,7 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
     create(
       :legislation,
       :draft,
+      created_by: user,
       geography: geography,
       laws_sectors: [sector1],
       title: 'This one is unpublished',

@@ -18,7 +18,7 @@
 require 'rails_helper'
 
 RSpec.describe CP::Assessment, type: :model do
-  subject { build(:cp_assessment) }
+  subject { build(:cp_assessment, company: build(:company)) }
 
   let(:company) { create(:company) }
 
