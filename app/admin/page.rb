@@ -11,8 +11,10 @@
          parent: (page_class == 'TPIPage' ? 'TPI' : 'Laws')
 
     permit_params :title, :slug, :description, :menu,
-                  contents_attributes: [:id, :title, :content_type, :text, :_destroy,
-                                        images_attributes: [:id, :link, :logo, :name, :_destroy]],
+                  contents_attributes: [
+                    *permit_params_for(:contents),
+                    images_attributes: permit_params_for(:images)
+                  ],
                   content_ids: []
 
     filter :title

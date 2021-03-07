@@ -15,5 +15,6 @@
 FactoryBot.define do
   factory :content do
     page { nil }
+    text { 'Content text' }
   end
 end

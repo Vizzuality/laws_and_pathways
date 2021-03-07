@@ -15,5 +15,12 @@
 require 'rails_helper'
 
 RSpec.describe Content, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { build(:content, page: build(:tpi_page)) }
+
+  it { is_expected.to be_valid }
+
+  it 'should not be valid without page' do
+    subject.page = nil
+    expect(subject).to have(1).errors_on(:page)
+  end
 end

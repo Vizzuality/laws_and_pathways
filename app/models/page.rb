@@ -17,7 +17,7 @@ class Page < ApplicationRecord
 
   friendly_id :title, use: :slugged, routes: :default
 
-  has_many :contents, -> { order(position: :asc) }, dependent: :destroy
+  has_many :contents, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :page
   has_many :images, through: :contents
 
   validates :menu, presence: true
