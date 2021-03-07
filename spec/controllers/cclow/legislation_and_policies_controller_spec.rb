@@ -113,7 +113,8 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
         expect(response.content_type).to eq('text/csv')
         # remove snapshot to update it (from spec/snapshots)
         # make sure no dynamic, sequenced entity values are used
-        expect(response.body).to match_snapshot('cclow_legislation_and_policies_controller_csv')
+        csv_json = CSV.parse(response.body, headers: true).map(&:to_h).to_json
+        expect(csv_json).to match_snapshot('cclow_legislation_and_policies_controller_csv')
       end
     end
 

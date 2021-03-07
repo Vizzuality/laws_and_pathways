@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Queries::CCLOW::LitigationQuery do
   before(:all) do
-    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.start
 
     @side_a1 = create(:litigation_side, name: 'Side A', side_type: 'a', party_type: 'corporation')

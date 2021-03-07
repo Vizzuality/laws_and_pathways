@@ -12,6 +12,7 @@ require 'cancan/matchers'
 # workaround to use factory defaults in let_it_be https://github.com/test-prof/test-prof/issues/125#issuecomment-471706752
 require 'test_prof/factory_default'
 TestProf::FactoryDefault.init
+require 'test_prof/recipes/rspec/before_all'
 require 'test_prof/recipes/rspec/let_it_be'
 
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -46,7 +47,7 @@ end
 
 RSpec.configure do |config|
   config.example_status_persistence_file_path = Rails.root.join('tmp/examples.txt')
-  config.snapshot_dir = 'spec/snapshots'
+  config.request_snapshots_dir = 'spec/fixtures/snapshots'
 
   config.include Devise::Test::ControllerHelpers, type: :controller
   # config.include Rails.application.routes.url_helpers, type: :controller

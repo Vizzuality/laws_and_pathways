@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Queries::CCLOW::LegislationQuery do
   before(:all) do
-    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.start
 
     @biodiversity = create(:keyword, name: 'Biodiversity')

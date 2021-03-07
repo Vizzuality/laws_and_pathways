@@ -1,0 +1,53 @@
+[
+  {
+    "Title": "Super Litigation",
+    "Geography": "Poland",
+    "Geography ISO": "POL",
+    "Jurisdiction": "Court in Country",
+    "Citation Reference Number": "SFKD777FDK77",
+    "Responses": "response1, response2",
+    "At issue": "At issue Lorem ipsumumum",
+    "Connected Internal Laws": "Legislation 1|http://climate-laws.org/geographies/poland/policies/legislation-1;Legislation 2|http://climate-laws.org/geographies/poland/policies/legislation-2",
+    "Connected External Laws": "External legislation1|https://example.com;External legislation2|https://next-example.com",
+    "Sectors": "sector1, sector2",
+    "Side A": "Side A1|government;Side A2|ngo",
+    "Side B": "Side B|corporation",
+    "Side C": "Side C|government",
+    "Events": "02/03/2018|Some case was started|Description of starting the case|https://test.com;03/04/2018|Some case was started|Description of starting the case|https://test.com",
+    "Summary": "Summary Lorem ipsum dolor dalej nie pamietam"
+  },
+  {
+    "Title": "Example",
+    "Geography": "Poland",
+    "Geography ISO": "POL",
+    "Jurisdiction": "Court in Country",
+    "Citation Reference Number": "SFKD777FDK77",
+    "Responses": "",
+    "At issue": "At issue Lorem ipsumumum",
+    "Connected Internal Laws": "",
+    "Connected External Laws": "",
+    "Sectors": "sector1",
+    "Side A": "",
+    "Side B": "",
+    "Side C": "",
+    "Events": "02/03/2019|Some case was started|Description of starting the case|https://test.com;01/05/2019|Some case was started|Description of starting the case|https://test.com",
+    "Summary": "Litigation example"
+  },
+  {
+    "Title": "Litigation Example",
+    "Geography": "Poland",
+    "Geography ISO": "POL",
+    "Jurisdiction": "Court in Country",
+    "Citation Reference Number": "SFKD777FDK77",
+    "Responses": "",
+    "At issue": "At issue Lorem ipsumumum",
+    "Connected Internal Laws": "",
+    "Connected External Laws": "",
+    "Sectors": "sector2",
+    "Side A": "",
+    "Side B": "",
+    "Side C": "",
+    "Events": "03/03/2018|Some case was started|Description of starting the case|https://test.com;01/05/2018|Some case was started|Description of starting the case|https://test.com",
+    "Summary": "Example"
+  }
+]

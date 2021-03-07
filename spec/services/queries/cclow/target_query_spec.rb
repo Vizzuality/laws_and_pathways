@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Queries::CCLOW::TargetQuery do
   before(:all) do
-    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.start
 
     @geography1 = create(:geography, region: 'East Asia & Pacific')

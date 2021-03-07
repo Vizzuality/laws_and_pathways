@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Queries::TPI::NewsPublicationsQuery do
   before(:all) do
-    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.strategy = :truncation # with transaction there are some problems and flaky tests
     DatabaseCleaner.start
 
     keyword1 = create(:keyword, name: 'keyword1')
@@ -49,7 +49,6 @@ RSpec.describe Queries::TPI::NewsPublicationsQuery do
   describe 'call' do
     it 'should return all news and publications with no filters' do
       results = subject.new.call
-
       expect(results.count).to eq(4)
     end
 
