@@ -413,6 +413,8 @@ GEM
       rspec-support (~> 3.10)
     rspec-request_snapshot (0.7.3)
       rspec (~> 3.0)
+    rspec-retry (0.6.2)
+      rspec-core (> 3.3)
     rspec-support (3.10.2)
     rubocop (1.11.0)
       parallel (~> 1.10)
@@ -581,6 +583,7 @@ DEPENDENCIES
   rspec-collection_matchers
   rspec-rails (~> 4.1.0)
   rspec-request_snapshot
+  rspec-retry
   rubocop
   rubocop-performance
   rubyzip

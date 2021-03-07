@@ -57,6 +57,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'rspec-collection_matchers'
   gem 'rspec-rails', '~> 4.1.0'
+  gem 'rspec-retry'
   gem 'rspec-request_snapshot'
   gem 'selenium-webdriver'
   gem 'super_diff'

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CCLOW::ClimateTargetsController, type: :controller do
+RSpec.describe CCLOW::ClimateTargetsController, type: :controller, retry: 3 do
   let_it_be(:geography) { create(:geography, name: 'Poland', iso: 'POL') }
   let_it_be(:sector) { create(:laws_sector, name: 'Airlines') }
   let_it_be(:target1) {

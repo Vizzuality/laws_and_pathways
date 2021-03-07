@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CCLOW::LitigationCasesController, type: :controller do
+RSpec.describe CCLOW::LitigationCasesController, type: :controller, retry: 3 do
   let_it_be(:user) { create(:admin_user) }
   let_it_be(:geography) { create(:geography, created_by: user, name: 'Poland', iso: 'POL') }
   let_it_be(:sector1) { create(:laws_sector, name: 'sector1') }
