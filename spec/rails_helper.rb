@@ -46,7 +46,6 @@ FactoryBot::SyntaxRunner.class_eval do
 end
 
 RSpec.configure do |config|
-  config.example_status_persistence_file_path = Rails.root.join('tmp/examples.txt')
   config.request_snapshots_dir = 'spec/fixtures/snapshots'
 
   config.include Devise::Test::ControllerHelpers, type: :controller
@@ -54,7 +53,6 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include CapybaraHelpers, type: :system
 
-  config.filter_run_when_matching focus: true
   config.render_views
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   # config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -85,6 +83,14 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
   config.after :each, type: :controller do
     ActiveSupport::CurrentAttributes.reset_all
+  end
+
+  config.after do
+    # Clear ActiveJob jobs
+    if defined?(ActiveJob) && ActiveJob::QueueAdapters::TestAdapter == ActiveJob::Base.queue_adapter
+      ActiveJob::Base.queue_adapter.enqueued_jobs.clear
+      ActiveJob::Base.queue_adapter.performed_jobs.clear
+    end
   end
 
   config.after(:each) do |ex|
