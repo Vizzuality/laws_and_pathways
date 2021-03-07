@@ -19,7 +19,7 @@ module CSVExport
       def format_documents(documents)
         return unless documents.any?
 
-        documents.map do |document|
+        documents.order(:created_at).map do |document|
           [document.name, document.url, document.language].join('|')
         end.join(';')
       end
