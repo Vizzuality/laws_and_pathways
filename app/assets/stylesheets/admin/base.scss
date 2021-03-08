@@ -114,15 +114,3 @@ fieldset.actions .cancel a {
     display: none;
   }
 }
-
-.activeadmin-orderable {
-  .handle {
-    cursor: grab;
-
-    &::before {
-      content: '\28f6';
-      position: relative;
-      top: -3px;
-    }
-  }
-}
