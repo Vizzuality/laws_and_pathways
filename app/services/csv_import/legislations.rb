@@ -37,7 +37,6 @@ module CSVImport
       return prepare_overridden_resource(row) if override_id
 
       find_record_by(:id, row) ||
-        find_record_by(:law_id, row) ||
         find_record_by(:title, row) ||
         resource_klass.new
     end

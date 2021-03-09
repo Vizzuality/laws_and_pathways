@@ -23,6 +23,7 @@ ActiveAdmin.register Legislation do
          as: :select,
          collection: proc { array_to_select_collection(Legislation::LEGISLATION_TYPES) }
   filter :geography
+  filter :created_at
   filter :frameworks,
          as: :check_boxes,
          collection: proc { Framework.all }
