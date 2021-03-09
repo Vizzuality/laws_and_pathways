@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Admin::CompaniesController, type: :controller do
   let(:admin) { create(:admin_user) }
-  let_it_be(:company) { create(:company, :with_mq_assessments, :with_cp_assessments) }
-  let_it_be(:sector) { create(:tpi_sector) }
   let_it_be(:geography) { create(:geography) }
+  let_it_be(:company) { create(:company, :with_mq_assessments, :with_cp_assessments, geography: geography) }
+  let_it_be(:sector) { create(:tpi_sector) }
   let(:valid_attributes) {
     attributes_for(:company).merge(
       geography_id: geography.id, headquarters_geography_id: geography.id, sector_id: sector.id
@@ -63,7 +63,7 @@ RSpec.describe Admin::CompaniesController, type: :controller do
   end
 
   describe 'PATCH update' do
-    let!(:company_to_update) { create(:company) }
+    let!(:company_to_update) { create(:company, geography: geography) }
 
     context 'with valid params' do
       let(:valid_update_params) { {name: 'name was updated'} }
@@ -92,7 +92,9 @@ RSpec.describe Admin::CompaniesController, type: :controller do
   end
 
   describe 'DELETE destroy' do
-    let!(:company) { create(:company, discarded_at: nil) }
+    render_views false
+
+    let!(:company) { create(:company, geography: geography, discarded_at: nil) }
 
     context 'with valid params' do
       let!(:litigation_side) do

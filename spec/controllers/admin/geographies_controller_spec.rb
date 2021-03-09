@@ -121,6 +121,8 @@ RSpec.describe Admin::GeographiesController, type: :controller do
   end
 
   describe 'DELETE destroy' do
+    render_views false
+
     let!(:geography) { create(:geography, discarded_at: nil) }
 
     context 'with valid params' do

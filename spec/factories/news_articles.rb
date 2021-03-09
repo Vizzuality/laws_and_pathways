@@ -21,7 +21,7 @@ FactoryBot.define do
     image { fixture_file_upload(Rails.root.join('spec', 'support', 'fixtures', 'files', 'test.jpg'), 'jpg') }
 
     association :created_by, factory: :admin_user
-    association :updated_by, factory: :admin_user
+    updated_by { created_by }
 
     trait :published do
       publication_date { 20.days.ago }

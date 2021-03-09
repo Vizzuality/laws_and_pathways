@@ -334,7 +334,8 @@ CREATE TABLE public.contents (
     page_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    content_type character varying
+    content_type character varying,
+    "position" integer
 );
 
 
@@ -2966,6 +2967,14 @@ ALTER TABLE ONLY public.legislations
 
 
 --
+-- Name: litigations fk_rails_3ad3738b8b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.litigations
+    ADD CONSTRAINT fk_rails_3ad3738b8b FOREIGN KEY (geography_id) REFERENCES public.geographies(id) ON DELETE CASCADE;
+
+
+--
 -- Name: images fk_rails_3ddaef631e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3027,14 +3036,6 @@ ALTER TABLE ONLY public.legislations
 
 ALTER TABLE ONLY public.litigation_sides
     ADD CONSTRAINT fk_rails_5ff60f0b08 FOREIGN KEY (litigation_id) REFERENCES public.litigations(id) ON DELETE CASCADE;
-
-
---
--- Name: litigations fk_rails_62402cca14; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.litigations
-    ADD CONSTRAINT fk_rails_62402cca14 FOREIGN KEY (geography_id) REFERENCES public.geographies(id) ON DELETE CASCADE;
 
 
 --
@@ -3321,6 +3322,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200227112956'),
 ('20200310163503'),
 ('20200622151708'),
-('20210204142212');
+('20210204142212'),
+('20210305132256');
 
 

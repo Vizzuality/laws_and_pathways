@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Admin::CPAssessmentsController, type: :controller do
   let(:admin) { create(:admin_user) }
   let_it_be(:company) { create(:company) }
-  let_it_be(:cp_assessment) { create(:cp_assessment) }
+  let_it_be(:cp_assessment) { create(:cp_assessment, company: company) }
   let(:valid_attributes) { attributes_for(:cp_assessment, company_id: company.id) }
   let(:invalid_attributes) { valid_attributes.merge(publication_date: nil) }
 

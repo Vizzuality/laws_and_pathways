@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CCLOW::ClimateTargetsController, type: :controller do
+RSpec.describe CCLOW::ClimateTargetsController, type: :controller, retry: 3 do
   let_it_be(:geography) { create(:geography, name: 'Poland', iso: 'POL') }
   let_it_be(:sector) { create(:laws_sector, name: 'Airlines') }
   let_it_be(:target1) {
@@ -73,7 +73,8 @@ RSpec.describe CCLOW::ClimateTargetsController, type: :controller do
         expect(response.content_type).to eq('text/csv')
         # remove snapshot to update it (from spec/snapshots)
         # make sure no dynamic, sequenced entity values are used
-        expect(response.body).to match_snapshot('cclow_climate_targets_controller_csv')
+        csv_json = CSV.parse(response.body, headers: true).map(&:to_h).to_json
+        expect(csv_json).to match_snapshot('cclow_climate_targets_controller_csv')
       end
     end
 

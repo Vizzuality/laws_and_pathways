@@ -27,7 +27,7 @@ end
 
 FactoryBot.define do
   factory :mq_assessment, class: MQ::Assessment do
-    association :company
+    # association :company
 
     assessment_date { 1.year.ago.to_date }
     publication_date { 11.months.ago.to_date }

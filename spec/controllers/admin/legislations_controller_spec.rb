@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Admin::LegislationsController, type: :controller do
+RSpec.describe Admin::LegislationsController, type: :controller, factory_default: :keep do
   let(:admin) { create(:admin_user) }
-  let_it_be(:geography) { create(:geography) }
+  let_it_be(:geography) { create_default(:geography) }
   let_it_be(:sector) { create(:laws_sector) }
 
   let_it_be(:legislation) { create(:legislation, visibility_status: 'published') }
@@ -188,6 +188,8 @@ RSpec.describe Admin::LegislationsController, type: :controller do
   end
 
   describe 'DELETE destroy' do
+    render_views false
+
     let!(:legislation_to_delete) { create(:legislation, discarded_at: nil) }
 
     context 'with valid params' do

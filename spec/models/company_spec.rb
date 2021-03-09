@@ -94,39 +94,38 @@ RSpec.describe Company, type: :model do
   end
 
   describe '#latest_sector_benchmarks_before_last_assessment' do
+    let_it_be(:sector) { create(:tpi_sector) }
     let_it_be(:sector_cp_benchmarks) do
       [
-        create(:cp_benchmark, release_date: '2013-05-01', scenario: 'Below 2'),    # previous benchmarks
-        create(:cp_benchmark, release_date: '2013-05-01', scenario: 'Paris'),      # - should be ignored
-        create(:cp_benchmark, release_date: '2013-05-01', scenario: '2 degrees'),
+        create(:cp_benchmark, sector: sector, release_date: '2013-05-01', scenario: 'Below 2'),    # previous benchmarks
+        create(:cp_benchmark, sector: sector, release_date: '2013-05-01', scenario: 'Paris'),      # - should be ignored
+        create(:cp_benchmark, sector: sector, release_date: '2013-05-01', scenario: '2 degrees'),
 
-        create(:cp_benchmark, release_date: '2016-05-01', scenario: 'Below 2'),    # last benchmarks
-        create(:cp_benchmark, release_date: '2016-05-01', scenario: 'Paris'),      # before latest CP assessment
-        create(:cp_benchmark, release_date: '2016-05-01', scenario: '2 degrees'),  # - OK
+        create(:cp_benchmark, sector: sector, release_date: '2016-05-01', scenario: 'Below 2'),    # last benchmarks
+        create(:cp_benchmark, sector: sector, release_date: '2016-05-01', scenario: 'Paris'),      # before latest CP assessment
+        create(:cp_benchmark, sector: sector, release_date: '2016-05-01', scenario: '2 degrees'),  # - OK
 
-        create(:cp_benchmark, release_date: '2019-05-01', scenario: 'Below 2'),    # most recent benchmarks,
-        create(:cp_benchmark, release_date: '2019-05-01', scenario: 'Paris'),      # but without CP assessment
-        create(:cp_benchmark, release_date: '2019-05-01', scenario: '2 degrees')   # - should be ignored
+        create(:cp_benchmark, sector: sector, release_date: '2019-05-01', scenario: 'Below 2'),    # most recent benchmarks,
+        create(:cp_benchmark, sector: sector, release_date: '2019-05-01', scenario: 'Paris'),      # but without CP assessment
+        create(:cp_benchmark, sector: sector, release_date: '2019-05-01', scenario: '2 degrees')   # - should be ignored
       ]
     end
-    let_it_be(:company_assessments) do
+    let(:company_assessments) do
       [
-        create(:cp_assessment, assessment_date: '2012-05-01', publication_date: '2012-05-01'),
-        create(:cp_assessment, assessment_date: '2013-05-01', publication_date: '2013-05-01'),
-        create(:cp_assessment, assessment_date: '2018-05-01', publication_date: '2018-05-01') # <- last assessment date
+        build(:cp_assessment, assessment_date: '2012-05-01', publication_date: '2012-05-01'),
+        build(:cp_assessment, assessment_date: '2013-05-01', publication_date: '2013-05-01'),
+        build(:cp_assessment, assessment_date: '2018-05-01', publication_date: '2018-05-01') # <- last assessment date
       ]
     end
-    let_it_be(:older_company_assessments) do
+    let(:older_company_assessments) do
       [
-        create(:cp_assessment, assessment_date: '2011-05-01', publication_date: '2011-05-01'),
-        create(:cp_assessment, assessment_date: '2012-05-01', publication_date: '2012-05-01')
+        build(:cp_assessment, assessment_date: '2011-05-01', publication_date: '2011-05-01'),
+        build(:cp_assessment, assessment_date: '2012-05-01', publication_date: '2012-05-01')
       ]
     end
 
     it 'returns latest CP benchmarks with release date smaller than latest CP Assessment assessment date' do
-      company = create(:company,
-                       sector: create(:tpi_sector, cp_benchmarks: sector_cp_benchmarks),
-                       cp_assessments: company_assessments)
+      company = create(:company, sector: sector, cp_assessments: company_assessments)
 
       # last assessment year is 2018, so we should take benchmarks from 2016
       expect(company.latest_sector_benchmarks_before_last_assessment.pluck(:release_date, :scenario))
@@ -138,9 +137,7 @@ RSpec.describe Company, type: :model do
     end
 
     it 'returns latest CP benchmarks with last release date if all CP Assessments are older' do
-      company = create(:company,
-                       sector: create(:tpi_sector, cp_benchmarks: sector_cp_benchmarks),
-                       cp_assessments: older_company_assessments)
+      company = create(:company, sector: sector, cp_assessments: older_company_assessments)
 
       # last assessment year is 2012 - before oldest bechmark, so we just take most recent benchmark
       expect(company.latest_sector_benchmarks_before_last_assessment.pluck(:release_date, :scenario))

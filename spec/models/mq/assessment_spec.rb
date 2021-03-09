@@ -18,7 +18,7 @@
 require 'rails_helper'
 
 RSpec.describe MQ::Assessment, type: :model do
-  subject { build(:mq_assessment) }
+  subject { build(:mq_assessment, company: build(:company)) }
 
   let(:company) { create(:company) }
 

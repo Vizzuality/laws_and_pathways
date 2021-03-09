@@ -1,0 +1,53 @@
+[
+  {
+    "Title": "Super Legislation",
+    "Type": "executive",
+    "Geography": "Poland",
+    "Geography ISO": "POL",
+    "Frameworks": "framework1, framework2",
+    "Responses": "response1, response2",
+    "Instruments": "instrument1|instrument_type_test;instrument2|instrument_type_test",
+    "Document Types": "document_type1, document_type2",
+    "Natural Hazards": "hazard1, hazard2",
+    "Keywords": "",
+    "Sectors": "sector1, sector2",
+    "Events": "02/03/2018|Some law was approved|Description of approved law|https://test.com;03/04/2018|Some law was approved|Description of approved law|https://test.com",
+    "Documents": "Cool document|https://test.com|en;Cool document|http://internal-url.com|en",
+    "Parent Legislation": "Parent Legislation",
+    "Description": "Test Legislation Description"
+  },
+  {
+    "Title": "Example",
+    "Type": "executive",
+    "Geography": "Poland",
+    "Geography ISO": "POL",
+    "Frameworks": "",
+    "Responses": "",
+    "Instruments": "",
+    "Document Types": "",
+    "Natural Hazards": "",
+    "Keywords": "climate",
+    "Sectors": "sector1",
+    "Events": "01/05/2017|Some law was approved|Description of approved law|https://test.com;02/03/2019|Some law was approved|Description of approved law|https://test.com",
+    "Documents": null,
+    "Parent Legislation": null,
+    "Description": "Legislation example"
+  },
+  {
+    "Title": "Legislation Example",
+    "Type": "executive",
+    "Geography": "Poland",
+    "Geography ISO": "POL",
+    "Frameworks": "",
+    "Responses": "",
+    "Instruments": "",
+    "Document Types": "",
+    "Natural Hazards": "",
+    "Keywords": "",
+    "Sectors": "sector1",
+    "Events": "03/03/2018|Some law was approved|Description of approved law|https://test.com;01/05/2018|Some law was approved|Description of approved law|https://test.com",
+    "Documents": null,
+    "Parent Legislation": null,
+    "Description": "Example"
+  }
+]
