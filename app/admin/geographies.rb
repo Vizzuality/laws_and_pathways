@@ -49,7 +49,7 @@ ActiveAdmin.register Geography do
           row 'Percentage of Global Emissions', &:percent_global_emissions
           row 'Climate Risk Index', &:climate_risk_index
           row 'World Bank Income Group', &:wb_income_group
-          row 'External Litigation Cases Count', &:exteral_litigations_count
+          row 'External Litigation Cases Count', &:external_litigations_count
           row :updated_at
           row :updated_by
           row :created_at
