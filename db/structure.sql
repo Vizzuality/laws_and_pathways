@@ -668,7 +668,8 @@ CREATE TABLE public.geographies (
     discarded_at timestamp without time zone,
     percent_global_emissions character varying,
     climate_risk_index character varying,
-    wb_income_group character varying
+    wb_income_group character varying,
+    external_litigations_count integer DEFAULT 0
 );
 
 
@@ -3323,6 +3324,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200310163503'),
 ('20200622151708'),
 ('20210204142212'),
-('20210305132256');
+('20210305132256'),
+('20210316164558');
 
 
