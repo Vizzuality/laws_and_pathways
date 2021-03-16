@@ -16,7 +16,8 @@ module CSVExport
           'Sectors', 'Events', 'Documents', 'Parent Legislation', 'Description'
         ]
 
-        CSV.generate do |csv|
+        # BOM UTF-8
+        CSV.generate("\xEF\xBB\xBF") do |csv|
           csv << headers
 
           legislations.each do |legislation|

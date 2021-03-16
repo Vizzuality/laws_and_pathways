@@ -17,7 +17,8 @@ module CSVExport
           'Side A', 'Side B', 'Side C', 'Events', 'Summary'
         ]
 
-        CSV.generate do |csv|
+        # BOM UTF-8
+        CSV.generate("\xEF\xBB\xBF") do |csv|
           csv << headers
 
           litigations.each do |litigation|

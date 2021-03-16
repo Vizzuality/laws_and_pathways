@@ -131,7 +131,7 @@ module CSVImport
     end
 
     def encoded_file_content
-      File.read(file).force_encoding('UTF-8')
+      File.read(file, encoding: 'bom|utf-8').force_encoding('UTF-8')
     end
 
     def import_each_csv_row(csv)

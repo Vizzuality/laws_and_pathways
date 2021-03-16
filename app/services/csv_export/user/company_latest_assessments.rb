@@ -21,7 +21,8 @@ module CSVExport
                    'Carbon Performance Alignment', 'History to Projection cutoff year',
                    'CP Unit', *year_headers, 'Assumptions']
 
-        CSV.generate do |csv|
+        # BOM UTF-8
+        CSV.generate("\xEF\xBB\xBF") do |csv|
           csv << headers
 
           @companies.sort_by(&:name).each do |company|
