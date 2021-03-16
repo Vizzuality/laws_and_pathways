@@ -47,7 +47,7 @@ module CSVImport
         assumptions: row[:assumptions],
         emissions: parse_emissions(row),
         last_reported_year: row[:last_reported_year],
-        cp_alignment: row[:cp_alignment]
+        cp_alignment: CP::Alignment.format_name(row[:cp_alignment])
       }
     end
 

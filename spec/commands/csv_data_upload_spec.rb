@@ -400,7 +400,7 @@ describe 'CSVDataUpload (integration)' do
 
   it 'imports CSV files with CP Assessments data' do
     acme_company = create(:company, name: 'ACME', id: 1000)
-    create(:company, name: 'ACME Materials', id: 2000)
+    acme_materials = create(:company, name: 'ACME Materials', id: 2000)
 
     expect_data_upload_results(
       CP::Assessment,
@@ -415,6 +415,7 @@ describe 'CSVDataUpload (integration)' do
     )
 
     assessment = acme_company.cp_assessments.last
+    assessment2 = acme_materials.cp_assessments.last
 
     expect(assessment.assessment_date).to eq(Date.parse('2019-01-04'))
     expect(assessment.publication_date).to eq(DateTime.strptime('2019-02', '%Y-%m').to_date)
@@ -428,7 +429,8 @@ describe 'CSVDataUpload (integration)' do
       '2019' => 99,
       '2020' => 98
     )
-    expect(assessment.cp_alignment).to eq('Paris Pledges')
+    expect(assessment.cp_alignment).to eq('No or unsuitable disclosure')
+    expect(assessment2.cp_alignment).to eq('Not Aligned')
   end
 
   it 'imports CSV files with MQ Assessments data' do

@@ -73,7 +73,7 @@ export function getOptions(data, sectors) {
           useHTML: true,
           formatter() {
             if (this.y <= 0) return null;
-            if (this.series.name !== 'No Disclosure') return this.y;
+            if (this.series.name !== 'No or unsuitable disclosure') return this.y;
 
             return `
               <span style="color: white;">
