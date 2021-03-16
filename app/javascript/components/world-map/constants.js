@@ -36,7 +36,6 @@ export const EU_COUNTRIES = [
   'EST',
   'FIN',
   'FRA',
-  'GBR',
   'GRC',
   'HRV',
   'HUN',
