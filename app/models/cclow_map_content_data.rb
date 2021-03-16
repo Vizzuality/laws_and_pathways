@@ -47,6 +47,19 @@ class CCLOWMapContentData
         }
       end
 
+      Geography
+        .published
+        .where('external_litigations_count > 0')
+        .pluck(:iso, :external_litigations_count)
+        .each do |geography_iso, value|
+          res = result.find { |r| r[:geography_iso] == geography_iso }
+          if res.present?
+            res[:value] += value
+          else
+            result.push({geography_iso: geography_iso, value: value})
+          end
+        end
+
       {
         id: :number_of_climate_lawsuits,
         name: 'Number of Litigation Cases',
