@@ -17,7 +17,7 @@ describe 'Company Page', type: 'system', site: 'tpi' do
 
   it 'shows carbon performance box' do
     within 'a.summary-box-link[href="#carbon-performance"]' do
-      expect(page).to have_text('Not aligned')
+      expect(page).to have_text('Not Aligned')
     end
   end
 
