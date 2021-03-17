@@ -144,17 +144,19 @@ describe 'CSVDataUpload (integration)' do
     end
   end
 
-  fit 'imports CSV files with Legislation data' do
+  it 'imports CSV files with Legislation data' do
     parent_legislation = create(:legislation)
     existing_instrument_type = create(:instrument_type, name: 'Existing Type')
     create(:instrument, instrument_type: existing_instrument_type, name: 'Instrument')
+    existing_governance_type = create(:governance_type, name: 'Existing Gov Type')
+    create(:governance, governance_type: existing_governance_type, name: 'Existing Gov')
     litigation1 = create(:litigation)
     litigation2 = create(:litigation)
 
     csv_content = <<~CSV
-      "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Connected litigation ids","Visibility status"
-       ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law","keyword1,keyword2","response1,response2","tsunami","instrument|existing type",,"draft"
-       ,"legislative","Climate Law",#{parent_legislation.id},"15 Jan 2015","Description","Poland","POL","Waste","Mitigation,Adaptation","Law","keyword1,keyword3","response1,response3","flooding,sharkinados","Monitoring and evaluation|existing Type;Climate fund|Governance and planning;Building codes|Regulation","#{litigation1.id},#{litigation2.id}","pending"
+      "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Connected litigation ids","Visibility status"
+       ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law","keyword1,keyword2","response1,response2","tsunami","instrument|existing type","Existing gov|Existing gov type",,"draft"
+       ,"legislative","Climate Law",#{parent_legislation.id},"15 Jan 2015","Description","Poland","POL","Waste","Mitigation,Adaptation","Law","keyword1,keyword3","response1,response3","flooding,sharkinados","Monitoring and evaluation|existing Type;Climate fund|Governance and planning;Building codes|Regulation","governance 1|new gov type;governance 2|existing gov type","#{litigation1.id},#{litigation2.id}","pending"
     CSV
 
     expect_data_upload_results(
@@ -188,9 +190,13 @@ describe 'CSVDataUpload (integration)' do
       .to contain_exactly('Monitoring and evaluation', 'Climate fund', 'Building codes')
     expect(InstrumentType.all.pluck(:name)).to contain_exactly('Governance and planning', 'Regulation', 'Existing Type')
     expect(existing_instrument_type.instruments.map(&:name)).to contain_exactly('Instrument', 'Monitoring and evaluation')
+    expect(legislation.governances.map(&:name)).to contain_exactly('governance 1', 'governance 2')
+    expect(GovernanceType.all.pluck(:name)).to contain_exactly('new gov type', 'Existing Gov Type')
+    expect(existing_governance_type.governances.map(&:name)).to contain_exactly('Existing Gov', 'governance 2')
 
     legislation2 = Legislation.find_by(title: 'Finance Act 2011')
     expect(legislation2.instruments.map(&:name)).to contain_exactly('Instrument')
+    expect(legislation2.governances.map(&:name)).to contain_exactly('Existing Gov')
   end
 
   it 'imports CSV files with Litigation data' do

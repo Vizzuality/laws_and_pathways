@@ -16,6 +16,7 @@ module CSVImport
         legislation.natural_hazards = parse_tags(row[:natural_hazards], natural_hazards) if row.header?(:natural_hazards)
         legislation.responses = parse_tags(row[:responses], responses) if row.header?(:responses)
         legislation.instruments = find_or_create_instruments(row[:instruments]) if row.header?(:instruments)
+        legislation.governances = find_or_create_governances(row[:governances]) if row.header?(:governances)
         legislation.assign_attributes(legislation_attributes(row))
 
         was_new_record = legislation.new_record?
@@ -51,6 +52,19 @@ module CSVImport
         visibility_status: row[:visibility_status],
         litigation_ids: parse_ids(row[:connected_litigation_ids])
       }
+    end
+
+    def find_or_create_governances(str)
+      return [] unless str.present?
+
+      str.split(';').flat_map do |governance_type_string|
+        governance, type = governance_type_string.split('|')
+
+        type = GovernanceType.where('lower(name) = ?', type.downcase).first ||
+          GovernanceType.create!(name: type)
+        Governance.where(governance_type_id: type.id).where('lower(name) = ?', governance.downcase).first ||
+          Governance.create!(name: governance, governance_type: type)
+      end
     end
 
     def find_or_create_instruments(str)

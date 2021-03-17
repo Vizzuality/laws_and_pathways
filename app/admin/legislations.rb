@@ -123,6 +123,7 @@ ActiveAdmin.register Legislation do
     column :natural_hazards, &:natural_hazards_string
     column :document_types, &:document_types_string
     column :instruments, &:instruments_csv
+    column :governances, &:governances_csv
     column(:connected_litigation_ids) { |l| l.litigation_ids.join(Rails.application.config.csv_options[:entity_sep]) }
     column :visibility_status
   end
