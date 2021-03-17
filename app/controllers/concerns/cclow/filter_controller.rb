@@ -81,7 +81,7 @@ module CCLOW
     end
 
     def litigation_jurisdictions_options
-      jurisdiction_types = Litigation.pluck(:jurisdiction).uniq.map { |j| {value: j, label: j.humanize} }
+      jurisdiction_types = Litigation.pluck(:jurisdiction).uniq.compact.map { |j| {value: j, label: j.humanize} }
       [{field_name: 'jurisdiction', options: jurisdiction_types.sort_by { |h| h[:label] }}]
     end
 
