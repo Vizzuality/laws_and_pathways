@@ -299,7 +299,7 @@ class List extends Component {
         return (
           <li>
             This dataset does not include the United States – to access information about climate change litigation in the US,
-            please click <a href="http://climatecasechart.com/us-climate-change-litigation/" rel="noopener noreferrer" target="_blank">here</a> to go to the Sabin Center / Arnold & Porter Kaye Scholer database. This will take you to a different website and will open in a new window.
+            please go to <a href="http://climatecasechart.com/us-climate-change-litigation/" rel="noopener noreferrer" target="_blank">the Sabin Center / Arnold & Porter Kaye Scholer database</a>. This will take you to a different website and will open in a new window.
           </li>
         );
       }
