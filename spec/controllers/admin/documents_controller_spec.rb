@@ -104,8 +104,4 @@ RSpec.describe Admin::DocumentsController, type: :controller do
 
     it { is_expected.to be_successful }
   end
-
-  def response_as_csv
-    CSV.parse(response.body, headers: true)
-  end
 end

@@ -88,8 +88,4 @@ RSpec.describe Admin::LitigationSidesController, type: :controller do
       expect(csv.to_a).to eq([expected_columns])
     end
   end
-
-  def response_as_csv
-    CSV.parse(response.body, headers: true)
-  end
 end

@@ -97,7 +97,9 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller, retry: 3 do
         # remove snapshot to update it (from spec/snapshots)
         # make sure no dynamic, sequenced entity values are used
 
-        csv_json = CSV.parse(response.body, headers: true).map(&:to_h).to_json
+        io = StringIO.new(response.body)
+        io.set_encoding_by_bom
+        csv_json = CSV.parse(io, headers: true).map(&:to_h).to_json
         expect(csv_json).to match_snapshot('cclow_litigation_cases_controller_csv')
       end
     end
