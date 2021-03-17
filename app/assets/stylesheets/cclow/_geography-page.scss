@@ -498,7 +498,7 @@ $count-description-lines: 2;
       border-radius: 50%;
       display: flex;
       font-family: $family-sans-serif-bold;
-      font-size: 2.25rem;
+      font-size: 1.75rem;
       height: 80px;
       justify-content: center;
       width: 80px;
@@ -506,14 +506,14 @@ $count-description-lines: 2;
       a:hover {
         text-decoration: underline;
         color: $white;
-        font-size: 2.25rem;
+        font-size: 1.75rem;
         font-family: $family-sans-serif-bold;
       }
 
       a, a:visited, a:active {
         color: $white;
         text-decoration: none;
-        font-size: 2.25rem;
+        font-size: 1.75rem;
         font-family: $family-sans-serif-bold;
       }
     }
