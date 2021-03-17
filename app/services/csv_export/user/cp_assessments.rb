@@ -15,7 +15,8 @@ module CSVExport
         year_columns = @assessments.flat_map(&:emissions_all_years).uniq.sort
         headers.concat(year_columns)
 
-        CSV.generate do |csv|
+        # BOM UTF-8
+        CSV.generate("\xEF\xBB\xBF") do |csv|
           csv << headers
 
           @assessments.each do |assessment|

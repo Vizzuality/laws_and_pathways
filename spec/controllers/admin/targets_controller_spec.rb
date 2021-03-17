@@ -297,8 +297,4 @@ RSpec.describe Admin::TargetsController, type: :controller, factory_default: :ke
       end
     end
   end
-
-  def response_as_csv
-    CSV.parse(response.body, headers: true)
-  end
 end

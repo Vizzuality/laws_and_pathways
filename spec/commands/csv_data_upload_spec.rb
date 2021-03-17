@@ -21,7 +21,6 @@ describe 'CSVDataUpload (integration)' do
   end
 
   before do
-    # countries
     ::Current.admin_user = current_user
   end
 
@@ -110,6 +109,42 @@ describe 'CSVDataUpload (integration)' do
     end
   end
 
+  describe 'encoding' do
+    it 'correctly imports files with BOM UTF-8' do
+      csv_content = <<~CSV
+        "Id","Name","ISIN","Sedol","Sector id","Sector","Market Cap Group","Geography iso","Geography","Headquarters geography iso","Headquarters geography","Company comments internal","Latest information","active","CA100","Visibility status"
+        "69","Consol Energy","US20854P1093",,"2","Coal Mining","small","USA","United States of America","USA","United States of America",,,TRUE,"true","published"
+        "74","Daio Paper","JP3440400004,23783837783",,"14","Paper","small","JPN","Japan","JPN","Japan",,,TRUE,"false","draft"
+        "81","Domtar","US2575592033",,"14","Paper","small","USA","United States of America","USA","United States of America",,,TRUE,"false","draft"
+      CSV
+
+      expect_data_upload_results(
+        Company,
+        fixture_file('companies.csv', content: csv_content, add_bom: true),
+        new_records: 3, not_changed_records: 0, rows: 3, updated_records: 0
+      )
+    end
+
+    it 'fixes wrong unicode characters' do
+      csv_content = <<~CSV
+        Id,Title,Document type,Geography iso,Jurisdiction,Sector,Citation reference number,Summary,responses,Keywords,At issue,Visibility status,Legislation ids
+        ,Litigation number 1 â€žquoteâ€,administrative_case,GBR,GBR,"Transport,Energy;Urban",EWHC 2752,Lyle requested judicial review,"response1,response2","keyword1,keyword2",At issues,pending,
+      CSV
+
+      litigations_csv = fixture_file('litigations.csv', content: csv_content)
+
+      expect_data_upload_results(
+        Litigation,
+        litigations_csv,
+        new_records: 1, not_changed_records: 0, rows: 1, updated_records: 0
+      )
+
+      litigation = Litigation.find_by(citation_reference_number: 'EWHC 2752')
+
+      expect(litigation.title).to eq('Litigation number 1 „quote”')
+    end
+  end
+
   it 'imports CSV files with Legislation data' do
     expect_data_upload_results(
       Legislation,
@@ -135,25 +170,6 @@ describe 'CSVDataUpload (integration)' do
     expect(legislation.responses_list).to include('Response1', 'Response3')
     expect(legislation.natural_hazards.size).to eq(2)
     expect(legislation.natural_hazards_list).to include('Sharkinados', 'Flooding')
-  end
-
-  it 'fixes wrong unicode characters' do
-    csv_content = <<-CSV
-      Id,Title,Document type,Geography iso,Jurisdiction,Sector,Citation reference number,Summary,responses,Keywords,At issue,Visibility status,Legislation ids
-      ,Litigation number 1 â€žquoteâ€,administrative_case,GBR,GBR,"Transport,Energy;Urban",EWHC 2752,Lyle requested judicial review,"response1,response2","keyword1,keyword2",At issues,pending,
-    CSV
-
-    litigations_csv = fixture_file('litigations.csv', content: csv_content)
-
-    expect_data_upload_results(
-      Litigation,
-      litigations_csv,
-      new_records: 1, not_changed_records: 0, rows: 1, updated_records: 0
-    )
-
-    litigation = Litigation.find_by(citation_reference_number: 'EWHC 2752')
-
-    expect(litigation.title).to eq('Litigation number 1 „quote”')
   end
 
   it 'imports CSV files with Litigation data' do
@@ -509,12 +525,15 @@ describe 'CSVDataUpload (integration)' do
     command
   end
 
-  def fixture_file(filename, content: nil)
+  def fixture_file(filename, content: nil, add_bom: false)
     file_path = "#{Rails.root}/spec/support/fixtures/files/#{filename}"
 
     if content.present?
       file_path = "#{Rails.root}/tmp/#{filename}"
-      File.write(file_path, content)
+      File.open(file_path, 'w:UTF-8') do |f|
+        f.write("\xEF\xBB\xBF") if add_bom
+        f.write(content)
+      end
     end
 
     Rack::Test::UploadedFile.new(

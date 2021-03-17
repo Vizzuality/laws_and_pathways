@@ -49,6 +49,7 @@ RSpec.configure do |config|
   config.request_snapshots_dir = 'spec/fixtures/snapshots'
 
   config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include ControllerHelpers, type: :controller
   # config.include Rails.application.routes.url_helpers, type: :controller
   config.include FactoryBot::Syntax::Methods
   config.include CapybaraHelpers, type: :system
