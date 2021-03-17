@@ -24,6 +24,7 @@ ActiveAdmin.register Legislation do
          collection: proc { array_to_select_collection(Legislation::LEGISLATION_TYPES) }
   filter :geography
   filter :created_at
+  filter :updated_at
   filter :frameworks,
          as: :check_boxes,
          collection: proc { Framework.all }
@@ -107,19 +108,22 @@ ActiveAdmin.register Legislation do
 
   csv do
     column :id
-    column 'Law Id', humanize_name: false, &:law_id
     column :title
+    column :link, &:preview_url
     column(:legislation_type) { |l| l.legislation_type.downcase }
     column :description
     column(:parent) { |l| l.parent&.title }
+    column 'Parent Id', humanize_name: false, &:parent_id
     column(:geography) { |l| l.geography.name }
     column(:geography_iso) { |l| l.geography.iso }
-    column(:sector) { |l| l.laws_sectors.map(&:name).join(Rails.application.config.csv_options[:entity_sep]) }
+    column(:sectors) { |l| l.laws_sectors.map(&:name).join(Rails.application.config.csv_options[:entity_sep]) }
     column :frameworks, &:frameworks_string
     column :responses, &:responses_string
-    column :document_types, &:document_types_string
     column :keywords, &:keywords_string
     column :natural_hazards, &:natural_hazards_string
+    column :document_types, &:document_types_string
+    column :instruments, &:instruments_csv
+    column(:connected_litigation_ids) { |l| l.litigation_ids.join(Rails.application.config.csv_options[:entity_sep]) }
     column :visibility_status
   end
 

@@ -3,7 +3,6 @@ require 'rails_helper'
 # TODO: Extract all importers tests from here to separate files
 
 describe 'CSVDataUpload (integration)' do
-  let(:legislations_csv) { fixture_file('legislations.csv') }
   let(:companies_csv) { fixture_file('companies.csv') }
   let(:cp_benchmarks_csv) { fixture_file('cp_benchmarks.csv') }
   let(:cp_assessments_csv) { fixture_file('cp_assessments.csv') }
@@ -30,7 +29,7 @@ describe 'CSVDataUpload (integration)' do
 
   describe 'errors handling' do
     it 'sets error for unknown uploader class' do
-      command = Command::CSVDataUpload.new(uploader: 'FooUploader', file: legislations_csv)
+      command = Command::CSVDataUpload.new(uploader: 'FooUploader', file: companies_csv)
 
       expect(command.call).to eq(false)
       expect(command.errors.to_a).to include('Uploader is not included in the list')
@@ -145,10 +144,22 @@ describe 'CSVDataUpload (integration)' do
     end
   end
 
-  it 'imports CSV files with Legislation data' do
+  fit 'imports CSV files with Legislation data' do
+    parent_legislation = create(:legislation)
+    existing_instrument_type = create(:instrument_type, name: 'Existing Type')
+    create(:instrument, instrument_type: existing_instrument_type, name: 'Instrument')
+    litigation1 = create(:litigation)
+    litigation2 = create(:litigation)
+
+    csv_content = <<~CSV
+      "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Connected litigation ids","Visibility status"
+       ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law","keyword1,keyword2","response1,response2","tsunami","instrument|existing type",,"draft"
+       ,"legislative","Climate Law",#{parent_legislation.id},"15 Jan 2015","Description","Poland","POL","Waste","Mitigation,Adaptation","Law","keyword1,keyword3","response1,response3","flooding,sharkinados","Monitoring and evaluation|existing Type;Climate fund|Governance and planning;Building codes|Regulation","#{litigation1.id},#{litigation2.id}","pending"
+    CSV
+
     expect_data_upload_results(
       Legislation,
-      legislations_csv,
+      fixture_file('legislations.csv', content: csv_content),
       new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0
     )
 
@@ -157,7 +168,8 @@ describe 'CSVDataUpload (integration)' do
     expect(legislation).to have_attributes(
       legislation_type: 'legislative',
       description: 'Description',
-      visibility_status: 'pending'
+      visibility_status: 'pending',
+      parent_id: parent_legislation.id
     )
     expect(legislation.document_types_list).to include('Law')
     expect(legislation.geography.iso).to eq('POL')
@@ -170,6 +182,15 @@ describe 'CSVDataUpload (integration)' do
     expect(legislation.responses_list).to include('Response1', 'Response3')
     expect(legislation.natural_hazards.size).to eq(2)
     expect(legislation.natural_hazards_list).to include('Sharkinados', 'Flooding')
+    expect(legislation.litigations.size).to eq(2)
+    expect(legislation.litigation_ids).to include(litigation1.id, litigation2.id)
+    expect(legislation.instruments.map(&:name))
+      .to contain_exactly('Monitoring and evaluation', 'Climate fund', 'Building codes')
+    expect(InstrumentType.all.pluck(:name)).to contain_exactly('Governance and planning', 'Regulation', 'Existing Type')
+    expect(existing_instrument_type.instruments.map(&:name)).to contain_exactly('Instrument', 'Monitoring and evaluation')
+
+    legislation2 = Legislation.find_by(title: 'Finance Act 2011')
+    expect(legislation2.instruments.map(&:name)).to contain_exactly('Instrument')
   end
 
   it 'imports CSV files with Litigation data' do
