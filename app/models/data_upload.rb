@@ -13,25 +13,26 @@
 class DataUpload < ApplicationRecord
   has_one_attached :file
 
-  DEV_UPLOADERS = Rails.env.development? || Rails.env.test? ? %w[Documents] : []
-  UPLOADERS = (%w[
-    CPAssessments
-    CPBenchmarks
-    Companies
-    Events
-    ExternalLegislations
-    Geographies
-    Legislations
-    LitigationSides
-    Litigations
-    MQAssessments
-    Targets
-  ] + DEV_UPLOADERS).freeze
+  DEV_UPLOADERS = %w[Documents].freeze
+  UPLOADERS = {
+    'Carbon Performance Assessments' => 'CPAssessments',
+    'Carbon Performance Benchmarks' => 'CPBenchmarks',
+    'Companies' => 'Companies',
+    'Documents' => 'Documents',
+    'Events' => 'Events',
+    'External Legislations' => 'ExternalLegislations',
+    'Geographies' => 'Geographies',
+    'Legislations' => 'Legislations',
+    'Litigation Sides' => 'LitigationSides',
+    'Litigations' => 'Litigations',
+    'Management Quality Assessments' => 'MQAssessments',
+    'Targets' => 'Targets'
+  }.reject { |k| !(Rails.env.test? || Rails.env.development?) && DEV_UPLOADERS.include?(k) }.freeze
 
   belongs_to :uploaded_by, class_name: 'AdminUser', optional: true
 
   validates :file, attached: true, content_type: {in: ['text/csv', 'application/vnd.ms-excel']}
-  validates :uploader, inclusion: {in: UPLOADERS}
+  validates :uploader, inclusion: {in: UPLOADERS.values}
 
   before_create :set_uploaded_by
 
