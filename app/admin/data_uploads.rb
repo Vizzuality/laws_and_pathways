@@ -7,6 +7,10 @@ ActiveAdmin.register DataUpload do
 
   actions :index, :show, :new, :create
 
+  collection_action :instruction, method: :get do
+    render :instruction, layout: false
+  end
+
   permit_params :uploader, :file
 
   filter :created_at, label: 'Uploaded at'
@@ -39,7 +43,7 @@ ActiveAdmin.register DataUpload do
     active_admin_comments
   end
 
-  form html: {'data-controller' => 'check-modified'} do |f|
+  form html: {'data-controller' => 'check-modified upload-instructions'} do |f|
     f.semantic_errors(*f.object.errors.keys)
 
     div class: 'padding-20' do
@@ -51,7 +55,14 @@ ActiveAdmin.register DataUpload do
       f.input :uploader,
               as: :select,
               hint: 'Choose data model',
+              input_html: {'data-target': 'upload-instructions.uploaderSelect'},
               collection: DataUpload::UPLOADERS
+      div do
+        link_to 'Show instructions for selected model', '',
+                class: 'padding-20',
+                'data-target': 'upload-instructions.showLink',
+                'data-action': 'click->upload-instructions#showInstructions'
+      end
       f.input :file,
               as: :file,
               hint: preview_file_tag(f.object.file)
