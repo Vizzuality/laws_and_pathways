@@ -9,7 +9,7 @@ module CSVImport
           next
         end
         legislation = prepare_legislation(row)
-        legislation.parent_id = row[:parent_id] if row.header?(:parent_id)
+
         legislation.frameworks = parse_tags(row[:frameworks], frameworks) if row.header?(:frameworks)
         legislation.document_types = parse_tags(row[:document_types], document_types) if row.header?(:document_types)
         legislation.keywords = parse_tags(row[:keywords], keywords) if row.header?(:keywords)
@@ -17,13 +17,20 @@ module CSVImport
         legislation.responses = parse_tags(row[:responses], responses) if row.header?(:responses)
         legislation.instruments = find_or_create_instruments(row[:instruments]) if row.header?(:instruments)
         legislation.governances = find_or_create_governances(row[:governances]) if row.header?(:governances)
-        legislation.assign_attributes(legislation_attributes(row))
+        legislation.laws_sectors = find_or_create_laws_sectors(row[:sectors].split(/,|;/)) if row.header?(:sectors)
+
+        legislation.title = row[:title] if row.header?(:title)
+        legislation.description = row[:description] if row.header?(:description)
+        legislation.geography = geographies[row[:geography_iso]] if row.header?(:geography_iso)
+        legislation.legislation_type = row[:legislation_type]&.downcase if row.header?(:legislation_type)
+        legislation.visibility_status = row[:visibility_status] if row.header?(:visibility_status)
+        legislation.parent_id = row[:parent_id] if row.header?(:parent_id)
+        legislation.litigation_ids = parse_ids(row[:connected_litigation_ids]) if row.header?(:connected_litigation_ids)
 
         was_new_record = legislation.new_record?
         any_changes = legislation.changed?
 
         legislation.save!
-        legislation.laws_sectors = find_or_create_laws_sectors(row[:sectors].split(/,|;/)) if row[:sectors]
 
         update_import_results(was_new_record, any_changes)
       end
@@ -41,17 +48,6 @@ module CSVImport
       find_record_by(:id, row) ||
         find_record_by(:title, row) ||
         resource_klass.new
-    end
-
-    def legislation_attributes(row)
-      {
-        title: row[:title],
-        description: row[:description],
-        geography: geographies[row[:geography_iso]],
-        legislation_type: row[:legislation_type]&.downcase,
-        visibility_status: row[:visibility_status],
-        litigation_ids: parse_ids(row[:connected_litigation_ids])
-      }
     end
 
     def find_or_create_governances(str)

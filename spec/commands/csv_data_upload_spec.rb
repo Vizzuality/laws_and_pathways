@@ -199,6 +199,33 @@ describe 'CSVDataUpload (integration)' do
     expect(legislation2.governances.map(&:name)).to contain_exactly('Existing Gov')
   end
 
+  describe 'partial updates' do
+    it 'works for Legislations' do
+      parent = create(:legislation)
+      to_update = create(:legislation, parent: parent)
+      csv_content = <<-CSV
+        Id,Title,Parent Id
+        #{to_update.id},New title for legislation,
+      CSV
+
+      expect_to_change = [:title, :slug, :tsv, :updated_at, :created_at, :parent_id]
+      expect_not_to_change = [
+        *(to_update.attributes.symbolize_keys.keys - expect_to_change),
+        :tag_ids, :event_ids, :instrument_ids, :governance_ids, :target_ids, :litigation_ids
+      ]
+
+      expect_changes(to_update, expect_to_change, expect_not_to_change) do
+        expect_data_upload_results(
+          Legislation,
+          fixture_file('legislations.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
+          expected_success: true
+        )
+        to_update.reload
+      end
+    end
+  end
+
   it 'imports CSV files with Litigation data' do
     legislation1 = create(:legislation)
     legislation2 = create(:legislation)
@@ -550,6 +577,17 @@ describe 'CSVDataUpload (integration)' do
     end.to change(uploaded_resource_klass, :count).by(expected_details[:new_records])
 
     command
+  end
+
+  def expect_changes(model, expect_to_change, expect_not_to_change)
+    expectations = [
+      *expect_to_change.map { |attr| change(model, attr) },
+      *expect_not_to_change.map { |attr| not_change(model, attr) }
+    ]
+
+    expect do
+      yield if block_given?
+    end.to expectations.reduce(&:&)
   end
 
   def fixture_file(filename, content: nil, add_bom: false)
