@@ -1,0 +1,97 @@
+<h3>Column descriptions</h3>
+
+<table class="index_table">
+  <thead>
+    <th>Column Name</th>
+    <th>Description</th>
+    <th>Example</th>
+    <th>Requirements</th>
+  </thead>
+  <tbody>
+    <%= render partial: 'admin/data_uploads/instruction/column_id' %>
+    <tr>
+      <td>
+        Litigation Id
+      </td>
+      <td>
+        Id of litigation for this side entry
+      </td>
+      <td>
+        7000
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Connected entity type
+      </td>
+      <td>
+        Database entity type connected to this litigation side. One of: Company, Geography
+      </td>
+      <td>
+        Company
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Connected entity Id
+      </td>
+      <td>
+        Database entity id connected to this litigation side, type: integer
+      </td>
+      <td>
+        1123
+      </td>
+      <td>
+        Extra column, will be omitted if present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Name
+      </td>
+      <td>
+        Side name
+      </td>
+      <td>
+        Japanese Minister of Economy
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Side type
+      </td>
+      <td>
+        Type of side, one of: <%= LitigationSide::SIDE_TYPES.join(', ') %>
+      </td>
+      <td>
+        <%= LitigationSide::SIDE_TYPES.first %>
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Party type
+      </td>
+      <td>
+        Type of party, one of: <%= LitigationSide::PARTY_TYPES.join(', ')  %>
+      </td>
+      <td>
+        <%= LitigationSide::PARTY_TYPES.first %>
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+  </tbody>
+</table>

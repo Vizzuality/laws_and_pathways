@@ -1,1 +1,40 @@
-<%= render "admin/data_uploads/instruction/#{params[:uploader].downcase}" %>
+<h2>How to generate CSV data correctly</h2>
+
+<ul>
+  <li>
+    File must be <a href="https://en.wikipedia.org/wiki/UTF-8" rel="noopener noreferrer" target="_blank">UTF-8</a> encoded. Follow <a href="https://www.webtoffee.com/how-to-save-csv-excel-file-as-utf-8-encoded/" rel="noopener noreferrer" target="_blank">this link for example</a> to read instruction how to save as UTF-8.
+  </li>
+  <li>First row is reserved for column names</li>
+  <li>Column names are case insensitive meaning that "Title" column, could be also named as "title", "TITLE" etc.</li>
+  <li>File can contain extra columns, if column is not recognized by importing script it will be omitted</li>
+  <li>Id column is required for all files. To add new entities leave it empty, to update it must contain matching entity Id from the database</li>
+  <li>
+    Make sure you generate .csv file using comma (,) separator. Some computers will generate .csv files where values are separated by semicolons (;) instead of commas (,).
+    <a href="https://harvestmedia.zendesk.com/hc/en-us/articles/360023978031-Opening-Excel-files-with-the-correct-CSV-list-separator" rel="noopener noreferrer" target="_blank">Take a look here</a>
+  </li>
+</ul>
+
+<h2>Prepare file for bulk edit</h2>
+
+<p>
+  All files downloaded from admin panel are valid files ready for re-upload. Some columns even present in downloaded file are extra column,
+  with informative purpose only that will be omitted when uploading the file.
+</p>
+
+<p>
+  You can use filters to
+</p>
+
+<h3>Partial updates</h3>
+
+<p>
+  Partial updates are possible for some models
+</p>
+
+<h2><%= params[:uploader] %> file specific instructions</h2>
+
+<% begin %>
+  <%= render "admin/data_uploads/instruction/#{params[:uploader].underscore}" %>
+<% rescue ActionView::MissingTemplate %>
+  No instructions found for this model.
+<% end %>

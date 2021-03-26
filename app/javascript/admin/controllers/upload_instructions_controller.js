@@ -24,7 +24,24 @@ export default class extends Controller {
           document.body.appendChild(instructionModal);
         }
         instructionModal.innerHTML = html;
-        $(instructionModal).dialog({ modal: true });
+        $(instructionModal).dialog({
+          dialogClass: 'dialog-no-title',
+          width: window.innerWidth * 0.9,
+          modal: true,
+          buttons: [
+            {
+              text: 'Close',
+              click() {
+                $(this).dialog('close');
+              }
+            }
+          ],
+          open() {
+            $('.ui-widget-overlay').bind('click', () => {
+              $(this).dialog('close');
+            });
+          }
+        });
       })
       .catch(() => {
         alert('Error occured while showing instructions'); // eslint-disable-line
