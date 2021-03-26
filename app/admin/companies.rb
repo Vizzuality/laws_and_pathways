@@ -215,6 +215,10 @@ ActiveAdmin.register Company do
       [:sector]
     end
 
+    def csv_format?
+      request[:format] == 'csv'
+    end
+
     def destroy
       destroy_command = ::Command::Destroy::Company.new(resource.object)
 
@@ -225,10 +229,6 @@ ActiveAdmin.register Company do
                 end
 
       redirect_to admin_companies_path, message
-    end
-
-    def csv_format?
-      request[:format] == 'csv'
     end
   end
 end

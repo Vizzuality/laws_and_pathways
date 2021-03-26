@@ -174,16 +174,31 @@ ActiveAdmin.register Legislation do
     def scoped_collection
       super.includes(
         :geography,
-        :parent,
-        :laws_sectors,
         :frameworks,
+        :document_types,
+        :created_by,
+        :updated_by,
+        *csv_includes
+      )
+    end
+
+    def csv_includes
+      return [] unless csv_format?
+
+      [
+        :governances,
+        :parent,
         :responses,
         :keywords,
         :natural_hazards,
-        :document_types,
-        :created_by,
-        :updated_by
-      )
+        :laws_sectors,
+        :litigations,
+        instruments: [:instrument_type]
+      ]
+    end
+
+    def csv_format?
+      request[:format] == 'csv'
     end
 
     def apply_filtering(chain)
