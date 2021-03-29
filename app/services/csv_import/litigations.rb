@@ -18,7 +18,7 @@ module CSVImport
         litigation.responses = parse_tags(row[:responses], responses)
         litigation.keywords = parse_tags(row[:keywords], keywords)
         # TODO: decide if only one separator or many possible
-        litigation.laws_sectors = find_or_create_laws_sectors(row[:sector]&.split(/,|;/))
+        litigation.laws_sectors = find_or_create_laws_sectors(row[:sectors]&.split(/,|;/))
 
         update_import_results(was_new_record, any_changes)
       end

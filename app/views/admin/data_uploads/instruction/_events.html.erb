@@ -28,7 +28,7 @@
         Eventable type
       </td>
       <td>
-        Type of entity to which event belongs. One of: Geography, Legislation, Litigation
+        Type of entity to which event belongs. One of: Geography, Legislation, Litigation, Target
       </td>
       <td>
         Geography
@@ -39,7 +39,7 @@
     </tr>
     <tr>
       <td>
-        Eventable
+        Eventable Id
       </td>
       <td>
         Id of entity to which event belongs. Used along with eventable type. For example, when eventable type is "Geography" and id is "10", this event is for Geography with Id: 10
@@ -49,6 +49,20 @@
       </td>
       <td>
         Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Eventable Name
+      </td>
+      <td>
+        Name of eventable depends what is the type, it could be name of country, climate target, law or policy, or litigation
+      </td>
+      <td>
+        Poland
+      </td>
+      <td>
+        Extra column, will be omitted if present
       </td>
     </tr>
     <tr>

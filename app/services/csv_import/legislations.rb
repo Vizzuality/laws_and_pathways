@@ -25,7 +25,7 @@ module CSVImport
         legislation.legislation_type = row[:legislation_type]&.downcase if row.header?(:legislation_type)
         legislation.visibility_status = row[:visibility_status] if row.header?(:visibility_status)
         legislation.parent_id = row[:parent_id] if row.header?(:parent_id)
-        legislation.litigation_ids = parse_ids(row[:connected_litigation_ids]) if row.header?(:connected_litigation_ids)
+        legislation.litigation_ids = parse_ids(row[:litigation_ids]) if row.header?(:litigation_ids)
 
         was_new_record = legislation.new_record?
         any_changes = legislation.changed?

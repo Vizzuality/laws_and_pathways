@@ -51,7 +51,7 @@ module CSVImport
         sector: find_or_create_laws_sector(row[:sector]),
         source: row[:source]&.downcase,
         visibility_status: row[:visibility_status],
-        legislation_ids: parse_ids(row[:connected_law_ids])
+        legislation_ids: parse_ids(row[:legislation_ids])
       }
     end
   end

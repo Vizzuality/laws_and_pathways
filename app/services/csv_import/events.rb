@@ -25,7 +25,7 @@ module CSVImport
     def prepare_event(row)
       find_record_by(:id, row) ||
         Event.find_or_initialize_by(
-          eventable_id: row[:eventable],
+          eventable_id: row[:eventable_id],
           eventable_type: row[:eventable_type],
           event_type: row[:event_type]&.downcase&.gsub(' ', '_'),
           title: row[:title]
@@ -34,9 +34,9 @@ module CSVImport
 
     def event_attributes(row)
       eventable_id = if row[:eventable_type] == 'Geography'
-                       geographies[row[:eventable]]&.id
+                       geographies[row[:eventable_id]]&.id
                      else
-                       row[:eventable].to_i
+                       row[:eventable_id].to_i
                      end
       {
         eventable_id: eventable_id,

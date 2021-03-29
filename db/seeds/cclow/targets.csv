@@ -1,4 +1,4 @@
-"Id","Target type","Description","Ghg target","Year","Base year period","Single year","Source","Geography","Geography iso","Sector","Connected law ids","Scopes","Visibility status"
+"Id","Target type","Description","Ghg target","Year","Base year period","Single year","Source","Geography","Geography iso","Sector","Legislation ids","Scopes","Visibility status"
 "8943","fixed_level_target","<div>To increase electricity interconnections by 15 per cent.<br><br></div>","false","2030","2020","true","plan","Portugal","PRT","Energy","9513","Energy: General","published"
 "8942","fixed_level_target","<div>To increase the share of renewables in transport by 20 per cent.<br><br></div>","false","2030","2020","true","plan","Portugal","PRT","Transportation","9513","Transport: General, Renewable Energy","published"
 "8941","trajectory_target","<div>Reinforce the weighting of renewable energies by 47 per cent.&nbsp;</div>","false","2030","2020","true","plan","Portugal","PRT","Energy","9513","Renewable Energy","published"
