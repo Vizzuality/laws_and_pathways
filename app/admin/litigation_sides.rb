@@ -6,8 +6,10 @@ ActiveAdmin.register LitigationSide do
   csv do
     column :id
     column 'Litigation ID', &:litigation_id
+    column('Litigation Title') { |l| l.litigation.title }
     column :connected_entity_type
     column 'Connected entity ID', &:connected_entity_id
+    column('Connected entity name') { |l| l.connected_entity.name if l.connected_entity.present? }
     column :name
     column :side_type
     column :party_type
@@ -21,7 +23,7 @@ ActiveAdmin.register LitigationSide do
     end
 
     def scoped_collection
-      results = super.includes(:connected_entity)
+      results = super.includes(:connected_entity, :litigation)
 
       return results unless litigation_params
 
