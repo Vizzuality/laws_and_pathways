@@ -19,6 +19,7 @@ ActiveAdmin.register Litigation do
   filter :id_equals, label: 'ID'
   filter :title_contains
   filter :created_at
+  filter :updated_at
   filter :citation_reference_number_contains, label: 'Citation Reference Number'
   filter :summary_contains
   filter :geography

@@ -17,6 +17,7 @@ ActiveAdmin.register InstrumentType do
   show do
     attributes_table do
       row :name
+      list_row 'Instruments', :instrument_links
     end
 
     active_admin_comments

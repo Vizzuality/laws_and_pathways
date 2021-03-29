@@ -93,6 +93,18 @@ class LegislationDecorator < Draper::Decorator
     )
   end
 
+  def instruments_csv
+    model.instruments.map do |instrument|
+      [instrument.name, instrument.instrument_type.name].join('|')
+    end.join(';')
+  end
+
+  def governances_csv
+    model.governances.map do |governance|
+      [governance.name, governance.governance_type.name].join('|')
+    end.join(';')
+  end
+
   def as_json(_ = {})
     super(methods: :display_name)
   end
