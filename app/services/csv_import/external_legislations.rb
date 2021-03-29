@@ -10,7 +10,11 @@ module CSVImport
           next
         end
         legislation = prepare_legislation(row)
-        legislation.assign_attributes(legislation_attributes(row))
+
+        legislation.litigation_ids = parse_ids(row[:litigation_ids]) if row.header?(:litigation_ids)
+        legislation.name = row[:name] if row.header?(:name)
+        legislation.url = row[:url] if row.header?(:url)
+        legislation.geography = geographies[row[:geography_iso]] if row.header?(:geography_iso)
 
         was_new_record = legislation.new_record?
         any_changes = legislation.changed?
@@ -32,15 +36,6 @@ module CSVImport
 
       find_record_by(:id, row) ||
         resource_klass.new
-    end
-
-    def legislation_attributes(row)
-      {
-        litigation_ids: parse_ids(row[:litigation_ids]),
-        name: row[:name],
-        url: row[:url],
-        geography: geographies[row[:geography_iso]]
-      }
     end
   end
 end

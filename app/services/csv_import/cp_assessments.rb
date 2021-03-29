@@ -5,7 +5,13 @@ module CSVImport
     def import
       import_each_csv_row(csv) do |row|
         assessment = prepare_assessment(row)
-        assessment.assign_attributes(assessment_attributes(row))
+
+        assessment.assessment_date = assessment_date(row) if row.header?(:assessment_date)
+        assessment.publication_date = publication_date(row) if row.header?(:publication_date)
+        assessment.assumptions = row[:assumptions] if row.header?(:assumptions)
+        assessment.emissions = parse_emissions(row) if emission_headers?(row)
+        assessment.last_reported_year = row[:last_reported_year] if row.header?(:last_reported_year)
+        assessment.cp_alignment = CP::Alignment.format_name(row[:cp_alignment]) if row.header?(:cp_alignment)
 
         was_new_record = assessment.new_record?
         any_changes = assessment.changed?
@@ -38,17 +44,6 @@ module CSVImport
         puts "!!WARNING!! CHECK YOUR FILE ID DOESN'T MATCH COMPANY NAME!! #{row[:company_id]} #{row[:company]}"
       end
       company
-    end
-
-    def assessment_attributes(row)
-      {
-        assessment_date: assessment_date(row),
-        publication_date: publication_date(row),
-        assumptions: row[:assumptions],
-        emissions: parse_emissions(row),
-        last_reported_year: row[:last_reported_year],
-        cp_alignment: CP::Alignment.format_name(row[:cp_alignment])
-      }
     end
 
     def assessment_date(row)

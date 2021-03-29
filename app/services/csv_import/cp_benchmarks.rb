@@ -5,7 +5,10 @@ module CSVImport
     def import
       import_each_csv_row(csv) do |row|
         benchmark = prepare_benchmark(row)
-        benchmark.assign_attributes(benchmark_attributes(row))
+
+        benchmark.scenario = row[:scenario] if row.header?(:scenario)
+        benchmark.release_date = parse_date(row[:release_date]) if row.header?(:release_date)
+        benchmark.emissions = parse_emissions(row) if emission_headers?(row)
 
         was_new_record = benchmark.new_record?
         any_changes = benchmark.changed?
@@ -29,14 +32,6 @@ module CSVImport
           release_date: parse_date(row[:release_date]),
           scenario: row[:scenario]
         )
-    end
-
-    def benchmark_attributes(row)
-      {
-        scenario: row[:scenario],
-        release_date: parse_date(row[:release_date]),
-        emissions: parse_emissions(row)
-      }
     end
 
     def parse_date(date)

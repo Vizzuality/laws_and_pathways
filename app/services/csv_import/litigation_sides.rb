@@ -5,7 +5,13 @@ module CSVImport
     def import
       import_each_csv_row(csv) do |row|
         litigation_side = prepare_litigation_side(row)
-        litigation_side.assign_attributes(litigation_side_attributes(row))
+
+        litigation_side.name = row[:name] if row.header?(:name)
+        litigation_side.litigation = Litigation.find(row[:litigation_id]) if row.header?(:litigation_id)
+        litigation_side.connected_entity_id = row[:connected_entity_id] if row.header?(:connected_entity_id)
+        litigation_side.connected_entity_type = row[:connected_entity_type] if row.header?(:connected_entity_type)
+        litigation_side.party_type = row[:party_type]&.downcase if row.header?(:party_type)
+        litigation_side.side_type = row[:side_type]&.downcase if row.header?(:side_type)
 
         was_new_record = litigation_side.new_record?
         any_changes = litigation_side.changed?
@@ -24,17 +30,6 @@ module CSVImport
 
     def prepare_litigation_side(row)
       find_record_by(:id, row) || resource_klass.new
-    end
-
-    def litigation_side_attributes(row)
-      {
-        name: row[:name],
-        litigation: Litigation.find(row[:litigation_id]),
-        connected_entity_id: row[:connected_entity_id],
-        connected_entity_type: row[:connected_entity_type],
-        party_type: row[:party_type]&.downcase,
-        side_type: row[:side_type]&.downcase
-      }
     end
   end
 end

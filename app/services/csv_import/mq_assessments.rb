@@ -7,7 +7,13 @@ module CSVImport
     def import
       import_each_csv_row(csv) do |row|
         assessment = prepare_assessment(row)
-        assessment.assign_attributes(assessment_attributes(row))
+
+        assessment.assessment_date = assessment_date(row) if row.header?(:assessment_date)
+        assessment.publication_date = publication_date(row) if row.header?(:publication_date)
+        assessment.level = row[:level] if row.header?(:level)
+        assessment.notes = row[:notes] if row.header?(:notes)
+        assessment.questions = get_questions(row) if question_headers?(row)
+        assessment.methodology_version = row[:methodology_version] if row.header?(:methodology_version)
 
         was_new_record = assessment.new_record?
         any_changes = assessment.changed?
@@ -50,17 +56,6 @@ module CSVImport
       company
     end
 
-    def assessment_attributes(row)
-      {
-        assessment_date: assessment_date(row),
-        publication_date: publication_date(row),
-        level: row[:level],
-        notes: row[:notes],
-        questions: get_questions(row),
-        methodology_version: row[:methodology_version]
-      }
-    end
-
     def assessment_date(row)
       CSVImport::DateUtils.safe_parse!(row[:assessment_date], ['%Y-%m-%d', '%d/%m/%Y'])
     end
@@ -70,16 +65,21 @@ module CSVImport
     end
 
     def get_questions(row)
-      question_headers = row.headers.map(&:to_s)
-        .select { |h| h.strip.start_with?('Q') }
-
-      question_headers.map do |q_header|
+      question_headers(row).map do |q_header|
         answer = row[q_header]
 
         next if answer.nil?
 
         parse_question(q_header).merge(answer: answer)
       end.compact
+    end
+
+    def question_headers(row)
+      row.headers.map(&:to_s).select { |h| h.strip.start_with?('Q') }
+    end
+
+    def question_headers?(row)
+      question_headers(row).any?
     end
 
     def parse_question(question)

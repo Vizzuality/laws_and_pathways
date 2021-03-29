@@ -5,7 +5,14 @@ module CSVImport
     def import
       import_each_csv_row(csv) do |row|
         event = prepare_event(row)
-        event.assign_attributes(event_attributes(row))
+
+        event.eventable_id = parse_eventable_id(row) if row.header?(:eventable_id)
+        event.eventable_type = row[:eventable_type].constantize if row.header?(:eventable_type)
+        event.event_type = row[:event_type]&.downcase&.gsub(' ', '_') if row.header?(:event_type)
+        event.title = (row[:title].presence || row[:event_type]) if row.header?(:title)
+        event.description = row[:description] if row.header?(:description)
+        event.date = event_date(row) if row.header?(:date)
+        event.url = row[:url] if row.header?(:url)
 
         was_new_record = event.new_record?
         any_changes = event.changed?
@@ -32,21 +39,10 @@ module CSVImport
         )
     end
 
-    def event_attributes(row)
-      eventable_id = if row[:eventable_type] == 'Geography'
-                       geographies[row[:eventable_id]]&.id
-                     else
-                       row[:eventable_id].to_i
-                     end
-      {
-        eventable_id: eventable_id,
-        eventable_type: row[:eventable_type].constantize,
-        event_type: row[:event_type]&.downcase&.gsub(' ', '_'),
-        title: (row[:title].presence || row[:event_type]),
-        description: row[:description],
-        date: event_date(row),
-        url: row[:url]
-      }
+    def parse_eventable_id(row)
+      return geographies[row[:eventable_id]]&.id if row[:eventable_type] == 'Geography'
+
+      row[:eventable_id].to_i
     end
 
     def event_date(row)
