@@ -7,8 +7,8 @@ import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
 import flatten from 'lodash/flatten';
 
-import SearchFilter from '../../SearchFilter';
-import TimeRangeFilter from '../../TimeRangeFilter';
+import SearchFilter from 'components/cclow/SearchFilter';
+import TimeRangeFilter from 'components/cclow/TimeRangeFilter';
 import { withDeviceInfo } from 'components/Responsive';
 
 import { getQueryFilters } from './helpers';

@@ -3,13 +3,7 @@ import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import ReactTooltip from 'react-tooltip';
 import cx from 'classnames';
-import Testimonials from './Testimonials';
 import MultiSelect from './MultiSelect';
-
-Testimonials.propTypes = {
-  events: PropTypes.array,
-  options: PropTypes.array
-};
 
 const blueDarkColor = '#2E3152';
 const eventSliderMoveBy = 300;

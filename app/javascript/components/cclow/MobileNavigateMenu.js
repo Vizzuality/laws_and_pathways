@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Select, { components } from 'react-select';
-import chevronDownIconBlack from '../../assets/images/icon_chevron_dark/chevron_down_black-1.svg';
-import chevronUpIconBlack from '../../assets/images/icon_chevron_dark/chevron-up.svg';
+import chevronDownIconBlack from 'images/icon_chevron_dark/chevron_down_black-1.svg';
+import chevronUpIconBlack from 'images/icon_chevron_dark/chevron-up.svg';
 
 const blueDarkColor = '#2E3152';
 const secondaryColor = '#828397';

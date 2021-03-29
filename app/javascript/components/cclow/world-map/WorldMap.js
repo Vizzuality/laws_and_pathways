@@ -14,7 +14,7 @@ import orderBy from 'lodash/orderBy';
 import { feature, mergeArcs } from 'topojson-client';
 import reducer, { initialState } from './world-map.reducer';
 import { useMarkers, useScale, useCombinedLayer } from './world-map.hooks';
-import chevronIconBlack from '../../../assets/images/icon_chevron_dark/chevron_down_black-1.svg';
+import chevronIconBlack from 'images/icon_chevron_dark/chevron_down_black-1.svg';
 
 import MapBubble from './MapBubble';
 import MapLegend from './MapLegend';

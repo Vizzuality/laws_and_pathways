@@ -20,7 +20,7 @@ import { useDeviceInfo } from 'components/Responsive';
 
 import CompanySelector from './CompanySelector';
 import CompanyTag from './CompanyTag';
-import NestedDropdown from 'components/NestedDropdown';
+import NestedDropdown from 'components/tpi/NestedDropdown';
 
 // get last emission also looking at targeted
 // const getLastEmission = (d) => d.data && d.data.length && d.data.slice(-1)[0][1];

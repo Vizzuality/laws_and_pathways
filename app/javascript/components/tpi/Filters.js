@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
-import filterIcon from '../../assets/images/icons/filter-white.svg';
-import filterBlueIcon from '../../assets/images/icons/filter-blue.svg';
+import filterIcon from 'images/icons/filter-white.svg';
+import filterBlueIcon from 'images/icons/filter-blue.svg';
 
 const ALL_OPTION_NAME = 'All';
 

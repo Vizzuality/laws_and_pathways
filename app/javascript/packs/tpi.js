@@ -11,5 +11,4 @@ Rails.start();
 /* Turbolinks.start(); */
 
 // setup react-rails
-const componentRequireContext = require.context('components', true);
-ReactRailsUJS.useContext(componentRequireContext);
+ReactRailsUJS.useContext(require.context('components/tpi', true));

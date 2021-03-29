@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import CheckList from 'components/CheckList';
+import CheckList from 'components/tpi/CheckList';
 
 function CompanySelector({ companies, selected, onChange, onClose }) {
   const options = useMemo(

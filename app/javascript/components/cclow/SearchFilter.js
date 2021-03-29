@@ -1,9 +1,9 @@
 import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
 import sortBy from 'lodash/sortBy';
-import search from '../../assets/images/icons/search.svg';
-import minus from '../../assets/images/icons/dark-minus.svg';
-import plus from '../../assets/images/icons/dark-plus.svg';
+import search from 'images/icons/search.svg';
+import minus from 'images/icons/dark-minus.svg';
+import plus from 'images/icons/dark-plus.svg';
 
 class SearchFilter extends Component {
   constructor(props) {
