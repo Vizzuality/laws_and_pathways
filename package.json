@@ -56,8 +56,8 @@
     "react-tooltip": "^3.11.1",
     "react_ujs": "^2.6.0",
     "simple-statistics": "^7.1.0",
-    "slick-carousel": "^1.8.1",
     "stimulus": "^1.1.1",
+    "tiny-slider": "^2.9.3",
     "trix": "^1.2.4",
     "turbolinks": "^5.2.0"
   },

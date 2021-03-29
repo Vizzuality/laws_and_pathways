@@ -1,47 +1,42 @@
 @import "variables";
 
-$slide-padding: 10px;
-
 .slider-container {
-  .slick-slide {
-    padding: 0 $slide-padding;
+  .tns-outer {
+    position: relative;
   }
 
-  .slider {
-    margin: 0 -$slide-padding;
-  }
+  .tns-controls {
+    button {
+      margin: auto 0;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      border: none;
+      border-radius: 50%;
+      height: 48px;
+      width: 48px;
+      background-color: $grey-light;
+      z-index: 1;
 
-  .slick-disabled {
-    display: none !important;
-  }
+      &:focus{
+        outline: none;
+      }
 
-  .slick-arrow {
-    margin: auto 0;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    border: none;
-    border-radius: 50%;
-    height: 48px;
-    width: 48px;
-    background-color: $grey-light;
-    z-index: 1;
+      &[disabled] {
+        display: none;
+      }
 
-    &:focus{
-      outline: none;
-    }
+      &[data-controls=next] {
+        right: -25px;
+      }
 
-    &.slick-next {
-      right: -14px;
-    }
-
-    &.slick-prev {
-      left: -14px;
+      &[data-controls=prev] {
+        left: -25px;
+      }
     }
   }
 
   .item-container {
-
     .item {
       height: 240px;
       border: 1px solid $border-cl;
