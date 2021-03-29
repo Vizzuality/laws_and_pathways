@@ -12,7 +12,7 @@ module CCLOW
 
       respond_to do |format|
         format.html do
-          render component: 'pages/cclow/ClimateTargets', props: {
+          render component: 'pages/ClimateTargets', props: {
             geo_filter_options: region_geography_options,
             types_filter_options: target_types_options,
             sectors_options: sectors_options('Target'),
