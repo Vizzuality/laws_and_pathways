@@ -8,6 +8,7 @@ module CSVImport
     attr_accessor :override_id, :rollback_on_error
 
     validate :check_if_current_user_authorized
+    validate :check_required_headers
 
     # @param file [File]
     # @param options [Hash]
@@ -95,6 +96,16 @@ module CSVImport
       return if current_user.can?(:create, resource_klass) && current_user.can?(:update, resource_klass)
 
       errors.add(:base, "User not authorized to import #{resource_klass}")
+    end
+
+    def check_required_headers
+      (required_headers - csv.headers).each do |header|
+        errors.add(:base, "CSV missing header: #{header.to_s.humanize(keep_id_suffix: true)}")
+      end
+    end
+
+    def required_headers
+      []
     end
 
     def current_user

@@ -44,5 +44,9 @@ module CSVImport
       LawsSector.where('lower(name) = ?', sector_name.downcase).first ||
         LawsSector.new(name: sector_name.titleize)
     end
+
+    def missing_header(header)
+      CSVImport::MissingHeader.new("CSV missing header: #{header}")
+    end
   end
 end

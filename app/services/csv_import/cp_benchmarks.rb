@@ -25,6 +25,10 @@ module CSVImport
       CP::Benchmark
     end
 
+    def required_headers
+      [:id]
+    end
+
     def prepare_benchmark(row)
       find_record_by(:id, row) ||
         CP::Benchmark.find_or_initialize_by(

@@ -29,6 +29,13 @@ module CSVImport
       Event
     end
 
+    def required_headers
+      headers = [:id]
+      headers << :eventable_type if csv.headers.include?(:eventable_id)
+      headers << :eventable_id if csv.headers.include?(:eventable_type)
+      headers
+    end
+
     def prepare_event(row)
       find_record_by(:id, row) ||
         Event.find_or_initialize_by(

@@ -3,7 +3,7 @@ module CSVImport
 
   class Row < SimpleDelegator
     def [](*args)
-      raise MissingHeader, "CSV missing header: #{args[0]}" unless header?(args[0])
+      raise MissingHeader, "CSV missing header: #{args[0].to_s.humanize(keep_id_suffix: true)}" unless header?(args[0])
 
       super
     end

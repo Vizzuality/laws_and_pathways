@@ -34,6 +34,10 @@ module CSVImport
       Company
     end
 
+    def required_headers
+      [:id]
+    end
+
     def prepare_company(row)
       return prepare_overridden_resource(row) if override_id
 

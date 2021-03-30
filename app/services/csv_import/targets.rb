@@ -38,6 +38,10 @@ module CSVImport
       Target
     end
 
+    def required_headers
+      [:id]
+    end
+
     def prepare_target(row)
       return prepare_overridden_resource(row) if override_id
 

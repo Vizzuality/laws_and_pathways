@@ -42,6 +42,10 @@ module CSVImport
       Legislation
     end
 
+    def required_headers
+      [:id]
+    end
+
     def prepare_legislation(row)
       return prepare_overridden_resource(row) if override_id
 

@@ -40,6 +40,10 @@ module CSVImport
       Litigation
     end
 
+    def required_headers
+      [:id]
+    end
+
     # to avoid doubling records when uploading the same record without id (new record)
     # if there is nothing in id column try to find Litigation by title first before
     # creating new record

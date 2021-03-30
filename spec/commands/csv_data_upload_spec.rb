@@ -56,7 +56,7 @@ describe 'CSVDataUpload (integration)' do
       )
 
       expect(command.errors.messages[:base])
-        .to eq(['CSV missing header: id'])
+        .to eq(['CSV missing header: Id'])
     end
 
     describe 'authorization errors' do
@@ -199,6 +199,184 @@ describe 'CSVDataUpload (integration)' do
     expect(legislation2.governances.map(&:name)).to contain_exactly('Existing Gov')
   end
 
+  describe 'required columns return error' do
+    it 'for Legislations' do
+      csv_content = <<-CSV
+        Title,Parent Id
+        New title for legislation,
+      CSV
+
+      command = expect_data_upload_results(
+        Legislation,
+        fixture_file('legislations.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for External Legislations' do
+      csv_content = <<-CSV
+        Name
+        New Name
+      CSV
+
+      command = expect_data_upload_results(
+        ExternalLegislation,
+        fixture_file('external-legislations.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for Targets' do
+      csv_content = <<-CSV
+        Target type
+        fixed_level_target
+      CSV
+
+      command = expect_data_upload_results(
+        Target,
+        fixture_file('targets.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for Litigations' do
+      csv_content = <<-CSV
+        Title
+        New title for litigation
+      CSV
+
+      command = expect_data_upload_results(
+        Litigation,
+        fixture_file('litigations.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for Litigation Sides' do
+      csv_content = <<-CSV
+        Name,Connected Entity Id
+        New side name, 12
+      CSV
+
+      command = expect_data_upload_results(
+        LitigationSide,
+        fixture_file('litigation-sides.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id', 'CSV missing header: Connected entity type'])
+    end
+
+    it 'for Geographies' do
+      csv_content = <<-CSV
+        Name
+        New Name
+      CSV
+
+      command = expect_data_upload_results(
+        Geography,
+        fixture_file('geographies.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for Companies' do
+      csv_content = <<-CSV
+        Name
+        New Name
+      CSV
+
+      command = expect_data_upload_results(
+        Company,
+        fixture_file('companies.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for MQ Assessments' do
+      csv_content = <<-CSV
+        Publication Date
+        2020-01
+      CSV
+
+      command = expect_data_upload_results(
+        MQ::Assessment,
+        fixture_file('mq-assessments.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for CP Assessments' do
+      csv_content = <<-CSV
+        Publication Date
+        2020-01
+      CSV
+
+      command = expect_data_upload_results(
+        CP::Assessment,
+        fixture_file('cp-assessments.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for Events' do
+      csv_content = <<-CSV
+        Title, Eventable Type
+        New event title,Geography
+      CSV
+
+      command = expect_data_upload_results(
+        Event,
+        fixture_file('events.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id', 'CSV missing header: Eventable id'])
+    end
+
+    it 'for CP Benchmarks' do
+      csv_content = <<-CSV
+        Scenario
+        2 degrees
+      CSV
+
+      command = expect_data_upload_results(
+        CP::Benchmark,
+        fixture_file('cp-benchmarks.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+  end
+
   describe 'partial updates' do
     it 'works for Legislations' do
       parent = create(:legislation)
@@ -208,7 +386,7 @@ describe 'CSVDataUpload (integration)' do
         #{to_update.id},New title for legislation,
       CSV
 
-      expect_to_change = [:title, :slug, :tsv, :updated_at, :created_at, :parent_id]
+      expect_to_change = [:title, :slug, :tsv, :updated_at, :parent_id]
       expect_not_to_change = [
         *(to_update.attributes.symbolize_keys.keys - expect_to_change),
         :tag_ids, :event_ids, :instrument_ids, :governance_ids, :target_ids, :litigation_ids
@@ -232,7 +410,7 @@ describe 'CSVDataUpload (integration)' do
         #{to_update.id},New title for litigation
       CSV
 
-      expect_to_change = [:title, :slug, :tsv, :updated_at, :created_at]
+      expect_to_change = [:title, :slug, :tsv, :updated_at]
       expect_not_to_change = [
         *(to_update.attributes.symbolize_keys.keys - expect_to_change),
         :tag_ids, :event_ids, :legislation_ids, :external_legislation_ids, :laws_sector_ids
@@ -256,7 +434,7 @@ describe 'CSVDataUpload (integration)' do
         #{to_update.id},New side name
       CSV
 
-      expect_to_change = [:name, :updated_at, :created_at]
+      expect_to_change = [:name, :updated_at]
       expect_not_to_change = [
         *(to_update.attributes.symbolize_keys.keys - expect_to_change)
       ]
@@ -279,7 +457,7 @@ describe 'CSVDataUpload (integration)' do
         #{to_update.id},fixed_level_target
       CSV
 
-      expect_to_change = [:target_type, :tsv, :updated_at, :created_at]
+      expect_to_change = [:target_type, :updated_at]
       expect_not_to_change = [
         *(to_update.attributes.symbolize_keys.keys - expect_to_change),
         :tag_ids, :event_ids, :legislation_ids
@@ -303,7 +481,7 @@ describe 'CSVDataUpload (integration)' do
         #{to_update.id},New Name
       CSV
 
-      expect_to_change = [:name, :created_at, :updated_at]
+      expect_to_change = [:name, :updated_at]
       expect_not_to_change = [
         *(to_update.attributes.symbolize_keys.keys - expect_to_change),
         :litigation_ids
@@ -350,7 +528,7 @@ describe 'CSVDataUpload (integration)' do
         #{to_update.id},New Name
       CSV
 
-      expect_to_change = [:name, :slug, :created_at, :updated_at]
+      expect_to_change = [:name, :slug, :updated_at]
       expect_not_to_change = [
         *(to_update.attributes.symbolize_keys.keys - expect_to_change),
         :tag_ids, :event_ids, :legislation_ids, :litigation_ids, :target_ids
@@ -374,7 +552,7 @@ describe 'CSVDataUpload (integration)' do
         #{to_update.id},New Name
       CSV
 
-      expect_to_change = [:name, :slug, :created_at, :updated_at]
+      expect_to_change = [:name, :slug, :updated_at]
       expect_not_to_change = [
         *(to_update.attributes.symbolize_keys.keys - expect_to_change)
       ]
@@ -397,7 +575,7 @@ describe 'CSVDataUpload (integration)' do
         #{to_update.id},2 degrees
       CSV
 
-      expect_to_change = [:scenario, :created_at, :updated_at]
+      expect_to_change = [:scenario, :updated_at]
       expect_not_to_change = [
         *(to_update.attributes.symbolize_keys.keys - expect_to_change)
       ]
@@ -420,7 +598,7 @@ describe 'CSVDataUpload (integration)' do
         #{to_update.id},2020-01
       CSV
 
-      expect_to_change = [:publication_date, :created_at, :updated_at]
+      expect_to_change = [:publication_date, :updated_at]
       expect_not_to_change = [
         *(to_update.attributes.symbolize_keys.keys - expect_to_change)
       ]
@@ -443,7 +621,7 @@ describe 'CSVDataUpload (integration)' do
         #{to_update.id},2020-01
       CSV
 
-      expect_to_change = [:publication_date, :created_at, :updated_at]
+      expect_to_change = [:publication_date, :updated_at]
       expect_not_to_change = [
         *(to_update.attributes.symbolize_keys.keys - expect_to_change)
       ]
@@ -818,6 +996,8 @@ describe 'CSVDataUpload (integration)' do
       *expect_to_change.map { |attr| change(model, attr) },
       *expect_not_to_change.map { |attr| not_change(model, attr) }
     ]
+
+    model.reload
 
     expect do
       yield if block_given?

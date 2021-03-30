@@ -28,6 +28,13 @@ module CSVImport
       LitigationSide
     end
 
+    def required_headers
+      headers = [:id]
+      headers << :connected_entity_type if csv.headers.include?(:connected_entity_id)
+      headers << :connected_entity_id if csv.headers.include?(:connected_entity_type)
+      headers
+    end
+
     def prepare_litigation_side(row)
       find_record_by(:id, row) || resource_klass.new
     end

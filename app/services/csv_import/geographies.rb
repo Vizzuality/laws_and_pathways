@@ -35,6 +35,10 @@ module CSVImport
       Geography
     end
 
+    def required_headers
+      [:id]
+    end
+
     def prepare_geography(row)
       find_record_by(:id, row) ||
         find_record_by(:iso, row) ||

@@ -28,6 +28,10 @@ module CSVImport
       CP::Assessment
     end
 
+    def required_headers
+      [:id]
+    end
+
     def prepare_assessment(row)
       find_record_by(:id, row) ||
         CP::Assessment.find_or_initialize_by(
