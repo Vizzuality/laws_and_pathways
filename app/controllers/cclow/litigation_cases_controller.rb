@@ -12,7 +12,7 @@ module CCLOW
 
       respond_to do |format|
         format.html do
-          render component: 'pages/cclow/LitigationCases', props: {
+          render component: 'pages/LitigationCases', props: {
             geo_filter_options: region_geography_options,
             keywords_filter_options: tags_options('Litigation', 'Keyword'),
             responses_filter_options: tags_options('Litigation', 'Response'),

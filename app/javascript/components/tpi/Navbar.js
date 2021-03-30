@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import Logo from '../../assets/images/logo/TPI_logo.svg';
+import Logo from 'images/logo/TPI_logo.svg';
 
 const ESCAPE_KEY = 27;
 const ENTER_KEY = 13;

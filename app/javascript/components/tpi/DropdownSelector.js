@@ -10,8 +10,8 @@ import PropTypes from 'prop-types';
 import Fuse from 'fuse.js';
 import cx from 'classnames';
 import groupBy from 'lodash/groupBy';
-import chevronIcon from '../../assets/images/icons/white-chevron-down.svg';
-import chevronIconBlack from '../../assets/images/icon_chevron_dark/chevron_down_black-1.svg';
+import chevronIcon from 'images/icons/white-chevron-down.svg';
+import chevronIconBlack from 'images/icon_chevron_dark/chevron_down_black-1.svg';
 
 const ESCAPE_KEY = 27;
 const ENTER_KEY = 13;

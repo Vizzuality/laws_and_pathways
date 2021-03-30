@@ -1,5 +1,5 @@
 (function () {
-  $('#cp-assessment').html("<%= j render('cp_assessment', assessment: @cp_assessment) %>");
+  document.getElementById('cp-assessment').innerHTML = "<%= j render('cp_assessment', assessment: @cp_assessment) %>";
   const newUrl = new URL(window.location.href);
   newUrl.searchParams.set('cp_assessment_id', <%= @cp_assessment.id %>);
   window.history.replaceState({}, '', newUrl.href);

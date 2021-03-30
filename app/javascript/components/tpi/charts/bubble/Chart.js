@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import legendImage from 'images/bubble-chart-legend.svg';
 import SingleCell from './SingleCell';
-import BaseTooltip from '../../BaseTooltip';
+import BaseTooltip from 'components/tpi/BaseTooltip';
 
 const SCALE = 5;
 

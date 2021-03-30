@@ -1,5 +1,5 @@
-<div class="slider-container">
-  <div class="slider" data-controller='slider' data-slick='{"slidesToShow": 3, "slidesToScroll": 3}'>
+<div class="slider-container" data-controller='slider'>
+  <div class="slider" data-target="slider.items">
     <% @latest_additions.each do |item| %>
       <div class="item-container">
         <div class="item">
