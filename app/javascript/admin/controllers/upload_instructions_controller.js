@@ -3,12 +3,6 @@ import { Controller } from 'stimulus';
 export default class extends Controller {
   static targets = ['uploaderSelect', 'showLink']
 
-  connect() {
-    // only this way with jquery works, because of select2
-    $(this.uploaderSelectTarget).on('change', this.refreshVisiblity.bind(this));
-    this.refreshVisiblity();
-  }
-
   showInstructions(e) {
     e.preventDefault();
     const uploader = this.uploaderSelectTarget.value;
@@ -46,9 +40,5 @@ export default class extends Controller {
       .catch(() => {
         alert('Error occured while showing instructions'); // eslint-disable-line
       });
-  }
-
-  refreshVisiblity() {
-    this.showLinkTarget.classList.toggle('hidden', !this.uploaderSelectTarget.value);
   }
 }

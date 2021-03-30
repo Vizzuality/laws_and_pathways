@@ -52,17 +52,17 @@ ActiveAdmin.register DataUpload do
     end
 
     f.inputs do
+      div do
+        link_to 'Show upload instructions', '',
+                class: 'padding-20',
+                'data-target': 'upload-instructions.showLink',
+                'data-action': 'click->upload-instructions#showInstructions'
+      end
       f.input :uploader,
               as: :select,
               hint: 'Choose data model',
               input_html: {'data-target': 'upload-instructions.uploaderSelect'},
               collection: DataUpload::UPLOADERS
-      div do
-        link_to 'Show instructions for selected model', '',
-                class: 'padding-20',
-                'data-target': 'upload-instructions.showLink',
-                'data-action': 'click->upload-instructions#showInstructions'
-      end
       f.input :file,
               as: :file,
               hint: preview_file_tag(f.object.file)

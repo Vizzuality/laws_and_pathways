@@ -1,4 +1,20 @@
+<h3>Import events for a new legislation</h3>
+
+<p>
+  To add or update events for legislation you first have to know the ID of legislation, and use Events importer.
+</p>
+
+<p>
+  When adding new legislations with events the good practice would be to first create legislations in draft state.
+  After the upload, you can download newly created legislations filtering by draft state and created date.
+  You will have Ids that you can use in Events CSV file. Eventable type must be set to "Legislation", Eventable Id - those
+  would be downloaded ids, and you can add extra column "Eventable Title" with Legislation Title to know for which
+  legislation you are creating a new event. Any extra column not mentioned in column descriptions will be ignored.
+</p>
+
 <h3>Column descriptions</h3>
+
+<%= render partial: 'admin/data_uploads/instruction/column_descriptions_notes' %>
 
 <table class="index_table">
   <thead>
@@ -72,7 +88,7 @@
         Name of parent legislation
       </td>
       <td>
-        TODO
+        Parent legislation name
       </td>
       <td>
         Extra column, will be omitted if present

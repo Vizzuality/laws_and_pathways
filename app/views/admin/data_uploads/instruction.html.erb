@@ -22,19 +22,37 @@
 </p>
 
 <p>
-  You can use filters to
+  You can use filters to download only subset of the database. Please be mindful that filters must be indicated in the Search status box.
+  Then you can download the data, or related data as on the image below.
 </p>
+
+<%= image_tag "admin/csv_instruction/bulk_edit_image1.png", height: 300 %>
+
+<p>
+  Id column is always <strong>required</strong>, and when editing data, make sure that values are present, otherwise new records will be created.
+</p>
+
+<%= image_tag "admin/csv_instruction/bulk_edit_image2.png", height: 200 %>
 
 <h3>Partial updates</h3>
 
 <p>
-  Partial updates are possible for some models
+  It is possible to update only data for specific columns. You can remove columns from CSV file if you are not interested to update any value for them.
 </p>
 
-<h2><%= params[:uploader] %> file specific instructions</h2>
+<div class="well">
+  There are some limitations to partial updates, specifically for TPI assessments. Any limitations to partial updates will be noted in the file upload
+  instruction section for chosen model.
+</div>
 
-<% begin %>
-  <%= render "admin/data_uploads/instruction/#{params[:uploader].underscore}" %>
-<% rescue ActionView::MissingTemplate %>
-  No instructions found for this model.
+<% if params[:uploader].present? %>
+  <h2><%= params[:uploader] %> file upload instruction</h2>
+
+  <% begin %>
+    <%= render "admin/data_uploads/instruction/#{params[:uploader].underscore}" %>
+  <% rescue ActionView::MissingTemplate %>
+    No instructions found for this model.
+  <% end %>
+<% else %>
+  <h3>Please select uploader to see specific instruction for a model</h3>
 <% end %>

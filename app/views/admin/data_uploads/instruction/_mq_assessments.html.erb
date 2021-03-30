@@ -1,14 +1,18 @@
-<p>
+<div class="well">
   In single file there could be only assessments for the same methodology version. As questions differs between versions, mixing
   different methodology version's assessments in the same file is not possible.
-</p>
+</div>
 
-<p>
+<h3>Partial updates limitations</h3>
+
+<div class="well">
   Partial update is not available for single questions. You can update all question answers or no question answers.
   If you try to partially update questions, removing some of the columns, then the not existing in the file will be REMOVED.
-</p>
+</div>
 
 <h3>Column descriptions</h3>
+
+<%= render partial: 'admin/data_uploads/instruction/column_descriptions_notes' %>
 
 <table class="index_table">
   <thead>
