@@ -68,11 +68,11 @@ ActiveAdmin.register Litigation do
     column :jurisdiction
     column :citation_reference_number
     column :summary
-    column(:sector) { |l| l.laws_sectors.map(&:name).join(Rails.application.config.csv_options[:entity_sep]) }
-    column :responses, &:responses_string
-    column :keywords, &:keywords_string
+    column(:sectors) { |l| l.laws_sectors.map(&:name).join(Rails.application.config.csv_options[:entity_sep]) }
+    column :responses, &:responses_csv
+    column :keywords, &:keywords_csv
     column :at_issue
-    column(:visibility_status) { |l| l.visibility_status&.humanize }
+    column :visibility_status
     column(:legislation_ids) { |l| l.legislation_ids.join(Rails.application.config.csv_options[:entity_sep]) }
   end
 

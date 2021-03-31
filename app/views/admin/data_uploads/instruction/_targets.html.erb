@@ -1,0 +1,193 @@
+<h3>Import events for a new target</h3>
+
+<p>
+  To add or update events for target you first have to know the ID of target and use Events importer.
+</p>
+
+<p>
+  When adding new targets with events the good practice would be to first create targets in draft state.
+  After the upload, you can download newly created targets filtering by draft state and created date.
+  You will have Ids that you can use in Events CSV file. Eventable type must be set to "Target", Eventable Id - those
+  would be downloaded ids, and you can add an extra column "Eventable Title" with target name to know for which
+  target you are creating a new event. Any extra columns not mentioned in column descriptions will be ignored.
+</p>
+
+<h3>Column descriptions</h3>
+
+<%= render partial: 'admin/data_uploads/instruction/column_descriptions_notes' %>
+
+<table class="index_table">
+  <thead>
+    <th>Column Name</th>
+    <th>Description</th>
+    <th>Example</th>
+    <th>Requirements</th>
+  </thead>
+  <tbody>
+    <%= render partial: 'admin/data_uploads/instruction/column_id' %>
+    <tr>
+      <td>
+        Target type
+      </td>
+      <td>
+        Type of target, type: string, one of: <%= Target::TYPES.join(', ')  %>
+      </td>
+      <td>
+        <%= Target::TYPES.first %>
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Source
+      </td>
+      <td>
+        Source of target, type: string, one of: <%= Target::SOURCES.join(', ')  %>
+      </td>
+      <td>
+        <%= Target::SOURCES.first %>
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Description
+      </td>
+      <td>
+        Target description. Can contain HTML tags.
+      </td>
+      <td>
+        90% of housing stock built or retrofitted to resilient building codes
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Ghg target
+      </td>
+      <td>
+        Is this a GHG target? type: boolean, one of: true, false
+      </td>
+      <td>
+        false
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Year
+      </td>
+      <td>
+        Target year, type: integer
+      </td>
+      <td>
+        2030
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Base year period
+      </td>
+      <td>
+        Base year period, type: string
+      </td>
+      <td>
+        against a 2005 baseline
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Single year
+      </td>
+      <td>
+        Is this single year target? type: boolean, one of: true, false
+      </td>
+      <td>
+        false
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Geography
+      </td>
+      <td>
+        Name of target geography
+      </td>
+      <td>
+        European Union
+      </td>
+      <td>
+        Extra column, will be omitted if present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Geography ISO
+      </td>
+      <td>
+        Geography ISO 3 code
+      </td>
+      <td>
+        EUR
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Sector
+      </td>
+      <td>
+        Name of target sector
+      </td>
+      <td>
+        Energy
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Scopes
+      </td>
+      <td>
+        List of target scopes delimited by semicolons (;)
+      </td>
+      <td>
+        Transport: General;GHG
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Legislation ids
+      </td>
+      <td>
+        List of legislation ids connected to this target delimited by semicolons (;)
+      </td>
+      <td>
+        10;33;22
+      </td>
+      <td>
+      </td>
+    </tr>
+    <%= render partial: 'admin/data_uploads/instruction/column_visibility_status' %>
+  </tbody>
+</table>

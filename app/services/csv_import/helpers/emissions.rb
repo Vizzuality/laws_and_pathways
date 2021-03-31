@@ -10,6 +10,10 @@ module CSVImport
           acc.merge(year.to_s.to_i => row[year].to_f)
         end
       end
+
+      def emission_headers?(row)
+        row.headers.grep(EMISSION_YEAR_PATTERN).any?
+      end
     end
   end
 end

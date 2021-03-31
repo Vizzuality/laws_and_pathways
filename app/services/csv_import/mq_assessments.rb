@@ -7,7 +7,14 @@ module CSVImport
     def import
       import_each_csv_row(csv) do |row|
         assessment = prepare_assessment(row)
-        assessment.assign_attributes(assessment_attributes(row))
+
+        assessment.methodology_version = row[:methodology_version] if row.header?(:methodology_version)
+        assessment.company = find_company!(row) if row.header?(:company_id)
+        assessment.assessment_date = assessment_date(row) if row.header?(:assessment_date)
+        assessment.publication_date = publication_date(row) if row.header?(:publication_date)
+        assessment.level = row[:level].presence if row.header?(:level)
+        assessment.notes = row[:notes].presence if row.header?(:notes)
+        assessment.questions = get_questions(row) if question_headers?(row)
 
         was_new_record = assessment.new_record?
         any_changes = assessment.changed?
@@ -32,6 +39,10 @@ module CSVImport
       MQ::Assessment
     end
 
+    def required_headers
+      [:id]
+    end
+
     def prepare_assessment(row)
       find_record_by(:id, row) ||
         MQ::Assessment.find_or_initialize_by(
@@ -43,22 +54,7 @@ module CSVImport
     def find_company!(row)
       return unless row[:company_id].present?
 
-      company = Company.find(row[:company_id])
-      if company.name.strip.downcase != row[:company].strip.downcase
-        puts "!!WARNING!! CHECK YOUR FILE ID DOESN'T MATCH COMPANY NAME!! #{row[:company_id]} #{row[:company]}"
-      end
-      company
-    end
-
-    def assessment_attributes(row)
-      {
-        assessment_date: assessment_date(row),
-        publication_date: publication_date(row),
-        level: row[:level],
-        notes: row[:notes],
-        questions: get_questions(row),
-        methodology_version: row[:methodology_version]
-      }
+      Company.find(row[:company_id])
     end
 
     def assessment_date(row)
@@ -70,16 +66,21 @@ module CSVImport
     end
 
     def get_questions(row)
-      question_headers = row.headers.map(&:to_s)
-        .select { |h| h.strip.start_with?('Q') }
-
-      question_headers.map do |q_header|
+      question_headers(row).map do |q_header|
         answer = row[q_header]
 
         next if answer.nil?
 
         parse_question(q_header).merge(answer: answer)
       end.compact
+    end
+
+    def question_headers(row)
+      row.headers.map(&:to_s).select { |h| h.strip.start_with?('Q') }
+    end
+
+    def question_headers?(row)
+      question_headers(row).any?
     end
 
     def parse_question(question)

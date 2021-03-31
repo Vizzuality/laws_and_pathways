@@ -2,10 +2,23 @@ module CSVImport
   class Companies < BaseImporter
     include Helpers
 
+    # rubocop:disable Layout/LineLength
     def import
       import_each_csv_row(csv) do |row|
         company = prepare_company(row)
-        company.assign_attributes(company_attributes(row))
+
+        company.name = row[:name] if row.header?(:name)
+        company.isin = row[:isin] if row.header?(:isin)
+        company.sector = find_or_create_tpi_sector(row[:sector]) if row.header?(:sector)
+        company.market_cap_group = row[:market_cap_group].downcase if row.header?(:market_cap_group)
+        company.sedol = row[:sedol].presence if row.header?(:sedol)
+        company.geography = find_geography(row[:geography_iso]) if row.header?(:geography_iso)
+        company.headquarters_geography = find_geography(row[:headquarters_geography_iso]) if row.header?(:headquarters_geography_iso)
+        company.latest_information = row[:latest_information].presence if row.header?(:latest_information)
+        company.company_comments_internal = row[:company_comments_internal].presence if row.header?(:company_comments_internal)
+        company.ca100 = row[:ca100] || false if row.header?(:ca100)
+        company.active = row[:active] || true if row.header?(:active)
+        company.visibility_status = row[:visibility_status]&.downcase if row.header?(:visibility_status)
 
         was_new_record = company.new_record?
         any_changes = company.changed?
@@ -15,11 +28,16 @@ module CSVImport
         update_import_results(was_new_record, any_changes)
       end
     end
+    # rubocop:enable Layout/LineLength
 
     private
 
     def resource_klass
       Company
+    end
+
+    def required_headers
+      [:id]
     end
 
     def prepare_company(row)
@@ -29,28 +47,6 @@ module CSVImport
         find_record_by(:isin, row) ||
         find_record_by(:name, row) ||
         resource_klass.new
-    end
-
-    # Builds resource attributes from a CSV row.
-    #
-    # If not present in DB, will create related:
-    # - sector
-    #
-    def company_attributes(row)
-      {
-        name: row[:name],
-        isin: row[:isin],
-        sector: find_or_create_tpi_sector(row[:sector]),
-        market_cap_group: row[:market_cap_group].downcase,
-        geography: geographies[row[:geography_iso]],
-        headquarters_geography: geographies[row[:headquarters_geography_iso]],
-        ca100: row[:ca100] || false,
-        sedol: row[:sedol],
-        latest_information: row[:latest_information],
-        company_comments_internal: row[:company_comments_internal],
-        visibility_status: row[:visibility_status],
-        active: row[:active] || true
-      }
     end
   end
 end

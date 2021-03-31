@@ -22,6 +22,7 @@
 #
 
 class Target < ApplicationRecord
+  include DirtyAssociations
   include Eventable
   include UserTrackable
   include VisibilityStatus
@@ -63,7 +64,7 @@ class Target < ApplicationRecord
 
   belongs_to :geography
   belongs_to :sector, class_name: 'LawsSector', foreign_key: 'sector_id'
-  has_and_belongs_to_many :legislations
+  has_and_belongs_to_many :legislations, after_add: :mark_changed, after_remove: :mark_changed
 
   scope :recent, ->(date = 1.month.ago) {
     joins(:events)

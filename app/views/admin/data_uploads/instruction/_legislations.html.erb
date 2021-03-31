@@ -1,0 +1,261 @@
+<h3>Import events for a new legislation</h3>
+
+<p>
+  To add or update events for legislation you first have to know the ID of legislation and use Events importer.
+</p>
+
+<p>
+  When adding new legislations with events the good practice would be to first create legislations in draft state.
+  After the upload, you can download newly created legislations filtering by draft state and created date.
+  You will have Ids that you can use in Events CSV file. Eventable type must be set to "Legislation", Eventable Id - those
+  would be downloaded ids, and you can add an extra column "Eventable Title" with Legislation Title to know for which
+  legislation you are creating a new event. Any extra column not mentioned in columns descriptions will be ignored.
+</p>
+
+<h3>Column descriptions</h3>
+
+<%= render partial: 'admin/data_uploads/instruction/column_descriptions_notes' %>
+
+<table class="index_table">
+  <thead>
+    <th>Column Name</th>
+    <th>Description</th>
+    <th>Example</th>
+    <th>Requirements</th>
+  </thead>
+  <tbody>
+    <%= render partial: 'admin/data_uploads/instruction/column_id' %>
+    <tr>
+      <td>
+        Title
+      </td>
+      <td>
+        Legislation title, type: string
+      </td>
+      <td>
+        EU strategy on adaptation to climate change
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Link
+      </td>
+      <td>
+        Link to the law/policy page
+      </td>
+      <td>
+        https://climate-laws.org/geographies/european-union/policies/eu-strategy-on-adaptation-to-climate-change
+      </td>
+      <td>
+        Extra column, will be omitted if present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Legislation type
+      </td>
+      <td>
+        Type of legislation, one of: <%= Legislation::LEGISLATION_TYPES.join(', ')  %>
+      </td>
+      <td>
+        executive
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Description
+      </td>
+      <td>
+        Description text for legislation. Can contain HTML tags.
+      </td>
+      <td>
+        Description example
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Parent
+      </td>
+      <td>
+        Name of parent legislation
+      </td>
+      <td>
+        Parent legislation name
+      </td>
+      <td>
+        Extra column, will be omitted if present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Parent Id
+      </td>
+      <td>
+        Id of parent legislation, type: integer
+      </td>
+      <td>
+        10
+      </td>
+      <td>
+
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Geography
+      </td>
+      <td>
+        Name of legislation geography
+      </td>
+      <td>
+        European Union
+      </td>
+      <td>
+        Extra column, will be omitted if present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Geography ISO
+      </td>
+      <td>
+        Geography ISO 3 code
+      </td>
+      <td>
+        EUR
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Sectors
+      </td>
+      <td>
+        List of sectors delimited by semicolons (;)
+      </td>
+      <td>
+        Residential and Commercial;Energy;LULUCF;Transportation;Urban;Water
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Frameworks
+      </td>
+      <td>
+        List of frameworks delimited by semicolons (;)
+      </td>
+      <td>
+        Adaptation;Mitigation
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Responses
+      </td>
+      <td>
+        List of responses delimited by semicolons (;)
+      </td>
+      <td>
+        Adaptation;Disaster Risk Management
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Keywords
+      </td>
+      <td>
+        List of keywords delimited by semicolons (;)
+      </td>
+      <td>
+        Adaptation;Industry;Institutions / Administrative Arrangements;Buildings
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Natural hazards
+      </td>
+      <td>
+        List of natural hazards delimited by semicolons (;)
+      </td>
+      <td>
+        Erosion;Floods;Droughts;Cyclones;Tsunamis
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Document types
+      </td>
+      <td>
+        List of document types delimited by semicolons (;)
+      </td>
+      <td>
+        Decree/Order/Ordinance;Strategy;Accord
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Instruments
+      </td>
+      <td>
+        List of instruments with instrument types delimited by semicolons (;). Instrument name is separated from instrument type by pipe character (|)
+        format "Instrument name|Instrument type name"
+      </td>
+      <td>
+        Knowledge generation|Capacity-building;Building codes|Regulation
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Governances
+      </td>
+      <td>
+        List of governances with instrument types delimited by semicolons (;). Governance name is separated from governance type by pipe character (|)
+        format "Governance name|Governance type name"
+      </td>
+      <td>
+        Governance1 name|Governance1 type name;Governance2 name|Governance2 type name
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Litigation ids
+      </td>
+      <td>
+        List of litigation ids connected to this law/policy delimited by semicolons (;)
+      </td>
+      <td>
+        10;33;22
+      </td>
+      <td>
+      </td>
+    </tr>
+    <%= render partial: 'admin/data_uploads/instruction/column_visibility_status' %>
+  </tbody>
+</table>

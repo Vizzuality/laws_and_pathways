@@ -5,7 +5,11 @@ module CSVImport
     def import
       import_each_csv_row(csv) do |row|
         benchmark = prepare_benchmark(row)
-        benchmark.assign_attributes(benchmark_attributes(row))
+
+        benchmark.sector = find_or_create_tpi_sector(row[:sector]) if row.header?(:sector)
+        benchmark.release_date = parse_date(row[:release_date]) if row.header?(:release_date)
+        benchmark.scenario = row[:scenario] if row.header?(:scenario)
+        benchmark.emissions = parse_emissions(row) if emission_headers?(row)
 
         was_new_record = benchmark.new_record?
         any_changes = benchmark.changed?
@@ -22,6 +26,10 @@ module CSVImport
       CP::Benchmark
     end
 
+    def required_headers
+      [:id]
+    end
+
     def prepare_benchmark(row)
       find_record_by(:id, row) ||
         CP::Benchmark.find_or_initialize_by(
@@ -29,14 +37,6 @@ module CSVImport
           release_date: parse_date(row[:release_date]),
           scenario: row[:scenario]
         )
-    end
-
-    def benchmark_attributes(row)
-      {
-        scenario: row[:scenario],
-        release_date: parse_date(row[:release_date]),
-        emissions: parse_emissions(row)
-      }
     end
 
     def parse_date(date)

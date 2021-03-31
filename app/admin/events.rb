@@ -51,7 +51,8 @@ ActiveAdmin.register Event do
   csv do
     column :id
     column :eventable_type
-    column :eventable_id
+    column 'Eventable Id', humanize_name: false, &:eventable_id
+    column :eventable_name
     column :event_type
     column :title
     column :description

@@ -15,7 +15,7 @@
           "type": "controller",
           "class": "TPI::HomeController",
           "method": "index",
-          "line": 23,
+          "line": 17,
           "file": "app/controllers/tpi/home_controller.rb",
           "rendered": {
             "name": "tpi/home/index",
@@ -25,7 +25,7 @@
         {
           "type": "template",
           "name": "tpi/home/index",
-          "line": 67,
+          "line": 87,
           "file": "app/views/tpi/home/index.html.erb",
           "rendered": {
             "name": "tpi/home/_partners",
@@ -48,7 +48,7 @@
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/cclow/pages/show.html.erb",
-      "line": 10,
+      "line": 12,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "(Unresolved Model).new.text",
       "render_path": [
@@ -73,13 +73,32 @@
       "note": ""
     },
     {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "5823e1db30c5459848a7064bb3984576a1cfe2bb67d716fd5c80a666f467dd0d",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/admin/data_uploads/instruction.html.erb",
+      "line": 37,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => \"admin/data_uploads/instruction/#{params[:uploader].underscore}\", {})",
+      "render_path": null,
+      "location": {
+        "type": "template",
+        "template": "admin/data_uploads/instruction"
+      },
+      "user_input": "params[:uploader].underscore",
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
       "fingerprint": "5eaef38c140ad1cb2e4ecc08755c940cc0df0f84ef77f58ac2efe6659dbae1a7",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/tpi/companies/show.html.erb",
-      "line": 98,
+      "line": 104,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "TPI::CompanyDecorator.decorate(Company.published.friendly.find(params[:id])).isin_array.join(\"<br/>\")",
       "render_path": [
@@ -87,7 +106,7 @@
           "type": "controller",
           "class": "TPI::CompaniesController",
           "method": "show",
-          "line": 19,
+          "line": 20,
           "file": "app/controllers/tpi/companies_controller.rb",
           "rendered": {
             "name": "tpi/companies/show",
@@ -110,7 +129,7 @@
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/tpi/pages/show.html.erb",
-      "line": 7,
+      "line": 8,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "TPIPage.find(params[:id]).description",
       "render_path": [
@@ -149,7 +168,7 @@
           "type": "controller",
           "class": "CCLOW::Geography::ClimateTargetsController",
           "method": "show",
-          "line": 23,
+          "line": 25,
           "file": "app/controllers/cclow/geography/climate_targets_controller.rb",
           "rendered": {
             "name": "cclow/geography/climate_targets/show",
@@ -168,73 +187,11 @@
     {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
-      "fingerprint": "7b209ea90975891c1af13c26055afad342db3ce56d8060b99414c86814df8492",
-      "check_name": "CrossSiteScripting",
-      "message": "Unescaped parameter value",
-      "file": "app/views/cclow/geography/litigation_cases/show.html.erb",
-      "line": 60,
-      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "@geography.litigations.find(params[:id]).summary",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "CCLOW::Geography::LitigationCasesController",
-          "method": "show",
-          "line": 29,
-          "file": "app/controllers/cclow/geography/litigation_cases_controller.rb",
-          "rendered": {
-            "name": "cclow/geography/litigation_cases/show",
-            "file": "app/views/cclow/geography/litigation_cases/show.html.erb"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "cclow/geography/litigation_cases/show"
-      },
-      "user_input": "params[:id]",
-      "confidence": "Weak",
-      "note": ""
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 2,
-      "fingerprint": "80e6c8a65302da007e6bd24c2354396ca64a5b32148bdd29d5a15b5d6ae644ab",
-      "check_name": "CrossSiteScripting",
-      "message": "Unescaped model attribute",
-      "file": "app/views/cclow/geography/legislations/show.html.erb",
-      "line": 63,
-      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "CCLOW::LegislationDecorator.new(::Legislation.find(params[:id])).description",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "CCLOW::Geography::LegislationsController",
-          "method": "show",
-          "line": 36,
-          "file": "app/controllers/cclow/geography/legislations_controller.rb",
-          "rendered": {
-            "name": "cclow/geography/legislations/show",
-            "file": "app/views/cclow/geography/legislations/show.html.erb"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "cclow/geography/legislations/show"
-      },
-      "user_input": "::Legislation.find(params[:id])",
-      "confidence": "Weak",
-      "note": ""
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 2,
       "fingerprint": "9d653b3157d282bd93ff7fbacf0d06a462c2a31c640dfc883fc00040975d3b71",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/cclow/pages/show.html.erb",
-      "line": 5,
+      "line": 7,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "CCLOWPage.find(params[:id]).description",
       "render_path": [
@@ -265,7 +222,7 @@
       "check_name": "CrossSiteScripting",
       "message": "Unescaped parameter value",
       "file": "app/views/cclow/geography/litigation_cases/show.html.erb",
-      "line": 60,
+      "line": 61,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "@geography.litigations.friendly.find(params[:id]).summary",
       "render_path": [
@@ -273,7 +230,7 @@
           "type": "controller",
           "class": "CCLOW::Geography::LitigationCasesController",
           "method": "show",
-          "line": 31,
+          "line": 25,
           "file": "app/controllers/cclow/geography/litigation_cases_controller.rb",
           "rendered": {
             "name": "cclow/geography/litigation_cases/show",
@@ -296,7 +253,7 @@
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/cclow/geography/legislations/show.html.erb",
-      "line": 63,
+      "line": 90,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "CCLOW::LegislationDecorator.new(::Legislation.friendly.find(params[:id])).description",
       "render_path": [
@@ -304,7 +261,7 @@
           "type": "controller",
           "class": "CCLOW::Geography::LegislationsController",
           "method": "show",
-          "line": 40,
+          "line": 30,
           "file": "app/controllers/cclow/geography/legislations_controller.rb",
           "rendered": {
             "name": "cclow/geography/legislations/show",
@@ -359,39 +316,8 @@
       "user_input": null,
       "confidence": "Medium",
       "note": ""
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 2,
-      "fingerprint": "e9fd3f276e516f2d4ba33985d327a0bc4065ef02149638b5ae39d1feb637c119",
-      "check_name": "CrossSiteScripting",
-      "message": "Unescaped model attribute",
-      "file": "app/views/tpi/pages/show.html.erb",
-      "line": 12,
-      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "(Unresolved Model).new.text",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "TPI::PagesController",
-          "method": "show",
-          "line": 9,
-          "file": "app/controllers/tpi/pages_controller.rb",
-          "rendered": {
-            "name": "tpi/pages/show",
-            "file": "app/views/tpi/pages/show.html.erb"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "tpi/pages/show"
-      },
-      "user_input": null,
-      "confidence": "High",
-      "note": ""
     }
   ],
-  "updated": "2020-03-02 13:02:11 +0300",
-  "brakeman_version": "4.7.2"
+  "updated": "2021-03-29 17:19:49 +0200",
+  "brakeman_version": "5.0.0"
 }

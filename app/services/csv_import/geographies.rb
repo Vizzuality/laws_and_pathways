@@ -5,9 +5,19 @@ module CSVImport
     def import
       import_each_csv_row(csv) do |row|
         geography = prepare_geography(row)
-        geography.political_groups = parse_tags(row[:political_groups], political_groups)
 
-        geography.assign_attributes(geography_attributes(row))
+        geography.name = row[:name] if row.header?(:name)
+        geography.iso = row[:iso] if row.header?(:iso)
+        geography.geography_type = row[:geography_type].downcase if row.header?(:geography_type)
+        geography.region = row[:region] if row.header?(:region)
+        geography.legislative_process = row[:legislative_process] if row.header?(:legislative_process)
+        geography.federal = row[:federal] if row.header?(:federal)
+        geography.federal_details = row[:federal_details] if row.header?(:federal_details)
+        geography.political_groups = parse_tags(row[:political_groups], political_groups) if row.header?(:political_groups)
+        geography.percent_global_emissions = row[:percent_global_emissions] if row.header?(:percent_global_emissions)
+        geography.climate_risk_index = row[:climate_risk_index] if row.header?(:climate_risk_index)
+        geography.wb_income_group = row[:wb_income_group] if row.header?(:wb_income_group)
+        geography.visibility_status = row[:visibility_status]&.downcase if row.header?(:visibility_status)
 
         was_new_record = geography.new_record?
         any_changes = geography.changed?
@@ -24,26 +34,14 @@ module CSVImport
       Geography
     end
 
+    def required_headers
+      [:id]
+    end
+
     def prepare_geography(row)
       find_record_by(:id, row) ||
         find_record_by(:iso, row) ||
         resource_klass.new
-    end
-
-    def geography_attributes(row)
-      {
-        name: row[:name],
-        region: row[:world_bank_region],
-        iso: row[:iso],
-        federal: row[:federal],
-        federal_details: row[:federal_details],
-        legislative_process: row[:legislative_process],
-        geography_type: row[:geography_type].downcase,
-        percent_global_emissions: row[:percent_global_emissions],
-        climate_risk_index: row[:climate_risk_index],
-        wb_income_group: row[:wb_income_group],
-        visibility_status: row[:visibility_status]
-      }
     end
   end
 end

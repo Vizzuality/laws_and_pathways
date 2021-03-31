@@ -16,7 +16,7 @@ FactoryBot.define do
     association :sector, factory: :tpi_sector
 
     release_date { 5.days.ago.to_date }
-    scenario { ['Paris pledges', '2 Degrees', 'Below 2 Degrees'].sample }
+    scenario { 'Paris pledges' }
 
     emissions do
       (2013..2030).map do |year|

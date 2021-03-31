@@ -44,8 +44,8 @@ describe 'CSVDataUpload (integration)' do
 
     it 'sets error when accessing missing header data' do
       csv_content = <<-CSV
-        Id,Title,Document type,Geography iso,Jurisdiction,Sector,Citation reference number,Summary wrong header,responses,Keywords,At issue,Visibility status,Legislation ids
-        ,Litigation number 1,administrative_case,GBR,GBR,Transport,EWHC 2752,Lyle requested judicial review,"response1,response2","keyword1,keyword2",At issues,pending,
+        Title,Document type,Geography iso,Jurisdiction,Sectors,Citation reference number,Summary wrong header,responses,Keywords,At issue,Visibility status,Legislation ids
+        Litigation number 1,administrative_case,GBR,GBR,Transport,EWHC 2752,Lyle requested judicial review,"response1;response2","keyword1;keyword2",At issues,pending,
       CSV
 
       command = expect_data_upload_results(
@@ -56,16 +56,16 @@ describe 'CSVDataUpload (integration)' do
       )
 
       expect(command.errors.messages[:base])
-        .to eq(['CSV missing header: summary'])
+        .to eq(['CSV missing header: Id'])
     end
 
     describe 'authorization errors' do
       let(:csv_content) do
         <<-CSV
-          Id,Law Id,Legislation type,Title,Date passed,Description,Geography,Geography iso,Sector,Frameworks,Document types,Keywords,Responses,Natural hazards,Visibility status
-          10,101,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,"keyword1,keyword2",response1,tsunami,draft
+          Id,Law Id,Legislation type,Title,Date passed,Description,Geography,Geography iso,Sectors,Frameworks,Document types,Keywords,Responses,Natural hazards,Visibility status
+          10,101,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,"keyword1;keyword2",response1,tsunami,draft
           20,102,legislative,Climate Law,15 Jan 2015,Desc,Poland,POL,Waste,"Mitigation",Law,"keyword1",response2,"flooding",published
-          30,103,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,"keyword1,keyword2",response1,tsunami,pending
+          30,103,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,"keyword1;keyword2",response1,tsunami,pending
         CSV
       end
 
@@ -126,7 +126,7 @@ describe 'CSVDataUpload (integration)' do
 
     it 'fixes wrong unicode characters' do
       csv_content = <<~CSV
-        Id,Title,Document type,Geography iso,Jurisdiction,Sector,Citation reference number,Summary,responses,Keywords,At issue,Visibility status,Legislation ids
+        Id,Title,Document type,Geography iso,Jurisdiction,Sectors,Citation reference number,Summary,responses,Keywords,At issue,Visibility status,Legislation ids
         ,Litigation number 1 â€žquoteâ€,administrative_case,GBR,GBR,"Transport,Energy;Urban",EWHC 2752,Lyle requested judicial review,"response1,response2","keyword1,keyword2",At issues,pending,
       CSV
 
@@ -154,9 +154,9 @@ describe 'CSVDataUpload (integration)' do
     litigation2 = create(:litigation)
 
     csv_content = <<~CSV
-      "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Connected litigation ids","Visibility status"
-       ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law","keyword1,keyword2","response1,response2","tsunami","instrument|existing type","Existing gov|Existing gov type",,"draft"
-       ,"legislative","Climate Law",#{parent_legislation.id},"15 Jan 2015","Description","Poland","POL","Waste","Mitigation,Adaptation","Law","keyword1,keyword3","response1,response3","flooding,sharkinados","Monitoring and evaluation|existing Type;Climate fund|Governance and planning;Building codes|Regulation","governance 1|new gov type;governance 2|existing gov type","#{litigation1.id},#{litigation2.id}","pending"
+      "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
+       ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law","keyword1;keyword2","response1;response2","tsunami","instrument|existing type","Existing gov|Existing gov type",,"draft"
+       ,"legislative","Climate Law",#{parent_legislation.id},"15 Jan 2015","Description","Poland","POL","Waste","Mitigation;Adaptation","Law","keyword1;keyword3","response1;response3","flooding;sharkinados","Monitoring and evaluation|existing Type;Climate fund|Governance and planning;Building codes|Regulation","governance 1|new gov type;governance 2|existing gov type","#{litigation1.id};#{litigation2.id}","pending"
     CSV
 
     expect_data_upload_results(
@@ -199,6 +199,184 @@ describe 'CSVDataUpload (integration)' do
     expect(legislation2.governances.map(&:name)).to contain_exactly('Existing Gov')
   end
 
+  describe 'required columns return error' do
+    it 'for Legislations' do
+      csv_content = <<-CSV
+        Title,Parent Id
+        New title for legislation,
+      CSV
+
+      command = expect_data_upload_results(
+        Legislation,
+        fixture_file('legislations.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for External Legislations' do
+      csv_content = <<-CSV
+        Name
+        New Name
+      CSV
+
+      command = expect_data_upload_results(
+        ExternalLegislation,
+        fixture_file('external-legislations.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for Targets' do
+      csv_content = <<-CSV
+        Target type
+        fixed_level_target
+      CSV
+
+      command = expect_data_upload_results(
+        Target,
+        fixture_file('targets.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for Litigations' do
+      csv_content = <<-CSV
+        Title
+        New title for litigation
+      CSV
+
+      command = expect_data_upload_results(
+        Litigation,
+        fixture_file('litigations.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for Litigation Sides' do
+      csv_content = <<-CSV
+        Name,Connected Entity Id
+        New side name, 12
+      CSV
+
+      command = expect_data_upload_results(
+        LitigationSide,
+        fixture_file('litigation-sides.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id', 'CSV missing header: Connected entity type'])
+    end
+
+    it 'for Geographies' do
+      csv_content = <<-CSV
+        Name
+        New Name
+      CSV
+
+      command = expect_data_upload_results(
+        Geography,
+        fixture_file('geographies.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for Companies' do
+      csv_content = <<-CSV
+        Name
+        New Name
+      CSV
+
+      command = expect_data_upload_results(
+        Company,
+        fixture_file('companies.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for MQ Assessments' do
+      csv_content = <<-CSV
+        Publication Date
+        2020-01
+      CSV
+
+      command = expect_data_upload_results(
+        MQ::Assessment,
+        fixture_file('mq-assessments.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for CP Assessments' do
+      csv_content = <<-CSV
+        Publication Date
+        2020-01
+      CSV
+
+      command = expect_data_upload_results(
+        CP::Assessment,
+        fixture_file('cp-assessments.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for Events' do
+      csv_content = <<-CSV
+        Title, Eventable Type
+        New event title,Geography
+      CSV
+
+      command = expect_data_upload_results(
+        Event,
+        fixture_file('events.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id', 'CSV missing header: Eventable id'])
+    end
+
+    it 'for CP Benchmarks' do
+      csv_content = <<-CSV
+        Scenario
+        2 degrees
+      CSV
+
+      command = expect_data_upload_results(
+        CP::Benchmark,
+        fixture_file('cp-benchmarks.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+  end
+
   describe 'partial updates' do
     it 'works for Legislations' do
       parent = create(:legislation)
@@ -208,7 +386,7 @@ describe 'CSVDataUpload (integration)' do
         #{to_update.id},New title for legislation,
       CSV
 
-      expect_to_change = [:title, :slug, :tsv, :updated_at, :created_at, :parent_id]
+      expect_to_change = [:title, :slug, :tsv, :updated_at, :parent_id]
       expect_not_to_change = [
         *(to_update.attributes.symbolize_keys.keys - expect_to_change),
         :tag_ids, :event_ids, :instrument_ids, :governance_ids, :target_ids, :litigation_ids
@@ -224,6 +402,264 @@ describe 'CSVDataUpload (integration)' do
         to_update.reload
       end
     end
+
+    it 'works for Legislation updating tags' do
+      to_update = create(:legislation)
+      csv_content = <<-CSV
+        Id,Keywords
+        #{to_update.id},New Keyword1;New Keyword2
+      CSV
+
+      expect_to_change = [:keyword_ids]
+      expect_not_to_change = [
+        *(to_update.attributes.symbolize_keys.keys - expect_to_change),
+        :event_ids, :instrument_ids, :governance_ids, :target_ids, :litigation_ids
+      ]
+
+      expect_changes(to_update, expect_to_change, expect_not_to_change) do
+        expect_data_upload_results(
+          Legislation,
+          fixture_file('legislations.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
+          expected_success: true
+        )
+        to_update.reload
+      end
+    end
+
+    it 'works for Litigations' do
+      to_update = create(:litigation)
+      csv_content = <<-CSV
+        Id,Title
+        #{to_update.id},New title for litigation
+      CSV
+
+      expect_to_change = [:title, :slug, :tsv, :updated_at]
+      expect_not_to_change = [
+        *(to_update.attributes.symbolize_keys.keys - expect_to_change),
+        :tag_ids, :event_ids, :legislation_ids, :external_legislation_ids, :laws_sector_ids
+      ]
+
+      expect_changes(to_update, expect_to_change, expect_not_to_change) do
+        expect_data_upload_results(
+          Litigation,
+          fixture_file('litigations.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
+          expected_success: true
+        )
+        to_update.reload
+      end
+    end
+
+    it 'works for Litigation Sides' do
+      to_update = create(:litigation_side)
+      csv_content = <<-CSV
+        Id,Name
+        #{to_update.id},New side name
+      CSV
+
+      expect_to_change = [:name, :updated_at]
+      expect_not_to_change = [
+        *(to_update.attributes.symbolize_keys.keys - expect_to_change)
+      ]
+
+      expect_changes(to_update, expect_to_change, expect_not_to_change) do
+        expect_data_upload_results(
+          LitigationSide,
+          fixture_file('litigation-sides.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
+          expected_success: true
+        )
+        to_update.reload
+      end
+    end
+
+    it 'works for Targets' do
+      to_update = create(:target)
+      csv_content = <<-CSV
+        Id,Target type
+        #{to_update.id},fixed_level_target
+      CSV
+
+      expect_to_change = [:target_type, :updated_at]
+      expect_not_to_change = [
+        *(to_update.attributes.symbolize_keys.keys - expect_to_change),
+        :tag_ids, :event_ids, :legislation_ids
+      ]
+
+      expect_changes(to_update, expect_to_change, expect_not_to_change) do
+        expect_data_upload_results(
+          Target,
+          fixture_file('targets.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
+          expected_success: true
+        )
+        to_update.reload
+      end
+    end
+
+    it 'works for External Legislations' do
+      to_update = create(:external_legislation)
+      csv_content = <<-CSV
+        Id,Name
+        #{to_update.id},New Name
+      CSV
+
+      expect_to_change = [:name, :updated_at]
+      expect_not_to_change = [
+        *(to_update.attributes.symbolize_keys.keys - expect_to_change),
+        :litigation_ids
+      ]
+
+      expect_changes(to_update, expect_to_change, expect_not_to_change) do
+        expect_data_upload_results(
+          ExternalLegislation,
+          fixture_file('external-laws.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
+          expected_success: true
+        )
+        to_update.reload
+      end
+    end
+
+    it 'works for Events' do
+      to_update = create(:litigation_event)
+      csv_content = <<-CSV
+        Id,Title
+        #{to_update.id},New event title
+      CSV
+
+      expect_to_change = [:title]
+      expect_not_to_change = [
+        *(to_update.attributes.symbolize_keys.keys - expect_to_change)
+      ]
+
+      expect_changes(to_update, expect_to_change, expect_not_to_change) do
+        expect_data_upload_results(
+          Event,
+          fixture_file('events.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
+          expected_success: true
+        )
+        to_update.reload
+      end
+    end
+
+    it 'works for Geographies' do
+      to_update = create(:geography)
+      csv_content = <<-CSV
+        Id,Name
+        #{to_update.id},New Name
+      CSV
+
+      expect_to_change = [:name, :slug, :updated_at]
+      expect_not_to_change = [
+        *(to_update.attributes.symbolize_keys.keys - expect_to_change),
+        :tag_ids, :event_ids, :legislation_ids, :litigation_ids, :target_ids
+      ]
+
+      expect_changes(to_update, expect_to_change, expect_not_to_change) do
+        expect_data_upload_results(
+          Geography,
+          fixture_file('geographies.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
+          expected_success: true
+        )
+        to_update.reload
+      end
+    end
+
+    it 'works for Companies' do
+      to_update = create(:company)
+      csv_content = <<-CSV
+        Id,Name
+        #{to_update.id},New Name
+      CSV
+
+      expect_to_change = [:name, :slug, :updated_at]
+      expect_not_to_change = [
+        *(to_update.attributes.symbolize_keys.keys - expect_to_change)
+      ]
+
+      expect_changes(to_update, expect_to_change, expect_not_to_change) do
+        expect_data_upload_results(
+          Company,
+          fixture_file('companies.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
+          expected_success: true
+        )
+        to_update.reload
+      end
+    end
+
+    it 'works for CP Benchmarks' do
+      to_update = create(:cp_benchmark)
+      csv_content = <<-CSV
+        Id,Scenario
+        #{to_update.id},2 degrees
+      CSV
+
+      expect_to_change = [:scenario, :updated_at]
+      expect_not_to_change = [
+        *(to_update.attributes.symbolize_keys.keys - expect_to_change)
+      ]
+
+      expect_changes(to_update, expect_to_change, expect_not_to_change) do
+        expect_data_upload_results(
+          CP::Benchmark,
+          fixture_file('cp_benchmarks.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
+          expected_success: true
+        )
+        to_update.reload
+      end
+    end
+
+    it 'works for CP Assessments' do
+      to_update = create(:cp_assessment, company: create(:company))
+      csv_content = <<-CSV
+        Id,Publication Date
+        #{to_update.id},2020-01
+      CSV
+
+      expect_to_change = [:publication_date, :updated_at]
+      expect_not_to_change = [
+        *(to_update.attributes.symbolize_keys.keys - expect_to_change)
+      ]
+
+      expect_changes(to_update, expect_to_change, expect_not_to_change) do
+        expect_data_upload_results(
+          CP::Assessment,
+          fixture_file('cp_assessments.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
+          expected_success: true
+        )
+        to_update.reload
+      end
+    end
+
+    it 'works for MQ Assessments' do
+      to_update = create(:mq_assessment, company: create(:company))
+      csv_content = <<-CSV
+        Id,Publication Date
+        #{to_update.id},2020-01
+      CSV
+
+      expect_to_change = [:publication_date, :updated_at]
+      expect_not_to_change = [
+        *(to_update.attributes.symbolize_keys.keys - expect_to_change)
+      ]
+
+      expect_changes(to_update, expect_to_change, expect_not_to_change) do
+        expect_data_upload_results(
+          MQ::Assessment,
+          fixture_file('mq_assessments.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
+          expected_success: true
+        )
+        to_update.reload
+      end
+    end
   end
 
   it 'imports CSV files with Litigation data' do
@@ -232,8 +668,8 @@ describe 'CSVDataUpload (integration)' do
     updated_litigation = create(:litigation)
 
     csv_content = <<-CSV
-      Id,Title,Document type,Geography iso,Jurisdiction,Sector,Citation reference number,Summary,responses,Keywords,At issue,Visibility status,Legislation ids
-      ,Litigation number 1,administrative_case,GBR,GBR,"Transport,Energy;Urban",EWHC 2752,Lyle requested judicial review,"response1,response2","keyword1,keyword2",At issues,pending,"#{legislation1.id}, #{legislation2.id}"
+      Id,Title,Document type,Geography iso,Jurisdiction,Sectors,Citation reference number,Summary,responses,Keywords,At issue,Visibility status,Legislation ids
+      ,Litigation number 1,administrative_case,GBR,GBR,"Transport;Energy;Urban",EWHC 2752,Lyle requested judicial review,"response1;response2","keyword1;keyword2",At issues,pending,"#{legislation1.id};#{legislation2.id}"
       #{updated_litigation.id},Litigation number 2,administrative_case,GBR,GBR,,[2013] NIQB 24,The applicants were brothers ...,,,,Draft,
     CSV
 
@@ -327,7 +763,7 @@ describe 'CSVDataUpload (integration)' do
 
     csv_content = <<-CSV
       Id,Name,url,Geography iso,Litigation ids
-      ,External law 1,http://example.com,POL,"#{litigation1.id},#{litigation2.id}"
+      ,External law 1,http://example.com,POL,"#{litigation1.id};#{litigation2.id}"
     CSV
     external_laws_csv = fixture_file('external_laws.csv', content: csv_content)
 
@@ -351,7 +787,7 @@ describe 'CSVDataUpload (integration)' do
     legislation = create(:legislation)
 
     csv_content = <<-CSV
-      Id,Eventable type,Eventable,Event type,Title,Description,Date,Url
+      Id,Eventable type,Eventable Id,Event type,Title,Description,Date,Url
       #{litigation_event.id},Litigation,#{litigation_event.eventable_id},closed,Changed title,Changed description,2020-12-30,https://example.com
       ,Legislation,#{legislation.id},passed/approved,title,description,2019-02-20,
     CSV
@@ -401,9 +837,9 @@ describe 'CSVDataUpload (integration)' do
     law2 = create(:legislation)
 
     csv_content = <<-CSV
-      Id,Target type,Description,Ghg target,Year,Base year period,Single year,Geography,Geography iso,Sector,Scopes,source,Connected law ids,Visibility status
+      Id,Target type,Description,Ghg target,Year,Base year period,Single year,Geography,Geography iso,Sector,Scopes,source,Legislation ids,Visibility status
       ,no_document_submitted,description,true,1995,1998,false,Japan,JPN,Airlines,"Scope2",law,,draft
-      #{updated_target.id},base_year_target,updated description,true,1994,1994,false,Poland,POL,Cement,"Scope1,Scope2",ndc,"#{law.id},#{law2.id}",draft
+      #{updated_target.id},base_year_target,updated description,true,1994,1994,false,Poland,POL,Cement,"Scope1;Scope2",ndc,"#{law.id};#{law2.id}",draft
       ,intensity_target_and_trajectory_target,description,false,2003,2001,true,Poland,POL,Electricity Utilities,"Scope1",plan,#{law.id},pending
     CSV
 
@@ -584,6 +1020,8 @@ describe 'CSVDataUpload (integration)' do
       *expect_to_change.map { |attr| change(model, attr) },
       *expect_not_to_change.map { |attr| not_change(model, attr) }
     ]
+
+    model.reload
 
     expect do
       yield if block_given?

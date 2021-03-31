@@ -21,6 +21,7 @@
 #
 
 class Litigation < ApplicationRecord
+  include DirtyAssociations
   include Eventable
   include UserTrackable
   include Taggable
@@ -67,11 +68,11 @@ class Litigation < ApplicationRecord
   tag_with :responses
 
   belongs_to :geography
-  has_and_belongs_to_many :laws_sectors
+  has_and_belongs_to_many :laws_sectors, after_add: :mark_changed, after_remove: :mark_changed
   has_many :litigation_sides, -> { order(:side_type) }, inverse_of: :litigation
   has_many :documents, as: :documentable, dependent: :destroy
-  has_and_belongs_to_many :legislations
-  has_and_belongs_to_many :external_legislations
+  has_and_belongs_to_many :legislations, after_add: :mark_changed, after_remove: :mark_changed
+  has_and_belongs_to_many :external_legislations, after_add: :mark_changed, after_remove: :mark_changed
 
   with_options allow_destroy: true, reject_if: :all_blank do
     accepts_nested_attributes_for :documents
