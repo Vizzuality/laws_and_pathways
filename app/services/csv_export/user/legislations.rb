@@ -68,7 +68,7 @@ module CSVExport
       end
 
       def format_instruments(instruments)
-        instruments.map do |instrument|
+        instruments.sort_by(&:created_at).map do |instrument|
           [instrument.name, instrument.instrument_type.name].join('|')
         end.join(';')
       end

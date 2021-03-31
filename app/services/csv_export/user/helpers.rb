@@ -19,13 +19,13 @@ module CSVExport
       def format_documents(documents)
         return unless documents.any?
 
-        documents.map do |document|
+        documents.sort_by(&:created_at).map do |document|
           [document.name, document.url, document.language].join('|')
         end.join(';')
       end
 
       def format_sectors(sectors)
-        sectors.map(&:name).join(', ')
+        sectors.map(&:name).sort.join(', ')
       end
 
       def format_boolean(value)
