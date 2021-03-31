@@ -1,3 +1,3 @@
 "Id","Name","Iso","Geography type","Region","Legislative process","Federal","Federal details","Political groups","Percent global emissions","Climate risk index","Wb income group","Visibility status"
-,"Afghanistan","AFG","National","South Asia","Legislative process Afghanistan","false",,"G77, LDC","-",,,"draft"
-,"United States of America","USA","National","North America","Legislative process USA","true","50 states, 1 federal district; 16 territories","OECD, G20","-",,,"draft"
+,"Afghanistan","AFG","National","South Asia","Legislative process Afghanistan","false",,"G77;LDC","-",,,"draft"
+,"United States of America","USA","National","North America","Legislative process USA","true","50 states, 1 federal district; 16 territories","OECD;G20","-",,,"draft"

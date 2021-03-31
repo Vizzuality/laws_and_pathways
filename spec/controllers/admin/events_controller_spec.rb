@@ -104,7 +104,7 @@ RSpec.describe Admin::EventsController, type: :controller do
 
       # only header expected
       expected_columns = [
-        'Id', 'Eventable type', 'Eventable id', 'Eventable name', 'Event type',
+        'Id', 'Eventable type', 'Eventable Id', 'Eventable name', 'Event type',
         'Title', 'Description', 'Date', 'Url'
       ]
       expect(csv.to_a).to eq([expected_columns])
