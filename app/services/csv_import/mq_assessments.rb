@@ -12,8 +12,8 @@ module CSVImport
         assessment.company = find_company!(row) if row.header?(:company_id)
         assessment.assessment_date = assessment_date(row) if row.header?(:assessment_date)
         assessment.publication_date = publication_date(row) if row.header?(:publication_date)
-        assessment.level = row[:level] if row.header?(:level)
-        assessment.notes = row[:notes] if row.header?(:notes)
+        assessment.level = row[:level].presence if row.header?(:level)
+        assessment.notes = row[:notes].presence if row.header?(:notes)
         assessment.questions = get_questions(row) if question_headers?(row)
 
         was_new_record = assessment.new_record?

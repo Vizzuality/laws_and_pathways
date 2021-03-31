@@ -12,7 +12,7 @@ module CSVImport
 
         legislation.title = row[:title] if row.header?(:title)
         legislation.legislation_type = row[:legislation_type]&.downcase if row.header?(:legislation_type)
-        legislation.description = row[:description] if row.header?(:description)
+        legislation.description = row[:description].presence if row.header?(:description)
         legislation.parent_id = row[:parent_id] if row.header?(:parent_id)
         legislation.geography = find_geography(row[:geography_iso]) if row.header?(:geography_iso)
         legislation.laws_sectors = find_or_create_laws_sectors(row[:sectors]) if row.header?(:sectors)

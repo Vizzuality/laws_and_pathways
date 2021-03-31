@@ -12,7 +12,7 @@ module CSVImport
         legislation = prepare_legislation(row)
 
         legislation.name = row[:name] if row.header?(:name)
-        legislation.url = row[:url] if row.header?(:url)
+        legislation.url = row[:url].presence if row.header?(:url)
         legislation.geography = find_geography(row[:geography_iso]) if row.header?(:geography_iso)
         legislation.litigation_ids = parse_ids(row[:litigation_ids]) if row.header?(:litigation_ids)
 

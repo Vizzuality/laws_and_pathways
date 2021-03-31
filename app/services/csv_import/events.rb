@@ -10,9 +10,9 @@ module CSVImport
         event.eventable_type = row[:eventable_type].constantize if row.header?(:eventable_type)
         event.event_type = row[:event_type]&.downcase&.gsub(' ', '_') if row.header?(:event_type)
         event.title = (row[:title].presence || row[:event_type]) if row.header?(:title)
-        event.description = row[:description] if row.header?(:description)
+        event.description = row[:description].presence if row.header?(:description)
         event.date = event_date(row) if row.header?(:date)
-        event.url = row[:url] if row.header?(:url)
+        event.url = row[:url].presence if row.header?(:url)
 
         was_new_record = event.new_record?
         any_changes = event.changed?

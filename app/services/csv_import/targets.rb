@@ -12,10 +12,10 @@ module CSVImport
 
         target.target_type = row[:target_type]&.downcase&.gsub(' ', '_') if row.header?(:target_type)
         target.source = row[:source]&.downcase if row.header?(:source)
-        target.description = row[:description] if row.header?(:description)
+        target.description = row[:description].presence if row.header?(:description)
         target.ghg_target = row[:ghg_target] if row.header?(:ghg_target)
         target.year = row[:year] if row.header?(:year)
-        target.base_year_period = row[:base_year_period] if row.header?(:base_year_period)
+        target.base_year_period = row[:base_year_period].presence if row.header?(:base_year_period)
         target.single_year = row[:single_year] if row.header?(:single_year)
         target.geography = find_geography(row[:geography_iso]) if row.header?(:geography_iso)
         target.sector = find_or_create_laws_sector(row[:sector]) if row.header?(:sector)
