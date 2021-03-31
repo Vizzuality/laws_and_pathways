@@ -403,6 +403,30 @@ describe 'CSVDataUpload (integration)' do
       end
     end
 
+    it 'works for Legislation updating tags' do
+      to_update = create(:legislation)
+      csv_content = <<-CSV
+        Id,Keywords
+        #{to_update.id},New Keyword1;New Keyword2
+      CSV
+
+      expect_to_change = [:keyword_ids]
+      expect_not_to_change = [
+        *(to_update.attributes.symbolize_keys.keys - expect_to_change),
+        :event_ids, :instrument_ids, :governance_ids, :target_ids, :litigation_ids
+      ]
+
+      expect_changes(to_update, expect_to_change, expect_not_to_change) do
+        expect_data_upload_results(
+          Legislation,
+          fixture_file('legislations.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
+          expected_success: true
+        )
+        to_update.reload
+      end
+    end
+
     it 'works for Litigations' do
       to_update = create(:litigation)
       csv_content = <<-CSV

@@ -33,7 +33,13 @@ module Taggable
     def tag_with(name, **attrs)
       singular_name = name.to_s.singularize
       class_name = attrs[:class_name] || singular_name.camelize
-      has_many name, -> { order(:id) }, through: :taggings, source: :tag, class_name: class_name
+
+      has_many_attrs = {}
+      has_many_attrs[:class_name] = class_name
+      has_many_attrs[:after_add] = :mark_changed if instance_methods.include?(:mark_changed)
+      has_many_attrs[:after_remove] = :mark_changed if instance_methods.include?(:mark_changed)
+
+      has_many name, -> { order(:id) }, through: :taggings, source: :tag, **has_many_attrs
 
       define_method("#{singular_name}_ids=") do |value|
         super(value&.uniq)

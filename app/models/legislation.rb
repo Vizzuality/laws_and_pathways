@@ -20,6 +20,7 @@
 #
 
 class Legislation < ApplicationRecord
+  include DirtyAssociations
   include Eventable
   include UserTrackable
   include Taggable
@@ -51,11 +52,11 @@ class Legislation < ApplicationRecord
   belongs_to :geography
   belongs_to :parent, class_name: 'Legislation', foreign_key: 'parent_id', optional: true
   has_many :documents, as: :documentable, dependent: :destroy
-  has_and_belongs_to_many :targets
-  has_and_belongs_to_many :litigations
-  has_and_belongs_to_many :instruments
-  has_and_belongs_to_many :governances
-  has_and_belongs_to_many :laws_sectors
+  has_and_belongs_to_many :targets, after_add: :mark_changed, after_remove: :mark_changed
+  has_and_belongs_to_many :litigations, after_add: :mark_changed, after_remove: :mark_changed
+  has_and_belongs_to_many :instruments, after_add: :mark_changed, after_remove: :mark_changed
+  has_and_belongs_to_many :governances, after_add: :mark_changed, after_remove: :mark_changed
+  has_and_belongs_to_many :laws_sectors, after_add: :mark_changed, after_remove: :mark_changed
 
   scope :laws, -> { legislative }
   scope :policies, -> { executive }
