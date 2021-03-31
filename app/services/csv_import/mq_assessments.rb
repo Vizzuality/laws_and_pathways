@@ -8,12 +8,13 @@ module CSVImport
       import_each_csv_row(csv) do |row|
         assessment = prepare_assessment(row)
 
+        assessment.methodology_version = row[:methodology_version] if row.header?(:methodology_version)
+        assessment.company = find_company!(row) if row.header?(:company_id)
         assessment.assessment_date = assessment_date(row) if row.header?(:assessment_date)
         assessment.publication_date = publication_date(row) if row.header?(:publication_date)
         assessment.level = row[:level] if row.header?(:level)
         assessment.notes = row[:notes] if row.header?(:notes)
         assessment.questions = get_questions(row) if question_headers?(row)
-        assessment.methodology_version = row[:methodology_version] if row.header?(:methodology_version)
 
         was_new_record = assessment.new_record?
         any_changes = assessment.changed?
@@ -53,11 +54,7 @@ module CSVImport
     def find_company!(row)
       return unless row[:company_id].present?
 
-      company = Company.find(row[:company_id])
-      if company.name.strip.downcase != row[:company].strip.downcase
-        puts "!!WARNING!! CHECK YOUR FILE ID DOESN'T MATCH COMPANY NAME!! #{row[:company_id]} #{row[:company]}"
-      end
-      company
+      Company.find(row[:company_id])
     end
 
     def assessment_date(row)

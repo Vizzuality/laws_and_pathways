@@ -61,6 +61,10 @@ module Taggable
         send("#{name}_list")&.join(', ')
       end
 
+      define_method("#{name}_csv") do
+        send("#{name}_list")&.join(Rails.application.config.csv_options[:entity_sep])
+      end
+
       alias_method "#{name}_string=", "#{name}_list="
     end
 

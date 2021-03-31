@@ -12,18 +12,16 @@ module CSVImport
 
         litigation.title = row[:title] if row.header?(:title)
         litigation.document_type = row[:document_type]&.parameterize&.underscore if row.header?(:document_type)
-        litigation.geography = geographies[row[:geography_iso]&.upcase] if row.header?(:geography_iso)
+        litigation.geography = find_geography(row[:geography_iso]) if row.header?(:geography_iso)
         litigation.jurisdiction = row[:jurisdiction] if row.header?(:jurisdiction)
         litigation.citation_reference_number = row[:citation_reference_number] if row.header?(:citation_reference_number)
-        litigation.at_issue = row[:at_issue] if row.header?(:at_issue)
         litigation.summary = row[:summary] if row.header?(:summary)
-        litigation.visibility_status = row[:visibility_status]&.downcase if row.header?(:visibility_status)
-        litigation.legislation_ids = parse_ids(row[:legislation_ids]) if row.header?(:legislation_ids)
-
+        litigation.laws_sectors = find_or_create_laws_sectors(row[:sectors]) if row.header?(:sectors)
         litigation.responses = parse_tags(row[:responses], responses) if row.header?(:responses)
         litigation.keywords = parse_tags(row[:keywords], keywords) if row.header?(:keywords)
-        # TODO: decide if only one separator or many possible
-        litigation.laws_sectors = find_or_create_laws_sectors(row[:sectors]&.split(/,|;/)) if row.header?(:sectors)
+        litigation.at_issue = row[:at_issue] if row.header?(:at_issue)
+        litigation.visibility_status = row[:visibility_status]&.downcase if row.header?(:visibility_status)
+        litigation.legislation_ids = parse_ids(row[:legislation_ids]) if row.header?(:legislation_ids)
 
         was_new_record = litigation.new_record?
         any_changes = litigation.changed?

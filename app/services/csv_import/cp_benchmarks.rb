@@ -6,8 +6,9 @@ module CSVImport
       import_each_csv_row(csv) do |row|
         benchmark = prepare_benchmark(row)
 
-        benchmark.scenario = row[:scenario] if row.header?(:scenario)
+        benchmark.sector = find_or_create_tpi_sector(row[:sector]) if row.header?(:sector)
         benchmark.release_date = parse_date(row[:release_date]) if row.header?(:release_date)
+        benchmark.scenario = row[:scenario] if row.header?(:scenario)
         benchmark.emissions = parse_emissions(row) if emission_headers?(row)
 
         was_new_record = benchmark.new_record?

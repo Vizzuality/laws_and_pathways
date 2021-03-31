@@ -20,6 +20,10 @@ module CSVImport
         .map(&:to_i)
     end
 
+    def find_geography(row_value)
+      geographies[row_value&.upcase]
+    end
+
     def find_or_create_tpi_sector(sector_name)
       return unless sector_name.present?
 
@@ -27,14 +31,13 @@ module CSVImport
         TPISector.new(name: sector_name)
     end
 
-    def find_or_create_laws_sectors(sector_names)
-      return [] unless sector_names
+    def find_or_create_laws_sectors(row_sectors)
+      return [] unless row_sectors.present?
 
-      sectors = []
-      sector_names.each do |sector_name|
-        sectors << find_or_create_laws_sector(sector_name)
-      end
-      sectors.uniq
+      row_sectors
+        .split(Rails.application.config.csv_options[:entity_sep])
+        .map { |sector_name| find_or_create_laws_sector(sector_name) }
+        .uniq
     end
 
     def find_or_create_laws_sector(sector_name)

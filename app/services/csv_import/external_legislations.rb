@@ -11,10 +11,10 @@ module CSVImport
         end
         legislation = prepare_legislation(row)
 
-        legislation.litigation_ids = parse_ids(row[:litigation_ids]) if row.header?(:litigation_ids)
         legislation.name = row[:name] if row.header?(:name)
         legislation.url = row[:url] if row.header?(:url)
-        legislation.geography = geographies[row[:geography_iso]] if row.header?(:geography_iso)
+        legislation.geography = find_geography(row[:geography_iso]) if row.header?(:geography_iso)
+        legislation.litigation_ids = parse_ids(row[:litigation_ids]) if row.header?(:litigation_ids)
 
         was_new_record = legislation.new_record?
         any_changes = legislation.changed?

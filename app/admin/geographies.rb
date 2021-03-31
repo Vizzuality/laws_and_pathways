@@ -82,7 +82,7 @@ ActiveAdmin.register Geography do
     column :legislative_process
     column :federal
     column :federal_details
-    column :political_groups, &:political_groups_string
+    column :political_groups, &:political_groups_csv
     column :percent_global_emissions
     column :climate_risk_index
     column :wb_income_group

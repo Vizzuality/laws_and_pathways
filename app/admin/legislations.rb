@@ -117,11 +117,11 @@ ActiveAdmin.register Legislation do
     column(:geography) { |l| l.geography.name }
     column(:geography_iso) { |l| l.geography.iso }
     column(:sectors) { |l| l.laws_sectors.map(&:name).join(Rails.application.config.csv_options[:entity_sep]) }
-    column :frameworks, &:frameworks_string
-    column :responses, &:responses_string
-    column :keywords, &:keywords_string
-    column :natural_hazards, &:natural_hazards_string
-    column :document_types, &:document_types_string
+    column :frameworks, &:frameworks_csv
+    column :responses, &:responses_csv
+    column :keywords, &:keywords_csv
+    column :natural_hazards, &:natural_hazards_csv
+    column :document_types, &:document_types_csv
     column :instruments, &:instruments_csv
     column :governances, &:governances_csv
     column(:litigation_ids) { |l| l.litigation_ids.join(Rails.application.config.csv_options[:entity_sep]) }

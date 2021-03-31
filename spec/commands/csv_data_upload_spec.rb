@@ -45,7 +45,7 @@ describe 'CSVDataUpload (integration)' do
     it 'sets error when accessing missing header data' do
       csv_content = <<-CSV
         Title,Document type,Geography iso,Jurisdiction,Sectors,Citation reference number,Summary wrong header,responses,Keywords,At issue,Visibility status,Legislation ids
-        Litigation number 1,administrative_case,GBR,GBR,Transport,EWHC 2752,Lyle requested judicial review,"response1,response2","keyword1,keyword2",At issues,pending,
+        Litigation number 1,administrative_case,GBR,GBR,Transport,EWHC 2752,Lyle requested judicial review,"response1;response2","keyword1;keyword2",At issues,pending,
       CSV
 
       command = expect_data_upload_results(
@@ -63,9 +63,9 @@ describe 'CSVDataUpload (integration)' do
       let(:csv_content) do
         <<-CSV
           Id,Law Id,Legislation type,Title,Date passed,Description,Geography,Geography iso,Sectors,Frameworks,Document types,Keywords,Responses,Natural hazards,Visibility status
-          10,101,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,"keyword1,keyword2",response1,tsunami,draft
+          10,101,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,"keyword1;keyword2",response1,tsunami,draft
           20,102,legislative,Climate Law,15 Jan 2015,Desc,Poland,POL,Waste,"Mitigation",Law,"keyword1",response2,"flooding",published
-          30,103,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,"keyword1,keyword2",response1,tsunami,pending
+          30,103,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,"keyword1;keyword2",response1,tsunami,pending
         CSV
       end
 
@@ -155,8 +155,8 @@ describe 'CSVDataUpload (integration)' do
 
     csv_content = <<~CSV
       "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
-       ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law","keyword1,keyword2","response1,response2","tsunami","instrument|existing type","Existing gov|Existing gov type",,"draft"
-       ,"legislative","Climate Law",#{parent_legislation.id},"15 Jan 2015","Description","Poland","POL","Waste","Mitigation,Adaptation","Law","keyword1,keyword3","response1,response3","flooding,sharkinados","Monitoring and evaluation|existing Type;Climate fund|Governance and planning;Building codes|Regulation","governance 1|new gov type;governance 2|existing gov type","#{litigation1.id},#{litigation2.id}","pending"
+       ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law","keyword1;keyword2","response1;response2","tsunami","instrument|existing type","Existing gov|Existing gov type",,"draft"
+       ,"legislative","Climate Law",#{parent_legislation.id},"15 Jan 2015","Description","Poland","POL","Waste","Mitigation;Adaptation","Law","keyword1;keyword3","response1;response3","flooding;sharkinados","Monitoring and evaluation|existing Type;Climate fund|Governance and planning;Building codes|Regulation","governance 1|new gov type;governance 2|existing gov type","#{litigation1.id};#{litigation2.id}","pending"
     CSV
 
     expect_data_upload_results(
@@ -645,7 +645,7 @@ describe 'CSVDataUpload (integration)' do
 
     csv_content = <<-CSV
       Id,Title,Document type,Geography iso,Jurisdiction,Sectors,Citation reference number,Summary,responses,Keywords,At issue,Visibility status,Legislation ids
-      ,Litigation number 1,administrative_case,GBR,GBR,"Transport,Energy;Urban",EWHC 2752,Lyle requested judicial review,"response1,response2","keyword1,keyword2",At issues,pending,"#{legislation1.id}, #{legislation2.id}"
+      ,Litigation number 1,administrative_case,GBR,GBR,"Transport;Energy;Urban",EWHC 2752,Lyle requested judicial review,"response1;response2","keyword1;keyword2",At issues,pending,"#{legislation1.id};#{legislation2.id}"
       #{updated_litigation.id},Litigation number 2,administrative_case,GBR,GBR,,[2013] NIQB 24,The applicants were brothers ...,,,,Draft,
     CSV
 
@@ -739,7 +739,7 @@ describe 'CSVDataUpload (integration)' do
 
     csv_content = <<-CSV
       Id,Name,url,Geography iso,Litigation ids
-      ,External law 1,http://example.com,POL,"#{litigation1.id},#{litigation2.id}"
+      ,External law 1,http://example.com,POL,"#{litigation1.id};#{litigation2.id}"
     CSV
     external_laws_csv = fixture_file('external_laws.csv', content: csv_content)
 
@@ -815,7 +815,7 @@ describe 'CSVDataUpload (integration)' do
     csv_content = <<-CSV
       Id,Target type,Description,Ghg target,Year,Base year period,Single year,Geography,Geography iso,Sector,Scopes,source,Legislation ids,Visibility status
       ,no_document_submitted,description,true,1995,1998,false,Japan,JPN,Airlines,"Scope2",law,,draft
-      #{updated_target.id},base_year_target,updated description,true,1994,1994,false,Poland,POL,Cement,"Scope1,Scope2",ndc,"#{law.id},#{law2.id}",draft
+      #{updated_target.id},base_year_target,updated description,true,1994,1994,false,Poland,POL,Cement,"Scope1;Scope2",ndc,"#{law.id};#{law2.id}",draft
       ,intensity_target_and_trajectory_target,description,false,2003,2001,true,Poland,POL,Electricity Utilities,"Scope1",plan,#{law.id},pending
     CSV
 

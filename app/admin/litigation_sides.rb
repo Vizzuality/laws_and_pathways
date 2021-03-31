@@ -5,10 +5,10 @@ ActiveAdmin.register LitigationSide do
 
   csv do
     column :id
-    column 'Litigation ID', &:litigation_id
+    column 'Litigation Id', &:litigation_id
     column('Litigation Title') { |l| l.litigation.title }
     column :connected_entity_type
-    column 'Connected entity ID', &:connected_entity_id
+    column 'Connected entity id', &:connected_entity_id
     column('Connected entity name') { |l| l.connected_entity.name if l.connected_entity.present? }
     column :name
     column :side_type

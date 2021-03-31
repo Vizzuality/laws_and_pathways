@@ -50,12 +50,11 @@ ActiveAdmin.register CP::Assessment do
     year_columns = collection.flat_map(&:emissions_all_years).uniq.sort
 
     column :id
-    column('Company id') { |a| a.company.id }
+    column('Company Id') { |a| a.company.id }
     column(:company) { |a| a.company.name }
     column :assessment_date
     column :publication_date, &:publication_date_csv
     column :last_reported_year
-
     year_columns.map do |year|
       column year do |a|
         a.emissions[year]
