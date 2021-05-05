@@ -59,6 +59,9 @@ module CSVImport
       str.split(';').flat_map do |governance_type_string|
         governance, type = governance_type_string.split('|')
 
+        raise "Governance #{governance} has no type" unless type.present?
+        raise "No name for governance of type #{type}" if type.present? && !governance.present?
+
         type = GovernanceType.where('lower(name) = ?', type.downcase).first ||
           GovernanceType.create!(name: type)
         Governance.where(governance_type_id: type.id).where('lower(name) = ?', governance.downcase).first ||
@@ -71,6 +74,9 @@ module CSVImport
 
       str.split(';').flat_map do |instrument_type_string|
         instrument, type = instrument_type_string.split('|')
+
+        raise "Instrument #{instrument} has no type" unless type.present?
+        raise "No name for instrument of type #{type}" if type.present? && !instrument.present?
 
         type = InstrumentType.where('lower(name) = ?', type.downcase).first ||
           InstrumentType.create!(name: type)
