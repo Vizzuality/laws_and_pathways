@@ -148,3 +148,6 @@ Performance/RangeInclude:
 
 Performance/CollectionLiteralInLoop:
   Enabled: false
+# To below was throwing error so bug in rubocop probably
+Performance/MapCompact:
+  Enabled: false
