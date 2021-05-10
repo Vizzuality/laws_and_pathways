@@ -19,7 +19,7 @@ const LatestInformation = ({ company }) => {
       function (_, space, url) {
         let link = url;
         if (!link.match('^https?:')) link = `http://${link}`;
-        return `${space}<a target="_blank" href="${link}">${url}</a>`;
+        return `${space}<a target="_blank" rel="noopener noreferrer" href="${link}">${url}</a>`;
       }
     );
   }
@@ -29,7 +29,7 @@ const LatestInformation = ({ company }) => {
       <div className="latest-information__container">
         <h6 className="latest-information__header">Latest information available on {company.name}</h6>
         <p
-          className={cx('latest-information__description', { 'latest-information__description--folded': !expanded })}
+          className={cx('latest-information__description', { 'latest-information__description--folded': showButton && !expanded })}
           dangerouslySetInnerHTML={{__html: parseLinks(company.latest_information) }}
         />
 

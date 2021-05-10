@@ -356,6 +356,10 @@ $dots-space: 1.3rem;
     &__container {
       margin: 0 auto;
       max-width: 700px;
+
+      @include from($desktop) {
+        max-width: 850px;
+      }
     }
 
     &__header {
@@ -366,7 +370,6 @@ $dots-space: 1.3rem;
     &__description {
       line-height: $line-height;
       font-size: 16px;
-      margin-bottom: 40px;
 
       a {
         color: inherit;
@@ -421,6 +424,7 @@ $dots-space: 1.3rem;
       background-color: transparent;
       border: none;
       cursor: pointer;
+      margin-top: 40px;
 
       &:focus {
         outline-color: $yellow;
