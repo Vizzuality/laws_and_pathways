@@ -26,5 +26,11 @@ module CP
     def unit
       sector.cp_unit_valid_for_date(release_date)&.unit
     end
+
+    def for_alignment?(alignment)
+      return false unless alignment.present?
+
+      CP::Alignment.new(name: scenario).standarized_name == CP::Alignment.new(name: alignment).standarized_name
+    end
   end
 end
