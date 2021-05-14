@@ -904,7 +904,7 @@ describe 'CSVDataUpload (integration)' do
     )
   end
 
-  it 'imports CSV files with CP Assessments data' do
+  fit 'imports CSV files with CP Assessments data' do
     acme_company = create(:company, name: 'ACME', id: 1000)
     acme_materials = create(:company, name: 'ACME Materials', id: 2000)
 
@@ -936,7 +936,9 @@ describe 'CSVDataUpload (integration)' do
       '2020' => 98
     )
     expect(assessment.cp_alignment).to eq('No or unsuitable disclosure')
+    expect(assessment.cp_alignment_year_override).to eq(2030)
     expect(assessment2.cp_alignment).to eq('Not Aligned')
+    expect(assessment2.cp_alignment_year_override).to be_nil
   end
 
   it 'imports CSV files with MQ Assessments data' do

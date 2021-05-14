@@ -40,6 +40,8 @@ module CP
     end
 
     def cp_alignment_year
+      return cp_alignment_year_override if cp_alignment_year_override.present?
+
       benchmark = cp_alignment_benchmark
       return unless benchmark.present?
 

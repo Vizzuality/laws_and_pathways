@@ -373,7 +373,8 @@ CREATE TABLE public.cp_assessments (
     updated_at timestamp without time zone NOT NULL,
     discarded_at timestamp without time zone,
     last_reported_year integer,
-    cp_alignment character varying
+    cp_alignment character varying,
+    cp_alignment_year_override integer
 );
 
 
@@ -3325,6 +3326,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200622151708'),
 ('20210204142212'),
 ('20210305132256'),
-('20210316164558');
+('20210316164558'),
+('20210514085536');
 
 
