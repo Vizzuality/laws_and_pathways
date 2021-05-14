@@ -18,9 +18,10 @@
 require 'rails_helper'
 
 RSpec.describe CP::Assessment, type: :model do
-  subject { build(:cp_assessment, company: build(:company)) }
+  let_it_be(:sector) { create(:tpi_sector) }
+  let_it_be(:company) { create(:company, sector: sector) }
 
-  let(:company) { create(:company) }
+  subject { build(:cp_assessment, company: company) }
 
   it { is_expected.to be_valid }
 
@@ -43,5 +44,43 @@ RSpec.describe CP::Assessment, type: :model do
     subject.emissions = {'2019': 344}
     subject.last_reported_year = nil
     expect(subject).to have(1).errors_on(:last_reported_year)
+  end
+
+  describe 'cp alignment year' do
+    before do
+      create(:cp_benchmark,
+             scenario: 'Paris Pledge',
+             release_date: 12.months.ago,
+             sector: sector)
+      create(:cp_benchmark,
+             scenario: '2 degrees',
+             release_date: 7.months.ago,
+             sector: sector)
+      create(:cp_benchmark,
+             scenario: 'Paris Pledge',
+             release_date: 7.months.ago,
+             sector: sector,
+             emissions: {'2016' => 130.5, '2017' => 123.0, '2018' => 100.0, '2019' => 98.0})
+    end
+
+    subject do
+      build(
+        :cp_assessment,
+        cp_alignment: 'Paris Pledge',
+        company: company,
+        assessment_date: 3.months.ago,
+        publication_date: 3.months.ago,
+        emissions: {'2016' => 140.5, '2017' => 126.0, '2018' => 99.0, '2019' => 97.0}
+      )
+    end
+
+    it 'returns year when emission is lower than that in benchmark' do
+      expect(subject.cp_alignment_year).to eq(2018)
+    end
+
+    it 'returns override year when set' do
+      subject.cp_alignment_year_override = 2030
+      expect(subject.cp_alignment_year).to eq(2030)
+    end
   end
 end
