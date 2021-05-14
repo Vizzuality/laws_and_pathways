@@ -38,5 +38,26 @@ module CP
     def unit
       company.sector.cp_unit_valid_for_date(publication_date)&.unit
     end
+
+    def cp_alignment_year
+      return cp_alignment_year_override if cp_alignment_year_override.present?
+
+      benchmark = cp_alignment_benchmark
+      return unless benchmark.present?
+
+      # check years where emissions are less or equal those in benchmark
+      aligned_years = emissions.merge(benchmark.emissions) { |_year, e, be| e <= be }
+      aligned_years.select { |_year, go_over| go_over == true }.keys.map(&:to_i).min
+    end
+
+    def cp_alignment_benchmark
+      benchmarks.find { |b| b.for_alignment?(cp_alignment) }
+    end
+
+    private
+
+    def benchmarks
+      company.sector.latest_benchmarks_for_date(publication_date)
+    end
   end
 end

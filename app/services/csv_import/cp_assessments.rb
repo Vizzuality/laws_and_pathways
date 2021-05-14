@@ -12,6 +12,7 @@ module CSVImport
         assessment.emissions = parse_emissions(row) if emission_headers?(row)
         assessment.last_reported_year = row[:last_reported_year] if row.header?(:last_reported_year)
         assessment.cp_alignment = CP::Alignment.format_name(row[:cp_alignment]) if row.header?(:cp_alignment)
+        assessment.cp_alignment_year_override = row[:cp_alignment_year_override] if row.header?(:cp_alignment_year_override)
 
         was_new_record = assessment.new_record?
         any_changes = assessment.changed?

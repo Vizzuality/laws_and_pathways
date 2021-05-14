@@ -13,13 +13,29 @@ module CSVExport
         question_headers = @latest_mq_assessments_hash.values.compact.first.questions.map(&:csv_column_name)
         year_headers = @latest_cp_assessments_hash.values.flat_map(&:emissions_all_years).uniq.sort
 
-        headers = ['Company Name', 'Geography', 'Geography Code', 'Sector',
-                   'CA100 Focus Company', 'Large/Medium Classification',
-                   'ISINs', 'SEDOL', 'MQ Publication Date', 'MQ Assessment Date',
-                   'Level', 'Performance compared to previous year', *question_headers,
-                   'CP Publication Date', 'CP Assessment Date',
-                   'Carbon Performance Alignment', 'History to Projection cutoff year',
-                   'CP Unit', *year_headers, 'Assumptions']
+        headers = [
+          'Company Name',
+          'Geography',
+          'Geography Code',
+          'Sector',
+          'CA100 Focus Company',
+          'Large/Medium Classification',
+          'ISINs',
+          'SEDOL',
+          'MQ Publication Date',
+          'MQ Assessment Date',
+          'Level',
+          'Performance Compared to Previous Year',
+          *question_headers,
+          'CP Publication Date',
+          'CP Assessment Date',
+          'Carbon Performance Alignment',
+          'Carbon Performance Alignment Year',
+          'History to Projection Cutoff Year',
+          'CP Unit',
+          *year_headers,
+          'Assumptions'
+        ]
 
         # BOM UTF-8
         CSV.generate("\xEF\xBB\xBF") do |csv|
@@ -48,6 +64,7 @@ module CSVExport
               cp_assessment&.publication_date,
               cp_assessment&.assessment_date,
               cp_assessment&.cp_alignment,
+              cp_assessment&.cp_alignment_year,
               cp_assessment&.last_reported_year,
               cp_assessment&.unit,
               year_headers.map do |year|
