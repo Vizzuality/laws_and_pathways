@@ -30,7 +30,7 @@ module CSVExport
           'CP Publication Date',
           'CP Assessment Date',
           'Carbon Performance Alignment',
-          'Carbon Performance Alignment Year',
+          # 'Carbon Performance Alignment Year',
           'History to Projection Cutoff Year',
           'CP Unit',
           *year_headers,
@@ -64,7 +64,7 @@ module CSVExport
               cp_assessment&.publication_date,
               cp_assessment&.assessment_date,
               cp_assessment&.cp_alignment,
-              cp_assessment&.cp_alignment_year,
+              # cp_assessment&.cp_alignment_year,
               cp_assessment&.last_reported_year,
               cp_assessment&.unit,
               year_headers.map do |year|

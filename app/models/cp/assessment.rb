@@ -47,6 +47,8 @@ module CP
 
       # check years where emissions are less or equal those in benchmark
       aligned_years = emissions.merge(benchmark.emissions) { |_year, e, be| e <= be }
+      # aligned_years.reject! { |_year, value| [true, false].exclude?(value) }
+
       aligned_years.select { |_year, go_over| go_over == true }.keys.map(&:to_i).min
     end
 
