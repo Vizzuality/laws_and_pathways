@@ -904,7 +904,7 @@ describe 'CSVDataUpload (integration)' do
     )
   end
 
-  fit 'imports CSV files with CP Assessments data' do
+  it 'imports CSV files with CP Assessments data' do
     acme_company = create(:company, name: 'ACME', id: 1000)
     acme_materials = create(:company, name: 'ACME Materials', id: 2000)
 
