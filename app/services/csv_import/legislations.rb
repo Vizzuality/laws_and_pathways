@@ -57,7 +57,7 @@ module CSVImport
       return [] unless str.present?
 
       str.split(';').flat_map do |governance_type_string|
-        governance, type = governance_type_string.split('|')
+        governance, type = governance_type_string.split('|').map(&:strip)
 
         raise "Governance #{governance} has no type" unless type.present?
         raise "No name for governance of type #{type}" if type.present? && !governance.present?
@@ -73,7 +73,7 @@ module CSVImport
       return [] unless str.present?
 
       str.split(';').flat_map do |instrument_type_string|
-        instrument, type = instrument_type_string.split('|')
+        instrument, type = instrument_type_string.split('|').map(&:strip)
 
         raise "Instrument #{instrument} has no type" unless type.present?
         raise "No name for instrument of type #{type}" if type.present? && !instrument.present?

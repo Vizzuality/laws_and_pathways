@@ -156,7 +156,7 @@ describe 'CSVDataUpload (integration)' do
     csv_content = <<~CSV
       "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
        ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law","keyword1;keyword2","response1;response2","tsunami","instrument|existing type","Existing gov|Existing gov type",,"draft"
-       ,"legislative","Climate Law",#{parent_legislation.id},"15 Jan 2015","Description","Poland","POL","Waste","Mitigation;Adaptation","Law","keyword1;keyword3","response1;response3","flooding;sharkinados","Monitoring and evaluation|existing Type;Climate fund|Governance and planning;Building codes|Regulation","governance 1|new gov type;governance 2|existing gov type","#{litigation1.id};#{litigation2.id}","pending"
+       ,"legislative","Climate Law",#{parent_legislation.id},"15 Jan 2015","Description","Poland","POL","Waste","Mitigation;Adaptation","Law","keyword1;keyword3","response1;response3","flooding;sharkinados","Monitoring and evaluation|existing Type;Climate fund|Governance and planning;Building codes | Regulation","governance 1|new gov type;governance 2|existing gov type","#{litigation1.id};#{litigation2.id}","pending"
     CSV
 
     expect_data_upload_results(

@@ -12,8 +12,8 @@ ActiveAdmin.register Instrument do
   filter :instrument_type
 
   index do
-    column :name, :name_link
-    column :instrument_type
+    column :name, sortable: :name, &:name_link
+    column :instrument_type, sortable: 'instrument_types.name'
 
     actions
   end
@@ -40,5 +40,11 @@ ActiveAdmin.register Instrument do
 
   controller do
     include DiscardableController
+
+    def scoped_collection
+      super.includes(
+        :instrument_type
+      )
+    end
   end
 end
