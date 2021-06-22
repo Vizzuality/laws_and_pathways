@@ -19,6 +19,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'acts_as_list'
 gem 'activeadmin'
 gem 'activeadmin_addons'
+gem 'active_material', '1.4.2'
 gem 'devise', '>= 4.7.1'
 gem 'cancancan'
 gem 'draper-cancancan'
