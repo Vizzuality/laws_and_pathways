@@ -113,7 +113,7 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
                   onClick={() => window.open(event.link, '_self')}
                   onMouseEnter={() => setTooltip(event.eventable_title)}
                 />
-                <div className="date">{ format(new Date(event.date), 'MMMM Y') }</div>
+                <div className="date">{ format(new Date(event.date), 'MMMM y') }</div>
               </div>
             ))}
           </div>
