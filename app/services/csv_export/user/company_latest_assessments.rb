@@ -1,10 +1,11 @@
 module CSVExport
   module User
     class CompanyLatestAssessments
-      def initialize(mq_assessments, cp_assessments)
+      def initialize(mq_assessments, cp_assessments, current_user)
         @companies = (mq_assessments.map(&:company) + cp_assessments.map(&:company)).uniq
         @latest_mq_assessments_hash = get_latest_mq_assessments_hash(mq_assessments)
         @latest_cp_assessments_hash = get_latest_cp_assessments_hash(cp_assessments)
+        @current_user = current_user
       end
 
       def call
@@ -30,12 +31,14 @@ module CSVExport
           'CP Publication Date',
           'CP Assessment Date',
           'Carbon Performance Alignment',
-          # 'Carbon Performance Alignment Year',
+          'Carbon Performance Alignment Year',
           'History to Projection Cutoff Year',
           'CP Unit',
           *year_headers,
           'Assumptions'
         ]
+
+        headers = headers.reject { |h| h == 'Carbon Performance Alignment Year' } unless @current_user.present?
 
         # BOM UTF-8
         CSV.generate("\xEF\xBB\xBF") do |csv|
@@ -64,14 +67,14 @@ module CSVExport
               cp_assessment&.publication_date,
               cp_assessment&.assessment_date,
               cp_assessment&.cp_alignment,
-              # cp_assessment&.cp_alignment_year,
+              @current_user.present? ? cp_assessment&.cp_alignment_year : '**remove**',
               cp_assessment&.last_reported_year,
               cp_assessment&.unit,
               year_headers.map do |year|
                 cp_assessment&.emissions.try(:[], year)
               end,
               cp_assessment&.assumptions
-            ].flatten
+            ].reject { |v| v == '**remove**' }.flatten
           end
         end
       end
