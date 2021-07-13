@@ -39,17 +39,28 @@ module CP
       company.sector.cp_unit_valid_for_date(publication_date)&.unit
     end
 
+    # Returns last alignment year
+    # algorithm goes backward and gets the first-year company is consistently aligned with scenario to the foreseeable futur
+    #
+    # @return [Integer, void]
     def cp_alignment_year
       return cp_alignment_year_override if cp_alignment_year_override.present?
 
       benchmark = cp_alignment_benchmark
       return unless benchmark.present?
 
-      # check years where emissions are less or equal those in benchmark
-      aligned_years = emissions.merge(benchmark.emissions) { |_year, e, be| e <= be }
-      # aligned_years.reject! { |_year, value| [true, false].exclude?(value) }
+      # merged [["2020", [232, 334]]]
+      merged = emissions.merge(benchmark.emissions) { |_year, e, be| [e, be] }.sort_by { |year, (_e, _be)| -year.to_i }
 
-      aligned_years.select { |_year, go_over| go_over == true }.keys.map(&:to_i).min
+      aligned_year = nil
+      merged.each do |year, (emission, benchmark_emission)|
+        next if emission.nil? || benchmark_emission.nil?
+        break if emission > benchmark_emission
+
+        aligned_year = year
+      end
+
+      aligned_year&.to_i
     end
 
     def cp_alignment_benchmark

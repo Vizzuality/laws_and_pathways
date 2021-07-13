@@ -48,10 +48,12 @@ RSpec.describe CP::Assessment, type: :model do
 
   describe 'cp alignment year' do
     before do
+      # this is not taken, it's too old
       create(:cp_benchmark,
              scenario: 'Paris Pledge',
              release_date: 12.months.ago,
              sector: sector)
+      # this is not taken, different scenario
       create(:cp_benchmark,
              scenario: '2 degrees',
              release_date: 7.months.ago,
@@ -81,6 +83,74 @@ RSpec.describe CP::Assessment, type: :model do
     it 'returns override year when set' do
       subject.cp_alignment_year_override = 2030
       expect(subject.cp_alignment_year).to eq(2030)
+    end
+
+    describe 'when alignement is not consistent' do
+      subject do
+        build(
+          :cp_assessment,
+          cp_alignment: 'Paris Pledge',
+          company: company,
+          assessment_date: 3.months.ago,
+          publication_date: 3.months.ago,
+          emissions: {'2016' => 100.5, '2017' => 126.0, '2018' => 99.0, '2019' => 97.0}
+        )
+      end
+
+      it 'returns the highest consistent alignement year' do
+        expect(subject.cp_alignment_year).to eq(2018)
+      end
+    end
+
+    describe 'when it was align in the past but wont be in future' do
+      subject do
+        build(
+          :cp_assessment,
+          cp_alignment: 'Paris Pledge',
+          company: company,
+          assessment_date: 3.months.ago,
+          publication_date: 3.months.ago,
+          emissions: {'2016' => 100.5, '2017' => 126.0, '2018' => 100.0, '2019' => 120.0}
+        )
+      end
+
+      it 'returns nil' do
+        expect(subject.cp_alignment_year).to be_nil
+      end
+    end
+
+    describe 'when it was align in the past' do
+      subject do
+        build(
+          :cp_assessment,
+          cp_alignment: 'Paris Pledge',
+          company: company,
+          assessment_date: 3.months.ago,
+          publication_date: 3.months.ago,
+          emissions: {'2016' => 100.5, '2017' => 113.0, '2018' => 99.0, '2019' => 97.0}
+        )
+      end
+
+      it 'returns that past date' do
+        expect(subject.cp_alignment_year).to eq(2016)
+      end
+    end
+
+    describe 'when emission data is missing' do
+      subject do
+        build(
+          :cp_assessment,
+          cp_alignment: 'Paris Pledge',
+          company: company,
+          assessment_date: 3.months.ago,
+          publication_date: 3.months.ago,
+          emissions: {'2015' => 45, '2016' => 80, '2017' => nil, '2018' => 99.0, '2019' => 97.0, '2020' => 76}
+        )
+      end
+
+      it 'should ignore years of missing data' do
+        expect(subject.cp_alignment_year).to eq(2016)
+      end
     end
   end
 end
