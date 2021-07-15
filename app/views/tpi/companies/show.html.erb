@@ -65,7 +65,7 @@
                 <%= @company_presenter.cp_alignment.name %>
               </p>
               <% if !['not assessed', 'not aligned', 'no disclosure', nil].include?(@company.cp_alignment&.downcase) %>
-                <% if @current_user.present? && @company.cp_alignment_year.present? %>
+                <% if @company.cp_alignment_year.present? %>
                   <p>
                     The company’s emissions intensity aligns with the <%= @company.cp_alignment %> benchmark in <%= @company.cp_alignment_year %>
                   </p>
