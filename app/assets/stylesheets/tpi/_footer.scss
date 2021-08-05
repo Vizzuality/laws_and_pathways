@@ -105,12 +105,23 @@
   .footer__contact {
     padding-bottom: $size-4;
 
+    .follow-tpi {
+      display: flex;
+    }
+
     .icon__twitter {
-      position: absolute;
       margin-left: 20px;
       width: 2rem;
       height: 2rem;
       background-image: image-url('icon_twitter/twitter_white.svg');
+      background-repeat: no-repeat;
+    }
+
+    .icon__linkedin {
+      margin-left: 10px;
+      width: 2rem;
+      height: 2rem;
+      background-image: image-url('icon_linkedin/icon_linkedin_white.svg');
       background-repeat: no-repeat;
     }
 
