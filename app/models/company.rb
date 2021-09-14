@@ -30,7 +30,7 @@ class Company < ApplicationRecord
 
   friendly_id :name, use: [:slugged, :history], routes: :default
 
-  MARKET_CAP_GROUPS = %w[small medium large].freeze
+  MARKET_CAP_GROUPS = %w[small medium large unlisted].freeze
 
   enum market_cap_group: array_to_enum_hash(MARKET_CAP_GROUPS)
 
