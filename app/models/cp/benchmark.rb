@@ -23,6 +23,10 @@ module CP
 
     validates_presence_of :release_date, :scenario
 
+    def benchmark_id
+      [sector.name, release_date].join('_')
+    end
+
     def unit
       sector.cp_unit_valid_for_date(release_date)&.unit
     end

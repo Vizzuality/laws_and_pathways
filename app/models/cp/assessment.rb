@@ -63,6 +63,10 @@ module CP
       aligned_year&.to_i
     end
 
+    def cp_benchmark_id
+      benchmarks&.first&.benchmark_id
+    end
+
     def cp_alignment_benchmark
       benchmarks.find { |b| b.for_alignment?(cp_alignment) }
     end

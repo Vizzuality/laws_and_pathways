@@ -7,7 +7,7 @@ module CSVExport
 
       def call
         year_columns = @cp_benchmarks.flat_map(&:emissions_all_years).uniq.sort
-        headers = ['Sector name', 'Scenario name', 'Release date', 'Unit'].concat(year_columns)
+        headers = ['Benchmark ID', 'Sector name', 'Scenario name', 'Release date', 'Unit'].concat(year_columns)
 
         # BOM UTF-8
         CSV.generate("\xEF\xBB\xBF") do |csv|
@@ -15,6 +15,7 @@ module CSVExport
 
           @cp_benchmarks.each do |benchmark|
             csv << [
+              benchmark.benchmark_id,
               benchmark.sector.name,
               benchmark.scenario,
               benchmark.release_date,
