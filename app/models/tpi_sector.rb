@@ -58,7 +58,7 @@ class TPISector < ApplicationRecord
   # Returns sector CP benchmarks:
   # - from the last date before latest CP::Assessment date
   #   (if company latest CP::Assessment was after at least one benchmark)
-  # - from latest benchmarks otherwise
+  # - from first benchmarks otherwise
   #
   # @return [AssociationRelation [#<CP::Benchmark]
   #
@@ -66,6 +66,7 @@ class TPISector < ApplicationRecord
   # - benchmarks available for 04.2017 and 05.2018
   # - if assessment publication date is 06.2018 - we take benchmarks from 05.2018
   # - if assessment publication date is 06.2017 - we take benchmarks from 04.2017
+  # - if assessment publication date is 03.2017 - we take benchmarks from 04.2017
   def latest_benchmarks_for_date(date)
     return latest_released_benchmarks unless date
 
@@ -77,7 +78,7 @@ class TPISector < ApplicationRecord
         .last
 
     release_date =
-      last_release_date_before_given_date || sector_benchmarks_dates.last
+      last_release_date_before_given_date || sector_benchmarks_dates.first
 
     cp_benchmarks.where(release_date: release_date).order(:created_at)
   end

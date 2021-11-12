@@ -136,15 +136,15 @@ RSpec.describe Company, type: :model do
                ])
     end
 
-    it 'returns latest CP benchmarks with last release date if all CP Assessments are older' do
+    it 'returns first CP benchmarks if all CP Assessments are older' do
       company = create(:company, sector: sector, cp_assessments: older_company_assessments)
 
       # last assessment year is 2012 - before oldest bechmark, so we just take most recent benchmark
       expect(company.latest_sector_benchmarks_before_last_assessment.pluck(:release_date, :scenario))
         .to eq([
-                 [Date.parse('2019-05-01'), 'Below 2'],
-                 [Date.parse('2019-05-01'), 'Paris'],
-                 [Date.parse('2019-05-01'), '2 degrees']
+                 [Date.parse('2013-05-01'), 'Below 2'],
+                 [Date.parse('2013-05-01'), 'Paris'],
+                 [Date.parse('2013-05-01'), '2 degrees']
                ])
     end
   end
