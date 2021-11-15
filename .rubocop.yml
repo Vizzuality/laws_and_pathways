@@ -74,6 +74,9 @@ Style/RescueModifier:
 Style/ClassAndModuleChildren:
   Enabled: false
 
+Style/OpenStructUse:
+  Enabled: false
+
 Layout/LineLength:
   Max: 130
   Exclude:
