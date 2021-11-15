@@ -4,14 +4,14 @@ module CSVExport
       def initialize(mq_assessments, cp_assessments)
         @companies = (mq_assessments.map(&:company) + cp_assessments.map(&:company)).uniq
         @latest_mq_assessments_hash = get_latest_mq_assessments_hash(mq_assessments)
-        @latest_cp_assessments_hash = get_latest_cp_assessments_hash(cp_assessments)
+        @cp_assessments_hash = get_cp_assessments_hash(cp_assessments)
       end
 
       def call
         return if @companies.empty?
 
         question_headers = @latest_mq_assessments_hash.values.compact.first.questions.map(&:csv_column_name)
-        year_headers = @latest_cp_assessments_hash.values.flat_map(&:emissions_all_years).uniq.sort
+        year_headers = @cp_assessments_hash.values.map(&:last).flat_map(&:emissions_all_years).uniq.sort
 
         headers = [
           'Company Name',
@@ -29,8 +29,11 @@ module CSVExport
           *question_headers,
           'CP Publication Date',
           'CP Assessment Date',
+          'Benchmark ID',
           'Carbon Performance Alignment',
           'Carbon Performance Alignment Year',
+          'Previous Carbon Performance Alignment',
+          'Previous Carbon Performance Alignment Year',
           'History to Projection Cutoff Year',
           'CP Unit',
           *year_headers,
@@ -43,7 +46,8 @@ module CSVExport
 
           @companies.sort_by(&:name).each do |company|
             mq_assessment = @latest_mq_assessments_hash[company.id]
-            cp_assessment = @latest_cp_assessments_hash[company.id]
+            cp_assessment = @cp_assessments_hash[company.id]&.last
+            prev_cp_assessment = @cp_assessments_hash[company.id]&.second_to_last
 
             csv << [
               company.name,
@@ -63,8 +67,11 @@ module CSVExport
               end,
               cp_assessment&.publication_date,
               cp_assessment&.assessment_date,
+              cp_assessment&.cp_benchmark_id,
               cp_assessment&.cp_alignment,
               cp_assessment&.cp_alignment_year,
+              prev_cp_assessment&.cp_alignment,
+              prev_cp_assessment&.cp_alignment_year,
               cp_assessment&.last_reported_year,
               cp_assessment&.unit,
               year_headers.map do |year|
@@ -88,9 +95,9 @@ module CSVExport
         end
       end
 
-      def get_latest_cp_assessments_hash(assessments)
+      def get_cp_assessments_hash(assessments)
         assessments.group_by(&:company_id).transform_values do |grouped|
-          grouped.max_by(&:publication_date)
+          grouped.sort_by(&:publication_date)
         end
       end
     end

@@ -1,8 +1,8 @@
 module TimedLogger
-  def self.log(name, &block)
+  def self.log(name)
     puts_box "Starting #{name}"
     starts_at = Time.now
-    block.call
+    yield
     delta = Time.now - starts_at
     puts_box "Finished #{name} after #{delta} seconds"
   end
