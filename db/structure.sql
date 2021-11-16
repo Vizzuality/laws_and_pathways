@@ -1144,7 +1144,7 @@ CREATE TABLE public.mq_assessments (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     discarded_at timestamp without time zone,
-    methodology_version integer
+    methodology_version integer NOT NULL
 );
 
 
@@ -3327,6 +3327,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210204142212'),
 ('20210305132256'),
 ('20210316164558'),
-('20210514085536');
+('20210514085536'),
+('20211116114117');
 
 

@@ -30,7 +30,7 @@ module MQ
     scope :currently_published, -> { where('publication_date <= ?', DateTime.now) }
 
     validates :level, inclusion: {in: LEVELS}
-    validates_presence_of :assessment_date, :publication_date, :level
+    validates_presence_of :assessment_date, :publication_date, :level, :methodology_version
     validates :assessment_date, date_after: Date.new(2010, 12, 31)
     validates :publication_date, date_after: Date.new(2010, 12, 31)
 
