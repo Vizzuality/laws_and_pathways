@@ -1,4 +1,4 @@
-/* eslint-disable react/no-this-in-sfc */
+/* eslint-disable react/no-this-in-sfc, no-nested-ternary */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -14,6 +14,7 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
   const { data, error, loading } = useChartData(dataUrl);
   const { isMobile } = useDeviceInfo();
   const options = isMobile ? getMobileOptions(data, sectors) : getOptions(data, sectors);
+  const noData = !loading && data && data.length === 0;
 
   return (
     <div id="cp-performance-all-sectors-chart" className="chart chart--cp-all-sectors">
@@ -23,6 +24,8 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
         <React.Fragment>
           {error ? (
             <p>{error}</p>
+          ) : noData ? (
+            <p>No data available.</p>
           ) : (
             <HighchartsReact
               highcharts={Highcharts}

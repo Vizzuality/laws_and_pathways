@@ -68,7 +68,7 @@ module Api
           data: data,
           zoneAxis: 'x',
           zones: [{
-            value: assessment.last_reported_year&.to_i
+            value: (assessment.last_reported_year&.to_i || 0) + 0.1
           }, {
             dashStyle: 'dot'
           }]
