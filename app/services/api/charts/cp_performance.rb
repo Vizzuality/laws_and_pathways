@@ -44,12 +44,14 @@ module Api
         result = cp_alignment_data.map do |name, data|
           {
             name: name,
-            data: data.sort_by do |sn, _v|
+            data: (data || []).sort_by do |sn, _v|
               sector = all_sectors.find { |s| s.name == sn }
               [sector.cluster&.name || 'ZZZ', sector.name] # stupid way to sort null last
             end.to_a
           }
         end
+
+        return [] if result.all? { |r| r[:data].empty? }
 
         result = result.select { |t| CP::Alignment::ORDER.include?(t[:name].downcase) }
 
