@@ -29,6 +29,11 @@ RSpec.describe MQ::Assessment, type: :model do
     expect(subject).to have(1).errors_on(:publication_date)
   end
 
+  it 'should be invalid if methodology version is nil' do
+    subject.methodology_version = nil
+    expect(subject).to have(1).errors_on(:methodology_version)
+  end
+
   it 'should be invalid if level not recognized' do
     subject.level = '5'
     expect(subject).to have(1).errors_on(:level)

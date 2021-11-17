@@ -34,6 +34,7 @@ FactoryBot.define do
 
     level { '1' }
     notes { 'Some notes' }
+    methodology_version { 1 }
 
     questions do
       (1..14).map do |nr|
