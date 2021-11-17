@@ -41,7 +41,15 @@ module CP
       'No Disclosure' => 'No or unsuitable disclosure'
     }.freeze
 
-    ORDER = ['below 2 degrees', '2 degrees', 'paris pledges', 'not aligned', 'no or unsuitable disclosure'].freeze
+    ORDER = [
+      '1.5 degrees',
+      'below 2 degrees',
+      'national pledges',
+      '2 degrees',
+      'paris pledges',
+      'not aligned',
+      'no or unsuitable disclosure'
+    ].freeze
 
     include ActiveModel::Model
 
@@ -49,6 +57,10 @@ module CP
 
     def standarized_name
       CP::Alignment.format_name((CP_ALIGNMENT_STANDARIZE_MAP[name.downcase] || name))
+    end
+
+    def formatted_name
+      CP::Alignment.format_name(name)
     end
 
     def color
