@@ -19,7 +19,9 @@ module CP
     CP_ALIGNMENT_NEW_COLORS = {
       '1.5 degrees' => '#00C170', # green
       'below 2 degrees' => '#FFDD49', # yellow
-      'national pledges' => '#FF9600' # orange,
+      'national pledges' => '#FF9600', # orange,
+      'not aligned' => '#ED3D4A', # red
+      'no or unsuitable disclosure' => '#595B5D' # black
     }.freeze
 
     NAMES = [
