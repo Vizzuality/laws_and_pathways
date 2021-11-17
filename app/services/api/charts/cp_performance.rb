@@ -29,7 +29,7 @@ module Api
         all_sectors = all_companies.map(&:sector)
         cp_alignment_data = CP::Alignment::CP_ALIGNMENT_NEW_COLORS
           .transform_keys { |k| CP::Alignment.format_name(k) }
-          .transform_values { |_v| {} }
+          .transform_values { |_v| all_sectors.map { |s| {s.name => 0} }.reduce(&:merge) }
 
         all_companies.each do |company|
           next if company.cp_alignment.nil?
