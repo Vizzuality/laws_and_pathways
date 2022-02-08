@@ -47,6 +47,9 @@ Style/Lambda:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+Style/FileWrite:
+  Enabled: false
+
 Style/PercentLiteralDelimiters:
   Enabled: false
 
@@ -93,6 +96,9 @@ Bundler/OrderedGems:
   Enabled: false
 
 Style/CaseLikeIf:
+  Enabled: false
+
+Style/MapToHash:
   Enabled: false
 
 Style/HashEachMethods:

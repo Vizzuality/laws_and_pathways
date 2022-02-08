@@ -2,8 +2,8 @@ name: Security
 
 on:
   push:
-  schedule:
-    - cron: "0 14 * * *"
+  # schedule:
+  #   - cron: "0 14 * * *"
 
 jobs:
   security:
