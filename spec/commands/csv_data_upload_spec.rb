@@ -59,6 +59,23 @@ describe 'CSVDataUpload (integration)' do
         .to eq(['CSV missing header: Id'])
     end
 
+    it 'sets error when wrong date format is used' do
+      to_update = create(:cp_assessment, company: create(:company))
+      csv_content = <<-CSV
+        Id,Assessment Date
+        #{to_update.id},1/14/2021
+      CSV
+
+      command = expect_data_upload_results(
+        CP::Assessment,
+        fixture_file('cp_assessments.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false
+      )
+      expect(command.errors.messages[:base])
+        .to eq(['Error on row 1: Cannot parse date: 1/14/2021, expected formats: %Y-%m-%d, %d/%m/%Y.'])
+    end
+
     describe 'authorization errors' do
       let(:csv_content) do
         <<-CSV

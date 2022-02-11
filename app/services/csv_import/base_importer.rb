@@ -157,7 +157,7 @@ module CSVImport
       yield
     rescue ActiveRecord::RecordInvalid => e
       handle_row_error(row_index, e, "for data: #{e.record.attributes}")
-    rescue ActiveRecord::RecordNotFound, ArgumentError => e
+    rescue ActiveRecord::RecordNotFound, ArgumentError, CSVImport::DateUtils::DateParseError => e
       handle_row_error(row_index, e)
     rescue CSVImport::MissingHeader
       raise
