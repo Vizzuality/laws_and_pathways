@@ -14,7 +14,8 @@
     "Side B": "Side B|corporation",
     "Side C": "Side C|government",
     "Events": "02/03/2018|Some case was started|Description of starting the case|https://test.com;03/04/2018|Some case was started|Description of starting the case|https://test.com",
-    "Summary": "Summary Lorem ipsum dolor dalej nie pamietam"
+    "Summary": "Summary Lorem ipsum dolor dalej nie pamietam",
+    "Id": "25"
   },
   {
     "Title": "Example",
@@ -31,7 +32,8 @@
     "Side B": "",
     "Side C": "",
     "Events": "02/03/2019|Some case was started|Description of starting the case|https://test.com;01/05/2019|Some case was started|Description of starting the case|https://test.com",
-    "Summary": "Litigation example"
+    "Summary": "Litigation example",
+    "Id": "26"
   },
   {
     "Title": "Litigation Example",
@@ -48,6 +50,7 @@
     "Side B": "",
     "Side C": "",
     "Events": "03/03/2018|Some case was started|Description of starting the case|https://test.com;01/05/2018|Some case was started|Description of starting the case|https://test.com",
-    "Summary": "Example"
+    "Summary": "Example",
+    "Id": "29"
   }
 ]
