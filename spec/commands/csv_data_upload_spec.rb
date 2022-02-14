@@ -76,6 +76,78 @@ describe 'CSVDataUpload (integration)' do
         .to eq(['Error on row 1: Cannot parse date: 1/14/2021, expected formats: %Y-%m-%d, %d/%m/%Y.'])
     end
 
+    describe 'Legislation errors' do
+      it 'sets error when instrument type is missing' do
+        csv_content = <<~CSV
+          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
+          ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law","keyword1;keyword2","response1;response2","tsunami","instrument|existing type",,,"draft"
+        CSV
+
+        command = expect_data_upload_results(
+          Legislation,
+          fixture_file('legislations.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+          expected_success: false
+        )
+
+        expect(command.errors.messages[:base])
+          .to eq(['Error on row 1: Cannot find Instrument Type: existing type.'])
+      end
+
+      it 'sets error when instrument is missing' do
+        create(:instrument_type, name: 'Existing type')
+        csv_content = <<~CSV
+          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
+           ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law","keyword1;keyword2","response1;response2","tsunami","instrument|existing type",,,"draft"
+        CSV
+
+        command = expect_data_upload_results(
+          Legislation,
+          fixture_file('legislations.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+          expected_success: false
+        )
+
+        expect(command.errors.messages[:base])
+          .to eq(["Error on row 1: Cannot find Instrument: 'instrument' of type 'Existing type'."])
+      end
+
+      it 'sets error when governance type is missing' do
+        csv_content = <<~CSV
+          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
+           ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law","keyword1;keyword2","response1;response2","tsunami",,"Existing gov|Existing gov type",,"draft"
+        CSV
+
+        command = expect_data_upload_results(
+          Legislation,
+          fixture_file('legislations.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+          expected_success: false
+        )
+
+        expect(command.errors.messages[:base])
+          .to eq(['Error on row 1: Cannot find Governance Type: Existing gov type.'])
+      end
+
+      it 'sets error when governance is missing' do
+        create(:governance_type, name: 'Existing gov type')
+        csv_content = <<~CSV
+          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
+           ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law","keyword1;keyword2","response1;response2","tsunami",,"Existing gov|Existing gov type",,"draft"
+        CSV
+
+        command = expect_data_upload_results(
+          Legislation,
+          fixture_file('legislations.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+          expected_success: false
+        )
+
+        expect(command.errors.messages[:base])
+          .to eq(["Error on row 1: Cannot find Governance: 'Existing gov' of type 'Existing gov type'."])
+      end
+    end
+
     describe 'authorization errors' do
       let(:csv_content) do
         <<-CSV
@@ -164,16 +236,24 @@ describe 'CSVDataUpload (integration)' do
   it 'imports CSV files with Legislation data' do
     parent_legislation = create(:legislation)
     existing_instrument_type = create(:instrument_type, name: 'Existing Type')
+    gov_planning_instrument_type = create(:instrument_type, name: 'Governance and planning')
+    regulation_instrument_type = create(:instrument_type, name: 'Regulation')
     create(:instrument, instrument_type: existing_instrument_type, name: 'Instrument')
+    create(:instrument, instrument_type: existing_instrument_type, name: 'Monitoring and evaluation')
+    create(:instrument, instrument_type: gov_planning_instrument_type, name: 'Climate fund')
+    create(:instrument, instrument_type: regulation_instrument_type, name: 'Building codes')
     existing_governance_type = create(:governance_type, name: 'Existing Gov Type')
+    new_governance_type = create(:governance_type, name: 'new gov type')
     create(:governance, governance_type: existing_governance_type, name: 'Existing Gov')
+    create(:governance, governance_type: existing_governance_type, name: 'governance 2')
+    create(:governance, governance_type: new_governance_type, name: 'governance 1')
     litigation1 = create(:litigation)
     litigation2 = create(:litigation)
 
     csv_content = <<~CSV
       "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
        ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law","keyword1;keyword2","response1;response2","tsunami","instrument|existing type","Existing gov|Existing gov type",,"draft"
-       ,"legislative","Climate Law",#{parent_legislation.id},"15 Jan 2015","Description","Poland","POL","Waste","Mitigation;Adaptation","Law","keyword1;keyword3","response1;response3","flooding;sharkinados","Monitoring and evaluation|existing Type;Climate fund|Governance and planning;Building codes | Regulation","governance 1|new gov type;governance 2|existing gov type","#{litigation1.id};#{litigation2.id}","pending"
+       ,"legislative","Climate Law",#{parent_legislation.id},"15 Jan 2015","Description","Poland","POL","Waste","Mitigation;Adaptation","Law","keyword1;keyword3","response1;response3","flooding;sharkinados","Monitoring and evaluation|existing Type;Climate fund|Governance and planning;Building codes | Regulation","goveRnance 1|new gov type;governance 2|existing gov type","#{litigation1.id};#{litigation2.id}","pending"
     CSV
 
     expect_data_upload_results(
