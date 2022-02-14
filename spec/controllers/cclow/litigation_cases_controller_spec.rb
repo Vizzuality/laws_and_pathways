@@ -100,7 +100,7 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller, retry: 3 do
         io = StringIO.new(response.body)
         io.set_encoding_by_bom
         csv_json = CSV.parse(io, headers: true).map(&:to_h).to_json
-        expect(csv_json).to match_snapshot('cclow_litigation_cases_controller_csv')
+        expect(csv_json).to match_snapshot('cclow_litigation_cases_controller_csv', dynamic_attributes: %w(Id))
       end
     end
 

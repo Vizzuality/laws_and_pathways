@@ -11,7 +11,7 @@ module CSVExport
         return if legislations.empty?
 
         headers = [
-          'Title', 'Type', 'Geography', 'Geography ISO', 'Frameworks', 'Responses',
+          'Id', 'Title', 'Type', 'Geography', 'Geography ISO', 'Frameworks', 'Responses',
           'Instruments', 'Document Types', 'Natural Hazards', 'Keywords',
           'Sectors', 'Events', 'Documents', 'Parent Legislation', 'Description'
         ]
@@ -22,6 +22,7 @@ module CSVExport
 
           legislations.each do |legislation|
             csv << [
+              legislation.id,
               legislation.title,
               legislation.legislation_type.downcase,
               legislation.geography_name,

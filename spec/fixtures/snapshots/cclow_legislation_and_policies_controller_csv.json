@@ -14,7 +14,8 @@
     "Events": "02/03/2018|Some law was approved|Description of approved law|https://test.com;03/04/2018|Some law was approved|Description of approved law|https://test.com",
     "Documents": "Cool document|https://test.com|en;Cool document|http://internal-url.com|en",
     "Parent Legislation": "Parent Legislation",
-    "Description": "Test Legislation Description"
+    "Description": "Test Legislation Description",
+    "Id": "40"
   },
   {
     "Title": "Example",
@@ -31,7 +32,8 @@
     "Events": "01/05/2017|Some law was approved|Description of approved law|https://test.com;02/03/2019|Some law was approved|Description of approved law|https://test.com",
     "Documents": null,
     "Parent Legislation": null,
-    "Description": "Legislation example"
+    "Description": "Legislation example",
+    "Id": "41"
   },
   {
     "Title": "Legislation Example",
@@ -48,6 +50,7 @@
     "Events": "03/03/2018|Some law was approved|Description of approved law|https://test.com;01/05/2018|Some law was approved|Description of approved law|https://test.com",
     "Documents": null,
     "Parent Legislation": null,
-    "Description": "Example"
+    "Description": "Example",
+    "Id": "42"
   }
 ]

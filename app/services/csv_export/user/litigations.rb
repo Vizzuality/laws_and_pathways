@@ -11,7 +11,7 @@ module CSVExport
         return if litigations.empty?
 
         headers = [
-          'Title', 'Geography', 'Geography ISO', 'Jurisdiction',
+          'Id', 'Title', 'Geography', 'Geography ISO', 'Jurisdiction',
           'Citation Reference Number', 'Responses', 'At issue',
           'Connected Internal Laws', 'Connected External Laws', 'Sectors',
           'Side A', 'Side B', 'Side C', 'Events', 'Summary'
@@ -23,6 +23,7 @@ module CSVExport
 
           litigations.each do |litigation|
             csv << [
+              litigation.id,
               litigation.title,
               litigation.geography_name,
               litigation.geography_iso,
