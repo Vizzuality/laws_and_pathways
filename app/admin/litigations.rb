@@ -9,10 +9,10 @@ ActiveAdmin.register Litigation do
   permit_params :title, :geography_id, :document_type, :jurisdiction,
                 :visibility_status, :summary, :at_issue,
                 :citation_reference_number, :created_by_id, :updated_by_id,
-                :keywords_string, :responses_string,
                 litigation_sides_attributes: permit_params_for(:litigation_sides),
                 documents_attributes: permit_params_for(:documents),
                 events_attributes: permit_params_for(:events),
+                keyword_ids: [], response_ids: [],
                 legislation_ids: [], external_legislation_ids: [],
                 laws_sector_ids: []
 

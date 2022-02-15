@@ -40,10 +40,9 @@
               end
             end
           %>
-        <%= f.input :natural_hazards_string, label: 'Natural Hazards', hint: t('hint.tag'), as: :tags, collection: NaturalHazard.pluck(:name) %>
-        <%= f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags, collection: Keyword.pluck(:name) %>
-        <%= f.input :responses_string, as: :tags, label: 'Responses (e.g. adaptation or mitigation)',
-          hint: t('hint.tag'), collection: Response.pluck(:name) %>
+          <%= f.input :natural_hazard_ids, label: 'Natural Hazards', as: :tags, collection: NaturalHazard.ordered_by_name %>
+          <%= f.input :keyword_ids, label: 'Keywords', as: :tags, collection: Keyword.ordered_by_name %>
+          <%= f.input :response_ids, as: :tags, label: 'Responses (e.g. adaptation or mitigation)', collection: Response.ordered_by_name %>
         <% end %>
       </div>
 
