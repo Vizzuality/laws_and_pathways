@@ -35,6 +35,7 @@ export function getOptions({ chartData, unit }) {
         }
       },
       line: {
+        lineWidth: 4,
         marker: {
           enabled: false
         }
@@ -43,7 +44,6 @@ export function getOptions({ chartData, unit }) {
         stacking: 'normal'
       },
       series: {
-        lineWidth: 4,
         marker: {
           states: {
             hover: {

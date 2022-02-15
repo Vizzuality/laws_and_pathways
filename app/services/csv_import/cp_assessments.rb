@@ -14,7 +14,7 @@ module CSVImport
         assessment.cp_alignment = CP::Alignment.format_name(row[:cp_alignment]) if row.header?(:cp_alignment)
         assessment.cp_alignment_2025 = CP::Alignment.format_name(row[:cp_alignment_2025]) if row.header?(:cp_alignment_2025)
         assessment.cp_alignment_2035 = CP::Alignment.format_name(row[:cp_alignment_2035]) if row.header?(:cp_alignment_2035)
-        assessment.target_years = get_target_years(row) if row.header?(:target_years)
+        assessment.years_with_targets = get_years_with_targets(row) if row.header?(:years_with_targets)
         assessment.cp_alignment_year_override = row[:cp_alignment_year_override] if row.header?(:cp_alignment_year_override)
 
         was_new_record = assessment.new_record?
@@ -54,8 +54,10 @@ module CSVImport
       company
     end
 
-    def get_target_years(row)
-      row[:target_years]
+    def get_years_with_targets(row)
+      return unless row[:years_with_targets].present?
+
+      row[:years_with_targets]
         .split(Rails.application.config.csv_options[:entity_sep])
         .map(&:strip)
         .map(&:to_i)

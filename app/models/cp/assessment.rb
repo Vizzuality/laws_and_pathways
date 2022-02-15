@@ -16,7 +16,7 @@
 #  cp_alignment_year_override :integer
 #  cp_alignment_2025          :string
 #  cp_alignment_2035          :string
-#  target_years               :integer          is an Array
+#  years_with_targets         :integer          is an Array
 #
 
 module CP
