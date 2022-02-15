@@ -5,7 +5,7 @@ module CSVImport
     include ActiveModel::Model
 
     attr_reader :file, :import_results
-    attr_accessor :override_id, :rollback_on_error
+    attr_accessor :override_id, :rollback_on_error, :allow_tags_adding
 
     validate :check_if_current_user_authorized
     validate :check_required_headers
@@ -18,6 +18,7 @@ module CSVImport
       @file = file
       @override_id = options.fetch(:override_id, false)
       @rollback_on_error = options.fetch(:rollback_on_error, false)
+      @allow_tags_adding = options.fetch(:allow_tags_adding, false)
     end
 
     def call

@@ -91,7 +91,7 @@ end
 if Rails.env.development? || Rails.env.test? || ENV['SEED_DATA']
   # import geographies
   TimedLogger.log('Import geographies') do
-    CSVImport::Geographies.new(seed_file('geographies.csv')).call
+    CSVImport::Geographies.new(seed_file('geographies.csv'), allow_tags_adding: true).call
   end
 
   # import NewsArticles

@@ -14,45 +14,48 @@ module CSVImport
       end
 
       def keywords
-        @keywords ||= Hash.new do |hash, keyword|
-          hash[keyword.titleize] = Keyword.find_or_initialize_by(name: keyword.titleize)
-        end
+        @keywords ||= new_hash(Keyword, :titleize)
       end
 
       def frameworks
-        @frameworks ||= Hash.new do |hash, keyword|
-          hash[keyword.titleize] = Framework.find_or_initialize_by(name: keyword.titleize)
-        end
+        @frameworks ||= new_hash(Framework, :titleize)
       end
 
       def scopes
-        @scopes ||= Hash.new do |hash, keyword|
-          hash[keyword.titleize] = Scope.find_or_initialize_by(name: keyword.titleize)
-        end
+        @scopes ||= new_hash(Scope, :titleize)
       end
 
       def document_types
-        @document_types ||= Hash.new do |hash, keyword|
-          hash[keyword.titleize] = DocumentType.find_or_initialize_by(name: keyword.titleize)
-        end
+        @document_types ||= new_hash(DocumentType, :titleize)
       end
 
       def natural_hazards
-        @natural_hazards ||= Hash.new do |hash, keyword|
-          hash[keyword.titleize] = NaturalHazard.find_or_initialize_by(name: keyword.titleize)
-        end
+        @natural_hazards ||= new_hash(NaturalHazard, :titleize)
       end
 
       def political_groups
-        @political_groups ||= Hash.new do |hash, keyword|
-          hash[keyword] = PoliticalGroup.find_or_initialize_by(name: keyword)
-        end
+        @political_groups ||= new_hash(PoliticalGroup)
       end
 
       def responses
-        @responses ||= Hash.new do |hash, keyword|
-          hash[keyword.titleize] = Response.find_or_initialize_by(name: keyword.titleize)
+        @responses ||= new_hash(Response, :titleize)
+      end
+
+      def new_hash(klass, format_name = :to_s)
+        Hash.new do |hash, keyword|
+          key = keyword.strip.downcase
+          hash[key] = find_by_name(klass, keyword.send(format_name)) unless hash.key?(key)
+          hash[key]
         end
+      end
+
+      def find_by_name(klass, name)
+        return klass.find_or_initialize_by(name: name) if allow_tags_adding
+
+        entity = klass.where('lower(name) = ?', name.strip.downcase).first
+        raise "Couldn't find #{klass.name} with name (case insensitive): '#{name}'" unless entity.present?
+
+        entity
       end
     end
   end
