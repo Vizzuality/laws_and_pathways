@@ -12,6 +12,9 @@ module CSVImport
         assessment.emissions = parse_emissions(row) if emission_headers?(row)
         assessment.last_reported_year = row[:last_reported_year] if row.header?(:last_reported_year)
         assessment.cp_alignment = CP::Alignment.format_name(row[:cp_alignment]) if row.header?(:cp_alignment)
+        assessment.cp_alignment_2025 = CP::Alignment.format_name(row[:cp_alignment_2025]) if row.header?(:cp_alignment_2025)
+        assessment.cp_alignment_2035 = CP::Alignment.format_name(row[:cp_alignment_2035]) if row.header?(:cp_alignment_2035)
+        assessment.target_years = get_target_years(row) if row.header?(:target_years)
         assessment.cp_alignment_year_override = row[:cp_alignment_year_override] if row.header?(:cp_alignment_year_override)
 
         was_new_record = assessment.new_record?
@@ -49,6 +52,13 @@ module CSVImport
         puts "!!WARNING!! CHECK YOUR FILE ID DOESN'T MATCH COMPANY NAME!! #{row[:company_id]} #{row[:company]}"
       end
       company
+    end
+
+    def get_target_years(row)
+      row[:target_years]
+        .split(Rails.application.config.csv_options[:entity_sep])
+        .map(&:strip)
+        .map(&:to_i)
     end
 
     def assessment_date(row)

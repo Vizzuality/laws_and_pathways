@@ -59,26 +59,29 @@
             </p>
 
             <div class="cp-alignments">
-              <div class="cp-alignment-container">
-                <h5>Short-term<br/> alignment in 2025</h5>
+              <% if @company_presenter.cp_alignment_2025.present? %>
+                <div class="cp-alignment-container">
+                  <h5>Short-term<br/> alignment in 2025</h5>
 
-                <div class="cp-alignment">
-                  <span class="cp-alignment__circle" style="background-color: #FF9600;">
-                  </span>
-                  National pledges
+                  <div class="cp-alignment">
+                    <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment_2025.color %>">
+                    </span>
+                    <%= @company_presenter.cp_alignment_2025.name %>
+                  </div>
                 </div>
-              </div>
+              <% end %>
 
-              <div class="cp-alignment-container">
-                <h5>Medium-term<br/> alignment in 2035</h5>
+              <% if @company_presenter.cp_alignment_2035.present? %>
+                <div class="cp-alignment-container">
+                  <h5>Medium-term<br/> alignment in 2035</h5>
 
-                <div class="cp-alignment">
-                  <span class="cp-alignment__circle" style="background-color: #FF9600;">
-                  </span>
-                  Placeholder
+                  <div class="cp-alignment">
+                    <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment_2035.color %>">
+                    </span>
+                    <%= @company_presenter.cp_alignment_2035.name %>
+                  </div>
                 </div>
-              </div>
-
+              <% end %>
 
               <% if @company_presenter.cp_alignment.present? %>
                 <div class="cp-alignment-container">

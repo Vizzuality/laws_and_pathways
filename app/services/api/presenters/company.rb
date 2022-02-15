@@ -23,6 +23,18 @@ module Api
 
         CP::Alignment.new(name: @company.cp_alignment, date: @company.latest_cp_assessment.publication_date)
       end
+
+      def cp_alignment_2025
+        return unless @company.cp_alignment_2025.present?
+
+        CP::Alignment.new(name: @company.cp_alignment_2025, date: @company.latest_cp_assessment.publication_date)
+      end
+
+      def cp_alignment_2035
+        return unless @company.cp_alignment_2035.present?
+
+        CP::Alignment.new(name: @company.cp_alignment_2035, date: @company.latest_cp_assessment.publication_date)
+      end
     end
   end
 end
