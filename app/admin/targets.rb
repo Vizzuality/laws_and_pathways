@@ -8,10 +8,10 @@ ActiveAdmin.register Target do
 
   permit_params :description, :sector_id, :geography_id, :single_year,
                 :year, :base_year_period, :ghg_target, :target_type,
-                :visibility_status, :scopes_string, :source,
+                :visibility_status, :source,
                 :created_by_id, :updated_by_id,
                 events_attributes: permit_params_for(:events),
-                legislation_ids: []
+                legislation_ids: [], scope_ids: []
 
   filter :geography
   filter :ghg_target

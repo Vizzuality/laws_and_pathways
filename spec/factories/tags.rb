@@ -75,4 +75,8 @@ FactoryBot.define do
       ].sample << n.to_s
     }
   end
+
+  factory :political_group do
+    type { 'PoliticalGroup' }
+  end
 end

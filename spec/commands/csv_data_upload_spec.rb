@@ -76,14 +76,94 @@ describe 'CSVDataUpload (integration)' do
         .to eq(['Error on row 1: Cannot parse date: 1/14/2021, expected formats: %Y-%m-%d, %d/%m/%Y.'])
     end
 
+    describe 'Legislation errors' do
+      before :each do
+        create(:document_type, name: 'Law')
+      end
+
+      it 'sets error when instrument type is missing' do
+        csv_content = <<~CSV
+          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
+          ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law",,,,"instrument|existing type",,,"draft"
+        CSV
+
+        command = expect_data_upload_results(
+          Legislation,
+          fixture_file('legislations.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+          expected_success: false
+        )
+
+        expect(command.errors.messages[:base])
+          .to eq(['Error on row 1: Cannot find Instrument Type: existing type.'])
+      end
+
+      it 'sets error when instrument is missing' do
+        create(:instrument_type, name: 'Existing type')
+        csv_content = <<~CSV
+          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
+           ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law",,,,"instrument|existing type",,,"draft"
+        CSV
+
+        command = expect_data_upload_results(
+          Legislation,
+          fixture_file('legislations.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+          expected_success: false
+        )
+
+        expect(command.errors.messages[:base])
+          .to eq(["Error on row 1: Cannot find Instrument: 'instrument' of type 'Existing type'."])
+      end
+
+      it 'sets error when governance type is missing' do
+        csv_content = <<~CSV
+          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
+           ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law",,,,,"Existing gov|Existing gov type",,"draft"
+        CSV
+
+        command = expect_data_upload_results(
+          Legislation,
+          fixture_file('legislations.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+          expected_success: false
+        )
+
+        expect(command.errors.messages[:base])
+          .to eq(['Error on row 1: Cannot find Governance Type: Existing gov type.'])
+      end
+
+      it 'sets error when governance is missing' do
+        create(:governance_type, name: 'Existing gov type')
+        csv_content = <<~CSV
+          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
+           ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law",,,,,"Existing gov|Existing gov type",,"draft"
+        CSV
+
+        command = expect_data_upload_results(
+          Legislation,
+          fixture_file('legislations.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+          expected_success: false
+        )
+
+        expect(command.errors.messages[:base])
+          .to eq(["Error on row 1: Cannot find Governance: 'Existing gov' of type 'Existing gov type'."])
+      end
+    end
+
     describe 'authorization errors' do
       let(:csv_content) do
         <<-CSV
           Id,Law Id,Legislation type,Title,Date passed,Description,Geography,Geography iso,Sectors,Frameworks,Document types,Keywords,Responses,Natural hazards,Visibility status
-          10,101,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,"keyword1;keyword2",response1,tsunami,draft
-          20,102,legislative,Climate Law,15 Jan 2015,Desc,Poland,POL,Waste,"Mitigation",Law,"keyword1",response2,"flooding",published
-          30,103,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,"keyword1;keyword2",response1,tsunami,pending
+          10,101,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,,,,draft
+          20,102,legislative,Climate Law,15 Jan 2015,Desc,Poland,POL,Waste,,Law,,,,published
+          30,103,executive,Finance Act 2,01 Jan 2012,Desc,United Kingdom,GBR,Transport,,Law,,,,pending
         CSV
+      end
+
+      before(:each) do
+        create(:document_type, name: 'Law')
       end
 
       context 'when user cannot import' do
@@ -144,7 +224,7 @@ describe 'CSVDataUpload (integration)' do
     it 'fixes wrong unicode characters' do
       csv_content = <<~CSV
         Id,Title,Document type,Geography iso,Jurisdiction,Sectors,Citation reference number,Summary,responses,Keywords,At issue,Visibility status,Legislation ids
-        ,Litigation number 1 â€žquoteâ€,administrative_case,GBR,GBR,"Transport,Energy;Urban",EWHC 2752,Lyle requested judicial review,"response1,response2","keyword1,keyword2",At issues,pending,
+        ,Litigation number 1 â€žquoteâ€,administrative_case,GBR,GBR,"Transport,Energy;Urban",EWHC 2752,Lyle requested judicial review,,,At issues,pending,
       CSV
 
       litigations_csv = fixture_file('litigations.csv', content: csv_content)
@@ -164,16 +244,34 @@ describe 'CSVDataUpload (integration)' do
   it 'imports CSV files with Legislation data' do
     parent_legislation = create(:legislation)
     existing_instrument_type = create(:instrument_type, name: 'Existing Type')
+    gov_planning_instrument_type = create(:instrument_type, name: 'Governance and planning')
+    regulation_instrument_type = create(:instrument_type, name: 'Regulation')
     create(:instrument, instrument_type: existing_instrument_type, name: 'Instrument')
+    create(:instrument, instrument_type: existing_instrument_type, name: 'Monitoring and evaluation')
+    create(:instrument, instrument_type: gov_planning_instrument_type, name: 'Climate fund')
+    create(:instrument, instrument_type: regulation_instrument_type, name: 'Building codes')
     existing_governance_type = create(:governance_type, name: 'Existing Gov Type')
+    new_governance_type = create(:governance_type, name: 'new gov type')
     create(:governance, governance_type: existing_governance_type, name: 'Existing Gov')
+    create(:governance, governance_type: existing_governance_type, name: 'governance 2')
+    create(:governance, governance_type: new_governance_type, name: 'governance 1')
     litigation1 = create(:litigation)
     litigation2 = create(:litigation)
 
+    create(:keyword, name: 'keyword1')
+    create(:keyword, name: 'keyword2')
+    create(:response, name: 'Response1')
+    create(:response, name: 'response2')
+    create(:framework, name: 'Mitigation')
+    create(:framework, name: 'adaptation')
+    create(:natural_hazard, name: 'tsunami')
+    create(:natural_hazard, name: 'flooding')
+    create(:document_type, name: 'Law')
+
     csv_content = <<~CSV
       "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
-       ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law","keyword1;keyword2","response1;response2","tsunami","instrument|existing type","Existing gov|Existing gov type",,"draft"
-       ,"legislative","Climate Law",#{parent_legislation.id},"15 Jan 2015","Description","Poland","POL","Waste","Mitigation;Adaptation","Law","keyword1;keyword3","response1;response3","flooding;sharkinados","Monitoring and evaluation|existing Type;Climate fund|Governance and planning;Building codes | Regulation","governance 1|new gov type;governance 2|existing gov type","#{litigation1.id};#{litigation2.id}","pending"
+       ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law","keyword1;Keyword2","Response1;response2","tsunami","instrument|existing type","Existing gov|Existing gov type",,"draft"
+       ,"legislative","Climate Law",#{parent_legislation.id},"15 Jan 2015","Description","Poland","POL","Waste","Mitigation;Adaptation","Law","keyword1","response1","flooding","Monitoring and evaluation|existing Type;Climate fund|Governance and planning;Building codes | Regulation","goveRnance 1|new gov type;governance 2|existing gov type","#{litigation1.id};#{litigation2.id}","pending"
     CSV
 
     expect_data_upload_results(
@@ -194,13 +292,13 @@ describe 'CSVDataUpload (integration)' do
     expect(legislation.geography.iso).to eq('POL')
     expect(legislation.laws_sectors.count).to eq(1)
     expect(legislation.frameworks.size).to eq(2)
-    expect(legislation.frameworks_list).to include('Mitigation', 'Adaptation')
-    expect(legislation.keywords.size).to eq(2)
-    expect(legislation.keywords_list).to include('Keyword1', 'Keyword3')
-    expect(legislation.responses.size).to eq(2)
-    expect(legislation.responses_list).to include('Response1', 'Response3')
-    expect(legislation.natural_hazards.size).to eq(2)
-    expect(legislation.natural_hazards_list).to include('Sharkinados', 'Flooding')
+    expect(legislation.frameworks_list).to include('Mitigation', 'adaptation')
+    expect(legislation.keywords.size).to eq(1)
+    expect(legislation.keywords_list).to include('keyword1')
+    expect(legislation.responses.size).to eq(1)
+    expect(legislation.responses_list).to include('Response1')
+    expect(legislation.natural_hazards.size).to eq(1)
+    expect(legislation.natural_hazards_list).to include('flooding')
     expect(legislation.litigations.size).to eq(2)
     expect(legislation.litigation_ids).to include(litigation1.id, litigation2.id)
     expect(legislation.instruments.map(&:name))
@@ -421,6 +519,9 @@ describe 'CSVDataUpload (integration)' do
     end
 
     it 'works for Legislation updating tags' do
+      create(:keyword, name: 'new keyword1')
+      create(:keyword, name: 'New keyword2')
+
       to_update = create(:legislation)
       csv_content = <<-CSV
         Id,Keywords
@@ -684,6 +785,11 @@ describe 'CSVDataUpload (integration)' do
     legislation2 = create(:legislation)
     updated_litigation = create(:litigation)
 
+    create(:keyword, name: 'Keyword1')
+    create(:keyword, name: 'Keyword2')
+    create(:response, name: 'Response1')
+    create(:response, name: 'Response2')
+
     csv_content = <<-CSV
       Id,Title,Document type,Geography iso,Jurisdiction,Sectors,Citation reference number,Summary,responses,Keywords,At issue,Visibility status,Legislation ids
       ,Litigation number 1,administrative_case,GBR,GBR,"Transport;Energy;Urban",EWHC 2752,Lyle requested judicial review,"response1;response2","keyword1;keyword2",At issues,pending,"#{legislation1.id};#{legislation2.id}"
@@ -853,6 +959,9 @@ describe 'CSVDataUpload (integration)' do
     law = create(:legislation)
     law2 = create(:legislation)
 
+    create(:scope, name: 'Scope1')
+    create(:scope, name: 'Scope2')
+
     csv_content = <<-CSV
       Id,Target type,Description,Ghg target,Year,Base year period,Single year,Geography,Geography iso,Sector,Scopes,source,Legislation ids,Visibility status
       ,no_document_submitted,description,true,1995,1998,false,Japan,JPN,Airlines,"Scope2",law,,draft
@@ -989,6 +1098,11 @@ describe 'CSVDataUpload (integration)' do
   end
 
   it 'import CSV file with Geographies data' do
+    create(:political_group, name: 'OECD')
+    create(:political_group, name: 'G20')
+    create(:political_group, name: 'G77')
+    create(:political_group, name: 'LDC')
+
     # USA is already created
     expect_data_upload_results(
       Geography,

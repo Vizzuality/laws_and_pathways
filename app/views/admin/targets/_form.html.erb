@@ -21,7 +21,7 @@
           <%= f.input :single_year, hint: 'single or multi year target' %>
           <%= f.input :year %>
           <%= f.input :base_year_period %>
-          <%= f.input :scopes_string, label: 'Scopes', hint: t('hint.tag'), as: :tags, collection: Scope.pluck(:name) %>
+          <%= f.input :scope_ids, label: 'Scopes', as: :tags, collection: Scope.ordered_by_name %>
           <%= f.input :legislation_ids, as: :selected_list, label: 'Connected Laws', fields: [:title],
             display_name: :display_name, order: 'title_asc' %>
           <%= f.input :visibility_status, as: :select %>
