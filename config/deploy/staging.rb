@@ -7,4 +7,4 @@ set :deploy_to, '/var/www/laws-pathways-staging'
 
 append :linked_files, 'config/secrets/google-credentials-staging.json'
 
-set :rvm_ruby_version, '2.7.5'
+set :rvm_ruby_version, '2.7.2'

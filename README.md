@@ -4,7 +4,7 @@ The backoffice for laws and pathways
 
 ## Dependencies:
 
-- Ruby v2.7.5
+- Ruby v2.7.2
 - Rails v6.0.3
 - Node v14
 - PostgreSQL v11
