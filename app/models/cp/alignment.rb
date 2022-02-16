@@ -1,7 +1,5 @@
 module CP
   class Alignment
-    NEW_ALIGNMENT_NAMES_DATE = Date.new(2021, 10, 1)
-
     CP_ALIGNMENT_STANDARIZE_MAP = {
       '2 degrees (high efficiency)' => 'below 2 degrees',
       '2 degrees (shift-improve)' => '2 degrees',
@@ -9,12 +7,21 @@ module CP
     }.freeze
 
     CP_ALIGNMENT_COLORS = {
-      'below 2 degrees' => '#00C170', # green
+      'below 2 degrees' => {
+        'paper/aluminium/cement/steel' => '#00C170', # green
+        'rest' => '#FFDD49' # yellow
+      },
+      '2 degrees (high efficiency)' => '#00C170', # green
+      '1.5 degrees' => '#00C170', # green
+      '2 degrees (shift-improve)' => '#FFDD49', # yellow
       '2 degrees' => '#FFDD49', # yellow
       'paris pledges' => '#FF9600', # orange,
+      'international pledges' => '#FF9600', # orange
       'not aligned' => '#ED3D4A', # red
       'no or unsuitable disclosure' => '#595B5D' # black
     }.freeze
+
+    DEFAULT_COLOR = '#595B5D'.freeze # black
 
     CP_ALIGNMENT_NEW_COLORS = {
       '1.5 degrees' => '#00C170', # green
@@ -53,7 +60,7 @@ module CP
 
     include ActiveModel::Model
 
-    attr_accessor :name, :date
+    attr_accessor :name, :sector
 
     def standarized_name
       CP::Alignment.format_name((CP_ALIGNMENT_STANDARIZE_MAP[name.downcase] || name))
@@ -64,15 +71,15 @@ module CP
     end
 
     def color
-      return CP_ALIGNMENT_COLORS[standarized_name.downcase] if date.nil?
+      color = CP_ALIGNMENT_COLORS[formatted_name.downcase]
+      return color unless color.is_a?(Hash)
 
-      if date > NEW_ALIGNMENT_NAMES_DATE
-        CP_ALIGNMENT_NEW_COLORS[standarized_name.downcase]
-      else
-        CP_ALIGNMENT_COLORS[standarized_name.downcase]
-      end
+      sector_key = sector&.downcase || 'rest'
+
+      color.select { |k| k.include?(sector_key) }.values.first || DEFAULT_COLOR
     end
 
+    # makes sure to format names based on the standarized NAMES array
     def self.format_name(name)
       return unless name.present?
 

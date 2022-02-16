@@ -21,19 +21,19 @@ module Api
       def cp_alignment
         return unless @company.cp_alignment.present?
 
-        CP::Alignment.new(name: @company.cp_alignment, date: @company.latest_cp_assessment.publication_date)
+        CP::Alignment.new(name: @company.cp_alignment, sector: @company.sector.name)
       end
 
       def cp_alignment_2025
         return unless @company.cp_alignment_2025.present?
 
-        CP::Alignment.new(name: @company.cp_alignment_2025, date: @company.latest_cp_assessment.publication_date)
+        CP::Alignment.new(name: @company.cp_alignment_2025, sector: @company.sector.name)
       end
 
       def cp_alignment_2035
         return unless @company.cp_alignment_2035.present?
 
-        CP::Alignment.new(name: @company.cp_alignment_2035, date: @company.latest_cp_assessment.publication_date)
+        CP::Alignment.new(name: @company.cp_alignment_2035, sector: @company.sector.name)
       end
     end
   end
