@@ -104,6 +104,7 @@ module TPI
 
     def fetch_sectors
       @sectors = TPISector.all.includes(:cluster).order(:name)
+      @sectors_json = @sectors.map { |s| s.as_json(except: [:created_at, :updated_at], methods: [:path]) }
     end
 
     def fetch_companies
