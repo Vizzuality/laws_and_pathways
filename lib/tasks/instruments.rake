@@ -55,7 +55,7 @@ namespace :instruments do
           )
         end
       end
-
+      puts "Count instruments_legislations: #{ActiveRecord::Base.connection.execute('SELECT COUNT(*) FROM instruments_legislations').values}"
       # remove duplicates from instruments_legislations
       duplicates_query = <<-SQL
         DELETE FROM instruments_legislations a USING instruments_legislations b
@@ -65,6 +65,7 @@ namespace :instruments do
           a.instrument_id = b.instrument_id
       SQL
       puts "Removing duplicates #{ActiveRecord::Base.connection.execute(duplicates_query).values}"
+      puts "Count instruments_legislations: #{ActiveRecord::Base.connection.execute('SELECT COUNT(*) FROM instruments_legislations').values}"
 
       puts "New instruments count #{final_new_instruments.count}"
 
