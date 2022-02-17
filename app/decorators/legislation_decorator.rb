@@ -56,10 +56,12 @@ class LegislationDecorator < Draper::Decorator
 
   def instrument_links
     model.instruments.map do |instrument|
-      h.link_to instrument.name,
+      title = "[#{instrument.instrument_type.name}] #{instrument.name}"
+
+      h.link_to title,
                 h.admin_instrument_path(instrument),
                 target: '_blank',
-                title: instrument.name
+                title: title
     end
   end
 

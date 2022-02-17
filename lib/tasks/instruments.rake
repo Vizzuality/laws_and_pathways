@@ -56,6 +56,16 @@ namespace :instruments do
         end
       end
 
+      # remove duplicates from instruments_legislations
+      duplicates_query = <<-SQL
+        DELETE FROM instruments_legislations a USING instruments_legislations b
+        WHERE
+          a.ctid < b.ctid AND
+          a.legislation_id = b.legislation_id AND
+          a.instrument_id = b.instrument_id
+      SQL
+      puts "Removing duplicates #{ActiveRecord::Base.connection.execute(duplicates_query).values}"
+
       puts "New instruments count #{final_new_instruments.count}"
 
       ids = final_new_instruments.map(&:id)
