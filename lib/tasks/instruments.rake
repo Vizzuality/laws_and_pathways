@@ -2,6 +2,7 @@ require 'csv'
 
 namespace :instruments do
   desc 'Fixing instrument types and instruments'
+  # rubocop:disable Layout/LineLength
   task fix_list: :environment do
     for_real = ENV['FOR_REAL'] == 'true'
 
@@ -77,10 +78,19 @@ namespace :instruments do
         puts "#{i.instrument_type.name}|#{i.name}"
       end
 
+      type_ids = final_new_instruments.map(&:instrument_type_id).uniq
+
+      Instrument.where.not(id: ids).delete_all
+      InstrumentType.where.not(id: type_ids).delete_all
+
+      puts "Instruments in DB #{Instrument.count}"
+      puts "InstrumentTypes in DB #{InstrumentType.count}"
+
       raise ActiveRecord::Rollback unless for_real
     end
 
     puts 'ALL DONE' if for_real
     puts 'ROLLBACK' unless for_real
   end
+  # rubocop:enable Layout/LineLength
 end
