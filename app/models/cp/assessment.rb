@@ -75,6 +75,14 @@ module CP
       benchmarks.find { |b| b.for_alignment?(cp_alignment) }
     end
 
+    def years_with_targets_string=(value)
+      self.years_with_targets = value.split(',').map(&:strip).map(&:to_i).reject(&:zero?)
+    end
+
+    def years_with_targets_string
+      years_with_targets&.join(', ')
+    end
+
     private
 
     def benchmarks

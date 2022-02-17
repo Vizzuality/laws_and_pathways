@@ -8,10 +8,25 @@ module CSVExport
       def call
         return if @assessments.empty?
 
-        headers = ['Company Name', 'Geography', 'Geography Code', 'Sector',
-                   'CA100 Focus Company', 'Large/Medium Classification',
-                   'ISINs', 'SEDOL', 'Publication Date', 'Assessment Date', 'Carbon Performance Alignment', 'Benchmark ID',
-                   'History to Projection cutoff year', 'CP Unit', 'Assumptions']
+        headers = [
+          'Company Name',
+          'Geography',
+          'Geography Code',
+          'Sector',
+          'CA100 Focus Company',
+          'Large/Medium Classification',
+          'ISINs',
+          'SEDOL',
+          'Publication Date',
+          'Assessment Date',
+          'Carbon Performance Alignment 2025',
+          'Carbon Performance Alignment 2035',
+          'Carbon Performance Alignment 2050',
+          'Benchmark ID',
+          'History to Projection cutoff year',
+          'CP Unit',
+          'Assumptions'
+        ]
         year_columns = @assessments.flat_map(&:emissions_all_years).uniq.sort
         headers.concat(year_columns)
 
@@ -31,6 +46,8 @@ module CSVExport
               assessment.company.sedol,
               assessment.publication_date,
               assessment.assessment_date,
+              assessment.cp_alignment_2025,
+              assessment.cp_alignment_2035,
               assessment.cp_alignment,
               assessment.cp_benchmark_id,
               assessment.last_reported_year,

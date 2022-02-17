@@ -8,7 +8,10 @@
     <%= f.input :last_reported_year %>
     <%= f.input :assumptions %>
     <%= f.input :cp_alignment %>
+    <%= f.input :cp_alignment_2025 %>
+    <%= f.input :cp_alignment_2035 %>
     <%= f.input :cp_alignment_year_override %>
+    <%= f.input :years_with_targets_string, label: 'Years with targets', as: :tags, hint: 'Type a year and press ENTER. Non integers will be rejected.' %>
     <%= f.input :emissions, as: :hidden, input_html: { value: f.object.emissions.to_json, id: 'input_emissions' } %>
   <% end %>
 
