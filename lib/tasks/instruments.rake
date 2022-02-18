@@ -20,6 +20,7 @@ namespace :instruments do
 
     new_instruments_csv = parse_csv.call('new_instruments.csv')
     mapping_csv = parse_csv.call('instruments_mapping.csv')
+    old_instruments_ids = []
 
     ActiveRecord::Base.transaction do
       Instrument.update_all('name = TRIM(name)')
@@ -51,11 +52,16 @@ namespace :instruments do
 
         old_instruments = Instrument.where(instrument_type: old_type, name: old_name)
         old_instruments.each do |old_instrument|
+          old_instruments_ids << old_instrument.id
           ActiveRecord::Base.connection.execute(
             "UPDATE instruments_legislations SET instrument_id = #{new_instrument.id} WHERE instrument_id = #{old_instrument.id}"
           )
         end
       end
+
+      not_processed = Instrument.where.not(id: (old_instruments_ids + final_new_instruments.map(&:id)).uniq).pluck(:id)
+      raise "Not processed instruments #{not_processed}" if not_processed.any?
+
       puts "Count instruments_legislations: #{ActiveRecord::Base.connection.execute('SELECT COUNT(*) FROM instruments_legislations').values}"
       # remove duplicates from instruments_legislations
       duplicates_query = <<-SQL
