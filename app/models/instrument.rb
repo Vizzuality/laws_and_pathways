@@ -19,6 +19,7 @@ class Instrument < ApplicationRecord
   scope :ordered_with_parent, -> { includes(:instrument_type).order('instrument_types.name ASC, instruments.name ASC') }
 
   validates_presence_of :name
+  validates_uniqueness_of :name, scope: [:instrument_type_id]
 
   def self.to_select
     pluck(Arel.sql("CONCAT('[', instrument_types.name, '] ', instruments.name)"), :id)

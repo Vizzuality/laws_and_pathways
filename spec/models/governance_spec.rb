@@ -26,4 +26,17 @@ RSpec.describe Governance, type: :model do
     subject.governance_type = nil
     expect(subject).to have(1).errors_on(:governance_type)
   end
+
+  it 'should be invalid if name is taken in goevernance type scope' do
+    type = create(:governance_type)
+    subject.governance_type = type
+
+    # name taken but for other type
+    create(:governance, name: 'try this name')
+    subject.name = 'try this name'
+    expect(subject).to be_valid
+
+    create(:governance, governance_type: type, name: 'try this name')
+    expect(subject).to have(1).errors_on(:name) # now name is taken for the same type
+  end
 end
