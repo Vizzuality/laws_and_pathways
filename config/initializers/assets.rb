@@ -14,4 +14,5 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 Rails.application.config.assets.precompile += %w( application.css tpi.css cclow.css )
 
 # issue with segmentation fault https://github.com/sass/sassc-ruby/issues/207#issuecomment-675571476
-Rails.application.config.assets.export_concurrent = false
+Sprockets.export_concurrent = false
+# Rails.application.config.assets.export_concurrent = false
