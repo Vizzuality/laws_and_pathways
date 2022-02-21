@@ -14,7 +14,7 @@ ActiveAdmin.register Legislation do
                 documents_attributes: permit_params_for(:documents),
                 natural_hazard_ids: [], keyword_ids: [], response_ids: [],
                 framework_ids: [], document_type_ids: [], instrument_ids: [],
-                governance_ids: [], laws_sector_ids: []
+                theme_ids: [], laws_sector_ids: []
 
   filter :id_equals, label: 'ID'
   filter :title_contains, label: 'Title'
@@ -75,7 +75,7 @@ ActiveAdmin.register Legislation do
           list_row 'Targets', :target_links
           list_row 'Documents', :document_links
           list_row 'Instruments', :instrument_links
-          list_row 'Governances', :governance_links
+          list_row 'Themes', :theme_links
           row :updated_at
           row :updated_by
           row :created_at
@@ -123,7 +123,7 @@ ActiveAdmin.register Legislation do
     column :natural_hazards, &:natural_hazards_csv
     column :document_types, &:document_types_csv
     column :instruments, &:instruments_csv
-    column :governances, &:governances_csv
+    column :themes, &:themes_csv
     column(:litigation_ids) { |l| l.litigation_ids.join(Rails.application.config.csv_options[:entity_sep]) }
     column :visibility_status
   end
@@ -186,7 +186,7 @@ ActiveAdmin.register Legislation do
       return [] unless csv_format?
 
       [
-        :governances,
+        :themes,
         :parent,
         :responses,
         :keywords,

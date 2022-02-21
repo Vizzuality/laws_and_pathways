@@ -55,7 +55,7 @@ class Legislation < ApplicationRecord
   has_and_belongs_to_many :targets, after_add: :mark_changed, after_remove: :mark_changed
   has_and_belongs_to_many :litigations, after_add: :mark_changed, after_remove: :mark_changed
   has_and_belongs_to_many :instruments, after_add: :mark_changed, after_remove: :mark_changed
-  has_and_belongs_to_many :governances, after_add: :mark_changed, after_remove: :mark_changed
+  has_and_belongs_to_many :themes, after_add: :mark_changed, after_remove: :mark_changed
   has_and_belongs_to_many :laws_sectors, after_add: :mark_changed, after_remove: :mark_changed
 
   scope :laws, -> { legislative }

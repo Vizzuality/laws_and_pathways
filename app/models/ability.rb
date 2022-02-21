@@ -14,7 +14,7 @@ class Ability
 
   LAWS_RESOURCES = [
     Legislation, Litigation, Target, ExternalLegislation, LawsSector,
-    CCLOWPage, Instrument, InstrumentType, Governance, GovernanceType
+    CCLOWPage, Instrument, InstrumentType, Theme, ThemeType
   ].freeze
 
   PUBLISHABLE_RESOURCES = [

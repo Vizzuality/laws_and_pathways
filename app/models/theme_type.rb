@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: governance_types
+# Table name: theme_types
 #
 #  id           :bigint           not null, primary key
 #  name         :string
@@ -9,11 +9,11 @@
 #  discarded_at :datetime
 #
 
-class GovernanceType < ApplicationRecord
+class ThemeType < ApplicationRecord
   include DiscardableModel
 
   validates_presence_of :name
   validates_uniqueness_of :name, case_sensitive: false
 
-  has_many :governances
+  has_many :themes
 end

@@ -22,7 +22,7 @@ module CSVImport
         legislation.natural_hazards = parse_tags(row[:natural_hazards], natural_hazards) if row.header?(:natural_hazards)
         legislation.document_types = parse_tags(row[:document_types], document_types) if row.header?(:document_types)
         legislation.instruments = find_instruments(row[:instruments]) if row.header?(:instruments)
-        legislation.governances = find_governances(row[:governances]) if row.header?(:governances)
+        legislation.themes = find_themes(row[:themes]) if row.header?(:themes)
         legislation.litigation_ids = parse_ids(row[:litigation_ids]) if row.header?(:litigation_ids)
         legislation.visibility_status = row[:visibility_status]&.downcase if row.header?(:visibility_status)
 
@@ -53,22 +53,22 @@ module CSVImport
         resource_klass.new
     end
 
-    def find_governances(str)
+    def find_themes(str)
       return [] unless str.present?
 
-      str.split(';').flat_map do |governance_type_string|
-        governance_name, type_name = governance_type_string.split('|').map(&:strip)
+      str.split(';').flat_map do |theme_type_string|
+        theme_name, type_name = theme_type_string.split('|').map(&:strip)
 
-        raise "Governance #{governance_name} has no type" unless type_name.present?
-        raise "No name for governance of type #{type_name}" if type_name.present? && !governance_name.present?
+        raise "Theme #{theme_name} has no type" unless type_name.present?
+        raise "No name for theme of type #{type_name}" if type_name.present? && !theme_name.present?
 
-        type = GovernanceType.where('lower(name) = ?', type_name.downcase).first
-        raise "Cannot find Governance Type: #{type_name}" unless type.present?
+        type = ThemeType.where('lower(name) = ?', type_name.downcase).first
+        raise "Cannot find Theme Type: #{type_name}" unless type.present?
 
-        governance = Governance.where(governance_type_id: type.id).where('lower(name) = ?', governance_name.downcase).first
-        raise "Cannot find Governance: '#{governance_name}' of type '#{type.name}'" unless governance.present?
+        theme = Theme.where(theme_type_id: type.id).where('lower(name) = ?', theme_name.downcase).first
+        raise "Cannot find Theme: '#{theme_name}' of type '#{type.name}'" unless theme.present?
 
-        governance
+        theme
       end
     end
 

@@ -83,7 +83,7 @@ describe 'CSVDataUpload (integration)' do
 
       it 'sets error when instrument type is missing' do
         csv_content = <<~CSV
-          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
+          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Themes","Litigation ids","Visibility status"
           ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law",,,,"instrument|existing type",,,"draft"
         CSV
 
@@ -101,7 +101,7 @@ describe 'CSVDataUpload (integration)' do
       it 'sets error when instrument is missing' do
         create(:instrument_type, name: 'Existing type')
         csv_content = <<~CSV
-          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
+          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Themes","Litigation ids","Visibility status"
            ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law",,,,"instrument|existing type",,,"draft"
         CSV
 
@@ -116,10 +116,10 @@ describe 'CSVDataUpload (integration)' do
           .to eq(["Error on row 1: Cannot find Instrument: 'instrument' of type 'Existing type'."])
       end
 
-      it 'sets error when governance type is missing' do
+      it 'sets error when theme type is missing' do
         csv_content = <<~CSV
-          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
-           ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law",,,,,"Existing gov|Existing gov type",,"draft"
+          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Themes","Litigation ids","Visibility status"
+           ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law",,,,,"Existing theme|Existing theme type",,"draft"
         CSV
 
         command = expect_data_upload_results(
@@ -130,14 +130,14 @@ describe 'CSVDataUpload (integration)' do
         )
 
         expect(command.errors.messages[:base])
-          .to eq(['Error on row 1: Cannot find Governance Type: Existing gov type.'])
+          .to eq(['Error on row 1: Cannot find Theme Type: Existing theme type.'])
       end
 
-      it 'sets error when governance is missing' do
-        create(:governance_type, name: 'Existing gov type')
+      it 'sets error when theme is missing' do
+        create(:theme_type, name: 'Existing theme type')
         csv_content = <<~CSV
-          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
-           ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law",,,,,"Existing gov|Existing gov type",,"draft"
+          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Themes","Litigation ids","Visibility status"
+           ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law",,,,,"Existing theme|Existing theme type",,"draft"
         CSV
 
         command = expect_data_upload_results(
@@ -148,7 +148,7 @@ describe 'CSVDataUpload (integration)' do
         )
 
         expect(command.errors.messages[:base])
-          .to eq(["Error on row 1: Cannot find Governance: 'Existing gov' of type 'Existing gov type'."])
+          .to eq(["Error on row 1: Cannot find Theme: 'Existing theme' of type 'Existing theme type'."])
       end
     end
 
@@ -250,11 +250,11 @@ describe 'CSVDataUpload (integration)' do
     create(:instrument, instrument_type: existing_instrument_type, name: 'Monitoring and evaluation')
     create(:instrument, instrument_type: gov_planning_instrument_type, name: 'Climate fund')
     create(:instrument, instrument_type: regulation_instrument_type, name: 'Building codes')
-    existing_governance_type = create(:governance_type, name: 'Existing Gov Type')
-    new_governance_type = create(:governance_type, name: 'new gov type')
-    create(:governance, governance_type: existing_governance_type, name: 'Existing Gov')
-    create(:governance, governance_type: existing_governance_type, name: 'governance 2')
-    create(:governance, governance_type: new_governance_type, name: 'governance 1')
+    existing_theme_type = create(:theme_type, name: 'Existing Theme Type')
+    new_theme_type = create(:theme_type, name: 'new theme type')
+    create(:theme, theme_type: existing_theme_type, name: 'Existing Theme')
+    create(:theme, theme_type: existing_theme_type, name: 'theme 2')
+    create(:theme, theme_type: new_theme_type, name: 'theme 1')
     litigation1 = create(:litigation)
     litigation2 = create(:litigation)
 
@@ -269,9 +269,9 @@ describe 'CSVDataUpload (integration)' do
     create(:document_type, name: 'Law')
 
     csv_content = <<~CSV
-      "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
-       ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law","keyword1;Keyword2","Response1;response2","tsunami","instrument|existing type","Existing gov|Existing gov type",,"draft"
-       ,"legislative","Climate Law",#{parent_legislation.id},"15 Jan 2015","Description","Poland","POL","Waste","Mitigation;Adaptation","Law","keyword1","response1","flooding","Monitoring and evaluation|existing Type;Climate fund|Governance and planning;Building codes | Regulation","goveRnance 1|new gov type;governance 2|existing gov type","#{litigation1.id};#{litigation2.id}","pending"
+      "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Themes","Litigation ids","Visibility status"
+       ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law","keyword1;Keyword2","Response1;response2","tsunami","instrument|existing type","Existing theme|Existing theme type",,"draft"
+       ,"legislative","Climate Law",#{parent_legislation.id},"15 Jan 2015","Description","Poland","POL","Waste","Mitigation;Adaptation","Law","keyword1","response1","flooding","Monitoring and evaluation|existing Type;Climate fund|Governance and planning;Building codes | Regulation","theMe 1|new theme type;theme 2|existing theme type","#{litigation1.id};#{litigation2.id}","pending"
     CSV
 
     expect_data_upload_results(
@@ -305,13 +305,13 @@ describe 'CSVDataUpload (integration)' do
       .to contain_exactly('Monitoring and evaluation', 'Climate fund', 'Building codes')
     expect(InstrumentType.all.pluck(:name)).to contain_exactly('Governance and planning', 'Regulation', 'Existing Type')
     expect(existing_instrument_type.instruments.map(&:name)).to contain_exactly('Instrument', 'Monitoring and evaluation')
-    expect(legislation.governances.map(&:name)).to contain_exactly('governance 1', 'governance 2')
-    expect(GovernanceType.all.pluck(:name)).to contain_exactly('new gov type', 'Existing Gov Type')
-    expect(existing_governance_type.governances.map(&:name)).to contain_exactly('Existing Gov', 'governance 2')
+    expect(legislation.themes.map(&:name)).to contain_exactly('theme 1', 'theme 2')
+    expect(ThemeType.all.pluck(:name)).to contain_exactly('new theme type', 'Existing Theme Type')
+    expect(existing_theme_type.themes.map(&:name)).to contain_exactly('Existing Theme', 'theme 2')
 
     legislation2 = Legislation.find_by(title: 'Finance Act 2011')
     expect(legislation2.instruments.map(&:name)).to contain_exactly('Instrument')
-    expect(legislation2.governances.map(&:name)).to contain_exactly('Existing Gov')
+    expect(legislation2.themes.map(&:name)).to contain_exactly('Existing Theme')
   end
 
   describe 'required columns return error' do
@@ -504,7 +504,7 @@ describe 'CSVDataUpload (integration)' do
       expect_to_change = [:title, :slug, :tsv, :updated_at, :parent_id]
       expect_not_to_change = [
         *(to_update.attributes.symbolize_keys.keys - expect_to_change),
-        :tag_ids, :event_ids, :instrument_ids, :governance_ids, :target_ids, :litigation_ids
+        :tag_ids, :event_ids, :instrument_ids, :theme_ids, :target_ids, :litigation_ids
       ]
 
       expect_changes(to_update, expect_to_change, expect_not_to_change) do
@@ -531,7 +531,7 @@ describe 'CSVDataUpload (integration)' do
       expect_to_change = [:keyword_ids]
       expect_not_to_change = [
         *(to_update.attributes.symbolize_keys.keys - expect_to_change),
-        :event_ids, :instrument_ids, :governance_ids, :target_ids, :litigation_ids
+        :event_ids, :instrument_ids, :theme_ids, :target_ids, :litigation_ids
       ]
 
       expect_changes(to_update, expect_to_change, expect_not_to_change) do
