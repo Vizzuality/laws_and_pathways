@@ -711,81 +711,6 @@ ALTER SEQUENCE public.geographies_id_seq OWNED BY public.geographies.id;
 
 
 --
--- Name: governance_types; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.governance_types (
-    id bigint NOT NULL,
-    name character varying,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    discarded_at timestamp without time zone
-);
-
-
---
--- Name: governance_types_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.governance_types_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: governance_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.governance_types_id_seq OWNED BY public.governance_types.id;
-
-
---
--- Name: governances; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.governances (
-    id bigint NOT NULL,
-    name character varying,
-    governance_type_id bigint,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    discarded_at timestamp without time zone
-);
-
-
---
--- Name: governances_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.governances_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: governances_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.governances_id_seq OWNED BY public.governances.id;
-
-
---
--- Name: governances_legislations; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.governances_legislations (
-    legislation_id bigint NOT NULL,
-    governance_id bigint NOT NULL
-);
-
-
---
 -- Name: images; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1025,6 +950,16 @@ CREATE SEQUENCE public.legislations_targets_id_seq
 --
 
 ALTER SEQUENCE public.legislations_targets_id_seq OWNED BY public.legislations_targets.id;
+
+
+--
+-- Name: legislations_themes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.legislations_themes (
+    legislation_id bigint NOT NULL,
+    theme_id bigint NOT NULL
+);
 
 
 --
@@ -1495,6 +1430,71 @@ ALTER SEQUENCE public.testimonials_id_seq OWNED BY public.testimonials.id;
 
 
 --
+-- Name: theme_types; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.theme_types (
+    id bigint NOT NULL,
+    name character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    discarded_at timestamp without time zone
+);
+
+
+--
+-- Name: theme_types_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.theme_types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: theme_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.theme_types_id_seq OWNED BY public.theme_types.id;
+
+
+--
+-- Name: themes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.themes (
+    id bigint NOT NULL,
+    name character varying,
+    theme_type_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    discarded_at timestamp without time zone
+);
+
+
+--
+-- Name: themes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.themes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: themes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.themes_id_seq OWNED BY public.themes.id;
+
+
+--
 -- Name: tpi_sector_clusters; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1671,20 +1671,6 @@ ALTER TABLE ONLY public.geographies ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
--- Name: governance_types id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.governance_types ALTER COLUMN id SET DEFAULT nextval('public.governance_types_id_seq'::regclass);
-
-
---
--- Name: governances id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.governances ALTER COLUMN id SET DEFAULT nextval('public.governances_id_seq'::regclass);
-
-
---
 -- Name: images id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1808,6 +1794,20 @@ ALTER TABLE ONLY public.targets ALTER COLUMN id SET DEFAULT nextval('public.targ
 --
 
 ALTER TABLE ONLY public.testimonials ALTER COLUMN id SET DEFAULT nextval('public.testimonials_id_seq'::regclass);
+
+
+--
+-- Name: theme_types id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.theme_types ALTER COLUMN id SET DEFAULT nextval('public.theme_types_id_seq'::regclass);
+
+
+--
+-- Name: themes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.themes ALTER COLUMN id SET DEFAULT nextval('public.themes_id_seq'::regclass);
 
 
 --
@@ -1961,22 +1961,6 @@ ALTER TABLE ONLY public.geographies
 
 
 --
--- Name: governance_types governance_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.governance_types
-    ADD CONSTRAINT governance_types_pkey PRIMARY KEY (id);
-
-
---
--- Name: governances governances_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.governances
-    ADD CONSTRAINT governances_pkey PRIMARY KEY (id);
-
-
---
 -- Name: images images_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2126,6 +2110,22 @@ ALTER TABLE ONLY public.targets
 
 ALTER TABLE ONLY public.testimonials
     ADD CONSTRAINT testimonials_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: theme_types theme_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.theme_types
+    ADD CONSTRAINT theme_types_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: themes themes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.themes
+    ADD CONSTRAINT themes_pkey PRIMARY KEY (id);
 
 
 --
@@ -2432,55 +2432,6 @@ CREATE INDEX index_geographies_on_updated_by_id ON public.geographies USING btre
 
 
 --
--- Name: index_governance_types_on_discarded_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_governance_types_on_discarded_at ON public.governance_types USING btree (discarded_at);
-
-
---
--- Name: index_governance_types_on_name; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_governance_types_on_name ON public.governance_types USING btree (name);
-
-
---
--- Name: index_governances_legislations_on_governance_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_governances_legislations_on_governance_id ON public.governances_legislations USING btree (governance_id);
-
-
---
--- Name: index_governances_legislations_on_legislation_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_governances_legislations_on_legislation_id ON public.governances_legislations USING btree (legislation_id);
-
-
---
--- Name: index_governances_on_discarded_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_governances_on_discarded_at ON public.governances USING btree (discarded_at);
-
-
---
--- Name: index_governances_on_governance_type_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_governances_on_governance_type_id ON public.governances USING btree (governance_type_id);
-
-
---
--- Name: index_governances_on_name_and_governance_type_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_governances_on_name_and_governance_type_id ON public.governances USING btree (name, governance_type_id);
-
-
---
 -- Name: index_images_on_content_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2660,6 +2611,20 @@ CREATE INDEX index_legislations_targets_on_target_id ON public.legislations_targ
 --
 
 CREATE UNIQUE INDEX index_legislations_targets_on_target_id_and_legislation_id ON public.legislations_targets USING btree (target_id, legislation_id);
+
+
+--
+-- Name: index_legislations_themes_on_legislation_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_legislations_themes_on_legislation_id ON public.legislations_themes USING btree (legislation_id);
+
+
+--
+-- Name: index_legislations_themes_on_theme_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_legislations_themes_on_theme_id ON public.legislations_themes USING btree (theme_id);
 
 
 --
@@ -2908,6 +2873,41 @@ CREATE INDEX index_targets_on_updated_by_id ON public.targets USING btree (updat
 
 
 --
+-- Name: index_theme_types_on_discarded_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_theme_types_on_discarded_at ON public.theme_types USING btree (discarded_at);
+
+
+--
+-- Name: index_theme_types_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_theme_types_on_name ON public.theme_types USING btree (name);
+
+
+--
+-- Name: index_themes_on_discarded_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_themes_on_discarded_at ON public.themes USING btree (discarded_at);
+
+
+--
+-- Name: index_themes_on_name_and_theme_type_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_themes_on_name_and_theme_type_id ON public.themes USING btree (name, theme_type_id);
+
+
+--
+-- Name: index_themes_on_theme_type_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_themes_on_theme_type_id ON public.themes USING btree (theme_type_id);
+
+
+--
 -- Name: index_tpi_sectors_on_cluster_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3094,11 +3094,11 @@ ALTER TABLE ONLY public.publications
 
 
 --
--- Name: governances fk_rails_767317104d; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: themes fk_rails_767317104d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.governances
-    ADD CONSTRAINT fk_rails_767317104d FOREIGN KEY (governance_type_id) REFERENCES public.governance_types(id);
+ALTER TABLE ONLY public.themes
+    ADD CONSTRAINT fk_rails_767317104d FOREIGN KEY (theme_type_id) REFERENCES public.theme_types(id);
 
 
 --
@@ -3376,6 +3376,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211116114117'),
 ('20220215170029'),
 ('20220218100325'),
-('20220218100643');
+('20220218100643'),
+('20220221123402');
 
 
