@@ -64,8 +64,10 @@
                   <h5>Short-term<br/> alignment in 2025</h5>
 
                   <div class="cp-alignment">
-                    <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment_2025.color %>">
-                    </span>
+                    <% unless @company_presenter.cp_alignment_2025.not_assessed? %>
+                      <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment_2025.color %>">
+                      </span>
+                    <% end %>
                     <%= @company_presenter.cp_alignment_2025.name %>
                   </div>
                 </div>
@@ -76,7 +78,9 @@
                   <h5>Medium-term<br/> alignment in 2035</h5>
 
                   <div class="cp-alignment">
-                    <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment_2035.color %>">
+                    <% unless @company_presenter.cp_alignment_2035.not_assessed? %>
+                      <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment_2035.color %>">
+                    <% end %>
                     </span>
                     <%= @company_presenter.cp_alignment_2035.name %>
                   </div>
@@ -88,8 +92,10 @@
                   <h5>Long-term<br/> alignment in 2050</h5>
 
                   <div class="cp-alignment">
-                    <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment.color %>">
-                    </span>
+                    <% unless @company_presenter.cp_alignment.not_assessed? %>
+                      <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment.color %>">
+                      </span>
+                    <% end %>
                     <%= @company_presenter.cp_alignment.name %>
                   </div>
                 </div>

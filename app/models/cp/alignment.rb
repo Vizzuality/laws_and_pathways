@@ -70,13 +70,20 @@ module CP
       CP::Alignment.format_name(name)
     end
 
+    alias to_s formatted_name
+
+    def not_assessed?
+      to_s.downcase == 'not assessed'
+    end
+
     def color
       color = CP_ALIGNMENT_COLORS[formatted_name.downcase]
       return color unless color.is_a?(Hash)
 
       sector_key = sector&.downcase || 'rest'
 
-      color.select { |k| k.include?(sector_key) }.values.first || DEFAULT_COLOR
+      default_value = color['rest'] || DEFAULT_COLOR
+      color.select { |k| k.include?(sector_key) }.values.first || default_value
     end
 
     # makes sure to format names based on the standarized NAMES array
