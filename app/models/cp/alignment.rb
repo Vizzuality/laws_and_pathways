@@ -24,25 +24,18 @@ module CP
 
     DEFAULT_COLOR = '#595B5D'.freeze # black
 
-    CP_ALIGNMENT_NEW_COLORS = {
-      '1.5 degrees' => '#00C170', # green
-      'below 2 degrees' => '#FFDD49', # yellow
-      'national pledges' => '#FF9600', # orange,
-      'not aligned' => '#ED3D4A', # red
-      'no or unsuitable disclosure' => '#595B5D' # black
-    }.freeze
-
     NAMES = [
       '1.5 Degrees',
-      'Not Aligned',
-      'Paris Pledges',
+      '2 Degrees (High Efficiency)',
+      'Below 2 Degrees (Paper/Aluminium/Cement/Steel)',
       'Below 2 Degrees',
       '2 Degrees',
-      'No or unsuitable disclosure',
       '2 Degrees (Shift-Improve)',
-      'Interational Pledges',
-      '2 Degrees (High Efficiency)',
-      'National Pledges'
+      'Paris Pledges',
+      'International Pledges',
+      'National Pledges',
+      'Not Aligned',
+      'No or unsuitable disclosure'
     ].freeze
 
     OLD_NAMES_MAP = {

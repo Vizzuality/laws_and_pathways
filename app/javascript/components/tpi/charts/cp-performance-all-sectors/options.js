@@ -56,9 +56,6 @@ export function getOptions(data, sectors) {
     credits: {
       enabled: false
     },
-    colors: [
-      '#00C170', '#FFDD49', '#FF9600', '#ED3D4A', '#595B5D'
-    ],
     legend: {
       align: 'left',
       verticalAlign: 'top',
