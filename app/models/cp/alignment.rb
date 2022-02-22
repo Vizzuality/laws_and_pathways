@@ -16,6 +16,7 @@ module CP
       '2 degrees (shift-improve)' => '#FFDD49', # yellow
       '2 degrees' => '#FFDD49', # yellow
       'paris pledges' => '#FF9600', # orange,
+      'national pledges' => '#FF9600', # orange
       'international pledges' => '#FF9600', # orange
       'not aligned' => '#ED3D4A', # red
       'no or unsuitable disclosure' => '#595B5D' # black
