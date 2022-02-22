@@ -14,7 +14,8 @@ export function getOptions(data, sectors) {
     // by cp alignment name and then we will use below colors in the right order
     chart: {
       marginBottom: 80,
-      height: '600px',
+      marginTop: 280,
+      height: 800,
       type: 'column',
       events: {
         render() {
@@ -59,9 +60,11 @@ export function getOptions(data, sectors) {
     legend: {
       align: 'left',
       verticalAlign: 'top',
-      layout: 'horizontal',
+      layout: 'vertical',
       itemMarginTop: 10,
-      margin: 50
+      margin: 50,
+      floating: true,
+      maxHeight: 250
     },
     plotOptions: {
       column: {
@@ -150,16 +153,15 @@ export function getMobileOptions(data, sectors) {
   const descktopOptions = getOptions(data, sectors);
   return merge({}, descktopOptions, {
     chart: {
-      height: 500,
+      height: 700,
       events: {render() {}}
     },
     legend: {
       margin: 35,
       marginLeft: 0,
       padding: 0,
-      alignColumns: false,
       itemStyle: {fontSize: '14px', fontWeight: 'normal'},
-      itemMarginTop: 20
+      itemMarginTop: 10
     },
     labels: {
       style: {fontSize: '10px'}
