@@ -59,6 +59,7 @@ export function getOptions(data, sectors) {
     legend: {
       align: 'left',
       verticalAlign: 'top',
+      layout: 'horizontal',
       itemMarginTop: 10,
       margin: 50
     },
@@ -71,7 +72,7 @@ export function getOptions(data, sectors) {
           useHTML: true,
           formatter() {
             if (this.y <= 0) return null;
-            if (this.series.name !== 'No or unsuitable disclosure in all sectors') return this.y;
+            if (this.series.name !== 'No or unsuitable disclosure') return this.y;
 
             return `
               <span style="color: white;">
@@ -115,7 +116,7 @@ export function getOptions(data, sectors) {
     xAxis: {
       labels: {
         style: {
-          color: '#0A4BDC'
+          color: '#5587F7'
         },
         formatter() {
           const sector = sectors.find(s => s.name === this.value);

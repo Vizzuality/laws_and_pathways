@@ -10,6 +10,13 @@
     display: none;
   }
 
+  .highcharts-axis-labels {
+    a, a:visited, .highcharts-anchor {
+      color: $blue !important;
+      fill: $blue !important;
+    }
+  }
+
   .tooltip {
     font-family: $font-family-regular;
     background-color: $white;
