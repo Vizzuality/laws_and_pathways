@@ -35,22 +35,14 @@ module CP
       'International Pledges',
       'National Pledges',
       'Not Aligned',
-      'No or unsuitable disclosure'
+      'No or unsuitable disclosure',
+      'Not Assessed'
     ].freeze
+    ALLOWED_NAMES = (NAMES - ['Below 2 Degrees (Paper/Aluminium/Cement/Steel)']).freeze
 
     OLD_NAMES_MAP = {
       'No Disclosure' => 'No or unsuitable disclosure'
     }.freeze
-
-    ORDER = [
-      '1.5 degrees',
-      'below 2 degrees',
-      'national pledges',
-      '2 degrees',
-      'paris pledges',
-      'not aligned',
-      'no or unsuitable disclosure'
-    ].freeze
 
     include ActiveModel::Model
 

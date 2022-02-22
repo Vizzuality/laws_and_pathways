@@ -89,7 +89,7 @@
 
               <% if @company_presenter.cp_alignment.present? %>
                 <div class="cp-alignment-container">
-                  <h5>Long-term<br/> alignment in <%= @company.sector.name.downcase == 'electricity utilities' ? '2040' : '2050' %></h5>
+                  <h5>Long-term<br/> alignment in <%= @company.sector.name.downcase == 'electricity utilities' ? '2040-50' : '2050' %></h5>
 
                   <div class="cp-alignment">
                     <% unless @company_presenter.cp_alignment.not_assessed? %>

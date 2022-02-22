@@ -24,11 +24,11 @@ module Api
           .active
           .includes(:latest_cp_assessment, sector: [:cluster])
           .select { |c| c.cp_alignment.present? }
-          .select { |c| c.latest_cp_assessment.publication_date >= Date.new(2021, 10, 1) }
+        # .select { |c| c.latest_cp_assessment.publication_date >= Date.new(2021, 10, 1) }
 
         all_sectors = all_companies.map(&:sector).uniq
         cp_alignment_objects = {}
-        cp_alignment_data = CP::Alignment::NAMES
+        cp_alignment_data = (CP::Alignment::NAMES - ['Not Assessed'])
           .map { |name| {name => all_sectors.map { |s| {s.name => 0} }.reduce(&:merge)} }
           .reduce(&:merge)
 

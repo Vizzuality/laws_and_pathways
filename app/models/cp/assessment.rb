@@ -39,6 +39,12 @@ module CP
     validates :assessment_date, date_after: Date.new(2010, 12, 31)
     validates :publication_date, date_after: Date.new(2010, 12, 31)
 
+    with_options allow_nil: true, allow_blank: true, inclusion: {in: CP::Alignment::ALLOWED_NAMES} do
+      validates :cp_alignment
+      validates :cp_alignment_2025
+      validates :cp_alignment_2035
+    end
+
     def unit
       company.sector.cp_unit_valid_for_date(publication_date)&.unit
     end

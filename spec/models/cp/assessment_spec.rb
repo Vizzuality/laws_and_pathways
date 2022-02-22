@@ -50,6 +50,28 @@ RSpec.describe CP::Assessment, type: :model do
     expect(subject).to have(1).errors_on(:last_reported_year)
   end
 
+  describe 'cp alignment' do
+    it 'should be invalid if cp alignment do not match list' do
+      subject.cp_alignment = 'do not match'
+      expect(subject).to have(1).errors_on(:cp_alignment)
+    end
+
+    it 'should be valid if cp alignment is blank' do
+      subject.cp_alignment = nil
+      expect(subject).to be_valid
+    end
+
+    it 'should be valid if cp alignment is nil' do
+      subject.cp_alignment = nil
+      expect(subject).to be_valid
+    end
+
+    it 'should be valid if cp alignment is on the list' do
+      subject.cp_alignment = 'Below 2 Degrees'
+      expect(subject).to be_valid
+    end
+  end
+
   describe 'cp alignment year' do
     before do
       # this is not taken, it's too old
