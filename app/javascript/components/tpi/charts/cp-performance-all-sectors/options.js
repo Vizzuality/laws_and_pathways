@@ -59,6 +59,7 @@ export function getOptions(data, sectors) {
     legend: {
       align: 'left',
       verticalAlign: 'top',
+      itemMarginTop: 10,
       margin: 50
     },
     plotOptions: {
