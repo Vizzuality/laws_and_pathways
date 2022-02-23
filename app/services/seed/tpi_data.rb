@@ -33,6 +33,10 @@ module Seed
         run_importer CSVImport::MQAssessments.new(seed_file('mq-assessments-M2.csv'))
         run_importer CSVImport::MQAssessments.new(seed_file('mq-assessments-M3.csv'))
       end
+
+      TimedLogger.log('Create Publications') do
+        create_publications
+      end
     end
 
     def import_sector_clusters
@@ -59,6 +63,36 @@ module Seed
       end
     end
 
+    def create_publications
+      Publication.create!(
+        title: 'Carbon Performance assessment of airlines: note on methodology',
+        publication_date: '2022-02-14',
+        short_description: 'Some short description',
+        keywords: keywords(%w[Airlines Methodology]),
+        file: attachable_file('files/test.pdf'),
+        image: attachable_file('files/airlines2022.jpg'),
+        created_by: admin_user
+      )
+      Publication.create!(
+        title: 'Carbon performance assessment of international shipping: note on methodology',
+        publication_date: '2022-02-10',
+        short_description: 'Some short description',
+        keywords: keywords(%w[Shipping Methodology]),
+        file: attachable_file('files/test.pdf'),
+        image: attachable_file('files/shipping2022.jpg'),
+        created_by: admin_user
+      )
+      Publication.create!(
+        title: 'Carbon Performance assessment of the automobile manufacturers: note on methodology 2020',
+        publication_date: '2022-02-12',
+        short_description: 'Some short description',
+        keywords: keywords(%w[Autos Methodology]),
+        file: attachable_file('files/test.pdf'),
+        image: attachable_file('files/autos2022.jpg'),
+        created_by: admin_user
+      )
+    end
+
     private
 
     def run_importer(importer)
@@ -66,8 +100,24 @@ module Seed
       puts importer.import_results
     end
 
+    def keywords(array)
+      array.map { |keyword| Keyword.find_or_create_by!(name: keyword) }
+    end
+
+    def admin_user
+      @admin_user ||= AdminUser.find_by(email: 'admin@example.com')
+    end
+
     def seed_file(filename)
       File.open(Rails.root.join('db', 'seeds', 'tpi', filename), 'r')
+    end
+
+    def attachable_file(filename)
+      {
+        io: seed_file(filename),
+        filename: File.basename(filename),
+        content_type: Marcel::MimeType.for(name: filename)
+      }
     end
 
     def import_sectors
