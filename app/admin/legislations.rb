@@ -10,9 +10,9 @@ ActiveAdmin.register Legislation do
   permit_params :title, :description, :parent_id,
                 :geography_id, :law_id, :legislation_type,
                 :created_by_id, :updated_by_id, :visibility_status,
-                :natural_hazards_string, :keywords_string, :responses_string,
                 events_attributes: permit_params_for(:events),
                 documents_attributes: permit_params_for(:documents),
+                natural_hazard_ids: [], keyword_ids: [], response_ids: [],
                 framework_ids: [], document_type_ids: [], instrument_ids: [],
                 governance_ids: [], laws_sector_ids: []
 
@@ -23,6 +23,8 @@ ActiveAdmin.register Legislation do
          as: :select,
          collection: proc { array_to_select_collection(Legislation::LEGISLATION_TYPES) }
   filter :geography
+  filter :created_at
+  filter :updated_at
   filter :frameworks,
          as: :check_boxes,
          collection: proc { Framework.all }
@@ -106,19 +108,23 @@ ActiveAdmin.register Legislation do
 
   csv do
     column :id
-    column 'Law Id', humanize_name: false, &:law_id
     column :title
+    column :link, &:preview_url
     column(:legislation_type) { |l| l.legislation_type.downcase }
     column :description
     column(:parent) { |l| l.parent&.title }
+    column 'Parent Id', humanize_name: false, &:parent_id
     column(:geography) { |l| l.geography.name }
     column(:geography_iso) { |l| l.geography.iso }
-    column(:sector) { |l| l.laws_sectors.map(&:name).join(',') }
-    column :frameworks, &:frameworks_string
-    column :responses, &:responses_string
-    column :document_types, &:document_types_string
-    column :keywords, &:keywords_string
-    column :natural_hazards, &:natural_hazards_string
+    column(:sectors) { |l| l.laws_sectors.map(&:name).join(Rails.application.config.csv_options[:entity_sep]) }
+    column :frameworks, &:frameworks_csv
+    column :responses, &:responses_csv
+    column :keywords, &:keywords_csv
+    column :natural_hazards, &:natural_hazards_csv
+    column :document_types, &:document_types_csv
+    column :instruments, &:instruments_csv
+    column :governances, &:governances_csv
+    column(:litigation_ids) { |l| l.litigation_ids.join(Rails.application.config.csv_options[:entity_sep]) }
     column :visibility_status
   end
 
@@ -168,16 +174,31 @@ ActiveAdmin.register Legislation do
     def scoped_collection
       super.includes(
         :geography,
-        :parent,
-        :laws_sectors,
         :frameworks,
+        :document_types,
+        :created_by,
+        :updated_by,
+        *csv_includes
+      )
+    end
+
+    def csv_includes
+      return [] unless csv_format?
+
+      [
+        :governances,
+        :parent,
         :responses,
         :keywords,
         :natural_hazards,
-        :document_types,
-        :created_by,
-        :updated_by
-      )
+        :laws_sectors,
+        :litigations,
+        instruments: [:instrument_type]
+      ]
+    end
+
+    def csv_format?
+      request[:format] == 'csv'
     end
 
     def apply_filtering(chain)

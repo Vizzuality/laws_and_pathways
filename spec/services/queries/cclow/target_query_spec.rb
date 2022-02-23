@@ -1,10 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Queries::CCLOW::TargetQuery do
-  before(:all) do
-    DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.start
-
+  before_all do
     @geography1 = create(:geography, region: 'East Asia & Pacific')
     @geography2 = create(:geography, region: 'Europe & Central Asia')
     @geography3 = create(:geography, region: 'Europe & Central Asia')
@@ -56,10 +53,6 @@ RSpec.describe Queries::CCLOW::TargetQuery do
 
     # It shouldn't show, so total is 4 not 5 at max!
     @unpublished_target = create(:target, :draft)
-  end
-
-  after(:all) do
-    DatabaseCleaner.clean
   end
 
   subject { described_class }

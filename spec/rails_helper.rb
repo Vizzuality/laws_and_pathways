@@ -6,13 +6,14 @@ require File.expand_path('../config/environment', __dir__)
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 
 require 'rspec/rails'
+require 'super_diff/rspec-rails'
 require 'cancan/matchers'
 
+# workaround to use factory defaults in let_it_be https://github.com/test-prof/test-prof/issues/125#issuecomment-471706752
+require 'test_prof/factory_default'
+TestProf::FactoryDefault.init
+require 'test_prof/recipes/rspec/before_all'
 require 'test_prof/recipes/rspec/let_it_be'
-require 'super_diff/rspec-rails'
-
-require 'rake'
-Rails.application.load_tasks
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -46,11 +47,12 @@ FactoryBot::SyntaxRunner.class_eval do
 end
 
 RSpec.configure do |config|
-  config.snapshot_dir = 'spec/snapshots'
+  config.request_snapshots_dir = 'spec/fixtures/snapshots'
 
-  config.include Devise::Test::ControllerHelpers, type: :controller
-  # config.include Rails.application.routes.url_helpers, type: :controller
   config.include FactoryBot::Syntax::Methods
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include ControllerHelpers, type: :controller
+  # config.include Rails.application.routes.url_helpers, type: :controller
   config.include CapybaraHelpers, type: :system
 
   config.render_views
@@ -85,6 +87,22 @@ RSpec.configure do |config|
     ActiveSupport::CurrentAttributes.reset_all
   end
 
+  config.after do
+    # Clear ActiveJob jobs
+    if defined?(ActiveJob) && ActiveJob::QueueAdapters::TestAdapter == ActiveJob::Base.queue_adapter
+      ActiveJob::Base.queue_adapter.enqueued_jobs.clear
+      ActiveJob::Base.queue_adapter.performed_jobs.clear
+    end
+  end
+
+  config.after(:each) do |ex|
+    TestProf::FactoryDefault.reset unless ex.metadata[:factory_default] == :keep
+  end
+
+  config.after(:all) do
+    TestProf::FactoryDefault.reset
+  end
+
   config.before(:each, type: :system) do
     driven_by :selenium, using: :headless_chrome, screen_size: [1400, 800]
   end
@@ -98,6 +116,8 @@ RSpec.configure do |config|
   end
 
   config.before(:all, type: :system) do
+    require 'rake'
+    Rails.application.load_tasks if Rake::Task.tasks.empty?
     Rake::Task['test:db_load'].execute
   end
 

@@ -9,11 +9,14 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  content_type :string
+#  position     :integer
 #
 
 class Content < ApplicationRecord
+  acts_as_list scope: [:page_id]
+
   belongs_to :page
-  has_many :images, dependent: :destroy
+  has_many :images, dependent: :destroy, inverse_of: :content
 
   CONTENT_TYPES = %w[regular text_description logo_description].freeze
 

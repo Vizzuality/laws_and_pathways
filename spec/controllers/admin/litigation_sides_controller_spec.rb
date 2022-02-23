@@ -82,14 +82,11 @@ RSpec.describe Admin::LitigationSidesController, type: :controller do
 
       # only header expected
       expected_columns = [
-        'Id', 'Litigation id', 'Connected entity type', 'Connected entity id',
+        'Id', 'Litigation id', 'Litigation title',
+        'Connected entity type', 'Connected entity id', 'Connected entity name',
         'Name', 'Side type', 'Party type'
       ]
       expect(csv.to_a).to eq([expected_columns])
     end
-  end
-
-  def response_as_csv
-    CSV.parse(response.body, headers: true)
   end
 end

@@ -41,11 +41,13 @@ module Queries
         [:a_party_type, :b_party_type, :c_party_type].each do |side_type|
           next unless params[side_type].present?
 
-          sql += <<-SQL
+          raw_sql = <<-SQL
             INNER JOIN litigation_sides AS #{side_type}
             ON #{side_type}.litigation_id = litigations.id AND #{side_type}.side_type = '#{side_type.to_s.split('_')[0]}'
-            AND #{side_type}.party_type IN (#{params[side_type].map { |party_type| "'#{party_type}'" }.join(', ')})
+            AND #{side_type}.party_type IN (?)
           SQL
+
+          sql += ActiveRecord::Base.sanitize_sql([raw_sql, params[side_type]])
         end
 
         sql.present? ? scope.joins(sql) : scope
@@ -57,11 +59,13 @@ module Queries
         [:side_a, :side_b, :side_c].each do |side|
           next unless params[side].present?
 
-          sql += <<-SQL
+          raw_sql = <<-SQL
             INNER JOIN litigation_sides AS #{side}
             ON #{side}.litigation_id = litigations.id AND #{side}.side_type = '#{side.to_s.split('_')[1]}'
-            AND #{side}.name IN (#{params[side].map { |a| "'#{a}'" }.join(', ')})
+            AND #{side}.name IN (?)
           SQL
+
+          sql += ActiveRecord::Base.sanitize_sql([raw_sql, params[side]])
         end
 
         sql.present? ? scope.joins(sql) : scope

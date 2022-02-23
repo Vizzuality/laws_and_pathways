@@ -9,9 +9,6 @@
   <url>
     <loc><%= "#{@host}/newsletter" %></loc>
   </url>
-  <url>
-    <loc><%= "#{@host}/register" %></loc>
-  </url>
   <% TPIPage.all.each do |page| %>
     <url>
       <loc><%= "#{@host}/#{page.slug}" %></loc>

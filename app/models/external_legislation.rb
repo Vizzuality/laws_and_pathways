@@ -11,7 +11,9 @@
 #
 
 class ExternalLegislation < ApplicationRecord
-  has_and_belongs_to_many :litigations
+  include DirtyAssociations
+
+  has_and_belongs_to_many :litigations, after_add: :mark_changed, after_remove: :mark_changed
   belongs_to :geography
 
   validates_presence_of :name

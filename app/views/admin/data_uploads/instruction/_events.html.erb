@@ -1,0 +1,150 @@
+<h3>Partial updates limitations</h3>
+
+<div class="well">
+  Both "Eventable type" and "Eventable id" columns must be present if their values are changed <br/>
+</div>
+
+<h3>Column descriptions</h3>
+
+<%= render partial: 'admin/data_uploads/instruction/column_descriptions_notes' %>
+
+<table class="index_table">
+  <thead>
+    <th>Column Name</th>
+    <th>Description</th>
+    <th>Example</th>
+    <th>Requirements</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        Id
+      </td>
+      <td>
+        Record identifier, type: integer
+      </td>
+      <td>
+        10
+      </td>
+      <td>
+        EMPTY when ADD,
+        existing on UPDATE
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Eventable type
+      </td>
+      <td>
+        Type of entity to which event belongs. One of: Geography, Legislation, Litigation, Target
+      </td>
+      <td>
+        Geography
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Eventable Id
+      </td>
+      <td>
+        Id of entity to which event belongs. Used along with eventable type. For example, when eventable type is "Geography" and id is "10", this event is for Geography with Id: 10
+      </td>
+      <td>
+        10
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Eventable Name
+      </td>
+      <td>
+        Name of eventable depends what is the type, it could be name of country, climate target, law or policy, or litigation
+      </td>
+      <td>
+        Poland
+      </td>
+      <td>
+        Extra column, will be omitted if present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Event type
+      </td>
+      <td>
+        Type of the event. Allowed value depends of eventable type, different event types are allowed for different models.
+        <br/><br/>
+        For Geography event: <%= Geography::EVENT_TYPES.map(&:titleize).join(', ')  %><br/>
+        For Litigation event: <%= Litigation::EVENT_TYPES.map(&:titleize).join(', ')  %><br/>
+        For Legislation event: <%= Legislation::EVENT_TYPES.map(&:titleize).join(', ')  %><br/>
+      </td>
+      <td>
+        Net Zero Pledge
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Title
+      </td>
+      <td>
+        Event title, type: string
+      </td>
+      <td>
+        Pledge for net zero by 2040
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Description
+      </td>
+      <td>
+        Event description
+      </td>
+      <td>
+        Some additional description
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Date
+      </td>
+      <td>
+        Date when event occurred, Allowed date formats: DD/MM/YYYY, YYYY-MM-DD
+      </td>
+      <td>
+        30/12/2020
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Url
+      </td>
+      <td>
+        Link to the external website with event description
+      </td>
+      <td>
+        https://example.com
+      </td>
+      <td>
+        valid URL
+      </td>
+    </tr>
+  </tbody>
+</table>

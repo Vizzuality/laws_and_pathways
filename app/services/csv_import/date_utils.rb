@@ -1,10 +1,9 @@
 module CSVImport
   class DateUtils
+    TWO_DIGIT_YEAR_CUTOFF = 2040
+    DateParseError = Class.new(StandardError)
+
     class << self
-      TWO_DIGIT_YEAR_CUTOFF = 2040
-
-      DateParseError = Class.new(StandardError)
-
       def safe_parse!(date, expected_date_formats)
         return if date.nil?
 

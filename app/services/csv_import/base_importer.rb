@@ -1,11 +1,14 @@
+require "#{Rails.root}/lib/unicode_fixer"
+
 module CSVImport
   class BaseImporter
     include ActiveModel::Model
 
     attr_reader :file, :import_results
-    attr_accessor :override_id, :rollback_on_error
+    attr_accessor :override_id, :rollback_on_error, :allow_tags_adding
 
     validate :check_if_current_user_authorized
+    validate :check_required_headers
 
     # @param file [File]
     # @param options [Hash]
@@ -15,6 +18,7 @@ module CSVImport
       @file = file
       @override_id = options.fetch(:override_id, false)
       @rollback_on_error = options.fetch(:rollback_on_error, false)
+      @allow_tags_adding = options.fetch(:allow_tags_adding, false)
     end
 
     def call
@@ -66,8 +70,9 @@ module CSVImport
     def csv_converters
       hard_space_converter = ->(f) { f&.gsub(160.chr('UTF-8'), 32.chr) }
       strip_converter = ->(field, _) { field&.strip }
+      unicode_fixer = ->(field) { UnicodeFixer.fix_unicode_characters(field) }
 
-      [hard_space_converter, strip_converter]
+      [hard_space_converter, strip_converter, unicode_fixer]
     end
 
     private
@@ -92,6 +97,16 @@ module CSVImport
       return if current_user.can?(:create, resource_klass) && current_user.can?(:update, resource_klass)
 
       errors.add(:base, "User not authorized to import #{resource_klass}")
+    end
+
+    def check_required_headers
+      (required_headers - csv.headers).each do |header|
+        errors.add(:base, "CSV missing header: #{header.to_s.humanize(keep_id_suffix: true)}")
+      end
+    end
+
+    def required_headers
+      []
     end
 
     def current_user
@@ -128,7 +143,7 @@ module CSVImport
     end
 
     def encoded_file_content
-      File.read(file).force_encoding('UTF-8')
+      File.read(file, encoding: 'bom|utf-8').force_encoding('UTF-8')
     end
 
     def import_each_csv_row(csv)
@@ -143,7 +158,7 @@ module CSVImport
       yield
     rescue ActiveRecord::RecordInvalid => e
       handle_row_error(row_index, e, "for data: #{e.record.attributes}")
-    rescue ActiveRecord::RecordNotFound, ArgumentError => e
+    rescue ActiveRecord::RecordNotFound, ArgumentError, CSVImport::DateUtils::DateParseError => e
       handle_row_error(row_index, e)
     rescue CSVImport::MissingHeader
       raise

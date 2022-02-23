@@ -1,13 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe Admin::LitigationsController, type: :controller do
+RSpec.describe Admin::LitigationsController, type: :controller, factory_default: :keep do
   before(:each) { sign_in admin }
 
+  let_it_be(:geography) { create_default(:geography) }
+
   let(:admin) { create(:admin_user) }
-  let_it_be(:litigation) { create(:litigation, :with_sides) }
+  let(:litigation) { create(:litigation, :with_sides) }
   let(:side_geography) { create(:geography) }
   let(:side_company) { create(:company) }
-  let(:geography) { create(:geography) }
   let(:sector) { create(:laws_sector) }
 
   describe 'GET index' do
@@ -134,7 +135,7 @@ RSpec.describe Admin::LitigationsController, type: :controller do
   end
 
   describe 'PATCH update' do
-    let!(:litigation_to_update) { create(:litigation, :draft, :with_sides) }
+    let!(:litigation_to_update) { create(:litigation, :draft, created_by: admin) }
 
     context 'with valid params' do
       let(:valid_update_params) { {title: 'title was updated', visibility_status: 'published'} }
@@ -175,9 +176,7 @@ RSpec.describe Admin::LitigationsController, type: :controller do
       end
 
       context 'as editor' do
-        let(:editor) { create(:admin_user, :editor_laws) }
-
-        before(:each) { sign_in editor }
+        let(:admin) { create(:admin_user, :editor_laws) }
 
         it 'cannot publish' do
           expect { subject }.not_to change(litigation_to_update, :visibility_status)
@@ -194,6 +193,8 @@ RSpec.describe Admin::LitigationsController, type: :controller do
   end
 
   describe 'DELETE destroy' do
+    render_views false
+
     let!(:litigation) { create(:litigation, discarded_at: nil) }
     subject { delete :destroy, params: {id: litigation.id} }
 

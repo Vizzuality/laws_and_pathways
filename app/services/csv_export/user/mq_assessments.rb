@@ -15,7 +15,8 @@ module CSVExport
         question_headers = @assessments.first.questions.map(&:csv_column_name)
         headers.concat(question_headers)
 
-        CSV.generate do |csv|
+        # BOM UTF-8
+        CSV.generate("\xEF\xBB\xBF") do |csv|
           csv << headers
 
           @assessments.each do |assessment|

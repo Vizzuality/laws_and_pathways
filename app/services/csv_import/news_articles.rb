@@ -1,6 +1,6 @@
 module CSVImport
   class NewsArticles < BaseImporter
-    include UploaderHelpers
+    include Helpers
 
     def import
       import_each_csv_row(csv) do |row|

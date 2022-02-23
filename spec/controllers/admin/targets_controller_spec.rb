@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe Admin::TargetsController, type: :controller do
+RSpec.describe Admin::TargetsController, type: :controller, factory_default: :keep do
   let(:admin) { create(:admin_user) }
+  let_it_be(:geography) { create_default(:geography) }
   let_it_be(:target) { create(:target, year: 2030) }
   let_it_be(:target2) { create(:target, year: 2040) }
   let_it_be(:target3) { create(:target, year: 2050) }
   let(:sector) { create(:laws_sector) }
-  let(:geography) { create(:geography) }
   let(:legislations) { create_list(:legislation, 2) }
 
   before { sign_in admin }
@@ -30,7 +30,7 @@ RSpec.describe Admin::TargetsController, type: :controller do
       csv = response_as_csv
 
       expect(csv.by_col[0].sort).to eq([target.id, target2.id, target3.id].map(&:to_s).sort)
-      expect(csv.by_col[4].sort).to eq(%w[2030 2040 2050])
+      expect(csv.by_col[5].sort).to eq(%w[2030 2040 2050])
     end
   end
 
@@ -164,6 +164,8 @@ RSpec.describe Admin::TargetsController, type: :controller do
   end
 
   describe 'DELETE destroy' do
+    render_views false
+
     let!(:target) { create(:target, discarded_at: nil) }
 
     context 'with valid params' do
@@ -294,9 +296,5 @@ RSpec.describe Admin::TargetsController, type: :controller do
         expect(flash[:notice]).to match('Successfully published 2 Targets')
       end
     end
-  end
-
-  def response_as_csv
-    CSV.parse(response.body, headers: true)
   end
 end

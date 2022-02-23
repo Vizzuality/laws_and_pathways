@@ -1,0 +1,44 @@
+[
+  {
+    "Type": "base_year_target",
+    "Description": "Super target",
+    "Is GHG Target?": "No",
+    "Year": "2023",
+    "Base Year Period": "2020",
+    "Is Single Year Target?": "Yes",
+    "Source": "framework",
+    "Geography": "Poland",
+    "Geography ISO": "POL",
+    "Sector": "Airlines",
+    "Scopes": "scope1, scope2",
+    "Events": "02/03/2018|Some target was set|Description of target event|https://test.com;03/04/2018|Some target was set|Description of target event|https://test.com"
+  },
+  {
+    "Type": "base_year_target",
+    "Description": "Example Description",
+    "Is GHG Target?": "No",
+    "Year": "2023",
+    "Base Year Period": null,
+    "Is Single Year Target?": "Yes",
+    "Source": null,
+    "Geography": "Poland",
+    "Geography ISO": "POL",
+    "Sector": "Airlines",
+    "Scopes": "",
+    "Events": "02/03/2019|Some target was set|Description of target event|https://test.com;01/05/2019|Some target was set|Description of target event|https://test.com"
+  },
+  {
+    "Type": "base_year_target",
+    "Description": "Example",
+    "Is GHG Target?": "No",
+    "Year": "2023",
+    "Base Year Period": null,
+    "Is Single Year Target?": "Yes",
+    "Source": null,
+    "Geography": "Poland",
+    "Geography ISO": "POL",
+    "Sector": "Airlines",
+    "Scopes": "",
+    "Events": "03/03/2018|Some target was set|Description of target event|https://test.com;01/05/2018|Some target was set|Description of target event|https://test.com"
+  }
+]

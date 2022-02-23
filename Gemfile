@@ -16,7 +16,8 @@ gem 'rubyzip'
 gem 'turbolinks', '~> 5'
 gem 'bootsnap', '>= 1.4.2', require: false
 
-gem 'activeadmin'
+gem 'acts_as_list'
+gem 'activeadmin', '2.9.0' # TODO: update when csv export is fixed, check bom options
 gem 'activeadmin_addons'
 gem 'devise', '>= 4.7.1'
 gem 'cancancan'
@@ -55,8 +56,9 @@ group :test do
   gem 'capybara'
   gem 'rails-controller-testing'
   gem 'rspec-collection_matchers'
-  gem 'rspec-rails', '~> 4.0.rc'
-  gem 'rspec-snapshot'
+  gem 'rspec-rails', '~> 4.1.0'
+  gem 'rspec-retry'
+  gem 'rspec-request_snapshot'
   gem 'selenium-webdriver'
   gem 'super_diff'
   gem 'test-prof'

@@ -14,7 +14,8 @@ module CSVExport
                    'Base Year Period', 'Is Single Year Target?', 'Source',
                    'Geography', 'Geography ISO', 'Sector', 'Scopes', 'Events']
 
-        CSV.generate do |csv|
+        # BOM UTF-8
+        CSV.generate("\xEF\xBB\xBF") do |csv|
           csv << headers
 
           targets.each do |target|

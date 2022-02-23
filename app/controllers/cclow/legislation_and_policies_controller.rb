@@ -13,7 +13,7 @@ module CCLOW
 
       respond_to do |format|
         format.html do
-          render component: 'pages/cclow/LegislationAndPolicies', props: {
+          render component: 'pages/LegislationAndPolicies', props: {
             min_law_passed_year: Legislation.published.passed.minimum('events.date')&.year,
             eu_members: ::Geography.all.select(:id, :iso).select(&:eu_member?).map(&:id),
             geo_filter_options: region_geography_options,

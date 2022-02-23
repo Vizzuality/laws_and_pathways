@@ -1,6 +1,7 @@
 ActiveAdmin.register InstrumentType do
   menu parent: 'Laws', priority: 7
   config.batch_actions = false
+  config.sort_order = 'name_asc'
 
   permit_params :name
 
@@ -9,7 +10,7 @@ ActiveAdmin.register InstrumentType do
   filter :name_contains, label: 'Name'
 
   index do
-    column :name, :name_link
+    column :name, sortable: :name, &:name_link
 
     actions
   end
@@ -17,6 +18,7 @@ ActiveAdmin.register InstrumentType do
   show do
     attributes_table do
       row :name
+      list_row 'Instruments', :instrument_links
     end
 
     active_admin_comments

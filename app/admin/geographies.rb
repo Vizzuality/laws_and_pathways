@@ -12,7 +12,7 @@ ActiveAdmin.register Geography do
   permit_params :name, :iso, :region, :federal, :federal_details,
                 :legislative_process, :geography_type,
                 :visibility_status, :percent_global_emissions,
-                :climate_risk_index, :wb_income_group,
+                :climate_risk_index, :wb_income_group, :external_litigations_count,
                 :created_by_id, :updated_by_id,
                 political_group_ids: [],
                 events_attributes: permit_params_for(:events)
@@ -49,6 +49,7 @@ ActiveAdmin.register Geography do
           row 'Percentage of Global Emissions', &:percent_global_emissions
           row 'Climate Risk Index', &:climate_risk_index
           row 'World Bank Income Group', &:wb_income_group
+          row 'External Litigation Cases Count', &:external_litigations_count
           row :updated_at
           row :updated_by
           row :created_at
@@ -81,7 +82,7 @@ ActiveAdmin.register Geography do
     column :legislative_process
     column :federal
     column :federal_details
-    column :political_groups, &:political_groups_string
+    column :political_groups, &:political_groups_csv
     column :percent_global_emissions
     column :climate_risk_index
     column :wb_income_group

@@ -1,0 +1,204 @@
+<h3>Import events for a new litigation</h3>
+
+<p>
+  To add or update events for litigation you first have to know the ID of litigation and use Events importer.
+</p>
+
+<p>
+  When adding new litigations with events the good practice would be to first create litigations in draft state.
+  After the upload, you can download newly created litigations filtering by draft state and created date.
+  You will have Ids that you can use in Events CSV file. Eventable type must be set to "Litigation", Eventable Id - those
+  would be downloaded ids, and you can add an extra column "Eventable Title" with litigation title to know for which
+  litigation you are creating a new event. Any extra columns not mentioned in column descriptions will be ignored.
+</p>
+
+<h3>Import litigation sides for a new litigation</h3>
+
+<p>
+  To add or update litigation sides for litigation you first have to know the ID of litigation, and use LitigationSide importer.
+</p>
+
+<p>
+  When adding new litigations with litigation sides the good practice would be to first create litigations in draft state.
+  After the upload, you can download newly created litigations filtering by draft state and created date.
+  You will have Ids that you can use in LitigationSides CSV file. "Litigation Id" - those
+  would be downloaded ids, and you can add extra column "Litigation Title" with litigation title to know for which
+  litigation you are creating a new side entry. Any extra column not mentioned in column descriptions will be ignored.
+</p>
+
+<h3>Column descriptions</h3>
+
+<%= render partial: 'admin/data_uploads/instruction/column_descriptions_notes' %>
+
+<table class="index_table">
+  <thead>
+    <th>Column Name</th>
+    <th>Description</th>
+    <th>Example</th>
+    <th>Requirements</th>
+  </thead>
+  <tbody>
+    <%= render partial: 'admin/data_uploads/instruction/column_id' %>
+    <tr>
+      <td>
+        Title
+      </td>
+      <td>
+        Litigation title, type: string
+      </td>
+      <td>
+        ClientEarth v. European Investment Bank
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Document type
+      </td>
+      <td>
+        Type of litigation document, type: string, one of: <%= Litigation::DOCUMENT_TYPES.map(&:humanize).join(', ')  %>
+      </td>
+      <td>
+        Case
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Geography
+      </td>
+      <td>
+        Name of legislation geography
+      </td>
+      <td>
+        European Union
+      </td>
+      <td>
+        Extra column, will be omitted if present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Geography ISO
+      </td>
+      <td>
+        Geography ISO 3 code
+      </td>
+      <td>
+        EUR
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Jurisdiction
+      </td>
+      <td>
+        Name of jurisdiction, type: string
+      </td>
+      <td>
+        High Court of Justice, Queen's Bench Division
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Citation reference number
+      </td>
+      <td>
+        Citation reference number, type: string
+      </td>
+      <td>
+        ICSID Case No. ARB/21/4
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Summary
+      </td>
+      <td>
+        Summary text for litigation. Can contain HTML tags.
+      </td>
+      <td>
+        Summary example text
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Sectors
+      </td>
+      <td>
+        List of sectors delimited by semicolons (;)
+      </td>
+      <td>
+        Residential and Commercial;Energy;LULUCF;Transportation;Urban;Water
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Responses
+      </td>
+      <td>
+        List of responses delimited by semicolons (;)
+      </td>
+      <td>
+        Adaptation;Disaster Risk Management
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Keywords
+      </td>
+      <td>
+        List of keywords delimited by semicolons (;)
+      </td>
+      <td>
+        Adaptation;Industry;Institutions / Administrative Arrangements;Buildings
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        At issue
+      </td>
+      <td>
+        At issue, type: string, can contain HTML tags
+      </td>
+      <td>
+        <div>Plaintiffs sought to block thermoelectric plant</div>
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Legislation ids
+      </td>
+      <td>
+        List of legislation ids connected to this litigation delimited by semicolons (;)
+      </td>
+      <td>
+        10;33;22
+      </td>
+      <td>
+      </td>
+    </tr>
+    <%= render partial: 'admin/data_uploads/instruction/column_visibility_status' %>
+  </tbody>
+</table>

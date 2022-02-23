@@ -40,6 +40,7 @@ class LegislationDecorator < Draper::Decorator
       h.link_to document.name,
                 document.url,
                 target: '_blank',
+                rel: 'noopener noreferrer',
                 title: document.external? ? document.url : nil
     end
   end
@@ -55,10 +56,12 @@ class LegislationDecorator < Draper::Decorator
 
   def instrument_links
     model.instruments.map do |instrument|
-      h.link_to instrument.name,
+      title = "[#{instrument.instrument_type.name}] #{instrument.name}"
+
+      h.link_to title,
                 h.admin_instrument_path(instrument),
                 target: '_blank',
-                title: instrument.name
+                title: title
     end
   end
 
@@ -90,6 +93,18 @@ class LegislationDecorator < Draper::Decorator
     h.cclow_geography_policy_url(
       model.geography.slug, model.slug, {host: Rails.configuration.try(:cclow_domain)}.compact
     )
+  end
+
+  def instruments_csv
+    model.instruments.map do |instrument|
+      [instrument.name, instrument.instrument_type.name].join('|')
+    end.join(';')
+  end
+
+  def governances_csv
+    model.governances.map do |governance|
+      [governance.name, governance.governance_type.name].join('|')
+    end.join(';')
   end
 
   def as_json(_ = {})

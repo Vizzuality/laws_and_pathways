@@ -17,18 +17,19 @@
 #  updated_by_id             :bigint
 #  discarded_at              :datetime
 #  jurisdiction              :string
+#  tsv                       :tsvector
 #
 
 FactoryBot.define do
   factory :litigation do
     draft
 
-    association :geography, factory: :geography
+    geography { association :geography, created_by: created_by }
     jurisdiction { 'Court in Country' }
-    laws_sectors { |a| [a.association(:laws_sector)] }
+    # laws_sectors { |a| [a.association(:laws_sector)] }
 
     association :created_by, factory: :admin_user
-    association :updated_by, factory: :admin_user
+    updated_by { created_by }
 
     sequence(:title) { |n| 'Litigation title -' + ('AAAA'..'ZZZZ').to_a[n] }
     document_type { 'administrative_case' }

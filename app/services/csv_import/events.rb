@@ -1,11 +1,18 @@
 module CSVImport
   class Events < BaseImporter
-    include UploaderHelpers
+    include Helpers
 
     def import
       import_each_csv_row(csv) do |row|
         event = prepare_event(row)
-        event.assign_attributes(event_attributes(row))
+
+        event.eventable_id = row[:eventable_id].to_i if row.header?(:eventable_id)
+        event.eventable_type = row[:eventable_type].constantize if row.header?(:eventable_type)
+        event.event_type = row[:event_type]&.downcase&.gsub(' ', '_') if row.header?(:event_type)
+        event.title = (row[:title].presence || row[:event_type]) if row.header?(:title)
+        event.description = row[:description].presence if row.header?(:description)
+        event.date = event_date(row) if row.header?(:date)
+        event.url = row[:url].presence if row.header?(:url)
 
         was_new_record = event.new_record?
         any_changes = event.changed?
@@ -22,31 +29,21 @@ module CSVImport
       Event
     end
 
+    def required_headers
+      headers = [:id]
+      headers << :eventable_type if csv.headers.include?(:eventable_id)
+      headers << :eventable_id if csv.headers.include?(:eventable_type)
+      headers
+    end
+
     def prepare_event(row)
       find_record_by(:id, row) ||
         Event.find_or_initialize_by(
-          eventable_id: row[:eventable],
+          eventable_id: row[:eventable_id],
           eventable_type: row[:eventable_type],
           event_type: row[:event_type]&.downcase&.gsub(' ', '_'),
           title: row[:title]
         )
-    end
-
-    def event_attributes(row)
-      eventable_id = if row[:eventable_type] == 'Geography'
-                       geographies[row[:eventable]]&.id
-                     else
-                       row[:eventable].to_i
-                     end
-      {
-        eventable_id: eventable_id,
-        eventable_type: row[:eventable_type].constantize,
-        event_type: row[:event_type]&.downcase&.gsub(' ', '_'),
-        title: (row[:title].presence || row[:event_type]),
-        description: row[:description],
-        date: event_date(row),
-        url: row[:url]
-      }
     end
 
     def event_date(row)

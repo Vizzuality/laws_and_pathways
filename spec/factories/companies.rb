@@ -26,7 +26,7 @@ FactoryBot.define do
     draft
 
     association :geography
-    association :headquarters_geography, factory: :geography
+    headquarters_geography { geography }
     association :sector, factory: :tpi_sector
 
     sequence(:name) { |n| 'Company name -' + ('AAAA'..'ZZZZ').to_a[n] }

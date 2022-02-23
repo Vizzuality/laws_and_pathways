@@ -14,6 +14,7 @@
 module CP
   class Benchmark < ApplicationRecord
     include HasEmissions
+    include TPICache
 
     belongs_to :sector, class_name: 'TPISector', foreign_key: 'sector_id'
 
@@ -22,8 +23,18 @@ module CP
 
     validates_presence_of :release_date, :scenario
 
+    def benchmark_id
+      [sector.name, release_date].join('_')
+    end
+
     def unit
       sector.cp_unit_valid_for_date(release_date)&.unit
+    end
+
+    def for_alignment?(alignment)
+      return false unless alignment.present?
+
+      CP::Alignment.new(name: scenario).standarized_name == CP::Alignment.new(name: alignment).standarized_name
     end
   end
 end

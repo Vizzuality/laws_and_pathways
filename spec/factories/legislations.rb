@@ -16,6 +16,7 @@
 #  discarded_at      :datetime
 #  legislation_type  :string           not null
 #  parent_id         :bigint
+#  tsv               :tsvector
 #
 
 FactoryBot.define do
@@ -29,7 +30,7 @@ FactoryBot.define do
     discarded_at { nil }
 
     association :created_by, factory: :admin_user
-    association :updated_by, factory: :admin_user
+    updated_by { created_by }
 
     association :geography
     laws_sectors { |a| [a.association(:laws_sector)] }

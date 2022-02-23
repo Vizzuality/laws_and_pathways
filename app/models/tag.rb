@@ -13,4 +13,6 @@ class Tag < ApplicationRecord
   has_many :taggings
 
   validates_presence_of :name, :type
+
+  scope :ordered_by_name, -> { order(Arel.sql('LOWER(name) ASC')) }
 end

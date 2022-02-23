@@ -18,6 +18,7 @@
 #  discarded_at      :datetime
 #  sector_id         :bigint
 #  source            :string
+#  tsv               :tsvector
 #
 
 FactoryBot.define do
@@ -27,7 +28,7 @@ FactoryBot.define do
     association :geography
     association :sector, factory: :laws_sector
     association :created_by, factory: :admin_user
-    association :updated_by, factory: :admin_user
+    updated_by { created_by }
 
     description { 'Target description' }
     year { 2023 }

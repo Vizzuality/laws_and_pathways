@@ -365,7 +365,8 @@ CREATE TABLE public.contents (
     page_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    content_type character varying
+    content_type character varying,
+    "position" integer
 );
 
 
@@ -403,7 +404,8 @@ CREATE TABLE public.cp_assessments (
     updated_at timestamp without time zone NOT NULL,
     discarded_at timestamp without time zone,
     last_reported_year integer,
-    cp_alignment character varying
+    cp_alignment character varying,
+    cp_alignment_year_override integer
 );
 
 
@@ -698,7 +700,8 @@ CREATE TABLE public.geographies (
     discarded_at timestamp without time zone,
     percent_global_emissions character varying,
     climate_risk_index character varying,
-    wb_income_group character varying
+    wb_income_group character varying,
+    external_litigations_count integer DEFAULT 0
 );
 
 
@@ -1172,7 +1175,7 @@ CREATE TABLE public.mq_assessments (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     discarded_at timestamp without time zone,
-    methodology_version integer
+    methodology_version integer NOT NULL
 );
 
 
@@ -3019,6 +3022,14 @@ ALTER TABLE ONLY public.legislations
 
 
 --
+-- Name: litigations fk_rails_3ad3738b8b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.litigations
+    ADD CONSTRAINT fk_rails_3ad3738b8b FOREIGN KEY (geography_id) REFERENCES public.geographies(id) ON DELETE CASCADE;
+
+
+--
 -- Name: images fk_rails_3ddaef631e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3080,14 +3091,6 @@ ALTER TABLE ONLY public.legislations
 
 ALTER TABLE ONLY public.litigation_sides
     ADD CONSTRAINT fk_rails_5ff60f0b08 FOREIGN KEY (litigation_id) REFERENCES public.litigations(id) ON DELETE CASCADE;
-
-
---
--- Name: litigations fk_rails_62402cca14; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.litigations
-    ADD CONSTRAINT fk_rails_62402cca14 FOREIGN KEY (geography_id) REFERENCES public.geographies(id) ON DELETE CASCADE;
 
 
 --
@@ -3384,6 +3387,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200622151708'),
 ('20210129140030'),
 ('20210129140031'),
-('20210204142212');
+('20210204142212'),
+('20210305132256'),
+('20210316164558'),
+('20210514085536'),
+('20211116114117');
 
 

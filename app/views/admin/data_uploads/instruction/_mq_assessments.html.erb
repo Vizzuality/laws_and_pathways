@@ -1,0 +1,139 @@
+<div class="well">
+  In a single file, there could be only assessments for the same methodology version. As questions differ between versions, mixing
+  different methodology version's assessments in the same file is not possible.
+</div>
+
+<h3>Partial updates limitations</h3>
+
+<div class="well">
+  Partial update is not available for single questions. You can update all question answers or no question answers.
+  If you try to partially update questions, removing some of the columns, then the not existing in the file will be REMOVED.
+</div>
+
+<h3>Column descriptions</h3>
+
+<%= render partial: 'admin/data_uploads/instruction/column_descriptions_notes' %>
+
+<table class="index_table">
+  <thead>
+    <th>Column Name</th>
+    <th>Description</th>
+    <th>Example</th>
+    <th>Requirements</th>
+  </thead>
+  <tbody>
+    <%= render partial: 'admin/data_uploads/instruction/column_id' %>
+    <tr>
+      <td>
+        Methodology version
+      </td>
+      <td>
+        Methodology version identifier, type: integer
+      </td>
+      <td>
+        1
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Company Id
+      </td>
+      <td>
+        Id of campany for this assessment, type: integer
+      </td>
+      <td>
+        1231
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Company
+      </td>
+      <td>
+        Name of company for this assessment
+      </td>
+      <td>
+        Suzano
+      </td>
+      <td>
+        Extra column, will be omitted if present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Assessment date
+      </td>
+      <td>
+        Date of the assessment, Allowed date formats: DD/MM/YYYY, YYYY-MM-DD
+      </td>
+      <td>
+        23/10/2019
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Publication date
+      </td>
+      <td>
+        Date of publication, Allowed date formats: YYYY-MM
+      </td>
+      <td>
+        2020-03
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Level
+      </td>
+      <td>
+        Achieved level for this assessment. One of: <%= MQ::Assessment::LEVELS.join(', ') %>
+      </td>
+      <td>
+        4
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Notes
+      </td>
+      <td>
+        Assessment's notes. type: string
+      </td>
+      <td>
+        Example notes
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        [QNrLNr|Question text] - dynamic columns
+      </td>
+      <td>
+        New column for every methodology question. Question must have number, level and text. format: "Q[QuestionNumber]L[LevelNumber]|Question text"
+        example: "Q1L0|Does the company acknowledge climate change as a significant issue for the business?". Answers in the cells, possible values: Yes, No, Not applicable
+      </td>
+      <td>
+        Yes
+      </td>
+      <td>
+        Required. You cannot change answer for single question doing partial update, you either update all questions or none
+      </td>
+    </tr>
+  </tbody>
+</table>

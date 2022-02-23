@@ -25,11 +25,12 @@ class Company < ApplicationRecord
   include VisibilityStatus
   include DiscardableModel
   include PublicActivityTrackable
+  include TPICache
   extend FriendlyId
 
   friendly_id :name, use: [:slugged, :history], routes: :default
 
-  MARKET_CAP_GROUPS = %w[small medium large].freeze
+  MARKET_CAP_GROUPS = %w[small medium large unlisted].freeze
 
   enum market_cap_group: array_to_enum_hash(MARKET_CAP_GROUPS)
 
@@ -46,7 +47,7 @@ class Company < ApplicationRecord
 
   delegate :level, :status, :status_description_short,
            to: :latest_mq_assessment, prefix: :mq, allow_nil: true
-  delegate :cp_alignment, to: :latest_cp_assessment, allow_nil: true
+  delegate :cp_alignment, :cp_alignment_year, to: :latest_cp_assessment, allow_nil: true
 
   validates :ca100, inclusion: {in: [true, false]}
   validates_presence_of :name, :slug, :isin, :market_cap_group

@@ -11,21 +11,23 @@ module Seed
 
     def call
       TimedLogger.log('Import legislation') do
-        run_importer CSVImport::Legislations.new(seed_file('legislations.csv'), override_id: true)
+        run_importer CSVImport::Legislations.new(seed_file('legislations.csv'), override_id: true, allow_tags_adding: true)
       end
       TimedLogger.log('Import Litigations') do
-        run_importer CSVImport::Litigations.new(seed_file('litigations.csv'), override_id: true)
+        run_importer CSVImport::Litigations.new(seed_file('litigations.csv'), override_id: true, allow_tags_adding: true)
       end
       import_litigation_sides
       TimedLogger.log('Import External Laws') do
-        run_importer CSVImport::ExternalLegislations.new(seed_file('external-legislations.csv'), override_id: true)
+        run_importer CSVImport::ExternalLegislations.new(
+          seed_file('external-legislations.csv'), override_id: true, allow_tags_adding: true
+        )
       end
       TimedLogger.log('Import documents') do
         run_importer CSVImport::Documents.new(seed_file('documents.csv'))
       end
 
       TimedLogger.log('Import targets') do
-        run_importer CSVImport::Targets.new(seed_file('targets.csv'), override_id: true)
+        run_importer CSVImport::Targets.new(seed_file('targets.csv'), override_id: true, allow_tags_adding: true)
       end
       TimedLogger.log('Import events') do
         run_importer CSVImport::Events.new(seed_file('events.csv'))

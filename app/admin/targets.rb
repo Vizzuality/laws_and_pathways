@@ -8,10 +8,10 @@ ActiveAdmin.register Target do
 
   permit_params :description, :sector_id, :geography_id, :single_year,
                 :year, :base_year_period, :ghg_target, :target_type,
-                :visibility_status, :scopes_string, :source,
+                :visibility_status, :source,
                 :created_by_id, :updated_by_id,
                 events_attributes: permit_params_for(:events),
-                legislation_ids: []
+                legislation_ids: [], scope_ids: []
 
   filter :geography
   filter :ghg_target
@@ -70,16 +70,16 @@ ActiveAdmin.register Target do
   csv do
     column :id
     column(:target_type) { |t| t.model.target_type }
+    column :source
     column :description
     column :ghg_target
     column :year
     column :base_year_period
     column :single_year
-    column :source
     column(:geography) { |t| t.geography.name }
     column(:geography_iso) { |t| t.geography.iso }
     column(:sector) { |t| t.sector&.name }
-    column(:connected_law_ids) { |t| t.legislation_ids.join(',') }
+    column(:legislation_ids) { |t| t.legislation_ids.join(Rails.application.config.csv_options[:entity_sep]) }
     column :scopes, &:scopes_string
     column :visibility_status
   end

@@ -20,4 +20,10 @@ class CP::AssessmentDecorator < Draper::Decorator
   def publication_date_csv
     model.publication_date.to_s(:year_month)
   end
+
+  def cp_alignment_year
+    return "#{model.cp_alignment_year} (override)" if cp_alignment_year_override.present?
+
+    model.cp_alignment_year
+  end
 end

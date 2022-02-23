@@ -27,13 +27,14 @@ end
 
 FactoryBot.define do
   factory :mq_assessment, class: MQ::Assessment do
-    association :company
+    # association :company
 
     assessment_date { 1.year.ago.to_date }
     publication_date { 11.months.ago.to_date }
 
     level { '1' }
     notes { 'Some notes' }
+    methodology_version { 1 }
 
     questions do
       (1..14).map do |nr|

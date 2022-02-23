@@ -231,7 +231,7 @@ ActiveAdmin.setup do |config|
   # config.csv_options = { col_sep: ';' }
   #
   # Force the use of quotes
-  config.csv_options = { force_quotes: true }
+  config.csv_options = { force_quotes: true, byte_order_mark: "\xEF\xBB\xBF" }
 
   # == Menu System
   #
@@ -334,12 +334,15 @@ Rails.configuration.to_prepare do
   ActiveAdmin::ResourceDSL.send :include, ResourceAttributes
   ActiveAdmin::ResourceDSL.send :include, ActiveAdminVisibilityStatus
   ActiveAdmin::ResourceDSL.send :include, ActiveAdminCsvDownload
+  ActiveAdmin::ResourceDSL.send :include, ActiveAdminOrderable::ControllerActions
 
   # extensions for 'show' context
   ActiveAdmin::Views::Pages::Show.send :include, ActiveAdminAddressableTabs
   ActiveAdmin::Views::Pages::Show.send :include, ActiveAdminEventableTab
 
   ActiveAdmin::Views::Header.send :prepend, ActiveAdminCustomHeader
+
+  ActiveAdmin::Views::TableFor.send :include, ActiveAdminOrderable::TableMethods
 
   # redirect after sign out to root_path
   ActiveAdmin::Devise::SessionsController.class_eval do

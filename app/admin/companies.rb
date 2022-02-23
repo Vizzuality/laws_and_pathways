@@ -69,7 +69,7 @@ ActiveAdmin.register Company do
             end
           else
             resource.mq_assessments.latest_first.decorate.map do |a|
-              panel a.title, class: 'mq_assessment' do
+              panel a.title_link, class: 'mq_assessment' do
                 attributes_table_for a do
                   row :level, &:level_tag
                   row :publication_date
@@ -95,11 +95,12 @@ ActiveAdmin.register Company do
             end
           else
             resource.cp_assessments.latest_first.decorate.map do |a|
-              div class: 'panel benchmark' do
+              panel a.title_link, class: 'benchmark' do
                 attributes_table_for a do
                   row :publication_date
                   row :assessment_date
                   row :cp_alignment
+                  row :cp_alignment_year
                   row :assumptions
                   row :last_reported_year
                 end
@@ -215,6 +216,10 @@ ActiveAdmin.register Company do
       [:sector]
     end
 
+    def csv_format?
+      request[:format] == 'csv'
+    end
+
     def destroy
       destroy_command = ::Command::Destroy::Company.new(resource.object)
 
@@ -225,10 +230,6 @@ ActiveAdmin.register Company do
                 end
 
       redirect_to admin_companies_path, message
-    end
-
-    def csv_format?
-      request[:format] == 'csv'
     end
   end
 end

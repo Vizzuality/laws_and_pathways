@@ -20,8 +20,6 @@ module TPI
 
     def newsletter; end
 
-    def register; end
-
     def disclaimer; end
 
     private

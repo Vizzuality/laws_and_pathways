@@ -1,0 +1,58 @@
+<h2>How to generate CSV data correctly</h2>
+
+<ul>
+  <li>
+    File must be <a href="https://en.wikipedia.org/wiki/UTF-8" rel="noopener noreferrer" target="_blank">UTF-8</a> encoded. Follow <a href="https://www.webtoffee.com/how-to-save-csv-excel-file-as-utf-8-encoded/" rel="noopener noreferrer" target="_blank">this link for example</a> to read the instruction on how to save as UTF-8.
+  </li>
+  <li>First row is reserved for column names</li>
+  <li>Column names are case insensitive meaning that the "Title" column, could be also named as "title", "TITLE" etc.</li>
+  <li>File can contain extra columns, if column is not recognized by importing script it will be omitted.</li>
+  <li>Id column is required for all files. To add new entities leave it empty, to update it must contain a matching entity Id from the database.</li>
+  <li>
+    Make sure you generate CSV file using comma (,) separator. Some computers will generate .csv files where values are separated by semicolons (;) instead of commas (,).
+    <a href="https://harvestmedia.zendesk.com/hc/en-us/articles/360023978031-Opening-Excel-files-with-the-correct-CSV-list-separator" rel="noopener noreferrer" target="_blank">Take a look here.</a>
+  </li>
+</ul>
+
+<h2>Prepare file for bulk edit</h2>
+
+<p>
+  All files downloaded from the admin panel are valid files ready for re-upload. There are extra columns in the downloaded file
+  with informative purposes only, and those will be omitted when uploading the file.
+</p>
+
+<p>
+  You can use filters to download only a subset of the database. Applied filters are indicated in the Search status box.
+  Then you can download the data or any related data to the model as on the image below.
+</p>
+
+<%= image_tag "admin/csv_instruction/bulk_edit_image1.png", height: 300 %>
+
+<p>
+  The "Id" column is always <strong>required</strong>, and when editing data, make sure that values are present otherwise new records will be created.
+</p>
+
+<%= image_tag "admin/csv_instruction/bulk_edit_image2.png", height: 200 %>
+
+<h3>Partial updates</h3>
+
+<p>
+  It is possible to update only data for specific columns. You can remove columns from the CSV file if you are not interested in updating any value for them.
+</p>
+
+<div class="well">
+  There are some limitations to partial updates, specifically for TPI assessments. Any limitations to partial updates will be noted in the file upload
+  instruction section for the chosen model.
+</div>
+
+<% if params[:uploader].present? %>
+  <h2><%= params[:uploader] %> file upload instruction</h2>
+
+  <% begin %>
+    <%= render "admin/data_uploads/instruction/#{params[:uploader].underscore}" %>
+  <% rescue ActionView::MissingTemplate %>
+    No instructions found for this model.
+  <% end %>
+<% else %>
+  <h3>Please select uploader to see specific instructions for a model</h3>
+<% end %>

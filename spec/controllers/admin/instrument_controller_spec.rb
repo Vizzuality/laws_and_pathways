@@ -5,6 +5,8 @@ RSpec.describe Admin::InstrumentsController, type: :controller do
   before { sign_in admin }
 
   describe 'DELETE destroy' do
+    render_views false
+
     let!(:instrument) { create(:instrument, discarded_at: nil) }
 
     context 'with valid params' do

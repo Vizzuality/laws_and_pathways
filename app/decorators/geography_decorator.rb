@@ -32,7 +32,7 @@ class GeographyDecorator < Draper::Decorator
   def indc_link
     return unless indc_url.present?
 
-    h.link_to 'INDC Link', indc_url, target: '_blank'
+    h.link_to 'INDC Link', indc_url, target: '_blank', rel: 'noopener noreferrer'
   end
 
   def percent_global_emissions

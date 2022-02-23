@@ -1,16 +1,18 @@
 require 'rails_helper'
 
-RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
-  let_it_be(:geography) { create(:geography, name: 'Poland', iso: 'POL') }
+RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller, retry: 3 do
+  let_it_be(:user) { create(:admin_user) }
+  let_it_be(:geography) { create(:geography, created_by: user, name: 'Poland', iso: 'POL') }
   let_it_be(:sector1) { create(:laws_sector, name: 'sector1') }
   let_it_be(:sector2) { create(:laws_sector, name: 'sector2') }
   let_it_be(:keyword) { create(:keyword, name: 'climate') }
-  let_it_be(:parent_legislation) { create(:legislation, title: 'Parent Legislation') }
+  let_it_be(:parent_legislation) { create(:legislation, created_by: user, title: 'Parent Legislation') }
   let_it_be(:instrument_type) { create(:instrument_type, name: 'instrument_type_test') }
   let_it_be(:legislation1) {
     create(
       :legislation,
       :published,
+      created_by: user,
       geography: geography,
       title: 'Super Legislation',
       parent: parent_legislation,
@@ -64,6 +66,7 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
     create(
       :legislation,
       :published,
+      created_by: user,
       geography: geography,
       laws_sectors: [sector1],
       title: 'Legislation Example',
@@ -78,6 +81,7 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
     create(
       :legislation,
       :draft,
+      created_by: user,
       geography: geography,
       laws_sectors: [sector1],
       title: 'This one is unpublished',
@@ -109,7 +113,10 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller do
         expect(response.content_type).to eq('text/csv')
         # remove snapshot to update it (from spec/snapshots)
         # make sure no dynamic, sequenced entity values are used
-        expect(response.body).to match_snapshot('cclow_legislation_and_policies_controller_csv')
+        io = StringIO.new(response.body)
+        io.set_encoding_by_bom
+        csv_json = CSV.parse(io, headers: true).map(&:to_h).to_json
+        expect(csv_json).to match_snapshot('cclow_legislation_and_policies_controller_csv', dynamic_attributes: %w(Id))
       end
     end
 

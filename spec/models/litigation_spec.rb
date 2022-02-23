@@ -17,6 +17,7 @@
 #  updated_by_id             :bigint
 #  discarded_at              :datetime
 #  jurisdiction              :string
+#  tsv                       :tsvector
 #
 
 require 'rails_helper'

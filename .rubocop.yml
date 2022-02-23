@@ -2,7 +2,8 @@ require: rubocop-performance
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 2.6
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7.2
   Exclude:
     - 'bin/*'
     - 'db/schema.rb'
@@ -46,6 +47,9 @@ Style/Lambda:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+Style/FileWrite:
+  Enabled: false
+
 Style/PercentLiteralDelimiters:
   Enabled: false
 
@@ -73,6 +77,9 @@ Style/RescueModifier:
 Style/ClassAndModuleChildren:
   Enabled: false
 
+Style/OpenStructUse:
+  Enabled: false
+
 Layout/LineLength:
   Max: 130
   Exclude:
@@ -89,6 +96,9 @@ Bundler/OrderedGems:
   Enabled: false
 
 Style/CaseLikeIf:
+  Enabled: false
+
+Style/MapToHash:
   Enabled: false
 
 Style/HashEachMethods:
@@ -146,4 +156,7 @@ Performance/RangeInclude:
   Enabled: false
 
 Performance/CollectionLiteralInLoop:
+  Enabled: false
+# To below was throwing error so bug in rubocop probably
+Performance/MapCompact:
   Enabled: false

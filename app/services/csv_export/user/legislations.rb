@@ -11,16 +11,18 @@ module CSVExport
         return if legislations.empty?
 
         headers = [
-          'Title', 'Type', 'Geography', 'Geography ISO', 'Frameworks', 'Responses',
+          'Id', 'Title', 'Type', 'Geography', 'Geography ISO', 'Frameworks', 'Responses',
           'Instruments', 'Document Types', 'Natural Hazards', 'Keywords',
           'Sectors', 'Events', 'Documents', 'Parent Legislation', 'Description'
         ]
 
-        CSV.generate do |csv|
+        # BOM UTF-8
+        CSV.generate("\xEF\xBB\xBF") do |csv|
           csv << headers
 
           legislations.each do |legislation|
             csv << [
+              legislation.id,
               legislation.title,
               legislation.legislation_type.downcase,
               legislation.geography_name,
@@ -67,7 +69,7 @@ module CSVExport
       end
 
       def format_instruments(instruments)
-        instruments.map do |instrument|
+        instruments.sort_by(&:created_at).map do |instrument|
           [instrument.name, instrument.instrument_type.name].join('|')
         end.join(';')
       end

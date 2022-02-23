@@ -11,7 +11,7 @@ module CCLOW
     end
 
     def number_of_litigation_cases
-      litigations.published.count
+      litigations.published.count + external_litigations_count
     end
 
     def number_of_targets

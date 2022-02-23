@@ -1,0 +1,143 @@
+<h3>Partial updates limitations</h3>
+
+<div class="well">
+  It is not possible to change emission values only for chosen years. You have to provide all emissions in dynamic year columns.
+</div>
+
+<h3>Column descriptions</h3>
+
+<%= render partial: 'admin/data_uploads/instruction/column_descriptions_notes' %>
+
+<table class="index_table">
+  <thead>
+    <th>Column Name</th>
+    <th>Description</th>
+    <th>Example</th>
+    <th>Requirements</th>
+  </thead>
+  <tbody>
+    <%= render partial: 'admin/data_uploads/instruction/column_id' %>
+    <tr>
+      <td>
+        Company Id
+      </td>
+      <td>
+        Id of campany for this assessment, type: integer
+      </td>
+      <td>
+        1231
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Company
+      </td>
+      <td>
+        Name of company for this assessment
+      </td>
+      <td>
+        Suzano
+      </td>
+      <td>
+        Extra column, will be omitted if present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Assessment date
+      </td>
+      <td>
+        Date of the assessment, Allowed date formats: DD/MM/YYYY, YYYY-MM-DD
+      </td>
+      <td>
+        23/10/2019
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Publication date
+      </td>
+      <td>
+        Date of publication, Allowed date formats: YYYY-MM
+      </td>
+      <td>
+        2020-03
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Last reported year
+      </td>
+      <td>
+        Indicates last reported year in the provided emissions. Emissions for next years will be showed as targeted.
+      </td>
+      <td>
+      </td>
+      <td>
+        Must be present if emissions are present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        [year] - Dynamic year columns ex. 2020, 2021, 2022
+      </td>
+      <td>
+        Each column indicate emission value for given year. Unit is set by sector in sector details page. Type: number
+      </td>
+      <td>
+        118.884
+      </td>
+      <td>
+        See partial update limitations
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Assumptions
+      </td>
+      <td>
+        Text of assumptions. type: string
+      </td>
+      <td>
+        TPI has not made any further assumptions in order to project this company’s Carbon Performance.
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        CP alignment
+      </td>
+      <td>
+        Carbon performance alignment status. One of: <%= CP::Alignment::NAMES.join(', ') %>
+      </td>
+      <td>
+        No or unsuitable disclosure
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        CP alignment year override
+      </td>
+      <td>
+        Override the calculated from reported emissions and carbon benchmark alignment year. type: integer
+      </td>
+      <td>
+        2050
+      </td>
+      <td>
+      </td>
+    </tr>
+  </tbody>
+</table>

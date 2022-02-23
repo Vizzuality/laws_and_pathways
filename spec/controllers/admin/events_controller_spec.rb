@@ -45,7 +45,7 @@ RSpec.describe Admin::EventsController, type: :controller do
     it('returns all events') do
       csv = response_as_csv
 
-      expect(csv.by_col[4].sort).to eq(%w[Event1 Event2 Event3 Event4])
+      expect(csv.by_col[5].sort).to eq(%w[Event1 Event2 Event3 Event4])
     end
   end
 
@@ -104,14 +104,10 @@ RSpec.describe Admin::EventsController, type: :controller do
 
       # only header expected
       expected_columns = [
-        'Id', 'Eventable type', 'Eventable', 'Event type',
+        'Id', 'Eventable type', 'Eventable Id', 'Eventable name', 'Event type',
         'Title', 'Description', 'Date', 'Url'
       ]
       expect(csv.to_a).to eq([expected_columns])
     end
-  end
-
-  def response_as_csv
-    CSV.parse(response.body, headers: true)
   end
 end

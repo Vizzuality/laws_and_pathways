@@ -17,10 +17,11 @@ module Api
         )
       end
 
+      # TODO: refactor this after adding colors based on dates
       def cp_alignment
         return unless @company.cp_alignment.present?
 
-        CP::Alignment.new(name: @company.cp_alignment)
+        CP::Alignment.new(name: @company.cp_alignment, date: @company.latest_cp_assessment.publication_date)
       end
     end
   end

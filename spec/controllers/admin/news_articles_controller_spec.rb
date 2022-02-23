@@ -99,6 +99,8 @@ RSpec.describe Admin::NewsArticlesController, type: :controller do
   end
 
   describe 'DELETE destroy' do
+    render_views false
+
     let!(:news_article_to_delete) { create(:news_article) }
 
     context 'with valid params' do

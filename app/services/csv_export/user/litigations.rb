@@ -11,17 +11,19 @@ module CSVExport
         return if litigations.empty?
 
         headers = [
-          'Title', 'Geography', 'Geography ISO', 'Jurisdiction',
+          'Id', 'Title', 'Geography', 'Geography ISO', 'Jurisdiction',
           'Citation Reference Number', 'Responses', 'At issue',
           'Connected Internal Laws', 'Connected External Laws', 'Sectors',
           'Side A', 'Side B', 'Side C', 'Events', 'Summary'
         ]
 
-        CSV.generate do |csv|
+        # BOM UTF-8
+        CSV.generate("\xEF\xBB\xBF") do |csv|
           csv << headers
 
           litigations.each do |litigation|
             csv << [
+              litigation.id,
               litigation.title,
               litigation.geography_name,
               litigation.geography_iso,
@@ -66,7 +68,7 @@ module CSVExport
       end
 
       def format_laws(laws)
-        laws.map do |law|
+        laws.sort_by(&:created_at).map do |law|
           [law.title, law.url].join('|')
         end.join(';')
       end
@@ -74,6 +76,7 @@ module CSVExport
       def format_sides(side_type, litigation)
         litigation
           .litigation_sides
+          .sort_by(&:created_at)
           .select { |s| s.side_type == side_type }
           .map { |s| [s.name, s.party_type].join('|') }
           .join(';')

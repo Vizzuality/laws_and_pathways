@@ -79,7 +79,7 @@
           </div>
           <div class="value-block">
             <div class="circle">
-              <%= link_to Litigation.published.count, cclow_litigation_cases_path %>
+              <%= link_to (Litigation.published.count + Geography.published.sum(:external_litigations_count)), cclow_litigation_cases_path %>
             </div>
           </div>
         </div>

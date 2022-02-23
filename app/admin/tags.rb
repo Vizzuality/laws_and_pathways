@@ -4,6 +4,7 @@
   NaturalHazard
   PoliticalGroup
   Response
+  Scope
 ].each do |tag_class|
   ActiveAdmin.register tag_class.constantize do
     config.sort_order = 'name_asc'

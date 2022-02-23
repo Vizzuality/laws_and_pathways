@@ -1,7 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe CCLOW::LitigationCasesController, type: :controller do
-  let_it_be(:geography) { create(:geography, name: 'Poland', iso: 'POL') }
+RSpec.describe CCLOW::LitigationCasesController, type: :controller, retry: 3 do
+  let_it_be(:user) { create(:admin_user) }
+  let_it_be(:geography) { create(:geography, created_by: user, name: 'Poland', iso: 'POL') }
   let_it_be(:sector1) { create(:laws_sector, name: 'sector1') }
   let_it_be(:sector2) { create(:laws_sector, name: 'sector2') }
   let_it_be(:litigation1) {
@@ -9,6 +10,7 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller do
       :litigation,
       :published,
       geography: geography,
+      created_by: user,
       title: 'Super Litigation',
       laws_sectors: [sector1, sector2],
       keywords: [
@@ -43,6 +45,7 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller do
     create(
       :litigation,
       :published,
+      created_by: user,
       laws_sectors: [sector1],
       geography: geography,
       title: 'Example',
@@ -57,6 +60,7 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller do
     create(
       :litigation,
       :published,
+      created_by: user,
       laws_sectors: [sector2],
       geography: geography,
       title: 'Litigation Example',
@@ -68,7 +72,7 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller do
     )
   }
   let_it_be(:litigation4) {
-    create(:litigation, :draft, geography: geography, title: 'This one is unpublished', summary: 'Example')
+    create(:litigation, :draft, created_by: user, geography: geography, title: 'This one is unpublished', summary: 'Example')
   }
 
   describe 'GET index' do
@@ -92,7 +96,11 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller do
         expect(response.content_type).to eq('text/csv')
         # remove snapshot to update it (from spec/snapshots)
         # make sure no dynamic, sequenced entity values are used
-        expect(response.body).to match_snapshot('cclow_litigation_cases_controller_csv')
+
+        io = StringIO.new(response.body)
+        io.set_encoding_by_bom
+        csv_json = CSV.parse(io, headers: true).map(&:to_h).to_json
+        expect(csv_json).to match_snapshot('cclow_litigation_cases_controller_csv', dynamic_attributes: %w(Id))
       end
     end
 

@@ -18,7 +18,7 @@
 require 'rails_helper'
 
 RSpec.describe MQ::Assessment, type: :model do
-  subject { build(:mq_assessment) }
+  subject { build(:mq_assessment, company: build(:company)) }
 
   let(:company) { create(:company) }
 
@@ -27,6 +27,11 @@ RSpec.describe MQ::Assessment, type: :model do
   it 'should be invalid if publication date is nil' do
     subject.publication_date = nil
     expect(subject).to have(1).errors_on(:publication_date)
+  end
+
+  it 'should be invalid if methodology version is nil' do
+    subject.methodology_version = nil
+    expect(subject).to have(1).errors_on(:methodology_version)
   end
 
   it 'should be invalid if level not recognized' do
