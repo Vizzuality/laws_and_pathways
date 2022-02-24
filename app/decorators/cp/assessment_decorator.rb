@@ -21,6 +21,10 @@ class CP::AssessmentDecorator < Draper::Decorator
     model.publication_date.to_s(:year_month)
   end
 
+  def years_with_targets_csv
+    model.years_with_targets&.join(Rails.application.config.csv_options[:entity_sep])
+  end
+
   def cp_alignment_year
     return "#{model.cp_alignment_year} (override)" if cp_alignment_year_override.present?
 

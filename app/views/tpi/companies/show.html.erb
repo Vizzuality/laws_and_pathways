@@ -50,7 +50,7 @@
           </div>
         </a>
       </div>
-      <div class="column">
+      <div class="column is-three-fifths">
         <a href="#carbon-performance" class="summary-box-link">
           <div class="summary-box summary-box--assessment">
             <h4>Carbon Performance</h4>
@@ -58,30 +58,49 @@
               <small>Number of assessments: <%= @company.cp_assessments.currently_published.size %></small>
             </p>
 
-            <% if @company_presenter.cp_alignment.present? %>
-              <p class="cp-alignment">
-                <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment.color %>">
-                </span>
-                <%= @company_presenter.cp_alignment.name %>
-              </p>
-              <% if !['not assessed', 'not aligned', 'no disclosure', nil].include?(@company.cp_alignment&.downcase) %>
-                <% if @company.cp_alignment_year.present? %>
-                  <p>
-                    The company’s emissions intensity aligns with the <%= @company.cp_alignment %> benchmark in <%= @company.cp_alignment_year %>
-                  </p>
-                <% else %>
-                  <p>
-                    The company’s emissions intensity and target are aligned
-                    with the Paris agreement benchmark of <%= @company.cp_alignment %>
-                  </p>
-                <% end %>
-              <% elsif @company.cp_alignment && @company.cp_alignment.downcase == 'not assessed' %>
-                <p>
-                  The company’s activities don't fit the scope of TPI’s Carbon
-                  Performance assessment of this sector, hence the company is not assessed.
-                </p>
+            <div class="cp-alignments">
+              <% if @company_presenter.cp_alignment_2025.present? %>
+                <div class="cp-alignment-container">
+                  <h5>Short-term<br/> alignment in 2025</h5>
+
+                  <div class="cp-alignment">
+                    <% unless @company_presenter.cp_alignment_2025.not_assessed? %>
+                      <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment_2025.color %>">
+                      </span>
+                    <% end %>
+                    <%= @company_presenter.cp_alignment_2025.name %>
+                  </div>
+                </div>
               <% end %>
-            <% end %>
+
+              <% if @company_presenter.cp_alignment_2035.present? %>
+                <div class="cp-alignment-container">
+                  <h5>Medium-term<br/> alignment in 2035</h5>
+
+                  <div class="cp-alignment">
+                    <% unless @company_presenter.cp_alignment_2035.not_assessed? %>
+                      <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment_2035.color %>">
+                    <% end %>
+                    </span>
+                    <%= @company_presenter.cp_alignment_2035.name %>
+                  </div>
+                </div>
+              <% end %>
+
+              <% if @company_presenter.cp_alignment.present? %>
+                <div class="cp-alignment-container">
+                  <h5>Long-term<br/> alignment in <%= @company.sector.name.downcase == 'electricity utilities' ? '2040-50' : '2050' %></h5>
+
+                  <div class="cp-alignment">
+                    <% unless @company_presenter.cp_alignment.not_assessed? %>
+                      <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment.color %>">
+                      </span>
+                    <% end %>
+                    <%= @company_presenter.cp_alignment.name %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
           </div>
         </a>
       </div>

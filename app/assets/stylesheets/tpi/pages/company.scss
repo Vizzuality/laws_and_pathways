@@ -34,10 +34,15 @@ $dots-space: 1.3rem;
     }
   }
 
+  .summary-boxes {
+    margin-top: 1.5rem;
+  }
+
   .summary-box {
     background: $grey;
     padding: 40px;
     border-bottom: none;
+    height: 100%;
 
     h3 {
       font-size: 16px;
@@ -55,30 +60,57 @@ $dots-space: 1.3rem;
       align-items: center;
       text-align: center;
       justify-content: center;
+    }
 
-      @include desktop {
-        height: 280px;
+    .cp-alignments {
+      width: 100%;
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      gap: 40px;
+
+      h5 {
+        font-size: 18px !important;
+      }
+
+      br {
+        display: none;
+      }
+
+      @include from($tablet) {
+        flex-direction: row;
+        gap: 10px;
+
+        br {
+          display: unset;
+        }
       }
     }
 
     .cp-alignment {
       font-family: $font-family-bold;
-      font-size: 20px;
+      font-size: 16px;
       padding: 30px 0;
       display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: left;
 
       &__circle {
+        flex-shrink: 0;
         width: 20px;
         height: 20px;
         border-radius: 50%;
         display: block;
         margin-right: 10px;
-        margin-top: 3px;
+        margin-top: -4px;
       }
 
       @include until($desktop) {
         display: flex;
-        padding-top: 1.5rem;
+        padding-top: 1rem;
         padding-bottom: 0;
 
         &__circle {

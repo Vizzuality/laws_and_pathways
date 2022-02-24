@@ -1,7 +1,7 @@
 module CSVImport
   module Helpers
     module Emissions
-      EMISSION_YEAR_PATTERN = /\d{4}/.freeze
+      EMISSION_YEAR_PATTERN = /^\d{4}$/.freeze
 
       def parse_emissions(row)
         row.headers.grep(EMISSION_YEAR_PATTERN).reduce({}) do |acc, year|

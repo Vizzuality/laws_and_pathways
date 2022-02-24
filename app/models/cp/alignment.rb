@@ -1,7 +1,5 @@
 module CP
   class Alignment
-    NEW_ALIGNMENT_NAMES_DATE = Date.new(2021, 10, 1)
-
     CP_ALIGNMENT_STANDARIZE_MAP = {
       '2 degrees (high efficiency)' => 'below 2 degrees',
       '2 degrees (shift-improve)' => '2 degrees',
@@ -9,51 +7,46 @@ module CP
     }.freeze
 
     CP_ALIGNMENT_COLORS = {
-      'below 2 degrees' => '#00C170', # green
+      'below 2 degrees' => {
+        'paper/aluminium/cement/steel' => '#00C170', # green
+        'rest' => '#FFDD49' # yellow
+      },
+      '2 degrees (high efficiency)' => '#00C170', # green
+      '1.5 degrees' => '#00C170', # green
+      '2 degrees (shift-improve)' => '#FFDD49', # yellow
       '2 degrees' => '#FFDD49', # yellow
       'paris pledges' => '#FF9600', # orange,
+      'national pledges' => '#FF9600', # orange
+      'international pledges' => '#FF9600', # orange
       'not aligned' => '#ED3D4A', # red
       'no or unsuitable disclosure' => '#595B5D' # black
     }.freeze
 
-    CP_ALIGNMENT_NEW_COLORS = {
-      '1.5 degrees' => '#00C170', # green
-      'below 2 degrees' => '#FFDD49', # yellow
-      'national pledges' => '#FF9600', # orange,
-      'not aligned' => '#ED3D4A', # red
-      'no or unsuitable disclosure' => '#595B5D' # black
-    }.freeze
+    DEFAULT_COLOR = '#595B5D'.freeze # black
 
     NAMES = [
       '1.5 Degrees',
-      'Not Aligned',
-      'Paris Pledges',
+      '2 Degrees (High Efficiency)',
+      'Below 2 Degrees (Paper/Aluminium/Cement/Steel)',
       'Below 2 Degrees',
       '2 Degrees',
-      'No or unsuitable disclosure',
       '2 Degrees (Shift-Improve)',
-      'Interational Pledges',
-      '2 Degrees (High Efficiency)',
-      'National Pledges'
+      'Paris Pledges',
+      'International Pledges',
+      'National Pledges',
+      'Not Aligned',
+      'No or unsuitable disclosure',
+      'Not Assessed'
     ].freeze
+    ALLOWED_NAMES = (NAMES - ['Below 2 Degrees (Paper/Aluminium/Cement/Steel)']).freeze
 
     OLD_NAMES_MAP = {
       'No Disclosure' => 'No or unsuitable disclosure'
     }.freeze
 
-    ORDER = [
-      '1.5 degrees',
-      'below 2 degrees',
-      'national pledges',
-      '2 degrees',
-      'paris pledges',
-      'not aligned',
-      'no or unsuitable disclosure'
-    ].freeze
-
     include ActiveModel::Model
 
-    attr_accessor :name, :date
+    attr_accessor :name, :sector
 
     def standarized_name
       CP::Alignment.format_name((CP_ALIGNMENT_STANDARIZE_MAP[name.downcase] || name))
@@ -63,16 +56,23 @@ module CP
       CP::Alignment.format_name(name)
     end
 
-    def color
-      return CP_ALIGNMENT_COLORS[standarized_name.downcase] if date.nil?
+    alias to_s formatted_name
 
-      if date > NEW_ALIGNMENT_NAMES_DATE
-        CP_ALIGNMENT_NEW_COLORS[standarized_name.downcase]
-      else
-        CP_ALIGNMENT_COLORS[standarized_name.downcase]
-      end
+    def not_assessed?
+      to_s.downcase == 'not assessed'
     end
 
+    def color
+      color = CP_ALIGNMENT_COLORS[formatted_name.downcase]
+      return color unless color.is_a?(Hash)
+
+      sector_key = sector&.downcase || 'rest'
+
+      default_value = color['rest'] || DEFAULT_COLOR
+      color.select { |k| k.include?(sector_key) }.values.first || default_value
+    end
+
+    # makes sure to format names based on the standarized NAMES array
     def self.format_name(name)
       return unless name.present?
 

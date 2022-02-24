@@ -10,6 +10,20 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
 -- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -374,7 +388,10 @@ CREATE TABLE public.cp_assessments (
     discarded_at timestamp without time zone,
     last_reported_year integer,
     cp_alignment character varying,
-    cp_alignment_year_override integer
+    cp_alignment_year_override integer,
+    cp_alignment_2025 character varying,
+    cp_alignment_2035 character varying,
+    years_with_targets integer[]
 );
 
 
@@ -3328,6 +3345,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210305132256'),
 ('20210316164558'),
 ('20210514085536'),
-('20211116114117');
+('20211116114117'),
+('20220215170029');
 
 

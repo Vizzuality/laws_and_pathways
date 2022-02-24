@@ -33,8 +33,9 @@ module Api
         [
           emissions_data_from_sector_benchmarks,
           emissions_data_from_company,
-          emissions_data_from_sector
-        ].flatten
+          emissions_data_from_sector,
+          years_with_targets
+        ].compact.flatten
       end
 
       private
@@ -85,6 +86,28 @@ module Api
             radius: 3
           }
         }]
+      end
+
+      def years_with_targets
+        return unless assessment&.years_with_targets&.any?
+        return unless assessment&.emissions&.any?
+
+        emissions = assessment.emissions.transform_keys(&:to_i)
+        data = assessment.years_with_targets
+          .map { |year| [year, emissions[year]] }
+          .select { |year_emission| year_emission[1].present? }
+
+        {
+          name: 'Target Years',
+          type: 'scatter',
+          marker: {
+            symbol: 'circle',
+            enabled: true,
+            radius: 5,
+            fillColor: '#00C170'
+          },
+          data: data
+        }
       end
 
       def emissions_data_from_sector

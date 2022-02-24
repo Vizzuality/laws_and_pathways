@@ -2,17 +2,21 @@
 #
 # Table name: cp_assessments
 #
-#  id                 :bigint           not null, primary key
-#  company_id         :bigint
-#  publication_date   :date             not null
-#  assessment_date    :date
-#  emissions          :jsonb
-#  assumptions        :text
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  discarded_at       :datetime
-#  last_reported_year :integer
-#  cp_alignment       :string
+#  id                         :bigint           not null, primary key
+#  company_id                 :bigint
+#  publication_date           :date             not null
+#  assessment_date            :date
+#  emissions                  :jsonb
+#  assumptions                :text
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#  discarded_at               :datetime
+#  last_reported_year         :integer
+#  cp_alignment               :string
+#  cp_alignment_year_override :integer
+#  cp_alignment_2025          :string
+#  cp_alignment_2035          :string
+#  years_with_targets         :integer          is an Array
 #
 
 require 'rails_helper'
@@ -44,6 +48,28 @@ RSpec.describe CP::Assessment, type: :model do
     subject.emissions = {'2019': 344}
     subject.last_reported_year = nil
     expect(subject).to have(1).errors_on(:last_reported_year)
+  end
+
+  describe 'cp alignment' do
+    it 'should be invalid if cp alignment do not match list' do
+      subject.cp_alignment = 'do not match'
+      expect(subject).to have(1).errors_on(:cp_alignment)
+    end
+
+    it 'should be valid if cp alignment is blank' do
+      subject.cp_alignment = nil
+      expect(subject).to be_valid
+    end
+
+    it 'should be valid if cp alignment is nil' do
+      subject.cp_alignment = nil
+      expect(subject).to be_valid
+    end
+
+    it 'should be valid if cp alignment is on the list' do
+      subject.cp_alignment = 'Below 2 Degrees'
+      expect(subject).to be_valid
+    end
   end
 
   describe 'cp alignment year' do

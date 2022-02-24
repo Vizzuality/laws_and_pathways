@@ -6,7 +6,8 @@ ActiveAdmin.register CP::Assessment do
   decorate_with CP::AssessmentDecorator
 
   permit_params :assessment_date, :publication_date, :company_id, :last_reported_year,
-                :assumptions, :cp_alignment, :cp_alignment_year_override, :emissions
+                :assumptions, :cp_alignment, :cp_alignment_2025, :cp_alignment_2035,
+                :cp_alignment_year_override, :years_with_targets_string, :emissions
 
   filter :assessment_date
   filter :publication_date, as: :select, collection: proc { CP::Assessment.all_publication_dates }
@@ -23,7 +24,10 @@ ActiveAdmin.register CP::Assessment do
       row :publication_date
       row :last_reported_year
       row :cp_alignment
+      row :cp_alignment_2025
+      row :cp_alignment_2035
       row :cp_alignment_year
+      row :years_with_targets
       row :assumptions
       row :created_at
       row :updated_at
@@ -42,6 +46,8 @@ ActiveAdmin.register CP::Assessment do
     column :title, &:title_link
     column :company
     column :cp_alignment
+    column :cp_alignment_2025
+    column :cp_alignment_2035
     column :assessment_date
     column :publication_date
     actions
@@ -63,7 +69,10 @@ ActiveAdmin.register CP::Assessment do
     end
     column :assumptions
     column :cp_alignment
+    column :cp_alignment_2025
+    column :cp_alignment_2035
     column :cp_alignment_year_override
+    column :years_with_targets, &:years_with_targets_csv
   end
 
   controller do
