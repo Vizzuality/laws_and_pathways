@@ -6,7 +6,11 @@ module CSVImport
       import_each_csv_row(csv) do |row|
         news_article = prepare_news_article(row)
 
-        news_article.assign_attributes(news_article_attributes(row))
+        news_article.title = row[:title] if row.header?(:title)
+        news_article.content = row[:content] if row.header?(:content)
+        news_article.publication_date = row[:publication_date] if row.header?(:publication_date)
+        news_article.keywords = parse_tags(row[:keywords], keywords) if row.header?(:keywords)
+        news_article.tpi_sectors = find_or_create_tpi_sectors(row[:sectors]) if row.header?(:sectors)
 
         was_new_record = news_article.new_record?
         any_changes = news_article.changed?
@@ -27,14 +31,6 @@ module CSVImport
       find_record_by(:id, row) ||
         find_record_by(:title, row) ||
         resource_klass.new
-    end
-
-    def news_article_attributes(row)
-      {
-        title: row[:title],
-        content: row[:content],
-        publication_date: row[:date]
-      }
     end
   end
 end

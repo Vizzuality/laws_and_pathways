@@ -12,26 +12,27 @@ module Seed
       import_sectors
       import_sector_clusters
 
-      # import companies
       TimedLogger.log('Import companies') do
         run_importer CSVImport::Companies.new(seed_file('tpi-companies.csv'), override_id: true)
       end
 
-      # import CP Benchmarks
       TimedLogger.log('Import CP Benchmarks') do
         run_importer CSVImport::CPBenchmarks.new(seed_file('cp-benchmarks.csv'))
       end
 
-      # import CP Assessments
       TimedLogger.log('Import CP Assessments') do
         run_importer CSVImport::CPAssessments.new(seed_file('cp-assessments.csv'))
       end
 
-      # import MQ Assessments
       TimedLogger.log('Import MQ Assessments') do
         run_importer CSVImport::MQAssessments.new(seed_file('mq-assessments-M1.csv'))
         run_importer CSVImport::MQAssessments.new(seed_file('mq-assessments-M2.csv'))
         run_importer CSVImport::MQAssessments.new(seed_file('mq-assessments-M3.csv'))
+      end
+
+      TimedLogger.log('Import News Articles') do
+        run_importer CSVImport::NewsArticles.new(seed_file('tpi-news-articles.csv'), allow_tags_adding: true)
+        random_assign_images_to_articles
       end
 
       TimedLogger.log('Create Publications') do
@@ -60,6 +61,12 @@ module Seed
         sector.update(
           cluster: TPISectorCluster.find_or_create_by!(name: cluster_name)
         )
+      end
+    end
+
+    def random_assign_images_to_articles
+      NewsArticle.find_each do |article|
+        article.image.attach(attachable_file(random_image_file))
       end
     end
 
@@ -110,6 +117,16 @@ module Seed
 
     def seed_file(filename)
       File.open(Rails.root.join('db', 'seeds', 'tpi', filename), 'r')
+    end
+
+    def random_image_file
+      %w[
+        files/airlines2022.jpg
+        files/autos2022.jpg
+        files/bridge.jpg
+        files/industrials.jpg
+        files/shipping2022.jpg
+      ].sample
     end
 
     def attachable_file(filename)
