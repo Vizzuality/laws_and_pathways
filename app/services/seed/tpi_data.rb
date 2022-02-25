@@ -12,26 +12,31 @@ module Seed
       import_sectors
       import_sector_clusters
 
-      # import companies
       TimedLogger.log('Import companies') do
         run_importer CSVImport::Companies.new(seed_file('tpi-companies.csv'), override_id: true)
       end
 
-      # import CP Benchmarks
       TimedLogger.log('Import CP Benchmarks') do
         run_importer CSVImport::CPBenchmarks.new(seed_file('cp-benchmarks.csv'))
       end
 
-      # import CP Assessments
       TimedLogger.log('Import CP Assessments') do
         run_importer CSVImport::CPAssessments.new(seed_file('cp-assessments.csv'))
       end
 
-      # import MQ Assessments
       TimedLogger.log('Import MQ Assessments') do
         run_importer CSVImport::MQAssessments.new(seed_file('mq-assessments-M1.csv'))
         run_importer CSVImport::MQAssessments.new(seed_file('mq-assessments-M2.csv'))
         run_importer CSVImport::MQAssessments.new(seed_file('mq-assessments-M3.csv'))
+      end
+
+      TimedLogger.log('Import News Articles') do
+        run_importer CSVImport::NewsArticles.new(seed_file('tpi-news-articles.csv'), allow_tags_adding: true)
+        random_assign_images_to_articles
+      end
+
+      TimedLogger.log('Create Publications') do
+        create_publications
       end
     end
 
@@ -59,6 +64,42 @@ module Seed
       end
     end
 
+    def random_assign_images_to_articles
+      NewsArticle.find_each do |article|
+        article.image.attach(attachable_file(random_image_file))
+      end
+    end
+
+    def create_publications
+      Publication.create!(
+        title: 'Carbon Performance assessment of airlines: note on methodology',
+        publication_date: '2022-02-14',
+        short_description: 'Some short description',
+        keywords: keywords(%w[Airlines Methodology]),
+        file: attachable_file('files/test.pdf'),
+        image: attachable_file('files/airlines2022.jpg'),
+        created_by: admin_user
+      )
+      Publication.create!(
+        title: 'Carbon performance assessment of international shipping: note on methodology',
+        publication_date: '2022-02-10',
+        short_description: 'Some short description',
+        keywords: keywords(%w[Shipping Methodology]),
+        file: attachable_file('files/test.pdf'),
+        image: attachable_file('files/shipping2022.jpg'),
+        created_by: admin_user
+      )
+      Publication.create!(
+        title: 'Carbon Performance assessment of the automobile manufacturers: note on methodology 2020',
+        publication_date: '2022-02-12',
+        short_description: 'Some short description',
+        keywords: keywords(%w[Autos Methodology]),
+        file: attachable_file('files/test.pdf'),
+        image: attachable_file('files/autos2022.jpg'),
+        created_by: admin_user
+      )
+    end
+
     private
 
     def run_importer(importer)
@@ -66,8 +107,34 @@ module Seed
       puts importer.import_results
     end
 
+    def keywords(array)
+      array.map { |keyword| Keyword.find_or_create_by!(name: keyword) }
+    end
+
+    def admin_user
+      @admin_user ||= AdminUser.find_by(email: 'admin@example.com')
+    end
+
     def seed_file(filename)
       File.open(Rails.root.join('db', 'seeds', 'tpi', filename), 'r')
+    end
+
+    def random_image_file
+      %w[
+        files/airlines2022.jpg
+        files/autos2022.jpg
+        files/bridge.jpg
+        files/industrials.jpg
+        files/shipping2022.jpg
+      ].sample
+    end
+
+    def attachable_file(filename)
+      {
+        io: seed_file(filename),
+        filename: File.basename(filename),
+        content_type: Marcel::MimeType.for(name: filename)
+      }
     end
 
     def import_sectors

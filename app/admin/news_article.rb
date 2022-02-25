@@ -51,6 +51,8 @@ ActiveAdmin.register NewsArticle do
     column :id
     column :title
     column :content
+    column(:sectors) { |l| l.tpi_sectors.map(&:name).join(Rails.application.config.csv_options[:entity_sep]) }
+    column :keywords, &:keywords_csv
     column :publication_date
   end
 

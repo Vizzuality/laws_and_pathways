@@ -24,6 +24,15 @@ module CSVImport
       geographies[row_value&.upcase]
     end
 
+    def find_or_create_tpi_sectors(row_sectors)
+      return [] unless row_sectors.present?
+
+      row_sectors
+        .split(Rails.application.config.csv_options[:entity_sep])
+        .map { |sector_name| find_or_create_tpi_sector(sector_name) }
+        .uniq
+    end
+
     def find_or_create_tpi_sector(sector_name)
       return unless sector_name.present?
 
