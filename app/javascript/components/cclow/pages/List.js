@@ -249,14 +249,20 @@ class List extends Component {
 
     if (timeRange) return this.renderTimeRangeTags(activeTags, filterConfig);
 
-    return Object.keys(activeTags).map((keyBlock) => (
-      activeTags[keyBlock].filter(x => x).map((key, i) => (
-        <span key={`tag_${keyBlock}_${i}`} className="tag">
-          {options.filter(item => item.field_name === keyBlock)[0].options.filter(l => l.value === key)[0].label}
-          <button type="button" onClick={() => filterEl.current.handleCheckItem(keyBlock, key)} className="delete" />
-        </span>
-      ))
-    ));
+    return Object.keys(activeTags).map((keyBlock) => {
+      const config = options.find(i => i.field_name === keyBlock);
+      if (!config) return null;
+      const availableValues = config.options.map(o => o.value);
+
+      return (
+        activeTags[keyBlock].filter(x => x).filter(x => availableValues.includes(x)).map((key, i) => (
+          <span key={`tag_${keyBlock}_${i}`} className="tag">
+            {config.options.filter(l => l.value === key)[0].label}
+            <button type="button" onClick={() => filterEl.current.handleCheckItem(keyBlock, key)} className="delete" />
+          </span>
+        ))
+      );
+    });
   }
 
   renderTimeRangeTags = (activeFilters, filterConfig) => {
