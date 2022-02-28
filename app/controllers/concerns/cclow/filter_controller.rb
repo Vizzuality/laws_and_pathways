@@ -30,7 +30,11 @@ module CCLOW
     end
 
     def instruments_options
-      instruments = Instrument.joins(:legislations).distinct.map { |j| {value: j.id, label: j.name} }
+      instruments = Instrument
+        .joins(:legislations)
+        .includes(:instrument_type)
+        .distinct
+        .map { |i| {value: i.id, label: "#{i.instrument_type.name} | #{i.name}"} }
       [{field_name: 'instrument', options: instruments.sort_by { |h| h[:label] }}]
     end
 
