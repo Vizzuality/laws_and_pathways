@@ -26,4 +26,17 @@ RSpec.describe Instrument, type: :model do
     subject.instrument_type = nil
     expect(subject).to have(1).errors_on(:instrument_type)
   end
+
+  it 'should be invalid if name is taken in instrument type scope' do
+    type = create(:instrument_type)
+    subject.instrument_type = type
+
+    # name taken but for other type
+    create(:instrument, name: 'try this name')
+    subject.name = 'try this name'
+    expect(subject).to be_valid
+
+    create(:instrument, instrument_type: type, name: 'try this name')
+    expect(subject).to have(1).errors_on(:name) # now name is taken for the same type
+  end
 end

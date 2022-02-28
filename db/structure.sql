@@ -2439,6 +2439,13 @@ CREATE INDEX index_governance_types_on_discarded_at ON public.governance_types U
 
 
 --
+-- Name: index_governance_types_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_governance_types_on_name ON public.governance_types USING btree (name);
+
+
+--
 -- Name: index_governances_legislations_on_governance_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2467,6 +2474,13 @@ CREATE INDEX index_governances_on_governance_type_id ON public.governances USING
 
 
 --
+-- Name: index_governances_on_name_and_governance_type_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_governances_on_name_and_governance_type_id ON public.governances USING btree (name, governance_type_id);
+
+
+--
 -- Name: index_images_on_content_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2478,6 +2492,13 @@ CREATE INDEX index_images_on_content_id ON public.images USING btree (content_id
 --
 
 CREATE INDEX index_instrument_types_on_discarded_at ON public.instrument_types USING btree (discarded_at);
+
+
+--
+-- Name: index_instrument_types_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_instrument_types_on_name ON public.instrument_types USING btree (name);
 
 
 --
@@ -2506,6 +2527,13 @@ CREATE INDEX index_instruments_on_discarded_at ON public.instruments USING btree
 --
 
 CREATE INDEX index_instruments_on_instrument_type_id ON public.instruments USING btree (instrument_type_id);
+
+
+--
+-- Name: index_instruments_on_name_and_instrument_type_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_instruments_on_name_and_instrument_type_id ON public.instruments USING btree (name, instrument_type_id);
 
 
 --
@@ -3346,6 +3374,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210316164558'),
 ('20210514085536'),
 ('20211116114117'),
-('20220215170029');
+('20220215170029'),
+('20220218100325'),
+('20220218100643');
 
 

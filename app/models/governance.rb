@@ -19,6 +19,7 @@ class Governance < ApplicationRecord
   scope :ordered_with_parent, -> { joins(:governance_type).order('governance_types.name ASC, governances.name ASC') }
 
   validates_presence_of :name
+  validates_uniqueness_of :name, scope: [:governance_type_id], case_sensitive: false
 
   def self.to_select
     pluck(Arel.sql("CONCAT('[', governance_types.name, '] ', governances.name)"), :id)

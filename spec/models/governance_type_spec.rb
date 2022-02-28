@@ -20,4 +20,10 @@ RSpec.describe GovernanceType, type: :model do
     subject.name = nil
     expect(subject).to have(1).errors_on(:name)
   end
+
+  it 'should be invalid if name is taken' do
+    create(:governance_type, name: 'governance_type')
+    subject.name = 'governance_type'
+    expect(subject).to have(1).errors_on(:name)
+  end
 end
