@@ -1,4 +1,9 @@
 module ApplicationHelper
+  def ie_browser?
+    (request.user_agent.include?('MSIE') && !request.user_agent.include?('Opera')) ||
+      request.user_agent.match?(/Trident\/.*?; rv:(.*?)/)
+  end
+
   def humanize_boolean(value)
     value ? 'Yes' : 'No'
   end
