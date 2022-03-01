@@ -1,5 +1,7 @@
 module ApplicationHelper
   def ie_browser?
+    return false if request.user_agent.blank?
+
     (request.user_agent.include?('MSIE') && !request.user_agent.include?('Opera')) ||
       request.user_agent.match?(/Trident\/.*?; rv:(.*?)/)
   end
