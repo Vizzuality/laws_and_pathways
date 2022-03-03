@@ -39,7 +39,11 @@ module CCLOW
     end
 
     def themes_options
-      themes = Theme.joins(:legislations).distinct.map { |j| {value: j.id, label: j.name} }
+      themes = Theme
+        .joins(:legislations)
+        .includes(:theme_type)
+        .distinct
+        .map { |t| {value: t.id, label: "#{t.theme_type.name} | #{t.name}"} }
       [{field_name: 'theme', options: themes.sort_by { |h| h[:label] }}]
     end
 
