@@ -21,7 +21,7 @@ module CSVExport
           targets.each do |target|
             csv << [
               target.target_type,
-              target.description,
+              strip_outer_div(target.description),
               format_boolean(target.ghg_target),
               target.year,
               target.base_year_period,

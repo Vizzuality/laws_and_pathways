@@ -27,17 +27,17 @@ module CSVExport
               legislation.legislation_type.downcase,
               legislation.geography_name,
               legislation.geography_iso,
-              legislation.frameworks_string,
-              legislation.responses_string,
+              legislation.frameworks_csv,
+              legislation.responses_csv,
               format_instruments(legislation.instruments),
-              legislation.document_types_string,
-              legislation.natural_hazards_string,
-              legislation.keywords_string,
+              legislation.document_types_csv,
+              legislation.natural_hazards_csv,
+              legislation.keywords_csv,
               format_sectors(legislation.laws_sectors),
               format_events(legislation.events),
               format_documents(legislation.documents),
               legislation.parent&.title,
-              legislation.description
+              strip_outer_div(legislation.description)
             ]
           end
         end

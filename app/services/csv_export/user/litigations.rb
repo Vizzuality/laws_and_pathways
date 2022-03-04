@@ -29,8 +29,8 @@ module CSVExport
               litigation.geography_iso,
               litigation.jurisdiction,
               litigation.citation_reference_number,
-              litigation.responses_string,
-              litigation.at_issue,
+              litigation.responses_csv,
+              strip_outer_div(litigation.at_issue),
               format_laws(litigation.legislations),
               format_laws(litigation.external_legislations),
               format_sectors(litigation.laws_sectors),
@@ -38,7 +38,7 @@ module CSVExport
               format_sides('b', litigation),
               format_sides('c', litigation),
               format_events(litigation.events),
-              litigation.summary
+              strip_outer_div(litigation.summary)
             ]
           end
         end
