@@ -54,7 +54,7 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller, retry
       laws_sectors: [sector1],
       geography: geography,
       title: 'Example',
-      description: 'Legislation example',
+      description: '<div>Legislation <div>This div should not be removed</div>example</div>',
       keywords: [keyword],
       events: [
         build(:legislation_event, date: Date.parse('2019-03-02')),
@@ -70,7 +70,7 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller, retry
       geography: geography,
       laws_sectors: [sector1],
       title: 'Legislation Example',
-      description: 'Example',
+      description: '<div>Example</div>',
       events: [
         build(:legislation_event, date: Date.parse('2018-03-03')),
         build(:legislation_event, date: Date.parse('2018-05-01'))
