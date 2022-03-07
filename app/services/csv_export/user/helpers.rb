@@ -3,6 +3,10 @@ module CSVExport
     module Helpers
       private
 
+      def bom
+        "\xEF\xBB\xBF"
+      end
+
       def format_events(events)
         return unless events.any?
 

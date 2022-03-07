@@ -1,6 +1,8 @@
 module CCLOW
   class LitigationCasesController < CCLOWController
     include FilterController
+    include Streaming
+
     def index
       add_breadcrumb('Climate Change Laws of the World', cclow_root_path)
       add_breadcrumb('Litigation cases', cclow_litigation_cases_path)
@@ -40,9 +42,10 @@ module CCLOW
         end
         format.csv do
           timestamp = Time.now.strftime('%d%m%Y')
+          filename = "litigation_cases_#{timestamp}.csv"
           litigation_ids = @litigations.reorder(:id).pluck(:id)
-          render csv: CSVExport::User::Litigations.new(litigation_ids).call,
-                 filename: "litigation_cases_#{timestamp}"
+
+          stream_csv CSVExport::User::Litigations.new(litigation_ids).call, filename
         end
       end
     end

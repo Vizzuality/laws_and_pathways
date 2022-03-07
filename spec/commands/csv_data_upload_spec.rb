@@ -28,6 +28,8 @@ describe 'CSVDataUpload (integration)' do
   end
 
   describe 'errors handling' do
+    before(:each) { allow_any_instance_of(Kernel).to receive(:warn) } # suppress warning message
+
     it 'sets error for unknown uploader class' do
       command = Command::CSVDataUpload.new(uploader: 'FooUploader', file: companies_csv)
 

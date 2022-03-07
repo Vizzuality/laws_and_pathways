@@ -110,7 +110,7 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller, retry
         allow_any_instance_of(Document).to receive(:file_url).and_return('http://internal-url.com')
 
         get :index, format: :csv
-        expect(response.content_type).to eq('text/csv')
+        expect(response.content_type).to include('text/csv')
         # remove snapshot to update it (from spec/snapshots)
         # make sure no dynamic, sequenced entity values are used
         io = StringIO.new(response.body)
@@ -134,7 +134,7 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller, retry
 
       it 'responds to csv' do
         get :index, params: params, format: :csv
-        expect(response.content_type).to eq('text/csv')
+        expect(response.content_type).to include('text/csv')
       end
     end
 
@@ -156,7 +156,7 @@ RSpec.describe CCLOW::LegislationAndPoliciesController, type: :controller, retry
 
       it 'responds to csv' do
         get :index, params: params, format: :csv
-        expect(response.content_type).to eq('text/csv')
+        expect(response.content_type).to include('text/csv')
       end
     end
 
