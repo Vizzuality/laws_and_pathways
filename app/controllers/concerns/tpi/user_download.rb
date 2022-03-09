@@ -19,11 +19,14 @@ module TPI
 
       timestamp = Time.now.strftime('%d%m%Y')
 
+      latest_cp_assessments_csv = CSVExport::User::CompanyLatestAssessments.new(mq_assessments, cp_assessments).call
+      cp_assessments_csv = CSVExport::User::CPAssessments.new(cp_assessments).call
+      sector_benchmarks_csv = CSVExport::User::CPBenchmarks.new(cp_benchmarks).call
+
       render zip: (mq_assessments_files || {}).merge(
-        'Company_Latest_Assessments.csv' => CSVExport::User::CompanyLatestAssessments
-          .new(mq_assessments, cp_assessments).call,
-        "CP_Assessments_#{timestamp}.csv" => CSVExport::User::CPAssessments.new(cp_assessments).call,
-        "Sector_Benchmarks_#{timestamp}.csv" => CSVExport::User::CPBenchmarks.new(cp_benchmarks).call
+        'Company_Latest_Assessments.csv' => latest_cp_assessments_csv,
+        "CP_Assessments_#{timestamp}.csv" => cp_assessments_csv,
+        "Sector_Benchmarks_#{timestamp}.csv" => sector_benchmarks_csv
       ).compact, filename: "#{filename} - #{timestamp}"
     end
   end

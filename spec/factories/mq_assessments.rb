@@ -41,7 +41,7 @@ FactoryBot.define do
         {
           level: QuestionFactoryHelper.get_question_level(nr),
           question: "Question nr #{nr}",
-          answer: %w[Yes No].sample
+          answer: (nr % 3).zero? ? 'No' : 'Yes'
         }
       end
     end
