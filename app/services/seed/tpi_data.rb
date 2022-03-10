@@ -30,14 +30,14 @@ module Seed
         run_importer CSVImport::MQAssessments.new(seed_file('mq-assessments-M3.csv'))
       end
 
-      TimedLogger.log('Import News Articles') do
-        run_importer CSVImport::NewsArticles.new(seed_file('tpi-news-articles.csv'), allow_tags_adding: true)
-        random_assign_images_to_articles
-      end
+      # TimedLogger.log('Import News Articles') do
+      #   run_importer CSVImport::NewsArticles.new(seed_file('tpi-news-articles.csv'), allow_tags_adding: true)
+      #   random_assign_images_to_articles
+      # end
 
-      TimedLogger.log('Create Publications') do
-        create_publications
-      end
+      # TimedLogger.log('Create Publications') do
+      #   create_publications
+      # end
     end
 
     def import_sector_clusters

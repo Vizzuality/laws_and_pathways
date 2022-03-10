@@ -1,10 +1,10 @@
-ActiveAdmin.register GovernanceType do
+ActiveAdmin.register ThemeType do
   menu parent: 'Laws', priority: 9
   config.batch_actions = false
 
   permit_params :name
 
-  decorate_with GovernanceTypeDecorator
+  decorate_with ThemeTypeDecorator
 
   filter :name_contains, label: 'Name'
 

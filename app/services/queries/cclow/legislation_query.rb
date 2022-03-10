@@ -19,7 +19,7 @@ module Queries
           .merge(filter_by_geography_or_region)
           .merge(filter_by_tags)
           .merge(filter_by_instruments)
-          .merge(filter_by_governances)
+          .merge(filter_by_themes)
           .merge(filter_by_last_change_from)
           .merge(filter_by_last_change_to)
           .merge(filter_by_law_passed_from)
@@ -39,10 +39,10 @@ module Queries
         scope.joins(:instruments).where(instruments: {id: params[:instrument]})
       end
 
-      def filter_by_governances
-        return scope unless params[:governance].present?
+      def filter_by_themes
+        return scope unless params[:theme].present?
 
-        scope.joins(:governances).where(governances: {id: params[:governance]})
+        scope.joins(:themes).where(themes: {id: params[:theme]})
       end
 
       def filter_by_type

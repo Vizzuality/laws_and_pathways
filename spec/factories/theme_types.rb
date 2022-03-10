@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: governance_types
+# Table name: theme_types
 #
 #  id           :bigint           not null, primary key
 #  name         :string
@@ -10,13 +10,13 @@
 #
 
 FactoryBot.define do
-  factory :governance_type do
-    sequence(:name) { |n| "governance_type#{n}" }
+  factory :theme_type do
+    sequence(:name) { |n| "theme_type#{n}" }
 
-    trait :with_governances do
+    trait :with_themes do
       after(:create) do
-        create :governance
-        create :governance
+        create :theme
+        create :theme
       end
     end
   end

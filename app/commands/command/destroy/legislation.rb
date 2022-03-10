@@ -16,7 +16,7 @@ module Command
             r.litigations = []
             r.targets = []
             r.instruments = []
-            r.governances = []
+            r.themes = []
           end
         end
       end

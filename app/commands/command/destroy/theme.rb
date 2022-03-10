@@ -1,6 +1,6 @@
 module Command
   module Destroy
-    class GovernanceType
+    class Theme
       def initialize(resource)
         @resource = resource
       end
@@ -10,7 +10,7 @@ module Command
           @resource.tap do |r|
             r.discard
 
-            r.governances = []
+            r.legislations = []
           end
         end
       end

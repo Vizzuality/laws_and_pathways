@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: governance_types
+# Table name: theme_types
 #
 #  id           :bigint           not null, primary key
 #  name         :string
@@ -11,8 +11,8 @@
 
 require 'rails_helper'
 
-RSpec.describe GovernanceType, type: :model do
-  subject { build(:governance_type) }
+RSpec.describe ThemeType, type: :model do
+  subject { build(:theme_type) }
 
   it { is_expected.to be_valid }
 
@@ -22,8 +22,8 @@ RSpec.describe GovernanceType, type: :model do
   end
 
   it 'should be invalid if name is taken' do
-    create(:governance_type, name: 'governance_type')
-    subject.name = 'governance_type'
+    create(:theme_type, name: 'theme_type')
+    subject.name = 'theme_type'
     expect(subject).to have(1).errors_on(:name)
   end
 end
