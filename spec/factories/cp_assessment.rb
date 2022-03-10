@@ -14,9 +14,14 @@ FactoryBot.define do
     years_with_targets { [2025, 2030, 2040] }
 
     emissions do
-      (2013..2030).map do |year|
-        {year => rand(120..140)}
-      end.reduce(&:merge)
+      {
+        2013 => 120,
+        2014 => 124,
+        2015 => 125,
+        2016 => 121,
+        2017 => 125,
+        2018 => 128
+      }
     end
   end
 end

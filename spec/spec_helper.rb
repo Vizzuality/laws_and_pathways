@@ -5,6 +5,7 @@ require 'rspec/retry'
 
 SimpleCov.start do
   add_filter '/spec/'
+  add_filter '/lib/tasks/'
 end
 
 # Use Timecop with the block syntax since it always puts time back the way it was.

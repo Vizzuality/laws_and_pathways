@@ -19,9 +19,14 @@ FactoryBot.define do
     scenario { 'Paris pledges' }
 
     emissions do
-      (2013..2030).map do |year|
-        {year => rand(120..140)}
-      end.reduce(&:merge)
+      {
+        2013 => 121,
+        2014 => 124,
+        2015 => 125,
+        2016 => 120,
+        2017 => 125,
+        2018 => 128
+      }
     end
   end
 end
