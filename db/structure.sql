@@ -411,7 +411,8 @@ CREATE TABLE public.cp_benchmarks (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     emissions jsonb,
-    scenario character varying
+    scenario character varying,
+    region character varying DEFAULT 'Global'::character varying NOT NULL
 );
 
 
@@ -3363,6 +3364,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220215170029'),
 ('20220218100325'),
 ('20220218100643'),
-('20220221123402');
-
-
+('20220221123402'),
+('20220310091530');

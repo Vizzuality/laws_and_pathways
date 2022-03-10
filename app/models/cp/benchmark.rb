@@ -9,6 +9,7 @@
 #  updated_at   :datetime         not null
 #  emissions    :jsonb
 #  scenario     :string
+#  region       :string           default("Global"), not null
 #
 
 module CP
@@ -16,12 +17,21 @@ module CP
     include HasEmissions
     include TPICache
 
+    REGIONS = %w[
+      Europe
+      Global
+      North-America
+      OECD
+      non-OECD
+    ].freeze
+
     belongs_to :sector, class_name: 'TPISector', foreign_key: 'sector_id'
 
     scope :latest_first, -> { order(release_date: :desc) }
     scope :by_release_date, -> { order(:release_date) }
 
     validates_presence_of :release_date, :scenario
+    validates :region, inclusion: {in: REGIONS}
 
     def benchmark_id
       [sector.name, release_date].join('_')
