@@ -4,6 +4,56 @@ RSpec.describe Admin::ThemeTypesController, type: :controller do
   let(:admin) { create(:admin_user) }
   before { sign_in admin }
 
+  let_it_be(:theme_type) { create(:theme_type) }
+
+  describe 'GET index' do
+    subject { get :index }
+
+    it { is_expected.to be_successful }
+  end
+
+  describe 'GET show' do
+    subject { get :show, params: {id: theme_type.id} }
+
+    it { is_expected.to be_successful }
+  end
+
+  describe 'GET new' do
+    subject { get :new }
+
+    it { is_expected.to be_successful }
+  end
+
+  describe 'GET edit' do
+    subject { get :edit, params: {id: theme_type.id} }
+
+    it { is_expected.to be_successful }
+  end
+
+  describe 'POST create' do
+    context 'with valid params' do
+      let(:valid_params) { attributes_for(:theme_type) }
+
+      subject { post :create, params: {theme_type: valid_params} }
+
+      it 'creates a new theme Type' do
+        expect { subject }.to change(ThemeType, :count).by(1)
+      end
+    end
+
+    context 'with invalid params' do
+      let(:invalid_params) { attributes_for(:theme_type, name: nil) }
+
+      subject { post :create, params: {theme_type: invalid_params} }
+
+      it { is_expected.to be_successful }
+
+      it 'invalid_attributes do not create an instrument type' do
+        expect { subject }.not_to change(ThemeType, :count)
+      end
+    end
+  end
+
   describe 'DELETE destroy' do
     let!(:theme_type) { create(:theme_type, discarded_at: nil) }
 

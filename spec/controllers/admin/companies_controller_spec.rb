@@ -20,6 +20,16 @@ RSpec.describe Admin::CompaniesController, type: :controller do
     it { is_expected.to be_successful }
   end
 
+  describe 'GET index with .csv format' do
+    before :each do
+      get :index, format: 'csv'
+    end
+
+    it('returns CSV file') do
+      expect(response.header['Content-Type']).to include('text/csv')
+    end
+  end
+
   describe 'GET show' do
     subject { get :show, params: {id: company.id} }
 

@@ -13,5 +13,17 @@
 require 'rails_helper'
 
 RSpec.describe Testimonial, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { build(:testimonial) }
+
+  it { is_expected.to be_valid }
+
+  it 'should be invalid without author' do
+    subject.author = nil
+    expect(subject).to have(1).errors_on(:author)
+  end
+
+  it 'should be invalid without quote' do
+    subject.quote = nil
+    expect(subject).to have(1).errors_on(:quote)
+  end
 end
