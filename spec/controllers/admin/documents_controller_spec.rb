@@ -91,7 +91,7 @@ RSpec.describe Admin::DocumentsController, type: :controller do
 
       # only header expected
       expected_columns = [
-        'Id', 'Name', 'External url',
+        'Id', 'Name', 'Url', 'Is external',
         'Language', 'Last verified on',
         'Documentable id', 'Documentable type'
       ]
