@@ -32,6 +32,39 @@ namespace :fix do
     end
   end
 
+  task trix_outer_div: :environment do
+    for_real = ENV['FOR_REAL'] == 'true'
+
+    puts 'Stripping outer divs placed by trix editor'
+    # just use before_validation code to strip outer div
+    ActiveRecord::Base.transaction do
+      puts 'Legislations...'
+      Legislation.find_each do |l|
+        l.save!(touch: false)
+      end
+
+      puts 'Litigations...'
+      Litigation.find_each do |l|
+        l.save!(touch: false)
+      end
+
+      puts 'Geographies...'
+      Geography.find_each do |g|
+        g.save!(touch: false)
+      end
+
+      puts 'Targets...'
+      Target.find_each do |t|
+        t.save!(touch: false)
+      end
+
+      raise ActiveRecord::Rollback unless for_real
+    end
+
+    puts 'Stripping outer divs placed by trix editor' if for_real
+    puts 'Rollback' unless for_real
+  end
+
   private
 
   def update_all(model, attribute, wrong, right)

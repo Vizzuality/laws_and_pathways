@@ -63,6 +63,12 @@ RSpec.describe Geography, type: :model do
     expect(geography.slug).to eq('new-name')
   end
 
+  it 'should trip outer div for trix fields before validation' do
+    subject.legislative_process = '<div>Some content <div>do not remove this</div></div>'
+    expect(subject).to be_valid
+    expect(subject.legislative_process).to eq('Some content <div>do not remove this</div>')
+  end
+
   context 'full_text_search' do
     let!(:portugal) {
       create(

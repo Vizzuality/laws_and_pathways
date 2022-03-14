@@ -36,7 +36,7 @@ module CSVExport
                 format_events(legislation.events),
                 format_documents(legislation.documents),
                 legislation.parent&.title,
-                strip_outer_div(legislation.description)
+                legislation.description
               ]
             )
           end

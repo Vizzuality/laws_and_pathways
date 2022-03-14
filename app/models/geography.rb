@@ -93,6 +93,12 @@ class Geography < ApplicationRecord
   validates :federal, inclusion: {in: [true, false]}
   validates :region, inclusion: {in: REGIONS}
 
+  before_validation :trix_strip_outer_div
+
+  def trix_strip_outer_div
+    self.legislative_process = HTMLHelper.strip_outer_div(legislative_process) if legislative_process.present?
+  end
+
   def should_generate_new_friendly_id?
     name_changed? || super
   end

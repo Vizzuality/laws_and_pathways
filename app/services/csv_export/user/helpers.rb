@@ -37,10 +37,6 @@ module CSVExport
 
         value ? 'Yes' : 'No'
       end
-
-      def strip_outer_div(content)
-        content.gsub(/\A<div>(.*)<\/div>\z/su, '\1').strip
-      end
     end
   end
 end

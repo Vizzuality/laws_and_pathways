@@ -82,6 +82,13 @@ class Litigation < ApplicationRecord
 
   validates_presence_of :title, :slug, :document_type
 
+  before_validation :trix_strip_outer_div
+
+  def trix_strip_outer_div
+    self.at_issue = HTMLHelper.strip_outer_div(at_issue) if at_issue.present?
+    self.summary = HTMLHelper.strip_outer_div(summary) if summary.present?
+  end
+
   def should_generate_new_friendly_id?
     title_changed? || super
   end

@@ -99,6 +99,12 @@ class Legislation < ApplicationRecord
   validates_presence_of :title, :slug, :legislation_type
   validates_uniqueness_of :slug
 
+  before_validation :trix_strip_outer_div
+
+  def trix_strip_outer_div
+    self.description = HTMLHelper.strip_outer_div(description) if description.present?
+  end
+
   def should_generate_new_friendly_id?
     title_changed? || super
   end

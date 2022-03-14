@@ -20,7 +20,7 @@ module CSVExport
             csv << CSV.generate_line(
               [
                 target.target_type,
-                strip_outer_div(target.description),
+                target.description,
                 format_boolean(target.ghg_target),
                 target.year,
                 target.base_year_period,
