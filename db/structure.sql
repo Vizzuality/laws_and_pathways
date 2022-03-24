@@ -377,7 +377,11 @@ CREATE TABLE public.cp_assessments (
     cp_alignment_year_override integer,
     cp_alignment_2025 character varying,
     cp_alignment_2035 character varying,
-    years_with_targets integer[]
+    years_with_targets integer[],
+    region character varying,
+    cp_regional_alignment_2025 character varying,
+    cp_regional_alignment_2035 character varying,
+    cp_regional_alignment_2050 character varying
 );
 
 
@@ -3365,4 +3369,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220218100325'),
 ('20220218100643'),
 ('20220221123402'),
-('20220310091530');
+('20220310091530'),
+('20220324160017');

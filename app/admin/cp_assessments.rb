@@ -7,6 +7,7 @@ ActiveAdmin.register CP::Assessment do
 
   permit_params :assessment_date, :publication_date, :company_id, :last_reported_year,
                 :assumptions, :cp_alignment, :cp_alignment_2025, :cp_alignment_2035,
+                :region, :cp_regional_alignment_2025, :cp_regional_alignment_2035, :cp_regional_alignment_2050,
                 :cp_alignment_year_override, :years_with_targets_string, :emissions
 
   filter :assessment_date
@@ -26,6 +27,10 @@ ActiveAdmin.register CP::Assessment do
       row :cp_alignment
       row :cp_alignment_2025
       row :cp_alignment_2035
+      row :region
+      row :cp_regional_alignment_2025
+      row :cp_regional_alignment_2035
+      row :cp_regional_alignment_2050
       row :cp_alignment_year
       row :years_with_targets
       row :assumptions
@@ -71,6 +76,10 @@ ActiveAdmin.register CP::Assessment do
     column :cp_alignment
     column :cp_alignment_2025
     column :cp_alignment_2035
+    column :region
+    column :cp_regional_alignment_2025
+    column :cp_regional_alignment_2035
+    column :cp_regional_alignment_2050
     column :cp_alignment_year_override
     column :years_with_targets, &:years_with_targets_csv
   end

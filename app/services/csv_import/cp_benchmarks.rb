@@ -9,7 +9,7 @@ module CSVImport
         benchmark.sector = find_or_create_tpi_sector(row[:sector]) if row.header?(:sector)
         benchmark.release_date = parse_date(row[:release_date]) if row.header?(:release_date)
         benchmark.scenario = row[:scenario] if row.header?(:scenario)
-        benchmark.region = parse_region(row[:region]) if row.header?(:region)
+        benchmark.region = parse_cp_benchmark_region(row[:region]) if row.header?(:region)
         benchmark.emissions = parse_emissions(row) if emission_headers?(row)
 
         was_new_record = benchmark.new_record?
@@ -29,14 +29,6 @@ module CSVImport
 
     def required_headers
       [:id]
-    end
-
-    def parse_region(region)
-      regions_hash[region&.downcase]
-    end
-
-    def regions_hash
-      @regions_hash ||= CP::Benchmark::REGIONS.map { |r| {r.downcase => r} }.reduce(&:merge)
     end
 
     def prepare_benchmark(row)
