@@ -1069,9 +1069,7 @@ describe 'CSVDataUpload (integration)' do
     expect(assessment.cp_regional_alignment_2025).to eq('1.5 Degrees')
     expect(assessment.cp_regional_alignment_2035).to eq('2 Degrees')
     expect(assessment.cp_regional_alignment_2050).to eq('International Pledges')
-    expect(assessment.cp_alignment_year_override).to eq(2030)
     expect(assessment2.cp_alignment).to eq('Not Aligned')
-    expect(assessment2.cp_alignment_year_override).to be_nil
   end
 
   it 'imports CSV files with MQ Assessments data' do

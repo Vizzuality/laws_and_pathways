@@ -25,7 +25,6 @@ module CSVImport
           assessment.cp_regional_alignment_2050 = CP::Alignment.format_name(row[:cp_regional_alignment_2050])
         end
         assessment.years_with_targets = get_years_with_targets(row) if row.header?(:years_with_targets)
-        assessment.cp_alignment_year_override = row[:cp_alignment_year_override] if row.header?(:cp_alignment_year_override)
 
         was_new_record = assessment.new_record?
         any_changes = assessment.changed?
