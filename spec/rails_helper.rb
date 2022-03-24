@@ -45,6 +45,10 @@ FactoryBot::SyntaxRunner.class_eval do
   include ActionDispatch::TestProcess
 end
 
+# TODO: remove when new capybara and selenium webdriver arrive
+# https://github.com/teamcapybara/capybara/issues/2511
+Selenium::WebDriver.logger.ignore(:browser_options)
+
 RSpec.configure do |config|
   config.request_snapshots_dir = 'spec/fixtures/snapshots'
 
