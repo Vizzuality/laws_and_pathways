@@ -1,0 +1,13 @@
+<% if alignment.present? %>
+  <div class="cp-alignment-container">
+    <h5><%== header %></h5>
+
+    <div class="cp-alignment">
+      <% unless alignment.not_assessed? %>
+        <span class="cp-alignment__circle" style="background-color: <%= alignment.color %>">
+        </span>
+      <% end %>
+      <%= alignment.name %>
+    </div>
+  </div>
+<% end %>

@@ -3,6 +3,13 @@ $max-lines: 3;
 $dots-space: 1.3rem;
 
 .company-page {
+  .change-view {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+  }
+
   .companies-header {
     background: $blue;
 
