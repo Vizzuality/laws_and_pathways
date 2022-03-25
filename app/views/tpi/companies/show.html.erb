@@ -36,8 +36,8 @@
 
   <% if @company.cp_alignment_region.present? %>
     <section class="container change-view buttons has-addons">
-      <%= link_to "Global view", params.to_unsafe_hash.merge(view: nil), class: "button #{!regional_view ? 'is-primary' : 'is-secondary'}" %>
-      <%= link_to "Regional view", params.to_unsafe_hash.merge(view: 'regional'), class: "button #{regional_view ? 'is-primary' : 'is-secondary'}" %>
+      <%= link_to "Global view", {view: nil}, class: "button #{!regional_view ? 'is-primary' : 'is-secondary'}" %>
+      <%= link_to "Regional view", {view: 'regional'}, class: "button #{regional_view ? 'is-primary' : 'is-secondary'}" %>
     </section>
   <% end %>
 
@@ -48,9 +48,9 @@
           <div class="summary-box summary-box--assessment">
             <h4>Management Quality</h4>
             <p>
-              <small>Number of assessments: <%= @company.mq_assessments.currently_published.size %></small>
+              <small>Number of assessments: <%= @company_presenter.mq_assessments.size %></small>
             </p>
-            <% if @company.mq_assessments.currently_published.any? %>
+            <% if @company_presenter.mq_assessments.any? %>
               <%= render 'mq_level', level: @company.mq_level, status: @company.mq_status %>
               <p>
                 <%= t("tpi.company.level_description.#{@company.mq_level.to_i}") %></h3>
@@ -64,7 +64,7 @@
           <div class="summary-box summary-box--assessment">
             <h4>Carbon Performance</h4>
             <p>
-              <small>Number of assessments: <%= @company.cp_assessments.currently_published.size %></small>
+              <small>Number of assessments: <%= @company_presenter.cp_assessments.size %></small>
             </p>
 
             <% unless regional_view %>
@@ -128,7 +128,7 @@
     </div>
   </section>
 
-  <% if @company.mq_assessments.currently_published.any? %>
+  <% if @company_presenter.mq_assessments.any? %>
     <section id="management-quality" class="management-quality container">
       <div class="management-quality__header">
         <h4>
@@ -144,7 +144,7 @@
               name: 'mq_assessment_id',
               remote: true,
               url: mq_assessment_tpi_company_path(@company),
-              data: @company.mq_assessments.currently_published.order(assessment_date: :desc).map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
+              data: @company_presenter.mq_assessments.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
               selected: params[:mq_assessment_id]
             }) %>
           </div>
@@ -162,7 +162,7 @@
             name: 'mq_assessment_id',
             remote: true,
             url: mq_assessment_tpi_company_path(@company),
-            data: @company.mq_assessments.currently_published.order(assessment_date: :desc).map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
+            data: @company_presenter.mq_assessments.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
             selected: params[:mq_assessment_id]
           }) %>
         </div>
@@ -175,8 +175,7 @@
     </section>
   <% end %>
 
-
-  <% if @company.cp_assessments.currently_published.any? %>
+  <% if @company_presenter.cp_assessments.any? %>
     <section id="carbon-performance" class="carbon-performance container">
       <div class="management-quality__header">
         <h4>
@@ -194,7 +193,7 @@
                 name: 'cp_assessment_id',
                 remote: true,
                 url: cp_assessment_tpi_company_path(@company),
-                data: @company.cp_assessments.currently_published.order(assessment_date: :desc).map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
+                data: @company_presenter.cp_assessments.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
                 selected: params[:cp_assessment_id]
               }) %>
             </div>

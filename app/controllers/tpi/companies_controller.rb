@@ -8,7 +8,7 @@ module TPI
     before_action :fetch_mq_assessment, only: [:show, :mq_assessment, :assessments_levels_chart_data]
 
     def show
-      @company_presenter = ::Api::Presenters::Company.new(@company)
+      @company_presenter = ::Api::Presenters::Company.new(@company, params[:view])
 
       @sectors = TPISector.select(:id, :name, :slug).order(:name)
       @companies = Company.published.joins(:sector)
