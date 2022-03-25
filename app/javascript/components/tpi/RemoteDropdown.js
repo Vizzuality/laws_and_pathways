@@ -27,11 +27,11 @@ List.propTypes = {
   onSelect: PropTypes.func.isRequired
 };
 
-function RemoteDropdown({ url, data, name }) {
+function RemoteDropdown({ url, data, selected, name }) {
   const Dropdown = useRef(null);
   const Select = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [label, setLabel] = useState(false);
+  const [label, setLabel] = useState(data.find(d => d.value.toString() === selected?.toString())?.label);
 
   useOutsideClick(Dropdown, () => setIsOpen(false));
 
@@ -59,6 +59,9 @@ function RemoteDropdown({ url, data, name }) {
     </>
   );
 }
+RemoteDropdown.defaultProps = {
+  selected: null
+};
 
 RemoteDropdown.propTypes = {
   data: PropTypes.arrayOf(
@@ -68,7 +71,8 @@ RemoteDropdown.propTypes = {
     }).isRequired
   ).isRequired,
   url: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
+  selected: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.number.isRequired])
 };
 
 export default RemoteDropdown;
