@@ -41,7 +41,7 @@ module TPI
     # Type:     line chart
     # On pages: :show
     def emissions_chart_data
-      data = ::Api::Charts::CPAssessment.new(@cp_assessment).emissions_data
+      data = ::Api::Charts::CPAssessment.new(@cp_assessment, params[:view]).emissions_data
 
       render json: data.chart_json
     end
