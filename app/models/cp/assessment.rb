@@ -16,6 +16,10 @@
 #  cp_alignment_2025          :string
 #  cp_alignment_2035          :string
 #  years_with_targets         :integer          is an Array
+#  region                     :string
+#  cp_regional_alignment_2025 :string
+#  cp_regional_alignment_2035 :string
+#  cp_regional_alignment_2050 :string
 #
 
 module CP
