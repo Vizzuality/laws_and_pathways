@@ -42,8 +42,8 @@ module Api
           .published
           .active
           .includes(:latest_cp_assessment, sector: [:cluster])
-          .select { |c| c.cp_alignment.present? }
-          .reject { |c| CP::Alignment.new(name: c.cp_alignment, sector: c.sector.name).not_assessed? }
+          .select { |c| c.cp_alignment_2050.present? }
+          .reject { |c| CP::Alignment.new(name: c.cp_alignment_2050, sector: c.sector.name).not_assessed? }
 
         all_sectors = all_companies.map(&:sector).uniq
         cp_alignment_data = COLOR_DESCRIPTIONS.keys
@@ -51,7 +51,7 @@ module Api
           .reduce(&:merge)
 
         all_companies.each do |company|
-          cp_alignment = CP::Alignment.new(name: company.cp_alignment, sector: company.sector.name)
+          cp_alignment = CP::Alignment.new(name: company.cp_alignment_2050, sector: company.sector.name)
           alignment_key = cp_alignment.color
           cp_alignment_data[alignment_key] ||= all_sectors.map { |s| {s.name => 0} }.reduce(&:merge)
           cp_alignment_data[alignment_key]

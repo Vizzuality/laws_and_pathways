@@ -49,7 +49,7 @@ module CSVExport
               assessment.assessment_date,
               assessment.cp_alignment_2025,
               assessment.cp_alignment_2035,
-              assessment.cp_alignment,
+              assessment.cp_alignment_2050,
               assessment.years_with_targets&.join(';'),
               assessment.cp_benchmark_id,
               assessment.last_reported_year,

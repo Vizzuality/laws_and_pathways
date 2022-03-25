@@ -6,7 +6,7 @@ ActiveAdmin.register CP::Assessment do
   decorate_with CP::AssessmentDecorator
 
   permit_params :assessment_date, :publication_date, :company_id, :last_reported_year,
-                :assumptions, :cp_alignment, :cp_alignment_2025, :cp_alignment_2035,
+                :assumptions, :cp_alignment_2025, :cp_alignment_2035, :cp_alignment_2050,
                 :region, :cp_regional_alignment_2025, :cp_regional_alignment_2035, :cp_regional_alignment_2050,
                 :years_with_targets_string, :emissions
 
@@ -24,7 +24,7 @@ ActiveAdmin.register CP::Assessment do
       row :assessment_date
       row :publication_date
       row :last_reported_year
-      row :cp_alignment
+      row :cp_alignment_2050
       row :cp_alignment_2025
       row :cp_alignment_2035
       row :region
@@ -49,7 +49,7 @@ ActiveAdmin.register CP::Assessment do
   index do
     column :title, &:title_link
     column :company
-    column :cp_alignment
+    column :cp_alignment_2050
     column :cp_alignment_2025
     column :cp_alignment_2035
     column :assessment_date

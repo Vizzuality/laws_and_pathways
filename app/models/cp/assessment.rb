@@ -12,8 +12,7 @@
 #  updated_at                 :datetime         not null
 #  discarded_at               :datetime
 #  last_reported_year         :integer
-#  cp_alignment               :string
-#  cp_alignment_year_override :integer
+#  cp_alignment_2050          :string
 #  cp_alignment_2025          :string
 #  cp_alignment_2035          :string
 #  years_with_targets         :integer          is an Array
@@ -40,7 +39,7 @@ module CP
     validates :publication_date, date_after: Date.new(2010, 12, 31)
 
     with_options allow_nil: true, allow_blank: true, inclusion: {in: CP::Alignment::ALLOWED_NAMES} do
-      validates :cp_alignment
+      validates :cp_alignment_2050
       validates :cp_alignment_2025
       validates :cp_alignment_2035
     end
@@ -51,10 +50,6 @@ module CP
 
     def cp_benchmark_id
       benchmarks&.first&.benchmark_id
-    end
-
-    def cp_alignment_benchmark
-      benchmarks.find { |b| b.for_alignment?(cp_alignment) }
     end
 
     def years_with_targets_string=(value)

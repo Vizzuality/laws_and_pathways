@@ -87,16 +87,16 @@
                 </div>
               <% end %>
 
-              <% if @company_presenter.cp_alignment.present? %>
+              <% if @company_presenter.cp_alignment_2050.present? %>
                 <div class="cp-alignment-container">
                   <h5>Long-term<br/> alignment in <%= @company.sector.name.downcase == 'electricity utilities' ? '2040-50' : '2050' %></h5>
 
                   <div class="cp-alignment">
-                    <% unless @company_presenter.cp_alignment.not_assessed? %>
-                      <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment.color %>">
+                    <% unless @company_presenter.cp_alignment_2050.not_assessed? %>
+                      <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment_2050.color %>">
                       </span>
                     <% end %>
-                    <%= @company_presenter.cp_alignment.name %>
+                    <%= @company_presenter.cp_alignment_2050.name %>
                   </div>
                 </div>
               <% end %>

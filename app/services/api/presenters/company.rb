@@ -17,11 +17,10 @@ module Api
         )
       end
 
-      # TODO: refactor this after adding colors based on dates
-      def cp_alignment
-        return unless @company.cp_alignment.present?
+      def cp_alignment_2050
+        return unless @company.cp_alignment_2050.present?
 
-        CP::Alignment.new(name: @company.cp_alignment, sector: @company.sector.name)
+        CP::Alignment.new(name: @company.cp_alignment_2050, sector: @company.sector.name)
       end
 
       def cp_alignment_2025

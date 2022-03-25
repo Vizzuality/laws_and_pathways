@@ -99,7 +99,7 @@ ActiveAdmin.register Company do
                 attributes_table_for a do
                   row :publication_date
                   row :assessment_date
-                  row :cp_alignment
+                  row :cp_alignment_2050
                   row :assumptions
                   row :last_reported_year
                 end

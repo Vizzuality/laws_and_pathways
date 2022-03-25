@@ -12,8 +12,7 @@
 #  updated_at                 :datetime         not null
 #  discarded_at               :datetime
 #  last_reported_year         :integer
-#  cp_alignment               :string
-#  cp_alignment_year_override :integer
+#  cp_alignment_2050          :string
 #  cp_alignment_2025          :string
 #  cp_alignment_2035          :string
 #  years_with_targets         :integer          is an Array
@@ -50,25 +49,22 @@ RSpec.describe CP::Assessment, type: :model do
     expect(subject).to have(1).errors_on(:last_reported_year)
   end
 
-  describe 'cp alignment' do
-    it 'should be invalid if cp alignment do not match list' do
-      subject.cp_alignment = 'do not match'
-      expect(subject).to have(1).errors_on(:cp_alignment)
-    end
+  %w[cp_alignment_2025 cp_alignment_2035 cp_alignment_2050].each do |cp_alignment|
+    describe cp_alignment do
+      it 'should be invalid if cp alignment do not match list' do
+        subject.send("#{cp_alignment}=", 'do not match')
+        expect(subject).to have(1).errors_on(cp_alignment.to_sym)
+      end
 
-    it 'should be valid if cp alignment is blank' do
-      subject.cp_alignment = nil
-      expect(subject).to be_valid
-    end
+      it 'should be valid if cp alignment 2050 is nil' do
+        subject.send("#{cp_alignment}=", nil)
+        expect(subject).to be_valid
+      end
 
-    it 'should be valid if cp alignment is nil' do
-      subject.cp_alignment = nil
-      expect(subject).to be_valid
-    end
-
-    it 'should be valid if cp alignment is on the list' do
-      subject.cp_alignment = 'Below 2 Degrees'
-      expect(subject).to be_valid
+      it 'should be valid if cp alignment 2050 is on the list' do
+        subject.send("#{cp_alignment}=", 'Below 2 Degrees')
+        expect(subject).to be_valid
+      end
     end
   end
 end

@@ -7,7 +7,7 @@ FactoryBot.define do
     last_reported_year { 2020 }
 
     assumptions { 'Assumptions about the assessment' }
-    cp_alignment { 'Paris Pledges' }
+    cp_alignment_2050 { 'Paris Pledges' }
     cp_alignment_2025 { 'Paris Pledges' }
     cp_alignment_2035 { 'Paris Pledges' }
 
