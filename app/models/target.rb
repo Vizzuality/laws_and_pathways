@@ -94,6 +94,12 @@ class Target < ApplicationRecord
   validates :ghg_target, inclusion: {in: [true, false]}
   validates :single_year, inclusion: {in: [true, false]}
 
+  before_validation :trix_strip_outer_div
+
+  def trix_strip_outer_div
+    self.description = HTMLHelper.strip_outer_div(description) if description.present?
+  end
+
   def to_s
     parts = [geography.name, target_type&.humanize, year]
     parts.compact.join(' - ')

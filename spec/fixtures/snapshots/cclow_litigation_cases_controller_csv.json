@@ -5,11 +5,11 @@
     "Geography ISO": "POL",
     "Jurisdiction": "Court in Country",
     "Citation Reference Number": "SFKD777FDK77",
-    "Responses": "response1, response2",
+    "Responses": "response1;response2",
     "At issue": "At issue Lorem ipsumumum",
     "Connected Internal Laws": "Legislation 1|http://climate-laws.org/geographies/poland/policies/legislation-1;Legislation 2|http://climate-laws.org/geographies/poland/policies/legislation-2",
     "Connected External Laws": "External legislation1|https://example.com;External legislation2|https://next-example.com",
-    "Sectors": "sector1, sector2",
+    "Sectors": "sector1;sector2",
     "Side A": "Side A1|government;Side A2|ngo",
     "Side B": "Side B|corporation",
     "Side C": "Side C|government",
@@ -32,7 +32,7 @@
     "Side B": "",
     "Side C": "",
     "Events": "02/03/2019|Some case was started|Description of starting the case|https://test.com;01/05/2019|Some case was started|Description of starting the case|https://test.com",
-    "Summary": "Litigation example",
+    "Summary": "Litigation <div>this div should not be removed</div> example",
     "Id": "26"
   },
   {

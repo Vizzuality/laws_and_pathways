@@ -43,6 +43,12 @@ RSpec.describe Target, type: :model do
     expect(subject).to have(2).errors_on(:visibility_status)
   end
 
+  it 'should trip outer div for trix fields before validation' do
+    subject.description = '<div>Some content <div>do not remove this</div></div>'
+    expect(subject).to be_valid
+    expect(subject.description).to eq('Some content <div>do not remove this</div>')
+  end
+
   context 'full_text_search' do
     let!(:target_1) {
       create(

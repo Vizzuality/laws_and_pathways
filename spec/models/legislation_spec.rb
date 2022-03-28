@@ -54,6 +54,12 @@ RSpec.describe Legislation, type: :model do
     expect(legislation.slug).to eq('new-title')
   end
 
+  it 'should trip outer div for trix fields before validation' do
+    subject.description = '<div>Some content <div>do not remove this</div></div>'
+    expect(subject).to be_valid
+    expect(subject.description).to eq('Some content <div>do not remove this</div>')
+  end
+
   context 'full_text_search' do
     let_it_be(:legislation_1) {
       create(

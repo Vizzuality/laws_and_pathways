@@ -8,31 +8,31 @@ module CSVExport
       end
 
       def call
-        return if targets.empty?
-
         headers = ['Type', 'Description', 'Is GHG Target?', 'Year',
                    'Base Year Period', 'Is Single Year Target?', 'Source',
                    'Geography', 'Geography ISO', 'Sector', 'Scopes', 'Events']
 
-        # BOM UTF-8
-        CSV.generate("\xEF\xBB\xBF") do |csv|
-          csv << headers
+        Enumerator.new do |csv|
+          csv << bom
+          csv << CSV.generate_line(headers)
 
           targets.each do |target|
-            csv << [
-              target.target_type,
-              target.description,
-              format_boolean(target.ghg_target),
-              target.year,
-              target.base_year_period,
-              format_boolean(target.single_year),
-              target.source,
-              target.geography_name,
-              target.geography_iso,
-              target.sector&.name,
-              target.scopes_string,
-              format_events(target.events)
-            ]
+            csv << CSV.generate_line(
+              [
+                target.target_type,
+                target.description,
+                format_boolean(target.ghg_target),
+                target.year,
+                target.base_year_period,
+                format_boolean(target.single_year),
+                target.source,
+                target.geography_name,
+                target.geography_iso,
+                target.sector&.name,
+                target.scopes_string,
+                format_events(target.events)
+              ]
+            )
           end
         end
       end

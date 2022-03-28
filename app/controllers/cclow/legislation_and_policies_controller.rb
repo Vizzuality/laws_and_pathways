@@ -1,6 +1,7 @@
 module CCLOW
   class LegislationAndPoliciesController < CCLOWController
     include FilterController
+    include Streaming
 
     def index
       add_breadcrumb('Climate Change Laws of the World', cclow_root_path)
@@ -39,9 +40,10 @@ module CCLOW
         end
         format.csv do
           timestamp = Time.now.strftime('%d%m%Y')
+          filename = "laws_and_policies_#{timestamp}.csv"
           legislation_ids = @legislations.reorder(:id).pluck(:id)
-          render csv: CSVExport::User::Legislations.new(legislation_ids).call,
-                 filename: "laws_and_policies_#{timestamp}"
+
+          stream_csv CSVExport::User::Legislations.new(legislation_ids).call, filename
         end
       end
     end

@@ -8,8 +8,6 @@ module CSVExport
       end
 
       def call
-        return if litigations.empty?
-
         headers = [
           'Id', 'Title', 'Geography', 'Geography ISO', 'Jurisdiction',
           'Citation Reference Number', 'Responses', 'At issue',
@@ -17,29 +15,31 @@ module CSVExport
           'Side A', 'Side B', 'Side C', 'Events', 'Summary'
         ]
 
-        # BOM UTF-8
-        CSV.generate("\xEF\xBB\xBF") do |csv|
-          csv << headers
+        Enumerator.new do |csv|
+          csv << bom
+          csv << CSV.generate_line(headers)
 
           litigations.each do |litigation|
-            csv << [
-              litigation.id,
-              litigation.title,
-              litigation.geography_name,
-              litigation.geography_iso,
-              litigation.jurisdiction,
-              litigation.citation_reference_number,
-              litigation.responses_string,
-              litigation.at_issue,
-              format_laws(litigation.legislations),
-              format_laws(litigation.external_legislations),
-              format_sectors(litigation.laws_sectors),
-              format_sides('a', litigation),
-              format_sides('b', litigation),
-              format_sides('c', litigation),
-              format_events(litigation.events),
-              litigation.summary
-            ]
+            csv << CSV.generate_line(
+              [
+                litigation.id,
+                litigation.title,
+                litigation.geography_name,
+                litigation.geography_iso,
+                litigation.jurisdiction,
+                litigation.citation_reference_number,
+                litigation.responses_csv,
+                litigation.at_issue,
+                format_laws(litigation.legislations),
+                format_laws(litigation.external_legislations),
+                format_sectors(litigation.laws_sectors),
+                format_sides('a', litigation),
+                format_sides('b', litigation),
+                format_sides('c', litigation),
+                format_events(litigation.events),
+                litigation.summary
+              ]
+            )
           end
         end
       end

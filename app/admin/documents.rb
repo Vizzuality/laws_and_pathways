@@ -41,7 +41,8 @@ ActiveAdmin.register Document do
   csv do
     column :id
     column :name
-    column :external_url
+    column :url
+    column :is_external, &:external?
     column :language
     column :last_verified_on
     column 'Documentable ID', &:documentable_id
@@ -50,7 +51,7 @@ ActiveAdmin.register Document do
 
   controller do
     def scoped_collection
-      results = super.includes(:documentable)
+      results = super.includes(:documentable).with_attached_file
 
       return results unless documentable_params
 
