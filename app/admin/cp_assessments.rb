@@ -72,9 +72,9 @@ ActiveAdmin.register CP::Assessment do
       end
     end
     column :assumptions
-    column :cp_alignment
     column :cp_alignment_2025
     column :cp_alignment_2035
+    column :cp_alignment_2050
     column :region
     column :cp_regional_alignment_2025
     column :cp_regional_alignment_2035
