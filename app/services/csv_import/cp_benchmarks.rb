@@ -36,7 +36,8 @@ module CSVImport
         CP::Benchmark.find_or_initialize_by(
           sector: find_or_create_tpi_sector(row[:sector]),
           release_date: parse_date(row[:release_date]),
-          scenario: row[:scenario]
+          scenario: row[:scenario],
+          region: row[:region]
         )
     end
 
