@@ -36,8 +36,8 @@
 
   <% if @company.cp_alignment_region.present? %>
     <section class="container change-view buttons has-addons">
-      <%= link_to "Global view", {view: nil}, class: "button #{!regional_view ? 'is-primary' : 'is-secondary'}" %>
-      <%= link_to "Regional view", {view: 'regional'}, class: "button #{regional_view ? 'is-primary' : 'is-secondary'}" %>
+      <%= link_to "Global benchmarks", {view: nil}, class: "button #{!regional_view ? 'is-primary' : 'is-secondary'}" %>
+      <%= link_to "Regional benchmarks", {view: 'regional'}, class: "button #{regional_view ? 'is-primary' : 'is-secondary'}" %>
     </section>
   <% end %>
 
@@ -72,7 +72,7 @@
                 <% long_term_header = "Long-term<br/> alignment in #{@company.sector.name.downcase == 'electricity utilities' ? '2040-50' : '2050'}" %>
 
                 <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2025', alignment: @company_presenter.cp_alignment_2025 %>
-                <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: @company_presenter.cp_alignment_2025 %>
+                <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: @company_presenter.cp_alignment_2035 %>
                 <%= render 'cp_alignment', header: long_term_header, alignment: @company_presenter.cp_alignment_2050 %>
               </div>
             <% else %>
@@ -80,7 +80,7 @@
                 <% long_term_header = "Long-term<br/> alignment in #{@company.sector.name.downcase == 'electricity utilities' ? '2040-50' : '2050'}" %>
 
                 <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2025', alignment: @company_presenter.cp_regional_alignment_2025 %>
-                <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: @company_presenter.cp_regional_alignment_2025 %>
+                <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: @company_presenter.cp_regional_alignment_2035 %>
                 <%= render 'cp_alignment', header: long_term_header, alignment: @company_presenter.cp_regional_alignment_2050 %>
               </div>
             <% end %>
