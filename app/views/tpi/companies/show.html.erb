@@ -201,6 +201,7 @@
                 name: 'cp_assessment_id',
                 remote: true,
                 url: cp_assessment_tpi_company_path(@company),
+                params: regional_view ? "view=regional" : nil,
                 data: @company_presenter.cp_assessments.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
                 selected: params[:cp_assessment_id]
               }) %>
