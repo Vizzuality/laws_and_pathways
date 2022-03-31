@@ -53,7 +53,29 @@ RSpec.describe CP::Assessment, type: :model do
     expect(subject).to have(1).errors_on(:last_reported_year)
   end
 
-  %w[cp_alignment_2025 cp_alignment_2035 cp_alignment_2050].each do |cp_alignment|
+  it 'should be invalid with wrong region' do
+    subject.region = 'wrong'
+    expect(subject).to have(1).errors_on(:region)
+  end
+
+  it 'should be invalid with empty region' do
+    subject.region = ''
+    expect(subject).to have(1).errors_on(:region)
+  end
+
+  it 'should be valid with nil region' do
+    subject.region = nil
+    expect(subject).to be_valid
+  end
+
+  %w[
+    cp_alignment_2025
+    cp_alignment_2035
+    cp_alignment_2050
+    cp_regional_alignment_2025
+    cp_regional_alignment_2035
+    cp_regional_alignment_2050
+  ].each do |cp_alignment|
     describe cp_alignment do
       it 'should be invalid if cp alignment do not match list' do
         subject.send("#{cp_alignment}=", 'do not match')

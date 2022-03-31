@@ -112,8 +112,13 @@ module Api
       end
 
       def emissions_data_from_sector
+        name = if regional_view?
+                 "#{region} #{company.sector.name} sector mean"
+               else
+                 "#{company.sector.name} sector mean"
+               end
         {
-          name: "#{company.sector.name} sector mean",
+          name: name,
           data: sector_average_emissions
         }
       end
@@ -122,7 +127,7 @@ module Api
         region = regional_view? ? assessment.region : nil
         company
           .sector
-          .latest_benchmarks_for_date(assessment.publication_date, region: region)
+          .latest_benchmarks_for_date(assessment.publication_date, region)
           .sort_by(&:average_emission)
           .map.with_index do |benchmark, index|
             {
@@ -181,6 +186,7 @@ module Api
           .includes(:cp_assessments)
           .flat_map do |c|
             c.cp_assessments
+              .select { |a| regional_view? ? a.region == region : true }
               .select { |a| a.publication_date <= assessment.publication_date }
               .max_by(&:publication_date)&.emissions&.transform_keys(&:to_i)
           end
@@ -201,6 +207,10 @@ module Api
       # @return [Integer]
       def current_year
         Time.new.year
+      end
+
+      def region
+        @assessment.region
       end
 
       def regional_view?

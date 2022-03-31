@@ -67,7 +67,7 @@ class TPISector < ApplicationRecord
   # - if assessment publication date is 06.2018 - we take benchmarks from 05.2018
   # - if assessment publication date is 06.2017 - we take benchmarks from 04.2017
   # - if assessment publication date is 03.2017 - we take benchmarks from 04.2017
-  def latest_benchmarks_for_date(date, region:)
+  def latest_benchmarks_for_date(date, region = nil)
     return latest_released_benchmarks unless date
 
     region = 'Global' unless region.present?

@@ -83,6 +83,12 @@ ActiveAdmin.register CP::Assessment do
   end
 
   controller do
+    before_action :fix_region
+
+    def fix_region
+      params['cp_assessment']['region'] = nil if params['cp_assessment'] && params['cp_assessment']['region'].blank?
+    end
+
     def scoped_collection
       super.includes(:company)
     end

@@ -35,9 +35,16 @@
   </div>
 
   <% if @company.cp_alignment_region.present? %>
-    <section class="container change-view buttons has-addons">
-      <%= link_to "Global benchmarks", {view: nil}, class: "button #{!regional_view ? 'is-primary' : 'is-secondary'}" %>
-      <%= link_to "Regional benchmarks", {view: 'regional'}, class: "button #{regional_view ? 'is-primary' : 'is-secondary'}" %>
+    <section class="container change-view">
+      <div class="buttons has-addons" style="justify-content: flex-end;">
+        <%= link_to "Global benchmarks", {view: nil}, class: "button #{!regional_view ? 'is-primary' : 'is-secondary'}" %>
+        <%= link_to "Regional benchmarks", {view: 'regional'}, class: "button #{regional_view ? 'is-primary' : 'is-secondary'}" %>
+      </div>
+      <div class="has-text-right">
+        <% if regional_view %>
+          The regional benchmarks applied to this company are for <%= @company.cp_alignment_region %>.
+        <% end %>
+      </div>
     </section>
   <% end %>
 
@@ -182,6 +189,7 @@
           Carbon Performance <%= @company.name %> <%= react_component("BaseTooltip", { content: t('.tooltips.cp_header') }) %>
         </h4>
         <p class="is-hidden-desktop"><%= "Carbon Performance alignment of companies in the #{@company.name} sector with the Paris agreement benchmarks." %></p>
+
         <div>
           <div class="show-by-dropdown assessment-date__container">
             <div class="caption">

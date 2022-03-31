@@ -1,12 +1,14 @@
 module CSVExport
   module User
-    class CPAssessments
+    class CPAssessmentsRegional
       def initialize(assessments)
         @assessments = assessments
       end
 
       def call
         return if @assessments.empty?
+
+        @assessments = @assessments.where.not(region: nil)
 
         headers = [
           'Company Name',
@@ -19,10 +21,11 @@ module CSVExport
           'SEDOL',
           'Publication Date',
           'Assessment Date',
-          'Carbon Performance Alignment 2025',
-          'Carbon Performance Alignment 2035',
-          'Carbon Performance Alignment 2050',
-          'Benchmark ID',
+          'Region',
+          'Carbon Performance Regional Alignment 2025',
+          'Carbon Performance Regional Alignment 2035',
+          'Carbon Performance Regional Alignment 2050',
+          'Regional Benchmark ID',
           'Years with targets',
           'History to Projection cutoff year',
           'CP Unit',
@@ -47,10 +50,11 @@ module CSVExport
               assessment.company.sedol,
               assessment.publication_date,
               assessment.assessment_date,
-              assessment.cp_alignment_2025,
-              assessment.cp_alignment_2035,
-              assessment.cp_alignment_2050,
-              assessment.cp_benchmark_id,
+              assessment.region,
+              assessment.cp_regional_alignment_2025,
+              assessment.cp_regional_alignment_2035,
+              assessment.cp_regional_alignment_2050,
+              assessment.cp_regional_benchmark_id,
               assessment.years_with_targets&.join(';'),
               assessment.last_reported_year,
               assessment.unit,

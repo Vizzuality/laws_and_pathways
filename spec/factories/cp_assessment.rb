@@ -11,6 +11,11 @@ FactoryBot.define do
     cp_alignment_2025 { 'Paris Pledges' }
     cp_alignment_2035 { 'Paris Pledges' }
 
+    region { 'Europe' }
+    cp_regional_alignment_2025 { 'Paris Pledges' }
+    cp_regional_alignment_2035 { 'Paris Pledges' }
+    cp_regional_alignment_2050 { 'Paris Pledges' }
+
     years_with_targets { [2025, 2030, 2040] }
 
     emissions do

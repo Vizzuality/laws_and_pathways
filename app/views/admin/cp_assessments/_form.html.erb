@@ -10,7 +10,7 @@
     <%= f.input :cp_alignment_2025 %>
     <%= f.input :cp_alignment_2035 %>
     <%= f.input :cp_alignment_2050 %>
-    <%= f.input :region, as: :select, collection: CP::Benchmark::REGIONS %>
+    <%= f.input :region, as: :select, collection: CP::Assessment::REGIONS, required: false %>
     <%= f.input :cp_regional_alignment_2025 %>
     <%= f.input :cp_regional_alignment_2035 %>
     <%= f.input :cp_regional_alignment_2050 %>

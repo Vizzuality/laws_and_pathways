@@ -1,3 +1,11 @@
+<% regional_view = assessment.region.present? && params[:view] == 'regional' %>
+
+<% if regional_view %>
+  <div style="margin-bottom: 1.5rem;">
+    The regional benchmarks applied to this company are for <%= assessment.region %>.
+  </div>
+<% end %>
+
 <% if assessment.emissions.any?  %>
   <%= react_component('charts/cp-performance', {
     dataUrl: emissions_chart_data_tpi_company_path(assessment.company, cp_assessment_id: assessment.id, view: params[:view]),

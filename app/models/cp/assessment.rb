@@ -28,6 +28,8 @@ module CP
     include DiscardableModel
     include TPICache
 
+    REGIONS = CP::Benchmark::REGIONS - ['Global']
+
     belongs_to :company
 
     scope :latest_first, -> { order(assessment_date: :desc) }
@@ -41,11 +43,15 @@ module CP
     validates_presence_of :last_reported_year, if: -> { emissions&.keys&.any? }
     validates :assessment_date, date_after: Date.new(2010, 12, 31)
     validates :publication_date, date_after: Date.new(2010, 12, 31)
+    validates :region, inclusion: {in: REGIONS}, allow_nil: true
 
     with_options allow_nil: true, allow_blank: true, inclusion: {in: CP::Alignment::ALLOWED_NAMES} do
-      validates :cp_alignment_2050
       validates :cp_alignment_2025
       validates :cp_alignment_2035
+      validates :cp_alignment_2050
+      validates :cp_regional_alignment_2025
+      validates :cp_regional_alignment_2035
+      validates :cp_regional_alignment_2050
     end
 
     def unit
@@ -54,6 +60,10 @@ module CP
 
     def cp_benchmark_id
       benchmarks&.first&.benchmark_id
+    end
+
+    def cp_regional_benchmark_id
+      regional_benchmarks&.first&.benchmark_id if region.present?
     end
 
     def years_with_targets_string=(value)
@@ -68,6 +78,10 @@ module CP
 
     def benchmarks
       company.sector.latest_benchmarks_for_date(publication_date)
+    end
+
+    def regional_benchmarks
+      company.sector.latest_benchmarks_for_date(publication_date, region)
     end
   end
 end
