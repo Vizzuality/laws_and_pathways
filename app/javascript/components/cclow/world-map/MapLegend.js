@@ -33,7 +33,7 @@ function MapLegend({ content, context, scales }) {
           <div className="name">{content.name}</div>
           <div className="world-map__legend-scale-buckets world-map__legend-scale-buckets--content bubbles__legend">
             {BUBBLE_LEGEND_RADIUSES.map((radius) => (
-              <div>
+              <div key={radius}>
                 <div className="circle" style={{width: radius * 2, height: radius * 2}} />
                 {Math.round(scales.sizeScale.invert(radius))}
               </div>
@@ -48,7 +48,7 @@ function MapLegend({ content, context, scales }) {
           <div className="name">{context.name}</div>
           <div className="world-map__legend-scale-buckets world-map__legend-scale-buckets--context rectangle__legend">
             {colors.map((color, i) => (
-              <div>
+              <div key={color}>
                 <div className="rectangle" style={{backgroundColor: color}} />&nbsp;
 
                 {(i === 0) && `<${displayContextValue(color, 1)}`}

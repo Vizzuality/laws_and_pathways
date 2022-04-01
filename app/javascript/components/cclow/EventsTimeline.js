@@ -72,7 +72,7 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
           </div>
         </Fragment>
       ) }
-      {isFiltered && (
+      {isFiltered && options && options.length && (
         <Fragment>
           <div className="title-block">
             <h5>Timeline of events</h5>
@@ -133,10 +133,15 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
   );
 };
 
+EventsTimeline.defaultProps = {
+  options: null,
+  isFiltered: false
+};
+
 EventsTimeline.propTypes = {
   events: PropTypes.array.isRequired,
-  options: PropTypes.array.isRequired,
-  isFiltered: PropTypes.bool.isRequired
+  options: PropTypes.array,
+  isFiltered: PropTypes.bool
 };
 
 export default EventsTimeline;
