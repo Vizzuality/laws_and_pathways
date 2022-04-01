@@ -102,7 +102,7 @@ function WorldMap({ zoomToGeographyIso }) {
 
   const DropdownIndicator = (props) => (
     <components.DropdownIndicator {...props}>
-      <img src={chevronIconBlack} />
+      <img src={chevronIconBlack} alt="chevron" />
     </components.DropdownIndicator>
   );
 

@@ -6,7 +6,7 @@
     <ul class="content-list">
       <li class="with-meta">
         <% if @geography.eu_member? %>
-          <div class="meta"><img class="flag" src=<%= asset_path "flags/EUR.svg"%> alt="">
+          <div class="meta"><img class="flag" src=<%= asset_path "flags/EUR.svg"%> alt="EU flag">
             This country is a member of the EU and so <span class="highlight"> EU NDC data </span> is being displayed.
           </div>
         <% end %>
@@ -96,12 +96,12 @@
     </ul>
     <div class="ndc-hint is-hidden-touch">
       <span>For further analysis of the NDC, see <%= @geography.name %> country profile on</span>
-      <img src=<%= asset_path "cclow/climate_watch.png"%> alt="">
+      <img src=<%= asset_path "cclow/climate_watch.png"%> alt="ClimateWatch logo">
     </div>
     </ul>
     <div class="ndc-hint-mobile is-hidden-desktop">
       <span>For further analysis of the NDC, see <%= @geography.name %> country profile on</span>
-      <span><img class="climate-watch-icon" src=<%= asset_path "cclow/climate_watch.png"%> alt=""></span>
+      <span><img class="climate-watch-icon" src=<%= asset_path "cclow/climate_watch.png"%> alt="ClimateWatch logo"></span>
     </div>
   </div>
 </div>

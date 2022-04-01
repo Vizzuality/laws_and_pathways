@@ -51,7 +51,7 @@ function Item({ item, onSelect }) {
     <li ref={itemElement} className={cx('nested-dropdown__item', { open: isOpen })} onClick={handleClick}>
       <div>
         <span>{item.label}</span>
-        {isNested && <img src={chevronIconBlack} />}
+        {isNested && <img src={chevronIconBlack} alt="chevron" />}
       </div>
       {isNested && isOpen && <List items={item.items} onSelect={onSelect} />}
     </li>
@@ -88,7 +88,7 @@ function NestedDropdown({ items, title, subTitle, onSelect }) {
           <span>{title}</span>
           {subTitle && <small>{subTitle}</small>}
         </div>
-        <img src={chevronIconBlack} />
+        <img src={chevronIconBlack} alt="chevron" />
       </div>
       {isOpen && <List items={items} onSelect={handleSelect} />}
     </div>

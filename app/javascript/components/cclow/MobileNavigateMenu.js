@@ -43,7 +43,7 @@ class MobileNavigateMenu extends Component {
 
   DropdownIndicator = (props) => (
     <components.DropdownIndicator {...props}>
-      <img src={props.selectProps.menuIsOpen ? chevronUpIconBlack : chevronDownIconBlack} />
+      <img src={props.selectProps.menuIsOpen ? chevronUpIconBlack : chevronDownIconBlack} alt="Mobile Menu Toggle" />
     </components.DropdownIndicator>
   );
 

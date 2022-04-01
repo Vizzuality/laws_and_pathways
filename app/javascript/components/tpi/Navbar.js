@@ -78,7 +78,7 @@ const NavbarComponent = ({ items, openSearchMode }) => {
       <div className="container">
         <div className="navbar-brand is-hidden-desktop">
           <a href="/" className="navbar-item logo">
-            <img src={Logo} alt="TPI logo" />
+            <img src={Logo} alt="Transition Pathway Initiative logo" />
           </a>
           <a
             className="navbar-item menu"

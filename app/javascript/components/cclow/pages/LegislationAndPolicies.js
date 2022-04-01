@@ -169,7 +169,7 @@ function LegislationAndPolicies(props) {
           <div className="meta">
             {legislation.geography && (
               <a href={legislation.geography_path}>
-                <img src={`/images/flags/${legislation.geography.iso}.svg`} alt="" />
+                <img src={`/images/flags/${legislation.geography.iso}.svg`} alt={`${legislation.geography.name} flag`} />
                 {legislation.geography.name}
               </a>
             )}

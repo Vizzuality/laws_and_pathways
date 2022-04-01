@@ -6,7 +6,7 @@
           <div class="additions-kind"><%= item[:kind] %></div>
           <div class="title"><%= item[:link].html_safe %></div>
           <div class="meta">
-            <img class="flag" src=<%= asset_path "flags/#{item[:iso]}.svg"%> alt="">
+            <img class="flag" src=<%= asset_path "flags/#{item[:iso]}.svg"%> alt="<%= item[:iso] + ' flag' %>">
             <div><%=(item.values_at(:jurisdiction_link, :addition_type, :date_passed)).compact.join(' | ').html_safe %></div>
           </div>
         </div>
