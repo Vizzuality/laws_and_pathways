@@ -34,11 +34,19 @@ module CP
     validates :region, inclusion: {in: REGIONS}
 
     def benchmark_id
-      [sector.name, release_date].join('_')
+      [
+        regional? ? region : nil,
+        sector.name,
+        release_date
+      ].compact.join('_')
     end
 
     def unit
       sector.cp_unit_valid_for_date(release_date)&.unit
+    end
+
+    def regional?
+      region.present? && region != 'Global'
     end
 
     def for_alignment?(alignment)
