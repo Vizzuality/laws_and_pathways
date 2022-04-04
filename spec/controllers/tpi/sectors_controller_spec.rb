@@ -7,6 +7,9 @@ RSpec.describe TPI::SectorsController, type: :controller do
   let_it_be(:benchmark1) { create(:cp_benchmark, sector: sector1, release_date: '2011-05-01', scenario: 'Below 2 Degrees') }
   let_it_be(:benchmark2) { create(:cp_benchmark, sector: sector1, release_date: '2011-05-01', scenario: 'Paris Pledges') }
   let_it_be(:benchmark3) { create(:cp_benchmark, sector: sector2, release_date: '2013-05-01', scenario: 'Paris Pledges') }
+  let_it_be(:regional_benchmark) {
+    create(:cp_benchmark, sector: sector1, release_date: '2011-05-01', scenario: 'Paris Pledges', region: 'OECD')
+  }
 
   let_it_be(:company1) {
     create(
@@ -15,9 +18,19 @@ RSpec.describe TPI::SectorsController, type: :controller do
       geography: geography,
       cp_assessments: [
         build(
-          :cp_assessment, assessment_date: '2012-05-01', publication_date: '2012-05-01', cp_alignment_2050: 'Below 2 Degrees'
+          :cp_assessment,
+          assessment_date: '2012-05-01',
+          publication_date: '2012-05-01',
+          cp_alignment_2050: 'Below 2 Degrees',
+          region: 'OECD'
         ),
-        build(:cp_assessment, assessment_date: '2019-05-01', publication_date: '2019-05-01', cp_alignment_2050: 'Paris Pledges')
+        build(
+          :cp_assessment,
+          assessment_date: '2019-05-01',
+          publication_date: '2019-05-01',
+          cp_alignment_2050: 'Paris Pledges',
+          region: 'OECD'
+        )
       ],
       mq_assessments: [
         build(:mq_assessment, assessment_date: '2013-05-01', publication_date: '2013-05-01'),
@@ -37,9 +50,19 @@ RSpec.describe TPI::SectorsController, type: :controller do
       geography: geography,
       cp_assessments: [
         build(
-          :cp_assessment, assessment_date: '2014-05-01', publication_date: '2014-05-01', cp_alignment_2050: 'Below 2 Degrees'
+          :cp_assessment,
+          assessment_date: '2014-05-01',
+          publication_date: '2014-05-01',
+          cp_alignment_2050: 'Below 2 Degrees',
+          region: 'OECD'
         ),
-        build(:cp_assessment, assessment_date: '2020-05-01', publication_date: '2020-05-01', cp_alignment_2050: 'Paris Pledges')
+        build(
+          :cp_assessment,
+          assessment_date: '2020-05-01',
+          publication_date: '2020-05-01',
+          cp_alignment_2050: 'Paris Pledges',
+          region: 'OECD'
+        )
       ],
       mq_assessments: [
         build(:mq_assessment, assessment_date: '2014-05-01', publication_date: '2014-05-01'),
@@ -125,6 +148,7 @@ RSpec.describe TPI::SectorsController, type: :controller do
 
         expect(entries_names).to include("Sector_Benchmarks_#{timestamp}.csv")
         expect(entries_names).to include("CP_Assessments_#{timestamp}.csv")
+        expect(entries_names).to include("CP_Assessments_Regional_#{timestamp}.csv")
         expect(entries_names).to include('Company_Latest_Assessments.csv')
         expect(entries_names).to include("MQ_Assessments_Methodology_1_#{timestamp}.csv")
 
@@ -132,6 +156,8 @@ RSpec.describe TPI::SectorsController, type: :controller do
           .to match_snapshot('tpi_single_sector_user_download_zip_sector_benchmarks_csv')
         expect(entries_csv_json["CP_Assessments_#{timestamp}.csv"])
           .to match_snapshot('tpi_single_sector_user_download_cp_assessments_csv')
+        expect(entries_csv_json["CP_Assessments_Regional_#{timestamp}.csv"])
+          .to match_snapshot('tpi_single_sector_user_download_cp_assessments_regional_csv')
         expect(entries_csv_json['Company_Latest_Assessments.csv'])
           .to match_snapshot('tpi_single_sector_user_company_latest_assessments_csv')
         expect(entries_csv_json['Company_Latest_Assessments.csv'])
