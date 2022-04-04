@@ -159,11 +159,19 @@ $dots-space: 1.3rem;
     &__name {
       white-space: nowrap;
       font-size: 12px;
+      height: 24px;
       line-height: 15px;
       color: $grey-dark;
 
+      display: inline-flex;
+      align-items: center;
+
       .base-tooltip {
         margin-left: 5px;
+
+        &__default-trigger {
+          transform: translateY(-3px);
+        }
       }
     }
 
@@ -188,6 +196,12 @@ $dots-space: 1.3rem;
       align-items: center;
 
       margin-bottom: 40px;
+
+      h4 {
+        .base-tooltip__default-trigger {
+          transform: translateY(-3px);
+        }
+      }
 
       .show-by-dropdown {
         align-items: center;
@@ -502,6 +516,12 @@ $dots-space: 1.3rem;
       align-items: center;
 
       margin-bottom: 20px;
+
+      h4 {
+        .base-tooltip__default-trigger {
+          transform: translateY(-3px);
+        }
+      }
     }
 
     &__assumptions {
