@@ -82,6 +82,7 @@ const NavbarComponent = ({ items, openSearchMode }) => {
           </a>
           <a
             className="navbar-item menu"
+            role="button"
             data-target="HeaderMenu"
             onClick={() => setIsOpen(!isOpen)}
           >
@@ -107,6 +108,7 @@ const NavbarComponent = ({ items, openSearchMode }) => {
           <div className="navbar-start">
             <div className="navbar-item has-dropdown is-hoverable">
               <a
+                role="button"
                 className={classnames('navbar-link', 'is-arrowless', {
                   'is-active': tpi.active
                 })}
@@ -130,7 +132,8 @@ const NavbarComponent = ({ items, openSearchMode }) => {
                     >
                       {title}
                     </a>
-                  )))}
+                  ))
+                )}
               </div>
             </div>
 
@@ -145,6 +148,7 @@ const NavbarComponent = ({ items, openSearchMode }) => {
 
             <div className="navbar-item has-dropdown is-hoverable">
               <a
+                role="button"
                 className={classnames('navbar-link', 'is-arrowless', {
                   'is-active': about.active
                 })}
@@ -163,7 +167,8 @@ const NavbarComponent = ({ items, openSearchMode }) => {
                     >
                       {title}
                     </a>
-                  )))}
+                  ))
+                )}
               </div>
             </div>
           </div>
@@ -180,6 +185,7 @@ const NavbarComponent = ({ items, openSearchMode }) => {
             <a
               className="navbar-item is-hidden-touch"
               aria-label={search.entry}
+              role="button"
               onClick={openSearchMode}
             >
               {search.hasIcon && <span className="icon icon__search" />}
