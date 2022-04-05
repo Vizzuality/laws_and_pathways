@@ -24,6 +24,10 @@ export default class extends Controller {
           items: 3,
           controls: true
         }
+      },
+      onInit(slider) {
+        slider.nextButton.setAttribute('aria-label', 'Next');
+        slider.prevButton.setAttribute('aria-label', 'Previous');
       }
     });
   }

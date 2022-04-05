@@ -63,7 +63,7 @@
 <% end %>
 
 <div class="content-show">
-  <h3 class="title"><%= @legislation.title %></h3>
+  <h1 class="is-size-3 title"><%= @legislation.title %></h1>
   <div class="meta">
     <div>
       <img src=<%= asset_path "icons/legislation_types/#{@legislation.legislation_type}.svg"%> alt="legislation type">
@@ -97,7 +97,7 @@
   <hr>
   <% if @legislation.documents.any? %>
     <section class="section is-medium">
-      <h5>Documents</h5>
+      <h2 class="is-size-5">Documents</h2>
       <%= render 'documents_list', documents: @legislation.documents %>
     </section>
   <% end %>
@@ -108,7 +108,7 @@
   <% end %>
   <% if @legislation.litigations.any? %>
     <section>
-      <h5>Related litigation cases</h5>
+      <h2 class="is-size-5">Related litigation cases</h2>
       <%= render 'related_litigations_list', litigations: CCLOW::LitigationDecorator.decorate_collection(@legislation.litigations) %>
     </section>
   <% end %>

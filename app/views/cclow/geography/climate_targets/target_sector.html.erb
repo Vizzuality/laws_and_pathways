@@ -1,7 +1,7 @@
 <% content_for :page_title, "#{@sector.name} - Climate Targets - #{@geography.name} - Climate Change Laws of the World" %>
 
 <div class="container">
-  <h3>Climate targets: <%= @sector.name %></h3>
+  <h1 class="is-size-3">Climate targets: <%= @sector.name %></h1>
   <ul class="content-list">
     <li class="with-meta">
       <% if @geography.eu_member? %>
@@ -11,7 +11,7 @@
       <% end %>
       <div class="climate-targets-section ndc-content">
         <div class="nav">
-          <h5>NDC content</h5>
+          <h2 class="is-size-5">NDC content</h2>
           <span class="counter"><%= pluralize(@ndc_targets.count, 'target') %></span>
         </div>
         <ul>
@@ -43,7 +43,7 @@
     <li>
       <div class="climate-targets-section">
         <div class="nav">
-          <h5>National laws and policies</h5>
+          <h2 class="is-size-5">National laws and policies</h2>
           <span class="counter"><%= pluralize(@climate_targets.count, 'target') %></span>
         </div>
         <ul>
