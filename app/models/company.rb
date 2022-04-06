@@ -65,10 +65,6 @@ class Company < ApplicationRecord
     name
   end
 
-  def latest_sector_benchmarks
-    sector.latest_released_benchmarks
-  end
-
   def isin_array
     return [] if isin.blank?
 

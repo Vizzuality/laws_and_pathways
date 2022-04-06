@@ -46,8 +46,9 @@ class TPISector < ApplicationRecord
     cp_units.order('valid_since DESC NULLS LAST').first
   end
 
-  def latest_released_benchmarks
-    cp_benchmarks.group_by(&:release_date).max&.last || []
+  def latest_released_benchmarks(region = nil)
+    region ||= 'Global'
+    cp_benchmarks.where(region: region).group_by(&:release_date).max&.last || []
   end
 
   def publications_and_articles
@@ -68,9 +69,9 @@ class TPISector < ApplicationRecord
   # - if assessment publication date is 06.2017 - we take benchmarks from 04.2017
   # - if assessment publication date is 03.2017 - we take benchmarks from 04.2017
   def latest_benchmarks_for_date(date, region = nil)
-    return latest_released_benchmarks unless date
+    region ||= 'Global'
+    return latest_released_benchmarks(region) unless date
 
-    region = 'Global' unless region.present?
     benchmarks = cp_benchmarks.where(region: region)
     sector_benchmarks_dates = benchmarks.pluck(:release_date).uniq.sort
 
