@@ -47,7 +47,9 @@ class Company < ApplicationRecord
 
   delegate :level, :status, :status_description_short,
            to: :latest_mq_assessment, prefix: :mq, allow_nil: true
-  delegate :cp_alignment, :cp_alignment_2025, :cp_alignment_2035, :cp_alignment_year, to: :latest_cp_assessment, allow_nil: true
+  delegate :cp_alignment_2050, :cp_alignment_2025, :cp_alignment_2035,
+           :cp_regional_alignment_2050, :cp_regional_alignment_2025, :cp_regional_alignment_2035,
+           to: :latest_cp_assessment, allow_nil: true
 
   validates :ca100, inclusion: {in: [true, false]}
   validates_presence_of :name, :slug, :isin, :market_cap_group
@@ -63,14 +65,6 @@ class Company < ApplicationRecord
     name
   end
 
-  def latest_sector_benchmarks
-    sector.latest_released_benchmarks
-  end
-
-  def latest_sector_benchmarks_before_last_assessment
-    sector.latest_benchmarks_for_date(latest_cp_assessment&.publication_date)
-  end
-
   def isin_array
     return [] if isin.blank?
 
@@ -79,6 +73,10 @@ class Company < ApplicationRecord
 
   def is_4_star?
     mq_level.eql?('4STAR')
+  end
+
+  def cp_alignment_region
+    latest_cp_assessment&.region
   end
 
   def path

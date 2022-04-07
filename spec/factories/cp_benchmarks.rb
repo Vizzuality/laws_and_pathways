@@ -9,6 +9,7 @@
 #  updated_at   :datetime         not null
 #  emissions    :jsonb
 #  scenario     :string
+#  region       :string           default("Global"), not null
 #
 
 FactoryBot.define do
@@ -17,6 +18,7 @@ FactoryBot.define do
 
     release_date { 5.days.ago.to_date }
     scenario { 'Paris pledges' }
+    region { 'Global' }
 
     emissions do
       {

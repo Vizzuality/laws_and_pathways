@@ -1,7 +1,9 @@
 (function () {
   document.getElementById('cp-assessment').innerHTML = "<%= j render('cp_assessment', assessment: @cp_assessment) %>";
   const newUrl = new URL(window.location.href);
+  const view = '<%= params[:view] %>';
   newUrl.searchParams.set('cp_assessment_id', <%= @cp_assessment.id %>);
+  if (view.length > 0) newUrl.searchParams.set('view', view);
   window.history.replaceState({}, '', newUrl.href);
   ReactRailsUJS.mountComponents('#cp-assessment');
 })();

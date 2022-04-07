@@ -8,7 +8,7 @@ module TPI
     before_action :fetch_mq_assessment, only: [:show, :mq_assessment, :assessments_levels_chart_data]
 
     def show
-      @company_presenter = ::Api::Presenters::Company.new(@company)
+      @company_presenter = ::Api::Presenters::Company.new(@company, params[:view])
 
       @sectors = TPISector.select(:id, :name, :slug).order(:name)
       @companies = Company.published.joins(:sector)
@@ -41,7 +41,7 @@ module TPI
     # Type:     line chart
     # On pages: :show
     def emissions_chart_data
-      data = ::Api::Charts::CPAssessment.new(@cp_assessment).emissions_data
+      data = ::Api::Charts::CPAssessment.new(@cp_assessment, params[:view]).emissions_data
 
       render json: data.chart_json
     end

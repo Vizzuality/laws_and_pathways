@@ -11,11 +11,20 @@ module CSVImport
         assessment.assumptions = row[:assumptions].presence if row.header?(:assumptions)
         assessment.emissions = parse_emissions(row) if emission_headers?(row)
         assessment.last_reported_year = row[:last_reported_year] if row.header?(:last_reported_year)
-        assessment.cp_alignment = CP::Alignment.format_name(row[:cp_alignment]) if row.header?(:cp_alignment)
         assessment.cp_alignment_2025 = CP::Alignment.format_name(row[:cp_alignment_2025]) if row.header?(:cp_alignment_2025)
         assessment.cp_alignment_2035 = CP::Alignment.format_name(row[:cp_alignment_2035]) if row.header?(:cp_alignment_2035)
+        assessment.cp_alignment_2050 = CP::Alignment.format_name(row[:cp_alignment_2050]) if row.header?(:cp_alignment_2050)
+        assessment.region = parse_cp_benchmark_region(row[:region]) if row.header?(:region)
+        if row.header?(:cp_regional_alignment_2025)
+          assessment.cp_regional_alignment_2025 = CP::Alignment.format_name(row[:cp_regional_alignment_2025])
+        end
+        if row.header?(:cp_regional_alignment_2035)
+          assessment.cp_regional_alignment_2035 = CP::Alignment.format_name(row[:cp_regional_alignment_2035])
+        end
+        if row.header?(:cp_regional_alignment_2050)
+          assessment.cp_regional_alignment_2050 = CP::Alignment.format_name(row[:cp_regional_alignment_2050])
+        end
         assessment.years_with_targets = get_years_with_targets(row) if row.header?(:years_with_targets)
-        assessment.cp_alignment_year_override = row[:cp_alignment_year_override] if row.header?(:cp_alignment_year_override)
 
         was_new_record = assessment.new_record?
         any_changes = assessment.changed?

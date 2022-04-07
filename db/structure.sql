@@ -373,11 +373,14 @@ CREATE TABLE public.cp_assessments (
     updated_at timestamp without time zone NOT NULL,
     discarded_at timestamp without time zone,
     last_reported_year integer,
-    cp_alignment character varying,
-    cp_alignment_year_override integer,
+    cp_alignment_2050 character varying,
     cp_alignment_2025 character varying,
     cp_alignment_2035 character varying,
-    years_with_targets integer[]
+    years_with_targets integer[],
+    region character varying,
+    cp_regional_alignment_2025 character varying,
+    cp_regional_alignment_2035 character varying,
+    cp_regional_alignment_2050 character varying
 );
 
 
@@ -411,7 +414,8 @@ CREATE TABLE public.cp_benchmarks (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     emissions jsonb,
-    scenario character varying
+    scenario character varying,
+    region character varying DEFAULT 'Global'::character varying NOT NULL
 );
 
 
@@ -3363,6 +3367,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220215170029'),
 ('20220218100325'),
 ('20220218100643'),
-('20220221123402');
-
-
+('20220221123402'),
+('20220310091530'),
+('20220324160017'),
+('20220324184534'),
+('20220324190738');

@@ -1,7 +1,7 @@
 @import 'colors';
 @import "typography";
 
-$default-trigger-size: 20px;
+$default-trigger-size: 22px;
 
 div[data-react-class=BaseTooltip] {
   display: inline-block;
@@ -14,6 +14,7 @@ div[data-react-class=BaseTooltip] {
     font-family: $font-family-bold;
     color: white;
     background-color: $blue;
+    padding-top: 2px;
     font-size: 16px;
     height: $default-trigger-size;
     width: $default-trigger-size;

@@ -27,11 +27,11 @@ List.propTypes = {
   onSelect: PropTypes.func.isRequired
 };
 
-function RemoteDropdown({ url, data, name }) {
+function RemoteDropdown({ url, params, data, selected, name }) {
   const Dropdown = useRef(null);
   const Select = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [label, setLabel] = useState(false);
+  const [label, setLabel] = useState(data.find(d => d.value.toString() === selected?.toString())?.label);
 
   useOutsideClick(Dropdown, () => setIsOpen(false));
 
@@ -51,7 +51,7 @@ function RemoteDropdown({ url, data, name }) {
         </div>
         {isOpen && <List url={url} data={data} onSelect={handleSelect} />}
       </div>
-      <select hidden ref={Select} name={name} className="input" data-remote="true" data-url={url}>
+      <select hidden ref={Select} name={name} className="input" data-remote="true" data-url={url} data-params={params}>
         {data.map((option, i) => (
           <option key={`${option.value}-${i}`} value={option.value}>{option.label}</option>
         ))}
@@ -59,6 +59,10 @@ function RemoteDropdown({ url, data, name }) {
     </>
   );
 }
+RemoteDropdown.defaultProps = {
+  selected: null,
+  params: null
+};
 
 RemoteDropdown.propTypes = {
   data: PropTypes.arrayOf(
@@ -68,7 +72,9 @@ RemoteDropdown.propTypes = {
     }).isRequired
   ).isRequired,
   url: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired
+  params: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  selected: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.number.isRequired])
 };
 
 export default RemoteDropdown;

@@ -20,6 +20,14 @@ module CSVImport
         .map(&:to_i)
     end
 
+    def parse_cp_benchmark_region(region)
+      cp_benchmarks_regions_hash[region&.downcase]
+    end
+
+    def cp_benchmarks_regions_hash
+      @cp_benchmarks_regions_hash ||= CP::Benchmark::REGIONS.map { |r| {r.downcase => r} }.reduce(&:merge)
+    end
+
     def find_geography(row_value)
       geographies[row_value&.upcase]
     end

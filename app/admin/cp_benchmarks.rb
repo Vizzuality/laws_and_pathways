@@ -3,10 +3,11 @@ ActiveAdmin.register CP::Benchmark do
 
   menu parent: 'TPI', priority: 3, label: 'Carbon Performance Benchmarks'
 
-  permit_params :scenario, :sector_id, :release_date, :emissions
+  permit_params :scenario, :sector_id, :release_date, :region, :emissions
 
   filter :release_date
   filter :sector
+  filter :region, as: :select, collection: proc { CP::Benchmark::REGIONS }
 
   data_export_sidebar 'CPBenchmarks'
 
@@ -16,6 +17,7 @@ ActiveAdmin.register CP::Benchmark do
       row :release_date
       row :sector
       row :scenario
+      row :region
       row :created_at
       row :updated_at
     end
@@ -34,6 +36,7 @@ ActiveAdmin.register CP::Benchmark do
     column(:sector) { |b| b.sector.name }
     column(:release_date) { |b| b.release_date.to_s(:year_month) }
     column :scenario
+    column :region
 
     year_columns.map do |year|
       column year do |benchmark|
@@ -45,6 +48,7 @@ ActiveAdmin.register CP::Benchmark do
   index do
     id_column
     column :scenario
+    column :region
     column :sector
     column :release_date
     actions
