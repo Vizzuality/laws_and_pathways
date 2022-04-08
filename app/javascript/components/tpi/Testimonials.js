@@ -35,12 +35,16 @@ const Controls = ({changePage}) => (
   <>
     <a
       onClick={() => changePage(previousPage)}
+      role="button"
       className="is-hidden-touch testimonials__control left"
+      aria-label="previous"
     >&#8592;
     </a>
     <a
       onClick={() => changePage(nextPage)}
+      role="button"
       className="is-hidden-touch testimonials__control right"
+      aria-label="next"
     >&#8594;
     </a>
   </>
@@ -77,6 +81,8 @@ const Pagination = ({page, quotes, changePage}) => (
     {quotes.map((_, i) => (
       <a
         key={`page-${i}`}
+        role="button"
+        aria-label={`${i} page`}
         className={classnames('page', {active: i === page})}
         onClick={() => changePage(() => i)}
       />

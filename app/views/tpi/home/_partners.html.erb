@@ -21,7 +21,7 @@
         <% next unless image.logo.present? %>
         <div class="image__container">
           <%= link_to image.link do %>
-            <%= image_tag image.logo %>
+            <%= image_tag image.logo, alt: image.name.blank? ? "partner logo" : image.name %>
           <% end %>
         </div>
       <% end %>
