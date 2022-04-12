@@ -183,6 +183,7 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
               onClick={() => isOpen && handleCloseDropdown()}
               className={cx('chevron-icon', { 'chevron-icon-rotated': isOpen })}
               src={isOpen ? chevronIconBlack : chevronIcon}
+              alt="chevron"
             />
           </div>
           {isOpen && (

@@ -1,7 +1,7 @@
 <ul class="content-list">
   <% legislations.each do |legislation| %>
     <li>
-      <div class="meta"><img class="flag" src=<%= asset_path "flags/#{legislation.geography.iso}.svg"%> alt="">
+      <div class="meta"><img class="flag" src=<%= asset_path "flags/#{legislation.geography.iso}.svg"%> alt="<%= legislation.geography.iso + ' flag' %>">
         This law implements <%= legislation.geography.name %> legislation
       </div>
       <h5 class="title">

@@ -72,7 +72,7 @@ function ClimateTargets(props) {
           <div className="meta">
             {target.geography && (
               <a href={target.geography_path}>
-                <img src={`/images/flags/${target.geography.iso}.svg`} alt="" />
+                <img src={`/images/flags/${target.geography.iso}.svg`} alt={`${target.geography.name} flag`} />
                 {target.geography.name}
               </a>
             )}

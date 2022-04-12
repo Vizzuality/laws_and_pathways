@@ -54,7 +54,7 @@
     width: 150px;
   }
 
-  h4,
+  h4, h2,
   .content {
     padding-bottom: $size-4;
   }
@@ -89,11 +89,11 @@
     background-color: $grey-dark;
   }
 
-  h4 {
+  h2, h4 {
     padding-bottom: $size-2;
   }
 
-  h4,
+  h2, h4,
   .content {
     color: rgba($white, 0.9);
   }
@@ -173,7 +173,7 @@
     padding: 0.75rem;
     padding-top: 2.5rem;
 
-    h4 {
+    h4, h2 {
       padding-bottom: 1.5rem
     }
 

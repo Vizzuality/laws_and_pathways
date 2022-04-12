@@ -41,7 +41,7 @@ function CheckList({ isSearchable, options, selected, onChange, maxSelectedCount
         <div className="check-list__search">
           <label>
             <input type="text" value={searchText} onChange={(e) => setSearchText(e.target.value)} />
-            <img src={SearchIcon} />
+            <img src={SearchIcon} alt="Search" />
           </label>
         </div>
       )}

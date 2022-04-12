@@ -1,11 +1,11 @@
 <div class="container partners__container">
   <div class="columns">
     <div class="column is-half is-hidden-touch">
-      <%= image_tag("homepage/bitmap.jpg", srcset: [["homepage/bitmap@2x.jpg", "2x"]], class: "partners__avatar") %>
+      <%= image_tag("homepage/bitmap.jpg", srcset: [["homepage/bitmap@2x.jpg", "2x"]], class: "partners__avatar", alt: "Partners Image") %>
     </div>
 
     <div class="column">
-      <h4>Research Funding Partners</h4>
+      <h2 class="is-size-4">Research Funding Partners</h2>
 
       <p>
         The support of our Research Funding Partners enables the analysis work behind TPI’s reports, which is undertaken by the <a href="http://www.lse.ac.uk/GranthamInstitute/" class="link">Grantham Research Institute on Climate Change and the Environment at the London School of Economics</a>. It also enables the free publication of the TPI’s findings to the global investor community.
@@ -21,7 +21,7 @@
         <% next unless image.logo.present? %>
         <div class="image__container">
           <%= link_to image.link do %>
-            <%= image_tag image.logo %>
+            <%= image_tag image.logo, alt: image.name.blank? ? "partner logo" : image.name %>
           <% end %>
         </div>
       <% end %>

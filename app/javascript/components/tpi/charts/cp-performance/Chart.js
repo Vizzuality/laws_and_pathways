@@ -205,7 +205,7 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl }) {
 
               <div className="chart-company-selector-wrapper is-hidden-touch" ref={companySelectorWrapper}>
                 <button type="button" className="button is-primary with-icon" onClick={handleAddCompaniesClick}>
-                  <img src={PlusIcon} />
+                  <img src={PlusIcon} alt="Add companies to the chart" />
                   Add companies to the chart
                 </button>
 

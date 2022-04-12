@@ -8,7 +8,10 @@ module CCLOW
       add_breadcrumb('Laws and policies', cclow_legislation_and_policies_path)
       add_breadcrumb('Search results', request.path) if params[:q].present? || params[:recent].present?
 
-      @legislations = Queries::CCLOW::LegislationQuery.new(filter_params).call
+      @legislations = Queries::CCLOW::LegislationQuery
+        .new(filter_params)
+        .call
+        .includes(:geography)
 
       fixed_navbar('Laws and policies', admin_legislations_path)
 

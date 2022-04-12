@@ -21,6 +21,7 @@ $size-9: 0.5rem;
        font-url('BrownTT-Regular.woff2') format('woff2'),
        font-url('BrownTT-Regular.woff') format('woff'),
        font-url("BrownTT-Regular.ttf") format("truetype");
+  font-display: swap;
 }
 
 @font-face {
@@ -29,7 +30,8 @@ $size-9: 0.5rem;
   src: font-url('BrownTT-Bold.eot?#iefix') format('embedded-opentype'),
        font-url('BrownTT-Bold.woff2') format('woff2'),
        font-url('BrownTT-Bold.woff') format('woff'),
-       font-url("BrownTT-Bold.ttf") format("truetype")
+       font-url("BrownTT-Bold.ttf") format("truetype");
+  font-display: swap;
 }
 
 h1 {

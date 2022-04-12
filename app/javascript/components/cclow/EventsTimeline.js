@@ -66,29 +66,31 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
     <div className="timeline-events-container">
       { !isFiltered && (
         <Fragment>
-          <h5>Timeline of events</h5>
+          <h2 className="is-size-5">Timeline of events</h2>
           <div className="topic-details is-hidden-desktop">
             Use the dropdown menu to select the different events you wish to see displayed on the country timeline.
           </div>
         </Fragment>
       ) }
-      {isFiltered && (
+      {isFiltered && options && options.length && (
         <Fragment>
           <div className="title-block">
-            <h5>Timeline of events</h5>
+            <h2 className="is-size-5">Timeline of events</h2>
             <div className="topic-details is-hidden-desktop">
               Use the dropdown menu to select the different events you wish to see displayed on the country timeline.
             </div>
             <div className="filter-block">
-              <span>Show events:</span>
-              <MultiSelect
-                styles={customStyles}
-                options={options}
-                placeholder="All events"
-                closeMenuOnSelect={false}
-                hideSelectedOptions={false}
-                onChange={(e) => setCurrentTypes(e)}
-              />
+              <label>
+                Show events:
+                <MultiSelect
+                  styles={customStyles}
+                  options={options}
+                  placeholder="All events"
+                  closeMenuOnSelect={false}
+                  hideSelectedOptions={false}
+                  onChange={(e) => setCurrentTypes(e)}
+                />
+              </label>
             </div>
           </div>
           <div className="topic-details is-hidden-touch">
@@ -133,10 +135,15 @@ const EventsTimeline = ({ events, options, isFiltered = false }) => {
   );
 };
 
+EventsTimeline.defaultProps = {
+  options: null,
+  isFiltered: false
+};
+
 EventsTimeline.propTypes = {
   events: PropTypes.array.isRequired,
-  options: PropTypes.array.isRequired,
-  isFiltered: PropTypes.bool.isRequired
+  options: PropTypes.array,
+  isFiltered: PropTypes.bool
 };
 
 export default EventsTimeline;

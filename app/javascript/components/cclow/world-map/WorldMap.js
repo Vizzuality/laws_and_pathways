@@ -102,7 +102,7 @@ function WorldMap({ zoomToGeographyIso }) {
 
   const DropdownIndicator = (props) => (
     <components.DropdownIndicator {...props}>
-      <img src={chevronIconBlack} />
+      <img src={chevronIconBlack} alt="chevron" />
     </components.DropdownIndicator>
   );
 
@@ -256,30 +256,34 @@ function WorldMap({ zoomToGeographyIso }) {
         </div>
         <div className="world-map__selectors">
           <div className="world-map__selector">
-            <label>Content</label>
-            <Select
-              options={contentOptions}
-              value={selectedContentOption}
-              onChange={setContentId}
-              isSearchable={false}
-              styles={customStyles}
-              components={{ DropdownIndicator }}
-              theme={customTheme}
-              width="300px"
-            />
+            <label>
+              Content
+              <Select
+                options={contentOptions}
+                value={selectedContentOption}
+                onChange={setContentId}
+                isSearchable={false}
+                styles={customStyles}
+                components={{ DropdownIndicator }}
+                theme={customTheme}
+                width="300px"
+              />
+            </label>
           </div>
           <div className="world-map__selector">
-            <label>Context</label>
-            <Select
-              options={contextOptions}
-              value={selectedContextOption}
-              onChange={setContextId}
-              isSearchable={false}
-              styles={customStyles}
-              components={{ DropdownIndicator }}
-              theme={customTheme}
-              width="300px"
-            />
+            <label>
+              Context
+              <Select
+                options={contextOptions}
+                value={selectedContextOption}
+                onChange={setContextId}
+                isSearchable={false}
+                styles={customStyles}
+                components={{ DropdownIndicator }}
+                theme={customTheme}
+                width="300px"
+              />
+            </label>
           </div>
           {!zoomToGeographyIso && (
             <div className="world-map__eu-aggregation-button-container">
@@ -308,6 +312,7 @@ function WorldMap({ zoomToGeographyIso }) {
                   return (
                     <Geography
                       key={geo.rsmKey}
+                      role="img"
                       data-tip=""
                       data-for="geographyTooltip"
                       id={`geo-${geo.properties.ISO_A3}`}

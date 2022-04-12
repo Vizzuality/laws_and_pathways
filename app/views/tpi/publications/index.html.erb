@@ -4,7 +4,7 @@
   <div class="titel__container container">
     <h1 class="publications__title">Publications and news</h1>
     <button id="filter-button" type="button" class="button is-centered is-hidden-desktop filter-mobile-button filters__button-active">
-      <img src="<%= asset_path 'icons/filter-blue.svg'%>" class="filters__filter-icon">
+      <img src="<%= asset_path 'icons/filter-blue.svg'%>" class="filters__filter-icon" alt="filter icon">
     </button>
   </div>
   <%= react_component("Filters", { tags: @tags, sectors: @sectors, resultsSize: @publications_and_articles.size }) %>

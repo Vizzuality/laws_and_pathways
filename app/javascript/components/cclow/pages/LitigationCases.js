@@ -179,7 +179,7 @@ function LitigationCases(props) {
           <div className="meta">
             {litigation.geography && (
               <a href={litigation.geography_path}>
-                <img src={`/images/flags/${litigation.geography.iso}.svg`} alt="" />
+                <img src={`/images/flags/${litigation.geography.iso}.svg`} alt={`${litigation.geography.name} flag`} />
                 {litigation.geography.name}
               </a>
             )}

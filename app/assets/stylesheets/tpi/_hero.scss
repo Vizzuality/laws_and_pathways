@@ -169,13 +169,13 @@ $home-background: image-url("homepage/homepage-bg@2x.jpg");
   justify-content: space-between;
 
   &:hover {
-    .subsection-button__container {
-      .section-button {
+    .subsection-link__container {
+      .link__icon {
         background-color: $yellow;
         background-image: image-url('icons/plus-blue.svg');
       }
 
-      .button__title {
+      .link__title {
         text-decoration: underline;
       }
     }
@@ -197,7 +197,14 @@ $home-background: image-url("homepage/homepage-bg@2x.jpg");
   color: $white;
 }
 
-.section-button {
+.subsection-link__container {
+  display: flex;
+  align-items: center;
+  color: $white;
+  bottom: 20px;
+}
+
+.link__icon {
   background-color: $blue-darker;
   border-radius: 50%;
   height: 30px;
@@ -214,14 +221,7 @@ $home-background: image-url("homepage/homepage-bg@2x.jpg");
   background-position: center;
 }
 
-.subsection-button__container {
-  display: flex;
-  align-items: center;
-  color: $white;
-  bottom: 20px;
-}
-
-.button__title {
+.link__title {
   font-size: 16px;
   font-family: $font-family-bold;
   color: $white;

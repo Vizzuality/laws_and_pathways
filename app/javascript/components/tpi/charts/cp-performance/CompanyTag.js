@@ -15,7 +15,7 @@ function CompanyTag({ className, item, hideRemoveIcon, onRemove }) {
       {item.name}
       {!hideRemoveIcon && (
         <span className="company-tag__remove" onClick={() => onRemove(item)}>
-          <img src={DarkXIcon} />
+          <img src={DarkXIcon} alt="Remove" />
         </span>
       )}
     </div>

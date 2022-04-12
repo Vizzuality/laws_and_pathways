@@ -121,6 +121,7 @@ const Filters = ({ tags, sectors, resultsSize }) => {
               <img
                 src={isFilterOpen ? filterIcon : filterBlueIcon}
                 className="filters__filter-icon"
+                alt="Filter icon"
               />
               <span>{buttonTitle}</span>
             </button>

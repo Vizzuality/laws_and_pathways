@@ -117,9 +117,12 @@ $arrow-btn-width: 48px;
     float: right;
     font-size: $size-7;
 
-    & >span {
+    & > label {
       color: $grey-text;
-      margin-right: 10px;
+
+      > div {
+        margin-left: 10px;
+      }
     }
   }
 

@@ -47,7 +47,7 @@ function RemoteDropdown({ url, params, data, selected, name }) {
       <div ref={Dropdown} className="nested-dropdown">
         <div className="nested-dropdown__title" onClick={() => setIsOpen(!isOpen)}>
           <div className="nested-dropdown__title-header">{label || data[0].label}</div>
-          <img src={chevronIconBlack} />
+          <img src={chevronIconBlack} alt="chevron" />
         </div>
         {isOpen && <List url={url} data={data} onSelect={handleSelect} />}
       </div>

@@ -35,7 +35,7 @@ const LatestInformation = ({ company }) => {
 
         {showButton && (
           <button onClick={() => setExpanded(!expanded)} type="button" className="latest-information__button-container">
-            <img src={expanded ? minusIcon : plusIcon} className="latest-information__button" />
+            <img src={expanded ? minusIcon : plusIcon} className="latest-information__button" alt="Toggle icon" />
             <span className="latest-information__button-text">{buttonText}</span>
           </button>
         )}

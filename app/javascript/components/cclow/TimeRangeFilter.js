@@ -74,14 +74,14 @@ function TimeRangeFilter(props) {
     <div className={`filter-container ${className}`}>
       <div className="control-field" onClick={() => setShowOptions(true)}>
         <div className="select-field">
-          <span>{filterName}</span><span className="toggle-indicator"><img src={plus} alt="" /></span>
+          <span>{filterName}</span><span className="toggle-indicator"><img src={plus} alt="open sign" /></span>
         </div>
         {selectedTitle && <div className="selected-count">{selectedTitle}</div>}
       </div>
       {showOptions && (
         <div className="options-container" ref={optionsContainer}>
           <div className="select-field" onClick={() => setShowOptions(false)}>
-            <span>{filterName}</span><span className="toggle-indicator"><img src={minus} alt="" /></span>
+            <span>{filterName}</span><span className="toggle-indicator"><img src={minus} alt="close sign" /></span>
           </div>
           <div className="time-range-options">
             <div className="slider-range-container">

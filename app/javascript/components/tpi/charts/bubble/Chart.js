@@ -72,7 +72,7 @@ const BubbleChart = ({ levels, sectors }) => {
           />
         </div>
         <div className="bubble-chart__legend">
-          <img className="bubble-chart__legend-image" src={legendImage} />
+          <img className="bubble-chart__legend-image" src={legendImage} alt="Bubble size description" />
           <div className="bubble-chart__legend-titles-container">
             {Object.keys(COMPANIES_MARKET_CAP_GROUPS).map((companySize, i) => (
               <span
