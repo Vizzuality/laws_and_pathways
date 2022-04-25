@@ -7,16 +7,6 @@
     <%= @page.description&.html_safe %>
   </div>
   <% @page.contents.order(:created_at).each do |content| %>
-    <div class="pages__description">
-      <h4><%= content.title %></h4>
-      <div class="pages__description"><%= content.text.html_safe %></div>
-      <% if content.images.any? %>
-        <div class="pages__content-logos">
-          <% content.images.order(:name).each do |image| %>
-            <%= link_to(image_tag(image.logo), image.link) %>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
+    <%= render "shared/pages/#{content.content_type.presence || 'regular'}", content: content %>
   <% end %>
 </div>
