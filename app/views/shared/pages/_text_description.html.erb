@@ -4,7 +4,7 @@
       <% content.images.order(:name).each do |image| %>
         <% if image.logo.present? %>
           <% if content.images.length > 1 %>
-            <%= link_to(image_tag(image.logo), image.link) %>
+            <%= link_to(image_tag(image.logo, alt: image.name), image.link) %>
           <% else %>
             <div style="background-image: url(<%= url_for(image.logo) %>)"></div>
           <% end %>
