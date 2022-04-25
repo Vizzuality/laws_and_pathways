@@ -168,6 +168,15 @@ ActiveAdmin.register Legislation do
     redirect_to collection_path, message
   end
 
+  collection_action :filter, method: :get do
+    results = []
+    # hacky way but the quickest to still use that aa addon
+    term = params.dig('q', 'groupings', '0', 'name_contains')
+    results = Legislation.admin_search(term).order(title: :asc) unless term.blank?
+
+    render json: results.map { |l| l.as_json(only: [:id, :title], methods: [:display_name]) }
+  end
+
   controller do
     include DiscardableController
 
