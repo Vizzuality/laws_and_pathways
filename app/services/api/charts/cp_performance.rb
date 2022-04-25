@@ -3,19 +3,19 @@ module Api
     class CPPerformance
       COLOR_DESCRIPTIONS = {
         '#00C170' => <<~HTML,
-          1.5 Degrees in electricity, oil & gas, diversified mining, shipping, and aviation<br/>
-          Below 2 Degrees in paper, aluminium, cement, and steel<br/>
+          1.5 Degrees in electricity, oil & gas, diversified mining, cement, steel, shipping, and aviation<br/>
+          Below 2 Degrees in paper and aluminium<br/>
           2 Degrees (High Efficiency) in autos
         HTML
         '#FFDD49' => <<~HTML,
-          Below 2 Degrees in electricity, oil & gas, diversified mining, shipping, and aviation<br/>
-          2 Degrees in paper, aluminium, cement, and steel<br/>
+          Below 2 Degrees in electricity, oil & gas, diversified mining, cement, steel, shipping, and aviation<br/>
+          2 Degrees in paper and aluminium<br/>
           2 Degrees (Shift-Improve) in autos
         HTML
         '#FF9600' => <<~HTML,
-          National Pledges in electricity, oil & gas, and diversified mining<br/>
+          National Pledges in electricity, oil & gas, diversified mining, cement, and steel<br/>
           International Pledges in aviation and shipping<br/>
-          Paris Pledges in autos, paper, aluminium, cement, and steel
+          Paris Pledges in autos, paper, and aluminium
         HTML
         '#ED3D4A' => 'Not Aligned',
         '#595B5D' => 'No or unsuitable disclosure'
