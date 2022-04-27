@@ -12,9 +12,25 @@
 
 class ExternalLegislation < ApplicationRecord
   include DirtyAssociations
+  include PgSearch::Model
 
   has_and_belongs_to_many :litigations, after_add: :mark_changed, after_remove: :mark_changed
   belongs_to :geography
+
+  pg_search_scope :admin_search,
+                  associated_against: {
+                    geography: [:name]
+                  },
+                  against: {
+                    id: 'A',
+                    name: 'B'
+                  },
+                  using: {
+                    tsearch: {
+                      prefix: true
+                    }
+                  },
+                  ignoring: :accents
 
   validates_presence_of :name
   validates :url, url: true

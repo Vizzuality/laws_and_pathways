@@ -71,6 +71,21 @@ class Legislation < ApplicationRecord
       .distinct
   }
 
+  pg_search_scope :admin_search,
+                  associated_against: {
+                    geography: [:name]
+                  },
+                  against: {
+                    id: 'A',
+                    title: 'B'
+                  },
+                  using: {
+                    tsearch: {
+                      prefix: true
+                    }
+                  },
+                  ignoring: :accents
+
   #  WARNING: make sure you update tsv column when changing against
   #           (against are actually not used when column is in use)
   pg_search_scope :full_text_search,
@@ -100,6 +115,10 @@ class Legislation < ApplicationRecord
   validates_uniqueness_of :slug
 
   before_validation :trix_strip_outer_div
+
+  def self.ransackable_scopes(_auth_object = nil)
+    [:admin_search]
+  end
 
   def trix_strip_outer_div
     self.description = HTMLHelper.strip_outer_div(description) if description.present?

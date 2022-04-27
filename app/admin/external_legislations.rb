@@ -13,6 +13,15 @@ ActiveAdmin.register ExternalLegislation do
 
   data_export_sidebar 'ExternalLegislations', display_name: 'External Laws'
 
+  collection_action :filter, method: :get do
+    results = []
+    # hacky way but the quickest to still use that aa addon
+    term = params.dig('q', 'groupings', '0', 'name_contains')
+    results = ExternalLegislation.admin_search(term).order(name: :asc) unless term.blank?
+
+    render json: results.map { |l| l.as_json(only: [:id, :name], methods: [:display_name]) }
+  end
+
   show do
     attributes_table do
       row :name
