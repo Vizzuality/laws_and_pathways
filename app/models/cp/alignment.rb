@@ -8,7 +8,7 @@ module CP
 
     CP_ALIGNMENT_COLORS = {
       'below 2 degrees' => {
-        'paper/aluminium/cement/steel' => '#00C170', # green
+        'paper/aluminium' => '#00C170', # green
         'rest' => '#FFDD49' # yellow
       },
       '2 degrees (high efficiency)' => '#00C170', # green
@@ -27,7 +27,6 @@ module CP
     NAMES = [
       '1.5 Degrees',
       '2 Degrees (High Efficiency)',
-      'Below 2 Degrees (Paper/Aluminium/Cement/Steel)',
       'Below 2 Degrees',
       '2 Degrees',
       '2 Degrees (Shift-Improve)',
@@ -38,7 +37,7 @@ module CP
       'No or unsuitable disclosure',
       'Not Assessed'
     ].freeze
-    ALLOWED_NAMES = (NAMES - ['Below 2 Degrees (Paper/Aluminium/Cement/Steel)']).freeze
+    ALLOWED_NAMES = NAMES
 
     OLD_NAMES_MAP = {
       'No Disclosure' => 'No or unsuitable disclosure'
