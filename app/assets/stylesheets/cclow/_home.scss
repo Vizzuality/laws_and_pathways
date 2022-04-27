@@ -1,0 +1,32 @@
+.latest_additions__container {
+  padding-bottom: 0;
+}
+
+.section__map {
+  margin-top: 44px;
+  padding-bottom: 0;
+  padding-top: 0 !important;
+  margin-bottom: 52px;
+
+  @include desktop {
+    margin-top: 68px;
+    margin-bottom: 74px;
+  }
+
+  .content {
+    font-size: 0.875rem;
+    line-height: 24px;
+    color: $blue-dark;
+    width: 100%;
+    margin-bottom: 10px;
+
+    @include desktop {
+      width: 75%;
+      margin-bottom: 26px;
+    }
+  }
+
+  .title {
+    margin-bottom: 18px;
+  }
+}
