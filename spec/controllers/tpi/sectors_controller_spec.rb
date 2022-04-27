@@ -151,7 +151,7 @@ RSpec.describe TPI::SectorsController, type: :controller do
         expect(entries_names).to include("CP_Assessments_Regional_#{timestamp}.csv")
         expect(entries_names).to include('Company_Latest_Assessments.csv')
         expect(entries_names).to include("MQ_Assessments_Methodology_1_#{timestamp}.csv")
-        expect(entries_names).to include('Data_Guide_NH.xlsx')
+        expect(entries_names).to include('User guide TPI files.xlsx')
 
         expect(entries_csv_json["Sector_Benchmarks_#{timestamp}.csv"])
           .to match_snapshot('tpi_single_sector_user_download_zip_sector_benchmarks_csv')
@@ -199,7 +199,7 @@ RSpec.describe TPI::SectorsController, type: :controller do
         expect(entries_names).to include("CP_Assessments_#{timestamp}.csv")
         expect(entries_names).to include('Company_Latest_Assessments.csv')
         expect(entries_names).to include("MQ_Assessments_Methodology_1_#{timestamp}.csv")
-        expect(entries_names).to include('Data_Guide_NH.xlsx')
+        expect(entries_names).to include('User guide TPI files.xlsx')
 
         expect(entries_csv_json["Sector_Benchmarks_#{timestamp}.csv"])
           .to match_snapshot('tpi_all_sectors_user_download_zip_sector_benchmarks_csv')
