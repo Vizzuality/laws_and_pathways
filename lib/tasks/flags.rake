@@ -9,7 +9,7 @@ namespace :flags do
     path = 'Assets/SVG'
     client = Octokit::Client.new
 
-    Dir.mkdir(destination_dir) unless Dir.exist?(destination_dir)
+    Dir.mkdir(destination_dir)
 
     flags = client.contents(repo, path: path)
 
