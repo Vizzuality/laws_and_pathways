@@ -7,7 +7,7 @@ class Bank < ApplicationRecord
   enum market_cap_group: array_to_enum_hash(MARKET_CAP_GROUPS)
 
   belongs_to :geography
-  has_many :bank_assessments
+  has_many :assessments, class_name: 'BankAssessment'
 
   validates_presence_of :name, :slug, :isin, :market_cap_group
   validates_uniqueness_of :slug, :name

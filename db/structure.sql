@@ -385,7 +385,7 @@ ALTER SEQUENCE public.bank_assessments_id_seq OWNED BY public.bank_assessments.i
 
 CREATE TABLE public.banks (
     id bigint NOT NULL,
-    location_id bigint,
+    geography_id bigint,
     name character varying NOT NULL,
     slug character varying NOT NULL,
     isin character varying NOT NULL,
@@ -2457,10 +2457,17 @@ CREATE INDEX index_bank_assessments_on_bank_id ON public.bank_assessments USING 
 
 
 --
--- Name: index_banks_on_location_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_banks_on_geography_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_banks_on_location_id ON public.banks USING btree (location_id);
+CREATE INDEX index_banks_on_geography_id ON public.banks USING btree (geography_id);
+
+
+--
+-- Name: index_banks_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_banks_on_name ON public.banks USING btree (name);
 
 
 --
@@ -3434,14 +3441,6 @@ ALTER TABLE ONLY public.publications
 
 
 --
--- Name: banks fk_rails_aa5c99fe10; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.banks
-    ADD CONSTRAINT fk_rails_aa5c99fe10 FOREIGN KEY (location_id) REFERENCES public.locations(id);
-
-
---
 -- Name: geographies fk_rails_b0c4e90fda; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3455,6 +3454,14 @@ ALTER TABLE ONLY public.geographies
 
 ALTER TABLE ONLY public.contents
     ADD CONSTRAINT fk_rails_b169e370d5 FOREIGN KEY (page_id) REFERENCES public.pages(id);
+
+
+--
+-- Name: banks fk_rails_b7a12616f3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.banks
+    ADD CONSTRAINT fk_rails_b7a12616f3 FOREIGN KEY (geography_id) REFERENCES public.geographies(id);
 
 
 --
