@@ -30,6 +30,10 @@ module Seed
         run_importer CSVImport::MQAssessments.new(seed_file('mq-assessments-M3.csv'))
       end
 
+      TimedLogger.log('Import Banking Tool Data') do
+        run_importer CSVImport::Banks.new(seed_file('banks.csv'))
+      end
+
       # TimedLogger.log('Import News Articles') do
       #   run_importer CSVImport::NewsArticles.new(seed_file('tpi-news-articles.csv'), allow_tags_adding: true)
       #   random_assign_images_to_articles
