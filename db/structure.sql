@@ -280,6 +280,75 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: bank_assessments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.bank_assessments (
+    id bigint NOT NULL,
+    bank_id bigint,
+    assessment_date date NOT NULL,
+    notes text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: bank_assessments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.bank_assessments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bank_assessments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.bank_assessments_id_seq OWNED BY public.bank_assessments.id;
+
+
+--
+-- Name: banks; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.banks (
+    id bigint NOT NULL,
+    location_id bigint,
+    name character varying NOT NULL,
+    slug character varying NOT NULL,
+    isin character varying NOT NULL,
+    sedol character varying,
+    market_cap_group character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: banks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.banks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: banks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.banks_id_seq OWNED BY public.banks.id;
+
+
+--
 -- Name: companies; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1584,6 +1653,20 @@ ALTER TABLE ONLY public.admin_users ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: bank_assessments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessments ALTER COLUMN id SET DEFAULT nextval('public.bank_assessments_id_seq'::regclass);
+
+
+--
+-- Name: banks id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.banks ALTER COLUMN id SET DEFAULT nextval('public.banks_id_seq'::regclass);
+
+
+--
 -- Name: companies id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1860,6 +1943,22 @@ ALTER TABLE ONLY public.admin_users
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: bank_assessments bank_assessments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessments
+    ADD CONSTRAINT bank_assessments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: banks banks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.banks
+    ADD CONSTRAINT banks_pkey PRIMARY KEY (id);
 
 
 --
@@ -2230,6 +2329,27 @@ CREATE UNIQUE INDEX index_admin_users_on_email ON public.admin_users USING btree
 --
 
 CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON public.admin_users USING btree (reset_password_token);
+
+
+--
+-- Name: index_bank_assessments_on_bank_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_bank_assessments_on_bank_id ON public.bank_assessments USING btree (bank_id);
+
+
+--
+-- Name: index_banks_on_location_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_banks_on_location_id ON public.banks USING btree (location_id);
+
+
+--
+-- Name: index_banks_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_banks_on_slug ON public.banks USING btree (slug);
 
 
 --
@@ -3076,6 +3196,14 @@ ALTER TABLE ONLY public.litigation_sides
 
 
 --
+-- Name: bank_assessments fk_rails_68427d4c57; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessments
+    ADD CONSTRAINT fk_rails_68427d4c57 FOREIGN KEY (bank_id) REFERENCES public.banks(id) ON DELETE CASCADE;
+
+
+--
 -- Name: publications fk_rails_6984032012; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3169,6 +3297,14 @@ ALTER TABLE ONLY public.taggings
 
 ALTER TABLE ONLY public.publications
     ADD CONSTRAINT fk_rails_a957b2faea FOREIGN KEY (created_by_id) REFERENCES public.admin_users(id);
+
+
+--
+-- Name: banks fk_rails_aa5c99fe10; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.banks
+    ADD CONSTRAINT fk_rails_aa5c99fe10 FOREIGN KEY (location_id) REFERENCES public.locations(id);
 
 
 --
@@ -3371,4 +3507,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220310091530'),
 ('20220324160017'),
 ('20220324184534'),
-('20220324190738');
+('20220324190738'),
+('20220704085154'),
+('20220704092137');
+
+
