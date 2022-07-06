@@ -38,6 +38,10 @@ module Seed
         run_importer CSVImport::BankAssessmentIndicators.new(seed_file('bank_assessment_indicators.csv'))
       end
 
+      TimedLogger.log('Import Bank Assessments') do
+        run_importer CSVImport::BankAssessments.new(seed_file('bank_assessments.csv'))
+      end
+
       # TimedLogger.log('Import News Articles') do
       #   run_importer CSVImport::NewsArticles.new(seed_file('tpi-news-articles.csv'), allow_tags_adding: true)
       #   random_assign_images_to_articles

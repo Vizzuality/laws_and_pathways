@@ -69,6 +69,8 @@ GEM
     activerecord (6.0.5)
       activemodel (= 6.0.5)
       activesupport (= 6.0.5)
+    activerecord-import (1.0.4)
+      activerecord (>= 3.2)
     activestorage (6.0.5)
       actionpack (= 6.0.5)
       activejob (= 6.0.5)
@@ -550,6 +552,7 @@ DEPENDENCIES
   active_link_to
   activeadmin (= 2.9.0)
   activeadmin_addons
+  activerecord-import
   acts_as_list
   annotate
   appsignal

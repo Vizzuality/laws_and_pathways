@@ -4,4 +4,12 @@ class BankAssessmentIndicator < ApplicationRecord
 
   validates_presence_of :number, :text
   validates_uniqueness_of :number, scope: [:indicator_type]
+
+  def percentage_indicator?
+    area? || indicator?
+  end
+
+  def answer_indicator?
+    sub_indicator?
+  end
 end
