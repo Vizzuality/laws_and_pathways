@@ -1,7 +1,7 @@
 ActiveAdmin.register CP::Assessment do
   config.sort_order = 'publication_date_desc'
 
-  menu parent: 'TPI', priority: 2, label: 'Carbon Performance Assessments'
+  menu parent: 'TPI', priority: 4, label: 'Carbon Performance Assessments'
 
   decorate_with CP::AssessmentDecorator
 

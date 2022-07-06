@@ -5,6 +5,13 @@ class BankAssessmentIndicator < ApplicationRecord
   validates_presence_of :number, :text
   validates_uniqueness_of :number, scope: [:indicator_type]
 
+  def display_text
+    return "#{number.chars.last}. #{text}" if answer_indicator?
+    return "#{number}: #{text}" if sub_area? || indicator?
+
+    text
+  end
+
   def percentage_indicator?
     area? || indicator?
   end

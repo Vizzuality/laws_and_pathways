@@ -1,7 +1,7 @@
 ActiveAdmin.register Bank do
   menu priority: 0, parent: 'TPI'
 
-  # decorate_with BankDecorator
+  decorate_with BankDecorator
 
   config.sort_order = 'name_asc'
   config.batch_actions = false
@@ -55,17 +55,17 @@ ActiveAdmin.register Bank do
               'No Assessments for this bank yet'
             end
           else
-            resource.assessments.map do |a|
+            resource.assessments.decorate.map do |a|
               panel a.title_link, class: 'bank_assessment' do
                 attributes_table_for a do
                   row :assessment_date
                 end
 
-                # table_for a.questions do
-                #   column :level
-                #   column :answer
-                #   column :question
-                # end
+                table_for a.results do
+                  column(:number) { |r| r.indicator.number }
+                  column(:display_text) { |r| r.indicator.display_text }
+                  column(:value) { |r| r.percentage || r.answer }
+                end
               end
             end
           end

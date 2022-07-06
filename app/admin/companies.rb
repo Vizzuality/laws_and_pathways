@@ -1,5 +1,5 @@
 ActiveAdmin.register Company do
-  menu priority: 0, parent: 'TPI'
+  menu priority: 2, parent: 'TPI'
 
   decorate_with CompanyDecorator
 

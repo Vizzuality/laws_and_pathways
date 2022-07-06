@@ -1,7 +1,7 @@
 ActiveAdmin.register MQ::Assessment do
   config.sort_order = 'publication_date_desc'
 
-  menu parent: 'TPI', priority: 1, label: 'Management Quality Assessments'
+  menu parent: 'TPI', priority: 3, label: 'Management Quality Assessments'
 
   decorate_with MQ::AssessmentDecorator
 
