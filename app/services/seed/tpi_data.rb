@@ -30,8 +30,12 @@ module Seed
         run_importer CSVImport::MQAssessments.new(seed_file('mq-assessments-M3.csv'))
       end
 
-      TimedLogger.log('Import Banking Tool Data') do
+      TimedLogger.log('Import Bank Data') do
         run_importer CSVImport::Banks.new(seed_file('banks.csv'))
+      end
+
+      TimedLogger.log('Import Bank Assessment Indicators') do
+        run_importer CSVImport::BankAssessmentIndicators.new(seed_file('bank_assessment_indicators.csv'))
       end
 
       # TimedLogger.log('Import News Articles') do
@@ -107,7 +111,7 @@ module Seed
     private
 
     def run_importer(importer)
-      importer.call
+      puts "Error while running importer: #{importer.errors.full_messages.join(', ')}" unless importer.call
       puts importer.import_results
     end
 
