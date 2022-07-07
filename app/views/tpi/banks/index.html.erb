@@ -1,0 +1,11 @@
+<% content_for :page_title, "Banking Tool - Transition Pathway Initiative" %>
+<% content_for :page_description, "TODO: Description of Banking tool" %>
+
+<div class="banks-index-page">
+  <div class="dropdown-selector-wrapper">
+    <%= react_component("BankDropdown", {
+      banks: @banks,
+      selectedOption: 'All banks'
+      }) %>
+  </div>
+</div>

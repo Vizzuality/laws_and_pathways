@@ -40,6 +40,8 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :banks, only: [:show, :index]
+
       resources :publications, only: [:index, :show] do
         collection do
           get :partial

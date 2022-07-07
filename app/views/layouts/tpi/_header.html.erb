@@ -3,10 +3,15 @@
     {
       entry: 'TPI tool',
       path: tpi_sectors_path,
-      content: @tpi_tool_pages,
+      content: [
+        { title: 'TPI banking tool', path: tpi_banks_path },
+        *@tpi_tool_pages
+      ],
       active: active_menu_page?([
         tpi_sectors_path,
+        tpi_banks_path,
         { controller: 'tpi/sectors', action: 'show' },
+        { controller: 'tpi/banks', action: 'show' },
         { controller: 'tpi/companies', action: 'show' },
         *@tpi_tool_pages_paths
       ])
@@ -39,4 +44,4 @@
       action: '/search',
     },
   },
-}) %>
+  }) %>
