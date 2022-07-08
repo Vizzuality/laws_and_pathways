@@ -4,11 +4,15 @@ module TPI
     before_action :fetch_banks
     before_action :redirect_if_numeric_or_historic_slug, only: [:show]
 
+    helper_method :child_indicators
+
     def index
       @banks = Bank.all
     end
 
     def show
+      @results_by_indicator_type = @bank.assessments.last&.results_by_indicator_type
+
       fixed_navbar(
         "Bank #{@bank.name}",
         admin_bank_path(@bank)
@@ -16,6 +20,10 @@ module TPI
     end
 
     private
+
+    def child_indicators(result, indicator_type)
+      @results_by_indicator_type[indicator_type].select { |r| r.indicator.number.start_with?(result.indicator.number) }
+    end
 
     def fetch_bank
       @bank = Bank.friendly.find(params[:id])

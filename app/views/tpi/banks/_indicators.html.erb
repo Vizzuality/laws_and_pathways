@@ -1,0 +1,24 @@
+<% indicators.each do |indicator| %>
+  <div class="bank-assessment__indicator">
+    <div class="bank-assessment__indicator-header">
+      <h4>
+        <%= indicator.indicator.display_text %>
+      </h4>
+    </div>
+
+    <div class="bank-assessment__sub-indicators">
+      <% sub_indicators = child_indicators(indicator, "sub_indicator") %>
+      <% sub_indicators.each do |sub_indicator| %>
+        <div class="bank-assessment__sub-indicator">
+          <div class="bank-assessment__sub-indicator-answer-wrapper">
+            <span class="bank-assessment__sub-indicator-answer bank-assessment__sub-indicator-answer--<%= sub_indicator.answer.parameterize %>">
+            </span>
+          </div>
+          <div class="bank-assessment__sub-indicator-answer-text">
+            <%= sub_indicator.indicator.display_text %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

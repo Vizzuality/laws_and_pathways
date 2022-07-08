@@ -1,11 +1,11 @@
-<div class="company-property">
-  <div class="company-property__name">
+<div class="property">
+  <div class="property__name">
     <%= name %>
     <% if defined?(tooltip) %>
       <%= react_component("BaseTooltip", { content: tooltip }) %>
     <% end %>
   </div>
-  <div class="company-property__value<%= ' highlight' if highlight.present? %>">
+  <div class="property__value<%= ' highlight' if highlight.present? %>">
     <%= yield%>
   </div>
 </div>

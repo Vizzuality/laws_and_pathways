@@ -100,32 +100,32 @@
         <div class="summary-box">
           <div class="columns">
             <div class="column">
-              <%= render 'company_property', highlight: true, name: 'Geography', tooltip: t('.tooltips.geography') do %>
+              <%= render 'tpi/shared/property', highlight: true, name: 'Geography', tooltip: t('.tooltips.geography') do %>
                 <%= @company.geography.name %>
               <% end %>
             </div>
             <div class="column">
-              <%= render 'company_property', highlight: true, name: 'Sector' do %>
+              <%= render 'tpi/shared/property', highlight: true, name: 'Sector' do %>
                 <%= link_to @company.sector.name, tpi_sector_path(@company.sector.slug) %>
               <% end %>
             </div>
             <div class="column">
-              <%= render 'company_property', highlight: false, name: 'Market cap (Group)', tooltip: t('.tooltips.market_cap') do %>
+              <%= render 'tpi/shared/property', highlight: false, name: 'Market cap (Group)', tooltip: t('.tooltips.market_cap') do %>
                 <%= @company.market_cap_group %>
               <% end %>
             </div>
             <div class="column">
-              <%= render 'company_property', highlight: false, name: 'ISIN', tooltip: t('.tooltips.ISIN') do %>
+              <%= render 'tpi/shared/property', highlight: false, name: 'ISIN', tooltip: t('.tooltips.ISIN') do %>
                 <%= @company.isin_array.join('<br/>').html_safe %>
               <% end %>
             </div>
             <div class="column">
-              <%= render 'company_property', highlight: false, name: 'SEDOL', tooltip: t('.tooltips.SEDOL') do %>
+              <%= render 'tpi/shared/property', highlight: false, name: 'SEDOL', tooltip: t('.tooltips.SEDOL') do %>
                 <%= @company.sedol %>
               <% end %>
             </div>
             <div class="column">
-              <%= render 'company_property', highlight: true, name: 'CA100+ engagement', tooltip: t('.tooltips.CA100') do %>
+              <%= render 'tpi/shared/property', highlight: true, name: 'CA100+ engagement', tooltip: t('.tooltips.CA100') do %>
                 <%= humanize_boolean(@company.ca100?) %>
               <% end %>
             </div>

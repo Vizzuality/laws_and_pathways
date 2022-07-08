@@ -1,0 +1,343 @@
+$line-height: 24px;
+$max-lines: 3;
+$dots-space: 1.3rem;
+$indicator-padding: 100px;
+
+.bank-page {
+  .change-view {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .bank-header {
+    background: $blue;
+
+    height: 100px;
+    display: flex;
+    align-items: center;
+
+    a {
+      color: white;
+    }
+
+    a + a {
+      margin-left: 20px;
+    }
+
+    @include until($desktop) {
+      padding: 0 0.75rem;
+      font-size: $size-7;
+      height: 60px;
+      font-family: $font-family-regular;
+    }
+  }
+
+  .dropdown-selector-wrapper {
+    background-color: $blue;
+
+    @include desktop {
+      height: 335px;
+    }
+  }
+
+  .summary-boxes {
+    margin-top: 1.5rem;
+  }
+
+  .summary-box {
+    background: $grey;
+    padding: 40px;
+    border-bottom: none;
+    height: 100%;
+
+    h3 {
+      font-size: 16px;
+      line-height: 20px;
+    }
+
+    small {
+      font-size: 12px;
+      color: $grey-dark;
+    }
+
+    @include until($desktop) {
+      padding: 1.5rem 0.75rem;
+
+      .mq-level {
+        font-size: 1.5rem;
+      }
+    }
+
+    @include until($desktop) {
+      .columns {
+        display: table;
+
+        .column {
+          display: inline-flex;
+          width: 50%;
+        }
+      }
+    }
+  }
+
+  .summary-box-link {
+    color: unset;
+    &:hover, &:visited {
+      color: unset;
+    }
+  }
+
+  .bank-assessment {
+    margin-top: 30px;
+
+    input.toggle {
+      display: none;
+    }
+
+    label {
+      cursor: pointer;
+    }
+
+    &__area {
+      margin-top: -1px;
+      border: 1px solid transparent;
+      border-bottom: 1px solid #CFD7ED;
+
+      &:hover {
+        background: #F5F8FE;
+        border: 1px solid #CFD7ED;
+      }
+    }
+
+    &__area-header {
+      padding: 40px 40px;
+      position: relative;
+
+      small {
+        font-size: 12px;
+      }
+
+      h2 {
+        font-family: $font-family-regular;
+        font-size: 24px;
+        font-weight: 400;
+        text-transform: uppercase;
+      }
+
+      label {
+        position: absolute;
+        padding: 10px 30px;
+        right: -1px;
+        bottom: -1px;
+        border: 1px solid #CFD7ED;
+        user-select: none;
+
+        &:after {
+          content: 'See more';
+        }
+      }
+    }
+
+    &__area-content {
+      display: none;
+      background: #F5F8FE;
+      padding-left: $indicator_padding;
+      padding-top: 20px;
+    }
+
+    input.toggle:checked + .bank-assessment__area {
+      background: #F5F8FE;
+      border: 1px solid #CFD7ED;
+
+      .bank-assessment__area-content {
+        display: block;
+      }
+
+      .bank-assessment__area-label {
+        &:after {
+          content: 'See less';
+        }
+      }
+    }
+
+    &__sub-area {
+    }
+
+    &__sub-area-header {
+      position: relative;
+
+      padding: 20px;
+      padding-left: $indicator_padding;
+      background: white;
+      border: 1px solid #CFD7ED;
+      border-right: 0px;
+
+      h3 {
+        font-size: 20px !important;
+      }
+
+      label {
+        position: absolute;
+        padding: 10px 30px;
+        right: -1px;
+        bottom: -1px;
+        border: 1px solid #CFD7ED;
+        user-select: none;
+
+        &:after {
+          content: 'See more';
+        }
+      }
+    }
+
+    input.toggle:checked + .bank-assessment__sub-area {
+      .bank-assessment__sub-area-content {
+        display: block;
+      }
+
+      .bank-assessment__sub-area-label {
+        &:after {
+          content: 'See less';
+        }
+      }
+    }
+
+    &__sub-area-content {
+      display: none;
+
+      .bank-assessment__indicator:first-of-type {
+
+        .bank-assessment__indicator-header {
+          border-top: 0px;
+        }
+      }
+    }
+
+    input.toggle:checked ~ .bank-assessment__sub-area-content {
+      display: block;
+    }
+
+    &__indicator {
+    }
+
+    &__indicator-header {
+      padding: 20px;
+      padding-left: $indicator_padding;
+      background: #F5F8FE;
+      border: 1px solid #CFD7ED;
+      border-right: 0px;
+
+      h4 {
+        font-size: 16px !important;
+      }
+    }
+
+    &__sub-indicators {
+      position: relative;
+
+      &:before {
+        position: absolute;
+        content: '';
+        left: $indicator_padding / 2 - 2px;
+        height: 100%;
+        background: #ECF1FE;
+        width: 4px;
+      }
+
+      .bank-assessment__sub-indicator {
+        &:first-of-type {
+          padding-top: 30px;
+        }
+
+        &:last-of-type {
+          padding-bottom: 30px;
+        }
+      }
+    }
+
+    &__sub-indicator {
+      display: flex;
+
+      .bank-assessment__sub-indicator-answer-wrapper {
+        position: relative;
+        width: $indicator_padding;
+        flex-shrink: 0;
+      }
+
+      .bank-assessment__sub-indicator-answer {
+        width: 36px;
+        height: 36px;
+
+        border-radius: 50%;
+
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 16px;
+
+        display: block;
+        position: absolute;
+        left: calc(50% - 36px / 2);
+        top: calc(50% - 36px / 2);
+
+        &--no {
+          background-image: image-url('icons/x.svg');
+          background-color: #ED3D4A;
+        }
+
+        &--yes {
+          @include mq-level-backgrounds;
+
+          background-image: image-url('icons/check.svg');
+          background-color: #5587F7;
+        }
+
+        &--not-applicable {
+          background-image: image-url('icons/oval.svg');
+          background-color: #C0C2C3;
+          background-size: 8px;
+        }
+
+        @include until($desktop) {
+          top: 0;
+          left: -45px;
+        }
+      }
+
+      .bank-assessment__sub-indicator-answer-text {
+        padding: 15px;
+        padding-left: 0px;
+      }
+    }
+  }
+
+  section {
+    @include until($desktop) {
+      &.summary-boxes {
+        > .columns {
+          &:not(:last-child) {
+            > .column {
+              border-bottom: solid 1px rgba(89, 91, 93, 0.2);
+            }
+          }
+
+          > .column {
+            padding: 0;
+          }
+        }
+
+        .columns {
+          margin: 0;
+        }
+      }
+
+      h4 {
+        font-size: $size-5 !important;
+      }
+
+      > p {
+        font-size: $size-6;
+        color: $grey-dark;
+      }
+    }
+  }
+}
