@@ -19,6 +19,12 @@ module TPI
       )
     end
 
+    def average_bank_score_chart_data
+      data = ::Api::Charts::AverageBankScore.new.average_bank_score_data
+
+      render json: data.chart_json
+    end
+
     private
 
     def child_indicators(result, indicator_type)

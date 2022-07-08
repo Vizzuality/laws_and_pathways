@@ -8,4 +8,16 @@
       selectedOption: 'All banks'
       }) %>
   </div>
+
+  <section class="container">
+    <div>
+      <h2 class="is-size-4">
+        Average bank score across each area: <%= react_component("BaseTooltip", { content: t('.tooltips.mq_header') }) %>
+      </h2>
+    </div>
+
+    <%= react_component('charts/average-bank-score', {
+      dataUrl: average_bank_score_chart_data_tpi_banks_path
+      }) %>
+  </section>
 </div>

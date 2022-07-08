@@ -4,4 +4,6 @@ class BankAssessmentResult < ApplicationRecord
 
   validates_presence_of :percentage, if: -> { indicator.percentage_indicator? }
   validates_presence_of :answer, if: -> { indicator.answer_indicator? }
+
+  scope :of_type, ->(type) { includes(:indicator).where(bank_assessment_indicators: {indicator_type: type}) }
 end

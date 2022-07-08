@@ -40,7 +40,11 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :banks, only: [:show, :index]
+      resources :banks, only: [:show, :index] do
+        collection do
+          get :average_bank_score_chart_data
+        end
+      end
 
       resources :publications, only: [:index, :show] do
         collection do
