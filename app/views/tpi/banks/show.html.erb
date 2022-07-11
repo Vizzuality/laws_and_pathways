@@ -32,7 +32,7 @@
             </div>
             <div class="column">
               <%= render 'tpi/shared/property', highlight: false, name: 'ISIN', tooltip: t('.tooltips.ISIN') do %>
-                <%= @bank.isin_array.join('<br/>').html_safe %>
+                <%= safe_join(@bank.isin_array, '<br/>'.html_safe) %>
               <% end %>
             </div>
             <div class="column">
