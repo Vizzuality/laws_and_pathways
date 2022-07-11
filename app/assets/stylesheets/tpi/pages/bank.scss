@@ -196,6 +196,7 @@ $indicator-padding: 100px;
       background: white;
       border: 1px solid #CFD7ED;
       border-right: 0px;
+      border-bottom: 0px;
 
       h3 {
         font-size: 20px !important;
@@ -222,13 +223,6 @@ $indicator-padding: 100px;
 
     &__sub-area-content {
       display: none;
-
-      .bank-assessment__indicator:first-of-type {
-
-        .bank-assessment__indicator-header {
-          border-top: 0px;
-        }
-      }
     }
 
     input.toggle:checked ~ .bank-assessment__sub-area-content {
