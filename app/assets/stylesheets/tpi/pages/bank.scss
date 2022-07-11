@@ -2,6 +2,9 @@ $line-height: 24px;
 $max-lines: 3;
 $dots-space: 1.3rem;
 $indicator-padding: 100px;
+$indicator-padding-desktop: 100px;
+$indicator-padding-tablet: 60px;
+$indicator-padding-mobile: 60px;
 
 .bank-page {
   .change-view {
@@ -106,18 +109,24 @@ $indicator-padding: 100px;
     }
 
     &__area-header {
-      padding: 40px 40px;
+      padding: 30px 20px;
       position: relative;
 
       small {
-        font-size: 12px;
+        font-size: 12px !important;
       }
 
       h2 {
+        margin-top: 5px;
         font-family: $font-family-regular;
-        font-size: 24px;
+        font-size: 24px !important;
+        line-height: 1.7rem;
         font-weight: 400;
         text-transform: uppercase;
+      }
+
+      @include desktop {
+        padding: 40px;
       }
     }
 
@@ -130,11 +139,15 @@ $indicator-padding: 100px;
       padding-left: 10px;
       padding-right: 10px;
       height: 30px;
-      width: 130px;
+      width: 100px;
       right: -1px;
       bottom: -1px;
       border: 1px solid #CFD7ED;
       user-select: none;
+
+      @include tablet {
+        width: 130px;
+      }
 
       &:before {
         content: 'See more';
@@ -160,8 +173,15 @@ $indicator-padding: 100px;
     &__area-content {
       display: none;
       background: #F5F8FE;
-      padding-left: $indicator_padding;
       padding-top: 20px;
+
+      @include tablet {
+        padding-left: $indicator_padding_tablet;
+      }
+
+      @include desktop {
+        padding-left: $indicator_padding_desktop;
+      }
     }
 
     input.toggle:checked + .bank-assessment__area {
@@ -191,12 +211,19 @@ $indicator-padding: 100px;
     &__sub-area-header {
       position: relative;
 
-      padding: 20px;
-      padding-left: $indicator_padding;
+      padding: 25px 20px;
       background: white;
       border: 1px solid #CFD7ED;
       border-right: 0px;
       border-bottom: 0px;
+
+      @include tablet {
+        padding-left: $indicator_padding_tablet;
+      }
+
+      @include desktop {
+        padding-left: $indicator_padding_desktop;
+      }
 
       h3 {
         font-size: 20px !important;
@@ -233,11 +260,18 @@ $indicator-padding: 100px;
     }
 
     &__indicator-header {
-      padding: 20px;
-      padding-left: $indicator_padding;
+      padding: 25px 20px;
       background: #F5F8FE;
       border: 1px solid #CFD7ED;
       border-right: 0px;
+
+      @include tablet {
+        padding-left: $indicator_padding_tablet;
+      }
+
+      @include desktop {
+        padding-left: $indicator_padding_desktop;
+      }
 
       h4 {
         font-size: 16px !important;
@@ -250,10 +284,18 @@ $indicator-padding: 100px;
       &:before {
         position: absolute;
         content: '';
-        left: $indicator_padding / 2 - 2px;
+        left: $indicator_padding_mobile / 2 - 2px;
         height: 100%;
         background: #ECF1FE;
         width: 4px;
+
+        @include tablet {
+          left: $indicator_padding_tablet / 2 - 2px;
+        }
+
+        @include desktop {
+          left: $indicator_padding_desktop / 2 - 2px;
+        }
       }
 
       .bank-assessment__sub-indicator {
@@ -272,8 +314,16 @@ $indicator-padding: 100px;
 
       .bank-assessment__sub-indicator-answer-wrapper {
         position: relative;
-        width: $indicator_padding;
+        width: $indicator_padding_mobile;
         flex-shrink: 0;
+
+        @include tablet {
+          width: $indicator_padding_tablet;
+        }
+
+        @include desktop {
+          width: $indicator_padding_desktop;
+        }
       }
 
       .bank-assessment__sub-indicator-answer {
@@ -307,11 +357,6 @@ $indicator-padding: 100px;
           background-image: image-url('icons/oval.svg');
           background-color: #C0C2C3;
           background-size: 8px;
-        }
-
-        @include until($desktop) {
-          top: 0;
-          left: -45px;
         }
       }
 
