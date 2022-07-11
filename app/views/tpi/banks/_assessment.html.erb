@@ -3,8 +3,26 @@
   <input id="<%= dom_id(area) %>" type="checkbox" class="toggle" checked />
   <div class="bank-assessment__area">
     <div for="<%= dom_id(area) %>" class="bank-assessment__area-header">
-      <small>Area <%= area.indicator.number %></small>
-      <h2><%= area.indicator.text %></h2>
+      <div>
+        <small>Area <%= area.indicator.number %></small>
+        <h2><%= area.indicator.text %></h2>
+      </div>
+      <div class="bank-assessment__area-value">
+        <div class="bank-assessment__area-value-average" style="left: <%= average_bank_score[area.indicator.text].to_i %>%;"></div>
+        <div class="bank-assessment__area-value-max" style="left: <%= max_bank_score[area.indicator.text].to_i %>%;"></div>
+        <div class="bank-assessment__area-value-progress" style="width: <%= area.percentage.to_i %>%;">
+          <% if area.percentage >= 5 %>
+            <div class="bank-assessment__area-value-value">
+              <%= area.percentage.to_i %>%
+            </div>
+          <% end %>
+        </div>
+        <% if area.percentage < 5 %>
+          <div class="bank-assessment__area-value-value">
+            <%= area.percentage.to_i %>%
+          </div>
+        <% end %>
+      </div>
       <label class="bank-assessment__more" for="<%= dom_id(area) %>">
       </label>
     </div>

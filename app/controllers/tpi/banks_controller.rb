@@ -12,6 +12,8 @@ module TPI
 
     def show
       @results_by_indicator_type = @bank.assessments.last&.results_by_indicator_type
+      @average_bank_score = BankAssessmentResult.of_type(:area).group(:text).average(:percentage).transform_values(&:to_f)
+      @max_bank_score = BankAssessmentResult.of_type(:area).group(:text).maximum(:percentage)
 
       fixed_navbar(
         "Bank #{@bank.name}",

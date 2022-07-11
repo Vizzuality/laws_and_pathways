@@ -112,6 +112,18 @@ $indicator-padding-mobile: 60px;
       padding: 30px 20px;
       position: relative;
 
+
+      @include tablet {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        justify-content: space-between;
+      }
+
+      @include desktop {
+        padding: 40px;
+      }
+
       small {
         font-size: 12px !important;
       }
@@ -124,9 +136,49 @@ $indicator-padding-mobile: 60px;
         font-weight: 400;
         text-transform: uppercase;
       }
+    }
 
-      @include desktop {
-        padding: 40px;
+    &__area-value {
+      position: relative;
+      height: 32px;
+      margin: 10px 0;
+      background: #F5F8FE;
+      border: 1px solid #CFD7ED;
+      box-sizing: content-box;
+      width: 100%;
+
+      @include tablet {
+        margin: 0;
+        width: 500px;
+      }
+
+      &-progress {
+        box-sizing: border-box;
+        background: #5587F6;
+        color: white;
+        text-align: right;
+      }
+
+      &-value {
+        height: 32px;
+        line-height: 32px;
+        padding-right: 10px;
+        padding-left: 10px;
+      }
+
+      &-average, &-max {
+        position: absolute;
+        width: 3px;
+        top: -4px;
+        height: 32px + 8px;
+      }
+
+      &-average {
+        background: #191919;
+      }
+
+      &-max {
+        background: #00C170;
       }
     }
 

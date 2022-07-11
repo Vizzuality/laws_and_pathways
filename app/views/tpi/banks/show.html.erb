@@ -48,7 +48,11 @@
 
   <% if @results_by_indicator_type.present? %>
     <section class="container bank-assessment">
-      <%= render 'assessment', results_by_indicator_type: @results_by_indicator_type %>
+      <%= render 'assessment',
+                   results_by_indicator_type: @results_by_indicator_type,
+                   average_bank_score: @average_bank_score,
+                   max_bank_score: @max_bank_score
+      %>
     </section>
   <% end %>
 </div>
