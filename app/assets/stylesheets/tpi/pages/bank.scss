@@ -94,10 +94,6 @@ $indicator-padding: 100px;
       display: none;
     }
 
-    label {
-      cursor: pointer;
-    }
-
     &__area {
       margin-top: -1px;
       border: 1px solid transparent;
@@ -123,18 +119,41 @@ $indicator-padding: 100px;
         font-weight: 400;
         text-transform: uppercase;
       }
+    }
 
-      label {
-        position: absolute;
-        padding: 10px 30px;
-        right: -1px;
-        bottom: -1px;
-        border: 1px solid #CFD7ED;
-        user-select: none;
+    &__more {
+      cursor: pointer;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-left: 10px;
+      padding-right: 10px;
+      height: 30px;
+      width: 130px;
+      right: -1px;
+      bottom: -1px;
+      border: 1px solid #CFD7ED;
+      user-select: none;
 
-        &:after {
-          content: 'See more';
-        }
+      &:before {
+        content: 'See more';
+        display: block;
+        font-size: 12px;
+        margin-top: 3px;
+      }
+
+      &:after {
+        content: '';
+        display: block;
+
+        background-image: image-url('icon_chevron_dark/chevron_down_black-1.svg');
+        background-repeat: no-repeat;
+        background-position: right center;
+        background-size: 16px;
+
+        height: 16px;
+        width: 16px;
       }
     }
 
@@ -153,9 +172,15 @@ $indicator-padding: 100px;
         display: block;
       }
 
-      .bank-assessment__area-label {
-        &:after {
-          content: 'See less';
+      .bank-assessment__area-header {
+        .bank-assessment__more {
+          &:before {
+            content: 'See less';
+          }
+
+          &::after {
+            transform: rotate(-180deg);
+          }
         }
       }
     }
@@ -175,19 +200,6 @@ $indicator-padding: 100px;
       h3 {
         font-size: 20px !important;
       }
-
-      label {
-        position: absolute;
-        padding: 10px 30px;
-        right: -1px;
-        bottom: -1px;
-        border: 1px solid #CFD7ED;
-        user-select: none;
-
-        &:after {
-          content: 'See more';
-        }
-      }
     }
 
     input.toggle:checked + .bank-assessment__sub-area {
@@ -195,9 +207,15 @@ $indicator-padding: 100px;
         display: block;
       }
 
-      .bank-assessment__sub-area-label {
-        &:after {
-          content: 'See less';
+      .bank-assessment__sub-area-header {
+        .bank-assessment__more {
+          &:before {
+            content: 'See less';
+          }
+
+          &::after {
+            transform: rotate(-180deg);
+          }
         }
       }
     }

@@ -1,0 +1,38 @@
+<% areas = results_by_indicator_type["area"] %>
+<% areas.each do |area| %>
+  <input id="<%= dom_id(area) %>" type="checkbox" class="toggle" checked />
+  <div class="bank-assessment__area">
+    <div for="<%= dom_id(area) %>" class="bank-assessment__area-header">
+      <small>Area <%= area.indicator.number %></small>
+      <h2><%= area.indicator.text %></h2>
+      <label class="bank-assessment__more" for="<%= dom_id(area) %>">
+      </label>
+    </div>
+
+    <div class="bank-assessment__area-content">
+      <% sub_areas = child_indicators(area, "sub_area") %>
+
+      <% if sub_areas.any? %>
+        <% sub_areas.each do |sub_area| %>
+          <input id="<%= dom_id(sub_area) %>" type="checkbox" class="toggle" checked />
+          <div class="bank-assessment__sub-area">
+            <div class="bank-assessment__sub-area-header">
+              <h3>
+                <%= sub_area.indicator.display_text %>
+              </h3>
+
+              <label class="bank-assessment__more" for="<%= dom_id(sub_area) %>">
+              </label>
+            </div>
+
+            <div class="bank-assessment__sub-area-content">
+              <%= render "indicators", indicators:  child_indicators(sub_area, "indicator") %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <%= render "indicators", indicators:  child_indicators(area, "indicator") %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
