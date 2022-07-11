@@ -112,7 +112,6 @@ $indicator-padding-mobile: 60px;
       padding: 30px 20px;
       position: relative;
 
-
       @include tablet {
         display: flex;
         align-items: center;
@@ -171,6 +170,33 @@ $indicator-padding-mobile: 60px;
         width: 3px;
         top: -4px;
         height: 32px + 8px;
+
+        .bank-assessment__tooltip {
+          display: none;
+          top: -5px;
+          position: absolute;
+          background: black;
+          padding: 10px;
+          transform: translate(-50%, -100%);
+          color: white;
+
+          &-header {
+            opacity: 0.9;
+            text-transform: uppercase;
+            font-size: 12px;
+            white-space: nowrap;
+          }
+
+          &-text {
+
+          }
+        }
+
+        &:hover {
+          div {
+            display: block;
+          }
+        }
       }
 
       &-average {
