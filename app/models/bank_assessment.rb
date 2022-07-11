@@ -5,6 +5,6 @@ class BankAssessment < ApplicationRecord
   validates_presence_of :assessment_date
 
   def results_by_indicator_type
-    results.includes(:indicator).group_by { |r| r.indicator.indicator_type }
+    results.includes(:indicator).order('bank_assessment_indicators.number').group_by { |r| r.indicator.indicator_type }
   end
 end

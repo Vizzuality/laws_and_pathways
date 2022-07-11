@@ -166,6 +166,7 @@ $indicator-padding-mobile: 60px;
       }
 
       &-average, &-max {
+        cursor: pointer;
         position: absolute;
         width: 3px;
         top: -4px;
