@@ -34,6 +34,7 @@ $button-border-width: 4px;
   height: $button-height;
   font-family: $family-sans-serif-bold;
   cursor: pointer;
+  border-radius: 0 !important;
 
   &.is-centered {
     justify-content: center;
@@ -78,7 +79,7 @@ $button-border-width: 4px;
     &.is-outlined {
       border-color: $primary;
       color: $primary;
-      
+
       &:hover,
       &:focus {
         background-color: $primary;
