@@ -1,4 +1,3 @@
-
 @import "colors";
 @import "typography";
 
@@ -16,8 +15,16 @@ $legend-image-width: 60px;
   grid-row-gap: 4px;
   align-items: center;
 
-  & > *:nth-child(6n) {
-    border-right: none;
+  &--sectors {
+    & > *:nth-child(6n) {
+      border-right: none;
+    }
+  }
+
+  &--banks {
+    & > *:nth-child(7n) {
+      border-right: none;
+    }
   }
 }
 

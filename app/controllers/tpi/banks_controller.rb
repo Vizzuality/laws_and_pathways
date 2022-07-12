@@ -1,14 +1,26 @@
 module TPI
   class BanksController < TPIController
     before_action :fetch_bank, only: [:show, :assessment]
-    before_action :fetch_banks
+    before_action :fetch_banks, only: [:index, :show]
     before_action :redirect_if_numeric_or_historic_slug, only: [:show]
     before_action :fetch_assessment, only: [:show, :assessment]
 
     helper_method :child_indicators
 
     def index
-      @banks = Bank.all
+      @results = BankAssessmentResult
+        .of_type(:area)
+        .includes(assessment: :bank)
+        .map do |result|
+          {
+            area: result.indicator.display_text,
+            percentage: result.percentage,
+            bank_id: result.assessment.bank_id,
+            bank_name: result.assessment.bank.name,
+            bank_path: tpi_bank_path(result.assessment.bank_id),
+            market_cap_group: result.assessment.bank.market_cap_group
+          }
+        end
     end
 
     def show
