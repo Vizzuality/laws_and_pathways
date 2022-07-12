@@ -40,7 +40,7 @@ describe 'Company Page', type: 'system', site: 'tpi' do
   def expect_company_property(property, text)
     within(
       :xpath,
-      "(.//div[#{contains_class('company-property__name')} and contains(., '#{property}')]/..)[1]"
+      "(.//div[#{contains_class('property__name')} and contains(., '#{property}')]/..)[1]"
     ) do
       expect(page).to have_text(text)
     end
