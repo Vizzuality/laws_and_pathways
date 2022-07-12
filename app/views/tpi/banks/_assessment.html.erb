@@ -1,6 +1,6 @@
-<% areas = results_by_indicator_type["area"] %>
+<% areas = assessment.results_by_indicator_type["area"] %>
 <% areas.each do |area| %>
-  <input id="<%= dom_id(area) %>" type="checkbox" class="toggle" checked />
+  <input id="<%= dom_id(area) %>" type="checkbox" class="toggle" />
   <div class="bank-assessment__area">
     <div for="<%= dom_id(area) %>" class="bank-assessment__area-header">
       <div>
@@ -10,20 +10,20 @@
       <div class="bank-assessment__area-value">
         <div
           class="bank-assessment__area-value-average"
-          style="left: <%= average_bank_score[area.indicator.text].to_i %>%;"
+          style="left: <%= assessment.average_bank_score[area.indicator.text].to_i %>%;"
         >
           <div class="bank-assessment__tooltip">
             <div class="bank-assessment__tooltip-header">ALL BANKS AVERAGE</div>
-            <div class="bank-assessment__tooltip-text"><%= average_bank_score[area.indicator.text].to_i %>%</div>
+            <div class="bank-assessment__tooltip-text"><%= assessment.average_bank_score[area.indicator.text].to_i %>%</div>
           </div>
         </div>
         <div
           class="bank-assessment__area-value-max"
-          style="left: <%= max_bank_score[area.indicator.text].to_i %>%;"
+          style="left: <%= assessment.max_bank_score[area.indicator.text].to_i %>%;"
         >
           <div class="bank-assessment__tooltip">
             <div class="bank-assessment__tooltip-header">ALL BANKS MAX SCORE</div>
-            <div class="bank-assessment__tooltip-text"><%= max_bank_score[area.indicator.text].to_i %>%</div>
+            <div class="bank-assessment__tooltip-text"><%= assessment.max_bank_score[area.indicator.text].to_i %>%</div>
           </div>
         </div>
         <div class="bank-assessment__area-value-progress" style="width: <%= area.percentage.to_i %>%;">
@@ -44,7 +44,7 @@
     </div>
 
     <div class="bank-assessment__area-content">
-      <% sub_areas = child_indicators(area, "sub_area") %>
+      <% sub_areas = assessment.child_indicators(area, "sub_area") %>
 
       <% if sub_areas.any? %>
         <% sub_areas.each do |sub_area| %>
@@ -60,12 +60,12 @@
             </div>
 
             <div class="bank-assessment__sub-area-content">
-              <%= render "indicators", indicators:  child_indicators(sub_area, "indicator") %>
+              <%= render "indicators", assessment: assessment, indicators: assessment.child_indicators(sub_area, "indicator") %>
             </div>
           </div>
         <% end %>
       <% else %>
-        <%= render "indicators", indicators:  child_indicators(area, "indicator") %>
+        <%= render "indicators", assessment: assessment, indicators: assessment.child_indicators(area, "indicator") %>
       <% end %>
     </div>
   </div>

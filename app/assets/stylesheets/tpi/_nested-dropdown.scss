@@ -27,6 +27,7 @@
     border: 1px solid $black;
     cursor: pointer;
     height: 100%;
+    user-select: none;
   }
 
   &__title-header {
@@ -90,6 +91,14 @@
           right: 0;
         }
       }
+    }
+  }
+
+  &--blue {
+    background: $blue;
+
+    .nested-dropdown__title {
+      border: 2px solid rgba(255, 255, 255, 0.5);
     }
   }
 }

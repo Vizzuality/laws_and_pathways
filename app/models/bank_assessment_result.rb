@@ -6,4 +6,5 @@ class BankAssessmentResult < ApplicationRecord
   validates_presence_of :answer, if: -> { indicator.answer_indicator? }
 
   scope :of_type, ->(type) { includes(:indicator).where(bank_assessment_indicators: {indicator_type: type}) }
+  scope :by_date, ->(date) { includes(:assessment).where(bank_assessments: {assessment_date: date}) }
 end

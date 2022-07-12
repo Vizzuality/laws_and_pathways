@@ -4,10 +4,29 @@
 <div class="bank-page">
   <div class="dropdown-selector-wrapper">
     <%= react_component("BankDropdown", { banks: @banks, selectedOption: @bank.name }) %>
-  </div>
 
-  <div class="bank-header">
+    <div class="bank-header container">
+      <div class="bank-header__assessment-dropdown">
+        <div class="caption">
+          Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.bank_assessment_date') }) %>
+        </div>
+        <div class="date-dropdown">
+          <%= react_component('RemoteDropdown', {
+            name: 'assessment_id',
+            remote: true,
+            theme: 'blue',
+            url: assessment_tpi_bank_path(@bank),
+            data: @bank.assessments.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
+            selected: params[:assessment_id]
+            }) %>
+        </div>
+      </div>
 
+      <%= link_to user_download_tpi_bank_path(@bank), class: 'button is-primary is-pulled-right with-icon with-border' do %>
+        <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
+        Download company data
+      <% end %>
+    </div>
   </div>
 
   <section class="container summary-boxes">
@@ -46,13 +65,9 @@
     </div>
   </section>
 
-  <% if @results_by_indicator_type.present? %>
-    <section class="container bank-assessment">
-      <%= render 'assessment',
-                   results_by_indicator_type: @results_by_indicator_type,
-                   average_bank_score: @average_bank_score,
-                   max_bank_score: @max_bank_score
-      %>
+  <% if @assessment.present? %>
+    <section class="container bank-assessment" id="assessment">
+      <%= render 'assessment', assessment: @assessment_presenter %>
     </section>
   <% end %>
 </div>

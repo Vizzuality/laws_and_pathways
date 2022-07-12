@@ -7,7 +7,7 @@
     </div>
 
     <div class="bank-assessment__sub-indicators">
-      <% sub_indicators = child_indicators(indicator, "sub_indicator") %>
+      <% sub_indicators = assessment.child_indicators(indicator, "sub_indicator") %>
       <% sub_indicators.each do |sub_indicator| %>
         <div class="bank-assessment__sub-indicator">
           <div class="bank-assessment__sub-indicator-answer-wrapper">

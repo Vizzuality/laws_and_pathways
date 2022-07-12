@@ -18,6 +18,19 @@ $indicator-padding-mobile: 60px;
     height: 100px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+
+    &__assessment-dropdown {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+
+      .base-tooltip__default-trigger {
+        background: white;
+        color: $blue;
+      }
+    }
 
     a {
       color: white;
@@ -37,6 +50,12 @@ $indicator-padding-mobile: 60px;
 
   .dropdown-selector-wrapper {
     background-color: $blue;
+
+    .dropdown-selector__container {
+      @include desktop {
+        padding: $container-top-padding $container-side-padding 40px $container-side-padding;
+      }
+    }
 
     @include desktop {
       height: 335px;
@@ -168,7 +187,6 @@ $indicator-padding-mobile: 60px;
       &-average, &-max {
         cursor: pointer;
         position: absolute;
-        width: 3px;
         top: -4px;
         height: 32px + 8px;
 
@@ -201,10 +219,12 @@ $indicator-padding-mobile: 60px;
       }
 
       &-average {
+        width: 2px;
         background: #191919;
       }
 
       &-max {
+        width: 3px;
         background: #00C170;
       }
     }

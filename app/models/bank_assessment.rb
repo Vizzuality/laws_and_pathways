@@ -3,6 +3,7 @@ class BankAssessment < ApplicationRecord
   has_many :results, class_name: 'BankAssessmentResult'
 
   validates_presence_of :assessment_date
+  validates :assessment_date, date_after: Date.new(2010, 12, 31)
 
   def results_by_indicator_type
     results.includes(:indicator).order('bank_assessment_indicators.number').group_by { |r| r.indicator.indicator_type }
