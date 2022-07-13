@@ -4,6 +4,9 @@
       <h4>
         <%= indicator.indicator.display_text %>
       </h4>
+      <div class="bank-assessment__indicator-value">
+        <%= number_with_precision(indicator.percentage, precision: 1, strip_insignificant_zeros: true) %>%
+      </div>
     </div>
 
     <div class="bank-assessment__sub-indicators">

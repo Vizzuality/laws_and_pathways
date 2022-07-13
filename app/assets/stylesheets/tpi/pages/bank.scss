@@ -175,6 +175,8 @@ $indicator-padding-mobile: 60px;
       }
 
       &-value {
+        padding-top: 2px;
+        font-weight: 700;
         height: 32px;
         line-height: 32px;
         padding-right: 10px;
@@ -361,6 +363,10 @@ $indicator-padding-mobile: 60px;
       border: 1px solid #CFD7ED;
       border-right: 0px;
 
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
       @include tablet {
         padding-left: $indicator_padding_tablet;
       }
@@ -372,6 +378,12 @@ $indicator-padding-mobile: 60px;
       h4 {
         font-size: 16px !important;
       }
+    }
+
+    &__indicator-value {
+      font-size: 20px;
+      font-weight: bold;
+      padding-left: 30px;
     }
 
     &__sub-indicators {
