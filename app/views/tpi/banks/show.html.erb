@@ -29,38 +29,32 @@
     </div>
   </div>
 
-  <section class="container summary-boxes">
+  <section class="container summary-box">
     <div class="columns">
       <div class="column">
-        <div class="summary-box">
-          <div class="columns">
-            <div class="column">
-              <%= render 'tpi/shared/property', highlight: true, name: 'Geography', tooltip: t('.tooltips.geography') do %>
-                <%= @bank.geography.name %>
-              <% end %>
-            </div>
-            <div class="column">
-              <%= render 'tpi/shared/property', highlight: true, name: 'Sector' do %>
-                <%= link_to "Banks", tpi_banks_path %>
-              <% end %>
-            </div>
-            <div class="column">
-              <%= render 'tpi/shared/property', highlight: false, name: 'Market cap (Group)', tooltip: t('.tooltips.market_cap') do %>
-                <%= @bank.market_cap_group %>
-              <% end %>
-            </div>
-            <div class="column">
-              <%= render 'tpi/shared/property', highlight: false, name: 'ISIN', tooltip: t('.tooltips.ISIN') do %>
-                <%= safe_join(@bank.isin_array, '<br/>'.html_safe) %>
-              <% end %>
-            </div>
-            <div class="column">
-              <%= render 'tpi/shared/property', highlight: false, name: 'SEDOL', tooltip: t('.tooltips.SEDOL') do %>
-                <%= @bank.sedol %>
-              <% end %>
-            </div>
-          </div>
-        </div>
+        <%= render 'tpi/shared/property', highlight: true, name: 'Geography', tooltip: t('.tooltips.geography') do %>
+          <%= @bank.geography.name %>
+        <% end %>
+      </div>
+      <div class="column">
+        <%= render 'tpi/shared/property', highlight: true, name: 'Sector' do %>
+          <%= link_to "Banks", tpi_banks_path %>
+        <% end %>
+      </div>
+      <div class="column">
+        <%= render 'tpi/shared/property', highlight: false, name: 'Market cap (Group)', tooltip: t('.tooltips.market_cap') do %>
+          <%= @bank.market_cap_group %>
+        <% end %>
+      </div>
+      <div class="column">
+        <%= render 'tpi/shared/property', highlight: false, name: 'ISIN', tooltip: t('.tooltips.ISIN') do %>
+          <%= safe_join(@bank.isin_array, '<br/>'.html_safe) %>
+        <% end %>
+      </div>
+      <div class="column">
+        <%= render 'tpi/shared/property', highlight: false, name: 'SEDOL', tooltip: t('.tooltips.SEDOL') do %>
+          <%= @bank.sedol %>
+        <% end %>
       </div>
     </div>
   </section>
