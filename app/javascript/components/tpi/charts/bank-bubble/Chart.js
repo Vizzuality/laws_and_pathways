@@ -91,6 +91,9 @@ const BubbleChart = ({ results }) => {
             content={<span>{tooltipDisclaimer}</span>}
           />
         </div>
+        <div className="bubble-chart__header">
+          Score Range
+        </div>
         <div className="bubble-chart__legend">
           <img className="bubble-chart__legend-image" src={legendImage} alt="Bubble size description" />
           <div className="bubble-chart__legend-titles-container">
@@ -108,7 +111,7 @@ const BubbleChart = ({ results }) => {
       {ranges.map((range) => (
         <div className="bubble-chart__level" key={range}>
           <div className="bubble-chart__level-container">
-            <div>
+            <div className="bubble-chart__level-title">
               {range}
             </div>
           </div>

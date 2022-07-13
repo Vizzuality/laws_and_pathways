@@ -4,24 +4,12 @@ module TPI
     before_action :fetch_banks, only: [:index, :show]
     before_action :redirect_if_numeric_or_historic_slug, only: [:show]
     before_action :fetch_assessment, only: [:show, :assessment]
+    before_action :fetch_results, only: [:index, :index_assessment]
 
     helper_method :child_indicators
 
     def index
-      @results = BankAssessmentResult
-        .of_type(:area)
-        .includes(assessment: :bank)
-        .order(:number)
-        .map do |result|
-          {
-            area: result.indicator.text,
-            percentage: result.percentage,
-            bank_id: result.assessment.bank_id,
-            bank_name: result.assessment.bank.name,
-            bank_path: tpi_bank_path(result.assessment.bank_id),
-            market_cap_group: result.assessment.bank.market_cap_group
-          }
-        end
+      @assessment_dates = BankAssessment.select(:assessment_date).distinct.pluck(:assessment_date)
     end
 
     def show
@@ -30,6 +18,8 @@ module TPI
         admin_bank_path(@bank)
       )
     end
+
+    def index_assessment; end
 
     def assessment; end
 
@@ -51,6 +41,26 @@ module TPI
         {name: 'All banks', path: tpi_banks_path},
         *@banks.as_json(only: [:name], methods: [:path])
       ]
+    end
+
+    def fetch_results
+      @date = params[:assessment_date]
+      @date = BankAssessment.maximum(:assessment_date) unless @date.present?
+      @results = BankAssessmentResult
+        .by_date(@date)
+        .of_type(:area)
+        .includes(assessment: :bank)
+        .order(:number)
+        .map do |result|
+          {
+            area: result.indicator.text,
+            percentage: result.percentage,
+            bank_id: result.assessment.bank_id,
+            bank_name: result.assessment.bank.name,
+            bank_path: tpi_bank_path(result.assessment.bank_id),
+            market_cap_group: result.assessment.bank.market_cap_group
+          }
+        end
     end
 
     def fetch_assessment

@@ -11,17 +11,21 @@ $legend-image-width: 60px;
   padding: 50px 0;
   /* CSS GRID */
   display: grid;
-  grid-template-rows: 150px auto;
   grid-row-gap: 4px;
   align-items: center;
 
   &--sectors {
+    grid-template-rows: 150px auto;
+
     & > *:nth-child(6n) {
       border-right: none;
     }
   }
 
   &--banks {
+    grid-template-rows: 100px auto;
+    padding-top: 120px;
+
     & > *:nth-child(7n) {
       border-right: none;
     }
@@ -96,6 +100,22 @@ $legend-image-width: 60px;
   align-items: center;
 }
 
+.bubble-chart__container--banks {
+  .bubble-chart__title-container {
+    position: absolute;
+    top: -50px;
+  }
+
+  .bubble-chart__header {
+    position: absolute;
+    right: 0;
+    top: -50px;
+    transform: translateX(100%);
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
+
 .bubble-chart__title {
   color: $grey-dark;
   font-size: $size-6;
@@ -105,7 +125,12 @@ $legend-image-width: 60px;
 .bubble-chart__legend {
   display: flex;
   position: relative;
-  margin-top: 20px;
+}
+
+.bubble-chart__container--sectors {
+  .bubble-chart__legend {
+    margin-top: 20px;
+  }
 }
 
 .bubble-chart__legend-image {
@@ -133,15 +158,34 @@ $legend-image-width: 60px;
   padding-left: 20px;
 }
 
-.bubble-chart__level-container {
-  position: absolute;
-  top: 20%;
+.bubble-chart__container--sectors {
+  .bubble-chart__level-container {
+    position: absolute;
+    top: 20%;
+  }
+
+  .bubble-chart__level-title {
+    font-family: $font-family-bold;
+    font-size: 16px;
+    color: $black;
+  }
 }
 
-.bubble-chart__level-title {
-  font-family: $font-family-bold;
-  font-size: 16px;
-  color: rgba(0,0,0,0.9);
+.bubble-chart__container--banks {
+  .bubble-chart__level-title {
+    font-family: $font-family-bold;
+    font-size: 12px;
+    color: $black;
+  }
+
+  .bubble-chart__level {
+    text-align: center;
+  }
+
+  .bubble-chart__legend-container + .bubble-chart__level {
+    padding-left: 0px;
+    text-align: left;
+  }
 }
 
 .bubble-chart__level-subtitle {

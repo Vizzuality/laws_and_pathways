@@ -10,13 +10,32 @@
   </div>
 
   <section class="container">
-    <div>
+    <div class="banks-score-header">
       <h2 class="is-size-4">
         Average bank score across each area: <%= react_component("BaseTooltip", { content: t('.tooltips.mq_header') }) %>
       </h2>
+
+      <div class="banks-score-header__assessment-dropdown">
+        <div class="caption">
+          Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.bank_assessment_date') }) %>
+        </div>
+        <div class="date-dropdown">
+          <%= react_component('RemoteDropdown', {
+            name: 'assessment_date',
+            remote: true,
+            url: index_assessment_tpi_banks_path(@bank),
+            data: @assessment_dates.map {|v| {label: v&.strftime('%d %B %Y'), value: v}},
+            selected: @date
+            }) %>
+        </div>
+      </div>
+    </div>
+    <div class="banks-score-description">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam molestie non lectus eu mollis. Vestibulum vehicula lorem a justo finibus porttitor non at urna.
     </div>
 
-    <%= react_component('charts/average-bank-score', { dataUrl: average_bank_score_chart_data_tpi_banks_path }) %>
-    <%= react_component("charts/bank-bubble/Chart", { results: @results }) %>
+    <div id="assessment-charts">
+      <%= render 'index_charts' %>
+    </div>
   </section>
 </div>

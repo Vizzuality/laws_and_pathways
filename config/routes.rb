@@ -46,6 +46,7 @@ Rails.application.routes.draw do
           get :user_download
         end
         collection do
+          get :index_assessment
           get :average_bank_score_chart_data
         end
       end
