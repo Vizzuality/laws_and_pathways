@@ -43,11 +43,11 @@ const SCORE_RANGES = [{
   color: '#042b82'
 }];
 
-const tooltipDisclaimer = 'Companies have to answer “yes” to all questions on a level to move to the next one';
+const tooltipDisclaimer = 'Define information box content';
 let tooltip = null;
 
 const BubbleChart = ({ results }) => {
-  const tooltipEl = '<div id="bubble-chart-tooltip" class="bubble-tip" hidden style="position:absolute;"></div>';
+  const tooltipEl = '<div id="bubble-chart-tooltip" class="bubble-tip bubble-tip--black" hidden style="position:absolute;"></div>';
   useEffect(() => {
     document.body.insertAdjacentHTML('beforeend', tooltipEl);
     tooltip = document.getElementById('bubble-chart-tooltip');
@@ -114,7 +114,7 @@ const BubbleChart = ({ results }) => {
           </div>
         </div>
       ))}
-      {Object.keys(parsedData).map(area => createRow(parsedData[area], area))}
+      {Object.keys(parsedData).map((area, index) => createRow(parsedData[area], area, index + 1))}
     </div>
   );
 };
@@ -136,8 +136,11 @@ const ForceLayoutBubbleChart = (companiesBubbles, uniqueKey) => {
 };
 
 const getTooltipText = ({ tooltipContent }) => {
-  if (tooltipContent && tooltipContent.length) {
-    return tooltipContent.join('<br>');
+  if (tooltipContent) {
+    return `
+     <div class="bubble-tip-header">${tooltipContent.header}</div>
+     <div class="bubble-tip-text">${parseFloat(Number(tooltipContent.percentage).toFixed(1))}%</div>
+    `;
   }
   return '';
 };
@@ -159,15 +162,18 @@ const hideTooltip = () => {
   tooltip.setAttribute('hidden', true);
 };
 
-const createRow = (dataRow, area) => (
+const createRow = (dataRow, area, index) => (
   <React.Fragment key={Math.random()}>
-    <div className="bubble-chart__sector-link">
-      {area}
+    <div className="bubble-chart__row-link">
+      {index}.&nbsp;{area}
     </div>
     {dataRow.map((el, i) => {
       const companiesBubbles = el.map(result => ({
         value: COMPANIES_MARKET_CAP_GROUPS[result.market_cap_group],
-        tooltipContent: [result.bank_name, result.percentage],
+        tooltipContent: {
+          header: result.bank_name,
+          percentage: result.percentage
+        },
         path: result.bank_path,
         color: result.color
       }));

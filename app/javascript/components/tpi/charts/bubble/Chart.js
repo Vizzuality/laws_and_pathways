@@ -37,7 +37,7 @@ const tooltipDisclaimer = 'Companies have to answer “yes” to all questions o
 let tooltip = null;
 
 const BubbleChart = ({ levels, sectors }) => {
-  const tooltipEl = '<div id="bubble-chart-tooltip" class="bubble-tip" hidden style="position:absolute;"></div>';
+  const tooltipEl = '<div id="bubble-chart-tooltip" class="bubble-tip bubble-tip--white" hidden style="position:absolute;"></div>';
   useEffect(() => {
     document.body.insertAdjacentHTML('beforeend', tooltipEl);
     tooltip = document.getElementById('bubble-chart-tooltip');
@@ -146,7 +146,7 @@ const createRow = (dataRow, title, sectors) => {
 
   return (
     <React.Fragment key={Math.random()}>
-      <div className="bubble-chart__sector-link">
+      <div className="bubble-chart__row-link">
         <a href={sector.path}>{title}</a>
       </div>
       {dataRow.map((el, i) => {

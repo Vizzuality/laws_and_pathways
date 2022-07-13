@@ -10,6 +10,9 @@ export function getOptions(data) {
     legend: {
       enabled: false
     },
+    tooltip: {
+      enabled: false
+    },
     title: {
       text: ''
     },
@@ -17,7 +20,20 @@ export function getOptions(data) {
       lineColor: '#595B5D',
       labels: {
         style: {
-          color: '#0A4BDC'
+          color: '#0A4BDC',
+          fontSize: '14px'
+        }
+      },
+      title: {
+        text: 'Areas',
+        align: 'high',
+        rotation: 0,
+        offset: 15,
+        y: 5,
+        style: {
+          color: '#0A4BDC',
+          fontSize: '14px',
+          fontWeight: 'bold'
         }
       },
       categories: data && data.length && data[0].data.map(x => x[0])

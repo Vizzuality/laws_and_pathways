@@ -11,9 +11,10 @@ module TPI
       @results = BankAssessmentResult
         .of_type(:area)
         .includes(assessment: :bank)
+        .order(:number)
         .map do |result|
           {
-            area: result.indicator.display_text,
+            area: result.indicator.text,
             percentage: result.percentage,
             bank_id: result.assessment.bank_id,
             bank_name: result.assessment.bank.name,

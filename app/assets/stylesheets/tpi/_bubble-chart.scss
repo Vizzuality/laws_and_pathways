@@ -58,11 +58,31 @@ $legend-image-width: 60px;
 }
 
 .bubble-tip {
-  background-color: $white;
-  border: 1px solid $black;
   font-size: 14px;
   padding: 10px;
   z-index: 5;
+
+  &--white {
+    background-color: $white;
+    border: 1px solid $black;
+  }
+
+  &--black {
+    background-color: $black;
+    color: white;
+  }
+
+  &-header {
+    opacity: 0.9;
+    text-transform: uppercase;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  &-text {
+    font-size: 16px;
+    font-weight: bold;
+  }
 }
 
 .bubble-chart__legend-container {
@@ -129,7 +149,7 @@ $legend-image-width: 60px;
   font-size: 12px;
 }
 
-.bubble-chart__sector-link {
+.bubble-chart__row-link {
   color: $blue-dark;
   text-align: right;
   padding-right: 50px;
