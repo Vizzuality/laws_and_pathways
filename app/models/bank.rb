@@ -26,4 +26,8 @@ class Bank < ApplicationRecord
 
     isin.split(',')
   end
+
+  def path
+    Rails.application.routes.url_helpers.tpi_bank_path(slug)
+  end
 end

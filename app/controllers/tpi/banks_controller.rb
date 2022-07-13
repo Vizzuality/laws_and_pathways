@@ -46,6 +46,10 @@ module TPI
 
     def fetch_banks
       @banks = Bank.all
+      @banks_json = [
+        {name: 'All banks', path: tpi_banks_path},
+        *@banks.as_json(only: [:name], methods: [:path])
+      ]
     end
 
     def fetch_assessment

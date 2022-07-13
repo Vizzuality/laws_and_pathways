@@ -43,11 +43,19 @@ function RemoteDropdown({ url, theme, params, data, selected, name }) {
     window.Rails.fire(Select.current, 'change');
     setLabel(item.label);
   };
-  const chevron = theme === 'blue' ? chevronIconWhite : chevronIconBlack;
+  const chevron = !isOpen && theme === 'blue' ? chevronIconWhite : chevronIconBlack;
 
   return (
     <>
-      <div ref={Dropdown} className={cx('nested-dropdown', { [`nested-dropdown--${theme}`]: !!theme })}>
+      <div
+        ref={Dropdown}
+        className={
+          cx('nested-dropdown', {
+            [`nested-dropdown--${theme}`]: !!theme,
+            'nested-dropdown--open': isOpen
+          })
+        }
+      >
         <div className="nested-dropdown__title" onClick={() => setIsOpen(!isOpen)}>
           <div className="nested-dropdown__title-header">{label || data[0].label}</div>
           <img src={chevron} alt="chevron" />

@@ -67,12 +67,12 @@ $button-border-width: 4px;
     }
 
     &.with-border {
-      border: 2px solid $grey;
+      border: 1px solid $grey;
       height: $button-height;
 
       &.is-hovered,
       &:hover {
-        border: 2px solid $white;
+        border: 1px solid $white;
       }
     }
 
@@ -90,7 +90,7 @@ $button-border-width: 4px;
   }
 
   &.is-secondary {
-    border: 2px solid $blue;
+    border: 1px solid $blue;
     color: $blue;
     justify-content: center;
     align-items: center;

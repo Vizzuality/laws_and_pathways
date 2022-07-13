@@ -52,11 +52,8 @@ const BankSelector = ({ banks, selectedOption }) => {
   );
 
   const handleOptionClick = (option) => {
-    const url = '/banks/';
     setIsOpen(false);
-    if (!(window.location.pathname === '/banks/' && option.id === 'all-sectors')) {
-      window.open(`${url}${option.slug}`, '_self');
-    }
+    window.location = option.path;
   };
 
   const handleCloseDropdown = () => {

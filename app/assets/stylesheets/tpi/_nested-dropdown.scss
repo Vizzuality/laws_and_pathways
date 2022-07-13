@@ -25,6 +25,7 @@
     align-items: center;
     padding: 0 20px;
     border: 1px solid $black;
+    color: $black;
     cursor: pointer;
     height: 100%;
     user-select: none;
@@ -94,11 +95,20 @@
     }
   }
 
-  &--blue {
+  &--open {
+    .nested-dropdown__title {
+      img {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &--blue:not(.nested-dropdown--open) {
     background: $blue;
 
     .nested-dropdown__title {
-      border: 2px solid rgba(255, 255, 255, 0.5);
+      border: 1px solid $white;
+      color: $white;
     }
   }
 }

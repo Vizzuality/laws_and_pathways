@@ -3,7 +3,7 @@
 
 <div class="bank-page">
   <div class="dropdown-selector-wrapper">
-    <%= react_component("BankDropdown", { banks: @banks, selectedOption: @bank.name }) %>
+    <%= react_component("BankDropdown", { banks: @banks_json, selectedOption: @bank.name }) %>
 
     <div class="bank-header container">
       <div class="bank-header__assessment-dropdown">
@@ -24,7 +24,7 @@
 
       <%= link_to user_download_tpi_bank_path(@bank), class: 'button is-primary is-pulled-right with-icon with-border' do %>
         <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
-        Download company data
+        Download banking data
       <% end %>
     </div>
   </div>
