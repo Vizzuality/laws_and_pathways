@@ -15,6 +15,9 @@ class DataUpload < ApplicationRecord
 
   DEV_UPLOADERS = %w[Documents].freeze
   UPLOADERS = {
+    'Banks' => 'Banks',
+    'Bank Assessment Indicators' => 'BankAssessmentIndicators',
+    'Bank Assessments' => 'BankAssessments',
     'Carbon Performance Assessments' => 'CPAssessments',
     'Carbon Performance Benchmarks' => 'CPBenchmarks',
     'Companies' => 'Companies',

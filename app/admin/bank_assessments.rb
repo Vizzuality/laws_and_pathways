@@ -10,7 +10,7 @@ ActiveAdmin.register BankAssessment do
   filter :assessment_date
   filter :bank
 
-  data_export_sidebar 'Bank Assessements'
+  data_export_sidebar 'BankAssessments', display_name: 'Assessments'
 
   show do
     attributes_table do
