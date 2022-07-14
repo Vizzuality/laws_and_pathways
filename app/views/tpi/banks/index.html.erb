@@ -12,12 +12,12 @@
   <section class="container">
     <div class="banks-score-header">
       <h2 class="is-size-4">
-        Average bank score across each area: <%= react_component("BaseTooltip", { content: t('.tooltips.mq_header') }) %>
+        Average bank score across each area: <%= react_component("BaseTooltip", { content: t('tpi.tooltips.bank_average_score') }) %>
       </h2>
 
       <div class="banks-score-header__assessment-dropdown">
         <div class="caption">
-          Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.bank_assessment_date') }) %>
+          Assessment Date: <%= react_component("BaseTooltip", { content: t('tpi.tooltips.bank_assessment_date') }) %>
         </div>
         <div class="date-dropdown">
           <%= react_component('RemoteDropdown', {

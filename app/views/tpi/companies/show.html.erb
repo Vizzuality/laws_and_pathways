@@ -100,7 +100,7 @@
         <div class="summary-box">
           <div class="columns">
             <div class="column">
-              <%= render 'tpi/shared/property', highlight: true, name: 'Geography', tooltip: t('.tooltips.geography') do %>
+              <%= render 'tpi/shared/property', highlight: true, name: 'Geography', tooltip: t('tpi.tooltips.geography') do %>
                 <%= @company.geography.name %>
               <% end %>
             </div>
@@ -110,22 +110,22 @@
               <% end %>
             </div>
             <div class="column">
-              <%= render 'tpi/shared/property', highlight: false, name: 'Market cap (Group)', tooltip: t('.tooltips.market_cap') do %>
+              <%= render 'tpi/shared/property', highlight: false, name: 'Market cap (Group)', tooltip: t('tpi.tooltips.market_cap') do %>
                 <%= @company.market_cap_group %>
               <% end %>
             </div>
             <div class="column">
-              <%= render 'tpi/shared/property', highlight: false, name: 'ISIN', tooltip: t('.tooltips.ISIN') do %>
+              <%= render 'tpi/shared/property', highlight: false, name: 'ISIN', tooltip: t('tpi.tooltips.ISIN') do %>
                 <%= @company.isin_array.join('<br/>').html_safe %>
               <% end %>
             </div>
             <div class="column">
-              <%= render 'tpi/shared/property', highlight: false, name: 'SEDOL', tooltip: t('.tooltips.SEDOL') do %>
+              <%= render 'tpi/shared/property', highlight: false, name: 'SEDOL', tooltip: t('tpi.tooltips.SEDOL') do %>
                 <%= @company.sedol %>
               <% end %>
             </div>
             <div class="column">
-              <%= render 'tpi/shared/property', highlight: true, name: 'CA100+ engagement', tooltip: t('.tooltips.CA100') do %>
+              <%= render 'tpi/shared/property', highlight: true, name: 'CA100+ engagement', tooltip: t('tpi.tooltips.CA100') do %>
                 <%= humanize_boolean(@company.ca100?) %>
               <% end %>
             </div>
@@ -139,12 +139,12 @@
     <section id="management-quality" class="management-quality container">
       <div class="management-quality__header">
         <h4>
-          Management Quality: <%= @company.name %> <%= react_component("BaseTooltip", { content: t('.tooltips.mq_header') }) %>
+          Management Quality: <%= @company.name %> <%= react_component("BaseTooltip", { content: t('tpi.tooltips.mq_header') }) %>
         </h4>
 
         <div class="is-hidden-touch show-by-dropdown assessment-date__container">
           <div class="caption">
-            Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.mq_assessment_date') }) %>
+            Assessment Date: <%= react_component("BaseTooltip", { content: t('tpi.tooltips.mq_assessment_date') }) %>
           </div>
           <div class="date-dropdown">
             <%= react_component('RemoteDropdown', {
@@ -162,7 +162,7 @@
       </p>
       <div class="is-hidden-desktop assessment-date__container">
         <div class="caption">
-          Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.mq_assessment_date') }) %>
+          Assessment Date: <%= react_component("BaseTooltip", { content: t('tpi.tooltips.mq_assessment_date') }) %>
         </div>
         <div class="date-dropdown">
           <%= react_component('RemoteDropdown', {
@@ -186,14 +186,14 @@
     <section id="carbon-performance" class="carbon-performance container">
       <div class="management-quality__header">
         <h4>
-          Carbon Performance <%= @company.name %> <%= react_component("BaseTooltip", { content: t('.tooltips.cp_header') }) %>
+          Carbon Performance <%= @company.name %> <%= react_component("BaseTooltip", { content: t('tpi.tooltips.cp_header') }) %>
         </h4>
         <p class="is-hidden-desktop"><%= "Carbon Performance alignment of companies in the #{@company.name} sector with the Paris agreement benchmarks." %></p>
 
         <div>
           <div class="show-by-dropdown assessment-date__container">
             <div class="caption">
-              Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.cp_assessment_date') }) %>
+              Assessment Date: <%= react_component("BaseTooltip", { content: t('tpi.tooltips.cp_assessment_date') }) %>
             </div>
 
             <div class="date-dropdown">

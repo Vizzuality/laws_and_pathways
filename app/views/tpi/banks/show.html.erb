@@ -8,7 +8,7 @@
     <div class="bank-header container">
       <div class="bank-header__assessment-dropdown">
         <div class="caption">
-          Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.bank_assessment_date') }) %>
+          Assessment Date: <%= react_component("BaseTooltip", { content: t('tpi.tooltips.bank_assessment_date') }) %>
         </div>
         <div class="date-dropdown">
           <%= react_component('RemoteDropdown', {
@@ -32,7 +32,7 @@
   <section class="container summary-box">
     <div class="columns">
       <div class="column">
-        <%= render 'tpi/shared/property', highlight: true, name: 'Geography', tooltip: t('.tooltips.geography') do %>
+        <%= render 'tpi/shared/property', highlight: true, name: 'Geography', tooltip: t('tpi.tooltips.geography') do %>
           <%= @bank.geography.name %>
         <% end %>
       </div>
@@ -42,17 +42,17 @@
         <% end %>
       </div>
       <div class="column">
-        <%= render 'tpi/shared/property', highlight: false, name: 'Market cap (Group)', tooltip: t('.tooltips.market_cap') do %>
+        <%= render 'tpi/shared/property', highlight: false, name: 'Market cap (Group)', tooltip: t('tpi.tooltips.market_cap') do %>
           <%= @bank.market_cap_group %>
         <% end %>
       </div>
       <div class="column">
-        <%= render 'tpi/shared/property', highlight: false, name: 'ISIN', tooltip: t('.tooltips.ISIN') do %>
+        <%= render 'tpi/shared/property', highlight: false, name: 'ISIN', tooltip: t('tpi.tooltips.ISIN') do %>
           <%= safe_join(@bank.isin_array, '<br/>'.html_safe) %>
         <% end %>
       </div>
       <div class="column">
-        <%= render 'tpi/shared/property', highlight: false, name: 'SEDOL', tooltip: t('.tooltips.SEDOL') do %>
+        <%= render 'tpi/shared/property', highlight: false, name: 'SEDOL', tooltip: t('tpi.tooltips.SEDOL') do %>
           <%= @bank.sedol %>
         <% end %>
       </div>

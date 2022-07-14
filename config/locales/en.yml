@@ -52,6 +52,20 @@ en:
   hint:
     tag: 'Pick an existing one or create new typing name and pressing ENTER'
   tpi:
+    tooltips:
+      bank_assessment_date: Assessment Date
+      bank_average_score: Average score
+      bank_indicator_value_description: Indicator value description
+      geography: 'This is where the company is listed'
+      market_cap: 'Market cap size'
+      ISIN: 'International Securities Identification Number'
+      SEDOL: 'Stock Exchange Daily Official List'
+      CA100: 'CA100'
+      mq_header: 'Management quality'
+      mq_assessment_date: 'Assessment Date'
+      mq_current_level: 'Current Level'
+      cp_header: 'Carbon performance'
+      cp_assessment_date: 'Assessment Date'
     company:
       level_description:
         '0': Unaware of Climate Change as a Business Issue
