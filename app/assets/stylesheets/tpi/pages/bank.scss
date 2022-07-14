@@ -5,6 +5,7 @@ $indicator-padding: 100px;
 $indicator-padding-desktop: 100px;
 $indicator-padding-tablet: 60px;
 $indicator-padding-mobile: 60px;
+$area-progress-height: 36px;
 
 .bank-page {
   .change-view {
@@ -155,7 +156,7 @@ $indicator-padding-mobile: 60px;
 
     &__area-value {
       position: relative;
-      height: 32px;
+      height: $area-progress-height;
       margin: 10px 0;
       background: #F5F8FE;
       border: 1px solid #CFD7ED;
@@ -177,8 +178,8 @@ $indicator-padding-mobile: 60px;
       &-value {
         padding-top: 2px;
         font-weight: 700;
-        height: 32px;
-        line-height: 32px;
+        height: $area-progress-height;
+        line-height: $area-progress-height;
         padding-right: 10px;
         padding-left: 10px;
       }
@@ -187,7 +188,7 @@ $indicator-padding-mobile: 60px;
         cursor: pointer;
         position: absolute;
         top: -4px;
-        height: 32px + 8px;
+        height: $area-progress-height + 8px;
 
         .bank-assessment__tooltip {
           display: none;
@@ -220,14 +221,26 @@ $indicator-padding-mobile: 60px;
         }
       }
 
+      &-average, &-max {
+        svg {
+          transform: translate(calc(-50% + 1px), -13px);
+          width: 18px;
+          height: 11px;
+        }
+      }
+
       &-average {
-        width: 2px;
-        background: #191919;
+        * {
+          fill: #191919;
+          stroke:  #191919;
+        }
       }
 
       &-max {
-        width: 3px;
-        background: #00C170;
+        * {
+          fill: #00C170;
+          stroke: #00C170;
+        }
       }
     }
 

@@ -12,6 +12,7 @@
           class="bank-assessment__area-value-average"
           style="left: <%= assessment.average_bank_score[area.indicator.text].to_i %>%;"
         >
+          <%= svg "icons/white-chevron-down" %>
           <div class="bank-assessment__tooltip">
             <div class="bank-assessment__tooltip-header">ALL BANKS AVERAGE</div>
             <div class="bank-assessment__tooltip-text"><%= assessment.average_bank_score[area.indicator.text].to_i %>%</div>
@@ -21,6 +22,7 @@
           class="bank-assessment__area-value-max"
           style="left: <%= assessment.max_bank_score[area.indicator.text].to_i %>%;"
         >
+          <%= svg "icons/white-chevron-down" %>
           <div class="bank-assessment__tooltip">
             <div class="bank-assessment__tooltip-header">ALL BANKS MAX SCORE</div>
             <div class="bank-assessment__tooltip-text"><%= assessment.max_bank_score[area.indicator.text].to_i %>%</div>
