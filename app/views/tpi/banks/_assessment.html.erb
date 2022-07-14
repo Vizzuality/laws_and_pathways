@@ -7,25 +7,29 @@
         <small>Area <%= area.indicator.number %></small>
         <h2><%= area.indicator.text %></h2>
       </div>
+      <%
+        average_score = number_with_precision(assessment.average_bank_score[area.indicator.text], precision: 1, strip_insignificant_zeros: true)
+        max_score = number_with_precision(assessment.max_bank_score[area.indicator.text], precision: 1, strip_insignificant_zeros: true)
+      %>
       <div class="bank-assessment__area-value">
         <div
           class="bank-assessment__area-value-average"
-          style="left: <%= assessment.average_bank_score[area.indicator.text].to_i %>%;"
+          style="left: <%= average_score %>%;"
         >
           <%= svg "icons/white-chevron-down" %>
           <div class="bank-assessment__tooltip">
             <div class="bank-assessment__tooltip-header">ALL BANKS AVERAGE</div>
-            <div class="bank-assessment__tooltip-text"><%= assessment.average_bank_score[area.indicator.text].to_i %>%</div>
+            <div class="bank-assessment__tooltip-text"><%= average_score %>%</div>
           </div>
         </div>
         <div
           class="bank-assessment__area-value-max"
-          style="left: <%= assessment.max_bank_score[area.indicator.text].to_i %>%;"
+          style="left: <%= max_score %>%;"
         >
           <%= svg "icons/white-chevron-down" %>
           <div class="bank-assessment__tooltip">
             <div class="bank-assessment__tooltip-header">ALL BANKS MAX SCORE</div>
-            <div class="bank-assessment__tooltip-text"><%= assessment.max_bank_score[area.indicator.text].to_i %>%</div>
+            <div class="bank-assessment__tooltip-text"><%= max_score %>%</div>
           </div>
         </div>
         <div class="bank-assessment__area-value-progress" style="width: <%= area.percentage.to_i %>%;">
