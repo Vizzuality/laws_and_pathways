@@ -51,7 +51,7 @@ export function getOptions(data) {
       labels: {
         overflow: 'justify',
         formatter() {
-          return `${this.value}%`;
+          return `${Number(this.value).toFixed(0)}%`;
         }
       }
     },
@@ -60,7 +60,7 @@ export function getOptions(data) {
         dataLabels: {
           enabled: true,
           formatter() {
-            return `${this.y}%`;
+            return `${parseFloat(Number(this.y).toFixed(1))}%`;
           }
         }
       }
