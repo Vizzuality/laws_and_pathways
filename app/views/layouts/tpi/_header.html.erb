@@ -4,9 +4,9 @@
       entry: 'TPI tool',
       path: tpi_sectors_path,
       content: [
-        { title: 'TPI banking tool', path: tpi_banks_path },
+        BankAssessment.any? ? { title: 'TPI banking tool', path: tpi_banks_path } : nil,
         *@tpi_tool_pages
-      ],
+      ].compact,
       active: active_menu_page?([
         tpi_sectors_path,
         tpi_banks_path,

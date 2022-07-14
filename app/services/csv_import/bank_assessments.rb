@@ -63,7 +63,7 @@ module CSVImport
     end
 
     def find_bank(row)
-      return Bank.find_or_create_by(name: row[:bank]) if row.header?(:bank) && row[:bank].present?
+      return Bank.find_by(name: row[:bank]) if row.header?(:bank) && row[:bank].present?
 
       nil
     end
