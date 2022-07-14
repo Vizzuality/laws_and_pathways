@@ -6,6 +6,8 @@ $indicator-padding-desktop: 100px;
 $indicator-padding-tablet: 60px;
 $indicator-padding-mobile: 60px;
 $area-progress-height: 36px;
+$see-more-width: 100px;
+$see-more-width-tablet: 130px;
 
 .bank-page {
   .change-view {
@@ -29,7 +31,7 @@ $area-progress-height: 36px;
 
       .base-tooltip__default-trigger {
         background: white;
-        color: $blue;
+        color: $blue-dark;
       }
     }
 
@@ -253,14 +255,14 @@ $area-progress-height: 36px;
       padding-left: 10px;
       padding-right: 10px;
       height: 30px;
-      width: 100px;
+      width: $see-more-width;
       right: -1px;
       bottom: -1px;
       border: 1px solid #CFD7ED;
       user-select: none;
 
       @include tablet {
-        width: 130px;
+        width: $see-more-width-tablet;
       }
 
       &:before {
@@ -399,7 +401,18 @@ $area-progress-height: 36px;
     &__indicator-value {
       font-size: 20px;
       font-weight: bold;
-      padding-left: 30px;
+      display: inline-flex;
+      justify-content: end;
+      gap: 10px;
+      min-width: $see-more-width - 10px;
+
+      @include tablet {
+        min-width: $see-more-width-tablet;
+      }
+
+      div[data-react-class] {
+        margin-top: -3px;
+      }
     }
 
     &__sub-indicators {
@@ -487,6 +500,10 @@ $area-progress-height: 36px;
       .bank-assessment__sub-indicator-answer-text {
         padding: 15px;
         padding-left: 0px;
+
+        @include tablet {
+          padding-right: 20px + $see-more-width-tablet;
+        }
       }
     }
   }
