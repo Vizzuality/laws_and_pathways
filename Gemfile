@@ -25,8 +25,6 @@ gem 'cancancan'
 gem 'draper-cancancan'
 gem 'draper'
 
-gem 'octokit', '~> 4.15.0'
-
 gem 'google-cloud-storage', require: false
 
 gem 'discard'
@@ -80,6 +78,7 @@ group :development do
   gem 'capistrano-yarn'
   gem 'countries' # just to generate country flags using rake task flags:generate
   gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'octokit', '~> 4.0' # used for generate flags - maybe could be removed
   gem 'rubocop'
   gem 'rubocop-performance'
   gem 'spring'
