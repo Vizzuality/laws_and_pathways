@@ -37,7 +37,7 @@ const tooltipDisclaimer = 'Companies have to answer “yes” to all questions o
 let tooltip = null;
 
 const BubbleChart = ({ levels, sectors }) => {
-  const tooltipEl = '<div id="bubble-chart-tooltip" class="bubble-tip bubble-tip--white" hidden style="position:absolute;"></div>';
+  const tooltipEl = '<div id="bubble-chart-tooltip" class="bubble-tip" hidden style="position:absolute;"></div>';
   useEffect(() => {
     document.body.insertAdjacentHTML('beforeend', tooltipEl);
     tooltip = document.getElementById('bubble-chart-tooltip');
@@ -118,8 +118,11 @@ const ForceLayoutBubbleChart = (companiesBubbles, uniqueKey) => {
 };
 
 const getTooltipText = ({ tooltipContent }) => {
-  if (tooltipContent && tooltipContent.length) {
-    return tooltipContent.join('<br>');
+  if (tooltipContent) {
+    return `
+     <div class="bubble-tip-header">${tooltipContent.header}</div>
+     <div class="bubble-tip-text">${parseFloat(Number(tooltipContent.value).toFixed(1))}%</div>
+    `;
   }
   return '';
 };
@@ -152,7 +155,10 @@ const createRow = (dataRow, title, sectors) => {
       {dataRow.map((el, i) => {
         const companiesBubbles = el.map(company => ({
           value: COMPANIES_MARKET_CAP_GROUPS[company.market_cap_group],
-          tooltipContent: [company.name, `Level ${company.level}`],
+          tooltipContent: {
+            header: company.name,
+            value: `Level ${company.level}`
+          },
           path: company.path,
           color: LEVELS_COLORS[i]
         }));

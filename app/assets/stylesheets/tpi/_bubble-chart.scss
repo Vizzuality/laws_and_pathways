@@ -65,16 +65,8 @@ $legend-image-width: 60px;
   font-size: 14px;
   padding: 10px;
   z-index: 5;
-
-  &--white {
-    background-color: $white;
-    border: 1px solid $black;
-  }
-
-  &--black {
-    background-color: $black;
-    color: white;
-  }
+  background-color: $white;
+  border: 1px solid $black;
 
   &-header {
     opacity: 0.9;
@@ -84,7 +76,8 @@ $legend-image-width: 60px;
   }
 
   &-text {
-    font-size: 16px;
+    margin-top: 2px;
+    font-size: 20px;
     font-weight: bold;
   }
 }

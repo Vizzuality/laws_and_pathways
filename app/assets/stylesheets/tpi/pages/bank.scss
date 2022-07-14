@@ -193,10 +193,11 @@ $indicator-padding-mobile: 60px;
           display: none;
           top: -5px;
           position: absolute;
-          background: black;
+          background: white;
+          border: 1px solid $black;
+          color: $black;
           padding: 10px;
           transform: translate(-50%, -100%);
-          color: white;
 
           &-header {
             opacity: 0.9;
@@ -206,7 +207,9 @@ $indicator-padding-mobile: 60px;
           }
 
           &-text {
-
+            margin-top: 2px;
+            font-size: 20px;
+            font-weight: bold;
           }
         }
 

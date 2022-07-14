@@ -47,7 +47,7 @@ const tooltipDisclaimer = 'Define information box content';
 let tooltip = null;
 
 const BubbleChart = ({ results }) => {
-  const tooltipEl = '<div id="bubble-chart-tooltip" class="bubble-tip bubble-tip--black" hidden style="position:absolute;"></div>';
+  const tooltipEl = '<div id="bubble-chart-tooltip" class="bubble-tip" hidden style="position:absolute;"></div>';
   useEffect(() => {
     document.body.insertAdjacentHTML('beforeend', tooltipEl);
     tooltip = document.getElementById('bubble-chart-tooltip');
@@ -142,7 +142,7 @@ const getTooltipText = ({ tooltipContent }) => {
   if (tooltipContent) {
     return `
      <div class="bubble-tip-header">${tooltipContent.header}</div>
-     <div class="bubble-tip-text">${parseFloat(Number(tooltipContent.percentage).toFixed(1))}%</div>
+     <div class="bubble-tip-text">${parseFloat(Number(tooltipContent.value).toFixed(1))}%</div>
     `;
   }
   return '';
@@ -175,7 +175,7 @@ const createRow = (dataRow, area, index) => (
         value: COMPANIES_MARKET_CAP_GROUPS[result.market_cap_group],
         tooltipContent: {
           header: result.bank_name,
-          percentage: result.percentage
+          value: result.percentage
         },
         path: result.bank_path,
         color: result.color
