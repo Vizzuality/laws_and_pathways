@@ -121,7 +121,7 @@ const getTooltipText = ({ tooltipContent }) => {
   if (tooltipContent) {
     return `
      <div class="bubble-tip-header">${tooltipContent.header}</div>
-     <div class="bubble-tip-text">${parseFloat(Number(tooltipContent.value).toFixed(1))}%</div>
+     <div class="bubble-tip-text">${tooltipContent.value}</div>
     `;
   }
   return '';
