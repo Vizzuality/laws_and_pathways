@@ -62,6 +62,11 @@ export function getOptions(data) {
           formatter() {
             return `${parseFloat(Number(this.y).toFixed(1))}%`;
           }
+        },
+        states: {
+          hover: {
+            enabled: false
+          }
         }
       }
     },

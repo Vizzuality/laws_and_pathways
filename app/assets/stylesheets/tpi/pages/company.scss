@@ -146,6 +146,18 @@ $dots-space: 1.3rem;
         }
       }
     }
+
+    @include desktop {
+      .columns {
+        justify-content: space-evenly;
+      }
+
+      .column {
+        flex-basis: unset;
+        flex-grow: unset;
+        flex-shrink: unset;
+      }
+    }
   }
 
   .summary-box-link {
