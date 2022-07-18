@@ -38,4 +38,23 @@
       <%= render 'index_charts' %>
     </div>
   </section>
+
+  <% if @publications_and_articles.any? %>
+    <hr>
+
+    <section class="section tpi-banks__promoted-publications">
+      <div class="container">
+        <div class="promoted-publications__title">
+          <div class="promoted-publications__title-text">Publications and news</div>
+
+          <%= link_to 'View all publications and news', tpi_publications_path, class: 'button is-secondary is-hidden-touch' %>
+        </div>
+
+        <%= render "tpi/publications/promoted", publications_and_articles: @publications_and_articles %>
+        <div class="view-all-btn__container">
+          <a href="/publications" class="button is-secondary is-hidden-desktop">View all news</a>
+        </div>
+      </div>
+    </section>
+  <% end %>
 </div>

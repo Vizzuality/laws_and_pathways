@@ -10,6 +10,7 @@ module TPI
 
     def index
       @assessment_dates = BankAssessment.select(:assessment_date).distinct.pluck(:assessment_date)
+      @publications_and_articles = publications_and_articles
     end
 
     def show
@@ -30,6 +31,15 @@ module TPI
     end
 
     private
+
+    def publications_and_articles
+      publications = Publication.published.order(publication_date: :desc).limit(3)
+      news = NewsArticle.published.order(publication_date: :desc).limit(3)
+
+      (publications + news).sort do |a, b|
+        b.publication_date <=> a.publication_date
+      end.first(3)
+    end
 
     def fetch_bank
       @bank = Bank.friendly.find(params[:id])

@@ -76,7 +76,7 @@
       <%= link_to 'View all publications and news', tpi_publications_path, class: 'button is-secondary is-hidden-touch' %>
     </div>
 
-    <%= render "tpi/publications/promoted" %>
+    <%= render "tpi/publications/promoted", publications_and_articles: @publications_and_articles %>
     <a href="/publications" class="view-all-button button is-secondary is-hidden-desktop">View all publications and news</a>
   </div>
 </section>

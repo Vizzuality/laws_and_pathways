@@ -197,7 +197,7 @@ BubbleChart.propTypes = {
     area: PropTypes.string.isRequired,
     market_cap_group: PropTypes.string.isRequired,
     percentage: PropTypes.number.isRequired,
-    bank_id: PropTypes.string.isRequired,
+    bank_id: PropTypes.number.isRequired,
     bank_name: PropTypes.string.isRequired,
     bank_path: PropTypes.string.isRequired
   })).isRequired

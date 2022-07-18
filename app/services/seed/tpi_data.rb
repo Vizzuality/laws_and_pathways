@@ -42,14 +42,14 @@ module Seed
         run_importer CSVImport::BankAssessments.new(seed_file('bank_assessments.csv'))
       end
 
-      # TimedLogger.log('Import News Articles') do
-      #   run_importer CSVImport::NewsArticles.new(seed_file('tpi-news-articles.csv'), allow_tags_adding: true)
-      #   random_assign_images_to_articles
-      # end
+      TimedLogger.log('Import News Articles') do
+        run_importer CSVImport::NewsArticles.new(seed_file('tpi-news-articles.csv'), allow_tags_adding: true)
+        random_assign_images_to_articles
+      end
 
-      # TimedLogger.log('Create Publications') do
-      #   create_publications
-      # end
+      TimedLogger.log('Create Publications') do
+        create_publications
+      end
     end
 
     def import_sector_clusters

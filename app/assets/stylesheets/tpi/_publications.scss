@@ -109,7 +109,7 @@ $max-lines: 3;
   }
 }
 
-.tpi-sector__promoted-publications {
+.tpi-sector__promoted-publications, .tpi-banks__promoted-publications {
   margin-bottom: 30px;
 
   .view-all-btn__container {
@@ -118,6 +118,10 @@ $max-lines: 3;
     a {
       border-radius: 0;
     }
+  }
+
+  .publications__grid {
+    margin-bottom: 0px;
   }
 
   @include desktop {
