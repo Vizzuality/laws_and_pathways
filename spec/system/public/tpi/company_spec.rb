@@ -22,11 +22,11 @@ describe 'Company Page', type: 'system', site: 'tpi' do
   end
 
   it 'shows company details' do
-    expect_company_property('Geography', 'Japan')
-    expect_company_property('Sector', 'Airlines')
-    expect_company_property('Market cap', 'large')
-    expect_company_property('ISIN', 'JP3705200008')
-    expect_company_property('SEDOL', 'B8BRV46')
+    expect_property('Geography', 'Japan')
+    expect_property('Sector', 'Airlines')
+    expect_property('Market cap', 'large')
+    expect_property('ISIN', 'JP3705200008')
+    expect_property('SEDOL', 'B8BRV46')
   end
 
   it 'shows mq level assessment chart' do
@@ -35,14 +35,5 @@ describe 'Company Page', type: 'system', site: 'tpi' do
 
   it 'shows carbon performance chart' do
     expect(page).to have_selector('.chart--cp-performance svg')
-  end
-
-  def expect_company_property(property, text)
-    within(
-      :xpath,
-      "(.//div[#{contains_class('property__name')} and contains(., '#{property}')]/..)[1]"
-    ) do
-      expect(page).to have_text(text)
-    end
   end
 end

@@ -6,7 +6,7 @@ module Api
           .group(:number, :text)
           .order(:number)
           .average(:percentage)
-          .transform_keys { |number, text| "#{number}.#{text}" }
+          .transform_keys { |number, text| "#{number}. #{text}" }
           .transform_values(&:to_f)
           .to_a
 
