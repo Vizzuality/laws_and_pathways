@@ -1,0 +1,71 @@
+.banking-question-legend {
+  background: #F5F8FF;
+  border: 1px solid #CFD7ED;
+  position: fixed;
+  top: 50%;
+  left: 8%;
+
+  font-size: 12px;
+
+  z-index: 10;
+
+  transition: opacity .5s ease-out;
+  opacity: 0;
+
+  @include until($desktop) {
+    display: none;
+  }
+
+  &--active {
+    opacity: 1;
+  }
+
+  &__header {
+    padding: 10px;
+    text-transform: uppercase;
+  }
+
+  &__content {
+    padding: 15px;
+    border-top: 1px solid #CFD7ED;
+
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+
+    .banking-question-legend-answer {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      &:before {
+        content: '';
+        display: block;
+        margin-top: -3px;
+
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 9px;
+      }
+
+      &--no:before {
+        background-image: image-url('icons/x.svg');
+        background-color: #ED3D4A;
+      }
+
+      &--yes:before {
+        background-image: image-url('icons/check.svg');
+        background-color: #5587F7;
+      }
+
+      &--not-applicable:before {
+        background-image: image-url('icons/oval.svg');
+        background-color: #C0C2C3;
+        background-size: 5px;
+      }
+    }
+  }
+}

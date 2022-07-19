@@ -1,3 +1,4 @@
+<%= react_component('BankingQuestionLegend') %>
 <% areas = assessment.results_by_indicator_type["area"] %>
 <% areas.each do |area| %>
   <input id="<%= dom_id(area) %>" type="checkbox" class="toggle" />

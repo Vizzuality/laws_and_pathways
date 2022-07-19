@@ -1,32 +1,9 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { useInterval } from 'shared/hooks';
 
 const SLIDE_DELAY = 8000;
-
-// from https://overreacted.io/making-setinterval-declarative-with-react-hooks/
-function useInterval(callback, delay) {
-  const savedCallback = useRef();
-
-  // Remember the latest callback.
-  useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
-
-  // Set up the interval.
-  useEffect(() => {
-    function tick() {
-      savedCallback.current();
-    }
-
-    if (delay !== null) {
-      const timer = setInterval(tick, delay);
-      return () => clearInterval(timer);
-    }
-
-    return () => {};
-  }, [delay]);
-}
 
 const nextPage = (current, total) => (current === total ? 0 : current + 1);
 const previousPage = (current, total) => (current === 0 ? total : current - 1);
