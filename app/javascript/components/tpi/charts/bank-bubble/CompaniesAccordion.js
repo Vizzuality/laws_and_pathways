@@ -1,17 +1,14 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Select, { components } from 'react-select';
+import uniq from 'lodash/uniq';
+import sortBy from 'lodash/sortBy';
+import cx from 'classnames';
 
 import chevronDownIconBlack from 'images/icon_chevron_dark/chevron_down_black-1.svg';
 import chevronUpIconBlack from 'images/icon_chevron_dark/chevron-up.svg';
 
-const LEVELS_SUBTITLES = {
-  0: 'Unaware',
-  1: 'Awareness',
-  2: 'Building capacity',
-  3: 'Integrating into operational decision making',
-  4: 'Strategic assessment'
-};
+import { SCORE_RANGES } from './constants';
 
 const blueDarkColor = '#2E3152';
 const secondaryColor = '#828397';
@@ -61,12 +58,31 @@ DropdownIndicator.propTypes = {
   selectProps: PropTypes.object.isRequired
 };
 
-const CompaniesAccordion = ({ levels, by_sector }) => {
-  const selectOptions = Object.keys(levels).map((level) => ({label: level, value: level}));
-  const levelsSignature = by_sector ? levels && Object.keys(levels[Object.keys(levels)[0]]) : levels && Object.keys(levels);
+const CompaniesAccordion = ({ results }) => {
+  const areas = uniq(results.map(r => r.area));
+  const selectOptions = areas.map((level) => ({label: level, value: level}));
   const [openItems, setOpenItems] = useState([]);
   const [activeOption, setActiveOption] = useState(selectOptions[0]);
-  const activeSector = by_sector ? levels[activeOption.value] : levels;
+
+  const ranges = SCORE_RANGES.map((range) => `${range.min}-${range.max}%`);
+
+  const parsedData = {};
+  results.forEach((result) => {
+    if (parsedData[result.area] === undefined) {
+      parsedData[result.area] = Array.from({ length: ranges.length }, () => []);
+    }
+    const rangeIndex = SCORE_RANGES.findIndex((range) => result.percentage >= range.min && result.percentage <= range.max);
+    if (rangeIndex >= 0) {
+      parsedData[result.area][rangeIndex].push({
+        ...result,
+        color: SCORE_RANGES[rangeIndex].color
+      });
+    } else {
+      console.error('WRONG INDEX', result);
+    }
+  });
+
+  const activeArea = parsedData[activeOption.value];
 
   function setOpenItemByIndex(index) {
     setOpenItems(openItems.includes(index) ? openItems.filter(i => i !== index) : [...openItems, index]);
@@ -74,41 +90,44 @@ const CompaniesAccordion = ({ levels, by_sector }) => {
 
   return (
     <div className="mobile_bubble-chart__container is-hidden-desktop">
-      {by_sector && (
-        <Select
-          options={selectOptions}
-          value={activeOption}
-          className="is-hidden-desktop"
-          onChange={(e) => { setActiveOption(e); }}
-          isSearchable={false}
-          styles={customSelectStyles}
-          components={{DropdownIndicator}}
-          theme={customSelectTheme}
-        />
-      )}
+      <Select
+        options={selectOptions}
+        value={activeOption}
+        className="is-hidden-desktop"
+        onChange={(e) => { setActiveOption(e); }}
+        isSearchable={false}
+        styles={customSelectStyles}
+        components={{DropdownIndicator}}
+        theme={customSelectTheme}
+      />
 
       <div className="accordions-list">
-        {levelsSignature.map((el, i) => (
-          <div key={`chart-item-list-${i}`} className={`item-list level-item-color-${el} ${openItems.includes(i) ? ' open' : ''}`}>
+        {SCORE_RANGES.map((range, i) => (
+          <div
+            key={`chart-item-list-${i}`}
+            className={cx('item-list', { open: openItems.includes(i) })}
+            style={{
+              background: range.color
+            }}
+          >
             <div className="item-header" onClick={() => setOpenItemByIndex(i)}>
               <div className="item-title">
-                <div>level {levelsSignature[el]}</div>
-                <div>{activeSector[el].length} {activeSector[el].length === 1 ? 'company' : 'companies'}</div>
+                <div>Score Range</div>
+                <div>{activeArea[i].length} {activeArea[i].length === 1 ? 'company' : 'companies'}</div>
               </div>
-              <div className="sector-subtitle">{LEVELS_SUBTITLES[el]}</div>
+              <div className="sector-subtitle">{range.min}-{range.max}%</div>
             </div>
             <div className="item-body">
               <hr />
-              {activeSector[el].length === 0 && <div className="no-companies">No companies</div>}
-              {activeSector[el].length > 0 && (
+              {activeArea[i].length === 0 && <div className="no-companies">No companies</div>}
+              {activeArea[i].length > 0 && (
                 <ul className="companies-list">
-                  {activeSector[el].map((company, index) => (
+                  {sortBy(activeArea[i], 'bank_name').map((company, index) => (
                     <li
                       key={`chart-companies-${index}`}
-                      onClick={() => { window.location.href = `/companies/${company.slug}`; }}
+                      onClick={() => { window.location.href = company.bank_path; }}
                     >
-                      {company.name}
-                      <span className={`mq-level-trend mq-level-trend--${company.status}`} />
+                      {company.bank_name}
                     </li>
                   ))}
                 </ul>
@@ -117,21 +136,21 @@ const CompaniesAccordion = ({ levels, by_sector }) => {
           </div>
         ))}
       </div>
-      {by_sector && (
-        <div className="go-to-button__container">
-          <a href={`/sectors/${activeOption.value.toLowerCase()}`} className="button is-primary is-outlined">Go to sector</a>
-        </div>
-      )}
     </div>
   );
 };
 
 CompaniesAccordion.defaultProps = {
-  by_sector: true
 };
 
 CompaniesAccordion.propTypes = {
-  levels: PropTypes.object.isRequired,
-  by_sector: PropTypes.bool
+  results: PropTypes.arrayOf(PropTypes.shape({
+    area: PropTypes.string.isRequired,
+    market_cap_group: PropTypes.string.isRequired,
+    percentage: PropTypes.number.isRequired,
+    bank_id: PropTypes.number.isRequired,
+    bank_name: PropTypes.string.isRequired,
+    bank_path: PropTypes.string.isRequired
+  })).isRequired
 };
 export default CompaniesAccordion;

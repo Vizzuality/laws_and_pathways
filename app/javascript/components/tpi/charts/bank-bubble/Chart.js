@@ -5,6 +5,8 @@ import legendImage from 'images/bubble-chart-legend.svg';
 import SingleCell from './SingleCell';
 import BaseTooltip from 'components/tpi/BaseTooltip';
 
+import { SCORE_RANGES } from './constants';
+
 const SCALE = 5;
 
 // radius of bubbles
@@ -16,32 +18,6 @@ const COMPANIES_MARKET_CAP_GROUPS = {
 
 const SINGLE_CELL_SVG_WIDTH = 120 * SCALE;
 const SINGLE_CELL_SVG_HEIGHT = 80 * SCALE;
-
-const SCORE_RANGES = [{
-  min: 0,
-  max: 5,
-  color: '#86A9F9'
-}, {
-  min: 5,
-  max: 15,
-  color: '#5587F7'
-}, {
-  min: 15,
-  max: 25,
-  color: '#2465F5'
-}, {
-  min: 25,
-  max: 50,
-  color: '#0A4BDC'
-}, {
-  min: 50,
-  max: 75,
-  color: '#083AAB'
-}, {
-  min: 75,
-  max: 100,
-  color: '#042b82'
-}];
 
 const tooltipDisclaimer = 'Define information box content';
 let tooltip = null;
