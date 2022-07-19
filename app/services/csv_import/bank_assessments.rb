@@ -10,13 +10,13 @@ module CSVImport
         assessment.assessment_date = assessment_date(row) if row.header?(:assessment_date)
 
         was_new_record = assessment.new_record?
-        any_changes = assessment.changed?
+        # any_changes = assessment.changed?
 
         assessment.save!
 
         save_assessment_results(assessment, row)
 
-        update_import_results(was_new_record, any_changes)
+        update_import_results(was_new_record, !was_new_record)
       end
     end
 
@@ -46,7 +46,7 @@ module CSVImport
     end
 
     def save_assessment_results(assessment, row)
-      assessment.results.delete_all
+      BankAssessmentResult.where(assessment: assessment).delete_all
       results = []
       BankAssessmentIndicator.find_each do |indicator|
         results << parse_assessment_result(assessment, indicator, row)
