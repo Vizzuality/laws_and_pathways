@@ -48,6 +48,7 @@ export function getOptions(data) {
       title: {
         enabled: false
       },
+      max: 100,
       labels: {
         overflow: 'justify',
         formatter() {
