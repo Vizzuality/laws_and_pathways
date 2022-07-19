@@ -7,7 +7,7 @@ ActiveAdmin.register Bank do
   config.batch_actions = false
 
   permit_params :name, :isin, :geography_id,
-                :market_cap_group, :sedol
+                :market_cap_group, :sedol, :latest_information
 
   filter :isin_contains, label: 'ISIN'
   filter :name_contains, label: 'Name'
@@ -43,6 +43,7 @@ ActiveAdmin.register Bank do
           row :sedol
           row :geography
           row :market_cap_group
+          row :latest_information
           row :created_at
           row :updated_at
         end
@@ -91,6 +92,7 @@ ActiveAdmin.register Bank do
     column :isin
     column :sedol
     column :market_cap_group
+    column :latest_information
   end
 
   form html: {'data-controller' => 'check-modified'} do |f|

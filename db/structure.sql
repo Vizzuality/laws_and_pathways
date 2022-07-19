@@ -392,7 +392,8 @@ CREATE TABLE public.banks (
     sedol character varying,
     market_cap_group character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    latest_information text
 );
 
 
@@ -3652,6 +3653,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220704085154'),
 ('20220704092137'),
 ('20220704094334'),
-('20220704094826');
+('20220704094826'),
+('20220719121521');
 
 

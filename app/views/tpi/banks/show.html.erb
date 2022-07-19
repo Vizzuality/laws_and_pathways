@@ -64,4 +64,8 @@
       <%= render 'assessment', assessment: @assessment_presenter %>
     </section>
   <% end %>
+
+  <% if @bank.latest_information.present? %>
+    <%= react_component("LatestInformation", { name: @bank.name, latestInformation: @bank.latest_information }) %>
+  <% end %>
 </div>

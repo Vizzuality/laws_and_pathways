@@ -55,5 +55,9 @@ describe 'Banking Tool', type: 'system', site: 'tpi' do
         expect(page).to have_selector('.bank-assessment__area-value-value', text: '25%')
       end
     end
+
+    it 'shows latest information' do
+      expect(page).to have_text('Another example of latest information')
+    end
   end
 end

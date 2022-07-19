@@ -11,6 +11,7 @@ module CSVImport
         bank.market_cap_group = row[:market_cap_group].downcase if row.header?(:market_cap_group)
         bank.sedol = row[:sedol].presence if row.header?(:sedol)
         bank.geography = find_geography(row[:geography_iso]) if row.header?(:geography_iso)
+        bank.latest_information = row[:latest_information] if row.header?(:latest_information)
 
         was_new_record = bank.new_record?
         any_changes = bank.changed?
