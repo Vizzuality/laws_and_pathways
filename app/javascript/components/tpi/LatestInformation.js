@@ -4,11 +4,11 @@ import cx from 'classnames';
 import plusIcon from 'images/icons/plus.svg';
 import minusIcon from 'images/icons/minus.svg';
 
-const LatestInformation = ({ company }) => {
+const LatestInformation = ({ name, latestInformation }) => {
   const [expanded, setExpanded] = useState(false);
 
   const buttonText = expanded ? 'Read less' : 'Read more';
-  const textLength = company.latest_information.length;
+  const textLength = latestInformation.length;
   const MAX_CHARACTERS_FOR_THREE_LINES = 270;
   const showButton = textLength > MAX_CHARACTERS_FOR_THREE_LINES;
 
@@ -27,10 +27,10 @@ const LatestInformation = ({ company }) => {
   return (
     <section className="container latest-information__wrapper">
       <div className="latest-information__container">
-        <h6 className="latest-information__header">Latest information available on {company.name}</h6>
+        <h6 className="latest-information__header">Latest information available on {name}</h6>
         <p
           className={cx('latest-information__description', { 'latest-information__description--folded': showButton && !expanded })}
-          dangerouslySetInnerHTML={{__html: parseLinks(company.latest_information) }}
+          dangerouslySetInnerHTML={{__html: parseLinks(latestInformation) }}
         />
 
         {showButton && (
@@ -45,10 +45,8 @@ const LatestInformation = ({ company }) => {
 };
 
 LatestInformation.propTypes = {
-  company: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    latest_information: PropTypes.string.isRequired
-  }).isRequired
+  name: PropTypes.string.isRequired,
+  latestInformation: PropTypes.string.isRequired
 };
 
 export default LatestInformation;

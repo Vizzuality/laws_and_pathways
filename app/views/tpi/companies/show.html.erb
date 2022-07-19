@@ -216,6 +216,6 @@
     </section>
   <% end %>
   <% if @company.latest_information.present? %>
-    <%= react_component("LatestInformation", { company: @company }) %>
+    <%= react_component("LatestInformation", { name: @company.name, latestInformation: @company.latest_information }) %>
   <% end %>
 </div>
