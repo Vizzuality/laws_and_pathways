@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: banks
+#
+#  id               :bigint           not null, primary key
+#  geography_id     :bigint
+#  name             :string           not null
+#  slug             :string           not null
+#  isin             :string           not null
+#  sedol            :string
+#  market_cap_group :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#
 require 'rails_helper'
 
 RSpec.describe Bank, type: :model do

@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: bank_assessment_indicators
+#
+#  id             :bigint           not null, primary key
+#  indicator_type :string           not null
+#  number         :string           not null
+#  text           :text             not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#
 class BankAssessmentIndicator < ApplicationRecord
   INDICATOR_TYPES = %w[area sub_area indicator sub_indicator].freeze
   enum indicator_type: array_to_enum_hash(INDICATOR_TYPES)

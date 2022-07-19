@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: bank_assessments
+#
+#  id              :bigint           not null, primary key
+#  bank_id         :bigint
+#  assessment_date :date             not null
+#  notes           :text
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
 require 'rails_helper'
 
 RSpec.describe BankAssessment, type: :model do
