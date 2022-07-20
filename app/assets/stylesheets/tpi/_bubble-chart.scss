@@ -4,6 +4,7 @@
 $tape-height: 8px;
 $tape-color: rgba(25,25,25,0.1);
 $cell-height: 80px;
+$cell-height-banks: 100px;
 $legend-image-width: 60px;
 
 .bubble-chart__container {
@@ -51,6 +52,12 @@ $legend-image-width: 60px;
     top: calc(50% - #{$tape-height / 2});
     height: $tape-height;
     width: calc(100% + #{$tape-height / 2});
+  }
+}
+
+.bubble-chart__container--banks {
+  .bubble-chart__cell {
+    height: $cell-height-banks;
   }
 }
 
@@ -176,8 +183,11 @@ $legend-image-width: 60px;
   }
 
   .bubble-chart__legend-container + .bubble-chart__level {
-    padding-left: 0px;
     text-align: left;
+  }
+
+  .bubble-chart__level {
+    padding-left: 0px;
   }
 }
 

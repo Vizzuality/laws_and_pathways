@@ -16,7 +16,7 @@ const COMPANIES_MARKET_CAP_GROUPS = {
 };
 
 const SINGLE_CELL_SVG_WIDTH = 120 * SCALE;
-const SINGLE_CELL_SVG_HEIGHT = 80 * SCALE;
+const SINGLE_CELL_SVG_HEIGHT = 100 * SCALE;
 
 const tooltipDisclaimer = 'Define information box content';
 let tooltip = null;
