@@ -2,7 +2,7 @@ import merge from 'lodash/merge';
 
 import defaultOptions from '../default-options';
 
-export function getOptions(data) {
+export function getOptions(data, isMobile) {
   return merge({}, defaultOptions, {
     chart: {
       type: 'bar'
@@ -21,7 +21,7 @@ export function getOptions(data) {
       labels: {
         style: {
           color: '#0A4BDC',
-          fontSize: '14px'
+          fontSize: isMobile ? '12px' : '16px'
         }
       },
       title: {

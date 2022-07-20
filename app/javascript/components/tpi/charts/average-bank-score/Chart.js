@@ -8,13 +8,12 @@ import HighchartsReact from 'highcharts-react-official';
 
 import { getOptions } from './options';
 import { useChartData } from '../hooks';
-/* import { useDeviceInfo } from 'components/Responsive'; */
+import { useDeviceInfo } from 'components/Responsive';
 
 function AverageBankScore({ dataUrl }) {
   const { data, error, loading } = useChartData(dataUrl);
-  /* const { isMobile } = useDeviceInfo(); */
-  /* const options = isMobile ? getMobileOptions(data) : getOptions(data); */
-  const options = getOptions(data);
+  const { isMobile } = useDeviceInfo();
+  const options = getOptions(data, isMobile);
   const noData = !loading && data && data.length === 0;
 
   return (
