@@ -14,6 +14,7 @@
 #  latest_information :text
 #
 class Bank < ApplicationRecord
+  include PublicActivityTrackable
   extend FriendlyId
 
   friendly_id :name, use: [:slugged, :history], routes: :default
