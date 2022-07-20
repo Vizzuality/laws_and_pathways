@@ -19,7 +19,7 @@ const SingleCell = ({ width, height, handleNodeClick, data, uniqueKey, showToolt
 
   const simulation = () => {
     d3.forceSimulation(nodes)
-      .force('charge', d3.forceManyBody().strength(3))
+      .force('charge', d3.forceManyBody().strength(60))
       .force('y', d3.forceY().y(0))
       .force('collision',
         d3.forceCollide().radius(function (d) {

@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
-import uniq from 'lodash/uniq';
 import legendImage from 'images/bubble-chart-legend.svg';
 import SingleCell from './SingleCell';
 import BaseTooltip from 'components/tpi/BaseTooltip';
@@ -28,7 +27,6 @@ const BubbleChart = ({ results }) => {
     document.body.insertAdjacentHTML('beforeend', tooltipEl);
     tooltip = document.getElementById('bubble-chart-tooltip');
   }, []);
-  const areas = uniq(results.map(r => r.area));
   const ranges = SCORE_RANGES.map((range) => `${range.min}-${range.max}%`);
 
   const parsedData = {};
@@ -58,7 +56,7 @@ const BubbleChart = ({ results }) => {
   return (
     <div
       className="bubble-chart__container bubble-chart__container--banks is-hidden-touch"
-      style={{ gridTemplateColumns: `repeat(${areas.length + 1}, 1fr)` }}
+      style={{ gridTemplateColumns: '1fr 1.5fr 1fr 1.5fr 1.5fr 1fr 1fr' }}
     >
       <div className="bubble-chart__legend-container">
         <div className="bubble-chart__title-container">
