@@ -124,6 +124,55 @@ $see-more-width-tablet: 130px;
   .bank-assessment {
     margin-top: 30px;
 
+    &__indicators-legend {
+      display: flex;
+      align-items: center;
+      justify-content: end;
+      gap: 20px;
+      margin-bottom: 10px;
+
+      @include desktop {
+        gap: 40px;
+      }
+
+      &-header {
+        text-transform: uppercase;
+        color: $grey-dark;
+        font-size: 12px;
+      }
+
+      div {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+
+        span {
+          color: $grey-dark;
+          font-size: 12px;
+        }
+
+        svg {
+          width: 12px;
+          height: 7px;
+          transform: translateY(-2px);
+        }
+
+        .svg-chevron-average {
+          * {
+            fill: $dark;
+            stroke: none;
+          }
+        }
+
+        .svg-chevron-max {
+          * {
+            fill: $green;
+            stroke: none;
+          }
+        }
+      }
+    }
+
     input.toggle {
       display: none;
     }

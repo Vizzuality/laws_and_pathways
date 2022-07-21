@@ -1,4 +1,19 @@
 <%= react_component('BankingQuestionLegend') %>
+<div class="bank-assessment__indicators-legend">
+  <div class="bank-assessment__indicators-legend-header">
+    Legend
+  </div>
+  <div>
+    <%= svg "icons/white-chevron-down", class: 'svg-chevron-average' %>
+    <span>All banks average</span>
+  </div>
+  <div>
+    <%= svg "icons/white-chevron-down", class: 'svg-chevron-max' %>
+    <span>All banks max score</span>
+  </div>
+</div>
+
+
 <% areas = assessment.results_by_indicator_type["area"] %>
 <% areas.each do |area| %>
   <input id="<%= dom_id(area) %>" type="checkbox" class="toggle" />
