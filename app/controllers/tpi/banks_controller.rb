@@ -11,6 +11,8 @@ module TPI
     def index
       @assessment_dates = BankAssessment.select(:assessment_date).distinct.pluck(:assessment_date)
       @publications_and_articles = TPISector.find_by(slug: 'banks')&.publications_and_articles || []
+
+      fixed_navbar('Banks', admin_banks_path)
     end
 
     def show
