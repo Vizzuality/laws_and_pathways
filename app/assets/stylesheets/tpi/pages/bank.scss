@@ -37,11 +37,6 @@ $see-more-width-tablet: 130px;
         flex-direction: row;
         align-items: center;
       }
-
-      .base-tooltip__default-trigger {
-        background: white;
-        color: $blue-dark;
-      }
     }
 
     a {
@@ -474,10 +469,6 @@ $see-more-width-tablet: 130px;
 
       @include tablet {
         min-width: $see-more-width-tablet;
-      }
-
-      div[data-react-class] {
-        margin-top: -3px;
       }
     }
 

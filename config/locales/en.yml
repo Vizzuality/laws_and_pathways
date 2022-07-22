@@ -53,9 +53,6 @@ en:
     tag: 'Pick an existing one or create new typing name and pressing ENTER'
   tpi:
     tooltips:
-      bank_assessment_date: Assessment Date
-      bank_average_score: Average score
-      bank_indicator_value_description: Indicator value description
       geography: 'This is where the company is listed'
       market_cap: 'Market cap size'
       ISIN: 'International Securities Identification Number'
