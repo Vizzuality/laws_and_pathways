@@ -28,6 +28,14 @@
     </url>
   <% end %>
   <url>
+    <loc><%= "#{@host}#{tpi_banks_path}" %></loc>
+  </url>
+  <% @banks.each do |bank| %>
+    <url>
+      <loc><%= "#{@host}#{tpi_bank_path(bank.slug)}" %></loc>
+    </url>
+  <% end %>
+  <url>
     <loc><%= "#{@host}#{tpi_publications_path}" %></loc>
   </url>
   <% @publications.each do |publication| %>

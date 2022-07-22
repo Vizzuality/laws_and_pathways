@@ -6,6 +6,7 @@ module TPI
       @companies = Company.published.select(:id, :slug).order(:name)
       @publications = Publication.published.select(:id)
       @news = NewsArticle.published.select(:id)
+      @banks = Bank.all.select(:id, :slug).order(:name)
     end
   end
 end
