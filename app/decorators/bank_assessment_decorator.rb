@@ -18,6 +18,6 @@ class BankAssessmentDecorator < Draper::Decorator
   end
 
   def results
-    model.results.includes(:indicator).sort_by { |r| r.indicator.number }
+    model.results.includes(:indicator).order('bank_assessment_indicators.number')
   end
 end

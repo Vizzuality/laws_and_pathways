@@ -23,10 +23,10 @@ ActiveAdmin.register BankAssessment do
     end
 
     panel 'Questions' do
-      table_for resource.results do
+      table_for resource.results.decorate do
         column(:number) { |r| r.indicator.number }
         column(:display_text) { |r| r.indicator.display_text }
-        column(:value) { |r| r.percentage || r.answer }
+        column(:value)
       end
     end
 
@@ -37,6 +37,25 @@ ActiveAdmin.register BankAssessment do
     column :title, &:title_link
     column :assessment_date
     actions
+  end
+
+  csv do
+    all_results = BankAssessmentResult
+      .includes(:indicator)
+      .group_by { |r| [r.bank_assessment_id, r.indicator.indicator_type, r.indicator.number] }
+
+    column :id
+    column(:bank) { |a| a.bank.name }
+    column :assessment_date
+    collection.first.results.map do |result|
+      type = result.indicator.indicator_type
+      number = result.indicator.number
+      column "#{type} #{number}", humanize_name: false do |a|
+        res = all_results[[a.id, result.indicator.indicator_type, result.indicator.number]]&.first&.decorate
+        res&.value
+      end
+    end
+    column :tpi_notes, &:notes
   end
 
   controller do
