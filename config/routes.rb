@@ -43,11 +43,11 @@ Rails.application.routes.draw do
       resources :banks, only: [:show, :index] do
         member do
           get :assessment
-          get :user_download
         end
         collection do
           get :index_assessment
           get :average_bank_score_chart_data
+          get :user_download
         end
       end
 

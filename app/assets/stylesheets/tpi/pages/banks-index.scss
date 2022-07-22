@@ -1,20 +1,12 @@
 @import "../variables";
 
 .banks-index-page {
-  .dropdown-selector-wrapper {
-    height: 335px;
-    background-color: $blue;
-
-    @include until($desktop) {
-      height: auto;
-    }
-  }
-
   .banks-header {
     background: $blue;
     height: 100px;
     display: flex;
     align-items: center;
+    justify-content: end;
 
     a {
       color: white;
@@ -29,6 +21,20 @@
       font-size: $size-7;
       height: 60px;
       font-family: $font-family-regular;
+    }
+  }
+
+  .dropdown-selector-wrapper {
+    background-color: $blue;
+
+    .dropdown-selector__container {
+      @include desktop {
+        padding: $container-top-padding $container-side-padding 40px $container-side-padding;
+      }
+    }
+
+    @include desktop {
+      height: 335px;
     }
   }
 

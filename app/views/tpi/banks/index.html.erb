@@ -7,6 +7,13 @@
       banks: @banks_json,
       selectedOption: 'All banks'
       }) %>
+
+    <div class="banks-header container">
+      <%= link_to user_download_tpi_banks_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
+        <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
+        Download banking data
+      <% end %>
+    </div>
   </div>
 
   <section class="container">
