@@ -95,7 +95,7 @@ module TPI
     end
 
     def fetch_sector
-      @sector = TPISector.friendly.find(params[:id])
+      @sector = TPISector.tpi_tool.friendly.find(params[:id])
     end
 
     def redirect_if_numeric_or_historic_slug
@@ -103,7 +103,7 @@ module TPI
     end
 
     def fetch_sectors
-      @sectors = TPISector.all.includes(:cluster).order(:name)
+      @sectors = TPISector.tpi_tool.includes(:cluster).order(:name)
       @sectors_json = @sectors.map { |s| s.as_json(except: [:created_at, :updated_at], methods: [:path]) }
     end
 
@@ -117,7 +117,7 @@ module TPI
 
     def companies_scope(params)
       if params[:id]
-        TPISector.friendly.find(params[:id]).companies.published.active
+        TPISector.tpi_tool.friendly.find(params[:id]).companies.published.active
       else
         Company.published.active
       end

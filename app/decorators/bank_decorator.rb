@@ -5,7 +5,7 @@ class BankDecorator < Draper::Decorator
     isin.split(',')
   end
 
-  # def preview_url
-  #   h.tpi_company_url(model.slug, {host: Rails.configuration.try(:tpi_domain)}.compact)
-  # end
+  def preview_url
+    h.tpi_bank_url(model.slug, {host: Rails.configuration.try(:tpi_domain)}.compact)
+  end
 end

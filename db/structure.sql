@@ -1662,7 +1662,8 @@ CREATE TABLE public.tpi_sectors (
     slug character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    cluster_id bigint
+    cluster_id bigint,
+    show_in_tpi_tool boolean DEFAULT true NOT NULL
 );
 
 
@@ -3654,6 +3655,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220704092137'),
 ('20220704094334'),
 ('20220704094826'),
-('20220719121521');
+('20220719121521'),
+('20220722075902');
 
 

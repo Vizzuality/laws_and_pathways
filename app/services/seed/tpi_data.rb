@@ -172,6 +172,7 @@ module Seed
           sector.cp_units.build(unit: sector_cp_unit) unless sector.latest_cp_unit.present?
         end
       end
+      TPISector.find_or_create_by!(name: 'Banks', show_in_tpi_tool: false)
     end
   end
 end

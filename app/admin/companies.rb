@@ -177,7 +177,7 @@ ActiveAdmin.register Company do
       end
 
       columns do
-        column { f.input :sector }
+        column { f.input :sector, collection: TPISector.tpi_tool }
         column do
           f.input :market_cap_group,
                   as: :select,

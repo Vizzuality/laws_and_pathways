@@ -28,9 +28,9 @@ ActiveAdmin.register Bank do
   #   end
   # end
 
-  # action_item :preview, priority: 0, only: :show do
-  #   link_to 'Preview', resource.preview_url if resource.published?
-  # end
+  action_item :preview, priority: 0, only: :show do
+    link_to 'Preview', resource.preview_url
+  end
 
   show do
     tabs do

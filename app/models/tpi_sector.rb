@@ -2,12 +2,13 @@
 #
 # Table name: tpi_sectors
 #
-#  id         :bigint           not null, primary key
-#  name       :string           not null
-#  slug       :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  cluster_id :bigint
+#  id               :bigint           not null, primary key
+#  name             :string           not null
+#  slug             :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  cluster_id       :bigint
+#  show_in_tpi_tool :boolean          default(TRUE), not null
 #
 
 class TPISector < ApplicationRecord
@@ -30,8 +31,10 @@ class TPISector < ApplicationRecord
   validates_presence_of :name, :slug
   validates_uniqueness_of :name, :slug
 
+  scope :tpi_tool, -> { where(show_in_tpi_tool: true) }
+
   def should_generate_new_friendly_id?
-    name_changed? || super
+    (show_in_tpi_tool? && name_changed?) || super
   end
 
   def cp_unit_valid_for_date(date)
@@ -87,6 +90,8 @@ class TPISector < ApplicationRecord
   end
 
   def path
+    return Rails.application.routes.url_helpers.tpi_banks_path if slug == 'banks'
+
     Rails.application.routes.url_helpers.tpi_sector_path(slug)
   end
 

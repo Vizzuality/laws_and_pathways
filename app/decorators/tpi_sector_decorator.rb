@@ -10,6 +10,8 @@ class TPISectorDecorator < Draper::Decorator
   end
 
   def preview_url
+    return h.tpi_banks_path({host: Rails.configuration.try(:tpi_domain)}.compact) if slug == 'banks'
+
     h.tpi_sector_url(model.slug, {host: Rails.configuration.try(:tpi_domain)}.compact)
   end
 end

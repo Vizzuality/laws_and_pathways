@@ -10,7 +10,7 @@ module TPI
     def show
       @company_presenter = ::Api::Presenters::Company.new(@company, params[:view])
 
-      @sectors = TPISector.select(:id, :name, :slug).order(:name)
+      @sectors = TPISector.tpi_tool.select(:id, :name, :slug).order(:name)
       @companies = Company.published.joins(:sector)
         .select(:id, :name, :slug, 'tpi_sectors.name as sector_name', :active)
         .order('tpi_sectors.name', :name)
