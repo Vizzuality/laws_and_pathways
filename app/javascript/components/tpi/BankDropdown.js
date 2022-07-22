@@ -131,7 +131,7 @@ const BankSelector = ({ banks, selectedOption }) => {
                 'dropdown-selector__active-button': true
               })}
             >
-              Select a Bank
+              Select a bank
             </button>
           </div>
           <div

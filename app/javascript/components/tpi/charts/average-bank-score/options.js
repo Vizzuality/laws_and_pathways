@@ -32,7 +32,7 @@ export function getOptions(data, isMobile) {
         y: 5,
         style: {
           color: '#0A4BDC',
-          fontSize: '14px',
+          fontSize: isMobile ? '14px' : '16px',
           fontWeight: 'bold'
         }
       },
