@@ -20,14 +20,23 @@ $see-more-width-tablet: 130px;
 
     height: 100px;
     display: flex;
-    align-items: center;
+    align-items: end;
     justify-content: space-between;
+
+    @include tablet {
+      align-items: center;
+    }
 
     &__assessment-dropdown {
       display: flex;
-      align-items: center;
+      flex-direction: column;
       gap: 10px;
       color: white;
+
+      @include tablet {
+        flex-direction: row;
+        align-items: center;
+      }
 
       .base-tooltip__default-trigger {
         background: white;
@@ -44,9 +53,8 @@ $see-more-width-tablet: 130px;
     }
 
     @include until($desktop) {
-      padding: 0 0.75rem;
+      padding: 15px 0.75rem;
       font-size: $size-7;
-      height: 60px;
       font-family: $font-family-regular;
     }
   }
