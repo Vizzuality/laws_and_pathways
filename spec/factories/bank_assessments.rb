@@ -11,6 +11,8 @@
 #
 FactoryBot.define do
   factory :bank_assessment, class: BankAssessment do
+    association :bank
+
     assessment_date { 1.year.ago.to_date }
 
     notes { 'Some notes' }
