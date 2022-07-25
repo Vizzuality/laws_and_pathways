@@ -18,9 +18,9 @@ FactoryBot.define do
     association :geography
 
     sequence(:name) { |n| 'Bank name -' + ('AAAA'..'ZZZZ').to_a[n] }
-    isin { SecureRandom.uuid }
+    isin { '342343433' }
 
-    market_cap_group { Bank::MARKET_CAP_GROUPS.sample }
+    market_cap_group { 'large' }
 
     trait :with_assessments do
       after(:create) do |b|

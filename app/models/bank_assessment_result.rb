@@ -19,4 +19,9 @@ class BankAssessmentResult < ApplicationRecord
 
   scope :of_type, ->(type) { includes(:indicator).where(bank_assessment_indicators: {indicator_type: type}) }
   scope :by_date, ->(date) { includes(:assessment).where(bank_assessments: {assessment_date: date}) }
+
+  def value=(val)
+    self.answer = val if indicator.answer_indicator?
+    self.percentage = val if indicator.percentage_indicator?
+  end
 end

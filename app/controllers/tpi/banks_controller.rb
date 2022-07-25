@@ -32,6 +32,18 @@ module TPI
       render json: data.chart_json
     end
 
+    def user_download
+      timestamp = Time.now.strftime('%d%m%Y')
+
+      bank_assessment_indicators_csv = CSVExport::User::BankAssessmentIndicators.new.call
+      bank_assessments_csv = CSVExport::User::BankAssessments.new.call
+
+      render zip: {
+        'Indicators.csv' => bank_assessment_indicators_csv,
+        "Bank_assessments_#{timestamp}.csv" => bank_assessments_csv
+      }, filename: "TPI banking data - #{timestamp}"
+    end
+
     private
 
     def fetch_bank

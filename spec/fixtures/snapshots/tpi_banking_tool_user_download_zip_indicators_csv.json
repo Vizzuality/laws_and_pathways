@@ -1,0 +1,47 @@
+[
+  {
+    "Type": "Area",
+    "Number": "1",
+    "Text": "Commitment"
+  },
+  {
+    "Type": "Sub area",
+    "Number": "1.1",
+    "Text": "Commitment subarea"
+  },
+  {
+    "Type": "Indicator",
+    "Number": "1.1.1",
+    "Text": "Commitment Indicator"
+  },
+  {
+    "Type": "Sub indicator",
+    "Number": "1.1.1.a",
+    "Text": "Maybe a"
+  },
+  {
+    "Type": "Sub indicator",
+    "Number": "1.1.1.b",
+    "Text": "Maybe b"
+  },
+  {
+    "Type": "Area",
+    "Number": "2",
+    "Text": "Targets"
+  },
+  {
+    "Type": "Indicator",
+    "Number": "2.1",
+    "Text": "Target Indicator"
+  },
+  {
+    "Type": "Sub indicator",
+    "Number": "2.1.a",
+    "Text": "Maybe a"
+  },
+  {
+    "Type": "Sub indicator",
+    "Number": "2.1.b",
+    "Text": "Maybe b"
+  }
+]
