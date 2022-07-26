@@ -61,7 +61,7 @@ export function getOptions(data, isMobile) {
         dataLabels: {
           enabled: true,
           formatter() {
-            return `${parseFloat(Number(this.y).toFixed(1))}%`;
+            return `${Number(this.y).toFixed(1)}%`;
           }
         },
         states: {
