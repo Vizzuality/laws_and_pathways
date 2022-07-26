@@ -51,7 +51,7 @@ module TPI
     end
 
     def fetch_banks
-      @banks = Bank.order(:name)
+      @banks = Bank.order('lower(name)')
       @banks_json = [
         {name: 'All banks', path: tpi_banks_path},
         *@banks.as_json(only: [:name], methods: [:path])
