@@ -17,15 +17,12 @@
     bottom: unset;
     right: unset;
     top: 50%;
-    left: 2%;
+    left: 15px;
   }
 
-  @include widescreen {
-    left: 5%;
-  }
-
-  @include fullhd {
-    left: 8%;
+  @media (min-width: 1530px) {
+    left: unset;
+    right: calc(#{$widescreen} + (100vw - #{$widescreen}) / 2);
   }
 
   &--active {
