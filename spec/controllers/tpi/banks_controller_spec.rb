@@ -105,12 +105,12 @@ RSpec.describe TPI::BanksController, type: :controller do
           end
         end
 
-        expect(entries_names).to include('Indicators.csv')
-        expect(entries_names).to include("Bank_assessments_#{timestamp}.csv")
+        expect(entries_names).to include('Framework of pilot indicators.csv')
+        expect(entries_names).to include("Bank assessments #{timestamp}.csv")
 
-        expect(entries_csv_json['Indicators.csv'])
+        expect(entries_csv_json['Framework of pilot indicators.csv'])
           .to match_snapshot('tpi_banking_tool_user_download_zip_indicators_csv')
-        expect(entries_csv_json["Bank_assessments_#{timestamp}.csv"])
+        expect(entries_csv_json["Bank assessments #{timestamp}.csv"])
           .to match_snapshot('tpi_banking_tool_user_download_zip_bank_assessments_csv')
       end
     end

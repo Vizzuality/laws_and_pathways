@@ -34,7 +34,7 @@ module CSVExport
               results_columns.map do |column|
                 all_results[[assessment.id, column.type, column.number]]&.first&.decorate&.value
               end,
-              assessment.bank.latest_information
+              assessment.bank.latest_information&.squish
             ].flatten
           end
         end

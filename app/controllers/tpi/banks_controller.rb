@@ -39,8 +39,8 @@ module TPI
       bank_assessments_csv = CSVExport::User::BankAssessments.new.call
 
       render zip: {
-        'Indicators.csv' => bank_assessment_indicators_csv,
-        "Bank_assessments_#{timestamp}.csv" => bank_assessments_csv
+        'Framework of pilot indicators.csv' => bank_assessment_indicators_csv,
+        "Bank assessments #{timestamp}.csv" => bank_assessments_csv
       }, filename: "TPI banking data - #{timestamp}"
     end
 
