@@ -15,7 +15,7 @@ module TPI
     def partial
       @publications_and_articles = Queries::TPI::NewsPublicationsQuery.new(filter_params).call
 
-      render partial: 'promoted'
+      render partial: 'promoted', locals: {publications_and_articles: @publications_and_articles}
     end
 
     def show

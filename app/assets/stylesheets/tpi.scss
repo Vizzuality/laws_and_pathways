@@ -36,8 +36,11 @@
 @import "tpi/search";
 @import "tpi/fixed-navbar";
 @import "tpi/nested-dropdown";
+@import "tpi/banking-question-legend";
+@import "tpi/latest-information";
 
 @import "tpi/pages/*";
+@import "tpi/shared/*";
 
 html {
   scroll-behavior: smooth;

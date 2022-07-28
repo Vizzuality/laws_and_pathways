@@ -2,7 +2,7 @@ ActiveAdmin.register Publication do
   config.batch_actions = false
   config.sort_order = 'publication_date_desc'
 
-  menu parent: 'TPI', priority: 9
+  menu parent: 'TPI', priority: 11
 
   decorate_with PublicationDecorator
 

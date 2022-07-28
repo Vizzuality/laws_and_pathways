@@ -1,0 +1,89 @@
+@import "../variables";
+
+.banks-index-page {
+  .banks-header {
+    background: $blue;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+
+    a {
+      color: white;
+    }
+
+    a + a {
+      margin-left: 20px;
+    }
+
+    @include until($desktop) {
+      padding: 0 0.75rem;
+      font-size: $size-7;
+      height: 60px;
+      font-family: $font-family-regular;
+    }
+  }
+
+  .dropdown-selector-wrapper {
+    background-color: $blue;
+
+    .dropdown-selector__container {
+      @include desktop {
+        padding: $container-top-padding $container-side-padding 40px $container-side-padding;
+      }
+    }
+
+    @include desktop {
+      height: 335px;
+    }
+  }
+
+  .banks-score-header {
+    margin-bottom: 20px;
+
+    @include desktop {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &__assessment-dropdown {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+
+  .banks-score-description {
+    margin-bottom: 40px;
+    font-size: 14px;
+    line-height: 1.75;
+
+    @include desktop {
+      max-width: 60%;
+    }
+  }
+
+  section {
+    margin-top: 70px;
+
+    > p {
+      margin-top: 30px;
+    }
+
+    @include until($desktop) {
+      margin-top: 40px;
+      padding: 0 0.75rem;
+
+      h4 {
+        font-size: $size-5 !important;
+      }
+
+      > p {
+        margin-top: 15px;
+        font-size: $size-6;
+        color: $grey-dark;
+      }
+    }
+  }
+}

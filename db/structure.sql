@@ -280,6 +280,143 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: bank_assessment_indicators; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.bank_assessment_indicators (
+    id bigint NOT NULL,
+    indicator_type character varying NOT NULL,
+    number character varying NOT NULL,
+    text text NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: bank_assessment_indicators_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.bank_assessment_indicators_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bank_assessment_indicators_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.bank_assessment_indicators_id_seq OWNED BY public.bank_assessment_indicators.id;
+
+
+--
+-- Name: bank_assessment_results; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.bank_assessment_results (
+    id bigint NOT NULL,
+    bank_assessment_id bigint,
+    bank_assessment_indicator_id bigint,
+    answer character varying,
+    percentage double precision,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: bank_assessment_results_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.bank_assessment_results_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bank_assessment_results_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.bank_assessment_results_id_seq OWNED BY public.bank_assessment_results.id;
+
+
+--
+-- Name: bank_assessments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.bank_assessments (
+    id bigint NOT NULL,
+    bank_id bigint,
+    assessment_date date NOT NULL,
+    notes text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: bank_assessments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.bank_assessments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bank_assessments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.bank_assessments_id_seq OWNED BY public.bank_assessments.id;
+
+
+--
+-- Name: banks; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.banks (
+    id bigint NOT NULL,
+    geography_id bigint,
+    name character varying NOT NULL,
+    slug character varying NOT NULL,
+    isin character varying NOT NULL,
+    sedol character varying,
+    market_cap_group character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    latest_information text
+);
+
+
+--
+-- Name: banks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.banks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: banks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.banks_id_seq OWNED BY public.banks.id;
+
+
+--
 -- Name: companies; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1525,7 +1662,8 @@ CREATE TABLE public.tpi_sectors (
     slug character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    cluster_id bigint
+    cluster_id bigint,
+    show_in_tpi_tool boolean DEFAULT true NOT NULL
 );
 
 
@@ -1581,6 +1719,34 @@ ALTER TABLE ONLY public.activities ALTER COLUMN id SET DEFAULT nextval('public.a
 --
 
 ALTER TABLE ONLY public.admin_users ALTER COLUMN id SET DEFAULT nextval('public.admin_users_id_seq'::regclass);
+
+
+--
+-- Name: bank_assessment_indicators id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessment_indicators ALTER COLUMN id SET DEFAULT nextval('public.bank_assessment_indicators_id_seq'::regclass);
+
+
+--
+-- Name: bank_assessment_results id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessment_results ALTER COLUMN id SET DEFAULT nextval('public.bank_assessment_results_id_seq'::regclass);
+
+
+--
+-- Name: bank_assessments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessments ALTER COLUMN id SET DEFAULT nextval('public.bank_assessments_id_seq'::regclass);
+
+
+--
+-- Name: banks id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.banks ALTER COLUMN id SET DEFAULT nextval('public.banks_id_seq'::regclass);
 
 
 --
@@ -1860,6 +2026,38 @@ ALTER TABLE ONLY public.admin_users
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: bank_assessment_indicators bank_assessment_indicators_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessment_indicators
+    ADD CONSTRAINT bank_assessment_indicators_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bank_assessment_results bank_assessment_results_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessment_results
+    ADD CONSTRAINT bank_assessment_results_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bank_assessments bank_assessments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessments
+    ADD CONSTRAINT bank_assessments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: banks banks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.banks
+    ADD CONSTRAINT banks_pkey PRIMARY KEY (id);
 
 
 --
@@ -2230,6 +2428,55 @@ CREATE UNIQUE INDEX index_admin_users_on_email ON public.admin_users USING btree
 --
 
 CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON public.admin_users USING btree (reset_password_token);
+
+
+--
+-- Name: index_bank_assessment_indicators_on_indicator_type_and_number; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_bank_assessment_indicators_on_indicator_type_and_number ON public.bank_assessment_indicators USING btree (indicator_type, number);
+
+
+--
+-- Name: index_bank_assessment_results_on_bank_assessment_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_bank_assessment_results_on_bank_assessment_id ON public.bank_assessment_results USING btree (bank_assessment_id);
+
+
+--
+-- Name: index_bank_assessment_results_on_bank_assessment_indicator_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_bank_assessment_results_on_bank_assessment_indicator_id ON public.bank_assessment_results USING btree (bank_assessment_indicator_id);
+
+
+--
+-- Name: index_bank_assessments_on_bank_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_bank_assessments_on_bank_id ON public.bank_assessments USING btree (bank_id);
+
+
+--
+-- Name: index_banks_on_geography_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_banks_on_geography_id ON public.banks USING btree (geography_id);
+
+
+--
+-- Name: index_banks_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_banks_on_name ON public.banks USING btree (name);
+
+
+--
+-- Name: index_banks_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_banks_on_slug ON public.banks USING btree (slug);
 
 
 --
@@ -2988,6 +3235,14 @@ ALTER TABLE ONLY public.instruments
 
 
 --
+-- Name: bank_assessment_results fk_rails_2796dae392; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessment_results
+    ADD CONSTRAINT fk_rails_2796dae392 FOREIGN KEY (bank_assessment_id) REFERENCES public.bank_assessments(id);
+
+
+--
 -- Name: news_articles fk_rails_286df43ea0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3036,6 +3291,14 @@ ALTER TABLE ONLY public.cp_assessments
 
 
 --
+-- Name: bank_assessment_results fk_rails_46970f9780; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessment_results
+    ADD CONSTRAINT fk_rails_46970f9780 FOREIGN KEY (bank_assessment_indicator_id) REFERENCES public.bank_assessment_indicators(id);
+
+
+--
 -- Name: legislations fk_rails_53881fe3dc; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3073,6 +3336,14 @@ ALTER TABLE ONLY public.legislations
 
 ALTER TABLE ONLY public.litigation_sides
     ADD CONSTRAINT fk_rails_5ff60f0b08 FOREIGN KEY (litigation_id) REFERENCES public.litigations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: bank_assessments fk_rails_68427d4c57; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessments
+    ADD CONSTRAINT fk_rails_68427d4c57 FOREIGN KEY (bank_id) REFERENCES public.banks(id) ON DELETE CASCADE;
 
 
 --
@@ -3185,6 +3456,14 @@ ALTER TABLE ONLY public.geographies
 
 ALTER TABLE ONLY public.contents
     ADD CONSTRAINT fk_rails_b169e370d5 FOREIGN KEY (page_id) REFERENCES public.pages(id);
+
+
+--
+-- Name: banks fk_rails_b7a12616f3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.banks
+    ADD CONSTRAINT fk_rails_b7a12616f3 FOREIGN KEY (geography_id) REFERENCES public.geographies(id);
 
 
 --
@@ -3371,4 +3650,13 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220310091530'),
 ('20220324160017'),
 ('20220324184534'),
-('20220324190738');
+('20220324190738'),
+('20220704085154'),
+('20220704092137'),
+('20220704094334'),
+('20220704094826'),
+('20220719121521'),
+('20220722075902'),
+('20220722100953');
+
+

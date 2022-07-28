@@ -2,7 +2,7 @@
   <%= f.semantic_errors(*f.object.errors.keys) %>
 
   <%= f.inputs do %>
-    <%= f.input :sector %>
+    <%= f.input :sector, collection: TPISector.tpi_tool %>
     <%= f.input :release_date %>
     <%= f.input :scenario %>
     <%= f.input :region, as: :select, collection: CP::Benchmark::REGIONS %>

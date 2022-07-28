@@ -1,0 +1,7 @@
+(function () {
+document.getElementById('assessment').innerHTML = "<%= j render('assessment', assessment: @assessment_presenter) %>";
+const newUrl = new URL(window.location.href);
+newUrl.searchParams.set('assessment_id', <%= @assessment.id %>);
+window.history.replaceState({}, '', newUrl.href);
+ReactRailsUJS.mountComponents('#assessment');
+})();

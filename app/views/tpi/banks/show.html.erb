@@ -1,0 +1,71 @@
+<% content_for :page_title, "#{@bank.name} - Transition Pathway Initiative" %>
+<% content_for :page_description, "Assess how prepared #{@bank.name} is for the transition to a low-carbon economy" %>
+
+<div class="bank-page">
+  <div class="dropdown-selector-wrapper">
+    <%= react_component("BankDropdown", { banks: @banks_json, selectedOption: @bank.name }) %>
+
+    <div class="bank-header container">
+      <div class="bank-header__assessment-dropdown">
+        <div class="caption">
+          Assessment Date:
+        </div>
+        <div class="date-dropdown">
+          <%= react_component('RemoteDropdown', {
+            name: 'assessment_id',
+            remote: true,
+            theme: 'blue',
+            url: assessment_tpi_bank_path(@bank),
+            data: @bank.assessments.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
+            selected: params[:assessment_id]
+            }) %>
+        </div>
+      </div>
+
+      <%= link_to user_download_tpi_banks_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
+        <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
+        Download all banks data
+      <% end %>
+    </div>
+  </div>
+
+  <section class="container summary-box">
+    <div class="columns">
+      <div class="column">
+        <%= render 'tpi/shared/property', highlight: true, name: 'Geography', tooltip: t('tpi.tooltips.geography') do %>
+          <%= @bank.geography.name %>
+        <% end %>
+      </div>
+      <div class="column">
+        <%= render 'tpi/shared/property', highlight: true, name: 'Sector' do %>
+          <%= link_to "Banks", tpi_banks_path %>
+        <% end %>
+      </div>
+      <div class="column">
+        <%= render 'tpi/shared/property', highlight: false, name: 'Market cap (Group)', tooltip: t('tpi.tooltips.market_cap') do %>
+          <%= @bank.market_cap_group %>
+        <% end %>
+      </div>
+      <div class="column">
+        <%= render 'tpi/shared/property', highlight: false, name: 'ISIN', tooltip: t('tpi.tooltips.ISIN') do %>
+          <%= safe_join(@bank.isin_array, '<br/>'.html_safe) %>
+        <% end %>
+      </div>
+      <div class="column">
+        <%= render 'tpi/shared/property', highlight: false, name: 'SEDOL', tooltip: t('tpi.tooltips.SEDOL') do %>
+          <%= @bank.sedol %>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <% if @assessment.present? %>
+    <section class="container bank-assessment" id="assessment">
+      <%= render 'assessment', assessment: @assessment_presenter %>
+    </section>
+  <% end %>
+
+  <% if @bank.latest_information.present? %>
+    <%= react_component("LatestInformation", { name: @bank.name, latestInformation: @bank.latest_information }) %>
+  <% end %>
+</div>

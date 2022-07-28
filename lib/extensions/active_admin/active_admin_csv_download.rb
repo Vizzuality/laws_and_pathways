@@ -13,7 +13,7 @@ module ActiveAdminCsvDownload
     display_name = options.fetch(:display_name) { resource_name }
     show_upload = options.fetch(:upload, true)
 
-    sidebar 'Export / Import', if: -> { collection.any? }, only: :index do
+    sidebar 'Export / Import', only: :index do
       ul do
         li do
           link_to "Download #{display_name} CSV",

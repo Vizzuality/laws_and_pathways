@@ -4,6 +4,7 @@ require 'rails_helper'
 RSpec.describe TPI::SitemapsController, type: :controller do
   let_it_be(:company1) { create(:company, :published) }
   let_it_be(:company2) { create(:company, :draft) }
+  let_it_be(:bank) { create(:bank) }
   let_it_be(:page1) { create(:tpi_page) }
   let_it_be(:publication1) { create(:publication, :published) }
   let_it_be(:publication2) { create(:publication, :not_published) }
@@ -24,6 +25,7 @@ RSpec.describe TPI::SitemapsController, type: :controller do
     it('should return all published entities') do
       subject
       expect(response.body).to have_css('url loc', text: tpi_company_url(company1.slug, **host_params))
+      expect(response.body).to have_css('url loc', text: tpi_bank_url(bank.slug, **host_params))
       expect(response.body).to have_css('url loc', text: "https://#{host_params[:host]}/#{page1.slug}")
       expect(response.body).to have_css('url loc', text: tpi_publication_url(publication1, format: :pdf, type: 'Publication', **host_params))
       expect(response.body).to have_css('url loc', text: tpi_publication_url(article1, type: 'NewsArticle', **host_params))

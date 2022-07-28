@@ -1,0 +1,40 @@
+[
+  {
+    "Bank": "Bank 1",
+    "Geography": "Poland",
+    "Geography ISO": "PL",
+    "Sector": "Banks",
+    "Market cap group": "small",
+    "ISINs": "2342343243, 435434445",
+    "SEDOL": "3234343",
+    "Assessment Date": "23/10/2020",
+    "Area 1": "50%",
+    "Indicator 1.1.1": "50%",
+    "Sub indicator 1.1.1.a": "Yes",
+    "Sub indicator 1.1.1.b": "No",
+    "Area 2": "100%",
+    "Indicator 2.1": "100%",
+    "Sub indicator 2.1.a": "Yes",
+    "Sub indicator 2.1.b": "Yes",
+    "Latest information": "Bank1 Latest info"
+  },
+  {
+    "Bank": "Bank 2",
+    "Geography": "Poland",
+    "Geography ISO": "PL",
+    "Sector": "Banks",
+    "Market cap group": "large",
+    "ISINs": "3342332, 4444444",
+    "SEDOL": "3434211",
+    "Assessment Date": "23/10/2020",
+    "Area 1": "50%",
+    "Indicator 1.1.1": "50%",
+    "Sub indicator 1.1.1.a": "No",
+    "Sub indicator 1.1.1.b": "Yes",
+    "Area 2": "0%",
+    "Indicator 2.1": "0%",
+    "Sub indicator 2.1.a": "No",
+    "Sub indicator 2.1.b": "No",
+    "Latest information": "Bank2 Latest info"
+  }
+]

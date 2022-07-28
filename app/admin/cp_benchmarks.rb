@@ -1,7 +1,7 @@
 ActiveAdmin.register CP::Benchmark do
   config.sort_order = 'release_date_desc'
 
-  menu parent: 'TPI', priority: 3, label: 'Carbon Performance Benchmarks'
+  menu parent: 'TPI', priority: 5, label: 'Carbon Performance Benchmarks'
 
   permit_params :scenario, :sector_id, :release_date, :region, :emissions
 

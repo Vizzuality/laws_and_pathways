@@ -100,6 +100,23 @@ RSpec.configure do |config|
     require 'rake'
     Rails.application.load_tasks if Rake::Task.tasks.empty?
     Rake::Task['test:db_load'].execute
+    # re-attach files for publications and news
+    Publication.find_each do |record|
+      record.image.attach(
+        io: File.open(Rails.root.join("db/seeds/tpi/files/#{record.image.filename}")),
+        filename: record.image.filename
+      )
+      record.file.attach(
+        io: File.open(Rails.root.join("db/seeds/tpi/files/#{record.file.filename}")),
+        filename: record.file.filename
+      )
+    end
+    NewsArticle.find_each do |record|
+      record.image.attach(
+        io: File.open(Rails.root.join("db/seeds/tpi/files/#{record.image.filename}")),
+        filename: record.image.filename
+      )
+    end
   end
 
   config.after(:all, type: :system) do

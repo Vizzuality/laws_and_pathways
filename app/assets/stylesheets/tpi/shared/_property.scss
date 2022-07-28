@@ -1,0 +1,30 @@
+.property {
+  &__name {
+    white-space: nowrap;
+    font-size: 12px;
+    height: 24px;
+    line-height: 15px;
+    color: $grey-dark;
+
+    display: inline-flex;
+    align-items: center;
+
+    .base-tooltip {
+      margin-left: 5px;
+
+      &__default-trigger {
+        transform: translateY(-3px);
+      }
+    }
+  }
+
+  &__value {
+    margin-top: 10px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .highlight, a {
+    color: $blue-ribbon;
+  }
+}

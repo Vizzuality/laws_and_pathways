@@ -43,7 +43,7 @@ module Seed
     private
 
     def run_importer(importer)
-      importer.call
+      puts "Error while running importer: #{importer.errors.full_messages.join(', ')}" unless importer.call
       puts importer.import_results
     end
 

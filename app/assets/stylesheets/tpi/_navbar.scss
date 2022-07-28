@@ -83,7 +83,7 @@
         padding-right: 0;
         padding-top: 0.938rem;
         padding-bottom: 0.938rem;
-  
+
         &:hover, &.is-hovered,
         &:active, &.is-actived,
         &:focus, &.is-focused {
@@ -117,11 +117,11 @@
         }
       }
     }
-    
+
     .navbar-burger {
       color: $dark;
       margin-left: 0;
-      
+
       &:hover, &.is-hovered,
       &:active, &.is-actived,
       &:focus, &.is-focused {
@@ -147,7 +147,7 @@
         .navbar-item {
           padding-left: 3.125rem;
         }
-  
+
         .navbar-link {
           padding-top: 0.938rem;
           padding-bottom: 0.938rem;
@@ -199,7 +199,7 @@
       font-size: $size-6;
       padding-top: 0.625rem;
       padding-bottom: 0.625rem;
-      
+
       @include until($desktop) {
         color: $blue;
         padding-top: 0.938rem;

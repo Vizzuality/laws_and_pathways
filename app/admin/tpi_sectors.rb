@@ -4,7 +4,7 @@ ActiveAdmin.register TPISector do
 
   decorate_with TPISectorDecorator
 
-  menu priority: 5, parent: 'TPI'
+  menu priority: 6, parent: 'TPI'
 
   permit_params :name, :cluster_id, cp_units_attributes: [:id, :unit, :valid_since, :_destroy]
 
@@ -28,31 +28,35 @@ ActiveAdmin.register TPISector do
         attributes_table do
           row :id
           row :name
-          list_row 'Carbon Performance Unit', &:cp_units_list
+          list_row 'Carbon Performance Unit', &:cp_units_list if resource.show_in_tpi_tool?
           row :slug
-          row :cluster
+          row :cluster if resource.show_in_tpi_tool?
+          row :show_in_tpi_tool
           row :created_at
           row :updated_at
         end
       end
-      tab :cp_benchmarks do
-        panel 'Carbon Performance Benchmarks' do
-          if resource.cp_benchmarks.empty?
-            div class: 'padding-20' do
-              'No Carbon Performance Benchmarks for this sector yet'
-            end
-          else
-            resource.cp_benchmarks.latest_first.group_by(&:release_date).map do |release_date, benchmarks|
-              panel "Released in #{release_date.to_s(:month_and_year)}", class: 'benchmark' do
-                all_years = benchmarks.map(&:emissions_all_years).flatten.uniq
 
-                table_for benchmarks.sort_by(&:average_emission).reverse, class: 'cell-padding-sm cell-centered' do
-                  column :scenario do |benchmark|
-                    link_to benchmark.scenario, edit_admin_cp_benchmark_path(benchmark)
-                  end
-                  all_years.map do |year|
-                    column year do |b|
-                      b.emissions[year]
+      if resource.show_in_tpi_tool?
+        tab :cp_benchmarks do
+          panel 'Carbon Performance Benchmarks' do
+            if resource.cp_benchmarks.empty?
+              div class: 'padding-20' do
+                'No Carbon Performance Benchmarks for this sector yet'
+              end
+            else
+              resource.cp_benchmarks.latest_first.group_by(&:release_date).map do |release_date, benchmarks|
+                panel "Released in #{release_date.to_s(:month_and_year)}", class: 'benchmark' do
+                  all_years = benchmarks.map(&:emissions_all_years).flatten.uniq
+
+                  table_for benchmarks.sort_by(&:average_emission).reverse, class: 'cell-padding-sm cell-centered' do
+                    column :scenario do |benchmark|
+                      link_to benchmark.scenario, edit_admin_cp_benchmark_path(benchmark)
+                    end
+                    all_years.map do |year|
+                      column year do |b|
+                        b.emissions[year]
+                      end
                     end
                   end
                 end

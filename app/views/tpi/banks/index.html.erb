@@ -1,0 +1,71 @@
+<% content_for :page_title, "Banking Tool - Transition Pathway Initiative" %>
+<% content_for :page_description, "TODO: Description of Banking tool" %>
+
+<div class="banks-index-page">
+  <div class="dropdown-selector-wrapper">
+    <%= react_component("BankDropdown", {
+      banks: @banks_json,
+      selectedOption: 'All banks'
+      }) %>
+
+    <div class="banks-header container">
+      <%= link_to user_download_tpi_banks_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
+        <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
+        Download all banks data
+      <% end %>
+    </div>
+  </div>
+
+  <section class="container">
+    <div class="banks-score-header">
+      <h2 class="is-size-4">
+        Average bank score across each area
+      </h2>
+
+      <div class="banks-score-header__assessment-dropdown">
+        <div class="caption">
+          Assessment Date:
+        </div>
+        <div class="date-dropdown">
+          <%= react_component('RemoteDropdown', {
+            name: 'assessment_date',
+            remote: true,
+            url: index_assessment_tpi_banks_path(@bank),
+            data: @assessment_dates.map {|v| {label: v&.strftime('%d %B %Y'), value: v}},
+            selected: @date
+            }) %>
+        </div>
+      </div>
+    </div>
+    <div class="banks-score-description">
+      Assessed banks alignment across the six areas (% of sub-indicators aligned with)
+    </div>
+
+    <div id="assessment-charts">
+      <%= render 'index_charts' %>
+    </div>
+  </section>
+
+  <hr>
+
+  <section class="section tpi-banks__promoted-publications">
+    <div class="container">
+      <div class="promoted-publications__title">
+        <div class="promoted-publications__title-text">Publications and news</div>
+
+        <%= link_to 'View all publications and news', tpi_publications_path, class: 'button is-secondary is-hidden-touch' %>
+      </div>
+
+      <% if @publications_and_articles.any? %>
+        <%= render "tpi/publications/promoted", publications_and_articles: @publications_and_articles %>
+      <% else %>
+        <div class="promoted-publications__no-data">
+          There are currently no articles related to banking available, but check all our other publications and news.
+        </div>
+      <% end %>
+      <div class="view-all-btn__container">
+        <a href="/publications" class="button is-secondary is-hidden-desktop">View all news</a>
+      </div>
+    </div>
+  </section>
+</div>
