@@ -1,10 +1,10 @@
 <% content_for :page_title, 'Home - Transition Pathway Initiative' %>
 
 <section class="section tpi-home__hero is-primary">
+  <div class="background"></div>
   <div class="container">
-    <div class="mobile-background is-hidden-tablet"></div>
     <div class="columns">
-      <div class="column is-4 left-size">
+      <div class="column is-5 left-size">
         <div class="title">
           <h1><%= @home_content[:intro][:title] %></h1>
         </div>
@@ -14,11 +14,8 @@
           </p>
         </div>
         <div class="button__container">
-          <%= link_to 'Access the tool', tpi_sectors_path, class: 'button is-primary button__hero' %>
+          <%= link_to 'About TPI', tpi_about_path, class: 'button is-red button__hero' %>
         </div>
-      </div>
-      <div class="column is-offset-1 is-hidden-mobile hero__splash">
-        <div class="background"></div>
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 @import "colors";
 @import "typography";
 
-$home-background: image-url("homepage/homepage-bg@2x.jpg");
+$home-background: image-url("tpi/home/hero-background.png");
 
 .tpi-home__hero {
   color: $white;
@@ -27,7 +27,7 @@ $home-background: image-url("homepage/homepage-bg@2x.jpg");
       }
     }
 
-    .mobile-background {
+    .background {
       position: absolute;
       top: 0;
       bottom: 0;
@@ -39,8 +39,6 @@ $home-background: image-url("homepage/homepage-bg@2x.jpg");
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
-      opacity: .2;
-      filter: grayscale(100%);
       z-index: 0;
     }
 
@@ -59,17 +57,28 @@ $home-background: image-url("homepage/homepage-bg@2x.jpg");
     }
 
     .title {
-      color: $white;
+      color: $red;
     }
 
     .description {
       display: flex;
       justify-content: center;
       line-height: $size-4;
+      position: relative;
 
       @media #{$tablet-portrait} {
         justify-content: left;
         width: 100%;
+      }
+
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 8px;
+        height: 100%;
+        background-color: $red;
+        left: -32px;
       }
     }
 
@@ -98,37 +107,6 @@ $home-background: image-url("homepage/homepage-bg@2x.jpg");
           max-width: 280px;
           margin: 0;
         }
-
-        background-color: $blue-darker;
-      }
-    }
-  }
-
-  .hero__splash {
-    & > .background {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: $home-background;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      overflow: hidden;
-      max-width: 720px;
-
-      &::after {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        content: " ";
-        height: 50%;
-        background-image: image-url("homepage/homepage_pattern.svg");
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position-x: right;
-        background-position-y: -10px;
       }
     }
   }
