@@ -7,6 +7,7 @@
 
 .section-description {
   margin-bottom: 20px;
+  margin-top: 50px;
   color: $white;
 }
 
@@ -68,6 +69,187 @@
         height: 40px;
         right: 20px;
         bottom: 20px;
+      }
+    }
+  }
+
+  &__stats-news {
+    background: linear-gradient(90deg, #FFFFFF 50%, $dark-violet 50%);
+
+    .container {
+      display: flex;
+    }
+
+    &__stats {
+      width: 50%;
+      padding-right: 80px;
+
+      h3 {
+        color: $red;
+      }
+
+      .stat-boxes {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px 70px;
+        padding: 30px 0px;
+
+        &--benchmarks {
+          gap: 30px 40px;
+        }
+      }
+
+      .stat-box {
+        text-align: right;
+        color: $medium-violet;
+        padding: 10px 0px;
+
+        &__number {
+          font-size: 48px;
+          line-height: 1em;
+          font-family: $font-family-bold;
+        }
+
+        &__title {
+          font-size: 18px;
+        }
+
+        background-repeat: no-repeat;
+        background-position: left center;
+
+        &--supporters {
+          background-image: image-url('tpi/home/support.svg');
+        }
+
+        &--combined-aum {
+          background-image: image-url('tpi/home/money-bag.svg');
+        }
+
+        &--companies {
+          background-image: image-url('tpi/home/companies.svg');
+        }
+
+        &--sectors {
+          background-image: image-url('tpi/home/sectors.svg');
+        }
+
+        &--countries {
+          background-image: image-url('tpi/home/location.svg');
+        }
+
+        &--market-cap {
+          background-image: image-url('tpi/home/market-cap.svg');
+        }
+      }
+
+      .stat-box-b {
+        color: $medium-violet;
+        padding: 10px 0px;
+        display: grid;
+        grid-template-columns: 80px 1fr;
+        gap: 10px 15px;
+
+        &__number {
+          text-align: right;
+          font-size: 48px;
+          line-height: 1em;
+          font-family: $font-family-bold;
+        }
+
+        &__title {
+          font-size: 18px;
+          line-height: 1.5rem;
+          max-width: 300px;
+        }
+
+        &--benchmarks {
+          grid-column: 1 / span 2;
+        }
+      }
+    }
+
+    &__news {
+      width: 50%;
+      padding-left: 80px;
+
+      h2 {
+        color: $white;
+      }
+
+      h3 {
+        padding-left: 10px;
+        margin-bottom: 20px;
+        border-left: 4px solid $red;
+        font-size: 18px !important;
+        color: $white;
+      }
+
+      .news-more {
+        display: flex;
+        justify-content: space-between;
+        gap: 30px;
+        margin-top: 50px;
+
+        &__learn-more {
+          > div {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+            a {
+              color: $white;
+
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+
+            .with-icon {
+              display: inline-flex;
+              gap: 10px;
+              align-items: center;
+            }
+
+            .icon {
+              width: 2rem;
+              height: 2rem;
+              background: $white;
+              background-position: center;
+              background-repeat: no-repeat;
+              border-radius: 50%;
+            }
+
+            .icon__news {
+              background-image: image-url('tpi/home/news.svg');
+            }
+
+            .icon__events {
+              background-image: image-url('tpi/home/events.svg');
+            }
+          }
+        }
+
+        &__social-media {
+          .icon__twitter {
+            width: 2rem;
+            height: 2rem;
+            background-image: image-url('icon_twitter/twitter_white.svg');
+            background-repeat: no-repeat;
+          }
+
+          .icon__linkedin {
+            width: 2rem;
+            height: 2rem;
+            background-image: image-url('icon_linkedin/icon_linkedin_white.svg');
+            background-repeat: no-repeat;
+          }
+        }
+
+        > div {
+          > div {
+            padding: 10px;
+          }
+        }
       }
     }
   }
