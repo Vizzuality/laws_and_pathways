@@ -20,50 +20,72 @@
     </div>
   </div>
 </section>
+<!--
+     <section class="section tpi-home__hero is-secondary">
+     <div class="container tpi-hero__body">
+     <div class="columns">
+     <%= link_to '/investors', class: "column is-5 section-clickable" do %>
+     <div class="subsection-content__container">
+     <h2 class="section-title is-size-4">
+     <%= @home_content[:investors][:title] %>
+     </h2>
 
-<section class="section tpi-home__hero is-secondary">
-  <div class="container tpi-hero__body">
-    <div class="columns">
-      <%= link_to '/investors', class: "column is-5 section-clickable" do %>
-        <div class="subsection-content__container">
-          <h2 class="section-title is-size-4">
-            <%= @home_content[:investors][:title] %>
-          </h2>
+     <p class="section-description">
+     <%= @home_content[:investors][:description] %>
+     </p>
+     </div>
 
-          <p class="section-description">
-            <%= @home_content[:investors][:description] %>
-          </p>
-        </div>
+     <div class="subsection-link__container">
+     <span class="link__icon"></span>
+     <span class="link__title">TPI for investors</span>
+     </div>
+     <% end %>
 
-        <div class="subsection-link__container">
-          <span class="link__icon"></span>
-          <span class="link__title">TPI for investors</span>
-        </div>
-      <% end %>
+     <div class="column is-2 separator__container">
+     <div class="separator"></div>
+     </div>
 
-      <div class="column is-2 separator__container">
-        <div class="separator"></div>
+     <%= link_to '/supporters', class: "column is-5 section-clickable" do %>
+     <div class="subsection-content__container">
+     <h2 class="section-title is-size-4">
+     <%= @home_content[:supporters][:title] %>
+     </h2>
+
+     <p class="section-description">
+     <%= @home_content[:supporters][:description] %>
+     </p>
+     </div>
+
+     <div class="subsection-link__container">
+     <span class="link__icon"></span>
+     <span class="link__title">Who supports the TPI?</span>
+     </div>
+     <% end %>
+     </div>
+     </div>
+     </section> -->
+
+<section class="section tpi-home__assessment-types">
+  <div class="container">
+    <h2 class="section-title is-size-4">
+      Check out the TPI Centre's online tool
+    </h2>
+
+    <div class="container">
+      <div class="section-description">
+        <%= link_to tpi_sectors_path, class: 'assessment-box publicly-listed-equities' do %>
+          <div class="assessment-box__header">Climate assessments:</div>
+          <div class="assessment-box__title">Publicly listed equites</div>
+        <% end %>
+        <%= link_to tpi_banks_path, class: 'assessment-box banks' do %>
+          <div class="assessment-box__header">Climate assessments:</div>
+          <div class="assessment-box__title">Banks</div>
+        <% end %>
       </div>
-
-      <%= link_to '/supporters', class: "column is-5 section-clickable" do %>
-        <div class="subsection-content__container">
-          <h2 class="section-title is-size-4">
-            <%= @home_content[:supporters][:title] %>
-          </h2>
-
-          <p class="section-description">
-            <%= @home_content[:supporters][:description] %>
-          </p>
-        </div>
-
-        <div class="subsection-link__container">
-          <span class="link__icon"></span>
-          <span class="link__title">Who supports the TPI?</span>
-        </div>
-      <% end %>
     </div>
   </div>
 </section>
+
 
 <section class="section tpi-home__promoted-publications">
   <div class="container">
