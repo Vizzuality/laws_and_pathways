@@ -16,9 +16,11 @@
 @import "bulma/sass/grid/all";
 @import "bulma/sass/layout/all";
 
+@import "tpi/helpers";
 @import "tpi/buttons";
 @import "tpi/forms";
 @import "tpi/tags";
+
 
 @import "tpi/banner";
 @import "tpi/navbar";

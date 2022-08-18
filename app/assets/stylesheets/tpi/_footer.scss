@@ -1,79 +1,6 @@
 @import "tpi/sizes";
 @import "tpi/colors";
 
-.footer__subscribe {
-  display: flex;
-  align-items: center;
-  height: 400px;
-  min-height: 400px;
-  background: linear-gradient(180deg, $white 0%, $light-grey 100%);
-
-  .subscribe__logo {
-    display: flex;
-    justify-content: flex-end;
-
-    & > img {
-      max-width: 250px;
-      max-height: 250px;
-    }
-  }
-
-  .subscribe__container {
-    padding: 1.75rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
-    @include until($desktop) {
-      .subscribe-title {
-        align-items: center;
-        color: $dark;
-        display: flex;
-        font-family: $family-sans-serif-bold;
-        font-size: 20px;
-        justify-content: space-between;
-        width: 100%;
-
-        margin-bottom: 20px;
-
-        img {
-          height: 82px;
-          width: 82px;
-        }
-      }
-    }
-
-    @media #{$tablet-portrait} {
-      padding-left: 3rem;
-      align-items: flex-start;
-    }
-  }
-
-  .subscribe__button {
-    width: 150px;
-  }
-
-  h4, h2,
-  .content {
-    padding-bottom: $size-4;
-  }
-
-  a {
-    color: $white;
-  }
-
-  @include until($desktop) {
-    .subscribe__button {
-      font-size: $size-5;
-    }
-
-    .content {
-      padding-bottom: 0;
-    }
-  }
-}
-
 .footer__information {
   background-color: $dark;
   padding: 1.75rem;
@@ -102,45 +29,6 @@
     font-size: $size-6;
   }
 
-  .footer__contact {
-    padding-bottom: $size-4;
-
-    .follow-tpi {
-      display: flex;
-    }
-
-    .icon__twitter {
-      margin-left: 20px;
-      width: 2rem;
-      height: 2rem;
-      background-image: image-url('icon_twitter/twitter_white.svg');
-      background-repeat: no-repeat;
-    }
-
-    .icon__linkedin {
-      margin-left: 10px;
-      width: 2rem;
-      height: 2rem;
-      background-image: image-url('icon_linkedin/icon_linkedin_white.svg');
-      background-repeat: no-repeat;
-    }
-
-    .button__contact {
-      margin-top: $size-4;
-    }
-
-    @include until($desktop) {
-      .button__contact {
-        font-size: $size-5;
-      }
-    }
-  }
-
-  .footer__disclaimer {
-    padding-top: $size-4;
-    padding-bottom: $size-6;
-  }
-
   .footer__bottom {
     padding-top: $size-6;
     padding-bottom: 60px;
@@ -149,10 +37,13 @@
   .footer__copyright {
     display: flex;
     justify-content: flex-end;
-    color: $grey-dark;
+    color: $white;
   }
 
   .footer__menu-list {
+    display: flex;
+    align-items: center;
+
     .column {
       flex-basis: auto;
     }
@@ -164,11 +55,6 @@
 }
 
 @include until($desktop) {
-  .footer__subscribe {
-    height: 320px;
-    min-height: 320px;
-  }
-
   .footer__information {
     padding: 0.75rem;
     padding-top: 2.5rem;

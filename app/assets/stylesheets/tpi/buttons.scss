@@ -28,6 +28,17 @@ $button-border-width: 4px;
   }
 }
 
+.link.is-red {
+  color: $red !important;
+
+  &.is-hovered,
+  &:hover,
+  &.is-focused,
+  &:focus {
+    color: $red !important;
+  }
+}
+
 .button {
   $button-height: 40px;
   min-width: 160px;
