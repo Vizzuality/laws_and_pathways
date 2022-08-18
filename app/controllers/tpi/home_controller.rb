@@ -5,7 +5,7 @@ module TPI
         {
           author: test.author,
           role: test.role,
-          message: [test.quote]
+          message: test.quote
         }
       end
 

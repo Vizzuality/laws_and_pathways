@@ -175,7 +175,7 @@
       Learn how others are using the TPI Centre’s Data
     </h2>
 
-    <div class="columns">
+    <div class="section-description columns">
       <div class="column">
         <ul>
           <li>
@@ -187,7 +187,20 @@
         </ul>
       </div>
       <div class="column is-9">
-
+        <div class="slider-container" data-controller="slider">
+          <div class="slider" data-target="slider.items">
+            <% @testimonials.each do |item| %>
+              <div class="item-container">
+                <div class="item">
+                  <div class="title"><%= item[:author] %></div>
+                  <div class="description">
+                    <%= item[:message] %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -8,7 +8,6 @@
 .section-description {
   margin-bottom: 20px;
   margin-top: 50px;
-  color: $white;
 }
 
 .tpi-home {
@@ -292,8 +291,73 @@
   &__case-studies-supporters {
     border-bottom: 1px solid rgba(89, 91, 93, 0.2);
 
+    .section-description {
+      margin-top: 20px;
+    }
+
     ul {
       list-style: inside;
+    }
+
+    .slider-container {
+      .tns-outer {
+        position: relative;
+      }
+
+      .tns-controls {
+        button {
+          margin: auto 0;
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          border: none;
+          border-radius: 50%;
+          height: 48px;
+          width: 48px;
+          background-color: $red;
+          z-index: 1;
+          color: $white;
+
+          &:focus{
+            outline: none;
+          }
+
+          &[disabled] {
+            display: none;
+          }
+
+          &[data-controls=next] {
+            right: -25px;
+          }
+
+          &[data-controls=prev] {
+            left: -25px;
+          }
+        }
+      }
+
+      .item-container {
+        .item {
+          height: 280px;
+          border: 1px solid $medium-violet;
+          padding: 20px;
+
+          .title {
+            color: $red;
+            display: -webkit-box;
+            font-size: 18px;
+          }
+
+          .description {
+            // height: 3.4rem;
+            font-size: 14px;
+            // text-overflow: ellipsis;
+            // -webkit-line-clamp: 3;
+            // -webkit-box-orient: vertical;
+          }
+        }
+      }
+
     }
   }
 
