@@ -1,0 +1,6 @@
+<div class="stat-box-b <%= local_assigns[:class] %>">
+  <div class="stat-box-b__number"><%= cluster.sectors.count %></div>
+  <div class="stat-box-b__title">Benchmarks for <%= cluster.name.downcase %></div>
+  <%= svg icon %>
+  <div class="stat-box-b__sectors"><%= cluster.sectors.map(&:name).join(', ')  %></div>
+</div>

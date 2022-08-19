@@ -64,7 +64,7 @@
 
         <div class="stat-boxes">
           <div class="stat-box stat-box--supporters">
-            <div class="stat-box__number">125</div>
+            <div class="stat-box__number"><%= @stats[:supporters_count] %></div>
             <div class="stat-box__title">Supporters</div>
           </div>
 
@@ -80,7 +80,7 @@
 
         <div class="stat-boxes">
           <div class="stat-box stat-box--companies">
-            <div class="stat-box__number">125</div>
+            <div class="stat-box__number"><%= @stats[:companies_count] %></div>
             <div class="stat-box__title">Companies</div>
           </div>
 
@@ -90,7 +90,7 @@
           </div>
 
           <div class="stat-box stat-box--countries">
-            <div class="stat-box__number">125</div>
+            <div class="stat-box__number"><%= @stats[:countries_count] %></div>
             <div class="stat-box__title">Countries</div>
           </div>
 
@@ -105,24 +105,9 @@
         </h3>
 
         <div class="stat-boxes stat-boxes--benchmarks">
-          <div class="stat-box-b">
-            <div class="stat-box-b__number">2</div>
-            <div class="stat-box-b__title">Benchmarks for energy</div>
-            <%= svg "tpi/home/electric-factory" %>
-            <div class="stat-box-b__sectors">Electricity, Oil & Gas</div>
-          </div>
-          <div class="stat-box-b">
-            <div class="stat-box-b__number">3</div>
-            <div class="stat-box-b__title">Benchmarks for transport</div>
-            <%= svg "tpi/home/transportation" %>
-            <div class="stat-box-b__sectors">Autos, Aviation, Shipping</div>
-          </div>
-          <div class="stat-box-b stat-box-b--benchmarks">
-            <div class="stat-box-b__number">5</div>
-            <div class="stat-box-b__title">Benchmarks for industrials and materials</div>
-            <%= svg "tpi/home/construction" %>
-            <div class="stat-box-b__sectors">Aluminium, Cement, Diversified Mining, Paper, Steel</div>
-          </div>
+          <%= render 'sector_cluster_stat', cluster: @sector_clusters['energy'], icon: 'tpi/home/electric-factory' %>
+          <%= render 'sector_cluster_stat', cluster: @sector_clusters['transport'], icon: 'tpi/home/transportation' %>
+          <%= render 'sector_cluster_stat', cluster: @sector_clusters['industrials-and-materials'], class: 'stat-box-b--benchmarks', icon: 'tpi/home/construction' %>
         </div>
       </div>
     </div>

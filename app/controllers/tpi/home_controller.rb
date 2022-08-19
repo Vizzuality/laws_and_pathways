@@ -9,6 +9,13 @@ module TPI
         }
       end
 
+      @stats = {
+        companies_count: Company.published.count,
+        countries_count: Company.select(:geography_id).distinct.count,
+        supporters_count: TPIPage.find_by(slug: 'supporters')&.contents&.flat_map(&:images)&.count
+      }
+      @sector_clusters = TPISectorCluster.all.group_by(&:slug).transform_values(&:first)
+
       @publications_and_articles = publications_and_articles
       @home_content = home_content
 
