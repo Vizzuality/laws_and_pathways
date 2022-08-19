@@ -297,6 +297,16 @@
 
     ul {
       list-style: inside;
+
+      li {
+        font-size: 24px;
+
+        a {
+          margin-left: -15px;
+          font-size: 16px;
+          color: $black;
+        }
+      }
     }
 
     .slider-container {
