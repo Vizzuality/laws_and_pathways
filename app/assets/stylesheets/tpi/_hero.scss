@@ -18,8 +18,8 @@ $home-background: image-url("tpi/home/hero-background.png");
     }
 
     @include mobile {
-      height: 340px;
-      max-height: 340px;
+      // height: 340px;
+      // max-height: 340px;
 
       & > .container > .columns {
         z-index: 1;
@@ -85,13 +85,9 @@ $home-background: image-url("tpi/home/hero-background.png");
     .button__container {
       display: flex;
       justify-content: center;
-
-      @include mobile {
-        margin-top: 20px;
-      }
+      margin-top: 50px;
 
       @include from($tablet) {
-        margin-top: 50px;
         justify-content: left;
       }
 

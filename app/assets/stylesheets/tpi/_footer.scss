@@ -49,6 +49,12 @@
     }
   }
 
+  .button__contact {
+    @include mobile {
+      display: none;
+    }
+  }
+
   .footer-link {
     color: $white;
   }
