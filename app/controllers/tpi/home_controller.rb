@@ -9,7 +9,6 @@ module TPI
         }
       end
 
-      @partners_logos = TPIPage.find_by(slug: 'research-funding-partners')&.contents&.flat_map(&:images)
       @publications_and_articles = publications_and_articles
       @home_content = home_content
 
