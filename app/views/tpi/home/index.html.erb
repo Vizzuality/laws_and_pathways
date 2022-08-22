@@ -189,10 +189,11 @@
         <div class="slider-container" data-controller="slider">
           <div class="slider" data-target="slider.items">
             <% @case_studies.each do |item| %>
-              <div class="item-container">
-                <div class="item">
-                  <div class="title"><%= item.organization %></div>
-                  <div class="description">
+              <div class="case-studies-container">
+                <div class="case-study">
+                  <%= image_tag url_for(item.logo), height: 35 %>
+                  <div class="case-study__title"><%= item.organization %></div>
+                  <div class="case-study__text">
                     <%= item.text %>
                   </div>
                 </div>

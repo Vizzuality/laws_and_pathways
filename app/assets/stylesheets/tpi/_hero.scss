@@ -11,7 +11,6 @@ $home-background: image-url("tpi/home/hero-background.png");
 
   &.is-primary {
     padding: 0;
-    background: $blue-ribbon;
 
     @include from($tablet) {
       min-height: 500px;

@@ -13,6 +13,7 @@ ActiveAdmin.register CaseStudy do
     column :logo
     column :organization, &:organization_link
     column :text
+    column :link
     actions
   end
 

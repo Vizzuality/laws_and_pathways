@@ -28,6 +28,32 @@ namespace :onetime do
         code: 'total_market_cap',
         text: '$10tn'
       )
+
+      CaseStudy.destroy_all
+
+      CaseStudy.create!(
+        organization: 'The church of England Pensions Board',
+        text: 'is using FTSE Russell and TPI data to create a new climate index.',
+        link: 'https://example.com'
+      ).logo.attach(attachable_file('church_of_england.png'))
+      CaseStudy.create!(
+        organization: 'Robeco',
+        text: 'is using TPI data to guide its engagements on climate change.',
+        link: 'https://example.com'
+      ).logo.attach(attachable_file('robeco.png'))
+      CaseStudy.create!(
+        organization: 'Brunel',
+        text: 'is using TPI data to shape portfolio construction in its Global High Alpha strategy.',
+        link: 'https://example.com'
+      ).logo.attach(attachable_file('brunel.png'))
     end
+  end
+
+  def attachable_file(filename)
+    {
+      io: File.open(Rails.root.join('lib', 'tasks', 'support', filename), 'r'),
+      filename: File.basename(filename),
+      content_type: Marcel::MimeType.for(name: filename)
+    }
   end
 end

@@ -397,24 +397,51 @@
         }
       }
 
-      .item-container {
-        .item {
+      .case-studies-container {
+        .case-study {
           height: 280px;
           border: 1px solid $medium-violet;
-          padding: 20px;
+          padding-top: 90px;
+          padding-bottom: 60px;
+          padding-left: 40px;
+          padding-right: 40px;;
 
-          .title {
+          position: relative;
+
+          img {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+          }
+
+          &__title {
             color: $red;
-            display: -webkit-box;
             font-size: 18px;
           }
 
-          .description {
+          &__text {
             // height: 3.4rem;
             font-size: 14px;
             // text-overflow: ellipsis;
             // -webkit-line-clamp: 3;
             // -webkit-box-orient: vertical;
+          }
+
+          &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            background-color: $white;
+            background-image: image-url('tpi/icons/plus-darker.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 13px;
+            border-radius: 50%;
+            border: 2px solid $dark-violet;
+            width: 33px;
+            height: 33px;
+            right: 20px;
+            bottom: 20px;
           }
         }
       }

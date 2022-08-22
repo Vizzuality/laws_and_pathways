@@ -3,4 +3,8 @@ class CaseStudy < ApplicationRecord
 
   validates_presence_of :organization, :link, :text
   validates :link, url: true
+
+  def to_s
+    organization
+  end
 end
