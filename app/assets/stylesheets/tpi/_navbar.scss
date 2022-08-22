@@ -180,16 +180,25 @@
           background-size: 50%;
         }
       }
+
+      &__chevron-right {
+        @include from($desktop) {
+          margin-left: auto;
+          background-image: image-url('icons/white-chevron-down.svg');
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: 50%;
+          transform: rotate(-90deg);
+        }
+      }
     }
   }
 
   .navbar-dropdown {
+    padding: 0;
+
     @include from($desktop) {
       width: 300px;
-    }
-
-    @include until($desktop) {
-      padding: 0;
     }
 
     > a.navbar-item,
@@ -207,4 +216,35 @@
       }
     }
   }
+
+  .nested-navbar-dropdown {
+    position: relative;
+
+    .navbar-dropdown {
+      @include from($desktop) {
+        display: none !important;
+      }
+
+      .navbar-item {
+        @include until($desktop) {
+          padding-left: 6rem !important;
+        }
+      }
+    }
+
+    .navbar-item {
+      padding-right: 1rem;
+    }
+
+    @include from($desktop) {
+      &:hover {
+        .navbar-dropdown {
+          display: block !important;
+          top: 0px;
+          margin-left: 100%;
+        }
+      }
+    }
+  }
+
 }

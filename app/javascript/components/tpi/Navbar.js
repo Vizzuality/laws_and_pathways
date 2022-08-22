@@ -118,20 +118,43 @@ const NavbarComponent = ({ items, openSearchMode }) => {
               </a>
 
               <div className="navbar-dropdown">
-                {tpi.path && (
-                  <a className="navbar-item" href={tpi.path}>
-                    {tpi.entry}
-                  </a>
-                )}
                 {tpi.content && (
-                  tpi.content.map(({ path, title }, i) => (
-                    <a
-                      key={`${title}-${i}`}
-                      href={path}
-                      className="navbar-item"
-                    >
-                      {title}
-                    </a>
+                  tpi.content.map(({ path, title, content }, i) => (
+                    <>
+                      {content && content.length > 0 ? (
+                        <div className="nested-navbar-dropdown">
+                          <a
+                            key={`${title}-${i}`}
+                            href={path}
+                            className="navbar-item"
+                          >
+                            {title}
+                            <span className="icon icon__chevron-right" />
+                          </a>
+
+                          <div className="navbar-dropdown">
+                            {/* eslint-disable-next-line no-shadow */}
+                            {content.map(({ path, title }, i) => (
+                              <a
+                                key={`${title}-${i}`}
+                                href={path}
+                                className="navbar-item"
+                              >
+                                {title}
+                              </a>
+                            ))}
+                          </div>
+                        </div>
+                      ) : (
+                        <a
+                          key={`${title}-${i}`}
+                          href={path}
+                          className="navbar-item"
+                        >
+                          {title}
+                        </a>
+                      )}
+                    </>
                   ))
                 )}
               </div>

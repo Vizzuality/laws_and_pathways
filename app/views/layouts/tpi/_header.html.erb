@@ -2,10 +2,26 @@
   items: [
     {
       entry: 'TPI tool',
-      path: tpi_sectors_path,
       content: [
-        BankAssessment.any? ? { title: 'TPI banking tool', path: tpi_banks_path } : nil,
-        *@tpi_tool_pages
+        {
+          title: 'TPI Tool',
+          path: tpi_sectors_path,
+          content: [
+            {
+              title: 'Sectors',
+              path: tpi_sectors_path,
+            },
+            *@tpi_tool_pages
+          ]
+        },
+        BankAssessment.any? ? {
+          title: 'TPI banking tool',
+          path: tpi_banks_path,
+          content: [{
+            title: 'Banks',
+            path: tpi_banks_path
+          }]
+        } : nil,
       ].compact,
       active: active_menu_page?([
         tpi_sectors_path,

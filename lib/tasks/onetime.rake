@@ -46,6 +46,8 @@ namespace :onetime do
         text: 'is using TPI data to shape portfolio construction in its Global High Alpha strategy.',
         link: 'https://example.com'
       ).logo.attach(attachable_file('brunel.png'))
+
+      TPIPage.find_by(title: 'Disclaimer').update!(menu: :about)
     end
   end
 
