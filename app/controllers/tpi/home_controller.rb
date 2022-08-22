@@ -3,6 +3,7 @@ module TPI
     def index
       @case_studies = CaseStudy.all
       @sector_clusters = TPISectorCluster.all.group_by(&:slug).transform_values(&:first)
+
       page = TPIPage.find_by(slug: 'homepage-content')
       @home_content = {
         intro: {

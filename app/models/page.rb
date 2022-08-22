@@ -17,7 +17,7 @@ class Page < ApplicationRecord
 
   friendly_id :title, use: :slugged, routes: :default
 
-  has_many :contents, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :page
+  has_many :contents, -> { order(position: :asc) }, foreign_key: :page_id, dependent: :destroy, inverse_of: :page
   has_many :images, through: :contents
 
   validates :menu, presence: true
@@ -38,9 +38,5 @@ class Page < ApplicationRecord
 
   def reload_routes
     DynamicRouter.reload
-  end
-
-  def order_disabled?
-    false
   end
 end
