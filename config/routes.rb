@@ -9,7 +9,6 @@ Rails.application.routes.draw do
       get '/tpi', to: redirect('/')
       get '/tpi/*rest', to: redirect('%{rest}')
 
-      get '/about', to: 'home#about'
       get '/newsletter', to: 'home#newsletter'
 
       get '/sandbox', to: 'home#sandbox' if Rails.env.development?

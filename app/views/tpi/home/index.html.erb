@@ -10,11 +10,11 @@
         </div>
         <div class="description">
           <p class="content">
-            <%= @home_content[:intro][:description] %>
+            <%= @home_content[:intro][:text] %>
           </p>
         </div>
         <div class="button__container">
-          <%= link_to 'About TPI', tpi_about_path, class: 'button is-red button__hero' %>
+          <%= link_to 'About TPI', '/overview', class: 'button is-red button__hero' %>
         </div>
       </div>
     </div>
@@ -64,12 +64,12 @@
 
         <div class="stat-boxes">
           <div class="stat-box stat-box--supporters">
-            <div class="stat-box__number"><%= @stats[:supporters_count] %></div>
+            <div class="stat-box__number"><%= @home_content[:stats][:supporters_count] %></div>
             <div class="stat-box__title">Supporters</div>
           </div>
 
           <div class="stat-box stat-box--combined-aum">
-            <div class="stat-box__number">$45tn</div>
+            <div class="stat-box__number"><%= @home_content[:stats][:combined_aum] %></div>
             <div class="stat-box__title">Combined AUM</div>
           </div>
         </div>
@@ -80,22 +80,22 @@
 
         <div class="stat-boxes">
           <div class="stat-box stat-box--companies">
-            <div class="stat-box__number"><%= @stats[:companies_count] %></div>
+            <div class="stat-box__number"><%= @home_content[:stats][:companies_count] %></div>
             <div class="stat-box__title">Companies</div>
           </div>
 
           <div class="stat-box stat-box--sectors">
-            <div class="stat-box__number">$45tn</div>
+            <div class="stat-box__number"><%= @home_content[:stats][:sectors] %></div>
             <div class="stat-box__title">Sectors</div>
           </div>
 
           <div class="stat-box stat-box--countries">
-            <div class="stat-box__number"><%= @stats[:countries_count] %></div>
+            <div class="stat-box__number"><%= @home_content[:stats][:countries_count] %></div>
             <div class="stat-box__title">Countries</div>
           </div>
 
           <div class="stat-box stat-box--market-cap">
-            <div class="stat-box__number">$10tn</div>
+            <div class="stat-box__number"><%= @home_content[:stats][:total_market_cap] %></div>
             <div class="stat-box__title">Total Market Cap</div>
           </div>
         </div>

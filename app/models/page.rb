@@ -39,4 +39,8 @@ class Page < ApplicationRecord
   def reload_routes
     DynamicRouter.reload
   end
+
+  def order_disabled?
+    false
+  end
 end

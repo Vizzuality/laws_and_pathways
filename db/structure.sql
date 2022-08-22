@@ -472,7 +472,8 @@ CREATE TABLE public.contents (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     content_type character varying,
-    "position" integer
+    "position" integer,
+    code character varying
 );
 
 
@@ -3657,6 +3658,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220704094826'),
 ('20220719121521'),
 ('20220722075902'),
-('20220722100953');
+('20220722100953'),
+('20220822094300');
 
 

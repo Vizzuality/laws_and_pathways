@@ -10,6 +10,7 @@
 #  updated_at   :datetime         not null
 #  content_type :string
 #  position     :integer
+#  code         :string
 #
 
 class Content < ApplicationRecord
@@ -22,5 +23,13 @@ class Content < ApplicationRecord
 
   with_options allow_destroy: true, reject_if: :all_blank do
     accepts_nested_attributes_for :images
+  end
+
+  def removeable?
+    code.nil?
+  end
+
+  def homepage_stat?
+    %w[total_market_cap sectors combined_aum].include? code
   end
 end

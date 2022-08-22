@@ -19,10 +19,17 @@ class TPIPage < Page
     no_menu_entry
   ].freeze
   enum menu: array_to_enum_hash(MENU_HEADERS)
+
+  has_many :contents, foreign_key: :page_id
+
   validates :slug, uniqueness: true, presence: true
   validates :title, uniqueness: true, presence: true
 
   def admin_path
     'admin_tpi_page_path'
+  end
+
+  def order_disabled?
+    %w(homepage-content).include? slug
   end
 end
