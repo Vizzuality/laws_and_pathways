@@ -188,12 +188,12 @@
       <div class="column is-9">
         <div class="slider-container" data-controller="slider">
           <div class="slider" data-target="slider.items">
-            <% @testimonials.each do |item| %>
+            <% @case_studies.each do |item| %>
               <div class="item-container">
                 <div class="item">
-                  <div class="title"><%= item[:author] %></div>
+                  <div class="title"><%= item.organization %></div>
                   <div class="description">
-                    <%= item[:message] %>
+                    <%= item.text %>
                   </div>
                 </div>
               </div>

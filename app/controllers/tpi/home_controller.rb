@@ -1,13 +1,7 @@
 module TPI
   class HomeController < TPIController
     def index
-      @testimonials = Testimonial.all.map do |test|
-        {
-          author: test.author,
-          role: test.role,
-          message: test.quote
-        }
-      end
+      @case_studies = CaseStudy.all
       @sector_clusters = TPISectorCluster.all.group_by(&:slug).transform_values(&:first)
       page = TPIPage.find_by(slug: 'homepage-content')
       @home_content = {

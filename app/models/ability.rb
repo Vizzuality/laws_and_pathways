@@ -10,7 +10,7 @@ class Ability
   TPI_RESOURCES = [
     Bank, BankAssessment, BankAssessmentIndicator, Company, MQ::Assessment, CP::Assessment,
     TPISector, TPISectorCluster, TPIPage,
-    NewsArticle, Testimonial, Publication
+    NewsArticle, CaseStudy, Publication
   ].freeze
 
   LAWS_RESOURCES = [
