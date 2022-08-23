@@ -524,10 +524,8 @@
     }
 
     .subscribe__container {
-      padding: 1.75rem;
       display: flex;
       justify-content: center;
-      align-items: center;
       flex-direction: column;
 
       @include until($desktop) {
@@ -547,11 +545,6 @@
             width: 82px;
           }
         }
-      }
-
-      @media #{$tablet-portrait} {
-        padding-left: 3rem;
-        align-items: flex-start;
       }
     }
 
