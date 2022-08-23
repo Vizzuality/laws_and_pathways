@@ -208,9 +208,10 @@
       font-size: $size-6;
       padding-top: 0.625rem;
       padding-bottom: 0.625rem;
+      line-height: 1.5rem;
 
       @include until($desktop) {
-        color: $blue;
+        color: $red;
         padding-top: 0.938rem;
         padding-bottom: 0.938rem;
       }
@@ -233,7 +234,11 @@
     }
 
     .navbar-item {
+      font-size: $size-6;
       padding-right: 1rem;
+      padding-top: 0.625rem;
+      padding-bottom: 0.625rem;
+      line-height: 1.5rem;
     }
 
     @include from($desktop) {
