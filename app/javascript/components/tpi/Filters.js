@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import filterIcon from 'images/icons/filter-white.svg';
@@ -11,24 +11,25 @@ const ALL_OPTION_NAME = 'All';
 const Filters = ({ tags, sectors, resultsSize }) => {
   const [isFilterOpen, setIsFiltersOpen] = useState(false);
   const [resultsCount, setResultsCount] = useState(resultsSize);
-
-  const tagsWithAllOption = [ALL_OPTION_NAME, ...tags];
-  const sectorsWithAllOption = [ALL_OPTION_NAME, ...sectors];
-
   const [queryTagsParam, setQueryTags] = useQueryParam('tags');
   const [querySectorsParam, setQuerySectors] = useQueryParam('sectors');
 
-  const queryTags = (queryTagsParam || '').split(',').filter(x => x);
-  const querySectors = (querySectorsParam || '').split(',').filter(x => x);
-
-  const activeTags = tagsWithAllOption.map(tag => ({
-    name: tag,
-    active: queryTags.length > 0 ? queryTags.includes(tag) : tag === ALL_OPTION_NAME
-  }));
-  const activeSectors = sectorsWithAllOption.map(sector => ({
-    name: sector,
-    active: querySectors.length > 0 ? querySectors.includes(sector) : sector === ALL_OPTION_NAME
-  }));
+  const activeTags = useMemo(() => {
+    const tagsWithAllOption = [ALL_OPTION_NAME, ...tags];
+    const queryTags = (queryTagsParam || '').split(',').filter(x => x);
+    return tagsWithAllOption.map(tag => ({
+      name: tag,
+      active: queryTags.length > 0 ? queryTags.includes(tag) : tag === ALL_OPTION_NAME
+    }));
+  }, [tags, queryTagsParam]);
+  const activeSectors = useMemo(() => {
+    const sectorsWithAllOption = [ALL_OPTION_NAME, ...sectors];
+    const querySectors = (querySectorsParam || '').split(',').filter(x => x);
+    return sectorsWithAllOption.map(sector => ({
+      name: sector,
+      active: querySectors.length > 0 ? querySectors.includes(sector) : sector === ALL_OPTION_NAME
+    }));
+  }, [sectors, querySectorsParam]);
 
   const isAllClicked = (option) => option.name === ALL_OPTION_NAME;
   const isAllSelected = (options) => options.filter(o => o.active).length === 0;
@@ -37,9 +38,16 @@ const Filters = ({ tags, sectors, resultsSize }) => {
 
   const buttonTitle = isFilterOpen ? 'Hide filters' : 'Show filters';
 
-  const handleButtonClick = () => {
+  const handleButtonClick = useCallback(() => {
     setIsFiltersOpen(!isFilterOpen);
-  };
+  }, [isFilterOpen]);
+  useEffect(() => {
+    document.getElementById('filter-button').addEventListener('click', handleButtonClick);
+
+    return () => {
+      document.getElementById('filter-button').removeEventListener('click', handleButtonClick);
+    };
+  }, [handleButtonClick]);
 
   const refreshPublicationsHtml = (query) => {
     const url = `/publications/partial?${query}`;
@@ -63,9 +71,7 @@ const Filters = ({ tags, sectors, resultsSize }) => {
       .map(s => encodeURIComponent(s.name))
       .join(', ');
     refreshPublicationsHtml(`tags=${activeTagsQueryParam}&sectors=${activeSectorsQueryParam}`);
-
-    document.getElementById('filter-button').addEventListener('click', handleButtonClick);
-  }, [activeTags, activeSectors, handleButtonClick]);
+  }, [activeTags, activeSectors]);
 
   const handleTagClick = (tag) => {
     const otherOptions = optionsWithoutALL(activeTags);
