@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import filterIcon from 'images/icons/filter-white.svg';
 import filterBlueIcon from 'images/icons/filter-blue.svg';
 
+import { useQueryParam } from 'shared/hooks';
+
 const ALL_OPTION_NAME = 'All';
 
 const Filters = ({ tags, sectors, resultsSize }) => {
@@ -11,20 +13,22 @@ const Filters = ({ tags, sectors, resultsSize }) => {
   const [resultsCount, setResultsCount] = useState(resultsSize);
 
   const tagsWithAllOption = [ALL_OPTION_NAME, ...tags];
-  const sectorsWithAlloption = [ALL_OPTION_NAME, ...sectors];
+  const sectorsWithAllOption = [ALL_OPTION_NAME, ...sectors];
 
-  const defaultActiveTags = tagsWithAllOption.map(tag => ({
+  const [queryTagsParam, setQueryTags] = useQueryParam('tags');
+  const [querySectorsParam, setQuerySectors] = useQueryParam('sectors');
+
+  const queryTags = (queryTagsParam || '').split(',').filter(x => x);
+  const querySectors = (querySectorsParam || '').split(',').filter(x => x);
+
+  const activeTags = tagsWithAllOption.map(tag => ({
     name: tag,
-    active: tag === ALL_OPTION_NAME
+    active: queryTags.length > 0 ? queryTags.includes(tag) : tag === ALL_OPTION_NAME
   }));
-
-  const defaultActiveSectors = sectorsWithAlloption.map(sector => ({
+  const activeSectors = sectorsWithAllOption.map(sector => ({
     name: sector,
-    active: sector === ALL_OPTION_NAME
+    active: querySectors.length > 0 ? querySectors.includes(sector) : sector === ALL_OPTION_NAME
   }));
-
-  const [activeTags, setActiveTags] = useState(defaultActiveTags);
-  const [activeSectors, setActiveSectors] = useState(defaultActiveSectors);
 
   const isAllClicked = (option) => option.name === ALL_OPTION_NAME;
   const isAllSelected = (options) => options.filter(o => o.active).length === 0;
@@ -73,14 +77,14 @@ const Filters = ({ tags, sectors, resultsSize }) => {
         name: t.name,
         active: t.name === ALL_OPTION_NAME
       }));
-      setActiveTags(tagsWithALLSelected);
+      setQueryTags(tagsWithALLSelected.filter(t => t.active).map((t) => t.name).join(','));
     } else {
       const updatedTags = activeTags.map(t => {
         if (t.name === tag.name) { return { name: t.name, active: !t.active }; }
         if (t.name === ALL_OPTION_NAME) { return { name: t.name, active: false }; }
         return { name: t.name, active: t.active };
       });
-      setActiveTags(updatedTags);
+      setQueryTags(updatedTags.filter(t => t.active).map((t) => t.name).join(','));
     }
   };
 
@@ -94,14 +98,14 @@ const Filters = ({ tags, sectors, resultsSize }) => {
         name: s.name,
         active: s.name === ALL_OPTION_NAME
       }));
-      setActiveSectors(sectorsWithALLSelected);
+      setQuerySectors(sectorsWithALLSelected.filter(s => s.active).map((s) => s.name).join(','));
     } else {
       const updatedSectors = activeSectors.map(s => {
         if (s.name === sector.name) { return { name: s.name, active: !s.active }; }
         if (s.name === ALL_OPTION_NAME) { return { name: s.name, active: false }; }
         return { name: s.name, active: s.active };
       });
-      setActiveSectors(updatedSectors);
+      setQuerySectors(updatedSectors.filter(s => s.active).map((s) => s.name).join(','));
     }
   };
 
