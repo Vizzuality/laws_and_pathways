@@ -48,6 +48,7 @@ namespace :onetime do
       ).logo.attach(attachable_file('brunel.png'))
 
       TPIPage.find_by(title: 'Disclaimer').update!(menu: :about)
+      TPIPage.find_by(title: 'FAQ').update!(menu: :no_menu_entry)
     end
   end
 

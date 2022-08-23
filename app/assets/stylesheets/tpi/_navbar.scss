@@ -137,6 +137,7 @@
   .navbar-menu {
     @include until($desktop) {
       padding: 17px 0;
+      background-color: $dark-violet;
 
       .navbar-item:not(.has-dropdown),
       .navbar-link {
@@ -147,23 +148,11 @@
         .navbar-item {
           padding-left: 3.125rem;
         }
-
-        .navbar-link {
-          padding-top: 0.938rem;
-          padding-bottom: 0.938rem;
-        }
       }
     }
   }
 
   .navbar-item {
-    @include until($desktop) {
-      &:not(.has-dropdown) {
-        padding-top: 0.938rem;
-        padding-bottom: 0.938rem;
-      }
-    }
-
     .icon {
       &__search {
         background-image: image-url('icon_search/search.svg');
@@ -212,8 +201,6 @@
 
       @include until($desktop) {
         color: $red;
-        padding-top: 0.938rem;
-        padding-bottom: 0.938rem;
       }
     }
   }

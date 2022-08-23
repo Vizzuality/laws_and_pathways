@@ -70,7 +70,7 @@ SearchComponent.propTypes = {
 };
 
 const NavbarComponent = ({ items, openSearchMode }) => {
-  const [tpi, publications, about, newsletter, search] = items;
+  const [tpi, publications, about, faq, newsletter, search] = items;
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -194,6 +194,15 @@ const NavbarComponent = ({ items, openSearchMode }) => {
                 )}
               </div>
             </div>
+
+            <a
+              href={faq.path}
+              className={classnames('navbar-item', {
+                'is-active': faq.active
+              })}
+            >
+              {faq.entry}
+            </a>
           </div>
 
           <div className="navbar-end">
