@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import Logo from 'images/logo/TPI_logo.svg';
+import GranthamLogo from 'images/logo/RICCE_logo.svg';
+import LSELogo from 'images/logo/LSE_logo.svg';
 
 const ESCAPE_KEY = 27;
 const ENTER_KEY = 13;
@@ -222,6 +224,27 @@ const NavbarComponent = ({ items, openSearchMode }) => {
             >
               {search.hasIcon && <span className="icon icon__search" />}
             </a>
+          </div>
+
+          <div className="partners__container is-hidden-desktop">
+            <p className="partners__title">Hosted by:</p>
+
+            <div className="partners">
+              <a href="http://www.lse.ac.uk/">
+                <img
+                  src={LSELogo}
+                  alt="The London School of Economics and Political Sciences"
+                  className="partners__lse"
+                />
+              </a>
+              <a href="http://www.lse.ac.uk/GranthamInstitute/">
+                <img
+                  src={GranthamLogo}
+                  alt="Grantham Research Institute on Climate Change and the Environment"
+                  className="partners__grantham"
+                />
+              </a>
+            </div>
           </div>
         </div>
       </div>

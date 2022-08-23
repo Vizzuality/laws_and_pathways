@@ -2,6 +2,8 @@
 @import "colors";
 @import "variables";
 
+$mobile-indent: 1rem;
+
 .tpi__navbar-margin {
   margin-top: var(--fixed-navbar-height);
 
@@ -141,12 +143,12 @@
 
       .navbar-item:not(.has-dropdown),
       .navbar-link {
-        padding-left: 1.563rem;
+        padding-left: $mobile-indent;
       }
 
       .navbar-item.has-dropdown {
         .navbar-item {
-          padding-left: 3.125rem;
+          padding-left: 2 * $mobile-indent;
         }
       }
     }
@@ -215,7 +217,7 @@
 
       .navbar-item {
         @include until($desktop) {
-          padding-left: 6rem !important;
+          padding-left: 3 * $mobile-indent !important;
         }
       }
     }
@@ -239,4 +241,30 @@
     }
   }
 
+  .partners {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &__container {
+      padding-left: $mobile-indent;
+      padding-right: $mobile-indent;
+      margin-top: 50px;
+    }
+
+    &__title {
+      font-size: 10px;
+      color: $white;
+      line-height: 0.938rem;
+      margin-bottom: 20px;
+    }
+
+    &__grantham {
+      max-height: 30px;
+    }
+
+    &__lse {
+      max-height: 34px;
+    }
+  }
 }
