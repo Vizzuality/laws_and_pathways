@@ -486,6 +486,11 @@ $home-background: image-url("tpi/home/hero-background.png");
     }
 
     .slider-container {
+      @include mobile {
+        margin-left: -1.5rem;
+        width: 100vw;
+      }
+
       .tns-outer {
         position: relative;
       }
