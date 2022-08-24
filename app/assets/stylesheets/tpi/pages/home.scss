@@ -8,113 +8,101 @@ $home-background: image-url("tpi/home/hero-background.png");
 }
 
 .section-description {
-  margin-bottom: 1.25rem;
   margin-top: 3.125rem;
+
+  @include tablet {
+    margin-bottom: 1.25rem;
+  }
 }
 
 .tpi-home {
   &__hero {
     color: $white;
     position: relative;
-    display: flex;
     overflow: hidden;
 
-    &.is-primary {
-      padding: 0;
+    @include from($tablet) {
+      min-height: 500px;
+    }
 
-      @include from($tablet) {
-        min-height: 500px;
-      }
+    .background {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background-image: $home-background;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      z-index: 0;
 
       @include mobile {
-        & > .container > .columns {
-          z-index: 1;
-          position: relative;
-        }
+        background-position: 20% center;
+      }
+    }
+
+    .left-size {
+      max-width: 80%;
+      margin-top: 15px;
+      margin-bottom: 15px;
+
+      @include tablet {
+        max-width: 60%;
       }
 
-      .background {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
+      @include tablet {
+        max-width: 45%;
+      }
+    }
+
+    .title {
+      color: $red;
+    }
+
+    .description {
+      display: flex;
+      justify-content: center;
+      line-height: $size-4;
+      position: relative;
+
+      @media #{$tablet-portrait} {
+        justify-content: left;
         width: 100%;
-        height: 100%;
-        background-image: $home-background;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
-        z-index: 0;
-
-        @include mobile {
-          background-position: 30% center;
-          // background-size: auto 500px;
-        }
       }
 
-      .left-size {
-        @include mobile {
-          margin: 26px 15px 43px;
-        }
-
-        @include from($tablet) {
-          margin: 80px 0;
-        }
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 8px;
+        height: 100%;
+        background-color: $red;
+        left: -1.5rem;
 
         @include tablet {
-          margin-left: 20px;
-        }
-      }
-
-      .title {
-        color: $red;
-      }
-
-      .description {
-        display: flex;
-        justify-content: center;
-        line-height: $size-4;
-        position: relative;
-
-        @media #{$tablet-portrait} {
-          justify-content: left;
-          width: 100%;
-        }
-
-        &:before {
-          content: '';
-          display: block;
-          position: absolute;
-          width: 8px;
-          height: 100%;
-          background-color: $red;
           left: -32px;
         }
       }
+    }
 
-      .button__container {
-        display: flex;
-        justify-content: center;
+    .button__hero {
+      @extend .is-medium;
+
+      height: 3.125rem;
+      margin-top: 30px;
+
+      @include mobile {
+        font-size: 1rem;
+      }
+
+      @include from($tablet) {
+        height: 5rem;
+        width: 280px;
+        max-width: 280px;
         margin-top: 50px;
-
-        @include from($tablet) {
-          justify-content: left;
-        }
-
-        .button__hero {
-          @extend .is-medium, .is-fullwidth;
-
-          height: 3.125rem;
-          width: 100%;
-
-          @include from($tablet) {
-            height: 5rem;
-            width: 280px;
-            max-width: 280px;
-            margin: 0;
-          }
-        }
       }
     }
   }
@@ -222,6 +210,10 @@ $home-background: image-url("tpi/home/hero-background.png");
   &__stats-news {
     border-bottom: 1px solid rgba(89, 91, 93, 0.2);
 
+    h3 {
+      font-size: 1.125rem !important;
+    }
+
     .container {
       display: flex;
       flex-direction: column;
@@ -248,7 +240,7 @@ $home-background: image-url("tpi/home/hero-background.png");
       .stat-boxes {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 30px 50px;
+        gap: 30px;
         padding: 30px 0px;
 
         @include tablet {
@@ -271,17 +263,30 @@ $home-background: image-url("tpi/home/hero-background.png");
         padding: 10px 0px;
 
         &__number {
-          font-size: 48px;
+          font-size: 2.25rem;
           line-height: 1em;
           font-family: $font-family-bold;
+
+          @include tablet {
+            font-size: 3rem;
+          }
         }
 
         &__title {
-          font-size: 18px;
+          font-size: 0.875rem;
+
+          @include tablet {
+            font-size: 1.125rem;
+          }
         }
 
         background-repeat: no-repeat;
         background-position: left center;
+        background-size: 60px;
+
+        @include tablet {
+          background-size: 80px;
+        }
 
         &--supporters {
           background-image: image-url('tpi/home/support.svg');
@@ -310,22 +315,34 @@ $home-background: image-url("tpi/home/hero-background.png");
 
       .stat-box-b {
         color: $medium-violet;
-        padding: 10px 0px;
         display: grid;
         grid-template-columns: 80px 1fr;
-        gap: 10px 15px;
+        gap: 0px 15px;
+
+        @include tablet {
+          gap: 10px 15px;
+          padding: 10px 0px;
+        }
 
         &__number {
           text-align: right;
-          font-size: 48px;
+          font-size: 2.25rem;
           line-height: 1em;
           font-family: $font-family-bold;
+
+          @include tablet {
+            font-size: 3rem;
+          }
         }
 
         &__title {
-          font-size: 18px;
           line-height: 1.5rem;
           max-width: 300px;
+          font-size: 0.875rem;
+
+          @include tablet {
+            font-size: 1.125rem;
+          }
         }
 
         &--benchmarks {
