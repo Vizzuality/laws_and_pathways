@@ -204,6 +204,14 @@ $home-background: image-url("tpi/home/hero-background.png");
         right: 20px;
         bottom: 20px;
       }
+
+      &:not(.disabled):hover {
+        &:after {
+          background-color: $dark-violet;
+          background-image: image-url('tpi/icons/plus-white.svg');
+          border: 2px solid $white;
+        }
+      }
     }
   }
 
@@ -550,28 +558,36 @@ $home-background: image-url("tpi/home/hero-background.png");
           }
 
           &__text {
-            // height: 3.4rem;
             font-size: 14px;
-            // text-overflow: ellipsis;
-            // -webkit-line-clamp: 3;
-            // -webkit-box-orient: vertical;
           }
 
-          &:after {
-            content: '';
-            display: block;
-            position: absolute;
-            background-color: $white;
-            background-image: image-url('tpi/icons/plus-darker.svg');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 13px;
-            border-radius: 50%;
-            border: 2px solid $dark-violet;
-            width: 33px;
-            height: 33px;
-            right: 20px;
-            bottom: 20px;
+          &.is-hoverable {
+            cursor: pointer;
+
+            &:after {
+              content: '';
+              display: block;
+              position: absolute;
+              background-color: $white;
+              background-image: image-url('tpi/icons/plus-darker.svg');
+              background-repeat: no-repeat;
+              background-position: center;
+              background-size: 13px;
+              border-radius: 50%;
+              border: 2px solid $dark-violet;
+              width: 33px;
+              height: 33px;
+              right: 20px;
+              bottom: 20px;
+            }
+
+            &:hover {
+              &:after {
+                background-color: $dark-violet;
+                background-image: image-url('tpi/icons/plus-white.svg');
+                border: 2px solid $dark-violet;
+              }
+            }
           }
         }
       }
