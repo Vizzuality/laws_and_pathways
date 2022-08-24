@@ -537,6 +537,8 @@ $home-background: image-url("tpi/home/hero-background.png");
 
       .case-studies-container {
         .case-study {
+          display: block;
+
           height: 280px;
           border: 1px solid $medium-violet;
           padding-top: 90px;
@@ -554,11 +556,13 @@ $home-background: image-url("tpi/home/hero-background.png");
 
           &__title {
             color: $red;
-            font-size: 18px;
+            font-size: 1.125rem;
+            line-height: 1.25rem;
           }
 
           &__text {
-            font-size: 14px;
+            color: $grey-dark;
+            font-size: 0.875rem;
           }
 
           &.is-hoverable {
@@ -632,6 +636,7 @@ $home-background: image-url("tpi/home/hero-background.png");
           display: flex;
           gap: 15px;
           margin-top: 10px;
+          margin-bottom: 10px;
         }
 
         &--yellow {
