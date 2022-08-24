@@ -6,7 +6,7 @@
     <div class="columns">
       <div class="column is-5 left-size">
         <div class="title">
-          <h1 class="is-size-3-mobile"><%= @home_content[:intro][:title] %></h1>
+          <h1 class="is-size-4-mobile is-size-2"><%= @home_content[:intro][:title] %></h1>
         </div>
         <div class="description">
           <p class="content">
@@ -131,7 +131,7 @@
                 News and publications
               <% end %>
 
-              <%= link_to tpi_publications_path, class: "with-icon" do %>
+              <%= link_to tpi_publications_path(tags: 'Event'), class: "with-icon" do %>
                 <i class="icon icon__events"></i>
                 Events
               <% end %>

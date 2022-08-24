@@ -49,6 +49,8 @@ namespace :onetime do
 
       TPIPage.find_by(title: 'Disclaimer').update!(menu: :about)
       TPIPage.find_by(title: 'FAQ').update!(menu: :no_menu_entry)
+
+      Keyword.find_or_create_by!(name: 'Event')
     end
   end
 
