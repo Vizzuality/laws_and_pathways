@@ -2,6 +2,8 @@ class CaseStudyDecorator < Draper::Decorator
   delegate_all
 
   def logo
+    return unless model.logo.attached?
+
     h.image_tag h.url_for(model.logo)
   end
 

@@ -423,7 +423,7 @@ ALTER SEQUENCE public.banks_id_seq OWNED BY public.banks.id;
 CREATE TABLE public.case_studies (
     id bigint NOT NULL,
     organization character varying NOT NULL,
-    link character varying NOT NULL,
+    link character varying,
     text character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL

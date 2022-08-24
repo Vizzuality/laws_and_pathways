@@ -37,7 +37,7 @@ ActiveAdmin.register CaseStudy do
     f.inputs do
       f.input :organization
       f.input :link
-      f.input :logo
+      f.input :logo, as: :file
       f.input :text, as: :text
     end
 

@@ -186,13 +186,28 @@
           <div class="slider" data-target="tpi-home-slider.items">
             <% @case_studies.each do |item| %>
               <div class="case-studies-container">
-                <a href="<%= item.link.present? ? item.link : 'javascript:void(0);' %>" class="case-study <%= item.link && 'is-hoverable' %>" rel="noopener noreferrer" target="_blank">
-                  <%= image_tag url_for(item.logo), height: 35 %>
+                <% tag = item.link.present? ? 'a' : 'div' %>
+                <%
+                  options = if item.link.present?
+                    {
+                      href: item.link,
+                      class: 'case-study is-hoverable',
+                      rel: 'noopener noreferrer',
+                      target: '_blank'
+                    }
+                  else
+                    {
+                      class: 'case-study'
+                    }
+                  end
+                %>
+                <%= content_tag tag, options do %>
+                  <%= image_tag url_for(item.logo) %>
                   <div class="case-study__title"><%= item.organization %></div>
                   <div class="case-study__text">
                     <%= item.text %>
                   </div>
-                </a>
+                <% end %>
               </div>
             <% end %>
           </div>
