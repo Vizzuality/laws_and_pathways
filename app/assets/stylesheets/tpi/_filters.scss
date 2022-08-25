@@ -8,6 +8,10 @@
 .filters__button-notactive {
   background-color: $blue;
   color: $white;
+
+  &:hover, &:focus {
+    color: $white;
+  }
 }
 
 .filters__button-active {
