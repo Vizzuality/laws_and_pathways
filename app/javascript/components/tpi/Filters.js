@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import uniq from 'lodash/uniq';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import filterIcon from 'images/icons/filter-white.svg';
@@ -15,8 +16,8 @@ const Filters = ({ tags, sectors, resultsSize }) => {
   const [querySectorsParam, setQuerySectors] = useQueryParam('sectors');
 
   const activeTags = useMemo(() => {
-    const tagsWithAllOption = [ALL_OPTION_NAME, ...tags];
     const queryTags = (queryTagsParam || '').split(',').filter(x => x);
+    const tagsWithAllOption = uniq([ALL_OPTION_NAME, ...queryTags, ...tags]);
     return tagsWithAllOption.map(tag => ({
       name: tag,
       active: queryTags.length > 0 ? queryTags.includes(tag) : tag === ALL_OPTION_NAME
