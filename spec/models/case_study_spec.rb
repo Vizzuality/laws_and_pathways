@@ -15,11 +15,6 @@ RSpec.describe CaseStudy, type: :model do
     expect(subject).to have(1).errors_on(:text)
   end
 
-  it 'should be invalid without link' do
-    subject.link = nil
-    expect(subject).to have(1).errors_on(:link)
-  end
-
   it 'should be invalid with wrong link' do
     subject.link = 'wrong'
     expect(subject).to have(1).errors_on(:link)

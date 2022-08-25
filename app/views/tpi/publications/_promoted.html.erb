@@ -1,6 +1,6 @@
 <%= hidden_field_tag :input_publications_count, count %>
 <div class="promoted-publications__publications">
   <div class="publications__grid" id="publications-list">
-    <%= render 'list', publications_and_articles: publications_and_articles %>
+    <%= render 'tpi/publications/list', publications_and_articles: publications_and_articles %>
   </div>
 </div>
