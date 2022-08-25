@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
-import uniq from 'lodash/uniq';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import filterIcon from 'images/icons/filter-white.svg';
@@ -14,10 +13,15 @@ const Filters = ({ tags, sectors, resultsSize }) => {
   const [resultsCount, setResultsCount] = useState(resultsSize);
   const [queryTagsParam, setQueryTags] = useQueryParam('tags');
   const [querySectorsParam, setQuerySectors] = useQueryParam('sectors');
+  const [offset, setOffset] = useState(0);
 
   const activeTags = useMemo(() => {
     const queryTags = (queryTagsParam || '').split(',').filter(x => x);
-    const tagsWithAllOption = uniq([ALL_OPTION_NAME, ...queryTags, ...tags]);
+    const tagsWithAllOption = [
+      ALL_OPTION_NAME,
+      ...queryTags.filter(x => !tags.includes(x)),
+      ...tags
+    ];
     return tagsWithAllOption.map(tag => ({
       name: tag,
       active: queryTags.length > 0 ? queryTags.includes(tag) : tag === ALL_OPTION_NAME
@@ -42,37 +46,59 @@ const Filters = ({ tags, sectors, resultsSize }) => {
   const handleButtonClick = useCallback(() => {
     setIsFiltersOpen(!isFilterOpen);
   }, [isFilterOpen]);
+
   useEffect(() => {
     document.getElementById('filter-button').addEventListener('click', handleButtonClick);
-
     return () => {
       document.getElementById('filter-button').removeEventListener('click', handleButtonClick);
     };
   }, [handleButtonClick]);
 
-  const refreshPublicationsHtml = (query) => {
+  useEffect(() => {
+    document.querySelector('.publications__load-more').classList.toggle('is-hidden', offset + 9 > resultsCount);
+  }, [offset, resultsCount]);
+
+  const handleLoadMore = useCallback(() => {
+    setOffset(offset + 9);
+  }, [offset]);
+
+  useEffect(() => {
+    document.getElementById('publications-load-more-button').addEventListener('click', handleLoadMore);
+
+    return () => {
+      document.getElementById('publications-load-more-button').removeEventListener('click', handleLoadMore);
+    };
+  }, [handleLoadMore]);
+
+  const refreshPublicationsHtml = (_tags, _sectors, _offset) => {
+    const activeTagsQueryParam = _tags
+      .filter(t => t.active && t.name !== ALL_OPTION_NAME)
+      .map(t => encodeURIComponent(t.name))
+      .join(', ');
+    const activeSectorsQueryParam = _sectors
+      .filter(s => s.active && s.name !== ALL_OPTION_NAME)
+      .map(s => encodeURIComponent(s.name))
+      .join(', ');
+
+    const query = `tags=${activeTagsQueryParam}&sectors=${activeSectorsQueryParam}&offset=${_offset}`;
     const url = `/publications/partial?${query}`;
 
     fetch(url)
       .then(response => response.text())
       .then(html => {
-        document.querySelector('#publications').innerHTML = html;
-        const newPublicationsCount = document.querySelector('#input_publications_count').value;
-        setResultsCount(newPublicationsCount);
+        if (_offset > 0) {
+          document.querySelector('#publications-list').insertAdjacentHTML('beforeend', html);
+        } else {
+          document.querySelector('#publications').innerHTML = html;
+          const newPublicationsCount = parseInt(document.querySelector('#input_publications_count').value, 10);
+          setResultsCount(newPublicationsCount);
+        }
       });
   };
 
   useEffect(() => {
-    const activeTagsQueryParam = activeTags
-      .filter(t => t.active && t.name !== ALL_OPTION_NAME)
-      .map(t => encodeURIComponent(t.name))
-      .join(', ');
-    const activeSectorsQueryParam = activeSectors
-      .filter(s => s.active && s.name !== ALL_OPTION_NAME)
-      .map(s => encodeURIComponent(s.name))
-      .join(', ');
-    refreshPublicationsHtml(`tags=${activeTagsQueryParam}&sectors=${activeSectorsQueryParam}`);
-  }, [activeTags, activeSectors]);
+    refreshPublicationsHtml(activeTags, activeSectors, offset);
+  }, [activeTags, activeSectors, offset]);
 
   const handleTagClick = (tag) => {
     const otherOptions = optionsWithoutALL(activeTags);
@@ -84,6 +110,7 @@ const Filters = ({ tags, sectors, resultsSize }) => {
         name: t.name,
         active: t.name === ALL_OPTION_NAME
       }));
+      setOffset(0);
       setQueryTags(tagsWithALLSelected.filter(t => t.active).map((t) => t.name).join(','));
     } else {
       const updatedTags = activeTags.map(t => {
@@ -91,6 +118,7 @@ const Filters = ({ tags, sectors, resultsSize }) => {
         if (t.name === ALL_OPTION_NAME) { return { name: t.name, active: false }; }
         return { name: t.name, active: t.active };
       });
+      setOffset(0);
       setQueryTags(updatedTags.filter(t => t.active).map((t) => t.name).join(','));
     }
   };
@@ -105,6 +133,7 @@ const Filters = ({ tags, sectors, resultsSize }) => {
         name: s.name,
         active: s.name === ALL_OPTION_NAME
       }));
+      setOffset(0);
       setQuerySectors(sectorsWithALLSelected.filter(s => s.active).map((s) => s.name).join(','));
     } else {
       const updatedSectors = activeSectors.map(s => {
@@ -112,6 +141,7 @@ const Filters = ({ tags, sectors, resultsSize }) => {
         if (s.name === ALL_OPTION_NAME) { return { name: s.name, active: false }; }
         return { name: s.name, active: s.active };
       });
+      setOffset(0);
       setQuerySectors(updatedSectors.filter(s => s.active).map((s) => s.name).join(','));
     }
   };
