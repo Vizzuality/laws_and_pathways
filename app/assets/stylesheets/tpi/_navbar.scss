@@ -33,6 +33,11 @@ $mobile-indent: 1rem;
       background: $white;
       border: none;
       box-shadow: 0 0 30px 0 rgba($dark, 0.25);
+      padding: 0 1.5rem;
+
+      @include desktop {
+        padding: 0;
+      }
 
       & > .container {
         height: 60px;
@@ -45,9 +50,14 @@ $mobile-indent: 1rem;
       height: 100%;
       border: none;
       outline: none;
-      font-size: 1.25rem;
-      line-height: 1.875rem;
+      font-size: 1rem;
+      line-height: 1.25rem;
       color: $dark;
+
+      @include desktop {
+        font-size: 1.25rem;
+        line-height: 1.875rem;
+      }
 
       &::placeholder {
         color: rgba($dark, 0.5);
@@ -58,13 +68,21 @@ $mobile-indent: 1rem;
       border: none;
       position: absolute;
       // 60px height / 2 + 24px icon / 2
-      top: 18px;
+      top: 22px;
       right: 0;
 
       & > .icon__close {
+        width: 0.875rem;
+        height: 0.875rem;
+
         background-image: image-url('icon_search/close.svg');
         background-repeat: no-repeat;
         background-position: center;
+
+        @include desktop {
+          width: 1rem;
+          height: 1rem;
+        }
       }
     }
   }
@@ -110,12 +128,6 @@ $mobile-indent: 1rem;
             width: 115px;
           }
         }
-
-        &.menu {
-          line-height: 0.938rem;
-          letter-spacing: 1px;
-          font-size: 0.875rem;
-        }
       }
     }
 
@@ -156,9 +168,13 @@ $mobile-indent: 1rem;
   .navbar-item {
     .icon {
       &__search {
-        background-image: image-url('icon_search/search.svg');
+        background-image: image-url('icon_search_dark/search@3x.svg');
         background-repeat: no-repeat;
         background-position: center;
+
+        @include desktop {
+          background-image: image-url('icon_search/search.svg');
+        }
       }
 
       &__chevron-down {

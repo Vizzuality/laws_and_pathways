@@ -83,12 +83,12 @@ const NavbarComponent = ({ items, openSearchMode }) => {
             <img src={Logo} alt="Transition Pathway Initiative logo" />
           </a>
           <a
-            className="navbar-item menu"
+            className="navbar-item"
+            aria-label={search.entry}
             role="button"
-            data-target="HeaderMenu"
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={openSearchMode}
           >
-            MENU
+            {search.hasIcon && <span className="icon icon__search" />}
           </a>
           <a
             role="button"

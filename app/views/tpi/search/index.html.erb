@@ -2,14 +2,14 @@
 
 <section class="section">
   <div class="container search-results">
-    <h1>Search results for: <%= @query %></h1>
+    <h1 class="is-size-3">Search results for: <%= @query %></h1>
 
     <% unless @sectors.any? || @companies.any? || @publications_and_articles.any? %>
       <p class="search-results__empty">Your search didn't return any results. Try another term or <%= link_to 'explore the tool', tpi_sectors_path, class: 'link' %>.</p>
     <% end %>
 
     <% if @sectors.any? %>
-      <h3>Sectors</h3>
+      <h3 class="is-size-4">Sectors</h3>
       <ul>
         <% @sectors.each do |sector| %>
           <li><%= link_to sector.name, tpi_sector_path(sector) %></li>
@@ -18,7 +18,7 @@
     <% end %>
 
     <% if @companies.any? %>
-      <h3>Companies</h3>
+      <h3 class="is-size-4">Companies</h3>
       <ul>
         <% @companies.each do |company| %>
           <li><%= link_to company.name, tpi_company_path(company) %></li>
@@ -27,7 +27,7 @@
     <% end %>
 
     <% if @publications_and_articles.any? %>
-      <h3>Publications and news</h3>
+      <h3 class="is-size-4">Publications and news</h3>
       <%= render 'tpi/publications/promoted', publications_and_articles: @publications_and_articles, count: @publications_and_articles.count %>
     <% end %>
   </div>
