@@ -7,6 +7,7 @@ import filterBlueIcon from 'images/icons/filter-blue.svg';
 import { useQueryParam } from 'shared/hooks';
 
 const ALL_OPTION_NAME = 'All';
+const SHOW_ON_PAGE = 9;
 
 const Filters = ({ tags, sectors, resultsSize }) => {
   const [isFilterOpen, setIsFiltersOpen] = useState(false);
@@ -55,11 +56,11 @@ const Filters = ({ tags, sectors, resultsSize }) => {
   }, [handleButtonClick]);
 
   useEffect(() => {
-    document.querySelector('.publications__load-more').classList.toggle('is-hidden', offset + 9 > resultsCount);
+    document.querySelector('.publications__load-more').classList.toggle('is-hidden', offset + SHOW_ON_PAGE > resultsCount);
   }, [offset, resultsCount]);
 
   const handleLoadMore = useCallback(() => {
-    setOffset(offset + 9);
+    setOffset(offset + SHOW_ON_PAGE);
   }, [offset]);
 
   useEffect(() => {
