@@ -16,6 +16,11 @@ namespace :storage do
     puts "#{attachments.count} attachments to copy"
 
     ActiveStorage::Blob.where(id: attachments.pluck(:blob_id)).find_each do |blob|
+      if to_service.exist?(blob.key)
+        puts "File #{blob.filename} exists"
+        next
+      end
+
       blob.open do |tf|
         checksum = blob.checksum
         to_service.upload(blob.key, tf, checksum: checksum)
