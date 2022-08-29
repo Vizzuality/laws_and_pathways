@@ -1,4 +1,4 @@
-import { Controller } from 'stimulus';
+import { Controller } from '@hotwired/stimulus';
 
 const Trix = require('trix');
 
@@ -11,10 +11,10 @@ export default class extends Controller {
     const videoDialog = `
       <div class="trix-dialog trix-dialog--video" data-trix-dialog="video" data-trix-dialog-attribute="video">
          <div class="trix-dialog__link-fields">
-          <input type="url" name="video" class="trix-input trix-input--dialog" 
+          <input type="url" name="video" class="trix-input trix-input--dialog"
             placeholder="Enter a Youtube URL…" aria-label="URL" required="" data-trix-input="" disabled="disabled">
           <div class="trix-button-group">
-            <input type="button" class="trix-button trix-button--dialog" value="Insert" 
+            <input type="button" class="trix-button trix-button--dialog" value="Insert"
               data-trix-method="setAttribute" data-trix-dialog-submit--video>
             <input type="button" class="trix-button trix-button--dialog" value="Cancel" data-trix-method="removeAttribute">
           </div>

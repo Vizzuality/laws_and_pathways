@@ -1,8 +1,12 @@
-import { Controller } from 'stimulus';
+import { Controller } from '@hotwired/stimulus';
 import { tns } from 'tiny-slider/src/tiny-slider';
 
 export default class extends Controller {
   static targets = ['items'];
+
+  static values = {
+    items: { type: Number, default: 3 }
+  };
 
   connect() {
     this.slider = tns({
@@ -22,7 +26,7 @@ export default class extends Controller {
       swipeAngle: 30,
       responsive: {
         768: {
-          items: 3,
+          items: this.itemsValue,
           controls: true
         }
       },

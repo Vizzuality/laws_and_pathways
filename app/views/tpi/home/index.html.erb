@@ -183,7 +183,7 @@
       </div>
       <div class="column is-9">
         <div class="slider-container" data-controller="tpi-home-slider">
-          <div class="slider" data-target="tpi-home-slider.items">
+          <div class="slider" data-tpi-home-slider-target="items">
             <% @case_studies.each do |item| %>
               <div class="case-studies-container">
                 <% tag = item.link.present? ? 'a' : 'div' %>

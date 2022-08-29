@@ -1,4 +1,4 @@
-import { Controller } from 'stimulus';
+import { Controller } from '@hotwired/stimulus';
 
 const ENTITY_TYPE_PARTY_TYPE_MAP = {
   Company: 'corporation',

@@ -19,7 +19,7 @@
           <%= render "cp_unit_fields", form: unit %>
         <% end %>
 
-        <div class="nested-list__actions" data-target="nested-list.links">
+        <div class="nested-list__actions" data-nested-list-target="links">
           <%= button_tag "Add New Unit", type: 'button', class: 'button button--raised', data: { action: "click->nested-list#addRecord" } %>
         </div>
       </div>

@@ -9,7 +9,7 @@
     <%= render "admin/pages/content_fields", form: content %>
   <% end %>
 
-  <div class="nested-list__actions" data-target="nested-list.links">
+  <div class="nested-list__actions" data-nested-list-target="links">
     <% contents_present = form.object.contents.any? %>
     <%= button_tag contents_present ? "Add Another Content" : "Add Content", type: 'button', class: 'button button--raised', data: { action: "click->nested-list#addRecord" } %>
   </div>
