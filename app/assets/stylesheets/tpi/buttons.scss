@@ -28,17 +28,6 @@ $button-border-width: 4px;
   }
 }
 
-.link.is-red {
-  color: $red !important;
-
-  &.is-hovered,
-  &:hover,
-  &.is-focused,
-  &:focus {
-    color: $red !important;
-  }
-}
-
 .button {
   $button-height: 40px;
   min-width: 160px;
@@ -128,38 +117,6 @@ $button-border-width: 4px;
     &.is-focused,
     &:focus {
       border-color: $yellow;
-    }
-  }
-
-  &.is-red {
-    border: 1px solid $red;
-    background-color: $red;
-    color: $white;
-    justify-content: center;
-    align-items: center;
-
-    &.is-small {
-      border-radius: 0;
-      height: 30px;
-      min-width: 100px;
-    }
-
-    &.is-hovered,
-    &:hover,
-    &.is-focused,
-    &:focus {
-      background-color: #B62932;
-      color: $white;
-    }
-
-    &.is-hovered,
-    &:hover {
-      border-color: #B62932;
-    }
-
-    &.is-focused,
-    &:focus {
-      border-color: $white;
     }
   }
 

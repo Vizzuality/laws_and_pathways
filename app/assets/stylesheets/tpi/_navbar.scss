@@ -150,7 +150,7 @@ $mobile-indent: 1rem;
   .navbar-menu {
     @include until($desktop) {
       padding: 17px 0;
-      background-color: $dark-violet;
+      background-color: $dark;
 
       .navbar-item:not(.has-dropdown),
       .navbar-link {
@@ -217,7 +217,7 @@ $mobile-indent: 1rem;
       line-height: 1.5rem;
 
       @include until($desktop) {
-        color: $red;
+        color: $blue-ribbon;
       }
     }
   }

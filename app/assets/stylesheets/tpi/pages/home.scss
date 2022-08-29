@@ -1,8 +1,8 @@
 .section-title {
   margin-bottom: 1.25rem;
   padding-left: 1.25rem;
-  border-left: 8px solid $red;
-  color: $dark-violet;
+  border-left: 8px solid $blue-ribbon;
+  color: $dark;
 }
 
 .section-description {
@@ -62,7 +62,7 @@
     }
 
     .title {
-      color: $red;
+      color: $white;
     }
 
     .description {
@@ -82,7 +82,7 @@
         position: absolute;
         width: 8px;
         height: 100%;
-        background-color: $red;
+        background-color: $blue-ribbon;
         left: -1.5rem;
 
         @include tablet {
@@ -147,22 +147,22 @@
 
       &.publicly-listed-equities {
         color: $white;
-        background-color: $dark-violet;
+        background-color: $blue-darker;
         background-image: image-url('tpi/home/office-building.svg');
         background-repeat: no-repeat;
         background-position: right -70px bottom 30px;
       }
 
       &.banks {
-        background-color: $yellow-new;
-        color: $dark-violet;
+        background-color: $blue-ribbon;
+        color: $white;
         background-image: image-url('tpi/home/bank.svg');
         background-repeat: no-repeat;
         background-position: right -70px bottom 30px;
       }
 
       &.corporate-bonds {
-        background-color: $red;
+        background-color: $blue-dark;
         color: $white;
         background-image: image-url('tpi/home/bond.svg');
         background-repeat: no-repeat;
@@ -170,7 +170,7 @@
       }
 
       &.sovereign-bonds {
-        background-color: $medium-violet;
+        background-color: $blue;
         color: $white;
         background-image: image-url('tpi/home/countries.svg');
         background-repeat: no-repeat;
@@ -197,8 +197,9 @@
         content: '';
         display: block;
         position: absolute;
-        background-color: $white;
-        background-image: image-url('tpi/icons/plus-darker.svg');
+        border: 2px solid $white;
+        background-color: $blue-dark;
+        background-image: image-url('tpi/icons/plus-white.svg');
         background-repeat: no-repeat;
         background-position: center;
         border-radius: 50%;
@@ -210,9 +211,8 @@
 
       &:not(.disabled):hover {
         &:after {
-          background-color: $dark-violet;
-          background-image: image-url('tpi/icons/plus-white.svg');
-          border: 2px solid $white;
+          background-color: $white;
+          background-image: image-url('tpi/icons/plus-darker.svg');
         }
       }
     }
@@ -245,7 +245,7 @@
       }
 
       h3 {
-        color: $red;
+        color: $grey-dark;
       }
 
       .stat-boxes {
@@ -270,13 +270,14 @@
 
       .stat-box {
         text-align: right;
-        color: $medium-violet;
+        color: $grey-dark;
         padding: 10px 0px;
 
         &__number {
           font-size: 2.25rem;
           line-height: 1em;
           font-family: $font-family-bold;
+          color: $blue;
 
           @include tablet {
             font-size: 3rem;
@@ -325,7 +326,7 @@
       }
 
       .stat-box-b {
-        color: $medium-violet;
+        color: $grey-dark;
         display: grid;
         grid-template-columns: 80px 1fr;
         gap: 0px 15px;
@@ -340,6 +341,7 @@
           font-size: 2.25rem;
           line-height: 1em;
           font-family: $font-family-bold;
+          color: $blue;
 
           @include tablet {
             font-size: 3rem;
@@ -370,7 +372,7 @@
       &:before {
         content: '';
         position: absolute;
-        background: $dark-violet;
+        background: $blue;
         left: -$gap;
         width: 100vw;
         top: -50px;
@@ -395,7 +397,7 @@
       h3 {
         padding-left: 10px;
         margin-bottom: 20px;
-        border-left: 4px solid $red;
+        border-left: 4px solid $blue-ribbon;
         font-size: 18px !important;
         color: $white;
       }
@@ -516,7 +518,7 @@
           border-radius: 50%;
           height: 48px;
           width: 48px;
-          background-color: $red;
+          background-color: $blue-ribbon;
           z-index: 1;
           color: $white;
 
@@ -543,7 +545,7 @@
           display: block;
 
           height: 280px;
-          border: 1px solid $medium-violet;
+          border: 1px solid $grey-medium;
           padding-top: 90px;
           padding-bottom: 60px;
           padding-left: 40px;
@@ -553,13 +555,13 @@
 
           img {
             position: absolute;
-            height: 35px;
+            max-height: 35px;
             left: 20px;
             top: 20px;
           }
 
           &__title {
-            color: $red;
+            color: $blue-ribbon;
             font-size: 1.125rem;
             line-height: 1.25rem;
           }
@@ -576,13 +578,12 @@
               content: '';
               display: block;
               position: absolute;
-              background-color: $white;
-              background-image: image-url('tpi/icons/plus-darker.svg');
+              background-color: $blue-dark;
+              background-image: image-url('tpi/icons/plus-white.svg');
               background-repeat: no-repeat;
               background-position: center;
               background-size: 13px;
               border-radius: 50%;
-              border: 2px solid $dark-violet;
               width: 33px;
               height: 33px;
               right: 20px;
@@ -591,9 +592,9 @@
 
             &:hover {
               &:after {
-                background-color: $dark-violet;
-                background-image: image-url('tpi/icons/plus-white.svg');
-                border: 2px solid $dark-violet;
+                background-color: $white;
+                background-image: image-url('tpi/icons/plus-darker.svg');
+                border: 2px solid $blue-dark;
               }
             }
           }
@@ -622,9 +623,10 @@
       .research-box {
         padding: 15px;
         display: block;
-        color: $white;
+        color: $dark;
         font-size: 12px;
-        background: $dark-violet;
+        background: $white;
+        border: 1px solid $grey-medium;
 
         > img {
           width: 100%;
@@ -641,11 +643,6 @@
           gap: 15px;
           margin-top: 10px;
           margin-bottom: 10px;
-        }
-
-        &--yellow {
-          color: $dark;
-          background: $yellow-new;
         }
       }
     }
@@ -666,7 +663,7 @@
     align-items: center;
     height: 400px;
     min-height: 400px;
-    background: linear-gradient(180deg, $white 0%, $light-grey 100%);
+    background: linear-gradient(180deg, $white 0%, $grey-light 100%);
 
     .subscribe__logo {
       display: flex;
