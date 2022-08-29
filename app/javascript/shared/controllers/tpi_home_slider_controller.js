@@ -5,7 +5,8 @@ export default class extends Controller {
   static targets = ['items'];
 
   static values = {
-    items: { type: Number, default: 3 }
+    tabletItems: { type: Number, default: 3 },
+    desktopItems: { type: Number, default: 3 }
   };
 
   connect() {
@@ -26,7 +27,11 @@ export default class extends Controller {
       swipeAngle: 30,
       responsive: {
         768: {
-          items: this.itemsValue,
+          items: this.tabletItemsValue,
+          controls: true
+        },
+        992: {
+          items: this.desktopItemsValue,
           controls: true
         }
       },

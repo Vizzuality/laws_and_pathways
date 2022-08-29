@@ -489,6 +489,10 @@
         position: relative;
       }
 
+      .tns-inner {
+        padding: 1px;
+      }
+
       .tns-controls {
         button {
           margin: auto 0;
@@ -610,20 +614,15 @@
     border-bottom: 1px solid rgba(89, 91, 93, 0.2);
 
     .section-description {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr);
-      gap: 20px;
-
-      @include tablet {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      @include desktop {
-        grid-template-columns: repeat(4, 1fr);
-      }
-
       .research-box {
         padding: 15px;
+
+        @include mobile {
+          padding: 20px;
+        }
+
+        min-height: 350px;
+
         display: block;
         color: $dark;
         font-size: 12px;
