@@ -224,42 +224,22 @@
     </h2>
 
     <div class="section-description">
-      <a href="#" class="research-box">
-        <img src="<%= asset_path 'tpi/home/temp-research-image.png' %>" />
-        <div class="research-box__title">
-          <img src="<%= asset_path 'tpi/home/temp-research-author.png' %>" />
-          <div>
-            Valentin Julius Jahn on the CA100+ benchmark update
-          </div>
+      <div class="slider-container">
+        <div class="slider">
+          <% @researchers.each do |research| %>
+            <a href="#" class="research-box">
+              <img src="<%= asset_path research[:image] %>" />
+              <div class="research-box__title">
+                <img src="<%= asset_path research[:author_image] %>" />
+                <div>
+                  <%= research[:text] %>
+                  Valentin Julius Jahn on the CA100+ benchmark update
+                </div>
+              </div>
+            </a>
+          <% end %>
         </div>
-      </a>
-      <a href="#" class="research-box">
-        <img src="<%= asset_path 'tpi/home/temp-research-image.png' %>" />
-        <div class="research-box__title">
-          <img src="<%= asset_path 'tpi/home/temp-research-author.png' %>" />
-          <div>
-            Valentin Julius Jahn on the CA100+ benchmark update
-          </div>
-        </div>
-      </a>
-      <a href="#" class="research-box research-box--yellow">
-        <img src="<%= asset_path 'tpi/home/temp-research-image.png' %>" />
-        <div class="research-box__title">
-          <img src="<%= asset_path 'tpi/home/temp-research-author.png' %>" />
-          <div>
-            Nikolaus Hastreiter and Tess Sokol-Sachs on banking projects, Lorem ipsum dolor sit ame
-          </div>
-        </div>
-      </a>
-      <a href="#" class="research-box">
-        <img src="<%= asset_path 'tpi/home/temp-research-image.png' %>" />
-        <div class="research-box__title">
-          <img src="<%= asset_path 'tpi/home/temp-research-author.png' %>" />
-          <div>
-            Valentin Julius Jahn on the CA100+ benchmark update
-          </div>
-        </div>
-      </a>
+      </div>
     </div>
   </div>
 </section>

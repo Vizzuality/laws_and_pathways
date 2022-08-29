@@ -22,6 +22,28 @@ module TPI
           sectors: page&.contents&.find_by(code: 'sectors')&.text || '-'
         }
       }
+      @researchers = [
+        {
+          text: 'Valentin Julius Jahn on the CA100+ benchmark update',
+          image: 'tpi/home/temp-research-image.png',
+          author_image: 'tpi/home/temp-research-author.png'
+        },
+        {
+          text: 'Nikolaus Hastreiter and Tess Sokol-Sachs on banking projects, Lorem ipsum dolor sit amet',
+          image: 'tpi/home/temp-research-image.png',
+          author_image: 'tpi/home/temp-research-author.png'
+        },
+        {
+          text: 'Valentin Julius Jahn on the CA100+ benchmark update',
+          image: 'tpi/home/temp-research-image.png',
+          author_image: 'tpi/home/temp-research-author.png'
+        },
+        {
+          text: 'Valentin Julius Jahn on the CA100+ benchmark update',
+          image: 'tpi/home/temp-research-image.png',
+          author_image: 'tpi/home/temp-research-author.png'
+        }
+      ]
 
       fixed_navbar('Dashboard', admin_root_path)
     end

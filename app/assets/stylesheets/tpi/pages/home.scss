@@ -477,27 +477,8 @@
     }
   }
 
-  &__case-studies-supporters {
-    border-bottom: 1px solid rgba(89, 91, 93, 0.2);
-
-    .section-description {
-      margin-top: 20px;
-    }
-
-    ul {
-      list-style: inside;
-
-      li {
-        font-size: 24px;
-
-        a {
-          margin-left: -15px;
-          font-size: 16px;
-          color: $black;
-        }
-      }
-    }
-
+  &__case-studies-supporters,
+  &__latest-research {
     .slider-container {
       @include mobile {
         margin-left: -1.5rem;
@@ -539,68 +520,89 @@
           }
         }
       }
+    }
+  }
 
-      .case-studies-container {
-        .case-study {
-          display: block;
+  &__case-studies-supporters {
+    border-bottom: 1px solid rgba(89, 91, 93, 0.2);
 
-          height: 280px;
-          border: 1px solid $grey-medium;
-          padding-top: 90px;
-          padding-bottom: 60px;
-          padding-left: 40px;
-          padding-right: 40px;;
+    .section-description {
+      margin-top: 20px;
+    }
 
-          position: relative;
+    ul {
+      list-style: inside;
 
-          img {
+      li {
+        font-size: 24px;
+
+        a {
+          margin-left: -15px;
+          font-size: 16px;
+          color: $black;
+        }
+      }
+    }
+
+    .case-studies-container {
+      .case-study {
+        display: block;
+
+        height: 280px;
+        border: 1px solid $grey-medium;
+        padding-top: 90px;
+        padding-bottom: 60px;
+        padding-left: 40px;
+        padding-right: 40px;;
+
+        position: relative;
+
+        img {
+          position: absolute;
+          max-height: 35px;
+          left: 20px;
+          top: 20px;
+        }
+
+        &__title {
+          color: $blue-ribbon;
+          font-size: 1.125rem;
+          line-height: 1.25rem;
+        }
+
+        &__text {
+          color: $grey-dark;
+          font-size: 0.875rem;
+        }
+
+        &.is-hoverable {
+          cursor: pointer;
+
+          &:after {
+            content: '';
+            display: block;
             position: absolute;
-            max-height: 35px;
-            left: 20px;
-            top: 20px;
+            background-color: $blue-dark;
+            background-image: image-url('tpi/icons/plus-white.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 13px;
+            border-radius: 50%;
+            width: 33px;
+            height: 33px;
+            right: 20px;
+            bottom: 20px;
           }
 
-          &__title {
-            color: $blue-ribbon;
-            font-size: 1.125rem;
-            line-height: 1.25rem;
-          }
-
-          &__text {
-            color: $grey-dark;
-            font-size: 0.875rem;
-          }
-
-          &.is-hoverable {
-            cursor: pointer;
-
+          &:hover {
             &:after {
-              content: '';
-              display: block;
-              position: absolute;
-              background-color: $blue-dark;
-              background-image: image-url('tpi/icons/plus-white.svg');
-              background-repeat: no-repeat;
-              background-position: center;
-              background-size: 13px;
-              border-radius: 50%;
-              width: 33px;
-              height: 33px;
-              right: 20px;
-              bottom: 20px;
-            }
-
-            &:hover {
-              &:after {
-                background-color: $white;
-                background-image: image-url('tpi/icons/plus-darker.svg');
-                border: 2px solid $blue-dark;
-              }
+              background-color: $white;
+              background-image: image-url('tpi/icons/plus-darker.svg');
+              border: 2px solid $blue-dark;
             }
           }
         }
       }
-
     }
   }
 
