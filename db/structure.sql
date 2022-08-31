@@ -1558,6 +1558,39 @@ ALTER SEQUENCE public.targets_id_seq OWNED BY public.targets.id;
 
 
 --
+-- Name: testimonials; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.testimonials (
+    id bigint NOT NULL,
+    quote character varying,
+    author character varying,
+    role character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: testimonials_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.testimonials_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: testimonials_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.testimonials_id_seq OWNED BY public.testimonials.id;
+
+
+--
 -- Name: theme_types; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1954,6 +1987,13 @@ ALTER TABLE ONLY public.targets ALTER COLUMN id SET DEFAULT nextval('public.targ
 
 
 --
+-- Name: testimonials id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.testimonials ALTER COLUMN id SET DEFAULT nextval('public.testimonials_id_seq'::regclass);
+
+
+--
 -- Name: theme_types id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2299,6 +2339,14 @@ ALTER TABLE ONLY public.tags
 
 ALTER TABLE ONLY public.targets
     ADD CONSTRAINT targets_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: testimonials testimonials_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.testimonials
+    ADD CONSTRAINT testimonials_pkey PRIMARY KEY (id);
 
 
 --
@@ -3660,7 +3708,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220722075902'),
 ('20220722100953'),
 ('20220822094300'),
-('20220822102328'),
-('20220822103454');
+('20220822102328');
 
 
