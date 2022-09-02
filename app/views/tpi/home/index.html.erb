@@ -37,10 +37,10 @@
           <div class="assessment-box__header">Climate assessments:</div>
           <div class="assessment-box__title">Banks</div>
         <% end %>
-        <div class="assessment-box sovereign-bonds disabled">
+        <%= link_to tpi_publications_path(tags: 'ASCOR'), class: 'assessment-box sovereign-bonds' do %>
           <div class="assessment-box__header">Climate assessments:</div>
           <div class="assessment-box__title">Sovereign bond issuers</div>
-        </div>
+        <% end %>
       </div>
     </div>
   </div>

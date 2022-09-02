@@ -51,6 +51,9 @@ namespace :onetime do
       TPIPage.find_by(title: 'FAQ').update!(menu: :no_menu_entry)
 
       Keyword.find_or_create_by!(name: 'Event')
+      ascor = Keyword.find_or_create_by!(name: 'ASCOR')
+      Publication.find(84).keywords << ascor
+      Publication.find(105).keywords << ascor
     end
   end
 
