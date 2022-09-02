@@ -515,6 +515,11 @@
           z-index: 1;
           color: $white;
 
+          @include mobile {
+            height: 38px;
+            width: 38px;
+          }
+
           &:focus{
             outline: none;
           }
@@ -524,11 +529,17 @@
           }
 
           &[data-controls=next] {
-            right: -25px;
+            right: 0;
+            @include tablet {
+              right: -25px;
+            }
           }
 
           &[data-controls=prev] {
-            left: -25px;
+            left: 0;
+            @include tablet {
+              left: -25px;
+            }
           }
         }
       }

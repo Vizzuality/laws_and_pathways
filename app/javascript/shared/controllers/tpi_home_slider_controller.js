@@ -12,27 +12,27 @@ export default class extends Controller {
   connect() {
     this.slider = tns({
       container: this.itemsTarget,
-      controls: false,
+      controls: true,
       controlsText: [
         '<i class="fa fa-1x fa-arrow-left"></i>',
         '<i class="fa fa-1x fa-arrow-right"></i>'
       ],
-      edgePadding: 40,
+      edgePadding: 20,
       gutter: 20,
       items: 1,
-      loop: true,
+      loop: false,
       mouseDrag: true,
       nav: false,
       slideBy: 'page',
       swipeAngle: 30,
       responsive: {
         768: {
-          items: this.tabletItemsValue,
-          controls: true
+          edgePadding: 0,
+          items: this.tabletItemsValue
         },
         992: {
-          items: this.desktopItemsValue,
-          controls: true
+          edgePadding: 0,
+          items: this.desktopItemsValue
         }
       },
       onInit(slider) {
