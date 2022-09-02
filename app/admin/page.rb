@@ -22,6 +22,7 @@
 
     index do
       column :title, &:title_link
+      column(:preview_link) { |page| link_to 'Preview', page.preview_url }
       column :slug
       column :menu
       actions
