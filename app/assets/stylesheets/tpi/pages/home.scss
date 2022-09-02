@@ -489,6 +489,10 @@
         width: 100vw;
       }
 
+      .tns-slider {
+        display: flex;
+      }
+
       .tns-outer {
         position: relative;
       }
@@ -625,7 +629,7 @@
           padding: 20px;
         }
 
-        min-height: 350px;
+        height: 100%;
 
         display: block;
         color: $dark;
