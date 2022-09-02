@@ -33,19 +33,33 @@ namespace :onetime do
 
       CaseStudy.create!(
         organization: 'The church of England Pensions Board',
-        text: 'is using FTSE Russell and TPI data to create a new climate index.',
-        link: 'https://example.com'
+        text: 'is using FTSE Russell and TPI data to create a new climate index.'
       ).logo.attach(attachable_file('church_of_england.png'))
+      CaseStudy.create!(
+        organization: 'abrdn',
+        text: 'is using TPI data to identify transition leaders and laggards.',
+        link: page_link('case-study-helping-abrdn-challenge-transition-laggards-and-identify-transition-leaders')
+      ).logo.attach(attachable_file('ABRDN.png'))
       CaseStudy.create!(
         organization: 'Robeco',
         text: 'is using TPI data to guide its engagements on climate change.',
-        link: 'https://example.com'
+        link: page_link('case-study-helping-robeco-drive-down-emissions-in-the-auto-industry')
       ).logo.attach(attachable_file('robeco.png'))
+      CaseStudy.create!(
+        organization: 'Länsförsäkringar',
+        text: 'is using TPI data to inform its exclusion and climate transition lists',
+        link: page_link('case-study-helping-lansforsakringar-define-companies-in-transition')
+      ).logo.attach(attachable_file('Lans.png'))
       CaseStudy.create!(
         organization: 'Brunel',
         text: 'is using TPI data to shape portfolio construction in its Global High Alpha strategy.',
-        link: 'https://example.com'
+        link: page_link('case-study-helping-brunel-raise-climate-standards-across-the-finance-industry')
       ).logo.attach(attachable_file('brunel.png'))
+      CaseStudy.create!(
+        organization: 'USS',
+        text: 'is using TPI data to inform voting and engagement decisions.',
+        link: page_link('case-study-helping-uss-vote-on-climate-management')
+      ).logo.attach(attachable_file('USS.png'))
 
       TPIPage.find_by(title: 'Disclaimer').update!(menu: :about)
       TPIPage.find_by(title: 'FAQ').update!(menu: :no_menu_entry)
@@ -55,6 +69,12 @@ namespace :onetime do
       Publication.find(84).keywords << ascor
       Publication.find(105).keywords << ascor
     end
+  end
+
+  def page_link(slug)
+    domain = Rails.configuration.try(:tpi_domain)
+
+    "https://#{domain}/#{slug}"
   end
 
   def attachable_file(filename)
