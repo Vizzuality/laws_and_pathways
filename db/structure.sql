@@ -1374,7 +1374,8 @@ CREATE TABLE public.publications (
     created_by_id bigint,
     updated_by_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    author character varying
 );
 
 
@@ -3708,6 +3709,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220722075902'),
 ('20220722100953'),
 ('20220822094300'),
-('20220822102328');
+('20220822102328'),
+('20220902105018');
 
 

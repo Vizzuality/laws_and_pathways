@@ -21,6 +21,7 @@ class Publication < ApplicationRecord
   include ImageWithThumb
 
   has_one_attached :file
+  has_one_attached :author_image
 
   tag_with :keywords
 
