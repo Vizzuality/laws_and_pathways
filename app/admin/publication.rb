@@ -22,7 +22,12 @@ ActiveAdmin.register Publication do
           row :short_description
           row :author
           row :author_image do |p|
-            image_tag(url_for(p.author_image)) if p.author_image.present?
+            if p.author_image.present?
+              image_tag(
+                url_for(p.author_image_thumbnail),
+                style: 'width:40px;height:40px;border-radius: 50%;'
+              )
+            end
           end
           row :publication_date
           list_row 'Sectors', :tpi_sector_links

@@ -40,4 +40,8 @@ class Publication < ApplicationRecord
   def tags_and_sectors
     (keywords.map(&:name) + tpi_sectors.map(&:name)).compact.uniq.sort
   end
+
+  def author_image_thumbnail
+    author_image.present? ? author_image.variant(resize: '40x40') : nil
+  end
 end

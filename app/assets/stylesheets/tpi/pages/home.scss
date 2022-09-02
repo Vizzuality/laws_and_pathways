@@ -666,6 +666,11 @@
           margin-top: 10px;
           margin-bottom: 10px;
         }
+
+        &__author {
+          color: $blue-ribbon;
+          font-family: $family-sans-serif-bold;
+        }
       }
     }
   }
