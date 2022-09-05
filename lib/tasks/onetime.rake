@@ -12,8 +12,8 @@ class OneTimeTasks
             title: 'The TPI Global Climate Transition Centre',
             code: 'hero',
             text: '
-          Transition Pathway Initiative (TPI) Global Climate Transition Centre is an authoritative,
-          independent source of research and data into the progress being made by the financial and
+          Transition Pathway Initiative (TPI) Global Climate Transition Centre is an independent,
+          authoritative source of research and data into the progress being made by the financial and
           corporate world in making the transition to a low-carbon economy
             '
           )
