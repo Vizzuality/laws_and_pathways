@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: case_studies
+#
+#  id           :bigint           not null, primary key
+#  organization :string           not null
+#  link         :string
+#  text         :string           not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
 require 'rails_helper'
 
 RSpec.describe CaseStudy, type: :model do

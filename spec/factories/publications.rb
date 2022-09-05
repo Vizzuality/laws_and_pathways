@@ -12,6 +12,7 @@
 #  updated_by_id     :bigint
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  author            :string
 #
 
 FactoryBot.define do
