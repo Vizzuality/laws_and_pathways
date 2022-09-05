@@ -235,10 +235,13 @@
                     <img src="<%= url_for(research.author_image_thumbnail) %>" />
                   <% end %>
                   <div>
-                    <span class="research-box__author">
-                      <%= research.author || 'Author' %>
-                    </span>
-                    <%= [' on the', research.title].join(' ') %>
+                    <% if research.author.present? %>
+                      <span class="research-box__author">
+                        <%= research.author %>
+                      </span>
+                      <%= ' on the ' %>
+                    <% end %>
+                    <%= research.title %>
                   </div>
                 </div>
               </a>
