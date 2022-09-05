@@ -72,6 +72,28 @@ class OneTimeTasks
           ascor = Keyword.find_or_create_by!(name: 'ASCOR')
           Publication.find(84).keywords << ascor
           Publication.find(105).keywords << ascor
+
+          tpi_companies_page = TPIPage
+            .create_with(menu: :no_menu_entry)
+            .find_or_create_by!(title: 'Publicly listed equities content', slug: 'publicly-listed-equities-content')
+
+          tpi_companies_page.contents.destroy_all
+          tpi_companies_page.contents.create!(
+            title: 'Methodology',
+            code: 'methodology_description',
+            text: 'TODO: define Methodology description'
+          )
+
+          tpi_banks_page = TPIPage
+            .create_with(menu: :no_menu_entry)
+            .find_or_create_by!(title: 'Banks content', slug: 'banks-content')
+
+          tpi_banks_page.contents.destroy_all
+          tpi_banks_page.contents.create!(
+            title: 'Methodology',
+            code: 'methodology_description',
+            text: 'TODO: define Methodology description'
+          )
         end
       end
     end

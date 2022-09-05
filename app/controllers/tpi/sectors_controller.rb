@@ -11,6 +11,18 @@ module TPI
       @companies_by_sectors = Rails.cache.fetch(TPICache::KEY, expires_in: TPICache::EXPIRES_IN) do
         ::Api::Charts::Sector.new(companies_scope(params)).companies_market_cap_by_sector
       end
+      @publications_and_articles = publications_and_articles
+      @methodology_description = Content.find_by(
+        page: TPIPage.find_by(slug: 'publicly-listed-equities-content'),
+        code: 'methodology_description'
+      )
+      @methodology_publication = Publication
+        .published
+        .joins(:keywords)
+        .where(tags: {name: 'Methodology'})
+        .where.not(id: Publication.published.joins(:tpi_sectors).distinct.pluck(:id))
+        .order(publication_date: :desc)
+        .first
 
       fixed_navbar('Sectors', admin_tpi_sectors_path)
     end
@@ -72,6 +84,15 @@ module TPI
     end
 
     private
+
+    def publications_and_articles
+      publications = Publication.published.order(publication_date: :desc).limit(3)
+      news = NewsArticle.published.order(publication_date: :desc).limit(3)
+
+      (publications + news).sort do |a, b|
+        b.publication_date <=> a.publication_date
+      end.first(3)
+    end
 
     def send_user_download_file(companies_ids, filename)
       mq_assessments = MQ::Assessment

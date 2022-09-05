@@ -3,22 +3,20 @@
 .sectors-index-page {
   .sectors-header {
     background: $blue;
-    height: 100px;
+    min-height: 100px;
     display: flex;
     align-items: center;
 
     a {
       color: white;
-    }
-
-    a + a {
-      margin-left: 20px;
+      line-height: 40px;
+      margin-right: 20px;
     }
 
     @include until($desktop) {
       padding: 0 0.75rem;
       font-size: $size-7;
-      height: 60px;
+      min-height: 60px;
       font-family: $font-family-regular;
     }
   }
@@ -26,14 +24,18 @@
   section {
     margin-top: 70px;
 
+    @include until($desktop) {
+      margin-top: 40px;
+      padding: 0 0.75rem;
+    }
+  }
+
+  section, .sectors-section-description {
     > p {
       margin-top: 30px;
     }
 
     @include until($desktop) {
-      margin-top: 40px;
-      padding: 0 0.75rem;
-
       h4 {
         font-size: $size-5 !important;
       }
@@ -44,5 +46,11 @@
         color: $grey-dark;
       }
     }
+  }
+
+  #methodology {
+    display: flex;
+
+
   }
 }

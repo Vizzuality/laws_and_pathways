@@ -29,7 +29,12 @@ class Content < ApplicationRecord
     code.nil?
   end
 
-  def homepage_stat?
-    %w[total_market_cap sectors combined_aum].include? code
+  def static_content?
+    %w[
+      total_market_cap
+      sectors
+      combined_aum
+      methodology_description
+    ].include? code
   end
 end
