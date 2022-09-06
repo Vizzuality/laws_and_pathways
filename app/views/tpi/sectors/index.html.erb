@@ -62,12 +62,12 @@
   <% if @methodology_publication.present? %>
     <section id="methodology" class="container">
       <div class="columns">
-        <div class="column sectors-section-description">
+        <div class="column pages__content">
           <h4>Methodology</h4>
 
-          <p>
-            <%= @methodology_description&.text %>
-          </p>
+          <div>
+            <%== @methodology_description&.text %>
+          </div>
         </div>
         <div class="column">
           <%= render 'tpi/publications/list', publications_and_articles: [@methodology_publication] %>

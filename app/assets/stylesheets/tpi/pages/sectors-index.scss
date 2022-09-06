@@ -30,7 +30,7 @@
     }
   }
 
-  section, .sectors-section-description {
+  section {
     > p {
       margin-top: 30px;
     }
@@ -51,6 +51,24 @@
   #methodology {
     display: flex;
 
+    .pages__content {
+      margin-bottom: 0;
 
+      > div {
+        margin-top: 30px;
+      }
+
+      @include until($desktop) {
+        h4 {
+          font-size: $size-5 !important;
+        }
+
+        > div {
+          margin-top: 15px;
+          font-size: $size-6;
+          color: $grey-dark;
+        }
+      }
+    }
   }
 }

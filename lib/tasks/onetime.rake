@@ -81,7 +81,7 @@ class OneTimeTasks
           tpi_companies_page.contents.create!(
             title: 'Methodology',
             code: 'methodology_description',
-            text: 'TODO: define Methodology description'
+            text: '<div><strong>The TPI’s methodology was developed by an international group of asset owners in partnership with the TPI Centre, supported by data from FTSE Russell. A robust approach was established based on objectivity, transparency and global application.</strong> The TPI Centre assesses companies on two dimensions based on publicly available information:</div><div>&nbsp;</div><ol><li><strong>Management Quality</strong>: the quality of companies’ management of their greenhouse gas emissions and of risks and opportunities related to the low-carbon transition. Companies’ management quality is assessed against a series of indicators, covering issues such as company policy, emissions reporting and verification, targets, strategic risk assessment and executive remuneration.</li><li><strong>Carbon Performance</strong>: how companies’ carbon performance now and in the future might compare to the international targets and national pledges made as part of the Paris Agreement. Companies’ carbon performance is assessed using the modelling conducted by the International Energy Agency (IEA). This modelling is used to translate emissions targets made at the international level into sectoral benchmarks, against which the performance of individual companies can be compared. This framework is known as the Sectoral Decarbonization Approach. We use 3 benchmark scenarios, which in most sectors are:</li></ol><ul><li>1.5 Degrees scenario, which is consistent with the overall aim of the Paris Agreement to hold “the increase in the global average temperature to well below 2°C above pre-industrial levels and to pursue efforts to limit the temperature increase to 1.5°C above pre-industrial levels”. This scenario is consistent with a carbon budget that limits the global mean temperature rise to 1.5°C with a 50% probability.</li><li>Below 2 Degrees scenario, which is also consistent with the overall aim of the Paris Agreement to limit warming, albeit at the middle of the range of ambition. This scenario is consistent with a carbon budget that limits the global mean temperature rise to 1.65°C with a 50% probability.</li><li>National Pledges scenario, which is consistent with the global aggregate of emissions reductions pledged by countries up to at least mid-2020, depending on the sector. According to the IEA, this aggregate is currently insufficient to put the world on a path to limit warming to 2°C, even if it will constitute a departure from a business-as-usual trend. This scenario is consistent with a carbon budget that limits the global mean temperature rise to 2.6°C by 2100 with a 50% probability.</li></ul><div>&nbsp;</div><div>For a more in-depth account of the methodology please see the latest publication.</div>'
           )
 
           tpi_banks_page = TPIPage
@@ -92,12 +92,12 @@ class OneTimeTasks
           tpi_banks_page.contents.create!(
             title: 'Methodology',
             code: 'methodology_description',
-            text: 'TODO: define Methodology description'
+            text: "<div>The banking sector has a critical role to play in the low-carbon transition, incentivising emissions reductions in the real economy through climate-aware financing. The TPI Centre in partnership with the Institutional Investor Group on Climate Change (IIGCC), developed an investor-led pilot framework of indicators to assess the preparedness of banks for the low-carbon transition. Our framework sets an action-focused roadmap for banks to align their financing activities with the goals of the Paris Agreement. In summer 2022, the TPI Centre published a report describing our methodology and pilot analysis of 27 banks.&nbsp;<br><br>The full pilot framework can be found in the report's Appendix.</div>"
           )
           tpi_banks_page.contents.create!(
             title: 'Methodology Publication ID',
             code: 'methodology_publication_id',
-            text: '123'
+            text: '107'
           )
         end
       end

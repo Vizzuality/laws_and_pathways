@@ -29,6 +29,15 @@ class Content < ApplicationRecord
     code.nil?
   end
 
+  def simple_text?
+    %w[
+      total_market_cap
+      sectors
+      combined_aum
+      methodology_publication_id
+    ].include? code
+  end
+
   def static_content?
     %w[
       total_market_cap
