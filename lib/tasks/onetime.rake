@@ -1,6 +1,7 @@
 class OneTimeTasks
   include Rake::DSL
 
+  # rubocop:disable Layout/LineLength
   def initialize
     namespace :onetime do
       desc 'Deploy new version of homepage content'
@@ -108,6 +109,7 @@ class OneTimeTasks
       end
     end
   end
+  # rubocop:enable Layout/LineLength
 
   private
 

@@ -1,85 +1,13 @@
 {
   "ignored_warnings": [
     {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 4,
-      "fingerprint": "3a9d04efafeb7619a7e6db3c8ee025dc5c756204db484431c02a2b0087a166ea",
-      "check_name": "LinkToHref",
-      "message": "Potentially unsafe model attribute in `link_to` href",
-      "file": "app/views/tpi/home/_partners.html.erb",
-      "line": 23,
-      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
-      "code": "link_to((Unresolved Model).new.link)",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "TPI::HomeController",
-          "method": "index",
-          "line": 17,
-          "file": "app/controllers/tpi/home_controller.rb",
-          "rendered": {
-            "name": "tpi/home/index",
-            "file": "app/views/tpi/home/index.html.erb"
-          }
-        },
-        {
-          "type": "template",
-          "name": "tpi/home/index",
-          "line": 87,
-          "file": "app/views/tpi/home/index.html.erb",
-          "rendered": {
-            "name": "tpi/home/_partners",
-            "file": "app/views/tpi/home/_partners.html.erb"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "tpi/home/_partners"
-      },
-      "user_input": "(Unresolved Model).new.link",
-      "confidence": "Weak",
-      "note": ""
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 2,
-      "fingerprint": "479971081b691a24c75f8f977743f13867183105e1a2cb3a5e868d205c55d49b",
-      "check_name": "CrossSiteScripting",
-      "message": "Unescaped model attribute",
-      "file": "app/views/cclow/pages/show.html.erb",
-      "line": 12,
-      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "(Unresolved Model).new.text",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "CCLOW::PagesController",
-          "method": "show",
-          "line": 14,
-          "file": "app/controllers/cclow/pages_controller.rb",
-          "rendered": {
-            "name": "cclow/pages/show",
-            "file": "app/views/cclow/pages/show.html.erb"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "cclow/pages/show"
-      },
-      "user_input": null,
-      "confidence": "High",
-      "note": ""
-    },
-    {
       "warning_type": "Dynamic Render Path",
       "warning_code": 15,
       "fingerprint": "5823e1db30c5459848a7064bb3984576a1cfe2bb67d716fd5c80a666f467dd0d",
       "check_name": "Render",
       "message": "Render path contains parameter value",
       "file": "app/views/admin/data_uploads/instruction.html.erb",
-      "line": 37,
+      "line": 52,
       "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
       "code": "render(action => \"admin/data_uploads/instruction/#{params[:uploader].underscore}\", {})",
       "render_path": null,
@@ -98,7 +26,7 @@
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/tpi/companies/show.html.erb",
-      "line": 104,
+      "line": 119,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "TPI::CompanyDecorator.decorate(Company.published.friendly.find(params[:id])).isin_array.join(\"<br/>\")",
       "render_path": [
@@ -120,6 +48,37 @@
       },
       "user_input": "Company.published.friendly",
       "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "63fe64bd309055ae08454ac15874ea333494cfd7415016bf2b6d82bc49ef30f0",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/tpi/sectors/index.html.erb",
+      "line": 69,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "Content.find_by(:page => TPIPage.find_by(:slug => \"publicly-listed-equities-content\"), :code => \"methodology_description\").text",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "TPI::SectorsController",
+          "method": "index",
+          "line": 27,
+          "file": "app/controllers/tpi/sectors_controller.rb",
+          "rendered": {
+            "name": "tpi/sectors/index",
+            "file": "app/views/tpi/sectors/index.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "tpi/sectors/index"
+      },
+      "user_input": null,
+      "confidence": "Medium",
       "note": ""
     },
     {
@@ -151,6 +110,37 @@
       },
       "user_input": null,
       "confidence": "High",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "706d39fa59d9d21efd30e74335f485b1c9c89e762698cd86e923220f36b2965b",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/tpi/banks/index.html.erb",
+      "line": 69,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "Content.find_by(:page => TPIPage.find_by(:slug => \"banks-content\"), :code => \"methodology_description\").text",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "TPI::BanksController",
+          "method": "index",
+          "line": 26,
+          "file": "app/controllers/tpi/banks_controller.rb",
+          "rendered": {
+            "name": "tpi/banks/index",
+            "file": "app/views/tpi/banks/index.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "tpi/banks/index"
+      },
+      "user_input": null,
+      "confidence": "Medium",
       "note": ""
     },
     {
@@ -318,6 +308,6 @@
       "note": ""
     }
   ],
-  "updated": "2021-03-29 17:19:49 +0200",
-  "brakeman_version": "5.0.0"
+  "updated": "2022-09-06 13:32:13 +0200",
+  "brakeman_version": "5.2.3"
 }
