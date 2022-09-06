@@ -83,6 +83,11 @@ class OneTimeTasks
             code: 'methodology_description',
             text: '<div><strong>The TPI’s methodology was developed by an international group of asset owners in partnership with the TPI Centre, supported by data from FTSE Russell. A robust approach was established based on objectivity, transparency and global application.</strong> The TPI Centre assesses companies on two dimensions based on publicly available information:</div><div>&nbsp;</div><ol><li><strong>Management Quality</strong>: the quality of companies’ management of their greenhouse gas emissions and of risks and opportunities related to the low-carbon transition. Companies’ management quality is assessed against a series of indicators, covering issues such as company policy, emissions reporting and verification, targets, strategic risk assessment and executive remuneration.</li><li><strong>Carbon Performance</strong>: how companies’ carbon performance now and in the future might compare to the international targets and national pledges made as part of the Paris Agreement. Companies’ carbon performance is assessed using the modelling conducted by the International Energy Agency (IEA). This modelling is used to translate emissions targets made at the international level into sectoral benchmarks, against which the performance of individual companies can be compared. This framework is known as the Sectoral Decarbonization Approach. We use 3 benchmark scenarios, which in most sectors are: 1.5 Degrees scenario, Below 2 Degrees scenario and National Pledges scenario.</li></ol><div>&nbsp;</div><div>For a more in-depth account of the methodology please see the latest publication.</div>'
           )
+          tpi_companies_page.contents.create!(
+            title: 'Methodology Publication ID',
+            code: 'methodology_publication_id',
+            text: '90'
+          )
 
           tpi_banks_page = TPIPage
             .create_with(menu: :no_menu_entry)

@@ -12,17 +12,16 @@ module TPI
         ::Api::Charts::Sector.new(companies_scope(params)).companies_market_cap_by_sector
       end
       @publications_and_articles = publications_and_articles
+      sectors_page = TPIPage.find_by(slug: 'publicly-listed-equities-content')
       @methodology_description = Content.find_by(
-        page: TPIPage.find_by(slug: 'publicly-listed-equities-content'),
+        page: sectors_page,
         code: 'methodology_description'
       )
-      @methodology_publication = Publication
-        .published
-        .joins(:keywords)
-        .where(tags: {name: 'Methodology'})
-        .where.not(id: Publication.published.joins(:tpi_sectors).distinct.pluck(:id))
-        .order(publication_date: :desc)
-        .first
+      @methodology_id = Content.find_by(
+        page: sectors_page,
+        code: 'methodology_publication_id'
+      )
+      @methodology_publication = Publication.find_by(id: @methodology_id&.text)
 
       fixed_navbar('Sectors', admin_tpi_sectors_path)
     end
