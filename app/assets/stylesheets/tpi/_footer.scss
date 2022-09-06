@@ -43,11 +43,13 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
 
     @include mobile {
       font-size: 14px;
+    }
+
+    @include desktop {
+      justify-content: space-between;
     }
 
     .column {

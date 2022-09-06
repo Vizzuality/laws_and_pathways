@@ -11,6 +11,16 @@ module TPI
     def index
       @assessment_dates = BankAssessment.select(:assessment_date).distinct.pluck(:assessment_date)
       @publications_and_articles = TPISector.find_by(slug: 'banks')&.publications_and_articles || []
+      bank_page = TPIPage.find_by(slug: 'banks-content')
+      @methodology_description = Content.find_by(
+        page: bank_page,
+        code: 'methodology_description'
+      )
+      @methodology_id = Content.find_by(
+        page: bank_page,
+        code: 'methodology_publication_id'
+      )
+      @methodology_publication = Publication.find_by(id: @methodology_id)
 
       fixed_navbar('Banks', admin_banks_path)
     end

@@ -94,6 +94,11 @@ class OneTimeTasks
             code: 'methodology_description',
             text: 'TODO: define Methodology description'
           )
+          tpi_banks_page.contents.create!(
+            title: 'Methodology Publication ID',
+            code: 'methodology_publication_id',
+            text: '123'
+          )
         end
       end
     end

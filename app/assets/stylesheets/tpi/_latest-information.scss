@@ -8,7 +8,14 @@ $dots-space: 1.3rem;
     color: $white;
     padding-top: 86px;
     padding-bottom: 136px;
-    margin-top: 50px;
+
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+
+    @include desktop {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
   }
 
   &__container {

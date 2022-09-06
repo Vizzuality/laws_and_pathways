@@ -35,6 +35,7 @@ class Content < ApplicationRecord
       sectors
       combined_aum
       methodology_description
+      methodology_publication_id
     ].include? code
   end
 end
