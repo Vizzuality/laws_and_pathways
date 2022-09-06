@@ -20,7 +20,7 @@ module TPI
         page: bank_page,
         code: 'methodology_publication_id'
       )
-      @methodology_publication = Publication.find_by(id: @methodology_id)
+      @methodology_publication = Publication.find_by(id: @methodology_id&.text)
 
       fixed_navbar('Banks', admin_banks_path)
     end
