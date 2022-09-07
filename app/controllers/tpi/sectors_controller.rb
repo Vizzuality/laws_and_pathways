@@ -7,6 +7,8 @@ module TPI
     before_action :fetch_sector, only: [:show, :user_download]
     before_action :redirect_if_numeric_or_historic_slug, only: [:show]
 
+    helper_method :any_cp_assessment?
+
     def index
       @companies_by_sectors = Rails.cache.fetch(TPICache::KEY, expires_in: TPICache::EXPIRES_IN) do
         ::Api::Charts::Sector.new(companies_scope(params)).companies_market_cap_by_sector
@@ -83,6 +85,10 @@ module TPI
     end
 
     private
+
+    def any_cp_assessment?
+      CP::Assessment.currently_published.joins(company: :sector).where(companies: {sector: @sector}).any?
+    end
 
     def publications_and_articles
       Queries::TPI::NewsPublicationsQuery.new(

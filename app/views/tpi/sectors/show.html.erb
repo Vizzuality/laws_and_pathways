@@ -15,10 +15,12 @@
         <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
         Go to Management Quality
       </a>
-      <a href="#carbon-performance" class="link with-icon is-pulled-left">
-        <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
-        Go to Carbon Performance
-      </a>
+      <% if any_cp_assessment? %>
+        <a href="#carbon-performance" class="link with-icon is-pulled-left">
+          <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
+          Go to Carbon Performance
+        </a>
+      <% end %>
 
       <%= link_to user_download_tpi_sector_path(@sector), class: 'button is-primary is-pulled-right with-icon with-border' do %>
         <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
@@ -29,9 +31,11 @@
       <a href="#management-quality" class="link with-icon is-pulled-left">
         Management Quality
       </a>
-      <a href="#carbon-performance" class="link with-icon is-pulled-left">
-        Carbon Performance
-      </a>
+      <% if any_cp_assessment? %>
+        <a href="#carbon-performance" class="link with-icon is-pulled-left">
+          Carbon Performance
+        </a>
+      <% end %>
     </div>
   </div>
 
@@ -72,21 +76,23 @@
     </div>
   </section>
 
-  <section id="carbon-performance" class="container">
-    <div class="cp-performance-header">
-      <h4>Carbon Performance: <%= @sector.name %></h4>
-      <p class="is-hidden-desktop"><%= "Carbon Performance alignment of companies in the #{@sector.name} sector with the Paris agreement benchmarks." %></p>
-      <div class="show-by-dropdown">
-        Showing:
-        <div id="show-by-dropdown-placeholder"></div>
+  <% if any_cp_assessment? %>
+    <section id="carbon-performance" class="container">
+      <div class="cp-performance-header">
+        <h4>Carbon Performance: <%= @sector.name %></h4>
+        <p class="is-hidden-desktop"><%= "Carbon Performance alignment of companies in the #{@sector.name} sector with the Paris agreement benchmarks." %></p>
+        <div class="show-by-dropdown">
+          Showing:
+          <div id="show-by-dropdown-placeholder"></div>
+        </div>
       </div>
-    </div>
 
-    <%= react_component('charts/cp-performance', {
-      dataUrl: emissions_chart_data_tpi_sector_path(@sector.id),
-      unit: @sector.latest_cp_unit&.unit
-    }) %>
-  </section>
+      <%= react_component('charts/cp-performance', {
+        dataUrl: emissions_chart_data_tpi_sector_path(@sector.id),
+        unit: @sector.latest_cp_unit&.unit
+        }) %>
+    </section>
+  <% end %>
 
   <% if @publications_and_articles.present? %>
     <hr>
