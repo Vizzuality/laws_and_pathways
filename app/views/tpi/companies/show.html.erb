@@ -14,10 +14,12 @@
         <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
         Go to Management Quality
       </a>
-      <a href="#carbon-performance" class="link with-icon is-pulled-left">
-        <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
-        Go to Carbon Performance
-      </a>
+      <% if @company_presenter.cp_assessments.any? %>
+        <a href="#carbon-performance" class="link with-icon is-pulled-left">
+          <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
+          Go to Carbon Performance
+        </a>
+      <% end %>
 
       <%= link_to user_download_all_tpi_sectors_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
         <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
@@ -28,9 +30,11 @@
       <a href="#management-quality" class="link with-icon is-pulled-left">
         Management Quality
       </a>
-      <a href="#carbon-performance" class="link with-icon is-pulled-left">
-        Carbon Performance
-      </a>
+      <% if @company_presenter.cp_assessments.any? %>
+        <a href="#carbon-performance" class="link with-icon is-pulled-left">
+          Carbon Performance
+        </a>
+      <% end %>
     </div>
   </div>
 
