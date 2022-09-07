@@ -85,12 +85,10 @@ module TPI
     private
 
     def publications_and_articles
-      publications = Publication.published.order(publication_date: :desc).limit(3)
-      news = NewsArticle.published.order(publication_date: :desc).limit(3)
-
-      (publications + news).sort do |a, b|
-        b.publication_date <=> a.publication_date
-      end.first(3)
+      Queries::TPI::NewsPublicationsQuery.new(
+        sectors: TPISector.tpi_tool.pluck(:name).join(','),
+        tags: 'State of Transition,Carbon Performance'
+      ).call.take(3)
     end
 
     def send_user_download_file(companies_ids, filename)
