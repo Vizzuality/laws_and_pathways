@@ -75,6 +75,8 @@ class OneTimeTasks
           Publication.find(105).keywords << ascor
 
           Keyword.find_or_create_by!(name: 'Carbon Performance')
+          Keyword.find_or_create_by!(name: 'Publicly listed companies')
+          Keyword.find_or_create_by!(name: 'Public consultations')
 
           tpi_companies_page = TPIPage
             .create_with(menu: :no_menu_entry)
@@ -84,7 +86,7 @@ class OneTimeTasks
           tpi_companies_page.contents.create!(
             title: 'Methodology',
             code: 'methodology_description',
-            text: '<div>The TPI’s methodology was developed by an international group of asset owners in partnership with the TPI Centre, supported by data from FTSE Russell. The TPI Centre assesses companies on two dimensions based on publicly available information: <strong>Management Quality</strong> covers companies’ governance of greenhouse gas emissions and the risks and opportunities arising from the low-carbon transition and <strong>Carbon Performance</strong>, which tests the alignment of company targets with the UN Paris Agreement goals. Benchmarking is sector-specific and based on emissions intensity. We use three benchmark scenarios for each sector, which in most sectors are: 1) National Pledges, consistent with emissions reductions related to policies introduced or under development up to at least mid-2020, depending on the sector; these reductions collectively are insufficient to limit global warming to 2°C or below; 2) Below 2 Degrees, consistent with holding the global temperature increase to below 1.8C with a 66% probability; 3) 1.5 Degrees, consistent with holding the temperature increase to 1.5C with a 50% probability.<br><br></div><div>For a more in-depth account of the methodology please see the Methodology report.</div>'
+            text: '<div>The TPI’s methodology was developed by an international group of asset owners in partnership with the TPI Centre, supported by data from FTSE Russell. The TPI Centre assesses companies on two dimensions based on publicly available information: Management Quality covers companies’ governance of greenhouse gas emissions and the risks and opportunities arising from the low-carbon transition and Carbon Performance, which tests the alignment of company targets with the UN Paris Agreement goals. Benchmarking is sector-specific and based on emissions intensity. We use three benchmark scenarios for each sector, which in most sectors are: 1.5 Degrees, Below 2 Degrees and National Pledges.<br>&nbsp;</div><div>For an in-depth account of the methodology please see the Methodology report.</div>'
           )
           tpi_companies_page.contents.create!(
             title: 'Methodology Publication ID',
