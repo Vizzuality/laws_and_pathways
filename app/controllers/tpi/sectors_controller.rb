@@ -127,7 +127,7 @@ module TPI
     end
 
     def fetch_sectors
-      @sectors = TPISector.tpi_tool.includes(:cluster).order(:name)
+      @sectors = TPISector.tpi_tool.with_companies.includes(:cluster).order(:name)
       @sectors_json = @sectors.map { |s| s.as_json(except: [:created_at, :updated_at], methods: [:path]) }
     end
 
