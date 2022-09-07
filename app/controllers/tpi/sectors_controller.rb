@@ -87,7 +87,7 @@ module TPI
     def publications_and_articles
       Queries::TPI::NewsPublicationsQuery.new(
         sectors: TPISector.tpi_tool.pluck(:name).join(','),
-        tags: 'State of Transition,Carbon Performance'
+        tags: 'State of Transition,Carbon Performance,Publicly listed companies,Public consultations'
       ).call.take(3)
     end
 
