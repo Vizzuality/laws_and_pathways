@@ -417,6 +417,39 @@ ALTER SEQUENCE public.banks_id_seq OWNED BY public.banks.id;
 
 
 --
+-- Name: case_studies; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.case_studies (
+    id bigint NOT NULL,
+    organization character varying NOT NULL,
+    link character varying,
+    text character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: case_studies_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.case_studies_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: case_studies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.case_studies_id_seq OWNED BY public.case_studies.id;
+
+
+--
 -- Name: companies; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -472,7 +505,8 @@ CREATE TABLE public.contents (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     content_type character varying,
-    "position" integer
+    "position" integer,
+    code character varying
 );
 
 
@@ -1303,7 +1337,8 @@ CREATE TABLE public.pages (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     menu character varying,
-    type character varying
+    type character varying,
+    "position" integer
 );
 
 
@@ -1340,7 +1375,8 @@ CREATE TABLE public.publications (
     created_by_id bigint,
     updated_by_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    author character varying
 );
 
 
@@ -1750,6 +1786,13 @@ ALTER TABLE ONLY public.banks ALTER COLUMN id SET DEFAULT nextval('public.banks_
 
 
 --
+-- Name: case_studies id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.case_studies ALTER COLUMN id SET DEFAULT nextval('public.case_studies_id_seq'::regclass);
+
+
+--
 -- Name: companies id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2058,6 +2101,14 @@ ALTER TABLE ONLY public.bank_assessments
 
 ALTER TABLE ONLY public.banks
     ADD CONSTRAINT banks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: case_studies case_studies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.case_studies
+    ADD CONSTRAINT case_studies_pkey PRIMARY KEY (id);
 
 
 --
@@ -3657,6 +3708,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220704094826'),
 ('20220719121521'),
 ('20220722075902'),
-('20220722100953');
+('20220722100953'),
+('20220822094300'),
+('20220822102328'),
+('20220902105018'),
+('20220908080811');
 
 

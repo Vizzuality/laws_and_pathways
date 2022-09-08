@@ -9,13 +9,14 @@ Rails.application.routes.draw do
       get '/tpi', to: redirect('/')
       get '/tpi/*rest', to: redirect('%{rest}')
 
-      get '/about', to: 'home#about'
       get '/newsletter', to: 'home#newsletter'
 
       get '/sandbox', to: 'home#sandbox' if Rails.env.development?
 
       get '/search', to: 'search#index'
       get '/sitemap', to: 'sitemaps#index'
+
+      get '/corporate-bond-issuers', to: 'home#corporate_bond_issuers'
 
       resources :sectors, only: [:show, :index] do
         collection do

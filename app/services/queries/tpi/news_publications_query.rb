@@ -31,13 +31,13 @@ module Queries
       def filter_by_tags(scope)
         return scope if tags.blank?
 
-        scope.joins(:keywords).where(tags: {name: tags.split(', ')})
+        scope.joins(:keywords).where(tags: {name: tags.split(',').map(&:strip)})
       end
 
       def filter_by_sectors(scope)
         return scope if sectors.blank?
 
-        scope.joins(:tpi_sectors).where('tpi_sectors.name IN (?)', sectors.split(', '))
+        scope.joins(:tpi_sectors).where('tpi_sectors.name IN (?)', sectors.split(',').map(&:strip))
       end
     end
   end

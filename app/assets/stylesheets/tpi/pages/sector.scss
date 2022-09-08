@@ -42,10 +42,6 @@ $tape-color: rgba(25,25,25,0.1);
       margin-top: 30px;
     }
 
-    &__title {
-      font-size: $size-4;
-    }
-
     @include until($desktop) {
       margin-top: 40px;
       padding: 0 0.75rem;

@@ -15,7 +15,7 @@
     <%= render "admin/documents/fields", form: document %>
   <% end %>
 
-  <div class="nested-list__actions" data-target="nested-list.links">
+  <div class="nested-list__actions" data-nested-list-target="links">
     <%= button_tag "Add Link", type: 'button', class: 'button button--raised', data: { action: "click->nested-list#addRecord", template: 'external' } %>
     <%= button_tag "Upload a new file", type: 'button', class: 'button button--raised', data: { action: "click->nested-list#addRecord", template: 'uploaded' } %>
   </div>

@@ -14,10 +14,12 @@
         <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
         Go to Management Quality
       </a>
-      <a href="#carbon-performance" class="link with-icon is-pulled-left">
-        <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
-        Go to Carbon Performance
-      </a>
+      <% if @company_presenter.cp_assessments.any? %>
+        <a href="#carbon-performance" class="link with-icon is-pulled-left">
+          <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
+          Go to Carbon Performance
+        </a>
+      <% end %>
 
       <%= link_to user_download_all_tpi_sectors_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
         <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
@@ -28,9 +30,11 @@
       <a href="#management-quality" class="link with-icon is-pulled-left">
         Management Quality
       </a>
-      <a href="#carbon-performance" class="link with-icon is-pulled-left">
-        Carbon Performance
-      </a>
+      <% if @company_presenter.cp_assessments.any? %>
+        <a href="#carbon-performance" class="link with-icon is-pulled-left">
+          Carbon Performance
+        </a>
+      <% end %>
     </div>
   </div>
 
@@ -100,7 +104,7 @@
         <div class="summary-box">
           <div class="columns">
             <div class="column">
-              <%= render 'tpi/shared/property', highlight: true, name: 'Geography', tooltip: t('tpi.tooltips.geography') do %>
+              <%= render 'tpi/shared/property', highlight: false, name: 'Geography', tooltip: t('tpi.tooltips.geography') do %>
                 <%= @company.geography.name %>
               <% end %>
             </div>
@@ -125,7 +129,7 @@
               <% end %>
             </div>
             <div class="column">
-              <%= render 'tpi/shared/property', highlight: true, name: 'CA100+ engagement', tooltip: t('tpi.tooltips.CA100') do %>
+              <%= render 'tpi/shared/property', highlight: false, name: 'CA100+ engagement', tooltip: t('tpi.tooltips.CA100') do %>
                 <%= humanize_boolean(@company.ca100?) %>
               <% end %>
             </div>
@@ -139,12 +143,12 @@
     <section id="management-quality" class="management-quality container">
       <div class="management-quality__header">
         <h4>
-          Management Quality: <%= @company.name %> <%= react_component("BaseTooltip", { content: t('tpi.tooltips.mq_header') }) %>
+          Management Quality: <%= @company.name %>
         </h4>
 
         <div class="is-hidden-touch show-by-dropdown assessment-date__container">
           <div class="caption">
-            Assessment Date: <%= react_component("BaseTooltip", { content: t('tpi.tooltips.mq_assessment_date') }) %>
+            Assessment Date:
           </div>
           <div class="date-dropdown">
             <%= react_component('RemoteDropdown', {
@@ -162,7 +166,7 @@
       </p>
       <div class="is-hidden-desktop assessment-date__container">
         <div class="caption">
-          Assessment Date: <%= react_component("BaseTooltip", { content: t('tpi.tooltips.mq_assessment_date') }) %>
+          Assessment Date:
         </div>
         <div class="date-dropdown">
           <%= react_component('RemoteDropdown', {
@@ -186,14 +190,14 @@
     <section id="carbon-performance" class="carbon-performance container">
       <div class="management-quality__header">
         <h4>
-          Carbon Performance <%= @company.name %> <%= react_component("BaseTooltip", { content: t('tpi.tooltips.cp_header') }) %>
+          Carbon Performance <%= @company.name %>
         </h4>
         <p class="is-hidden-desktop"><%= "Carbon Performance alignment of companies in the #{@company.name} sector with the Paris agreement benchmarks." %></p>
 
         <div>
           <div class="show-by-dropdown assessment-date__container">
             <div class="caption">
-              Assessment Date: <%= react_component("BaseTooltip", { content: t('tpi.tooltips.cp_assessment_date') }) %>
+              Assessment Date:
             </div>
 
             <div class="date-dropdown">

@@ -3,6 +3,12 @@ module TestFiles
 
   extend ActionDispatch::TestProcess
 
+  def png
+    fixture_file_upload(
+      Rails.root.join('spec', 'support', 'fixtures', 'files', 'test.png'), 'image/png'
+    )
+  end
+
   def pdf
     fixture_file_upload(
       Rails.root.join('spec', 'support', 'fixtures', 'files', 'test.pdf'), 'application/pdf'

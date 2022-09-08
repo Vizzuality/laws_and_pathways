@@ -10,6 +10,7 @@
 #  updated_at   :datetime         not null
 #  content_type :string
 #  position     :integer
+#  code         :string
 #
 
 require 'rails_helper'

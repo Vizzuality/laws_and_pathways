@@ -6,7 +6,7 @@ ActiveAdmin.register Publication do
 
   decorate_with PublicationDecorator
 
-  permit_params :title, :short_description, :publication_date,
+  permit_params :title, :author, :author_image, :short_description, :publication_date,
                 :file, :image, :created_by_id, :updated_by_id,
                 :keywords_string, tpi_sector_ids: []
 
@@ -20,6 +20,15 @@ ActiveAdmin.register Publication do
         attributes_table do
           row :title
           row :short_description
+          row :author
+          row :author_image do |p|
+            if p.author_image.present?
+              image_tag(
+                url_for(p.author_image_thumbnail),
+                style: 'width:40px;height:40px;border-radius: 50%;'
+              )
+            end
+          end
           row :publication_date
           list_row 'Sectors', :tpi_sector_links
           row 'Keywords', &:keywords_string
@@ -51,6 +60,8 @@ ActiveAdmin.register Publication do
 
     f.inputs do
       f.input :title
+      f.input :author
+      f.input :author_image, as: :file, hint: preview_file_tag(f.object.author_image), input_html: {accept: 'image/*'}
       f.input :short_description, as: :text
       f.input :publication_date, as: :date_time_picker
       f.input :tpi_sector_ids, label: 'Sectors', as: :select,

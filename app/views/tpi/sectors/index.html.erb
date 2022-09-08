@@ -10,30 +10,31 @@
     }) %>
   </div>
 
-
   <div class="sectors-header">
-    <div class="container is-hidden-touch">
+    <div class="container">
       <a href="#management-quality" class="link with-icon is-pulled-left">
-        <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
-        Go to Management Quality
+        <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" class="is-hidden-touch" />
+        Management Quality
       </a>
       <a href="#carbon-performance" class="link with-icon is-pulled-left">
-        <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
-        Go to Carbon Performance
+        <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" class="is-hidden-touch" />
+        Carbon Performance
+      </a>
+      <% if @methodology_publication.present? %>
+        <a href="#methodology" class="link with-icon is-pulled-left">
+          <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" class="is-hidden-touch" />
+          Methodology
+        </a>
+      <% end %>
+      <a href="#publications" class="link with-icon is-pulled-left">
+        <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" class="is-hidden-touch" />
+        Publications
       </a>
 
       <%= link_to user_download_all_tpi_sectors_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
         <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
         Download All sectors data
       <% end %>
-    </div>
-    <div class="container is-hidden-desktop">
-      <a href="#management-quality" class="link with-icon is-pulled-left">
-        Management Quality
-      </a>
-      <a href="#carbon-performance" class="link with-icon is-pulled-left">
-        Carbon Performance
-      </a>
     </div>
   </div>
 
@@ -56,5 +57,37 @@
       dataUrl: cp_performance_chart_data_tpi_sectors_path,
       sectors: TPI::CPPerformanceSectorDecorator.decorate_collection(@sectors).map(&:to_h)
     }) %>
+  </section>
+
+  <% if @methodology_publication.present? %>
+    <section id="methodology" class="container">
+      <div class="columns">
+        <div class="column pages__content">
+          <h4>Methodology</h4>
+
+          <div>
+            <%= @methodology_description&.text&.html_safe %>
+          </div>
+        </div>
+        <div class="column">
+          <%= render 'tpi/publications/list', publications_and_articles: [@methodology_publication] %>
+        </div>
+      </div>
+    </section>
+  <% end %>
+
+  <hr/>
+
+  <section id="publications" class="container tpi-sector__promoted-publications">
+    <div class="promoted-publications__title">
+      <div class="promoted-publications__title-text">Publications and news</div>
+
+      <%= link_to 'View all publications and news', tpi_publications_path, class: 'button is-secondary is-hidden-touch' %>
+    </div>
+
+    <%= render "tpi/publications/promoted", publications_and_articles: @publications_and_articles, count: @publications_and_articles.count %>
+    <div class="view-all-btn__container">
+      <a href="/publications" class="button is-secondary is-hidden-desktop">View all news</a>
+    </div>
   </section>
 </div>

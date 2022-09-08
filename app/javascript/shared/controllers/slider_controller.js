@@ -1,4 +1,4 @@
-import { Controller } from 'stimulus';
+import { Controller } from '@hotwired/stimulus';
 import { tns } from 'tiny-slider/src/tiny-slider';
 
 export default class extends Controller {

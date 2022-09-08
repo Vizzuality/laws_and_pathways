@@ -32,6 +32,7 @@ class TPISector < ApplicationRecord
   validates_uniqueness_of :name, :slug
 
   scope :tpi_tool, -> { where(show_in_tpi_tool: true) }
+  scope :with_companies, -> { joins(:companies).where(companies: Company.published).distinct }
 
   def should_generate_new_friendly_id?
     (show_in_tpi_tool? && name_changed?) || super

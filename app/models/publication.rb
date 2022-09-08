@@ -12,6 +12,7 @@
 #  updated_by_id     :bigint
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  author            :string
 #
 
 class Publication < ApplicationRecord
@@ -21,6 +22,7 @@ class Publication < ApplicationRecord
   include ImageWithThumb
 
   has_one_attached :file
+  has_one_attached :author_image
 
   tag_with :keywords
 
@@ -38,5 +40,9 @@ class Publication < ApplicationRecord
 
   def tags_and_sectors
     (keywords.map(&:name) + tpi_sectors.map(&:name)).compact.uniq.sort
+  end
+
+  def author_image_thumbnail
+    author_image.present? ? author_image.variant(resize: '40x40') : nil
   end
 end

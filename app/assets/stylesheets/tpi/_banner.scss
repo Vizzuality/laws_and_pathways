@@ -9,10 +9,8 @@
     height: 130px;
     display: flex;
     align-items: center;
-
-    .column {
-      align-items: flex-end;
-    }
+    padding-top: 10px;
+    padding-bottom: 10px;
 
     .partners__title {
       display: flex;
@@ -24,32 +22,19 @@
     }
 
     .partners {
+      display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: end;
+      gap: 30px;
 
-      &__partner-1 {
-        height: 40px;
-      }
-
-      &__partner-2 {
+      &__grantham {
         width: 114px;
         max-height: 30px;
       }
 
-      &__partner-3 {
+      &__lse {
         width: 95px;
         max-height: 34px;
-      }
-
-      &__partner-4 {
-        width: 108px;
-        max-height: 21px;
-      }
-
-      .column {
-        flex-grow: 0;
-        flex-basis: initial;
-        flex-shrink: 1;
       }
     }
   }
@@ -75,12 +60,6 @@
 
 .partners {
   @include until($desktop) {
-    .columns,
-    .column {
-      padding: 0;
-      margin: 0;
-    }
-
     &.section {
       padding: 1.2rem 0.75rem;
     }

@@ -1,6 +1,7 @@
-@import "sizes";
 @import "colors";
 @import "variables";
+
+$mobile-indent: 1rem;
 
 .tpi__navbar-margin {
   margin-top: var(--fixed-navbar-height);
@@ -32,6 +33,11 @@
       background: $white;
       border: none;
       box-shadow: 0 0 30px 0 rgba($dark, 0.25);
+      padding: 0 1.5rem;
+
+      @include desktop {
+        padding: 0;
+      }
 
       & > .container {
         height: 60px;
@@ -44,9 +50,14 @@
       height: 100%;
       border: none;
       outline: none;
-      font-size: 1.25rem;
-      line-height: 1.875rem;
+      font-size: 1rem;
+      line-height: 1.25rem;
       color: $dark;
+
+      @include desktop {
+        font-size: 1.25rem;
+        line-height: 1.875rem;
+      }
 
       &::placeholder {
         color: rgba($dark, 0.5);
@@ -57,13 +68,21 @@
       border: none;
       position: absolute;
       // 60px height / 2 + 24px icon / 2
-      top: 18px;
+      top: 22px;
       right: 0;
 
       & > .icon__close {
+        width: 0.875rem;
+        height: 0.875rem;
+
         background-image: image-url('icon_search/close.svg');
         background-repeat: no-repeat;
         background-position: center;
+
+        @include desktop {
+          width: 1rem;
+          height: 1rem;
+        }
       }
     }
   }
@@ -109,12 +128,6 @@
             width: 115px;
           }
         }
-
-        &.menu {
-          line-height: 0.938rem;
-          letter-spacing: 1px;
-          font-size: 0.875rem;
-        }
       }
     }
 
@@ -137,38 +150,35 @@
   .navbar-menu {
     @include until($desktop) {
       padding: 17px 0;
+      background-color: $dark;
 
       .navbar-item:not(.has-dropdown),
       .navbar-link {
-        padding-left: 1.563rem;
+        padding-left: $mobile-indent;
       }
 
       .navbar-item.has-dropdown {
         .navbar-item {
-          padding-left: 3.125rem;
-        }
-
-        .navbar-link {
-          padding-top: 0.938rem;
-          padding-bottom: 0.938rem;
+          padding-left: 2 * $mobile-indent;
         }
       }
     }
   }
 
   .navbar-item {
-    @include until($desktop) {
-      &:not(.has-dropdown) {
-        padding-top: 0.938rem;
-        padding-bottom: 0.938rem;
-      }
+    .navbar-item-text {
+      margin-right: 20px;
     }
 
     .icon {
       &__search {
-        background-image: image-url('icon_search/search.svg');
+        background-image: image-url('icon_search_dark/search@3x.svg');
         background-repeat: no-repeat;
         background-position: center;
+
+        @include desktop {
+          background-image: image-url('icon_search/search.svg');
+        }
       }
 
       &__chevron-down {
@@ -180,16 +190,25 @@
           background-size: 50%;
         }
       }
+
+      &__chevron-right {
+        @include from($desktop) {
+          margin-left: auto;
+          background-image: image-url('icons/white-chevron-down.svg');
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: 50%;
+          transform: rotate(-90deg);
+        }
+      }
     }
   }
 
   .navbar-dropdown {
-    @include from($desktop) {
-      width: 300px;
-    }
+    padding: 0;
 
-    @include until($desktop) {
-      padding: 0;
+    @include from($desktop) {
+      min-width: 300px;
     }
 
     > a.navbar-item,
@@ -199,12 +218,72 @@
       font-size: $size-6;
       padding-top: 0.625rem;
       padding-bottom: 0.625rem;
+      line-height: 1.5rem;
 
       @include until($desktop) {
-        color: $blue;
-        padding-top: 0.938rem;
-        padding-bottom: 0.938rem;
+        color: $blue-ribbon;
       }
+    }
+  }
+
+  .nested-navbar-dropdown {
+    position: relative;
+
+    .navbar-dropdown {
+      @include from($desktop) {
+        display: none !important;
+      }
+
+      .navbar-item {
+        @include until($desktop) {
+          padding-left: 3 * $mobile-indent !important;
+        }
+      }
+    }
+
+    .navbar-item {
+      font-size: $size-6;
+      padding-right: 1rem;
+      padding-top: 0.625rem;
+      padding-bottom: 0.625rem;
+      line-height: 1.5rem;
+    }
+
+    @include from($desktop) {
+      &:hover {
+        .navbar-dropdown {
+          display: block !important;
+          top: 0px;
+          margin-left: 100%;
+        }
+      }
+    }
+  }
+
+  .partners {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &__container {
+      padding-left: $mobile-indent;
+      padding-right: $mobile-indent;
+      margin-top: 50px;
+    }
+
+    &__title {
+      font-size: 10px;
+      color: $white;
+      line-height: 0.938rem;
+      margin-bottom: 20px;
+    }
+
+    &__grantham {
+      max-height: 30px;
+    }
+
+    &__lse {
+      max-height: 34px;
     }
   }
 }

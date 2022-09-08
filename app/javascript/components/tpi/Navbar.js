@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import Logo from 'images/logo/TPI_logo.svg';
+import GranthamLogo from 'images/logo/RICCE_logo.svg';
+import LSELogo from 'images/logo/LSE_logo.svg';
 
 const ESCAPE_KEY = 27;
 const ENTER_KEY = 13;
@@ -69,8 +71,50 @@ SearchComponent.propTypes = {
   closeSearchMode: PropTypes.func.isRequired
 };
 
+function renderMenuItem(menuItem, index) {
+  const { content, title, path } = menuItem;
+
+  return (
+    <>
+      {content && content.length > 0 ? (
+        <div className="nested-navbar-dropdown">
+          <a
+            key={`${title}-${index}`}
+            href={path}
+            className="navbar-item"
+          >
+            <span className="navbar-item-text">{title}</span>
+            <span className="icon icon__chevron-right" />
+          </a>
+
+          <div className="navbar-dropdown">
+            {/* eslint-disable-next-line no-shadow */}
+            {content.map(({ path, title }, i) => (
+              <a
+                key={`${title}-${i}`}
+                href={path}
+                className="navbar-item"
+              >
+                {title}
+              </a>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <a
+          key={`${title}-${index}`}
+          href={path}
+          className="navbar-item"
+        >
+          {title}
+        </a>
+      )}
+    </>
+  );
+}
+
 const NavbarComponent = ({ items, openSearchMode }) => {
-  const [tpi, publications, about, newsletter, search] = items;
+  const [tpi, publications, about, faq, newsletter, search] = items;
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -81,12 +125,12 @@ const NavbarComponent = ({ items, openSearchMode }) => {
             <img src={Logo} alt="Transition Pathway Initiative logo" />
           </a>
           <a
-            className="navbar-item menu"
+            className="navbar-item"
+            aria-label={search.entry}
             role="button"
-            data-target="HeaderMenu"
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={openSearchMode}
           >
-            MENU
+            {search.hasIcon && <span className="icon icon__search" />}
           </a>
           <a
             role="button"
@@ -118,22 +162,7 @@ const NavbarComponent = ({ items, openSearchMode }) => {
               </a>
 
               <div className="navbar-dropdown">
-                {tpi.path && (
-                  <a className="navbar-item" href={tpi.path}>
-                    {tpi.entry}
-                  </a>
-                )}
-                {tpi.content && (
-                  tpi.content.map(({ path, title }, i) => (
-                    <a
-                      key={`${title}-${i}`}
-                      href={path}
-                      className="navbar-item"
-                    >
-                      {title}
-                    </a>
-                  ))
-                )}
+                {tpi.content && tpi.content.map((menuItem, i) => renderMenuItem(menuItem, i))}
               </div>
             </div>
 
@@ -158,19 +187,18 @@ const NavbarComponent = ({ items, openSearchMode }) => {
               </a>
 
               <div className="navbar-dropdown">
-                {about.content && (
-                  about.content.map(({ path, title }, i) => (
-                    <a
-                      key={`${title}-${i}`}
-                      href={path}
-                      className="navbar-item"
-                    >
-                      {title}
-                    </a>
-                  ))
-                )}
+                {about.content && about.content.map((menuItem, i) => renderMenuItem(menuItem, i))}
               </div>
             </div>
+
+            <a
+              href={faq.path}
+              className={classnames('navbar-item', {
+                'is-active': faq.active
+              })}
+            >
+              {faq.entry}
+            </a>
           </div>
 
           <div className="navbar-end">
@@ -190,6 +218,27 @@ const NavbarComponent = ({ items, openSearchMode }) => {
             >
               {search.hasIcon && <span className="icon icon__search" />}
             </a>
+          </div>
+
+          <div className="partners__container is-hidden-desktop">
+            <p className="partners__title">Hosted by:</p>
+
+            <div className="partners">
+              <a href="http://www.lse.ac.uk/">
+                <img
+                  src={LSELogo}
+                  alt="The London School of Economics and Political Sciences"
+                  className="partners__lse"
+                />
+              </a>
+              <a href="http://www.lse.ac.uk/GranthamInstitute/">
+                <img
+                  src={GranthamLogo}
+                  alt="Grantham Research Institute on Climate Change and the Environment"
+                  className="partners__grantham"
+                />
+              </a>
+            </div>
           </div>
         </div>
       </div>

@@ -23,6 +23,8 @@
     "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.10.4",
+    "@hotwired/stimulus": "^3.1.0",
+    "@hotwired/stimulus-webpack-helpers": "^1.0.1",
     "@rails/actioncable": "^6.0.3-3",
     "@rails/activestorage": "^6.0.3-3",
     "@rails/ujs": "^6.0.3-3",
@@ -56,7 +58,6 @@
     "react-tooltip": "^3.11.1",
     "react_ujs": "^2.6.0",
     "simple-statistics": "^7.1.0",
-    "stimulus": "^1.1.1",
     "tiny-slider": "^2.9.3",
     "trix": "^1.2.4",
     "turbolinks": "^5.2.0"

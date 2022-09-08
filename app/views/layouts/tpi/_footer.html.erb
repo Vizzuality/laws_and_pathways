@@ -1,95 +1,30 @@
-<% unless action_name == "newsletter" %>
-  <section class="footer__subscribe">
-    <div class="container">
-      <div class="columns" >
-        <div class="column is-5 subscribe__logo is-hidden-touch">
-          <img src="<%= asset_path 'newsletter_background/newsletter img@2x.png' %>" alt="tpi newsletter logo">
-        </div>
-
-        <div class="column is-5-desktop subscribe__container">
-          <h2 class="is-size-4 is-hidden-touch">Subscribe to the TPI newsletter</h2>
-          <div class="subscribe-title is-hidden-desktop">
-            <div>Subscribe to the TPI newsletter</div>
-            <img src="<%= asset_path 'newsletter_background/newsletter img@2x.png' %>" alt="tpi newsletter logo">
-          </div>
-
-          <p class="content">
-            Receive updates on the TPI, including on latest developments and research findings, by signing-up to our newsletter.
-          </p>
-
-          <%= link_to 'Subscribe', tpi_newsletter_path, class: 'button is-primary subscribe__button' %>
-        </div>
-      </div>
-    </div>
-  </section>
-<% end %>
-
 <section class="footer__information">
   <div class="container">
-    <div class="columns footer__contact">
-      <div class="column">
-        <h2 class="is-size-4">Contact</h2>
-
-        <p class="content">
-          We welcome specific enquiries relating to the TPI, as well as feedback from investors, companies, NGOs, academics and consumers on how we can strengthen and improve our work.
-        </p>
-        <p class="content">
-          For all media inquiries please contact ESG Communications
-          <a href="mailto:mikem@esgcomms.com">mikem@esgcomms.com</a>.
-        </p>
-        <button class="button is-primary button__contact">
+    <div class="contact-button-container is-hidden-tablet">
+      <button class="button is-primary">
+        <a href="mailto:tpi@lse.ac.uk" class="footer-link">Contact Us</a>
+      </button>
+    </div>
+    <div class="columns footer__menu">
+      <div class="column is-9 footer__menu-list">
+        <button class="button is-primary is-hidden-mobile">
           <a href="mailto:tpi@lse.ac.uk" class="footer-link">Contact Us</a>
         </button>
-      </div>
-
-      <div class="column">
-        <h2 class="is-size-4 follow-tpi">
-          Follow TPI
-          <a href="https://twitter.com/tp_initiative" class="icon icon__twitter" aria-label="Twitter"></a>
-          <a href="https://www.linkedin.com/company/transition-pathway-initiative-tpi/" class="icon icon__linkedin" aria-label="Linkedin"></a>
-        </h2>
-
-        <p class="content">
-          <a class="twitter-timeline" data-height="300" data-dnt="true" data-theme="dark" href="https://twitter.com/tp_initiative?ref_src=twsrc%5Etfw">Tweets by tp_initiative</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-        </p>
-      </div>
-    </div>
-
-    <hr />
-
-    <div class="columns footer__disclaimer">
-      <div class="column is-6">
-        <h2 class="is-size-4">Disclaimer</h2>
-
-        <p class="content is-size-7">
-          All information contained on this website is derived from publicly available sources. Information can change without notice and TPI does not guarantee the accuracy of information on the website, including information provided by third parties. This website does not provide investment advice. <%= link_to "View full disclaimer", '/disclaimer', class: 'link'%>.
-        </p>
-      </div>
-    </div>
-
-    <hr />
-
-    <div class="columns footer__bottom">
-      <div class="column footer__menu">
-        <div class="columns footer__menu-list">
-          <div class="column">
-            <%= link_to 'TPI tool', tpi_sectors_path, class: 'link is-large' %>
-          </div>
-          <div class="column">
-            <a href="https://www.lse.ac.uk/lse-information/terms-of-use" class="link is-large is-hidden-touch">LSE Terms of use</a>
-            <a href="https://www.lse.ac.uk/lse-information/terms-of-use" class="link is-large is-hidden-desktop">Terms of use</a>
-          </div>
-          <div class="column">
-            <a href="https://www.lse.ac.uk/lse-information/privacy-policy" class="link is-large is-hidden-touch">LSE Privacy policy</a>
-            <a href="https://www.lse.ac.uk/lse-information/privacy-policy" class="link is-large is-hidden-desktop">Privacy policy</a>
-          </div>
-          <div class="column">
-            <a href="https://www.lse.ac.uk/lse-information/cookies" class="link is-large">Cookies</a>
-          </div>
+        <div>
+          <%= link_to 'TPI tool', tpi_sectors_path, class: 'link is-large' %>
+        </div>
+        <div>
+          <a href="https://www.lse.ac.uk/lse-information/terms-of-use" class="link is-large is-hidden-touch">LSE Terms of use</a>
+          <a href="https://www.lse.ac.uk/lse-information/terms-of-use" class="link is-large is-hidden-desktop">Terms of use</a>
+        </div>
+        <div>
+          <a href="https://www.lse.ac.uk/lse-information/privacy-policy" class="link is-large is-hidden-touch">LSE Privacy policy</a>
+          <a href="https://www.lse.ac.uk/lse-information/privacy-policy" class="link is-large is-hidden-desktop">Privacy policy</a>
+        </div>
+        <div>
+          <a href="https://www.lse.ac.uk/lse-information/cookies" class="link is-large">Cookies</a>
         </div>
       </div>
-
       <div class="column footer__copyright">Copyright © <%= Time.now.year %></div>
-    </div>
   </div>
 </section>

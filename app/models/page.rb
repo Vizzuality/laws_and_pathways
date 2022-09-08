@@ -10,6 +10,7 @@
 #  updated_at  :datetime         not null
 #  menu        :string
 #  type        :string
+#  position    :integer
 #
 
 class Page < ApplicationRecord
@@ -17,7 +18,9 @@ class Page < ApplicationRecord
 
   friendly_id :title, use: :slugged, routes: :default
 
-  has_many :contents, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :page
+  acts_as_list scope: [:type, :menu]
+
+  has_many :contents, -> { order(position: :asc) }, foreign_key: :page_id, dependent: :destroy, inverse_of: :page
   has_many :images, through: :contents
 
   validates :menu, presence: true

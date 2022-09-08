@@ -2,20 +2,34 @@ module TPI
   class PublicationsController < TPIController
     include ActionController::Live
 
+    SHOW_ON_PAGE = 9
+
     before_action :fetch_tags, only: [:index]
     before_action :fetch_sectors, only: [:index]
     before_action :fetch_publication, only: [:show]
 
     def index
-      @publications_and_articles = Queries::TPI::NewsPublicationsQuery.new(filter_params).call
+      results = Queries::TPI::NewsPublicationsQuery.new(filter_params).call
+      @publications_and_articles_count = results.size
+      @publications_and_articles = results.drop(offset).take(SHOW_ON_PAGE)
 
       fixed_navbar('Publications', admin_publications_path)
     end
 
     def partial
-      @publications_and_articles = Queries::TPI::NewsPublicationsQuery.new(filter_params).call
+      results = Queries::TPI::NewsPublicationsQuery.new(filter_params).call
+      @publications_and_articles = results.drop(offset).take(SHOW_ON_PAGE)
 
-      render partial: 'promoted', locals: {publications_and_articles: @publications_and_articles}
+      if offset.positive?
+        render partial: 'list', locals: {
+          publications_and_articles: @publications_and_articles
+        }
+      else
+        render partial: 'promoted', locals: {
+          publications_and_articles: @publications_and_articles,
+          count: results.count
+        }
+      end
     end
 
     def show
@@ -44,6 +58,10 @@ module TPI
       end
     ensure
       response.stream.close
+    end
+
+    def offset
+      params[:offset]&.to_i || 0
     end
 
     def filter_params

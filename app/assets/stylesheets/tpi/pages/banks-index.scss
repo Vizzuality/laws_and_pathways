@@ -2,18 +2,14 @@
 
 .banks-index-page {
   .banks-header {
-    background: $blue;
-    height: 100px;
+    min-height: 100px;
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: space-between;
 
     a {
       color: white;
-    }
-
-    a + a {
-      margin-left: 20px;
+      margin-right: 20px;
     }
 
     @include until($desktop) {
@@ -83,6 +79,30 @@
         margin-top: 15px;
         font-size: $size-6;
         color: $grey-dark;
+      }
+    }
+  }
+
+  #methodology {
+    display: flex;
+
+    .pages__content {
+      margin-bottom: 0;
+
+      > div {
+        margin-top: 30px;
+      }
+
+      @include until($desktop) {
+        h4 {
+          font-size: $size-5 !important;
+        }
+
+        > div {
+          margin-top: 15px;
+          font-size: $size-6;
+          color: $grey-dark;
+        }
       }
     }
   }

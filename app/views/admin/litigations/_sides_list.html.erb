@@ -9,7 +9,7 @@
     <%= render "side_fields", form: side %>
   <% end %>
 
-  <div class="nested-list__actions" data-target="nested-list.links">
+  <div class="nested-list__actions" data-nested-list-target="links">
     <%= button_tag "Add Litigation Side", type: 'button', class: 'button button--raised', data: { action: "click->nested-list#addRecord" } %>
   </div>
 </div>
