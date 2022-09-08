@@ -87,7 +87,8 @@ module TPI
     private
 
     def any_cp_assessment?
-      CP::Assessment.currently_published.joins(company: :sector).where(companies: {sector: @sector}).any?
+      CP::Assessment.currently_published.joins(company: :sector).where(companies: {sector: @sector}).any? &&
+        CP::Benchmark.where(sector: @sector).exists?
     end
 
     def publications_and_articles

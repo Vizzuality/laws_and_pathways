@@ -104,7 +104,7 @@
         <div class="summary-box">
           <div class="columns">
             <div class="column">
-              <%= render 'tpi/shared/property', highlight: true, name: 'Geography', tooltip: t('tpi.tooltips.geography') do %>
+              <%= render 'tpi/shared/property', highlight: false, name: 'Geography', tooltip: t('tpi.tooltips.geography') do %>
                 <%= @company.geography.name %>
               <% end %>
             </div>
@@ -129,7 +129,7 @@
               <% end %>
             </div>
             <div class="column">
-              <%= render 'tpi/shared/property', highlight: true, name: 'CA100+ engagement', tooltip: t('tpi.tooltips.CA100') do %>
+              <%= render 'tpi/shared/property', highlight: false, name: 'CA100+ engagement', tooltip: t('tpi.tooltips.CA100') do %>
                 <%= humanize_boolean(@company.ca100?) %>
               <% end %>
             </div>
