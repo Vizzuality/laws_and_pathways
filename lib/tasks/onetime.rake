@@ -61,7 +61,11 @@ class OneTimeTasks
             link: page_link('case-study-helping-uss-vote-on-climate-management')
           ).logo.attach(attachable_file('USS.png'))
 
-          TPIPage.find_by(title: 'Disclaimer').update!(menu: :no_menu_entry, title: 'Use of the data', slug: 'use-of-the-data')
+          TPIPage.find_by(title: 'Disclaimer').update!(
+            menu: :no_menu_entry,
+            title: "Use of the Centre's data",
+            slug: 'use-of-the-centre-s-data'
+          )
 
           DynamicRouter.reload
 
