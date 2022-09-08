@@ -16,6 +16,8 @@ class TPIPage < Page
   MENU_HEADERS = %w[
     tpi_tool
     about
+    about_tpi_centre
+    about_tpi_ltd
     no_menu_entry
   ].freeze
   enum menu: array_to_enum_hash(MENU_HEADERS)
@@ -25,5 +27,9 @@ class TPIPage < Page
 
   def admin_path
     'admin_tpi_page_path'
+  end
+
+  def to_menu_entry
+    slice(:path, :title)
   end
 end

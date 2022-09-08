@@ -31,7 +31,17 @@
     },
     {
       entry: 'About',
-      content: @about_pages,
+      content: [
+        @about_tpi_centre.empty? ? nil : {
+          title: 'TPI Global Climate Transition Centre',
+          content: @about_tpi_centre
+        },
+        @about_tpi_ltd.empty? ? nil : {
+          title: 'TPI Ltd.',
+          content: @about_tpi_ltd
+        },
+        *@about_pages
+      ].compact,
       active: active_menu_page?(@about_pages_paths)
     },
     {

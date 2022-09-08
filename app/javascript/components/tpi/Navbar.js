@@ -71,6 +71,48 @@ SearchComponent.propTypes = {
   closeSearchMode: PropTypes.func.isRequired
 };
 
+function renderMenuItem(menuItem, index) {
+  const { content, title, path } = menuItem;
+
+  return (
+    <>
+      {content && content.length > 0 ? (
+        <div className="nested-navbar-dropdown">
+          <a
+            key={`${title}-${index}`}
+            href={path}
+            className="navbar-item"
+          >
+            <span className="navbar-item-text">{title}</span>
+            <span className="icon icon__chevron-right" />
+          </a>
+
+          <div className="navbar-dropdown">
+            {/* eslint-disable-next-line no-shadow */}
+            {content.map(({ path, title }, i) => (
+              <a
+                key={`${title}-${i}`}
+                href={path}
+                className="navbar-item"
+              >
+                {title}
+              </a>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <a
+          key={`${title}-${index}`}
+          href={path}
+          className="navbar-item"
+        >
+          {title}
+        </a>
+      )}
+    </>
+  );
+}
+
 const NavbarComponent = ({ items, openSearchMode }) => {
   const [tpi, publications, about, faq, newsletter, search] = items;
   const [isOpen, setIsOpen] = useState(false);
@@ -120,45 +162,7 @@ const NavbarComponent = ({ items, openSearchMode }) => {
               </a>
 
               <div className="navbar-dropdown">
-                {tpi.content && (
-                  tpi.content.map(({ path, title, content }, i) => (
-                    <>
-                      {content && content.length > 0 ? (
-                        <div className="nested-navbar-dropdown">
-                          <a
-                            key={`${title}-${i}`}
-                            href={path}
-                            className="navbar-item"
-                          >
-                            {title}
-                            <span className="icon icon__chevron-right" />
-                          </a>
-
-                          <div className="navbar-dropdown">
-                            {/* eslint-disable-next-line no-shadow */}
-                            {content.map(({ path, title }, i) => (
-                              <a
-                                key={`${title}-${i}`}
-                                href={path}
-                                className="navbar-item"
-                              >
-                                {title}
-                              </a>
-                            ))}
-                          </div>
-                        </div>
-                      ) : (
-                        <a
-                          key={`${title}-${i}`}
-                          href={path}
-                          className="navbar-item"
-                        >
-                          {title}
-                        </a>
-                      )}
-                    </>
-                  ))
-                )}
+                {tpi.content && tpi.content.map((menuItem, i) => renderMenuItem(menuItem, i))}
               </div>
             </div>
 
@@ -183,17 +187,7 @@ const NavbarComponent = ({ items, openSearchMode }) => {
               </a>
 
               <div className="navbar-dropdown">
-                {about.content && (
-                  about.content.map(({ path, title }, i) => (
-                    <a
-                      key={`${title}-${i}`}
-                      href={path}
-                      className="navbar-item"
-                    >
-                      {title}
-                    </a>
-                  ))
-                )}
+                {about.content && about.content.map((menuItem, i) => renderMenuItem(menuItem, i))}
               </div>
             </div>
 

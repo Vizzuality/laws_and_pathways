@@ -166,6 +166,10 @@ $mobile-indent: 1rem;
   }
 
   .navbar-item {
+    .navbar-item-text {
+      margin-right: 20px;
+    }
+
     .icon {
       &__search {
         background-image: image-url('icon_search_dark/search@3x.svg');
@@ -204,7 +208,7 @@ $mobile-indent: 1rem;
     padding: 0;
 
     @include from($desktop) {
-      width: 300px;
+      min-width: 300px;
     }
 
     > a.navbar-item,
