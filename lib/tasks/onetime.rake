@@ -61,8 +61,9 @@ class OneTimeTasks
             link: page_link('case-study-helping-uss-vote-on-climate-management')
           ).logo.attach(attachable_file('USS.png'))
 
-          TPIPage.find_by(title: 'Disclaimer').update!(menu: :about)
-          TPIPage.find_by(title: 'FAQ').update!(menu: :no_menu_entry)
+          TPIPage.find_by(title: 'Disclaimer').update!(menu: :no_menu_entry, title: 'Use of the data', slug: 'use-of-the-data')
+
+          DynamicRouter.reload
 
           Keyword.find_or_create_by!(name: 'Event')
           ascor = Keyword.find_or_create_by!(name: 'ASCOR')
