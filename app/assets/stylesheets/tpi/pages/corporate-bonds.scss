@@ -1,4 +1,10 @@
 .corporate-bonds-page {
+  padding: 0 1rem;
+
+  @include desktop {
+    padding: unset;
+  }
+
   h1 {
     margin-top: 65px;
     margin-bottom: 40px;
