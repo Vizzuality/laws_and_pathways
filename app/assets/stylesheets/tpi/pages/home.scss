@@ -240,8 +240,16 @@
       }
 
       @include tablet {
-        padding-right: 80px;
+        padding-right: 20px;
         width: 50%;
+      }
+
+      @include desktop {
+        padding-right: 30px;
+      }
+
+      @include widescreen {
+        padding-right: 80px;
       }
 
       h3 {
@@ -254,7 +262,11 @@
         gap: 30px;
         padding: 30px 0px;
 
-        @include tablet {
+        @include desktop {
+          gap: 30px 50px;
+        }
+
+        @include widescreen {
           gap: 30px 70px;
         }
 
@@ -272,6 +284,10 @@
         text-align: right;
         color: $grey-dark;
         padding: 10px 0px;
+
+        @include mobile {
+          max-width: 180px;
+        }
 
         &__number {
           font-size: 2.25rem;
@@ -381,13 +397,21 @@
       }
 
       @include tablet {
-        padding-left: 80px;
+        padding-left: 20px;
         width: 50%;
 
         &:before {
           left: 0;
           width: 50vw;
         }
+      }
+
+      @include desktop {
+        padding-left: 30px;
+      }
+
+      @include widescreen {
+        padding-left: 80px;
       }
 
       h2 {

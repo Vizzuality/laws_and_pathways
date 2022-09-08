@@ -24,11 +24,6 @@ class OneTimeTasks
             text: '$45tn'
           )
           homepage.contents.create!(
-            title: 'Sectors',
-            code: 'sectors',
-            text: '$45tn'
-          )
-          homepage.contents.create!(
             title: 'Total Market Cap',
             code: 'total_market_cap',
             text: '$10tn'

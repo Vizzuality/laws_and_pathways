@@ -19,7 +19,7 @@ module TPI
           supporters_count: TPIPage.find_by(slug: 'supporters')&.contents&.flat_map(&:images)&.count,
           total_market_cap: page&.contents&.find_by(code: 'total_market_cap')&.text || '-',
           combined_aum: page&.contents&.find_by(code: 'combined_aum')&.text || '-',
-          sectors: page&.contents&.find_by(code: 'sectors')&.text || '-'
+          sectors_count: TPISector.with_companies.count
         }
       }
       @latest_researches = Publication
