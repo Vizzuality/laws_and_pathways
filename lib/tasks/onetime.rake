@@ -19,12 +19,12 @@ class OneTimeTasks
             '
           )
           homepage.contents.create!(
-            title: 'Combined AUM',
+            title: 'AUM',
             code: 'combined_aum',
             text: '$45tn'
           )
           homepage.contents.create!(
-            title: 'Total Market Cap',
+            title: 'Market cap',
             code: 'total_market_cap',
             text: '$10tn'
           )
