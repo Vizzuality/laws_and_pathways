@@ -10,7 +10,7 @@
     menu priority: (page_class == 'TPIPage' ? 8 : 6),
          parent: (page_class == 'TPIPage' ? 'TPI' : 'Laws')
 
-    permit_params :title, :slug, :description, :menu,
+    permit_params :title, :slug, :description, :menu, :position,
                   contents_attributes: [
                     *permit_params_for(:contents),
                     images_attributes: permit_params_for(:images)
@@ -39,6 +39,7 @@
             row :title
             row :slug
             row :menu
+            row :position
             row :description
           end
         end

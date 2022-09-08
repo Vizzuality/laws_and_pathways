@@ -1337,7 +1337,8 @@ CREATE TABLE public.pages (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     menu character varying,
-    type character varying
+    type character varying,
+    "position" integer
 );
 
 
@@ -3710,6 +3711,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220722100953'),
 ('20220822094300'),
 ('20220822102328'),
-('20220902105018');
+('20220902105018'),
+('20220908080811');
 
 

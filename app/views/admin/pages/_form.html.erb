@@ -17,6 +17,7 @@
           <%= f.input :title %>
           <%= f.input :slug %>
           <%= f.input :menu, as: :select, collection: array_to_select_collection(f.object.class::MENU_HEADERS) %>
+          <%= f.input :position %>
           <%= f.input :description, as: :trix, embed_youtube: true %>
         <% end %>
       </div>

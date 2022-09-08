@@ -10,12 +10,15 @@
 #  updated_at  :datetime         not null
 #  menu        :string
 #  type        :string
+#  position    :integer
 #
 
 class Page < ApplicationRecord
   extend FriendlyId
 
   friendly_id :title, use: :slugged, routes: :default
+
+  acts_as_list scope: [:type, :menu]
 
   has_many :contents, -> { order(position: :asc) }, foreign_key: :page_id, dependent: :destroy, inverse_of: :page
   has_many :images, through: :contents

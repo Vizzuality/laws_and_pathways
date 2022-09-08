@@ -10,6 +10,7 @@
 #  updated_at  :datetime         not null
 #  menu        :string
 #  type        :string
+#  position    :integer
 #
 
 class TPIPage < Page
