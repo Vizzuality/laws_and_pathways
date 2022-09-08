@@ -8,6 +8,10 @@
           path: tpi_sectors_path,
         },
         {
+          title: 'Corporate bonds issuers',
+          path: tpi_corporate_bond_issuers_path
+        },
+        {
           title: 'Banks',
           path: tpi_banks_path
         },
@@ -19,6 +23,7 @@
       active: active_menu_page?([
         tpi_sectors_path,
         tpi_banks_path,
+        tpi_corporate_bond_issuers_path,
         { controller: 'tpi/sectors', action: 'show' },
         { controller: 'tpi/banks', action: 'show' },
         { controller: 'tpi/companies', action: 'show' }

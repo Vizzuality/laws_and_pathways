@@ -29,10 +29,10 @@
           <div class="assessment-box__header">Climate assessments:</div>
           <div class="assessment-box__title">Publicly listed equities</div>
         <% end %>
-        <div class="assessment-box corporate-bonds disabled">
+        <%= link_to tpi_corporate_bond_issuers_path, class: 'assessment-box corporate-bonds' do %>
           <div class="assessment-box__header">Climate assessments:</div>
           <div class="assessment-box__title">Corporate bond issuers</div>
-        </div>
+        <% end %>
         <%= link_to tpi_banks_path, class: 'assessment-box banks' do %>
           <div class="assessment-box__header">Climate assessments:</div>
           <div class="assessment-box__title">Banks</div>

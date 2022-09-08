@@ -35,6 +35,6 @@ module TPI
 
     def newsletter; end
 
-    def disclaimer; end
+    def corporate_bond_issuers; end
   end
 end
