@@ -38,6 +38,7 @@ module CP
       order(:publication_date).where('publication_date <= ?', publication_date)
     }
     scope :currently_published, -> { where('publication_date <= ?', DateTime.now) }
+    scope :regional, -> { where.not(region: [nil, '']) }
 
     validates_presence_of :publication_date
     validates_presence_of :last_reported_year, if: -> { emissions&.keys&.any? }

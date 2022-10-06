@@ -42,6 +42,8 @@ class Company < ApplicationRecord
   has_one :latest_mq_assessment, -> { currently_published.order(assessment_date: :desc) }, class_name: 'MQ::Assessment'
   has_many :cp_assessments, class_name: 'CP::Assessment', inverse_of: :company
   has_one :latest_cp_assessment, -> { currently_published.order(assessment_date: :desc) }, class_name: 'CP::Assessment'
+  has_one :latest_cp_assessment_regional, -> { currently_published.regional.order(assessment_date: :desc) },
+          class_name: 'CP::Assessment'
   has_many :litigation_sides, as: :connected_entity
   has_many :litigations, through: :litigation_sides
 
@@ -76,7 +78,7 @@ class Company < ApplicationRecord
   end
 
   def cp_alignment_region
-    latest_cp_assessment&.region
+    latest_cp_assessment_regional&.region
   end
 
   def path
