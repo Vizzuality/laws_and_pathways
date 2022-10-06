@@ -28,8 +28,8 @@ module CSVExport
               assessment.bank.geography.iso,
               'Banks',
               assessment.bank.market_cap_group,
-              assessment.bank.isin,
-              assessment.bank.sedol,
+              assessment.bank.isin&.tr(',', ';')&.tr(' ', ''),
+              assessment.bank.sedol&.tr(',', ';')&.tr(' ', ''),
               assessment.assessment_date,
               results_columns.map do |column|
                 all_results[[assessment.id, column.type, column.number]]&.first&.decorate&.value
