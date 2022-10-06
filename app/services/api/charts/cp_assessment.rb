@@ -100,12 +100,18 @@ module Api
 
         {
           name: 'Target Years',
-          type: 'scatter',
+          type: 'line',
+          lineWidth: 0,
           marker: {
             symbol: 'circle',
             enabled: true,
             radius: 5,
             fillColor: '#00C170'
+          },
+          states: {
+            hover: {
+              lineWidth: 0
+            }
           },
           data: data
         }

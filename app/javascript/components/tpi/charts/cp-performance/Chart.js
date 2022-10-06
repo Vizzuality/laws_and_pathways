@@ -139,7 +139,7 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl }) {
     },
     [data, companySelector, selectedCompanies]
   );
-  const legendItems = chartData.filter(d => d.type !== 'area' && d.type !== 'scatter');
+  const legendItems = chartData.filter(d => d.type !== 'area' && d.name !== 'Target Years');
 
   // handlers
   const handleAddCompaniesClick = (e) => {

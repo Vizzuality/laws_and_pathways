@@ -80,7 +80,7 @@ export function getOptions({ chartData, unit }) {
       useHTML: true,
       formatter() {
         const xValue = this.x;
-        const yValues = this.points.map(p => ({
+        const yValues = this.points.filter(p => p.series.name !== 'Target Years').map(p => ({
           value: p.y,
           color: p.series.color,
           title: p.series.name,
