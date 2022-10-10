@@ -43,6 +43,6 @@ class Publication < ApplicationRecord
   end
 
   def author_image_thumbnail
-    author_image.present? ? author_image.variant(resize: '40x40') : nil
+    author_image.present? ? author_image.variant(resize_to_fill: [40, 40]) : nil
   end
 end
