@@ -67,6 +67,8 @@ module TPI
     def fetch_cp_assessment
       @cp_assessment = if params[:cp_assessment_id].present?
                          @company.cp_assessments.find(params[:cp_assessment_id])
+                       elsif params[:view] == 'regional'
+                         @company.latest_cp_assessment_regional
                        else
                          @company.latest_cp_assessment
                        end
