@@ -46,6 +46,13 @@
   </head>
   <body>
     <%= render "layouts/cclow/fixed-navbar" %>
+    <% if @current_user.present? %>
+      <div class="header__margin">
+      </div>
+    <% end %>
+    <div class="cpr-banner ">
+      Climate Change Laws of the World will soon be upgraded to be AI powered, <a href="https://www.lse.ac.uk/granthaminstitute/news/new-partnership-launches-ai-powered-global-climate-law-and-policy-database" target="_blank" rel="noopener noreferrer">see full announcement</a>
+    </div>
     <% if controller_name == 'home' && action_name == 'index'  %>
       <%= render "cclow/home/hero" %>
     <% else %>
