@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :cp_assessment, class: CP::Assessment do
-    # association :company
+    association :cp_assessmentable, factory: :company
 
     assessment_date { 1.year.ago }
     publication_date { 11.months.ago }

@@ -2,7 +2,11 @@
   <%= f.semantic_errors(*f.object.errors.keys) %>
 
   <%= f.inputs do %>
-    <%= f.input :company %>
+    <%= f.input :cp_assessmentable,
+                label: "Company or Bank",
+                collection: [Company].map { |klass| klass.all.map { |record| ["#{klass}: #{record.name}", "#{klass}::#{record.id}"] } }.flatten(1),
+                selected: "#{resource.cp_assessmentable_type}::#{resource.cp_assessmentable_id}"
+    %>
     <%= f.input :assessment_date %>
     <%= f.input :publication_date %>
     <%= f.input :last_reported_year %>

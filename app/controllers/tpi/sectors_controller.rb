@@ -87,7 +87,7 @@ module TPI
     private
 
     def any_cp_assessment?
-      CP::Assessment.currently_published.joins(company: :sector).where(companies: {sector: @sector}).any? &&
+      CP::Assessment.currently_published.companies.joins(company: :sector).where(companies: {sector: @sector}).any? &&
         CP::Benchmark.where(sector: @sector).exists?
     end
 
@@ -107,7 +107,8 @@ module TPI
         .includes(company: [:sector, :geography, :mq_assessments])
       cp_assessments = CP::Assessment
         .currently_published
-        .where(company_id: companies_ids)
+        .companies
+        .where(cp_assessmentable_id: companies_ids)
         .joins(:company)
         .order('companies.name ASC, assessment_date DESC')
         .includes(company: [:geography, sector: [:cp_units]])

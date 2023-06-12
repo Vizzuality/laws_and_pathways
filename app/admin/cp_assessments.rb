@@ -15,12 +15,23 @@ ActiveAdmin.register CP::Assessment do
   filter :company
   filter :company_sector_id, as: :select, collection: proc { TPISector.all }
 
-  data_export_sidebar 'CPAssessments'
+  data_export_sidebar 'CPAssessments', show_display_name: false do
+    li do
+      link_to 'Download Company CPAssessments CSV',
+              params: request.query_parameters.merge(cp_assessmentable_type: 'Company').except(:commit, :format),
+              format: 'csv'
+    end
+    li do
+      link_to 'Download Bank CPAssessments CSV',
+              params: request.query_parameters.merge(cp_assessmentable_type: 'Bank').except(:commit, :format),
+              format: 'csv'
+    end
+  end
 
   show do
     attributes_table do
       row :id
-      row :company
+      row 'Company/Bank', &:company
       row :assessment_date
       row :publication_date
       row :last_reported_year
@@ -48,7 +59,7 @@ ActiveAdmin.register CP::Assessment do
 
   index do
     column :title, &:title_link
-    column :company
+    column 'Company/Bank', &:company
     column :cp_alignment_2050
     column :cp_alignment_2025
     column :cp_alignment_2035
@@ -61,8 +72,8 @@ ActiveAdmin.register CP::Assessment do
     year_columns = collection.flat_map(&:emissions_all_years).uniq.sort
 
     column :id
-    column('Company Id') { |a| a.company.id }
-    column(:company) { |a| a.company.name }
+    column('Company') { |a| a.company.id } if params[:cp_assessmentable_type] == 'Company'
+    column(:name) { |a| a.cp_assessmentable.name }
     column :assessment_date
     column :publication_date, &:publication_date_csv
     column :last_reported_year
@@ -85,12 +96,20 @@ ActiveAdmin.register CP::Assessment do
   controller do
     before_action :fix_region
 
+    before_save do |record|
+      if params['cp_assessment']['cp_assessmentable_id'].present?
+        record.cp_assessmentable_type, record.cp_assessmentable_id = params['cp_assessment']['cp_assessmentable_id'].split('::')
+      end
+    end
+
     def fix_region
       params['cp_assessment']['region'] = nil if params['cp_assessment'] && params['cp_assessment']['region'].blank?
     end
 
     def scoped_collection
-      super.includes(:company)
+      query = super.includes(:company)
+      query = query.where(cp_assessmentable_type: params[:cp_assessmentable_type]) if params[:cp_assessmentable_type].present?
+      query
     end
   end
 end

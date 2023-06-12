@@ -30,7 +30,8 @@ module CP
 
     REGIONS = CP::Benchmark::REGIONS - ['Global']
 
-    belongs_to :company
+    belongs_to :cp_assessmentable, polymorphic: true
+    belongs_to :company, foreign_type: 'Company', foreign_key: 'cp_assessmentable_id', optional: true
 
     scope :latest_first, -> { order(assessment_date: :desc) }
     scope :all_publication_dates, -> { distinct.order(publication_date: :desc).pluck(:publication_date) }
@@ -39,6 +40,7 @@ module CP
     }
     scope :currently_published, -> { where('publication_date <= ?', DateTime.now) }
     scope :regional, -> { where.not(region: [nil, '']) }
+    scope :companies, -> { where(cp_assessmentable_type: 'Company') }
 
     validates_presence_of :publication_date
     validates_presence_of :last_reported_year, if: -> { emissions&.keys&.any? }
@@ -56,7 +58,7 @@ module CP
     end
 
     def unit
-      company.sector.cp_unit_valid_for_date(publication_date)&.unit
+      cp_assessmentable.sector.cp_unit_valid_for_date(publication_date)&.unit
     end
 
     def cp_benchmark_id
@@ -78,11 +80,11 @@ module CP
     private
 
     def benchmarks
-      company.sector.latest_benchmarks_for_date(publication_date)
+      cp_assessmentable.sector.latest_benchmarks_for_date(publication_date)
     end
 
     def regional_benchmarks
-      company.sector.latest_benchmarks_for_date(publication_date, region)
+      cp_assessmentable.sector.latest_benchmarks_for_date(publication_date, region)
     end
   end
 end

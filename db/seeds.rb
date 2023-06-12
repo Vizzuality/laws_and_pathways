@@ -1,5 +1,8 @@
 require "#{Rails.root}/lib/timed_logger"
 
+TPISector.reset_column_information
+Company.reset_column_information
+
 # admin users
 # envs: DEV
 if (Rails.env.development? || Rails.env.test?) && !AdminUser.find_by(email: 'admin@example.com')

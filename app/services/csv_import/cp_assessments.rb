@@ -48,7 +48,8 @@ module CSVImport
     def prepare_assessment(row)
       find_record_by(:id, row) ||
         CP::Assessment.find_or_initialize_by(
-          company: find_company!(row),
+          cp_assessmentable_type: 'Company',
+          cp_assessmentable_id: find_company!(row).id,
           assessment_date: assessment_date(row)
         )
     end

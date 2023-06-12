@@ -28,7 +28,7 @@ RSpec.describe CP::Assessment, type: :model do
   let_it_be(:sector) { create(:tpi_sector) }
   let_it_be(:company) { create(:company, sector: sector) }
 
-  subject { build(:cp_assessment, company: company) }
+  subject { build(:cp_assessment, cp_assessmentable: company) }
 
   it { is_expected.to be_valid }
 
