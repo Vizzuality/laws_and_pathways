@@ -85,7 +85,7 @@ CREATE FUNCTION public.target_tsv_trigger() RETURNS trigger
 
 SET default_tablespace = '';
 
-SET default_with_oids = false;
+SET default_table_access_method = heap;
 
 --
 -- Name: active_admin_comments; Type: TABLE; Schema: public; Owner: -
@@ -587,7 +587,8 @@ CREATE TABLE public.cp_benchmarks (
     updated_at timestamp without time zone NOT NULL,
     emissions jsonb,
     scenario character varying,
-    region character varying DEFAULT 'Global'::character varying NOT NULL
+    region character varying DEFAULT 'Global'::character varying NOT NULL,
+    source character varying NOT NULL
 );
 
 
@@ -3570,6 +3571,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220822102328'),
 ('20220902105018'),
 ('20220908080811'),
-('20230612083439');
+('20230612083439'),
+('20230613090106');
 
 
