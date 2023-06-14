@@ -32,6 +32,8 @@ module CP
 
     belongs_to :cp_assessmentable, polymorphic: true
     belongs_to :company, foreign_type: 'Company', foreign_key: 'cp_assessmentable_id', optional: true
+    belongs_to :bank, foreign_type: 'Bank', foreign_key: 'cp_assessmentable_id', optional: true
+    belongs_to :sector, class_name: 'TPISector', foreign_key: 'sector_id', optional: true
 
     scope :latest_first, -> { order(assessment_date: :desc) }
     scope :all_publication_dates, -> { distinct.order(publication_date: :desc).pluck(:publication_date) }
@@ -50,9 +52,11 @@ module CP
 
     with_options allow_nil: true, allow_blank: true, inclusion: {in: CP::Alignment::ALLOWED_NAMES} do
       validates :cp_alignment_2025
+      validates :cp_alignment_2027
       validates :cp_alignment_2035
       validates :cp_alignment_2050
       validates :cp_regional_alignment_2025
+      validates :cp_regional_alignment_2027
       validates :cp_regional_alignment_2035
       validates :cp_regional_alignment_2050
     end

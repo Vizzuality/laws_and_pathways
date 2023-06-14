@@ -8,7 +8,9 @@ ActiveAdmin.register CP::Benchmark do
   filter :release_date
   filter :sector
   filter :region, as: :select, collection: proc { CP::Benchmark::REGIONS }
-  filter :source, as: :select, collection: proc { %w[Company Bank] }
+
+  scope('Banks') { |scope| scope.where(source: 'Bank') }
+  scope('Companies') { |scope| scope.where(source: 'Company') }
 
   data_export_sidebar 'CPBenchmarks', show_display_name: false do
     li do

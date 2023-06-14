@@ -72,6 +72,39 @@ ActiveAdmin.register Bank do
           end
         end
       end
+
+      tab :cp_assessments do
+        panel 'Carbon Performance Assessments' do
+          if resource.cp_assessments.empty?
+            div class: 'padding-20' do
+              'No Carbon Performance Assessments for this bank yet'
+            end
+          else
+            resource.cp_assessments.latest_first.decorate.map do |a|
+              panel a.title_link, class: 'benchmark' do
+                attributes_table_for a do
+                  row :sector
+                  row :publication_date
+                  row :assessment_date
+                  row :cp_alignment_2027
+                  row :cp_alignment_2035
+                  row :cp_alignment_2050
+                  if a.region.present?
+                    row :region
+                    row :cp_regional_alignment_2027
+                    row :cp_regional_alignment_2035
+                    row :cp_regional_alignment_2050
+                  end
+                  row :assumptions
+                  row :last_reported_year
+                end
+
+                render 'admin/cp/emissions_table', emissions: a.emissions
+              end
+            end
+          end
+        end
+      end
     end
 
     active_admin_comments

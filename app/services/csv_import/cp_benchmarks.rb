@@ -23,6 +23,10 @@ module CSVImport
 
     private
 
+    def source_klass
+      raise NotImplementedError
+    end
+
     def resource_klass
       CP::Benchmark
     end
@@ -34,7 +38,7 @@ module CSVImport
     def prepare_benchmark(row)
       find_record_by(:id, row) ||
         CP::Benchmark.find_or_initialize_by(
-          source: 'Company',
+          source: source_klass.to_s,
           sector: find_or_create_tpi_sector(row[:sector]),
           release_date: parse_date(row[:release_date]),
           scenario: row[:scenario],

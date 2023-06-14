@@ -16,12 +16,12 @@ module Seed
         run_importer CSVImport::Companies.new(seed_file('tpi-companies.csv'), override_id: true)
       end
 
-      TimedLogger.log('Import CP Benchmarks') do
-        run_importer CSVImport::CPBenchmarks.new(seed_file('cp-benchmarks.csv'))
+      TimedLogger.log('Import Company CP Benchmarks') do
+        run_importer CSVImport::CompanyCPBenchmarks.new(seed_file('company-cp-benchmarks.csv'))
       end
 
-      TimedLogger.log('Import CP Assessments') do
-        run_importer CSVImport::CPAssessments.new(seed_file('cp-assessments.csv'))
+      TimedLogger.log('Import Company CP Assessments') do
+        run_importer CSVImport::CompanyCPAssessments.new(seed_file('company-cp-assessments.csv'))
       end
 
       TimedLogger.log('Import MQ Assessments') do
@@ -32,6 +32,14 @@ module Seed
 
       TimedLogger.log('Import Bank Data') do
         run_importer CSVImport::Banks.new(seed_file('banks.csv'))
+      end
+
+      TimedLogger.log('Import Bank CP Benchmarks') do
+        run_importer CSVImport::BankCPBenchmarks.new(seed_file('bank-cp-benchmarks.csv'))
+      end
+
+      TimedLogger.log('Import Bank CP Assessments') do
+        run_importer CSVImport::BankCPAssessments.new(seed_file('bank-cp-assessments.csv'))
       end
 
       TimedLogger.log('Import Bank Assessment Indicators') do

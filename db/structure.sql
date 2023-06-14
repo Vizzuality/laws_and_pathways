@@ -552,7 +552,10 @@ CREATE TABLE public.cp_assessments (
     cp_regional_alignment_2035 character varying,
     cp_regional_alignment_2050 character varying,
     cp_assessmentable_type character varying,
-    cp_assessmentable_id bigint
+    cp_assessmentable_id bigint,
+    cp_alignment_2027 character varying,
+    cp_regional_alignment_2027 character varying,
+    sector_id bigint
 );
 
 
@@ -2495,6 +2498,13 @@ CREATE INDEX index_cp_assessments_on_discarded_at ON public.cp_assessments USING
 
 
 --
+-- Name: index_cp_assessments_on_sector_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_cp_assessments_on_sector_id ON public.cp_assessments USING btree (sector_id);
+
+
+--
 -- Name: index_cp_benchmarks_on_sector_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3248,6 +3258,14 @@ ALTER TABLE ONLY public.geographies
 
 
 --
+-- Name: cp_assessments fk_rails_4c218774c4; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.cp_assessments
+    ADD CONSTRAINT fk_rails_4c218774c4 FOREIGN KEY (sector_id) REFERENCES public.tpi_sectors(id);
+
+
+--
 -- Name: cp_benchmarks fk_rails_59a4fb24ff; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3572,6 +3590,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220902105018'),
 ('20220908080811'),
 ('20230612083439'),
-('20230613090106');
+('20230613090106'),
+('20230613101102');
 
 
