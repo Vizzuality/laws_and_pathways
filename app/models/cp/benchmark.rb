@@ -29,10 +29,8 @@ module CP
 
     scope :latest_first, -> { order(release_date: :desc) }
     scope :by_release_date, -> { order(:release_date) }
-    scope :companies, -> { where(source: 'Company') }
-    scope :banks, -> { where(source: 'Bank') }
 
-    validates_presence_of :release_date, :scenario, :source
+    validates_presence_of :release_date, :scenario
     validates :region, inclusion: {in: REGIONS}
 
     def benchmark_id

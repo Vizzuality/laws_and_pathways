@@ -6,7 +6,6 @@ module TPI
       timestamp = Time.now.strftime('%d%m%Y')
       mq_assessments_by_methodology = mq_assessments.group_by(&:methodology_version)
       cp_benchmarks = CP::Benchmark
-        .companies
         .joins(:sector)
         .order('tpi_sectors.name ASC, release_date DESC')
         .includes(sector: [:cp_units])

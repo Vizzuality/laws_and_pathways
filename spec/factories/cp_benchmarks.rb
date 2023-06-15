@@ -16,7 +16,6 @@ FactoryBot.define do
   factory :cp_benchmark, class: CP::Benchmark do
     association :sector, factory: :tpi_sector
 
-    source { 'Company' }
     release_date { 5.days.ago.to_date }
     scenario { 'Paris pledges' }
     region { 'Global' }

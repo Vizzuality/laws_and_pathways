@@ -43,6 +43,7 @@ module CP
     scope :currently_published, -> { where('publication_date <= ?', DateTime.now) }
     scope :regional, -> { where.not(region: [nil, '']) }
     scope :companies, -> { where(cp_assessmentable_type: 'Company') }
+    scope :banks, -> { where(cp_assessmentable_type: 'Bank') }
 
     validates_presence_of :publication_date
     validates_presence_of :last_reported_year, if: -> { emissions&.keys&.any? }
@@ -84,11 +85,11 @@ module CP
     private
 
     def benchmarks
-      cp_assessmentable.sector.latest_benchmarks_for_date(publication_date, source: cp_assessmentable_type)
+      cp_assessmentable.sector.latest_benchmarks_for_date(publication_date)
     end
 
     def regional_benchmarks
-      cp_assessmentable.sector.latest_benchmarks_for_date(publication_date, source: cp_assessmentable_type, region: region)
+      cp_assessmentable.sector.latest_benchmarks_for_date(publication_date, region: region)
     end
   end
 end

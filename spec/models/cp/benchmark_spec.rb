@@ -24,11 +24,6 @@ RSpec.describe CP::Benchmark, type: :model do
     expect(subject).to have(1).errors_on(:sector)
   end
 
-  it 'should be invalid without source' do
-    subject.source = nil
-    expect(subject).to have(1).errors_on(:source)
-  end
-
   it 'should be invalid if date is nil' do
     subject.release_date = nil
     expect(subject).to have(1).errors_on(:release_date)
