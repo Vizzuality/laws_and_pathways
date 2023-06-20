@@ -155,24 +155,33 @@ module Seed
 
     def import_sectors
       [
-        ['Airlines', 'gCO2 / passenger-kilometre (pkm)'],
-        ['Aluminium', 'tCO2e / t aluminium'],
-        ['Autos', 'Average new vehicle emissions (grams of CO2 per kilometre [NEDC])'],
-        ['Cement', 'Carbon intensity (tonnes of CO2 per tonne of cementitious product)'],
-        ['Coal Mining'],
-        ['Consumer Goods'],
-        ['Electricity Utilities', 'Carbon intensity (metric tonnes of CO2 per MWh electricity generation)'],
-        ['Oil & Gas Distribution'],
-        ['Oil & gas'],
-        ['Other Basic Materials'],
-        ['Other Industrials'],
-        ['Paper', 'Carbon intensity (tonnes of CO2 per tonne of pulp, paper and paperboard)'],
-        ['Services'],
-        ['Steel', 'Carbon intensity (tonnes of CO2 per tonne of steel)']
-      ].each do |sector_name, sector_cp_unit|
+        ['Airlines', 'gCO2 / passenger-kilometre (pkm)', [Company, Bank]],
+        ['Aluminium', 'tCO2e / t aluminium', [Company, Bank]],
+        ['Autos', 'Average new vehicle emissions (grams of CO2 per kilometre [NEDC])', [Company]],
+        ['Cement', 'Carbon intensity (tonnes of CO2 per tonne of cementitious product)', [Company, Bank]],
+        ['Coal Mining', [Company, Bank]],
+        ['Consumer Goods', [Company]],
+        ['Electricity Utilities', 'Carbon intensity (metric tonnes of CO2 per MWh electricity generation)', [Company]],
+        ['Oil & Gas Distribution', [Company]],
+        ['Oil & gas', [Company, Bank]],
+        ['Other Basic Materials', [Company]],
+        ['Other Industrials', [Company]],
+        ['Paper', 'Carbon intensity (tonnes of CO2 per tonne of pulp, paper and paperboard)', [Company, Bank]],
+        ['Services', [Company]],
+        ['Steel', 'Carbon intensity (tonnes of CO2 per tonne of steel)', [Company, Bank]],
+        ['Electric Utilities (Global)', 'Carbon intensity (metric tonnes of CO2 per MWh electricity generation)', [Bank]],
+        ['Electric Utilities (Regional)', 'Carbon intensity (metric tonnes of CO2 per MWh electricity generation)', [Bank]],
+        ['Shipping', [Bank]],
+        ['Auto Manufacturing', [Bank]],
+        ['Food', [Bank]],
+        ['Diversified Mining', [Bank]],
+        ['Chemicals', [Bank]],
+        ['Real Estate', [Bank]]
+      ].each do |sector_name, sector_cp_unit, categories|
         next unless sector_cp_unit.present?
 
         TPISector.find_or_create_by!(name: sector_name) do |sector|
+          sector.update categories: categories.map(&:to_s) if categories.present?
           sector.cp_units.build(unit: sector_cp_unit) unless sector.latest_cp_unit.present?
         end
       end

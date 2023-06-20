@@ -1632,7 +1632,8 @@ CREATE TABLE public.tpi_sectors (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     cluster_id bigint,
-    show_in_tpi_tool boolean DEFAULT true NOT NULL
+    show_in_tpi_tool boolean DEFAULT true NOT NULL,
+    categories character varying[] DEFAULT '{}'::character varying[]
 );
 
 
@@ -3589,6 +3590,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220902105018'),
 ('20220908080811'),
 ('20230612083439'),
-('20230613101102');
+('20230613101102'),
+('20230620080704');
 
 

@@ -43,7 +43,7 @@ module CSVImport
           cp_assessmentable_type: 'Bank',
           cp_assessmentable_id: find_bank!(row)&.id,
           assessment_date: assessment_date(row),
-          sector: find_or_create_tpi_sector(row[:sector])
+          sector: find_or_create_tpi_sector(row[:sector], categories: [Bank])
         )
     end
 

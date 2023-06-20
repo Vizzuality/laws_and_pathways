@@ -15,6 +15,8 @@ class TPISector < ApplicationRecord
   include TPICache
   extend FriendlyId
 
+  CATEGORIES = %w[Company Bank].freeze
+
   friendly_id :name, use: [:slugged, :history], routes: :default
 
   belongs_to :cluster, class_name: 'TPISectorCluster', foreign_key: 'cluster_id', optional: true
@@ -31,8 +33,11 @@ class TPISector < ApplicationRecord
 
   validates_presence_of :name, :slug
   validates_uniqueness_of :name, :slug
+  validates :categories, array_inclusion: {in: CATEGORIES}
 
   scope :tpi_tool, -> { where(show_in_tpi_tool: true) }
+  scope :companies, -> { where('categories && ARRAY[?]::varchar[]', 'Company') }
+  scope :banks, -> { where('categories && ARRAY[?]::varchar[]', 'Bank') }
   scope :with_companies, -> { joins(:companies).where(companies: Company.published).distinct }
 
   def should_generate_new_friendly_id?

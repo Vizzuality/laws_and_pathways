@@ -28,6 +28,11 @@ RSpec.describe TPISector, type: :model do
     expect(build(:tpi_sector, name: 'Airlines')).to have(1).errors_on(:name)
   end
 
+  it 'should not be valid when category is unknown' do
+    subject.categories = ['Unknown']
+    expect(subject).to have(1).errors_on(:categories)
+  end
+
   it 'should update slug when editing name' do
     sector = create(:tpi_sector, name: 'Some name')
     expect(sector.slug).to eq('some-name')
