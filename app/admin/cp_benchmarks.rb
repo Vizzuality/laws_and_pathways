@@ -3,18 +3,33 @@ ActiveAdmin.register CP::Benchmark do
 
   menu parent: 'TPI', priority: 5, label: 'Carbon Performance Benchmarks'
 
-  permit_params :scenario, :sector_id, :release_date, :region, :emissions
+  permit_params :scenario, :category, :sector_id, :release_date, :region, :emissions
 
   filter :release_date
   filter :sector
   filter :region, as: :select, collection: proc { CP::Benchmark::REGIONS }
 
-  data_export_sidebar 'CPBenchmarks'
+  scope('Banks') { |scope| scope.where(category: 'Bank') }
+  scope('Companies') { |scope| scope.where(category: 'Company') }
+
+  data_export_sidebar 'CPBenchmarks', show_display_name: false do
+    li do
+      link_to 'Download Company CPBenchmarks CSV',
+              params: request.query_parameters.merge(category: 'Company').except(:commit, :format),
+              format: 'csv'
+    end
+    li do
+      link_to 'Download Bank CPBenchmarks CSV',
+              params: request.query_parameters.merge(category: 'Bank').except(:commit, :format),
+              format: 'csv'
+    end
+  end
 
   show do
     attributes_table do
       row :id
       row :release_date
+      row :category
       row :sector
       row :scenario
       row :region
@@ -58,7 +73,9 @@ ActiveAdmin.register CP::Benchmark do
 
   controller do
     def scoped_collection
-      super.includes(:sector)
+      query = super.includes(:sector)
+      query = query.where(category: params[:category]) if params[:category].present?
+      query
     end
   end
 end

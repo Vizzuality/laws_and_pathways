@@ -3,6 +3,7 @@
 
   <%= f.inputs do %>
     <%= f.input :sector, collection: TPISector.tpi_tool %>
+    <%= f.input :category, as: :select, collection: %w[Company Bank] %>
     <%= f.input :release_date %>
     <%= f.input :scenario %>
     <%= f.input :region, as: :select, collection: CP::Benchmark::REGIONS %>

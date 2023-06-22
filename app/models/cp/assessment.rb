@@ -85,11 +85,11 @@ module CP
     private
 
     def benchmarks
-      cp_assessmentable.sector.latest_benchmarks_for_date(publication_date)
+      cp_assessmentable.sector.latest_benchmarks_for_date(publication_date, category: cp_assessmentable_type)
     end
 
     def regional_benchmarks
-      cp_assessmentable.sector.latest_benchmarks_for_date(publication_date, region: region)
+      cp_assessmentable.sector.latest_benchmarks_for_date(publication_date, category: cp_assessmentable_type, region: region)
     end
   end
 end

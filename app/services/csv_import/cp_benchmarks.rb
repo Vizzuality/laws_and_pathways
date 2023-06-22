@@ -6,7 +6,7 @@ module CSVImport
       import_each_csv_row(csv) do |row|
         benchmark = prepare_benchmark(row)
 
-        benchmark.sector = find_or_create_tpi_sector(row[:sector]) if row.header?(:sector)
+        benchmark.sector = find_or_create_tpi_sector(row[:sector], categories: [category_klass.to_s]) if row.header?(:sector)
         benchmark.release_date = parse_date(row[:release_date]) if row.header?(:release_date)
         benchmark.scenario = row[:scenario] if row.header?(:scenario)
         benchmark.region = parse_cp_benchmark_region(row[:region]) if row.header?(:region)
@@ -23,6 +23,10 @@ module CSVImport
 
     private
 
+    def category_klass
+      raise NotImplementedError
+    end
+
     def resource_klass
       CP::Benchmark
     end
@@ -34,7 +38,8 @@ module CSVImport
     def prepare_benchmark(row)
       find_record_by(:id, row) ||
         CP::Benchmark.find_or_initialize_by(
-          sector: find_or_create_tpi_sector(row[:sector]),
+          category: category_klass.to_s,
+          sector: find_or_create_tpi_sector(row[:sector], categories: [category_klass.to_s]),
           release_date: parse_date(row[:release_date]),
           scenario: row[:scenario],
           region: parse_cp_benchmark_region(row[:region])

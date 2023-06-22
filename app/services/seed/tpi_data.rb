@@ -16,8 +16,8 @@ module Seed
         run_importer CSVImport::Companies.new(seed_file('tpi-companies.csv'), override_id: true)
       end
 
-      TimedLogger.log('Import CP Benchmarks') do
-        run_importer CSVImport::CPBenchmarks.new(seed_file('cp-benchmarks.csv'))
+      TimedLogger.log('Import Company CP Benchmarks') do
+        run_importer CSVImport::CompanyCPBenchmarks.new(seed_file('company-cp-benchmarks.csv'))
       end
 
       TimedLogger.log('Import Company CP Assessments') do
@@ -32,6 +32,10 @@ module Seed
 
       TimedLogger.log('Import Bank Data') do
         run_importer CSVImport::Banks.new(seed_file('banks.csv'))
+      end
+
+      TimedLogger.log('Import Bank CP Benchmarks') do
+        run_importer CSVImport::BankCPBenchmarks.new(seed_file('bank-cp-benchmarks.csv'))
       end
 
       TimedLogger.log('Import Bank CP Assessments') do
@@ -159,24 +163,24 @@ module Seed
         ['Aluminium', 'tCO2e / t aluminium', [Company, Bank]],
         ['Autos', 'Average new vehicle emissions (grams of CO2 per kilometre [NEDC])', [Company]],
         ['Cement', 'Carbon intensity (tonnes of CO2 per tonne of cementitious product)', [Company, Bank]],
-        ['Coal Mining', [Company, Bank]],
-        ['Consumer Goods', [Company]],
+        ['Coal Mining', nil, [Company, Bank]],
+        ['Consumer Goods', nil, [Company]],
         ['Electricity Utilities', 'Carbon intensity (metric tonnes of CO2 per MWh electricity generation)', [Company]],
-        ['Oil & Gas Distribution', [Company]],
-        ['Oil & gas', [Company, Bank]],
-        ['Other Basic Materials', [Company]],
-        ['Other Industrials', [Company]],
+        ['Oil & Gas Distribution', nil, [Company]],
+        ['Oil & gas', nil, [Company, Bank]],
+        ['Other Basic Materials', nil, [Company]],
+        ['Other Industrials', nil, [Company]],
         ['Paper', 'Carbon intensity (tonnes of CO2 per tonne of pulp, paper and paperboard)', [Company, Bank]],
-        ['Services', [Company]],
+        ['Services', nil, [Company]],
         ['Steel', 'Carbon intensity (tonnes of CO2 per tonne of steel)', [Company, Bank]],
         ['Electric Utilities (Global)', 'Carbon intensity (metric tonnes of CO2 per MWh electricity generation)', [Bank]],
         ['Electric Utilities (Regional)', 'Carbon intensity (metric tonnes of CO2 per MWh electricity generation)', [Bank]],
-        ['Shipping', [Bank]],
-        ['Auto Manufacturing', [Bank]],
-        ['Food', [Bank]],
-        ['Diversified Mining', [Bank]],
-        ['Chemicals', [Bank]],
-        ['Real Estate', [Bank]]
+        ['Shipping', nil, [Bank]],
+        ['Auto Manufacturing', nil, [Bank]],
+        ['Food', nil, [Bank]],
+        ['Diversified Mining', nil, [Bank]],
+        ['Chemicals', nil, [Bank]],
+        ['Real Estate', nil, [Bank]]
       ].each do |sector_name, sector_cp_unit, categories|
         next unless sector_cp_unit.present?
 

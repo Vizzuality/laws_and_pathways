@@ -65,22 +65,22 @@ RSpec.describe TPISector, type: :model do
   describe '#latest_benchmarks_for_date' do
     let(:sector) { create(:tpi_sector) }
     let!(:first_benchmark) {
-      create(:cp_benchmark, sector: sector, scenario: 'scenario', release_date: 12.months.ago)
+      create(:cp_benchmark, sector: sector, category: Company.to_s, scenario: 'scenario', release_date: 12.months.ago)
     }
     let!(:second_benchmark) {
-      create(:cp_benchmark, sector: sector, scenario: 'scenario', release_date: 5.months.ago)
+      create(:cp_benchmark, sector: sector, category: Company.to_s, scenario: 'scenario', release_date: 5.months.ago)
     }
 
     it 'should return first benchmark if is the latest one to the date' do
-      expect(sector.latest_benchmarks_for_date(10.months.ago)).to eq([first_benchmark])
+      expect(sector.latest_benchmarks_for_date(10.months.ago, category: Company.to_s)).to eq([first_benchmark])
     end
 
     it 'should return last benchmark if is the latest one to the date' do
-      expect(sector.latest_benchmarks_for_date(3.months.ago)).to eq([second_benchmark])
+      expect(sector.latest_benchmarks_for_date(3.months.ago, category: Company.to_s)).to eq([second_benchmark])
     end
 
     it 'should return the latest if no date given' do
-      expect(sector.latest_benchmarks_for_date(nil)).to eq([second_benchmark])
+      expect(sector.latest_benchmarks_for_date(nil, category: Company.to_s)).to eq([second_benchmark])
     end
   end
 end
