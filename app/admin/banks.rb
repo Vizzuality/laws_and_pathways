@@ -86,12 +86,12 @@ ActiveAdmin.register Bank do
                   row :sector
                   row :publication_date
                   row :assessment_date
-                  row :cp_alignment_2027
+                  row :cp_alignment_2025
                   row :cp_alignment_2035
                   row :cp_alignment_2050
                   if a.region.present?
                     row :region
-                    row :cp_regional_alignment_2027
+                    row :cp_regional_alignment_2025
                     row :cp_regional_alignment_2035
                     row :cp_regional_alignment_2050
                   end

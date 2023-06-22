@@ -1212,9 +1212,9 @@ describe 'CSVDataUpload (integration)' do
       (2019..2050).each_with_object({}).with_index { |(v, result), i| result[v.to_s] = 100 - i }
     )
     expect(assessment.cp_alignment_2050).to eq('No or unsuitable disclosure')
-    expect(assessment.cp_alignment_2027).to eq('National Pledges')
+    expect(assessment.cp_alignment_2025).to eq('National Pledges')
     expect(assessment.cp_alignment_2035).to eq('Not Aligned')
-    expect(assessment.cp_regional_alignment_2027).to eq('2 Degrees')
+    expect(assessment.cp_regional_alignment_2025).to eq('2 Degrees')
     expect(assessment.cp_regional_alignment_2035).to eq('2 Degrees')
     expect(assessment.cp_regional_alignment_2050).to eq('2 Degrees')
     expect(assessment2.cp_alignment_2050).to eq('Not Aligned')

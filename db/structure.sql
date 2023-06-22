@@ -553,8 +553,6 @@ CREATE TABLE public.cp_assessments (
     cp_regional_alignment_2050 character varying,
     cp_assessmentable_type character varying,
     cp_assessmentable_id bigint,
-    cp_alignment_2027 character varying,
-    cp_regional_alignment_2027 character varying,
     sector_id bigint
 );
 
@@ -612,6 +610,43 @@ CREATE SEQUENCE public.cp_benchmarks_id_seq
 --
 
 ALTER SEQUENCE public.cp_benchmarks_id_seq OWNED BY public.cp_benchmarks.id;
+
+
+--
+-- Name: cp_matrices; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.cp_matrices (
+    id bigint NOT NULL,
+    bank_id bigint NOT NULL,
+    region character varying NOT NULL,
+    sector_id bigint NOT NULL,
+    portfolio character varying NOT NULL,
+    cp_alignment_2025 character varying,
+    cp_alignment_2035 character varying,
+    cp_alignment_2050 character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: cp_matrices_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.cp_matrices_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: cp_matrices_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.cp_matrices_id_seq OWNED BY public.cp_matrices.id;
 
 
 --
@@ -1756,6 +1791,13 @@ ALTER TABLE ONLY public.cp_benchmarks ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
+-- Name: cp_matrices id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.cp_matrices ALTER COLUMN id SET DEFAULT nextval('public.cp_matrices_id_seq'::regclass);
+
+
+--
 -- Name: cp_units id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2062,6 +2104,14 @@ ALTER TABLE ONLY public.cp_assessments
 
 ALTER TABLE ONLY public.cp_benchmarks
     ADD CONSTRAINT cp_benchmarks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cp_matrices cp_matrices_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.cp_matrices
+    ADD CONSTRAINT cp_matrices_pkey PRIMARY KEY (id);
 
 
 --
@@ -2510,6 +2560,20 @@ CREATE INDEX index_cp_assessments_on_sector_id ON public.cp_assessments USING bt
 --
 
 CREATE INDEX index_cp_benchmarks_on_sector_id ON public.cp_benchmarks USING btree (sector_id);
+
+
+--
+-- Name: index_cp_matrices_on_bank_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_cp_matrices_on_bank_id ON public.cp_matrices USING btree (bank_id);
+
+
+--
+-- Name: index_cp_matrices_on_sector_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_cp_matrices_on_sector_id ON public.cp_matrices USING btree (sector_id);
 
 
 --
@@ -3299,6 +3363,14 @@ ALTER TABLE ONLY public.litigation_sides
 
 
 --
+-- Name: cp_matrices fk_rails_66a8350948; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.cp_matrices
+    ADD CONSTRAINT fk_rails_66a8350948 FOREIGN KEY (sector_id) REFERENCES public.tpi_sectors(id);
+
+
+--
 -- Name: bank_assessments fk_rails_68427d4c57; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3424,6 +3496,14 @@ ALTER TABLE ONLY public.legislations
 
 ALTER TABLE ONLY public.active_storage_attachments
     ADD CONSTRAINT fk_rails_c3b3935057 FOREIGN KEY (blob_id) REFERENCES public.active_storage_blobs(id);
+
+
+--
+-- Name: cp_matrices fk_rails_cf56c69270; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.cp_matrices
+    ADD CONSTRAINT fk_rails_cf56c69270 FOREIGN KEY (bank_id) REFERENCES public.banks(id);
 
 
 --
@@ -3593,6 +3673,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230612083439'),
 ('20230613101102'),
 ('20230620080704'),
-('20230622073030');
+('20230622073030'),
+('20230622093001');
 
 
