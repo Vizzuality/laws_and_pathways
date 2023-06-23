@@ -84,22 +84,23 @@ ActiveAdmin.register Bank do
               panel a.title_link, class: 'benchmark' do
                 attributes_table_for a do
                   row :sector
+                  row :region
                   row :publication_date
                   row :assessment_date
-                  row :cp_alignment_2025
-                  row :cp_alignment_2035
-                  row :cp_alignment_2050
-                  if a.region.present?
-                    row :region
-                    row :cp_regional_alignment_2025
-                    row :cp_regional_alignment_2035
-                    row :cp_regional_alignment_2050
-                  end
                   row :assumptions
-                  row :last_reported_year
+                  row :final_disclosure_year
+                  panel 'Emissions', style: 'margin: 10px' do
+                    render 'admin/cp/emissions_table', emissions: a.emissions
+                  end
+                  panel 'Carbon Performance Matrix', style: 'margin: 10px' do
+                    attributes_table_for a.cp_matrices do
+                      row :portfolio
+                      row :cp_alignment_2025
+                      row :cp_alignment_2035
+                      row :cp_alignment_2050
+                    end
+                  end
                 end
-
-                render 'admin/cp/emissions_table', emissions: a.emissions
               end
             end
           end

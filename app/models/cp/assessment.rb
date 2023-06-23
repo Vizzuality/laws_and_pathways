@@ -67,8 +67,12 @@ module CP
 
     before_validation :prepare_default_values
 
+    def sector
+      super || cp_assessmentable.try(:sector)
+    end
+
     def unit
-      (sector || cp_assessmentable.try(:sector)).cp_unit_valid_for_date(publication_date)&.unit
+      sector.cp_unit_valid_for_date(publication_date)&.unit
     end
 
     def cp_benchmark_id
@@ -94,11 +98,11 @@ module CP
     end
 
     def benchmarks
-      cp_assessmentable.sector.latest_benchmarks_for_date(publication_date, category: cp_assessmentable_type)
+      sector.latest_benchmarks_for_date(publication_date, category: cp_assessmentable_type)
     end
 
     def regional_benchmarks
-      cp_assessmentable.sector.latest_benchmarks_for_date(publication_date, category: cp_assessmentable_type, region: region)
+      sector.latest_benchmarks_for_date(publication_date, category: cp_assessmentable_type, region: region)
     end
   end
 end

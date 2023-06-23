@@ -9,6 +9,8 @@ module CSVImport
 
           assessment.assessment_date = assessment_date(row) if row.header?(:assessment_date)
           assessment.publication_date = publication_date(row) if row.header?(:publication_date)
+          assessment.sector = find_or_create_tpi_sector(row[:sector], categories: [Bank]) if row.header?(:sector)
+          assessment.region = parse_cp_benchmark_region(row[:region]) if row.header?(:region)
           assessment.assumptions = row[:assumptions].presence if row.header?(:assumptions)
           assessment.emissions = parse_emissions(row) if emission_headers?(row)
           assessment.final_disclosure_year = row[:final_disclosure_year] if row.header?(:final_disclosure_year)
