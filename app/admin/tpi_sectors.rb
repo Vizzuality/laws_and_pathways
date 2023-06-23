@@ -4,7 +4,7 @@ ActiveAdmin.register TPISector do
 
   decorate_with TPISectorDecorator
 
-  menu priority: 6, parent: 'TPI'
+  menu priority: 7, parent: 'TPI'
 
   permit_params :name, :cluster_id, categories: [], cp_units_attributes: [:id, :unit, :valid_since, :_destroy]
 

@@ -38,8 +38,8 @@ module Seed
         run_importer CSVImport::BankCPBenchmarks.new(seed_file('bank-cp-benchmarks.csv'))
       end
 
-      TimedLogger.log('Import Bank CP Assessments') do
-        run_importer CSVImport::BankCPAssessments.new(seed_file('bank-cp-assessments.csv'))
+      TimedLogger.log('Import Bank CP Assessments 2025') do
+        run_importer CSVImport::BankCPAssessments2025.new(seed_file('bank-cp-assessments-2025.csv'))
       end
 
       TimedLogger.log('Import Bank Assessment Indicators') do

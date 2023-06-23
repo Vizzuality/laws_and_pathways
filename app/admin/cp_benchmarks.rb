@@ -12,17 +12,28 @@ ActiveAdmin.register CP::Benchmark do
   scope('Banks') { |scope| scope.where(category: 'Bank') }
   scope('Companies') { |scope| scope.where(category: 'Company') }
 
-  data_export_sidebar 'CPBenchmarks', show_display_name: false do
-    li do
-      link_to 'Download Company CPBenchmarks CSV',
-              params: request.query_parameters.merge(category: 'Company').except(:commit, :format),
-              format: 'csv'
+  sidebar 'Export / Import', only: :index do
+    ul do
+      li do
+        link_to 'Download Company CPBenchmarks CSV',
+                params: request.query_parameters.merge(category: 'Company').except(:commit, :format),
+                format: 'csv'
+      end
+      li do
+        link_to 'Download Bank CPBenchmarks CSV',
+                params: request.query_parameters.merge(category: 'Bank').except(:commit, :format),
+                format: 'csv'
+      end
+      li do
+        link_to '<strong>Upload</strong> Company CPBenchmarks'.html_safe,
+                new_admin_data_upload_path(data_upload: {uploader: 'CompanyCPBenchmarks'})
+      end
+      li do
+        link_to '<strong>Upload</strong> Bank CPBenchmarks'.html_safe,
+                new_admin_data_upload_path(data_upload: {uploader: 'BankCPBenchmarks'})
+      end
     end
-    li do
-      link_to 'Download Bank CPBenchmarks CSV',
-              params: request.query_parameters.merge(category: 'Bank').except(:commit, :format),
-              format: 'csv'
-    end
+    hr
   end
 
   show do

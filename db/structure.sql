@@ -553,7 +553,8 @@ CREATE TABLE public.cp_assessments (
     cp_regional_alignment_2050 character varying,
     cp_assessmentable_type character varying,
     cp_assessmentable_id bigint,
-    sector_id bigint
+    sector_id bigint,
+    final_disclosure_year integer
 );
 
 
@@ -618,9 +619,7 @@ ALTER SEQUENCE public.cp_benchmarks_id_seq OWNED BY public.cp_benchmarks.id;
 
 CREATE TABLE public.cp_matrices (
     id bigint NOT NULL,
-    bank_id bigint NOT NULL,
-    region character varying NOT NULL,
-    sector_id bigint NOT NULL,
+    cp_assessment_id bigint NOT NULL,
     portfolio character varying NOT NULL,
     cp_alignment_2025 character varying,
     cp_alignment_2035 character varying,
@@ -2563,17 +2562,10 @@ CREATE INDEX index_cp_benchmarks_on_sector_id ON public.cp_benchmarks USING btre
 
 
 --
--- Name: index_cp_matrices_on_bank_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_cp_matrices_on_cp_assessment_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_cp_matrices_on_bank_id ON public.cp_matrices USING btree (bank_id);
-
-
---
--- Name: index_cp_matrices_on_sector_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_cp_matrices_on_sector_id ON public.cp_matrices USING btree (sector_id);
+CREATE INDEX index_cp_matrices_on_cp_assessment_id ON public.cp_matrices USING btree (cp_assessment_id);
 
 
 --
@@ -3363,14 +3355,6 @@ ALTER TABLE ONLY public.litigation_sides
 
 
 --
--- Name: cp_matrices fk_rails_66a8350948; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.cp_matrices
-    ADD CONSTRAINT fk_rails_66a8350948 FOREIGN KEY (sector_id) REFERENCES public.tpi_sectors(id);
-
-
---
 -- Name: bank_assessments fk_rails_68427d4c57; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3392,6 +3376,14 @@ ALTER TABLE ONLY public.targets
 
 ALTER TABLE ONLY public.publications
     ADD CONSTRAINT fk_rails_6984032012 FOREIGN KEY (updated_by_id) REFERENCES public.admin_users(id);
+
+
+--
+-- Name: cp_matrices fk_rails_7501b6962b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.cp_matrices
+    ADD CONSTRAINT fk_rails_7501b6962b FOREIGN KEY (cp_assessment_id) REFERENCES public.cp_assessments(id);
 
 
 --
@@ -3496,14 +3488,6 @@ ALTER TABLE ONLY public.legislations
 
 ALTER TABLE ONLY public.active_storage_attachments
     ADD CONSTRAINT fk_rails_c3b3935057 FOREIGN KEY (blob_id) REFERENCES public.active_storage_blobs(id);
-
-
---
--- Name: cp_matrices fk_rails_cf56c69270; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.cp_matrices
-    ADD CONSTRAINT fk_rails_cf56c69270 FOREIGN KEY (bank_id) REFERENCES public.banks(id);
 
 
 --

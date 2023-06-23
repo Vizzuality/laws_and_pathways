@@ -24,6 +24,18 @@
   <% end %>
 
   <div class="panel">
+    <h3>CP Matrix values</h3>
+    <div class="panel-contents padding-20">
+      <% f.has_many :cp_matrices, allow_destroy: true, heading: false do |ff| %>
+        <% ff.input :portfolio, collection: CP::Portfolio::NAMES %>
+        <% ff.input :cp_alignment_2025 %>
+        <% ff.input :cp_alignment_2035 %>
+        <% ff.input :cp_alignment_2050 %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="panel">
     <h3>Emissions/Targets values</h3>
     <div class="panel-contents padding-20">
       <%= render "admin/cp/emissions_table_edit", f: f %>

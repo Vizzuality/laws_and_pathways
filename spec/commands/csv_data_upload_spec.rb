@@ -476,10 +476,10 @@ describe 'CSVDataUpload (integration)' do
 
       command = expect_data_upload_results(
         CP::Assessment,
-        fixture_file('bank-cp-assessments.csv', content: csv_content),
+        fixture_file('bank-cp-assessments-2025.csv', content: csv_content),
         {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
         expected_success: false,
-        custom_uploader: 'BankCPAssessments'
+        custom_uploader: 'BankCPAssessments2025'
       )
 
       expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
@@ -844,7 +844,7 @@ describe 'CSVDataUpload (integration)' do
           fixture_file('bank_cp_assessments.csv', content: csv_content),
           {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
           expected_success: true,
-          custom_uploader: 'BankCPAssessments'
+          custom_uploader: 'BankCPAssessments2025'
         )
         to_update.reload
       end
@@ -1185,39 +1185,52 @@ describe 'CSVDataUpload (integration)' do
   end
 
   it 'imports CSV files with Bank CP Assessments data' do
-    diamond_bank = create(:bank, name: 'Diamond Corporation')
-    bastion_bank = create(:bank, name: 'Bastion Banks Inc.')
+    bastion_bank = create(:bank, id: 2, name: 'Bastion Banks Inc.')
+    edge_bank = create(:bank, id: 11, name: 'Edge Bank Inc.')
 
     expect_data_upload_results(
       CP::Assessment,
       bank_cp_assessments_csv,
-      {new_records: 15, not_changed_records: 0, rows: 15, updated_records: 0},
-      custom_uploader: 'BankCPAssessments'
+      {new_records: 8, not_changed_records: 0, rows: 8, updated_records: 0},
+      custom_uploader: 'BankCPAssessments2025'
+    )
+    expect_data_upload_results(
+      CP::Assessment,
+      bank_cp_assessments_csv,
+      {new_records: 0, not_changed_records: 8, rows: 8, updated_records: 0},
+      custom_uploader: 'BankCPAssessments2035'
     )
     # subsequent import should not create or update any record
     expect_data_upload_results(
       CP::Assessment,
       bank_cp_assessments_csv,
-      {new_records: 0, not_changed_records: 15, rows: 15, updated_records: 0},
-      custom_uploader: 'BankCPAssessments'
+      {new_records: 0, not_changed_records: 8, rows: 8, updated_records: 0},
+      custom_uploader: 'BankCPAssessments2025'
     )
 
-    assessment = diamond_bank.cp_assessments.last
-    assessment2 = bastion_bank.cp_assessments.last
+    assessment = bastion_bank.cp_assessments.last
+    assessment2 = edge_bank.cp_assessments.last
 
-    expect(assessment.assessment_date).to eq(Date.parse('12/6/2023'))
-    expect(assessment.publication_date).to eq(DateTime.strptime('2023-07', '%Y-%m').to_date)
-    expect(assessment.last_reported_year).to eq(2020)
+    expect(assessment.assessment_date).to eq(Date.parse('30/06/2022'))
+    expect(assessment.publication_date).to eq(DateTime.strptime('2022-09', '%Y-%m').to_date)
     expect(assessment.emissions).to eq(
-      (2019..2050).each_with_object({}).with_index { |(v, result), i| result[v.to_s] = 100 - i }
+      {'2019' => 0.3,
+       '2020' => 0.4,
+       '2021' => 0.3,
+       '2022' => 0.3,
+       '2023' => 0.3,
+       '2024' => 0.3,
+       '2025' => 0.2}
     )
-    expect(assessment.cp_alignment_2050).to eq('No or unsuitable disclosure')
-    expect(assessment.cp_alignment_2025).to eq('National Pledges')
-    expect(assessment.cp_alignment_2035).to eq('Not Aligned')
-    expect(assessment.cp_regional_alignment_2025).to eq('2 Degrees')
-    expect(assessment.cp_regional_alignment_2035).to eq('2 Degrees')
-    expect(assessment.cp_regional_alignment_2050).to eq('2 Degrees')
-    expect(assessment2.cp_alignment_2050).to eq('Not Aligned')
+    expect(assessment.sector.name).to eq('Electric Utilities')
+    expect(assessment.region).to eq('North-America')
+    expect(assessment.cp_alignment_2050).to be_nil
+    expect(assessment.cp_alignment_2025).to be_nil
+    expect(assessment.cp_alignment_2035).to be_nil
+    expect(assessment.cp_matrices.find_by(portfolio: 'Corporate lending').cp_alignment_2025).to eq('National Pledges')
+    expect(assessment.cp_matrices.find_by(portfolio: 'Corporate lending').cp_alignment_2035).to eq('National Pledges')
+    expect(assessment.cp_matrices.find_by(portfolio: 'Corporate lending').cp_alignment_2050).to be_nil
+    expect(assessment2.cp_matrices.find_by(portfolio: 'Project finance').cp_alignment_2025).to eq('Below 2 Degrees')
   end
 
   it 'imports CSV files with MQ Assessments data' do

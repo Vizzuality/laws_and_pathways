@@ -8,7 +8,8 @@ ActiveAdmin.register CP::Assessment do
   permit_params :sector_id, :assessment_date, :publication_date, :cp_assessmentable_id, :last_reported_year,
                 :assumptions, :cp_alignment_2025, :cp_alignment_2035, :cp_alignment_2050,
                 :region, :cp_regional_alignment_2025, :cp_regional_alignment_2035,
-                :cp_regional_alignment_2050, :years_with_targets_string, :emissions
+                :cp_regional_alignment_2050, :years_with_targets_string, :emissions,
+                cp_matrices_attributes: [:id, :portfolio, :cp_alignment_2025, :cp_alignment_2035, :cp_alignment_2050, :_destroy]
 
   filter :assessment_date
   filter :publication_date, as: :select, collection: proc { CP::Assessment.all_publication_dates }
@@ -19,17 +20,36 @@ ActiveAdmin.register CP::Assessment do
   scope('Banks') { |scope| scope.where(cp_assessmentable_type: 'Bank') }
   scope('Companies') { |scope| scope.where(cp_assessmentable_type: 'Company') }
 
-  data_export_sidebar 'CPAssessments', show_display_name: false do
-    li do
-      link_to 'Download Company CPAssessments CSV',
-              params: request.query_parameters.merge(cp_assessmentable_type: 'Company').except(:commit, :format),
-              format: 'csv'
+  sidebar 'Export / Import', only: :index do
+    ul do
+      li do
+        link_to 'Download Company CPAssessments CSV',
+                params: request.query_parameters.merge(cp_assessmentable_type: 'Company').except(:commit, :format),
+                format: 'csv'
+      end
+      li do
+        link_to 'Download Bank CPAssessments CSV',
+                params: request.query_parameters.merge(cp_assessmentable_type: 'Bank').except(:commit, :format),
+                format: 'csv'
+      end
+      li do
+        link_to '<strong>Upload</strong> Company CPAssessments'.html_safe,
+                new_admin_data_upload_path(data_upload: {uploader: 'CompanyCPAssessments'})
+      end
+      li do
+        link_to '<strong>Upload</strong> Bank CPAssessments 2025'.html_safe,
+                new_admin_data_upload_path(data_upload: {uploader: 'BankCPAssessments2025'})
+      end
+      li do
+        link_to '<strong>Upload</strong> Bank CPAssessments 2035'.html_safe,
+                new_admin_data_upload_path(data_upload: {uploader: 'BankCPAssessments2035'})
+      end
+      li do
+        link_to '<strong>Upload</strong> Bank CPAssessments 2050'.html_safe,
+                new_admin_data_upload_path(data_upload: {uploader: 'BankCPAssessments2050'})
+      end
     end
-    li do
-      link_to 'Download Bank CPAssessments CSV',
-              params: request.query_parameters.merge(cp_assessmentable_type: 'Bank').except(:commit, :format),
-              format: 'csv'
-    end
+    hr
   end
 
   show do
@@ -55,6 +75,15 @@ ActiveAdmin.register CP::Assessment do
       row :updated_at
     end
 
+    panel 'CP Matrix values' do
+      table_for resource.cp_matrices do
+        column :portfolio
+        column :cp_alignment_2025
+        column :cp_alignment_2035
+        column :cp_alignment_2050
+      end
+    end
+
     panel 'Emissions/Targets' do
       render 'admin/cp/emissions_table', emissions: resource.emissions
     end
@@ -69,6 +98,7 @@ ActiveAdmin.register CP::Assessment do
     column 'Company/Bank' do |assessment|
       assessment.company.presence || assessment.bank
     end
+    column :sector
     column :cp_alignment_2050
     column :cp_alignment_2025
     column :cp_alignment_2035
@@ -81,13 +111,13 @@ ActiveAdmin.register CP::Assessment do
     year_columns = collection.flat_map(&:emissions_all_years).uniq.sort
 
     column :id
-    if params[:cp_assessmentable_type] == 'Company'
-      column('Company') { |a| a.company.id }
-      column(:name) { |a| a.company.name }
-    elsif params[:cp_assessmentable_type] == 'Bank'
-      column('Bank') { |a| a.bank.id }
-      column(:name) { |a| a.bank.name }
-      column(:sector) { |c| c.sector&.name }
+    column "#{params[:cp_assessmentable_type]} Id", &:cp_assessmentable_id
+    column :name do |record|
+      record.cp_assessmentable.name
+    end
+    column :region
+    column :sector do |record|
+      record.sector.name
     end
     column :assessment_date
     column :publication_date, &:publication_date_csv
@@ -98,14 +128,25 @@ ActiveAdmin.register CP::Assessment do
       end
     end
     column :assumptions
-    column :cp_alignment_2025
-    column :cp_alignment_2035
-    column :cp_alignment_2050
-    column :region
-    column :cp_regional_alignment_2025
-    column :cp_regional_alignment_2035
-    column :cp_regional_alignment_2050
     column :years_with_targets, &:years_with_targets_csv
+
+    if params[:cp_assessmentable_type] == 'Company'
+      column :cp_alignment_2025
+      column :cp_alignment_2035
+      column :cp_alignment_2050
+      column :cp_regional_alignment_2025
+      column :cp_regional_alignment_2035
+      column :cp_regional_alignment_2050
+    elsif params[:cp_assessmentable_type] == 'Bank'
+      column :final_disclosure_year
+      [:'2025', :'2035', :'2050'].each do |year|
+        CP::Portfolio::NAMES.each do |portfolio|
+          column "#{portfolio} #{year}" do |record|
+            record.cp_matrices.detect { |r| r.portfolio == portfolio }.try(:"cp_alignment_#{year}")
+          end
+        end
+      end
+    end
   end
 
   controller do
@@ -122,7 +163,7 @@ ActiveAdmin.register CP::Assessment do
     end
 
     def scoped_collection
-      query = super.includes(:company, :bank)
+      query = super.includes(:company, :bank, :cp_matrices, :sector)
       query = query.where(cp_assessmentable_type: params[:cp_assessmentable_type]) if params[:cp_assessmentable_type].present?
       query
     end
