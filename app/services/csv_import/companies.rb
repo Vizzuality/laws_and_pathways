@@ -9,7 +9,7 @@ module CSVImport
 
         company.name = row[:name] if row.header?(:name)
         company.isin = row[:isin] if row.header?(:isin)
-        company.sector = find_or_create_tpi_sector(row[:sector]) if row.header?(:sector)
+        company.sector = find_or_create_tpi_sector(row[:sector], categories: [Company]) if row.header?(:sector)
         company.market_cap_group = row[:market_cap_group].downcase if row.header?(:market_cap_group)
         company.sedol = row[:sedol].presence if row.header?(:sedol)
         company.geography = find_geography(row[:geography_iso]) if row.header?(:geography_iso)

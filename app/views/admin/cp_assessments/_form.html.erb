@@ -2,7 +2,12 @@
   <%= f.semantic_errors(*f.object.errors.keys) %>
 
   <%= f.inputs do %>
-    <%= f.input :company %>
+    <%= f.input :cp_assessmentable,
+                label: "Company or Bank",
+                collection: [Company, Bank].map { |klass| klass.all.map { |record| ["#{klass}: #{record.name}", "#{klass}::#{record.id}"] } }.flatten(1),
+                selected: "#{resource.cp_assessmentable_type}::#{resource.cp_assessmentable_id}"
+    %>
+    <%= f.input :sector, collection: TPISector.tpi_tool %>
     <%= f.input :assessment_date %>
     <%= f.input :publication_date %>
     <%= f.input :last_reported_year %>
@@ -17,6 +22,18 @@
     <%= f.input :years_with_targets_string, label: 'Years with targets', as: :tags, hint: 'Type a year and press ENTER. Non integers will be rejected.' %>
     <%= f.input :emissions, as: :hidden, input_html: { value: f.object.emissions.to_json, id: 'input_emissions' } %>
   <% end %>
+
+  <div class="panel">
+    <h3>CP Matrix values</h3>
+    <div class="panel-contents padding-20">
+      <% f.has_many :cp_matrices, allow_destroy: true, heading: false do |ff| %>
+        <% ff.input :portfolio, collection: CP::Portfolio::NAMES %>
+        <% ff.input :cp_alignment_2025 %>
+        <% ff.input :cp_alignment_2035 %>
+        <% ff.input :cp_alignment_2050 %>
+      <% end %>
+    </div>
+  </div>
 
   <div class="panel">
     <h3>Emissions/Targets values</h3>

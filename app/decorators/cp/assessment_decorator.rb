@@ -2,7 +2,7 @@ class CP::AssessmentDecorator < Draper::Decorator
   delegate_all
 
   def title
-    "#{model.company.name} (#{assessment_date})"
+    "#{model.cp_assessmentable.name} (#{assessment_date})"
   end
 
   def title_link

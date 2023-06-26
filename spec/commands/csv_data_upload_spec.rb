@@ -7,8 +7,10 @@ describe 'CSVDataUpload (integration)' do
   let(:bank_assessment_indicators_csv) { fixture_file('bank_assessment_indicators.csv') }
   let(:bank_assessments_csv) { fixture_file('bank_assessments.csv') }
   let(:companies_csv) { fixture_file('companies.csv') }
-  let(:cp_benchmarks_csv) { fixture_file('cp_benchmarks.csv') }
-  let(:cp_assessments_csv) { fixture_file('cp_assessments.csv') }
+  let(:company_cp_benchmarks_csv) { fixture_file('company_cp_benchmarks.csv') }
+  let(:company_cp_assessments_csv) { fixture_file('company_cp_assessments.csv') }
+  let(:bank_cp_benchmarks_csv) { fixture_file('bank_cp_benchmarks.csv') }
+  let(:bank_cp_assessments_csv) { fixture_file('bank_cp_assessments.csv') }
   let(:mq_assessments_csv) { fixture_file('mq_assessments.csv') }
   let(:geographies_csv) { fixture_file('geographies.csv') }
   let(:current_user_role) { 'super_user' }
@@ -73,9 +75,10 @@ describe 'CSVDataUpload (integration)' do
 
       command = expect_data_upload_results(
         CP::Assessment,
-        fixture_file('cp_assessments.csv', content: csv_content),
+        fixture_file('company_cp_assessments.csv', content: csv_content),
         {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
-        expected_success: false
+        expected_success: false,
+        custom_uploader: 'CompanyCPAssessments'
       )
       expect(command.errors.messages[:base])
         .to eq(['Error on row 1: Cannot parse date: 1/14/2021, expected formats: %Y-%m-%d, %d/%m/%Y.'])
@@ -448,7 +451,7 @@ describe 'CSVDataUpload (integration)' do
       expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
     end
 
-    it 'for CP Assessments' do
+    it 'for Company CP Assessments' do
       csv_content = <<-CSV
         Publication Date
         2020-01
@@ -456,9 +459,27 @@ describe 'CSVDataUpload (integration)' do
 
       command = expect_data_upload_results(
         CP::Assessment,
-        fixture_file('cp-assessments.csv', content: csv_content),
+        fixture_file('company-cp-assessments.csv', content: csv_content),
         {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
-        expected_success: false
+        expected_success: false,
+        custom_uploader: 'CompanyCPAssessments'
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for Bank CP Assessments' do
+      csv_content = <<-CSV
+        Publication Date
+        2020-01
+      CSV
+
+      command = expect_data_upload_results(
+        CP::Assessment,
+        fixture_file('bank-cp-assessments-2025.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false,
+        custom_uploader: 'BankCPAssessments2025'
       )
 
       expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
@@ -480,7 +501,7 @@ describe 'CSVDataUpload (integration)' do
       expect(command.errors.messages[:base]).to eq(['CSV missing header: Id', 'CSV missing header: Eventable id'])
     end
 
-    it 'for CP Benchmarks' do
+    it 'for CP Company Benchmarks' do
       csv_content = <<-CSV
         Scenario
         2 degrees
@@ -488,9 +509,27 @@ describe 'CSVDataUpload (integration)' do
 
       command = expect_data_upload_results(
         CP::Benchmark,
-        fixture_file('cp-benchmarks.csv', content: csv_content),
+        fixture_file('company_cp_benchmarks.csv', content: csv_content),
         {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
-        expected_success: false
+        expected_success: false,
+        custom_uploader: 'CompanyCPBenchmarks'
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for CP Bank Benchmarks' do
+      csv_content = <<-CSV
+        Scenario
+        2 degrees
+      CSV
+
+      command = expect_data_upload_results(
+        CP::Benchmark,
+        fixture_file('bank_cp_benchmarks.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false,
+        custom_uploader: 'BankCPBenchmarks'
       )
 
       expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
@@ -715,8 +754,8 @@ describe 'CSVDataUpload (integration)' do
       end
     end
 
-    it 'works for CP Benchmarks' do
-      to_update = create(:cp_benchmark)
+    it 'works for Company CP Benchmarks' do
+      to_update = create(:cp_benchmark, category: 'Company')
       csv_content = <<-CSV
         Id,Scenario
         #{to_update.id},2 degrees
@@ -730,15 +769,40 @@ describe 'CSVDataUpload (integration)' do
       expect_changes(to_update, expect_to_change, expect_not_to_change) do
         expect_data_upload_results(
           CP::Benchmark,
-          fixture_file('cp_benchmarks.csv', content: csv_content),
+          fixture_file('company_cp_benchmarks.csv', content: csv_content),
           {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
-          expected_success: true
+          expected_success: true,
+          custom_uploader: 'CompanyCPBenchmarks'
         )
         to_update.reload
       end
     end
 
-    it 'works for CP Assessments' do
+    it 'works for Bank CP Benchmarks' do
+      to_update = create(:cp_benchmark, category: 'Bank')
+      csv_content = <<-CSV
+        Id,Scenario
+        #{to_update.id},2 degrees
+      CSV
+
+      expect_to_change = [:scenario, :updated_at]
+      expect_not_to_change = [
+        *(to_update.attributes.symbolize_keys.keys - expect_to_change)
+      ]
+
+      expect_changes(to_update, expect_to_change, expect_not_to_change) do
+        expect_data_upload_results(
+          CP::Benchmark,
+          fixture_file('bank_cp_benchmarks.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
+          expected_success: true,
+          custom_uploader: 'BankCPBenchmarks'
+        )
+        to_update.reload
+      end
+    end
+
+    it 'works for Company CP Assessments' do
       to_update = create(:cp_assessment, company: create(:company))
       csv_content = <<-CSV
         Id,Publication Date
@@ -753,9 +817,34 @@ describe 'CSVDataUpload (integration)' do
       expect_changes(to_update, expect_to_change, expect_not_to_change) do
         expect_data_upload_results(
           CP::Assessment,
-          fixture_file('cp_assessments.csv', content: csv_content),
+          fixture_file('company_cp_assessments.csv', content: csv_content),
           {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
-          expected_success: true
+          expected_success: true,
+          custom_uploader: 'CompanyCPAssessments'
+        )
+        to_update.reload
+      end
+    end
+
+    it 'works for Bank CP Assessments' do
+      to_update = create(:cp_assessment, cp_assessmentable: create(:bank))
+      csv_content = <<-CSV
+        Id,Publication Date
+        #{to_update.id},2020-01
+      CSV
+
+      expect_to_change = [:publication_date, :updated_at]
+      expect_not_to_change = [
+        *(to_update.attributes.symbolize_keys.keys - expect_to_change)
+      ]
+
+      expect_changes(to_update, expect_to_change, expect_not_to_change) do
+        expect_data_upload_results(
+          CP::Assessment,
+          fixture_file('bank_cp_assessments.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
+          expected_success: true,
+          custom_uploader: 'BankCPAssessments2025'
         )
         to_update.reload
       end
@@ -1021,34 +1110,54 @@ describe 'CSVDataUpload (integration)' do
     expect(latest.legislation_ids).to include(law.id)
   end
 
-  it 'imports CSV files with CP Benchmarks data' do
+  it 'imports CSV files with Company CP Benchmarks data' do
     expect_data_upload_results(
       CP::Benchmark,
-      cp_benchmarks_csv,
-      new_records: 6, not_changed_records: 0, rows: 6, updated_records: 0
+      company_cp_benchmarks_csv,
+      {new_records: 6, not_changed_records: 0, rows: 6, updated_records: 0},
+      custom_uploader: 'CompanyCPBenchmarks'
     )
     # subsequent import should not create or update any record
     expect_data_upload_results(
       CP::Benchmark,
-      cp_benchmarks_csv,
-      new_records: 0, not_changed_records: 6, rows: 6, updated_records: 0
+      company_cp_benchmarks_csv,
+      {new_records: 0, not_changed_records: 6, rows: 6, updated_records: 0},
+      custom_uploader: 'CompanyCPBenchmarks'
     )
   end
 
-  it 'imports CSV files with CP Assessments data' do
+  it 'imports CSV files with Bank CP Benchmarks data' do
+    expect_data_upload_results(
+      CP::Benchmark,
+      bank_cp_benchmarks_csv,
+      {new_records: 6, not_changed_records: 0, rows: 6, updated_records: 0},
+      custom_uploader: 'BankCPBenchmarks'
+    )
+    # subsequent import should not create or update any record
+    expect_data_upload_results(
+      CP::Benchmark,
+      bank_cp_benchmarks_csv,
+      {new_records: 0, not_changed_records: 6, rows: 6, updated_records: 0},
+      custom_uploader: 'BankCPBenchmarks'
+    )
+  end
+
+  it 'imports CSV files with Company CP Assessments data' do
     acme_company = create(:company, name: 'ACME', id: 1000)
     acme_materials = create(:company, name: 'ACME Materials', id: 2000)
 
     expect_data_upload_results(
       CP::Assessment,
-      cp_assessments_csv,
-      new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0
+      company_cp_assessments_csv,
+      {new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0},
+      custom_uploader: 'CompanyCPAssessments'
     )
     # subsequent import should not create or update any record
     expect_data_upload_results(
       CP::Assessment,
-      cp_assessments_csv,
-      new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0
+      company_cp_assessments_csv,
+      {new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0},
+      custom_uploader: 'CompanyCPAssessments'
     )
 
     assessment = acme_company.cp_assessments.last
@@ -1073,6 +1182,55 @@ describe 'CSVDataUpload (integration)' do
     expect(assessment.cp_regional_alignment_2035).to eq('2 Degrees')
     expect(assessment.cp_regional_alignment_2050).to eq('International Pledges')
     expect(assessment2.cp_alignment_2050).to eq('Not Aligned')
+  end
+
+  it 'imports CSV files with Bank CP Assessments data' do
+    bastion_bank = create(:bank, id: 2, name: 'Bastion Banks Inc.')
+    edge_bank = create(:bank, id: 11, name: 'Edge Bank Inc.')
+
+    expect_data_upload_results(
+      CP::Assessment,
+      bank_cp_assessments_csv,
+      {new_records: 8, not_changed_records: 0, rows: 8, updated_records: 0},
+      custom_uploader: 'BankCPAssessments2025'
+    )
+    expect_data_upload_results(
+      CP::Assessment,
+      bank_cp_assessments_csv,
+      {new_records: 0, not_changed_records: 8, rows: 8, updated_records: 0},
+      custom_uploader: 'BankCPAssessments2035'
+    )
+    # subsequent import should not create or update any record
+    expect_data_upload_results(
+      CP::Assessment,
+      bank_cp_assessments_csv,
+      {new_records: 0, not_changed_records: 8, rows: 8, updated_records: 0},
+      custom_uploader: 'BankCPAssessments2025'
+    )
+
+    assessment = bastion_bank.cp_assessments.last
+    assessment2 = edge_bank.cp_assessments.last
+
+    expect(assessment.assessment_date).to eq(Date.parse('30/06/2022'))
+    expect(assessment.publication_date).to eq(DateTime.strptime('2022-09', '%Y-%m').to_date)
+    expect(assessment.emissions).to eq(
+      {'2019' => 0.3,
+       '2020' => 0.4,
+       '2021' => 0.3,
+       '2022' => 0.3,
+       '2023' => 0.3,
+       '2024' => 0.3,
+       '2025' => 0.2}
+    )
+    expect(assessment.sector.name).to eq('Electric Utilities')
+    expect(assessment.region).to eq('North-America')
+    expect(assessment.cp_alignment_2050).to be_nil
+    expect(assessment.cp_alignment_2025).to be_nil
+    expect(assessment.cp_alignment_2035).to be_nil
+    expect(assessment.cp_matrices.find_by(portfolio: 'Corporate lending').cp_alignment_2025).to eq('National Pledges')
+    expect(assessment.cp_matrices.find_by(portfolio: 'Corporate lending').cp_alignment_2035).to eq('National Pledges')
+    expect(assessment.cp_matrices.find_by(portfolio: 'Corporate lending').cp_alignment_2050).to be_nil
+    expect(assessment2.cp_matrices.find_by(portfolio: 'Project finance').cp_alignment_2025).to eq('Below 2 Degrees')
   end
 
   it 'imports CSV files with MQ Assessments data' do
@@ -1198,8 +1356,8 @@ describe 'CSVDataUpload (integration)' do
     expect(geography.federal_details).to be
   end
 
-  def expect_data_upload_results(uploaded_resource_klass, csv, expected_details, expected_success: true)
-    uploader_name = uploaded_resource_klass.name.tr('::', '').pluralize
+  def expect_data_upload_results(uploaded_resource_klass, csv, expected_details, expected_success: true, custom_uploader: nil)
+    uploader_name = custom_uploader || uploaded_resource_klass.name.tr('::', '').pluralize
     command = Command::CSVDataUpload.new(uploader: uploader_name, file: csv)
 
     expect do

@@ -14,6 +14,7 @@
 FactoryBot.define do
   factory :tpi_sector do
     sequence(:name) { |n| 'name-' + ('AAAA'..'ZZZZ').to_a[n] }
+    categories { ['Company'] }
 
     trait :with_benchmarks do
       after(:create) do |s|

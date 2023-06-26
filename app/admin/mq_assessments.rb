@@ -16,7 +16,7 @@ ActiveAdmin.register MQ::Assessment do
          collection: proc { MQ::Assessment.all_methodology_versions }
   filter :publication_date, as: :select, collection: proc { MQ::Assessment.all_publication_dates }
   filter :company
-  filter :company_sector_id, as: :select, collection: proc { TPISector.all }
+  filter :company_sector_id, as: :select, collection: proc { TPISector.companies.all }
   filter :level, as: :select, collection: MQ::Assessment::LEVELS
 
   sidebar 'Export / Import', if: -> { collection.any? }, only: :index do

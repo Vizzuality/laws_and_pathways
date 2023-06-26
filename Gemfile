@@ -61,7 +61,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'super_diff'
   gem 'test-prof'
-  gem 'webdrivers', '~> 4.0'
+  gem 'webdrivers'
 end
 
 group :development do

@@ -130,7 +130,7 @@ module Api
 
         company
           .sector
-          .latest_released_benchmarks('Global')
+          .latest_released_benchmarks(category: Company, region: 'Global')
           .sort_by(&:average_emission)
           .map.with_index do |benchmark, index|
             {

@@ -3,6 +3,7 @@
 
   <%= f.inputs do %>
     <%= f.input :name %>
+    <%= f.input :categories, collection: TPISector::CATEGORIES, input_html: { multiple: true } %>
     <%= f.input :cluster if resource.show_in_tpi_tool? %>
   <% end %>
 

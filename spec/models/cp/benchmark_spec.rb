@@ -33,4 +33,9 @@ RSpec.describe CP::Benchmark, type: :model do
     subject.region = 'unknown'
     expect(subject).to have(1).errors_on(:region)
   end
+
+  it 'should be invalid without category' do
+    subject.category = nil
+    expect(subject).to have(1).errors_on(:category)
+  end
 end

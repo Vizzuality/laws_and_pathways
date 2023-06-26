@@ -11,14 +11,17 @@ module ActiveAdminCsvDownload
     export_link_for_documents = options.fetch(:documents, false)
     export_link_for_events = options.fetch(:events, false)
     display_name = options.fetch(:display_name) { resource_name }
+    show_display_name = options.fetch(:show_display_name, true)
     show_upload = options.fetch(:upload, true)
 
     sidebar 'Export / Import', only: :index do
       ul do
-        li do
-          link_to "Download #{display_name} CSV",
-                  params: request.query_parameters.except(:commit, :format),
-                  format: 'csv'
+        if show_display_name
+          li do
+            link_to "Download #{display_name} CSV",
+                    params: request.query_parameters.except(:commit, :format),
+                    format: 'csv'
+          end
         end
 
         if export_link_for_documents

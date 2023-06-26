@@ -3,7 +3,10 @@ require 'rails_helper'
 RSpec.describe Admin::TPISectorsController, type: :controller do
   let(:admin) { create(:admin_user) }
   let(:cluster) { create(:tpi_sector_cluster) }
-  let_it_be(:sector) { create(:tpi_sector, :with_benchmarks) }
+  let_it_be(:sector) { create(:tpi_sector, categories: %w[Company Bank]) }
+  let_it_be(:benchmark_1) { create(:cp_benchmark, sector: sector, category: 'Company', release_date: 1.year.ago) }
+  let_it_be(:benchmark_2) { create(:cp_benchmark, sector: sector, category: 'Company', release_date: 1.month.ago) }
+  let_it_be(:benchmark_3) { create(:cp_benchmark, sector: sector, category: 'Bank', release_date: 1.month.ago) }
   let(:valid_attributes) {
     attributes_for(
       :tpi_sector,
@@ -35,17 +38,34 @@ RSpec.describe Admin::TPISectorsController, type: :controller do
       expect(response).to be_successful
     end
 
-    it 'should show sector benchmarks' do
+    it 'should show sector company benchmarks' do
       benchmarks = sector
         .cp_benchmarks
+        .companies
         .by_release_date
         .group_by(&:release_date)
         .values
         .last
 
-      expect(page).to have_selector '#cp-benchmarks .panel.benchmark',
-                                    count: sector.cp_benchmarks.count
-      latest_benchmarks = page.find('#cp-benchmarks .panel.benchmark:nth-child(1) table tbody')
+      expect(page).to have_selector '#company-cp-benchmarks .panel.benchmark',
+                                    count: sector.cp_benchmarks.companies.count
+      latest_benchmarks = page.find('#company-cp-benchmarks .panel.benchmark:nth-child(1) table tbody')
+      expect(latest_benchmarks).to have_selector 'tr', count: benchmarks.length
+      expect(latest_benchmarks).to have_selector 'tr:nth-child(1) td:nth-child(1)', text: benchmarks[0].scenario
+    end
+
+    it 'should show sector bank benchmarks' do
+      benchmarks = sector
+        .cp_benchmarks
+        .banks
+        .by_release_date
+        .group_by(&:release_date)
+        .values
+        .last
+
+      expect(page).to have_selector '#bank-cp-benchmarks .panel.benchmark',
+                                    count: sector.cp_benchmarks.banks.count
+      latest_benchmarks = page.find('#bank-cp-benchmarks .panel.benchmark:nth-child(1) table tbody')
       expect(latest_benchmarks).to have_selector 'tr', count: benchmarks.length
       expect(latest_benchmarks).to have_selector 'tr:nth-child(1) td:nth-child(1)', text: benchmarks[0].scenario
     end

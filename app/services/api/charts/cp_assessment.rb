@@ -133,7 +133,7 @@ module Api
         region = regional_view? ? assessment.region : nil
         company
           .sector
-          .latest_benchmarks_for_date(assessment.publication_date, region)
+          .latest_benchmarks_for_date(assessment.publication_date, category: Company, region: region)
           .sort_by(&:average_emission)
           .map.with_index do |benchmark, index|
             {

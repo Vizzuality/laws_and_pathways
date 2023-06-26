@@ -10,7 +10,7 @@ module CSVImport
         news_article.content = row[:content] if row.header?(:content)
         news_article.publication_date = row[:publication_date] if row.header?(:publication_date)
         news_article.keywords = parse_tags(row[:keywords], keywords) if row.header?(:keywords)
-        news_article.tpi_sectors = find_or_create_tpi_sectors(row[:sectors]) if row.header?(:sectors)
+        news_article.tpi_sectors = find_or_create_tpi_sectors(row[:sectors], categories: [Company]) if row.header?(:sectors)
 
         was_new_record = news_article.new_record?
         any_changes = news_article.changed?
