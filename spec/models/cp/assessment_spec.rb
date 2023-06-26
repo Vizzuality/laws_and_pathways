@@ -3,7 +3,6 @@
 # Table name: cp_assessments
 #
 #  id                         :bigint           not null, primary key
-#  company_id                 :bigint
 #  publication_date           :date             not null
 #  assessment_date            :date
 #  emissions                  :jsonb
@@ -20,6 +19,10 @@
 #  cp_regional_alignment_2025 :string
 #  cp_regional_alignment_2035 :string
 #  cp_regional_alignment_2050 :string
+#  cp_assessmentable_type     :string
+#  cp_assessmentable_id       :bigint
+#  sector_id                  :bigint
+#  final_disclosure_year      :integer
 #
 
 require 'rails_helper'

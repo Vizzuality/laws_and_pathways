@@ -10,6 +10,12 @@ ActiveAdmin.register TPISector do
 
   filter :name_contains
 
+  controller do
+    before_save do |record|
+      record.categories = record.categories.reject(&:blank?)
+    end
+  end
+
   index do
     column :name, &:name_link
     column 'Carbon Performance Unit', &:latest_cp_unit

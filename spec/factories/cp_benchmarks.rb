@@ -10,6 +10,7 @@
 #  emissions    :jsonb
 #  scenario     :string
 #  region       :string           default("Global"), not null
+#  category     :string           not null
 #
 
 FactoryBot.define do

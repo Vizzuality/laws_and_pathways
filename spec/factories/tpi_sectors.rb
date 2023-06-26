@@ -9,6 +9,7 @@
 #  updated_at       :datetime         not null
 #  cluster_id       :bigint
 #  show_in_tpi_tool :boolean          default(TRUE), not null
+#  categories       :string           default([]), is an Array
 #
 
 FactoryBot.define do

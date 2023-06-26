@@ -121,7 +121,6 @@ ActiveAdmin.register CP::Assessment do
     end
     column :assessment_date
     column :publication_date, &:publication_date_csv
-    column :last_reported_year
     year_columns.map do |year|
       column year do |a|
         a.emissions[year]
@@ -131,6 +130,7 @@ ActiveAdmin.register CP::Assessment do
     column :years_with_targets, &:years_with_targets_csv
 
     if params[:cp_assessmentable_type] == 'Company'
+      column :last_reported_year
       column :cp_alignment_2025
       column :cp_alignment_2035
       column :cp_alignment_2050
@@ -139,9 +139,9 @@ ActiveAdmin.register CP::Assessment do
       column :cp_regional_alignment_2050
     elsif params[:cp_assessmentable_type] == 'Bank'
       column :final_disclosure_year
-      [:'2025', :'2035', :'2050'].each do |year|
+      %w[2025 2035 2050].each do |year|
         CP::Portfolio::NAMES.each do |portfolio|
-          column "#{portfolio} #{year}" do |record|
+          column "#{portfolio} #{year}", humanize_name: false do |record|
             record.cp_matrices.detect { |r| r.portfolio == portfolio }.try(:"cp_alignment_#{year}")
           end
         end
