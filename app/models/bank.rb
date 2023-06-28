@@ -39,6 +39,8 @@ class Bank < ApplicationRecord
   validates_presence_of :name, :slug, :isin, :market_cap_group
   validates_uniqueness_of :slug, :name
 
+  scope :published, -> { all }
+
   def should_generate_new_friendly_id?
     name_changed? || super
   end

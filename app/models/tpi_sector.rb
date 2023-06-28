@@ -38,8 +38,9 @@ class TPISector < ApplicationRecord
   validates :categories, array_inclusion: {in: CATEGORIES}
 
   scope :tpi_tool, -> { where(show_in_tpi_tool: true) }
-  scope :companies, -> { where('categories && ARRAY[?]::varchar[]', 'Company') }
-  scope :banks, -> { where('categories && ARRAY[?]::varchar[]', 'Bank') }
+  scope :for_category, ->(klass) { where('categories && ARRAY[?]::varchar[]', klass.to_s) }
+  scope :companies, -> { for_category Company }
+  scope :banks, -> { for_category Bank }
   scope :with_companies, -> { joins(:companies).where(companies: Company.published).distinct }
 
   def should_generate_new_friendly_id?
