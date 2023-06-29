@@ -1,0 +1,14 @@
+<% TPISector.for_category(Bank).each do |sector| %>
+  <div style="margin: 25px 0">
+    <% cp_assessment = bank.cp_assessments.where(sector_id: sector.id).currently_published.order(assessment_date: :desc).first %>
+    <% next if cp_assessment.blank? || cp_assessment.emissions.blank? %>
+
+    <h3><%= sector.name %></h3>
+    <%= react_component('charts/cp-performance', {
+      dataUrl: emissions_chart_data_tpi_bank_path(bank, sector_id: sector.id),
+      unit: cp_assessment.unit,
+      companySelector: false,
+      sectorUrl: tpi_sector_path(sector.slug)
+    }) %>
+  </div>
+<% end %>
