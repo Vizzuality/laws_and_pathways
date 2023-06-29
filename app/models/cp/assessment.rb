@@ -46,7 +46,7 @@ module CP
     scope :published_on_or_before, lambda { |publication_date|
       order(:publication_date).where('publication_date <= ?', publication_date)
     }
-    scope :currently_published, -> { where('publication_date <= ?', DateTime.now) }
+    scope :currently_published, -> { where('cp_assessments.publication_date <= ?', DateTime.now) }
     scope :regional, -> { where.not(region: [nil, '']) }
     scope :companies, -> { where(cp_assessmentable_type: 'Company') }
     scope :banks, -> { where(cp_assessmentable_type: 'Bank') }

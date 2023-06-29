@@ -44,6 +44,7 @@ Rails.application.routes.draw do
       resources :banks, only: [:show, :index] do
         member do
           get :emissions_chart_data
+          get :cp_matrix_data
           get :assessment
         end
         collection do

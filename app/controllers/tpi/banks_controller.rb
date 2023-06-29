@@ -1,6 +1,6 @@
 module TPI
   class BanksController < TPIController
-    before_action :fetch_bank, only: [:show, :assessment, :emissions_chart_data]
+    before_action :fetch_bank, only: [:show, :assessment, :emissions_chart_data, :cp_matrix_data]
     before_action :fetch_banks, only: [:index, :show]
     before_action :redirect_if_numeric_or_historic_slug, only: [:show]
     before_action :fetch_assessment, only: [:show, :assessment]
@@ -61,6 +61,16 @@ module TPI
     # On pages: :show
     def emissions_chart_data
       data = ::Api::Charts::CPAssessment.new(@cp_assessment, 'regional').emissions_data
+
+      render json: data.chart_json
+    end
+
+    # Data:     Bank CP Alignments
+    # Section:  CP
+    # Type:     table
+    # On pages: :show
+    def cp_matrix_data
+      data = ::Api::Charts::CPMatrix.new(@bank).matrix_data
 
       render json: data.chart_json
     end
