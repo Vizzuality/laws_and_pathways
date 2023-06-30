@@ -65,6 +65,16 @@
     </section>
   <% end %>
 
+  <% if @bank.cp_assessments.exists? %>
+    <section class="container" id="cp-matrix">
+      <%#= render "cp_matrix", bank: @bank %> <!-- TODO -->
+    </section>
+
+    <section class="container" id="cp-assessment">
+      <%#= render "cp_assessments", bank: @bank %> <!-- TODO -->
+    </section>
+  <% end %>
+
   <% if @bank.latest_information.present? %>
     <%= react_component("LatestInformation", { name: @bank.name, latestInformation: @bank.latest_information }) %>
   <% end %>

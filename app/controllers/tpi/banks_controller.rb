@@ -1,9 +1,10 @@
 module TPI
   class BanksController < TPIController
-    before_action :fetch_bank, only: [:show, :assessment]
+    before_action :fetch_bank, only: [:show, :assessment, :emissions_chart_data, :cp_matrix_data]
     before_action :fetch_banks, only: [:index, :show]
     before_action :redirect_if_numeric_or_historic_slug, only: [:show]
     before_action :fetch_assessment, only: [:show, :assessment]
+    before_action :fetch_cp_assessment, only: [:show, :emissions_chart_data]
     before_action :fetch_results, only: [:index, :index_assessment]
 
     helper_method :child_indicators
@@ -54,6 +55,26 @@ module TPI
       }, filename: "TPI banking data - #{timestamp}"
     end
 
+    # Data:     Bank emissions
+    # Section:  CP
+    # Type:     line chart
+    # On pages: :show
+    def emissions_chart_data
+      data = ::Api::Charts::CPAssessment.new(@cp_assessment, 'regional').emissions_data
+
+      render json: data.chart_json
+    end
+
+    # Data:     Bank CP Alignments
+    # Section:  CP
+    # Type:     table
+    # On pages: :show
+    def cp_matrix_data
+      data = ::Api::Charts::CPMatrix.new(@bank).matrix_data
+
+      render json: data.chart_json
+    end
+
     private
 
     def fetch_bank
@@ -95,6 +116,15 @@ module TPI
                       @bank.latest_assessment
                     end
       @assessment_presenter = BankAssessmentPresenter.new(@assessment)
+    end
+
+    def fetch_cp_assessment
+      @cp_assessment = if params[:cp_assessment_id].present?
+                         @bank.cp_assessments.find(params[:cp_assessment_id])
+                       else
+                         @bank.cp_assessments.where(sector_id: params[:sector_id]).currently_published
+                           .order(assessment_date: :desc).first
+                       end
     end
 
     def redirect_if_numeric_or_historic_slug

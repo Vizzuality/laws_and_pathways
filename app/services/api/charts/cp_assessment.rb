@@ -5,17 +5,18 @@ module Api
 
       attr_reader :assessment
 
-      delegate :company, to: :assessment
+      delegate :sector, to: :assessment
 
       def initialize(assessment, view)
         @assessment = assessment
+        @category = assessment&.cp_assessmentable_type
         @view = view
       end
 
       # Returns array of following series:
-      # - company emissions
-      # - company's sector average emissions
-      # - company's sector CP benchmarks (scenarios)
+      # - assessment emissions
+      # - assessment's sector average emissions
+      # - assessment's sector CP benchmarks (scenarios)
       #
       # @return [Array]
       # @example
@@ -33,7 +34,7 @@ module Api
 
         [
           emissions_data_from_sector_benchmarks,
-          emissions_data_from_company,
+          emissions_data_from_assessment,
           emissions_data_from_sector,
           years_with_targets
         ].compact.flatten
@@ -59,14 +60,14 @@ module Api
       #     }
       #   }
       # ]
-      def emissions_data_from_company
+      def emissions_data_from_assessment
         data = if assessment&.emissions&.size == 1
                  data_with_marker_settings
                else
                  assessment&.emissions&.transform_keys(&:to_i)
                end
         {
-          name: company.name,
+          name: assessment.cp_assessmentable.name,
           data: data,
           zoneAxis: 'x',
           zones: [{
@@ -118,10 +119,10 @@ module Api
       end
 
       def emissions_data_from_sector
-        name = if regional_view?
-                 "#{region} #{company.sector.name} sector mean"
+        name = if regional_view? && @category != 'Bank'
+                 "#{region} #{sector.name} sector mean"
                else
-                 "#{company.sector.name} sector mean"
+                 "#{sector.name} sector mean"
                end
         {
           name: name,
@@ -131,9 +132,8 @@ module Api
 
       def emissions_data_from_sector_benchmarks
         region = regional_view? ? assessment.region : nil
-        company
-          .sector
-          .latest_benchmarks_for_date(assessment.publication_date, category: Company, region: region)
+        sector
+          .latest_benchmarks_for_date(assessment.publication_date, category: @category, region: region)
           .sort_by(&:average_emission)
           .map.with_index do |benchmark, index|
             {
@@ -158,15 +158,15 @@ module Api
           .to_h
       end
 
-      # @return [Float] average emission from all Companies from single year
+      # @return [Float] average emission from all entities from single year
       def sector_average_emission_for_year(year)
-        company_emissions = sector_all_emissions
+        emissions_for_year = sector_all_emissions
           .map { |emissions| emissions[year] }
           .compact
 
-        return nil if company_emissions.empty?
+        return nil if emissions_for_year.empty?
 
-        (company_emissions.sum / company_emissions.count).round(2)
+        (emissions_for_year.sum / emissions_for_year.count).round(2)
       end
 
       # @return [Array] of years for which emissions was reported
@@ -184,19 +184,19 @@ module Api
           .uniq
       end
 
-      # @return [Array<Hash>] list of { year => value } pairs from all Companies from current TPISector
+      # @return [Array<Hash>] list of { year => value } pairs from all Companies or Banks from current TPISector
       def sector_all_emissions
-        @sector_all_emissions ||= company.sector
-          .companies
-          .published
-          .includes(:cp_assessments)
-          .flat_map do |c|
-            c.cp_assessments
-              .select { |a| regional_view? ? a.region == region : true }
-              .select { |a| a.publication_date <= assessment.publication_date }
-              .max_by(&:publication_date)&.emissions&.transform_keys(&:to_i)
-          end
-          .compact
+        @sector_all_emissions ||= CP::Assessment
+          .where(
+            sector_id: sector.id,
+            publication_date: [..assessment.publication_date],
+            cp_assessmentable_type: @category,
+            cp_assessmentable_id: @category.constantize.published.select(:id)
+          )
+        @sector_all_emissions = @sector_all_emissions.where(region: region) if regional_view?
+        @sector_all_emissions.group_by(&:cp_assessmentable_id).flat_map do |_id, cp_assessments|
+          cp_assessments.max_by(&:publication_date)&.emissions&.transform_keys(&:to_i)
+        end
       end
 
       # @return [Integer]
