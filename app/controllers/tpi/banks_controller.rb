@@ -51,7 +51,8 @@ module TPI
 
       render zip: {
         'Framework of pilot indicators.csv' => bank_assessment_indicators_csv,
-        "Bank assessments #{timestamp}.csv" => bank_assessments_csv
+        "Bank assessments #{timestamp}.csv" => bank_assessments_csv,
+        "Bank CP assessments #{timestamp}.csv" => CSVExport::User::BankCPAssessments.new.call
       }, filename: "TPI banking data - #{timestamp}"
     end
 
@@ -72,7 +73,7 @@ module TPI
     def cp_matrix_data
       data = ::Api::Charts::CPMatrix.new(@bank).matrix_data
 
-      render json: data.chart_json
+      render json: data.as_json
     end
 
     private

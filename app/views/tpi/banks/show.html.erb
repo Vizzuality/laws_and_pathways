@@ -59,12 +59,6 @@
     </div>
   </section>
 
-  <% if @assessment.present? %>
-    <section class="container bank-assessment" id="assessment">
-      <%= render 'assessment', assessment: @assessment_presenter %>
-    </section>
-  <% end %>
-
   <% if @bank.cp_assessments.exists? %>
     <section class="container" id="cp-matrix">
       <%#= render "cp_matrix", bank: @bank %> <!-- TODO -->
@@ -72,6 +66,12 @@
 
     <section class="container" id="cp-assessment">
       <%#= render "cp_assessments", bank: @bank %> <!-- TODO -->
+    </section>
+  <% end %>
+
+  <% if @assessment.present? %>
+    <section class="container bank-assessment" id="assessment">
+      <%= render 'assessment', assessment: @assessment_presenter %>
     </section>
   <% end %>
 
