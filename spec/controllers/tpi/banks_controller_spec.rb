@@ -24,6 +24,14 @@ RSpec.describe TPI::BanksController, type: :controller do
       latest_information: 'Bank2 Latest info'
     )
   }
+  let_it_be(:cp_assessment1) do
+    create :cp_assessment, cp_assessmentable: bank1, sector: create(:tpi_sector, name: 'AAA')
+  end
+  let_it_be(:cp_assessment2) do
+    create :cp_assessment, cp_assessmentable: bank2, sector: create(:tpi_sector, name: 'BBB')
+  end
+  let_it_be(:cp_matrix1) { create :cp_matrix, cp_assessment: cp_assessment1 }
+  let_it_be(:cp_matrix1) { create :cp_matrix, cp_assessment: cp_assessment2 }
 
   before_all do
     i_area_1 = create(:bank_assessment_indicator, number: '1', indicator_type: 'area', text: 'Commitment')
@@ -107,11 +115,14 @@ RSpec.describe TPI::BanksController, type: :controller do
 
         expect(entries_names).to include('Framework of pilot indicators.csv')
         expect(entries_names).to include("Bank assessments #{timestamp}.csv")
+        expect(entries_names).to include("Bank CP assessments #{timestamp}.csv")
 
         expect(entries_csv_json['Framework of pilot indicators.csv'])
           .to match_snapshot('tpi_banking_tool_user_download_zip_indicators_csv')
         expect(entries_csv_json["Bank assessments #{timestamp}.csv"])
           .to match_snapshot('tpi_banking_tool_user_download_zip_bank_assessments_csv')
+        expect(entries_csv_json["Bank CP assessments #{timestamp}.csv"])
+          .to match_snapshot('tpi_banking_tool_user_download_zip_bank_cp_assessments_csv')
       end
     end
   end

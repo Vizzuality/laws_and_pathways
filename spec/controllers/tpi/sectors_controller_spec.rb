@@ -19,6 +19,7 @@ RSpec.describe TPI::SectorsController, type: :controller do
       cp_assessments: [
         build(
           :cp_assessment,
+          sector: sector1,
           assessment_date: '2012-05-01',
           publication_date: '2012-05-01',
           cp_alignment_2050: 'Below 2 Degrees',
@@ -26,6 +27,7 @@ RSpec.describe TPI::SectorsController, type: :controller do
         ),
         build(
           :cp_assessment,
+          sector: sector1,
           assessment_date: '2019-05-01',
           publication_date: '2019-05-01',
           cp_alignment_2050: 'Paris Pledges',
@@ -51,6 +53,7 @@ RSpec.describe TPI::SectorsController, type: :controller do
       cp_assessments: [
         build(
           :cp_assessment,
+          sector: sector1,
           assessment_date: '2014-05-01',
           publication_date: '2014-05-01',
           cp_alignment_2050: 'Below 2 Degrees',
@@ -58,6 +61,7 @@ RSpec.describe TPI::SectorsController, type: :controller do
         ),
         build(
           :cp_assessment,
+          sector: sector1,
           assessment_date: '2020-05-01',
           publication_date: '2020-05-01',
           cp_alignment_2050: 'Paris Pledges',
@@ -81,8 +85,8 @@ RSpec.describe TPI::SectorsController, type: :controller do
       :published,
       geography: geography,
       cp_assessments: [
-        build(:cp_assessment, assessment_date: '2014-05-01', publication_date: '2014-05-01'),
-        build(:cp_assessment, assessment_date: '2020-06-01', publication_date: '2020-06-01')
+        build(:cp_assessment, sector: sector2, assessment_date: '2014-05-01', publication_date: '2014-05-01'),
+        build(:cp_assessment, sector: sector2, assessment_date: '2020-06-01', publication_date: '2020-06-01')
       ],
       mq_assessments: [
         build(:mq_assessment, assessment_date: '2015-05-01', publication_date: '2015-05-01'),

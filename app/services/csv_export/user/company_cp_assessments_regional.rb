@@ -1,6 +1,6 @@
 module CSVExport
   module User
-    class CPAssessmentsRegional
+    class CompanyCPAssessmentsRegional
       def initialize(assessments)
         @assessments = assessments
       end
