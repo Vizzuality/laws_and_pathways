@@ -98,6 +98,10 @@ export function getOptions({ chartData, unit }) {
   };
 }
 
+export function getMultipleOptions({ chartData, unit }) {
+  return {...getOptions({ chartData, unit }), chart: {height: 300, width: 400} };
+}
+
 export function getMobileOptions({ chartData, unit }) {
   const descktopOptions = getOptions({ chartData, unit });
   return merge({}, descktopOptions, {

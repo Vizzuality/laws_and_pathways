@@ -1,14 +1,16 @@
-<% TPISector.for_category(Bank).each do |sector| %>
-  <div style="margin: 25px 0">
-    <% cp_assessment = bank.cp_assessments.where(sector_id: sector.id).currently_published.order(assessment_date: :desc).first %>
-    <% next if cp_assessment.blank? || cp_assessment.emissions.blank? %>
-
-    <h3><%= sector.name %></h3>
-    <%= react_component('charts/cp-performance', {
+<h3 style="margin: 25px 0">
+  Carbon performance of <%= @bank.name %>
+</h3>
+<% cp_sectors = TPISector.for_category(Bank).map { |sector|
+    {
+      name: sector.name,
+      assessment: bank.cp_assessments.where(sector_id: sector.id).currently_published.order(assessment_date: :desc).first,
       dataUrl: emissions_chart_data_tpi_bank_path(bank, sector_id: sector.id),
-      unit: cp_assessment.unit,
-      companySelector: false,
       sectorUrl: tpi_sector_path(sector.slug)
-    }) %>
-  </div>
-<% end %>
+    }
+  }.select { |sector| sector[:assessment].present? && sector[:assessment].emissions.present? } %>
+<div style="margin: 25px 0">
+  <%= react_component('charts/cp-performance/MultipleChart', {
+    sectors: cp_sectors
+  }) %>
+</div>
