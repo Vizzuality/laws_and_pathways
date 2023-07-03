@@ -1222,7 +1222,7 @@ describe 'CSVDataUpload (integration)' do
        '2024' => 0.3,
        '2025' => 0.2}
     )
-    expect(assessment.sector.name).to eq('Electric Utilities')
+    expect(assessment.sector.name).to eq('Electric Utilities (Regional)')
     expect(assessment.region).to eq('North-America')
     expect(assessment.cp_alignment_2050).to be_nil
     expect(assessment.cp_alignment_2025).to be_nil

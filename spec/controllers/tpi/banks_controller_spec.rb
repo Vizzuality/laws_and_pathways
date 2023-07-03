@@ -25,10 +25,22 @@ RSpec.describe TPI::BanksController, type: :controller do
     )
   }
   let_it_be(:cp_assessment1) do
-    create :cp_assessment, cp_assessmentable: bank1, sector: create(:tpi_sector, name: 'AAA')
+    create(
+      :cp_assessment,
+      cp_assessmentable: bank1,
+      sector: create(:tpi_sector, name: 'AAA'),
+      assessment_date: Date.parse('2022-06-30'),
+      publication_date: Date.parse('2022-07-30')
+    )
   end
   let_it_be(:cp_assessment2) do
-    create :cp_assessment, cp_assessmentable: bank2, sector: create(:tpi_sector, name: 'BBB')
+    create(
+      :cp_assessment,
+      cp_assessmentable: bank2,
+      sector: create(:tpi_sector, name: 'BBB'),
+      assessment_date: Date.parse('2022-06-30'),
+      publication_date: Date.parse('2022-07-30')
+    )
   end
   let_it_be(:cp_matrix1) { create :cp_matrix, cp_assessment: cp_assessment1 }
   let_it_be(:cp_matrix1) { create :cp_matrix, cp_assessment: cp_assessment2 }
