@@ -24,7 +24,6 @@ class TPISector < ApplicationRecord
 
   has_many :companies, foreign_key: 'sector_id'
   has_many :cp_assessments, class_name: 'CP::Assessment', foreign_key: 'sector_id'
-  has_many :cp_matrices, class_name: 'Cp::Matrix', foreign_key: 'sector_id', inverse_of: :sector, dependent: :destroy
   has_many :cp_benchmarks, class_name: 'CP::Benchmark', foreign_key: 'sector_id'
   has_many :cp_units, class_name: 'CP::Unit', foreign_key: 'sector_id', inverse_of: :sector
 

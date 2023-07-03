@@ -31,25 +31,30 @@ RSpec.describe Api::Charts::CPMatrix do
       end
 
       it 'should return all portfolio for each sector' do
-        expect(subject['2025'][@bank_sector1.name].keys).to contain_exactly(*CP::Portfolio::NAMES)
-        expect(subject['2025'][@bank_sector2.name].keys).to contain_exactly(*CP::Portfolio::NAMES)
+        expect(subject['2025'][@bank_sector1.name][:portfolio_values].keys).to contain_exactly(*CP::Portfolio::NAMES)
+        expect(subject['2025'][@bank_sector2.name][:portfolio_values].keys).to contain_exactly(*CP::Portfolio::NAMES)
+      end
+
+      it 'should return assumptions for each sector' do
+        expect(subject['2025'][@bank_sector1.name][:assumptions]).to eq(@cp_assessment1.assumptions)
+        expect(subject['2025'][@bank_sector2.name][:assumptions]).to eq(@cp_assessment2.assumptions)
       end
 
       it 'should return alignment values for selected portfolio' do
-        expect(subject['2025'][@bank_sector1.name]['Mortgages']).to eq(@cp_matrix1.cp_alignment_2025)
-        expect(subject['2025'][@bank_sector1.name]['Auto Loans']).to eq(@cp_matrix2.cp_alignment_2025)
-        expect(subject['2025'][@bank_sector1.name]['Corporate lending']).to eq(nil)
-        expect(subject['2025'][@bank_sector2.name]['Mortgages']).to eq(nil)
-        expect(subject['2025'][@bank_sector2.name]['Auto Loans']).to eq(nil)
-        expect(subject['2025'][@bank_sector2.name]['Corporate lending']).to eq(@cp_matrix3.cp_alignment_2025)
+        expect(subject['2025'][@bank_sector1.name][:portfolio_values]['Mortgages']).to eq(@cp_matrix1.cp_alignment_2025)
+        expect(subject['2025'][@bank_sector1.name][:portfolio_values]['Auto Loans']).to eq(@cp_matrix2.cp_alignment_2025)
+        expect(subject['2025'][@bank_sector1.name][:portfolio_values]['Corporate lending']).to eq(nil)
+        expect(subject['2025'][@bank_sector2.name][:portfolio_values]['Mortgages']).to eq(nil)
+        expect(subject['2025'][@bank_sector2.name][:portfolio_values]['Auto Loans']).to eq(nil)
+        expect(subject['2025'][@bank_sector2.name][:portfolio_values]['Corporate lending']).to eq(@cp_matrix3.cp_alignment_2025)
 
-        expect(subject['2035'][@bank_sector1.name]['Mortgages']).to eq(@cp_matrix1.cp_alignment_2035)
-        expect(subject['2035'][@bank_sector1.name]['Auto Loans']).to eq(@cp_matrix2.cp_alignment_2035)
-        expect(subject['2035'][@bank_sector2.name]['Corporate lending']).to eq(@cp_matrix3.cp_alignment_2035)
+        expect(subject['2035'][@bank_sector1.name][:portfolio_values]['Mortgages']).to eq(@cp_matrix1.cp_alignment_2035)
+        expect(subject['2035'][@bank_sector1.name][:portfolio_values]['Auto Loans']).to eq(@cp_matrix2.cp_alignment_2035)
+        expect(subject['2035'][@bank_sector2.name][:portfolio_values]['Corporate lending']).to eq(@cp_matrix3.cp_alignment_2035)
 
-        expect(subject['2050'][@bank_sector1.name]['Mortgages']).to eq(@cp_matrix1.cp_alignment_2050)
-        expect(subject['2050'][@bank_sector1.name]['Auto Loans']).to eq(@cp_matrix2.cp_alignment_2050)
-        expect(subject['2050'][@bank_sector2.name]['Corporate lending']).to eq(@cp_matrix3.cp_alignment_2050)
+        expect(subject['2050'][@bank_sector1.name][:portfolio_values]['Mortgages']).to eq(@cp_matrix1.cp_alignment_2050)
+        expect(subject['2050'][@bank_sector1.name][:portfolio_values]['Auto Loans']).to eq(@cp_matrix2.cp_alignment_2050)
+        expect(subject['2050'][@bank_sector2.name][:portfolio_values]['Corporate lending']).to eq(@cp_matrix3.cp_alignment_2050)
       end
     end
 

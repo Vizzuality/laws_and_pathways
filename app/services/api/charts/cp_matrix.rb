@@ -13,10 +13,11 @@ module Api
         %w[2025 2035 2050].each_with_object({}) do |year, result|
           result[year] = sectors.each_with_object({}) do |sector, section|
             cp_assessment = cp_assessments[[cp_assessmentable, sector]]&.first
-            section[sector.name] = CP::Portfolio::NAMES.each_with_object({}) do |portfolio, row|
+            portfolio_values = CP::Portfolio::NAMES.each_with_object({}) do |portfolio, row|
               value = cp_assessment&.cp_matrices&.detect { |m| m.portfolio == portfolio }
               row[portfolio] = value&.public_send "cp_alignment_#{year}"
             end
+            section[sector.name] = {assumptions: cp_assessment&.assumptions, portfolio_values: portfolio_values}
           end
         end
       end
