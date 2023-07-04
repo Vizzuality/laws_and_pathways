@@ -2,11 +2,12 @@
   Carbon performance of <%= @bank.name %>
 </h3>
 <% cp_sectors = TPISector.for_category(Bank).map { |sector|
+   cp_assessment = bank.cp_assessments.where(sector_id: sector.id).currently_published.order(assessment_date: :desc).first
     {
       name: sector.name,
-      assessment: bank.cp_assessments.where(sector_id: sector.id).currently_published.order(assessment_date: :desc).first,
+      assessment: cp_assessment,
       dataUrl: emissions_chart_data_tpi_bank_path(bank, sector_id: sector.id),
-      unit: sector.latest_cp_unit&.unit
+      unit: cp_assessment&.unit
     }
   }.select { |sector| sector[:assessment].present? && sector[:assessment].emissions.present? } %>
 <div style="margin: 25px 0">
