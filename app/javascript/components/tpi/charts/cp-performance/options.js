@@ -98,6 +98,24 @@ export function getOptions({ chartData, unit }) {
   };
 }
 
+export function getMultipleOptions({ chartData, unit }) {
+  return {
+    ...getOptions({ chartData, unit }),
+    chart: { height: 300, width: 400},
+    yAxis: {
+      title: {
+        text: unit,
+        reserveSpace: false,
+        textAlign: 'left',
+        align: 'low',
+        rotation: -90,
+        x: 0,
+        y: 10
+      }
+    }
+  };
+}
+
 export function getMobileOptions({ chartData, unit }) {
   const descktopOptions = getOptions({ chartData, unit });
   return merge({}, descktopOptions, {
@@ -130,4 +148,22 @@ export function getMobileOptions({ chartData, unit }) {
       }
     }
   });
+}
+
+export function getMultipleMobileOptions({ chartData, unit }) {
+  return {
+    ...getMobileOptions({ chartData, unit }),
+    chart: { height: 300, width: 400 },
+    yAxis: {
+      title: {
+        text: unit,
+        reserveSpace: false,
+        textAlign: 'left',
+        align: 'low',
+        rotation: -90,
+        x: 0,
+        y: 10
+      }
+    }
+  };
 }
