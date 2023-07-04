@@ -7,7 +7,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import cx from 'classnames';
 
-import { getMultipleOptions, getMobileOptions } from './options';
+import { getMultipleOptions, getMultipleMobileOptions } from './options';
 
 import { useChartData } from '../hooks';
 import { useDeviceInfo } from 'components/Responsive';
@@ -36,7 +36,7 @@ const Chart = ({ isMobile, sector }) => {
   const { dataUrl, name, unit } = sector;
   const { data, error, loading } = useChartData(dataUrl);
   const chartData = useParsedChartData(data);
-  const options = isMobile ? getMobileOptions({ chartData, unit }) : getMultipleOptions({ chartData, unit });
+  const options = isMobile ? getMultipleMobileOptions({ chartData, unit }) : getMultipleOptions({ chartData, unit });
   if (error) return <p>{error}</p>;
   if (loading) return <p>Loading...</p>;
   const { series } = options;
@@ -61,12 +61,12 @@ Chart.propTypes = {
   sector: PropTypes.shape({
     dataUrl: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    unit: PropTypes.string.isRequired
+    unit: PropTypes.string
   }).isRequired
 };
 
 function MultipleChart({ sectors }) {
-  const { dataUrl, sectorUrl } = sectors?.[0] || {};
+  const { dataUrl } = sectors?.[0] || {};
 
   const { isMobile } = useDeviceInfo();
 
@@ -75,14 +75,13 @@ function MultipleChart({ sectors }) {
   if (!sectors) return null;
 
   return (
-    <div className="chart chart--cp-performance">
+    <div className="chart chart--cp-performance multiple-chart">
       <Legend
         chartData={chartData}
-        sectorUrl={sectorUrl}
         companySelector={false}
       />
       <div className="charts-container">
-        {sectors.map(sector => <Chart isMobile={isMobile} sector={sector} />)}
+        {sectors.map(sector => <Chart key={sector.dataUrl} isMobile={isMobile} sector={sector} />)}
       </div>
     </div>
   );
@@ -91,8 +90,7 @@ function MultipleChart({ sectors }) {
 MultipleChart.propTypes = {
   sectors: PropTypes.arrayOf(PropTypes.shape({
     dataUrl: PropTypes.string.isRequired,
-    unit: PropTypes.string.isRequired,
-    sectorUrl: PropTypes.string
+    unit: PropTypes.string
   })).isRequired
 };
 

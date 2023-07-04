@@ -1,4 +1,4 @@
-<h3 style="margin: 25px 0">
+<h3 class="cp_assessments_title" style="margin: 25px 0">
   Carbon performance of <%= @bank.name %>
 </h3>
 <% cp_sectors = TPISector.for_category(Bank).map { |sector|
@@ -6,7 +6,7 @@
       name: sector.name,
       assessment: bank.cp_assessments.where(sector_id: sector.id).currently_published.order(assessment_date: :desc).first,
       dataUrl: emissions_chart_data_tpi_bank_path(bank, sector_id: sector.id),
-      sectorUrl: tpi_sector_path(sector.slug)
+      unit: sector.latest_cp_unit&.unit
     }
   }.select { |sector| sector[:assessment].present? && sector[:assessment].emissions.present? } %>
 <div style="margin: 25px 0">

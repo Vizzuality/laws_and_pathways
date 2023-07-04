@@ -259,4 +259,21 @@
       }
     }
   }
+
+}
+
+.cp_assessments_title {
+  padding: 0 30px;
+
+  @include desktop {
+    padding: 0;
+  }
+}
+
+.multiple-chart {
+  padding: 0 30px;
+
+  @include desktop {
+    padding: 0;
+  }
 }

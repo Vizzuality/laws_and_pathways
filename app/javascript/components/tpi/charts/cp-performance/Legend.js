@@ -95,14 +95,15 @@ Legend.defaultProps = {
   selectedCompanies: null,
   companySelector: false,
   companyData: [],
-  companies: []
+  companies: [],
+  sectorUrl: null
 };
 
 Legend.propTypes = {
   chartData: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   setSelectedCompanies: PropTypes.func,
   selectedCompanies: PropTypes.arrayOf(PropTypes.string),
-  sectorUrl: PropTypes.string.isRequired,
+  sectorUrl: PropTypes.string,
   companyData: PropTypes.arrayOf(PropTypes.shape({})),
   companySelector: PropTypes.bool,
   companies: PropTypes.arrayOf(PropTypes.shape({}))
