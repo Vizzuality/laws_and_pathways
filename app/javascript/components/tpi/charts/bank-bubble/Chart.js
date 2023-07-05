@@ -155,7 +155,7 @@ const createRow = (dataRow, area, index) => (
         color: result.color
       }));
 
-      const uniqueKey = `${area}-${el.length}-${i}`;
+      const uniqueKey = `${area.replace(/[&/\\#,+()$~%.'":*?<>{}]/g, '')}-${el.length}-${i}`;
 
       return (
         <div className="bubble-chart__cell" key={uniqueKey}>

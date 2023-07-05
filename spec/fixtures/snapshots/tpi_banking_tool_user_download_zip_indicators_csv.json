@@ -43,5 +43,20 @@
     "Type": "Sub indicator",
     "Number": "2.1.b",
     "Text": "Maybe b"
+  },
+  {
+    "Type": "Area",
+    "Number": "10",
+    "Text": "Targets"
+  },
+  {
+    "Type": "Indicator",
+    "Number": "10.1",
+    "Text": "Target Indicator"
+  },
+  {
+    "Type": "Sub indicator",
+    "Number": "10.1.a",
+    "Text": "Maybe a"
   }
 ]

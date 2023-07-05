@@ -97,7 +97,7 @@ module TPI
         .by_date(@date)
         .of_type(:area)
         .includes(assessment: :bank)
-        .order(:number)
+        .order('length(bank_assessment_indicators.number), bank_assessment_indicators.number')
         .map do |result|
           {
             area: result.indicator.text,

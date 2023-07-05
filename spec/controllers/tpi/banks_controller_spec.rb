@@ -55,6 +55,9 @@ RSpec.describe TPI::BanksController, type: :controller do
     i_indicator_2 = create(:bank_assessment_indicator, number: '2.1', indicator_type: 'indicator', text: 'Target Indicator')
     i_subindicator_2_1 = create(:bank_assessment_indicator, number: '2.1.a', indicator_type: 'sub_indicator', text: 'Maybe a')
     i_subindicator_2_2 = create(:bank_assessment_indicator, number: '2.1.b', indicator_type: 'sub_indicator', text: 'Maybe b')
+    i_area_10 = create(:bank_assessment_indicator, number: '10', indicator_type: 'area', text: 'Targets')
+    i_indicator_10 = create(:bank_assessment_indicator, number: '10.1', indicator_type: 'indicator', text: 'Target Indicator')
+    i_subindicator_10_1 = create(:bank_assessment_indicator, number: '10.1.a', indicator_type: 'sub_indicator', text: 'Maybe a')
 
     ba1 = create(:bank_assessment, bank: bank1, assessment_date: Date.parse('2020-10-23'))
     {
@@ -66,7 +69,10 @@ RSpec.describe TPI::BanksController, type: :controller do
       i_area_2 => 100,
       i_indicator_2 => 100,
       i_subindicator_2_1 => 'Yes',
-      i_subindicator_2_2 => 'Yes'
+      i_subindicator_2_2 => 'Yes',
+      i_area_10 => 100,
+      i_indicator_10 => 100,
+      i_subindicator_10_1 => 'Yes'
     }.each do |indicator, value|
       create(:bank_assessment_result, assessment: ba1, indicator: indicator, value: value)
     end
@@ -81,7 +87,10 @@ RSpec.describe TPI::BanksController, type: :controller do
       i_area_2 => 0,
       i_indicator_2 => 0,
       i_subindicator_2_1 => 'No',
-      i_subindicator_2_2 => 'No'
+      i_subindicator_2_2 => 'No',
+      i_area_10 => 0,
+      i_indicator_10 => 0,
+      i_subindicator_10_1 => 'No'
     }.each do |indicator, value|
       create(:bank_assessment_result, assessment: ba2, indicator: indicator, value: value)
     end
