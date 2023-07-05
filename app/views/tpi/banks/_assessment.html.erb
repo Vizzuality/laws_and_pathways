@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<% areas = assessment.results_by_indicator_type["area"] %>
+<% areas = assessment.results.of_type("area").order('length(bank_assessment_indicators.number), bank_assessment_indicators.number') %>
 <% areas.each do |area| %>
   <input id="<%= dom_id(area) %>" type="checkbox" class="toggle" />
   <div class="bank-assessment__area">

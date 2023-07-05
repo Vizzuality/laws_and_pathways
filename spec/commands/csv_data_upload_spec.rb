@@ -1286,15 +1286,15 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       BankAssessmentIndicator,
       bank_assessment_indicators_csv,
-      new_records: 20, not_changed_records: 0, rows: 21, updated_records: 1
+      new_records: 23, not_changed_records: 0, rows: 24, updated_records: 1
     )
 
     changed = BankAssessmentIndicator.find_by(number: '1')
     expect(changed.text).to eq('Commitment')
 
-    expect(BankAssessmentIndicator.area.count).to eq(2)
-    expect(BankAssessmentIndicator.indicator.count).to eq(3)
-    expect(BankAssessmentIndicator.sub_indicator.count).to eq(16)
+    expect(BankAssessmentIndicator.area.count).to eq(3)
+    expect(BankAssessmentIndicator.indicator.count).to eq(4)
+    expect(BankAssessmentIndicator.sub_indicator.count).to eq(17)
     expect(BankAssessmentIndicator.sub_indicator.find_by(number: '2.2.b').text)
       .to eq("Do the targets cover the bank's material financing activities in at least one high-risk sector?")
   end
@@ -1307,7 +1307,7 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       BankAssessmentIndicator,
       bank_assessment_indicators_csv,
-      new_records: 21, not_changed_records: 0, rows: 21, updated_records: 0
+      new_records: 24, not_changed_records: 0, rows: 24, updated_records: 0
     )
 
     expect_data_upload_results(
@@ -1318,8 +1318,7 @@ describe 'CSVDataUpload (integration)' do
 
     assessment = Bank.find_by(name: 'Edge Bank Inc.').assessments.last
     expect(assessment.assessment_date).to eq(Date.parse('2022-02-25'))
-    expect(assessment.results_by_indicator_type['area'].first.percentage).to eq(25.0)
-    expect(assessment.results_by_indicator_type['area'].second.percentage).to eq(0.0)
+    expect(assessment.results_by_indicator_type['area'].map(&:percentage)).to contain_exactly(25.0, 0.0, 100.0)
     expect(assessment.results_by_indicator_type['indicator'].first.percentage).to eq(25.0)
     expect(assessment.results_by_indicator_type['sub_indicator'].first.answer).to eq('Yes')
   end
