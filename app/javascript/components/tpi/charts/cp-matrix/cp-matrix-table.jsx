@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Table from 'rc-table';
 import ReactTooltip from 'react-tooltip';
 import cx from 'classnames';
+import chevronIcon from 'images/icon_chevron_dark/chevron_down_black-1.svg';
 
 const COLORS = {
   'Not assessable using TPI’s methodology': { color: '#CACBCE' },
@@ -34,6 +35,7 @@ ColorDot.propTypes = {
 
 function CPMatrixTable({ data, meta }) {
   if (!data) return <div>no data</div>;
+  const href = window.location.pathname;
   const { portfolios } = meta || {};
   const columns = [
     {
@@ -47,8 +49,14 @@ function CPMatrixTable({ data, meta }) {
           ellipsis: true,
           render: (content) => {
             const assumptions = data[content]?.assumptions;
+            const hasEmissionsChart = data[content]?.has_emissions;
             return (
-              <span>
+              <span className="activities-text">
+                {hasEmissionsChart && (
+                  <a href={`${href}#${content}`} className="chart-link">
+                    <img src={chevronIcon} alt="chevron" />
+                  </a>
+                )}
                 {content}
                 {assumptions && (
                   <span className="assumptions-ellipsis" data-tip={assumptions}>
@@ -112,7 +120,8 @@ CPMatrixTable.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       assumptions: PropTypes.string.isRequired,
-      portfolio_values: PropTypes.object.isRequired
+      portfolio_values: PropTypes.object.isRequired,
+      has_emissions: PropTypes.bool
     })
   ),
   meta: PropTypes.shape({
