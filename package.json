@@ -50,6 +50,7 @@
     "prop-types": "^15.7.2",
     "qs": "^6.9.4",
     "rc-slider": "^8.7.1",
+    "rc-table": "^7.32.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-responsive": "^8.1.0",
