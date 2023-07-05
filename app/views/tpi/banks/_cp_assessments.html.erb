@@ -1,8 +1,9 @@
 <h3 class="cp_assessments_title" style="margin: 25px 0">
   Carbon performance of <%= @bank.name %>
 </h3>
-<% cp_sectors = TPISector.for_category(Bank).map { |sector|
-   cp_assessment = bank.cp_assessments.where(sector_id: sector.id).currently_published.order(assessment_date: :desc).first
+<% cp_assessments = Queries::TPI::LatestCPAssessmentsQuery.new(category: Bank, cp_assessmentable: @bank).call %>
+<% cp_sectors = TPISector.for_category(Bank).order(:name).map { |sector|
+   cp_assessment = cp_assessments[[@bank, sector]]&.first
     {
       name: sector.name,
       assessment: cp_assessment,

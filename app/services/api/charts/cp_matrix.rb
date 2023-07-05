@@ -8,6 +8,12 @@ module Api
       end
 
       def matrix_data
+        {data: collect_data, meta: collect_metadata}
+      end
+
+      private
+
+      def collect_data
         return [] unless cp_assessmentable.present?
 
         %w[2025 2035 2050].each_with_object({}) do |year, result|
@@ -17,12 +23,19 @@ module Api
               value = cp_assessment&.cp_matrices&.detect { |m| m.portfolio == portfolio }
               row[portfolio] = value&.public_send "cp_alignment_#{year}"
             end
-            section[sector.name] = {assumptions: cp_assessment&.assumptions, portfolio_values: portfolio_values}
+            section[sector.name] = {
+              assumptions: cp_assessment&.assumptions,
+              portfolio_values: portfolio_values,
+              has_emissions: cp_assessment&.emissions&.present?
+            }
           end
         end
       end
 
-      private
+      def collect_metadata
+        {sectors: sectors.map(&:name),
+         portfolios: CP::Portfolio::NAMES_WITH_CATEGORIES}
+      end
 
       def cp_assessments
         @cp_assessments ||= Queries::TPI::LatestCPAssessmentsQuery

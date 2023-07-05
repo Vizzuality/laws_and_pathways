@@ -75,12 +75,6 @@
     </section>
   <% end %>
 
-  <% if @assessment.present? %>
-    <section class="container bank-assessment" id="assessment">
-      <%= render 'assessment', assessment: @assessment_presenter %>
-    </section>
-  <% end %>
-
   <% if @bank.latest_information.present? %>
     <%= react_component("LatestInformation", { name: @bank.name, latestInformation: @bank.latest_information }) %>
   <% end %>
