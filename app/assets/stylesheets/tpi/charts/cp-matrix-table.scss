@@ -25,6 +25,13 @@
 .cp-matrix-legend {
   display: flex;
   margin-top: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-left: 30px;
+
+  @include desktop {
+    margin-left: 0;
+  }
 
   .legend-item {
     margin-right: 10px;

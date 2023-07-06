@@ -5,6 +5,13 @@
   display: flex;
   justify-content: flex-start;
   margin-bottom: 30px;
+  flex-direction: column;
+  margin-left: 10px;
+
+  @include desktop {
+    flex-direction: row;
+    margin-left: 0;
+  }
 }
 
 .tab {
