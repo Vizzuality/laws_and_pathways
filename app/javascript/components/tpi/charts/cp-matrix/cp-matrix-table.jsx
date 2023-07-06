@@ -29,8 +29,12 @@ function ColorDot({ value }) {
   );
 }
 
+ColorDot.defaultProps = {
+  value: null
+};
+
 ColorDot.propTypes = {
-  value: PropTypes.string.isRequired
+  value: PropTypes.string
 };
 
 function CPMatrixTable({ data, meta }) {
@@ -117,16 +121,16 @@ CPMatrixTable.defaultProps = {
 };
 
 CPMatrixTable.propTypes = {
-  data: PropTypes.arrayOf(
+  data: PropTypes.objectOf(
     PropTypes.shape({
-      assumptions: PropTypes.string.isRequired,
-      portfolio_values: PropTypes.object.isRequired,
+      assumptions: PropTypes.string,
+      portfolio_values: PropTypes.object,
       has_emissions: PropTypes.bool
     })
   ),
   meta: PropTypes.shape({
     portfolios: PropTypes.shape({}),
-    sectors: PropTypes.shape({})
+    sectors: PropTypes.array
   })
 };
 

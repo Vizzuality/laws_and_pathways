@@ -11,7 +11,7 @@ function Tabs({ selectedTabIndex, setSelectedTabIndex }) {
         'Medium-term alignment',
         'Long-term alignment'
       ].map((text, index) => (
-        <div>
+        <div key={`tab${index}`}>
           <button
             className={`button tab ${
               selectedTabIndex === index ? 'active' : ''
