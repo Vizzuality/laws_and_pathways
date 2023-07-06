@@ -19,7 +19,8 @@ module CP
       'national pledges' => '#FF9600', # orange
       'international pledges' => '#FF9600', # orange
       'not aligned' => '#ED3D4A', # red
-      'no or unsuitable disclosure' => '#595B5D' # black
+      'no or unsuitable disclosure' => '#595B5D', # black
+      'not assessable using tpi’s methodology' => '#CFD7ED' # grey
     }.freeze
 
     DEFAULT_COLOR = '#595B5D'.freeze # black
@@ -35,7 +36,8 @@ module CP
       'National Pledges',
       'Not Aligned',
       'No or unsuitable disclosure',
-      'Not Assessed'
+      'Not Assessed',
+      'Not assessable using TPI’s methodology'
     ].freeze
     ALLOWED_NAMES = NAMES
 

@@ -262,8 +262,9 @@
 
 }
 
-.cp_assessments_title {
-  padding: 0 30px;
+.cp_assessments_title,
+.cp_assessments_description {
+  padding: 0 10px;
 
   @include desktop {
     padding: 0;

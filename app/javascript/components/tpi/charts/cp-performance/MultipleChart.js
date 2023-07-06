@@ -41,7 +41,7 @@ const Chart = ({ isMobile, sector }) => {
   if (loading) return <p>Loading...</p>;
   const { series } = options;
   return (
-    <div className="individual-chart">
+    <div className="individual-chart" id={name}>
       <div className="chart-container">
         <div>
           <h5 className="individual-chart-title">{name}</h5>
