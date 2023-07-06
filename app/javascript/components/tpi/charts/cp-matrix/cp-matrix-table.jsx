@@ -10,7 +10,7 @@ import chevronIcon from 'images/icon_chevron_dark/chevron_down_black-1.svg';
 const COLORS = {
   'Not assessable using TPI’s methodology': { color: '#CACBCE' },
   'No or unsuitable disclosure': { color: 'white', border: true },
-  'Not aligned': { color: '#ED3D4A' },
+  'Not Aligned': { color: '#ED3D4A' },
   'National Pledges': { color: '#F6C242' },
   'Below 2 Degrees': { color: '#F9DF65' },
   '1.5 Degrees': { color: '#57BE77' }
