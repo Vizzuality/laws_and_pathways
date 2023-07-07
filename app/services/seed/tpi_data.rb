@@ -175,9 +175,9 @@ module Seed
         ['Steel', 'Carbon intensity (tonnes of CO2 per tonne of steel)', [Company, Bank]],
         ['Electric Utilities (Global)', 'Carbon intensity (metric tonnes of CO2 per MWh electricity generation)', [Bank]],
         ['Electric Utilities (Regional)', 'Carbon intensity (metric tonnes of CO2 per MWh electricity generation)', [Bank]],
-        ['Shipping', nil, [Bank]],
-        ['Food', nil, [Bank]],
-        ['Diversified Mining', nil, [Bank]],
+        ['Shipping', 'Carbon intensity, TTW (grams CO2 per tonnes -km)', [Bank]],
+        ['Food', 'Carbon intensity (tCO2e/tonnes agricultural input)', [Bank]],
+        ['Diversified Mining', 'Emissions intensity (tCO2e / tonne of copper equivalent)', [Bank]],
         ['Chemicals', nil, [Bank]],
         ['Real Estate', nil, [Bank]]
       ].each do |sector_name, sector_cp_unit, categories|
