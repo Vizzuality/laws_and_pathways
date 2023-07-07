@@ -42,6 +42,7 @@ gem 'font-awesome-rails'
 gem 'react-rails'
 
 gem 'appsignal'
+gem 'rubyXL'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

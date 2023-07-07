@@ -50,9 +50,9 @@ module TPI
       bank_assessments_csv = CSVExport::User::BankAssessments.new.call
 
       render zip: {
-        'Framework of pilot indicators.csv' => bank_assessment_indicators_csv,
-        "Bank assessments #{timestamp}.csv" => bank_assessments_csv,
-        "Bank CP assessments #{timestamp}.csv" => CSVExport::User::BankCPAssessments.new.call
+        'Framework of pilot indicators.xlsx' => Api::CSVToExcel.new(bank_assessment_indicators_csv).call,
+        "Bank assessments #{timestamp}.xlsx" => Api::CSVToExcel.new(bank_assessments_csv).call,
+        "Bank CP assessments #{timestamp}.xlsx" => Api::CSVToExcel.new(CSVExport::User::BankCPAssessments.new.call).call
       }, filename: "TPI banking data - #{timestamp}"
     end
 

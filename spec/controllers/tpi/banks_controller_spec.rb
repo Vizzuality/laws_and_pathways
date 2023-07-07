@@ -131,18 +131,19 @@ RSpec.describe TPI::BanksController, type: :controller do
           zipfile.each do |entry|
             entries_names << entry.name
             entries_csv_json[entry.name] = parse_csv_to_json(entry.get_input_stream.read) if entry.name.ends_with?('.csv')
+            entries_csv_json[entry.name] = parse_xlsx_to_json(entry.get_input_stream.read) if entry.name.ends_with?('.xlsx')
           end
         end
 
-        expect(entries_names).to include('Framework of pilot indicators.csv')
-        expect(entries_names).to include("Bank assessments #{timestamp}.csv")
-        expect(entries_names).to include("Bank CP assessments #{timestamp}.csv")
+        expect(entries_names).to include('Framework of pilot indicators.xlsx')
+        expect(entries_names).to include("Bank assessments #{timestamp}.xlsx")
+        expect(entries_names).to include("Bank CP assessments #{timestamp}.xlsx")
 
-        expect(entries_csv_json['Framework of pilot indicators.csv'])
+        expect(entries_csv_json['Framework of pilot indicators.xlsx'])
           .to match_snapshot('tpi_banking_tool_user_download_zip_indicators_csv')
-        expect(entries_csv_json["Bank assessments #{timestamp}.csv"])
+        expect(entries_csv_json["Bank assessments #{timestamp}.xlsx"])
           .to match_snapshot('tpi_banking_tool_user_download_zip_bank_assessments_csv')
-        expect(entries_csv_json["Bank CP assessments #{timestamp}.csv"])
+        expect(entries_csv_json["Bank CP assessments #{timestamp}.xlsx"])
           .to match_snapshot('tpi_banking_tool_user_download_zip_bank_cp_assessments_csv')
       end
     end
