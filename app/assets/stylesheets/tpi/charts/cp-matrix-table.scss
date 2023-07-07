@@ -49,6 +49,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  vertical-align: middle;
 
   .color-dot {
     height: 16px;
@@ -65,11 +66,20 @@
   color: $grey-dark;
   font-size: 18px;
   margin-left: 5px;
+  margin-bottom: 8px;
   cursor: pointer;
 }
 
 .activities-text {
   margin-left: 5px;
+  max-height: 22px;
+  display: flex;
+  align-items: center;
+}
+
+.activities-column,
+.rc-table-cell-fix-left {
+  box-shadow: inset -1px 0 0 $grey-blue;
 }
 
 .rc-table {
@@ -95,6 +105,22 @@
       }
     }
 
+    // Sector titles
+    tr:nth-child(2) {
+      th {
+        &.sector-column-dashed-left {
+          border-style: dashed;
+          border-bottom-style: solid;
+        }
+
+        &.sector-column-dashed-right {
+          border-style: dashed;
+          border-right-style: solid;
+          border-bottom-style: solid;
+        }
+      }
+    }
+
 		.rc-table-cell-scrollbar {
 			&::after {
 				position: absolute;
@@ -107,6 +133,7 @@
 			}
 		}
 	}
+
 	tbody {
 		tr {
 			td {
@@ -125,53 +152,38 @@
   }
 }
 
-.rc-table-rtl {
-	direction: rtl;
-	.rc-table-cell-fix-right {
-		&:last-child {
-			border-right-color: $grey-blue;
-		}
-	}
-
-	.rc-table-cell-fix-left {
-		&:last-child {
-			border-left-color: transparent;
-		}
-	}
-
-	.rc-table-cell-fix-left-first {
-		box-shadow: 1px 0 0 $grey-blue;
-	}
-
-	&.rc-table {
-		thead {
-			.rc-table-cell-scrollbar {
-				&::after {
-					right: -1px;
-					left: auto;
-				}
-			}
-		}
-	}
-}
-
 .rc-table th,
 .rc-table td {
 	position: relative;
 	box-sizing: border-box;
 	padding: 0;
-	padding: 16px 8px;
+	padding: 6px 8px;
 	white-space: normal;
 	word-break: break-word;
-	border: 1px solid $grey-blue;
+	border: 1px dashed $grey-blue;
 	border-top: 0;
 	border-left: 0;
 	transition: box-shadow 0.3s;
 }
 
+.rc-table th {
+  border: 1px solid $grey-blue;
+}
+
+.rc-table tr {
+  &:last-child td {
+    border-bottom: 1px solid $grey-blue;
+  }
+}
+
 .rc-table td {
-  &:not(:last-child) {
+  &:not(:last-child),
+  &:not(:first-child) {
     border-right: none;
+  }
+
+  &:last-child {
+    border-right: 1px solid $grey-blue;
   }
 }
 
@@ -193,6 +205,84 @@
 	}
 }
 
+
+.rc-table-body {
+  background-image:
+
+    /* Shadows */
+    linear-gradient(to right, white, white),
+    linear-gradient(to right, white, white),
+
+/* Shadow covers */
+    linear-gradient(to right, rgba(0,0,0,.25), rgba(255,255,255,0)),
+    linear-gradient(to left, rgba(0,0,0,.25), rgba(255,255,255,0));
+
+  background-position: left center, right center, left center, right center;
+	background-repeat: no-repeat;
+	background-color: white;
+	background-size: 20px 100%, 20px 100%, 10px 100%, 10px 100%;
+
+	/* Opera doesn't support this in the shorthand */
+	background-attachment: local, local, scroll, scroll;
+}
+
+// Scroll shadows
+
+.rc-table-body,
+.rc-table-header {
+
+  // Left shadow
+
+  &.partially-scrolled,
+  &.fully-scrolled {
+    .activities-column,
+    .rc-table-cell-fix-left {
+      &::before {
+        position: absolute;
+        top: 0;
+        right: -1px;
+        bottom: -1px;
+        width: 20px;
+        transform: translateX(100%);
+        transition: box-shadow 0.3s;
+        content: '';
+        pointer-events: none;
+        box-shadow: inset 10px 0 8px -8px $grey-dark;
+
+        opacity: 0.25;
+      }
+    }
+  }
+
+  // Right shadow
+
+  &:not(.fully-scrolled) {
+    &::after {
+      position: absolute;
+      top: 0;
+      right: -1px;
+      bottom: -1px;
+      width: 10px;
+      transform: scaleX(-1);
+      transition: box-shadow 0.3s;
+      content: '';
+      pointer-events: none;
+      box-shadow: inset 10px 0 8px -6px $grey-dark;
+      opacity: 0.17;
+    }
+  }
+}
+
+.vertical-align-center {
+  vertical-align: middle;
+}
+
+.rc-table-ping-right {
+  .rc-table-cell-fix-right::after {
+    box-shadow: inset -10px 0 8px -8px $grey-dark;;
+  }
+}
+
 .rc-table-cell-fix-left-first::after,
 .rc-table-cell-fix-left-last::after {
 	position: absolute;
@@ -206,22 +296,6 @@
 	pointer-events: none;
 }
 
-.rc-table-cell-fix-left-all {
-	&::after {
-		display: none;
-	}
-}
-
-.rc-table-cell-fix-right-first,
-.rc-table-cell-fix-right-last {
-	box-shadow: -1px 0 0 $grey-blue;
-}
-
-.rc-table-rtl .rc-table-cell-fix-right-first,
-.rc-table-rtl .rc-table-cell-fix-right-last {
-	box-shadow: none;
-}
-
 .rc-table-cell-fix-right-first::after,
 .rc-table-cell-fix-right-last::after {
 	position: absolute;
@@ -233,6 +307,18 @@
 	transition: box-shadow 0.3s;
 	content: '';
 	pointer-events: none;
+}
+
+.rc-table-cell-fix-left-all {
+	&::after {
+		display: none;
+	}
+}
+
+// Right line for the activities column
+.rc-table-cell-fix-right-first,
+.rc-table-cell-fix-right-last {
+	box-shadow: -1px 0 0 $grey-blue;
 }
 
 .rc-table-cell {
