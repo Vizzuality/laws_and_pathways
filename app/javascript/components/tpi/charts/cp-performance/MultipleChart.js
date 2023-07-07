@@ -14,16 +14,19 @@ import { useDeviceInfo } from 'components/Responsive';
 
 import Legend from './Legend';
 
-const EmissionsLegend = ({ data }) => (
-  <div className="emissions-legend">
-    {data.map((d) => (
-      <div className="emissions-legend__item" key={d.name}>
-        <div className={cx('emissions-legend__circle', { line: d.type !== 'area' })} style={{ backgroundColor: d.color }} />
-        <div className="emissions-legend__text">{d.name}</div>
-      </div>
-    ))}
-  </div>
-);
+const EmissionsLegend = ({ data }) => {
+  // Target Years won't show on the chart if there are less than two data points
+  const filteredData = data.filter(d => !(d.name === 'Target Years' && d.data.length < 2));
+  return (
+    <div className="emissions-legend">
+      {filteredData.map((d) => (
+        <div className="emissions-legend__item" key={d.name}>
+          <div className={cx('emissions-legend__circle', { line: d.type !== 'area' })} style={{ backgroundColor: d.color }} />
+          <div className="emissions-legend__text">{d.name}</div>
+        </div>
+      ))}
+    </div>);
+};
 
 EmissionsLegend.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({
@@ -40,6 +43,7 @@ const Chart = ({ isMobile, sector }) => {
   if (error) return <p>{error}</p>;
   if (loading) return <p>Loading...</p>;
   const { series } = options;
+
   return (
     <div className="individual-chart" id={name}>
       <div className="chart-container">
