@@ -71,7 +71,7 @@ function CPMatrixTable({ data, meta }) {
           title: 'Activities',
           dataIndex: 'activities',
           key: 'activities',
-          className: 'activities-column',
+          className: 'activities-column vertical-align-center',
           width: 200,
           fixed: true,
           render: (content) => {
@@ -109,9 +109,9 @@ function CPMatrixTable({ data, meta }) {
           // eslint-disable-next-line no-nested-ternary
           sectors.length > 1
             ? i !== sectors.length - 1
-              ? 'sector-column-dashed-left'
-              : 'sector-column-dashed-right'
-            : '',
+              ? 'sector-column-dashed-left vertical-align-center'
+              : 'sector-column-dashed-right vertical-align-center'
+            : 'vertical-align-center',
         render: (content) => <ColorDot value={content} />
       }))
     }))
