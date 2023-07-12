@@ -1,95 +1,110 @@
-"Id","Type","Number","Text"
-,"area",1,"Commitment"
-,"indicator",1,"Has the bank committed to achieve net-zero emissions from its financed emissions by 2050 or sooner, consistent with a 1.5 Degrees scenario?"
-,"sub_indicator","1.a","Has the bank committed to achieve net-zero emissions from its financing activities by 2050 or sooner, consistent with a 1.5 Degrees scenario?"
-,"sub_indicator","1.b","Does the net-zero emissions commitment include the bank's material portfolio-wide activities in at least one sector?"
-,"sub_indicator","1.c","Does the net-zero emissions commitment cover all material financing of high-risk sectors in at least one business segment (e.g., wholesale lending, retail lending, capital market activities, etc.)?"
-,"sub_indicator","1.d","Does the bank's net-zero emissions commitment cover all its material financing of high-risk sectors across all business segments?"
-,"area",2,"Targets"
-,"indicator","2.1","Has the bank set short-term targets for reducing its material emissions anytime up to 2025, consistent with a 1.5°C pathway?"
-,"sub_indicator","2.1.a","Has the bank set at least one target for reducing its financed emissions up to 2025?"
-,"sub_indicator","2.1.b","Do the targets cover the bank's material financing activities in at least one high-risk sector?"
-,"sub_indicator","2.1.c","Do the targets cover all material financing of high-risk sectors in at least one business segment (e.g., wholesale lending, retail lending, capital market activities, etc.)?"
-,"sub_indicator","2.1.d","Do the targets cover all material financing of high-risk sectors across all business segments?"
-,"sub_indicator","2.1.e","Has the bank disclosed the scenarios it uses to set sector specific targets?"
-,"sub_indicator","2.1.f","Has the bank set at least one target that is aligned with a 1.5C scenario?"
-,"indicator","2.2","Has the bank set medium-term targets for reducing its material emissions anytime between 2026 and 2035, consistent with a 1.5C pathway?"
-,"sub_indicator","2.2.a","Has the bank set at least one target for reducing its financed emissions between 2026 and 2035?"
-,"sub_indicator","2.2.b","Do the targets cover the bank's material financing activities in at least one high-risk sector?"
-,"sub_indicator","2.2.c","Do the targets cover all material financing of high-risk sectors in at least one business segment (e.g., wholesale lending, retail lending, capital market activities, etc.)?"
-,"sub_indicator","2.2.d","Do the targets cover all material financing of high-risk sectors across all business segments?"
-,"sub_indicator","2.2.e","Has the bank disclosed the scenarios it uses to set sector specific targets?"
-,"sub_indicator","2.2.f","Has the bank set at least one target that is aligned with a 1.5°C scenario?"
-,"area",3,"Decarbonization Strategy"
-,"sub_area","3.1","Engagement and Capital Allocation"
-,"indicator","3.1.1","Does the bank disclose its engagement activities with companies on climate change matters?"
-,"sub_indicator","3.1.1.a","Does the bank disclose an engagement policy requiring companies to adopt transition plans consistent with the bank's emissions targets?"
-,"sub_indicator","3.1.1.b","Does the bank disclose actions taken to ensure transition plans are enforced?"
-,"indicator","3.1.2","Do the bank's asset management and/or wealth management divisions disclose their engagement activities with companies on climate change matters?"
-,"sub_indicator","3.1.2.a","Do the bank's asset management and/or wealth management divisions disclose their engagement policy with companies on climate change matters?"
-,"sub_indicator","3.1.2.b","Do the bank's asset management and/or wealth management divisions disclose the number of companies they have engaged with and relevant details, including stakeholders, focus, and outcomes of engagement?"
-,"sub_indicator","3.1.2.c","Do the bank's asset management and/or wealth management divisions disclose the value of associated financing or percentage of overall financing they have engaged with?"
-,"indicator","3.1.3","Does the bank set and disclose explicit criteria for the withdrawal of financing to misaligned activities?"
-,"sub_indicator","3.1.3.a","Has the bank committed to phase out thermal coal related financing (mining and power) in a timeline compatible with a 1.5°C aligned pathway?"
-,"sub_indicator","3.1.3.b","Has the bank committed to end financing activities which aim to explore or develop new oil and gas fields?"
-,"sub_indicator","3.1.3.c","Has the bank committed to end financing deforestation no later than 2030?"
-,"sub_indicator","3.1.3.d","Has the bank committed to end financing land conversion of peatlands no later than 2030?"
-,"indicator","3.1.4","Does the bank set and disclose a strategy to scale up green finance with clear goals and timelines?"
-,"sub_indicator","3.1.4.a","Has the bank set and disclosed a strategy to scale up green finance with specific milestones and targets?"
-,"sub_indicator","3.1.4.b","Does the bank use an established external definition of green activities (e.g., EU Taxonomy)?"
-,"sub_area","3.2","Exposure and Financed Emissions Disclosure"
-,"indicator","3.2.1","Does the bank disclose exposure to high-risk sectors, from all of its material financing activities, on an emissions or portfolio basis?"
-,"sub_indicator","3.2.1.a","Does the bank disclose exposure to high-risk sectors?"
-,"sub_indicator","3.2.1.b","Does the bank disclose exposure to high-risk sectors across all its material business segments?"
-,"sub_indicator","3.2.1.c","Does the bank disclose exposure to high-risk sectors across all sectors in which it has activities?"
-,"indicator","3.2.2","Does the bank disclose absolute emissions from all of its material financing activities?"
-,"sub_indicator","3.2.2.a","Does the bank quantify and disclose financed absolute emissions?"
-,"sub_indicator","3.2.2.b","Does the bank quantify and disclose financed absolute emissions for all its material business segments?"
-,"sub_indicator","3.2.2.c","Does the bank quantify and disclose absolute emissions for all high-risk sectors in which it has activities?"
-,"indicator","3.2.3","Does the bank disclose emissions intensities from all of its material financing activities?"
-,"sub_indicator","3.2.3.a","Does the bank quantify and disclose financed emissions intensities?"
-,"sub_indicator","3.2.3.b","Does the bank quantify and disclose emissions intensities for all its material business segments?"
-,"sub_indicator","3.2.3.c","Does the bank quantify and disclose emissions intensities for all high-risk sectors in which it has activities?"
-,"indicator","3.2.4","Does the bank disclose its approach to offsetting in the accounting of financed emissions, including explicit disclosure in case offsetting is included in financed emissions reduction targets?"
-,"sub_indicator","3.2.4.a","Does the bank disclose its approach to offsetting in the accounting of financed emissions, including explicit disclosure in case offsetting is included in financed emissions reduction targets?"
-,"sub_area","3.3","Climate Scenario Analysis"
-,"indicator","3.3","Does the bank undertake 1.5C climate scenario planning?"
-,"sub_indicator","3.3.a","Has the bank conducted a climate-related scenario analysis for transition risks, including quantitative elements, and disclosed its results?"
-,"sub_indicator","3.3.b","Has the bank conducted a climate-related scenario analysis for physical risks, including quantitative elements, and disclosed its results?"
-,"sub_indicator","3.3.c","Has the bank conducted a climate-related scenario analysis for all its material business segments and disclosed its results?"
-,"sub_indicator","3.3.d","Does the quantitative scenario analysis explicitly cover all of the high-risk sectors the bank has activities in?"
-,"sub_indicator","3.3.e","Does the scenario analysis explicitly include a 1.5°C scenario, cover the entire portfolio, disclose key assumptions and variables used, and report on the key risks and opportunities identified?"
-,"area",4,"Climate Policy Engagement"
-,"indicator","4.1","Does the bank have a Paris Agreement-aligned climate lobbying position, and are all of its direct lobbying activities aligned with this?"
-,"sub_indicator","4.1.a","Does the bank have a specific position statement to conduct its lobbying in line with the goals of the Paris Agreement?"
-,"sub_indicator","4.1.b","Does the bank list all of its climate-related lobbying activities (e.g., meetings, policy submissions, etc.)?"
-,"indicator","4.2","Does the bank align its trade association memberships with the goals of the Paris Agreement, and does it disclose its trade association memberships?"
-,"sub_indicator","4.2.a","Does the bank have a specific commitment to ensure that the trade associations it is a member of lobby in line with the goals of the Paris Agreement?"
-,"sub_indicator","4.2.b","Does the bank disclose all of its trade associations memberships?"
-,"indicator","4.3","Does the bank have a process to ensure its trade associations lobby in accordance with the Paris Agreement?"
-,"sub_indicator","4.3.a","Has the bank conducted and published a review of its trade associations' climate positions/alignment with the Paris Agreement?"
-,"sub_indicator","4.3.b","Does the bank explain what actions it took as a result of this review?"
-,"area",5,"Climate Governance"
-,"indicator","5.1","Has the bank nominated a board member or board committee with explicit responsibility for oversight of the climate change policy? "
-,"sub_indicator","5.1.a","Has the bank nominated a board member or board committee with explicit responsibility for oversight of the climate change policy?"
-,"sub_indicator","5.1.b","Has the bank nominated a board member or board committee with explicit responsibility for oversight of the net zero strategy?"
-,"indicator","5.2","Does the bank's risk committee explicitly discuss and consider the impacts of climate related risks? "
-,"sub_indicator","5.2.a","Has the bank's risk committee explicitly included physical and transition as a key risk category?"
-,"sub_indicator","5.2.b","Does the bank's risk committee explicitly discuss how the impacts of risks associated with the transition to net zero are integrated in the bank's key risk categories?"
-,"indicator","5.3","Does the bank's remuneration for senior executives incorporate climate change performance aligned with a 1.5C transition?"
-,"sub_indicator","5.3.a","Does the bank’s CEO and/or at least one other senior executives' remuneration arrangements specifically incorporate climate change performance based on material Scope 3 emissions as a KPI determining performance-linked compensation?"
-,"sub_indicator","5.3.b","Are the bank's CEO and/or at least one other senior executives' remuneration arrangements explicitly aligned with a 1.5C pathway?"
-,"indicator","5.4","Does the bank commit to implement the recommendations of the Task Force on Climate related Financial Disclosures (TCFD)?"
-,"sub_indicator","5.4.a","Is the bank listed as a supporter on the TCFD website or does it explicitly commit to align its disclosures with the TCFD recommendations?"
-,"sub_indicator","5.4.b","Does the bank explicitly sign-post TCFD aligned disclosures in its annual reporting or publish them in a TCFD report?"
-,"area",6,"Audit and Accounts"
-,"indicator","6.1","Do the bank's audited financial statements and notes thereto incorporate material climate-related matters?"
-,"sub_indicator","6.1.a","Do the financial statements demonstrate how material climate-related matters are incorporated?"
-,"sub_indicator","6.1.b","Do the financial statements disclose the quantitative climate-related assumptions and estimates?"
-,"sub_indicator","6.1.c","Are the financial statements consistent with the bank's other reporting?"
-,"indicator","6.2","Does the audit report demonstrate that the auditor considered the effects of material climate-related matters in its audit?"
-,"sub_indicator","6.2.a","Does the audit report identify how the auditor has assessed the material impacts of climate-related matters?"
-,"sub_indicator","6.2.b","Does the audit report identify inconsistencies between the financial statements and 'other information'?"
-,"indicator","6.3","Do the audited financial statements and notes thereto incorporate the material impacts of the global drive to net zero emissions by 2050 (or sooner), equivalent to achieving the Paris Agreement goal of limiting global warming to no more than 1.5C?"
-,"sub_indicator","6.3.a","Do the financial statements use, or disclose a sensitivity to, assumptions and estimates that are aligned with achieving net zero emissions by 2050 (or sooner)?"
-,"sub_indicator","6.3.b","Does the audit report identify that the assumptions and estimates that the bank used were aligned with achieving net zero emissions by 2050 (or sooner) or does it provide a sensitivity analysis on the potential implications?"
+Id,Type,Number,Text
+,area,1,Net zero commitment
+,indicator,1.1,"Has the bank committed to achieving net zero financed and facilitated1 emissions by 2050 or sooner, consistent with a  1.5°C scenario?"
+,sub_indicator,1.1.a,"Has the bank committed to achieving net zero financed/facilitated emissions by 2050 or sooner, consistent with a 1.5°C scenario?"
+,sub_indicator,1.1.b,Has the bank disclosed what on- and off-balance sheet activities OR what proportion of total financed/ facilitated emissions are covered by its net zero commitment?
+,sub_indicator,1.1.c,Does the bank’s net-zero emissions commitment cover all material on- and off-balance sheet activities OR explicitly commit to doing so once methodologies are developed?
+,sub_indicator,1.1.d,"If the coverage is incomplete, has the bank disclosed how it will expand its commitment and over what timeframe?"
+,area,2,Target methodology
+,indicator,2.1,"Has the bank set short-, medium- and long-term targets for reducing its financed and facilitated emissions, consistent with a 1.5°C pathway?"
+,sub_indicator,2.1.a,Has the bank set a short-term target(s) for reducing its material financed/facilitated emissions (within the next three years)?
+,sub_indicator,2.1.b,Has the bank set a medium-term target(s) for reducing its material financed/facilitated emissions between 2027 and 2035?
+,sub_indicator,2.1.c,Has the bank set a long-term target(s) for reducing its material financed and facilitated emissions between 2036 and 2050?
+,indicator,2.2,Has the bank comprehensively disclosed its target-setting methodology?
+,sub_indicator,2.2.a,Has the bank disclosed its financed/facilitated emissions targets on both an absolute and intensity basis?
+,sub_indicator,2.2.b,Has the bank disclosed the materiality test that informed the on- and off-balance sheet activities and high-emission sectors included in the scope of its targets?
+,sub_indicator,2.2.c,Has the bank disclosed the proportion (%) of bank-wide revenues covered by its targets?
+,sub_indicator,2.2.d,Has the bank disclosed the proportion (%) of financed and facilitated emissions covered by its targets?
+,sub_indicator,2.2.e,"Has the bank disclosed a commitment to cover all material on- and off-balance sheet activities and high-emission sectors once externally recognised methodologies (e.g., PCAF) are developed?"
+,area,3,Exposure and emissions disclosure
+,indicator,3.1,Has the bank disclosed its exposure to high-emission sectors?
+,sub_indicator,3.1.a,Has the bank disclosed the amount (in millions of US dollars [$m]) AND share (%) of its credit exposure to all high-emission sectors?
+,sub_indicator,3.1.b,Has the bank disclosed the amount ($m) AND share (%) of its financial exposure to all high-emission sectors covering all material on- and off-balance sheet activities?
+,indicator,3.2,Has the bank disclosed absolute emissions from all material on- and off-balance sheet activities? 
+,sub_indicator,3.2.a,Has the bank disclosed financed/facilitated absolute emissions?
+,sub_indicator,3.2.b,Has the bank disclosed financed/facilitated absolute emissions for all high-emission sectors?
+,sub_indicator,3.2.c,Has the bank disclosed financed/facilitated absolute emissions for all material on- and off-balance sheet activities?
+,indicator,3.3,Has the bank disclosed emissions intensities from all material on- and off-balance sheet activities?
+,sub_indicator,3.3.a,Has the bank disclosed financed/facilitated emissions intensities?
+,sub_indicator,3.3.b,Has the bank disclosed financed/facilitated emissions intensities for all high-emission sectors?
+,sub_indicator,3.3.c,Has the bank disclosed financed/facilitated emissions intensities for all material on- and off-balance sheet activities?
+,indicator,3.4,Has the bank disclosed the methodology used to quantify financed/facilitated emissions?
+,sub_indicator,3.4.a,"Has the bank disclosed the methods, assumptions, and variables used to quantify financed/facilitated emissions?"
+,sub_indicator,3.4.b,Has the bank used and disclosed results from PCAF’s data quality scoring methodology to assess the quality of underlying client emissions data?
+,indicator,3.5,Has the bank disclosed its approach to client-purchased offsets?
+,sub_indicator,3.5.a,Has the bank disclosed the contribution of client-purchased offsets in the accounting of its financed/facilitated emissions?
+,sub_indicator,3.5.b,Has the bank excluded client-purchased offsets toward meeting its financed/facilitated emissions targets?
+,area,4,Historical emissions performance (placeholder indicator)
+,indicator,4.1,Has the bank disclosed its annual progress against its emissions reduction targets?
+,area,5,Decarbonisation strategy
+,sub_area,5.1,Financing conditions and revenue alignment
+,indicator,5.1.1,Has the bank set financing conditions for high-emitting sectors linked to a 1.5°C pathway?
+,sub_indicator,5.1.1.a,Has the bank set financing conditions and/or covenants to incentivise the transition of high-emission sector companies?
+,sub_indicator,5.1.1.b,"Has the bank disclosed actions taken to ensure that financing conditions and/or covenants are enforced (e.g., developing watch list, suspending loan disbursement, risk-weighted pricing incentives)?"
+,sub_indicator,5.1.1.c,Do the bank's conditions and/or covenants apply to all high-emission sectors?
+,sub_indicator,5.1.1.d,"Has the bank established climate provisions in deal and transaction terms to ensure high-emitting asset transfers (e.g., from M&A advisory, capital market facilitations) are compliant with a 1.5°C scenario?"
+,indicator,5.1.2,Has the bank set a target to increase its revenue derived from 1.5°C-aligned assets?
+,sub_indicator,5.1.2.a,Has the bank set a target to increase the share of financing/facilitation provisioned to high-emitting companies that is subject to decarbonisation-linked conditions?
+,sub_indicator,5.1.2.b,Has the bank set a group-wide target to increase the share of revenue derived from 1.5°C-aligned companies (TPI Centre or Science-Based Targets initiative [SBTi])?
+,indicator,5.1.3,Do the bank's asset management and/or wealth management divisions disclosed its strategy to increase portfolio alignment?
+,sub_indicator,5.1.3.a,Has the bank’s asset management division disclosed a criteria-based escalation policy for voting and engagement with non-aligned assets?
+,sub_indicator,5.1.3.b,Has the bank’s asset management division disclosed a portfolio coverage goal to increase the percentage of assets under management (AUM) invested in 1.5°C-aligned assets?
+,sub_indicator,5.1.3.c,Has the bank’s asset management division disclosed the percentage of AUM invested in 1.5°C-aligned assets?
+,sub_area,5.2,Capital allocation to misaligned activities
+,indicator,5.2.1,Has the bank set and disclosed explicit criteria for withdrawal of financing from misaligned fossil fuel activities?
+,sub_indicator,5.2.1.a,Has the bank committed to end all on- and off-balance sheet activities that finance new coal capacity (mining and power) immediately?
+,sub_indicator,5.2.1.b,Has the bank committed to phase out all on- and off-balance sheet activities that finance unabated thermal coal (mining and power) on a timeline compatible with a 1.5°C-aligned pathway (i.e. by  2030 in OECD countries and by 2040 in the rest of  the world)?
+,sub_indicator,5.2.1.c,Has the bank committed to end all project financing dedicated to the exploration and development of new oil and gas fields?
+,sub_indicator,5.2.1.d,Has the bank committed to end all on- and off-balance sheet activities dedicated to the exploration and development of new oil and gas fields misaligned with a 1.5°C pathway?
+,sub_indicator,5.2.1.e,Does the bank’s oil and gas policy include an exclusion threshold for investees with oil and gas expansion plans or with operations in unconventional oil and gas?
+,indicator,5.2.2,Has the bank set and disclosed explicit criteria for withdrawal of financing from misaligned land conversion activities?
+,sub_indicator,5.2.2.a,Has the bank disclosed an overarching commitment to end all on- and off-balance sheet activities that finance deforestation no later than 2025?
+,sub_indicator,5.2.2.b,Has the bank disclosed a commodity-specific deforestation policy for all high forest-risk  commodities OR explicitly state its overarching commitment covers specific commodity supply chains?
+,sub_indicator,5.2.2.c,"Has the bank committed to end all on- and off-balance sheet activities that finance land conversion of other natural ecosystems including natural savannahs, grasslands, peatlands and wetlands no later than 2025?"
+,sub_area,5.3,Climate scenario analysis
+,indicator,5.3.1,Has the bank undertaken climate-related scenario analysis?
+,sub_indicator,5.3.1.a,"Has the bank conducted a climate-related scenario analysis for transition risks and disclosed its quantified results, including for a 1.5°C scenario?"
+,sub_indicator,5.3.1.b,"Has the bank conducted a climate-related scenario analysis for physical risks and disclosed its quantified results, including for a higher temperature scenario?"
+,sub_indicator,5.3.1.c,Do the bank's quantitative scenario analyses explicitly cover all its material on- and off-balance sheet activities?
+,sub_indicator,5.3.1.d,Do the bank's quantitative scenario analyses explicitly cover all of the high-emission sectors in which it has activities?
+,sub_indicator,5.3.1.e,Does the bank’s quantitative scenario analysis explicitly include a 1.5°C scenario; comprehensively cover all high-emission sectors and on- and off-balance sheet activities; and report on how results informed decision-making?
+,area,6,Climate solutions
+,indicator,6.1,Has the bank set and disclosed a strategy to scale up finance directed toward climate solutions?
+,sub_indicator,6.1.a,"Has the bank committed to scale up finance directed toward climate solutions, with specific targets and milestones?"
+,sub_indicator,6.1.b,Has the bank disclosed its total share of finance directed towards climate solutions in the latest reporting year AND reported progress against the target?
+,sub_indicator,6.1.c,"Has the bank disclosed its definition of climate solutions AND used an established, external standard developed by a national, regional, or global governing body (e.g., EU Taxonomy)?"
+,area,7,Climate policy engagement
+,indicator,7.1,"Has the bank disclosed a 1.5°C-aligned climate lobbying position, with governance and review measures to enforce this position?"
+,sub_indicator,7.1.a,Has the bank disclosed a public commitment or position statement to conduct all of its lobbying in accordance with the goal of restricting global temperature rise to 1.5?C above pre-industrial levels?
+,sub_indicator,7.1.b,"Has the bank published an annual review of its climate policy positions, evaluated whether these are in line with Paris Agreement goals, AND disclosed how it has advocated for them through its own climate policy engagement activities?"
+,indicator,7.2,"Has the bank disclosed a 1.5°C-aligned climate lobbying position related to its trade association memberships, with governance and review measures to enforce this position?"
+,sub_indicator,7.2.a,Has the bank disclosed a public commitment or position statement to advocate for 1.5?C-aligned lobbying within the trade associations of which it is  a member?
+,sub_indicator,7.2.b,Has the bank published a review of its trade associations’ climate positions or alignment with the Paris Agreement AND disclosed what actions it has taken as a result?
+,sub_indicator,7.2.c,"For each trade association, has the bank disclosed whether it sits on the Executive Board or plays an active role in committees or other activities related to climate change?"
+,area,8,Climate governance
+,indicator,8.1,Has the bank evaluated whether climate-related risks are material risks across its business and discussed the impacts? 
+,sub_indicator,8.1.a,"Has the bank included climate-related risks, including both transition and physical risks, as a key risk category in its annual report OR explained the decision to exclude climate risk as a material risk category?"
+,sub_indicator,8.1.b,Has the bank disclosed in its annual report the implications of climate-related risks and actions taken?
+,indicator,8.2,Has the bank nominated a Board member or Board Committee with explicit responsibility for oversight of climate change?
+,sub_indicator,8.2.a,Has the bank disclosed evidence of a Board committee or a Board member with responsibility for oversight of climate change?
+,sub_indicator,8.2.b,Has the bank assessed these individuals’ competencies with respect to managing climate risks and disclosed the results of those assessments?
+,sub_indicator,8.2.c,Has the bank disclosed details on the criteria used to assess the board competencies with respect to managing climate risks and/or the measures taken to enhance these competences?
+,indicator,8.3,Has the bank incorporated climate change performance elements in its executive remuneration scheme?
+,sub_indicator,8.3.a,Has the bank established a remuneration scheme at the C-suite level that specifically incorporates climate change performance as a KPI determining performance-linked compensation? (References to ‘ESG’ or ‘sustainability performance’ are insufficient)
+,sub_indicator,8.3.b,Has the bank established a remuneration scheme at the C-suite level that incorporates progress towards achieving the bank’s financed/facilitated emissions reduction targets as a KPI determining performance linked compensation? (This requires meeting relevant target indicators in Section 2)
+,area,9,Just Transition
+,indicator,9.1,Has the bank integrated Just Transition principles in its climate strategy?
+,sub_indicator,9.1.a,"Has the bank committed to decarbonise in line with defined Just Transition principles, recognising the social impacts of its decarbonisation efforts?"
+,sub_indicator,9.1.b,"Has the bank disclosed actions taken to ensure relevant Just Transition considerations are incorporated in its climate strategy (e.g. Just Transition-related requirements in lending  covenants and conditions, pre-investment  screening, sector policies)?"
+,area,10,"Annual reporting, accounting and audits"
+,indicator,10.1,Has the bank implemented and disclosed in line with the recommendations of the Task Force on Climate-related Financial Disclosures (TCFD)?
+,sub_indicator,10.1.a,Has the bank disclosed in line with all four pillars of the TCFD recommendations and signposted these disclosures in its Annual Report?
+,indicator,10.2,"Has the bank incorporated material climate-related matters in its audited financial statements, and notes on this?"
+,sub_indicator,10.2.a,Has the bank demonstrated how material climate-related matters are incorporated in its financial statements?
+,sub_indicator,10.2.b,"Has the bank disclosed the quantitative climate-related assumptions and estimates (e.g., estimates of future cash flows used in impairment testing) in its financial statements?"
+,sub_indicator,10.2.c,"Has the bank used, or disclosed a sensitivity to, assumptions and estimates that are aligned with achieving net-zero financed/facilitated emissions by 2050 (or sooner) in its financial statements?"
+,sub_indicator,10.2.d,"Are the bank’s financial statements consistent with the bank’s other reporting (e.g. annual report, TCFD index, sustainability report)?"
+,indicator,10.3,Has the bank's audit report demonstrated that the auditor considered the effects of material climate-related matters in its audit?
+,sub_indicator,10.3.a,Has the report identified how the auditor has assessed the material impacts of climate-related matters?
+,sub_indicator,10.3.b,Has the audit report analysed the bank's assumptions and estimates used in quantifying the financial consequences of climate -related matters?
+,sub_indicator,10.3.c,"Has the audit report identified inconsistencies between the financial statements and the bank's other reporting (e.g., Annual Report, TCFD index, sustainability report, etc.)?"

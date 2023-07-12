@@ -9,11 +9,13 @@
 #  updated_at       :datetime         not null
 #  cluster_id       :bigint
 #  show_in_tpi_tool :boolean          default(TRUE), not null
+#  categories       :string           default([]), is an Array
 #
 
 FactoryBot.define do
   factory :tpi_sector do
     sequence(:name) { |n| 'name-' + ('AAAA'..'ZZZZ').to_a[n] }
+    categories { ['Company'] }
 
     trait :with_benchmarks do
       after(:create) do |s|

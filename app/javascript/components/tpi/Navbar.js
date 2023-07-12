@@ -73,9 +73,8 @@ SearchComponent.propTypes = {
 
 function renderMenuItem(menuItem, index) {
   const { content, title, path } = menuItem;
-
   return (
-    <>
+    <React.Fragment key={`menu-${title}-${index}`}>
       {content && content.length > 0 ? (
         <div className="nested-navbar-dropdown">
           <a
@@ -109,14 +108,13 @@ function renderMenuItem(menuItem, index) {
           {title}
         </a>
       )}
-    </>
+    </React.Fragment>
   );
 }
 
 const NavbarComponent = ({ items, openSearchMode }) => {
   const [tpi, publications, about, faq, newsletter, search] = items;
   const [isOpen, setIsOpen] = useState(false);
-
   return (
     <div className="navbar" role="navigation" aria-label="main navigation">
       <div className="container">

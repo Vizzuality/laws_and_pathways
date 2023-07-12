@@ -87,13 +87,13 @@ module TPI
     private
 
     def any_cp_assessment?
-      CP::Assessment.currently_published.joins(company: :sector).where(companies: {sector: @sector}).any? &&
+      CP::Assessment.currently_published.companies.joins(company: :sector).where(companies: {sector: @sector}).any? &&
         CP::Benchmark.where(sector: @sector).exists?
     end
 
     def publications_and_articles
       Queries::TPI::NewsPublicationsQuery.new(
-        sectors: TPISector.tpi_tool.pluck(:name).join(','),
+        sectors: TPISector.companies.tpi_tool.pluck(:name).join(','),
         tags: 'State of Transition,Carbon Performance,Publicly listed companies,Public consultations'
       ).call.take(3)
     end
@@ -107,7 +107,8 @@ module TPI
         .includes(company: [:sector, :geography, :mq_assessments])
       cp_assessments = CP::Assessment
         .currently_published
-        .where(company_id: companies_ids)
+        .companies
+        .where(cp_assessmentable_id: companies_ids)
         .joins(:company)
         .order('companies.name ASC, assessment_date DESC')
         .includes(company: [:geography, sector: [:cp_units]])
@@ -120,7 +121,7 @@ module TPI
     end
 
     def fetch_sector
-      @sector = TPISector.tpi_tool.friendly.find(params[:id])
+      @sector = TPISector.companies.tpi_tool.friendly.find(params[:id])
     end
 
     def redirect_if_numeric_or_historic_slug

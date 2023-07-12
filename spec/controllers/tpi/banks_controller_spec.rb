@@ -24,6 +24,26 @@ RSpec.describe TPI::BanksController, type: :controller do
       latest_information: 'Bank2 Latest info'
     )
   }
+  let_it_be(:cp_assessment1) do
+    create(
+      :cp_assessment,
+      cp_assessmentable: bank1,
+      sector: create(:tpi_sector, name: 'AAA'),
+      assessment_date: Date.parse('2022-06-30'),
+      publication_date: Date.parse('2022-07-30')
+    )
+  end
+  let_it_be(:cp_assessment2) do
+    create(
+      :cp_assessment,
+      cp_assessmentable: bank2,
+      sector: create(:tpi_sector, name: 'BBB'),
+      assessment_date: Date.parse('2022-06-30'),
+      publication_date: Date.parse('2022-07-30')
+    )
+  end
+  let_it_be(:cp_matrix1) { create :cp_matrix, cp_assessment: cp_assessment1 }
+  let_it_be(:cp_matrix1) { create :cp_matrix, cp_assessment: cp_assessment2 }
 
   before_all do
     i_area_1 = create(:bank_assessment_indicator, number: '1', indicator_type: 'area', text: 'Commitment')
@@ -35,6 +55,9 @@ RSpec.describe TPI::BanksController, type: :controller do
     i_indicator_2 = create(:bank_assessment_indicator, number: '2.1', indicator_type: 'indicator', text: 'Target Indicator')
     i_subindicator_2_1 = create(:bank_assessment_indicator, number: '2.1.a', indicator_type: 'sub_indicator', text: 'Maybe a')
     i_subindicator_2_2 = create(:bank_assessment_indicator, number: '2.1.b', indicator_type: 'sub_indicator', text: 'Maybe b')
+    i_area_10 = create(:bank_assessment_indicator, number: '10', indicator_type: 'area', text: 'Targets')
+    i_indicator_10 = create(:bank_assessment_indicator, number: '10.1', indicator_type: 'indicator', text: 'Target Indicator')
+    i_subindicator_10_1 = create(:bank_assessment_indicator, number: '10.1.a', indicator_type: 'sub_indicator', text: 'Maybe a')
 
     ba1 = create(:bank_assessment, bank: bank1, assessment_date: Date.parse('2020-10-23'))
     {
@@ -46,7 +69,10 @@ RSpec.describe TPI::BanksController, type: :controller do
       i_area_2 => 100,
       i_indicator_2 => 100,
       i_subindicator_2_1 => 'Yes',
-      i_subindicator_2_2 => 'Yes'
+      i_subindicator_2_2 => 'Yes',
+      i_area_10 => 100,
+      i_indicator_10 => 100,
+      i_subindicator_10_1 => 'Yes'
     }.each do |indicator, value|
       create(:bank_assessment_result, assessment: ba1, indicator: indicator, value: value)
     end
@@ -61,7 +87,10 @@ RSpec.describe TPI::BanksController, type: :controller do
       i_area_2 => 0,
       i_indicator_2 => 0,
       i_subindicator_2_1 => 'No',
-      i_subindicator_2_2 => 'No'
+      i_subindicator_2_2 => 'No',
+      i_area_10 => 0,
+      i_indicator_10 => 0,
+      i_subindicator_10_1 => 'No'
     }.each do |indicator, value|
       create(:bank_assessment_result, assessment: ba2, indicator: indicator, value: value)
     end
@@ -102,16 +131,20 @@ RSpec.describe TPI::BanksController, type: :controller do
           zipfile.each do |entry|
             entries_names << entry.name
             entries_csv_json[entry.name] = parse_csv_to_json(entry.get_input_stream.read) if entry.name.ends_with?('.csv')
+            entries_csv_json[entry.name] = parse_xlsx_to_json(entry.get_input_stream.read) if entry.name.ends_with?('.xlsx')
           end
         end
 
-        expect(entries_names).to include('Framework of pilot indicators.csv')
-        expect(entries_names).to include("Bank assessments #{timestamp}.csv")
+        expect(entries_names).to include('Framework of pilot indicators.xlsx')
+        expect(entries_names).to include("Bank assessments #{timestamp}.xlsx")
+        expect(entries_names).to include("Bank CP assessments #{timestamp}.xlsx")
 
-        expect(entries_csv_json['Framework of pilot indicators.csv'])
+        expect(entries_csv_json['Framework of pilot indicators.xlsx'])
           .to match_snapshot('tpi_banking_tool_user_download_zip_indicators_csv')
-        expect(entries_csv_json["Bank assessments #{timestamp}.csv"])
+        expect(entries_csv_json["Bank assessments #{timestamp}.xlsx"])
           .to match_snapshot('tpi_banking_tool_user_download_zip_bank_assessments_csv')
+        expect(entries_csv_json["Bank CP assessments #{timestamp}.xlsx"])
+          .to match_snapshot('tpi_banking_tool_user_download_zip_bank_cp_assessments_csv')
       end
     end
   end

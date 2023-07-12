@@ -25,9 +25,21 @@ class Bank < ApplicationRecord
   belongs_to :geography
   has_many :assessments, class_name: 'BankAssessment', inverse_of: :bank
   has_one :latest_assessment, -> { order(assessment_date: :desc) }, class_name: 'BankAssessment'
+  has_many :cp_assessments, class_name: 'CP::Assessment', as: :cp_assessmentable
+  has_one :latest_cp_assessment, -> {
+    currently_published.order(assessment_date: :desc)
+  }, class_name: 'CP::Assessment', as: :cp_assessmentable
+  has_one :latest_cp_assessment_regional, -> { currently_published.regional.order(assessment_date: :desc) },
+          class_name: 'CP::Assessment', as: :cp_assessmentable
+
+  delegate :cp_alignment_2025, :cp_alignment_2050, :cp_alignment_2035,
+           :cp_regional_alignment_2050, :cp_regional_alignment_2025, :cp_regional_alignment_2035,
+           to: :latest_cp_assessment, allow_nil: true
 
   validates_presence_of :name, :slug, :isin, :market_cap_group
   validates_uniqueness_of :slug, :name
+
+  scope :published, -> { all }
 
   def should_generate_new_friendly_id?
     name_changed? || super

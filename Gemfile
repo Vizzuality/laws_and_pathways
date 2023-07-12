@@ -42,6 +42,7 @@ gem 'font-awesome-rails'
 gem 'react-rails'
 
 gem 'appsignal'
+gem 'rubyXL'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -61,7 +62,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'super_diff'
   gem 'test-prof'
-  gem 'webdrivers', '~> 4.0'
+  gem 'webdrivers'
 end
 
 group :development do

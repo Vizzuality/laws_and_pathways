@@ -16,6 +16,9 @@
     "Indicator 2.1": "100%",
     "Sub indicator 2.1.a": "Yes",
     "Sub indicator 2.1.b": "Yes",
+    "Area 10": "100%",
+    "Indicator 10.1": "100%",
+    "Sub indicator 10.1.a": "Yes",
     "Latest information": "Bank1 Latest info"
   },
   {
@@ -35,6 +38,9 @@
     "Indicator 2.1": "0%",
     "Sub indicator 2.1.a": "No",
     "Sub indicator 2.1.b": "No",
+    "Area 10": "0%",
+    "Indicator 10.1": "0%",
+    "Sub indicator 10.1.a": "No",
     "Latest information": "Bank2 Latest info"
   }
 ]

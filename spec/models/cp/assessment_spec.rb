@@ -3,7 +3,6 @@
 # Table name: cp_assessments
 #
 #  id                         :bigint           not null, primary key
-#  company_id                 :bigint
 #  publication_date           :date             not null
 #  assessment_date            :date
 #  emissions                  :jsonb
@@ -20,6 +19,10 @@
 #  cp_regional_alignment_2025 :string
 #  cp_regional_alignment_2035 :string
 #  cp_regional_alignment_2050 :string
+#  cp_assessmentable_type     :string
+#  cp_assessmentable_id       :bigint
+#  sector_id                  :bigint
+#  final_disclosure_year      :integer
 #
 
 require 'rails_helper'
@@ -28,7 +31,7 @@ RSpec.describe CP::Assessment, type: :model do
   let_it_be(:sector) { create(:tpi_sector) }
   let_it_be(:company) { create(:company, sector: sector) }
 
-  subject { build(:cp_assessment, company: company) }
+  subject { build(:cp_assessment, cp_assessmentable: company) }
 
   it { is_expected.to be_valid }
 

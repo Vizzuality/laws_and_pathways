@@ -48,8 +48,8 @@ FactoryBot.define do
 
     trait :with_cp_assessments do
       after(:create) do |c|
-        create :cp_assessment, company: c, assessment_date: 1.year.ago
-        create :cp_assessment, company: c, assessment_date: 1.month.ago
+        create :cp_assessment, cp_assessmentable: c, assessment_date: 1.year.ago
+        create :cp_assessment, cp_assessmentable: c, assessment_date: 1.month.ago
       end
     end
   end
