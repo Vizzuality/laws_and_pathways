@@ -7,7 +7,7 @@
       <li><a href="#events">Events</a></li>
     </ul>
 
-    <%= hidden_field_tag :active_tab, params[:active_tab], 'data-target' => 'tabs.activeTab' %>
+    <%= hidden_field_tag :active_tab, params[:active_tab], 'data-tabs-target' => 'activeTab' %>
 
     <div class="tab-content">
       <div id="details">
@@ -22,8 +22,7 @@
           <%= f.input :year %>
           <%= f.input :base_year_period %>
           <%= f.input :scope_ids, label: 'Scopes', as: :tags, collection: Scope.ordered_by_name %>
-          <%= f.input :legislation_ids, as: :selected_list, label: 'Connected Laws', fields: [:title],
-            display_name: :display_name, order: 'title_asc' %>
+          <%= f.input :legislation_ids, as: :selected_list, label: 'Connected Laws', url: filter_admin_legislations_path, display_name: :display_name %>
           <%= f.input :visibility_status, as: :select %>
         <% end %>
       </div>

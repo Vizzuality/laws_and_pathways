@@ -1,3 +1,0 @@
-"Id","company_id","Company","Assessment date","Publication date","Last Reported Year",2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,"Assumptions","CP Alignment","CP Alignment Year Override"
-,1000,"ACME","2019-01-04","2019-02",2018,,101,101,100,101,100,99,98,,,,,,,,,,,"Assumptions for ACME","No Disclosure",2030
-,2000,"ACME Materials","2019-01-04","2019-02",2019,,,,,,,,,,,,,,,,,,,"Assumptions for ACME Materials","Not aligned",

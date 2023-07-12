@@ -1,5 +1,4 @@
 @import "bulma/sass/utilities/all";
-@import "sizes";
 @import "colors";
 @import "typography";
 
@@ -127,12 +126,16 @@ $margin-between-list-items: 20px;
     .pages__content-logo {
       margin-right: 60px;
 
-      > div {
-        background-position: center;
-        background-size: cover;
-        height: 240px;
+      .pages__content-logo-img-wrapper {
         width: 240px;
-        border-radius: 50%;
+        height: 240px;
+
+        img {
+          width: 240px;
+          height: 240px;
+          object-fit: cover;
+          border-radius: 50%;
+        }
       }
     }
 

@@ -1,17 +1,32 @@
 module TPI
   class HomeController < TPIController
     def index
-      @testimonials = Testimonial.all.map do |test|
-        {
-          author: test.author,
-          role: test.role,
-          message: [test.quote]
-        }
-      end
+      @case_studies = CaseStudy.all
+      @sector_clusters = TPISectorCluster.all.group_by(&:slug).transform_values(&:first)
 
-      @partners_logos = TPIPage.find_by(slug: 'research-funding-partners')&.contents&.flat_map(&:images)
-      @publications_and_articles = publications_and_articles
-      @home_content = home_content
+      page = TPIPage.find_by(slug: 'homepage-content')
+      @home_content = {
+        intro: {
+          title: page&.contents&.find_by(code: 'hero')&.title || 'The TPI Global Climate Transition Centre',
+          text: ActionView::Base.full_sanitizer.sanitize(page&.contents&.find_by(code: 'hero')&.text) ||
+            'Transition Pathway Initiative (TPI) Global Climate Transition Centre is an authoritative,
+             independent source of research and data into the progress being made by the financial and
+             corporate world in making the transition to a low-carbon economy.'
+        },
+        stats: {
+          companies_count: Company.published.count,
+          countries_count: Company.select(:geography_id).distinct.count,
+          supporters_count: TPIPage.find_by(slug: 'supporters')&.contents&.flat_map(&:images)&.count,
+          total_market_cap: page&.contents&.find_by(code: 'total_market_cap')&.text || '-',
+          combined_aum: page&.contents&.find_by(code: 'combined_aum')&.text || '-',
+          sectors_count: TPISector.with_companies.count
+        }
+      }
+      @latest_researches = Publication
+        .published
+        .includes([:image_attachment, :author_image_attachment])
+        .order(publication_date: :desc)
+        .take(4)
 
       fixed_navbar('Dashboard', admin_root_path)
     end
@@ -20,43 +35,6 @@ module TPI
 
     def newsletter; end
 
-    def disclaimer; end
-
-    private
-
-    def publications_and_articles
-      publications = Publication.published.order(publication_date: :desc).limit(3)
-      news = NewsArticle.published.order(publication_date: :desc).limit(3)
-
-      (publications + news).sort do |a, b|
-        b.publication_date <=> a.publication_date
-      end.first(3)
-    end
-
-    def home_content
-      contents = Content.joins(:page).where(pages: {slug: 'homepage-content'})
-        .order(:created_at).to_a
-      {
-        intro: {
-          title: contents&.first&.title || 'The TPI tool',
-          description: ActionView::Base.full_sanitizer.sanitize(contents&.first&.text) ||
-            'The Transition Pathway Initiative (TPI) is a global, asset-owner led
-              initiative which assesses companies\' preparedness for the transition to
-              a low carbon economy. Rapidly becoming the go-to corporate climate action benchmark,
-              the TPI tool is available here.'
-        },
-        investors: {
-          title: contents&.second&.title || 'How investors can use the TPI',
-          description: ActionView::Base.full_sanitizer.sanitize(contents&.second&.text) ||
-            'The TPI is designed to support investors. Find out how they can use its findings.'
-        },
-        supporters: {
-          title: contents&.third&.title || 'Supporters',
-          description: ActionView::Base.full_sanitizer.sanitize(contents&.third&.text) ||
-            'The TPI is supported globally by more than 75 investors with over
-              $20.5 trillion combined Assets Under Management and Advice.'
-        }
-      }
-    end
+    def corporate_bond_issuers; end
   end
 end

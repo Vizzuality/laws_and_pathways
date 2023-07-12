@@ -30,13 +30,21 @@ module CCLOW
     end
 
     def instruments_options
-      instruments = Instrument.joins(:legislations).distinct.map { |j| {value: j.id, label: j.name} }
+      instruments = Instrument
+        .joins(:legislations)
+        .includes(:instrument_type)
+        .distinct
+        .map { |i| {value: i.id, label: "#{i.instrument_type.name} | #{i.name}"} }
       [{field_name: 'instrument', options: instruments.sort_by { |h| h[:label] }}]
     end
 
-    def governances_options
-      governances = Governance.joins(:legislations).distinct.map { |j| {value: j.id, label: j.name} }
-      [{field_name: 'governance', options: governances.sort_by { |h| h[:label] }}]
+    def themes_options
+      themes = Theme
+        .joins(:legislations)
+        .includes(:theme_type)
+        .distinct
+        .map { |t| {value: t.id, label: "#{t.theme_type.name} | #{t.name}"} }
+      [{field_name: 'theme', options: themes.sort_by { |h| h[:label] }}]
     end
 
     def litigation_side_a_party_type_options
@@ -104,7 +112,7 @@ module CCLOW
                     frameworks: [], natural_hazards: [], party_type: [],
                     side_a: [], side_b: [], side_c: [], law_sector: [],
                     a_party_type: [], b_party_type: [], c_party_type: [],
-                    instrument: [], governance: [])
+                    instrument: [], theme: [])
     end
   end
 end

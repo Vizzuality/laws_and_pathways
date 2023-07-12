@@ -5,7 +5,7 @@ if emissions.empty?
 else
   emissions_all_years = emissions.keys
 
-  table class: 'table cell-padding-sm cell-centered' do
+  table class: 'table table-scroll cell-padding-sm cell-centered' do
     thead do
       emissions_all_years.map { |year| th year }
     end

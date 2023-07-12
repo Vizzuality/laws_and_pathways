@@ -35,6 +35,7 @@ export function getOptions({ chartData, unit }) {
         }
       },
       line: {
+        lineWidth: 4,
         marker: {
           enabled: false
         }
@@ -43,7 +44,6 @@ export function getOptions({ chartData, unit }) {
         stacking: 'normal'
       },
       series: {
-        lineWidth: 4,
         marker: {
           states: {
             hover: {
@@ -80,7 +80,7 @@ export function getOptions({ chartData, unit }) {
       useHTML: true,
       formatter() {
         const xValue = this.x;
-        const yValues = this.points.map(p => ({
+        const yValues = this.points.filter(p => p.series.name !== 'Target Years').map(p => ({
           value: p.y,
           color: p.series.color,
           title: p.series.name,
@@ -130,4 +130,40 @@ export function getMobileOptions({ chartData, unit }) {
       }
     }
   });
+}
+
+export function getMultipleOptions({ chartData, unit }) {
+  return {
+    ...getOptions({ chartData, unit }),
+    chart: { height: 300, width: 400},
+    yAxis: {
+      title: {
+        text: unit,
+        reserveSpace: false,
+        textAlign: 'left',
+        align: 'low',
+        rotation: -90,
+        x: -20,
+        y: 10
+      }
+    }
+  };
+}
+
+export function getMultipleMobileOptions({ chartData, unit }) {
+  return {
+    ...getMobileOptions({ chartData, unit }),
+    chart: { height: 300, width: 400 },
+    yAxis: {
+      title: {
+        text: unit,
+        reserveSpace: false,
+        textAlign: 'left',
+        align: 'low',
+        rotation: -90,
+        x: 0,
+        y: 10
+      }
+    }
+  };
 }

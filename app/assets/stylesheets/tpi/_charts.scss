@@ -92,7 +92,10 @@ $scrollbar-track-border: $neutral-color-5 !default;
   line-height: 30px;
 }
 
+@import 'charts/bank-average-score';
 @import 'charts/cp-performance';
+@import 'charts/cp-matrix';
+@import 'charts/cp-matrix-table';
 @import 'charts/cp-all-sectors';
 @import 'charts/mq-sector-pie-chart';
 @import 'charts/mq-level';

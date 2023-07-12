@@ -8,13 +8,14 @@ class Ability
   prepend Draper::CanCanCan
 
   TPI_RESOURCES = [
-    Company, MQ::Assessment, CP::Assessment, TPISector, TPISectorCluster, TPIPage,
-    NewsArticle, Testimonial, Publication
+    Bank, BankAssessment, BankAssessmentIndicator, Company, MQ::Assessment, CP::Assessment,
+    TPISector, TPISectorCluster, TPIPage,
+    NewsArticle, CaseStudy, Publication
   ].freeze
 
   LAWS_RESOURCES = [
     Legislation, Litigation, Target, ExternalLegislation, LawsSector,
-    CCLOWPage, Instrument, InstrumentType, Governance, GovernanceType
+    CCLOWPage, Instrument, InstrumentType, Theme, ThemeType
   ].freeze
 
   PUBLISHABLE_RESOURCES = [

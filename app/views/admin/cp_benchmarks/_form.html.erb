@@ -2,9 +2,11 @@
   <%= f.semantic_errors(*f.object.errors.attribute_names) %>
 
   <%= f.inputs do %>
-    <%= f.input :sector %>
+    <%= f.input :sector, collection: TPISector.tpi_tool %>
+    <%= f.input :category, as: :select, collection: TPISector::CATEGORIES %>
     <%= f.input :release_date %>
     <%= f.input :scenario %>
+    <%= f.input :region, as: :select, collection: CP::Benchmark::REGIONS %>
     <%= f.input :emissions, as: :hidden, input_html: { value: f.object.emissions.to_json, id: 'input_emissions' } %>
   <% end %>
 

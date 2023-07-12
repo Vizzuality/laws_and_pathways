@@ -1,8 +1,8 @@
-<template data-target="with-emission-table-form.emissionRowTemplate">
+<template data-with-emission-table-form-target="emissionRowTemplate">
   <%= render "admin/cp/emissions_table_edit_row", year: '', value: '' %>
 </template>
 
-<table data-target="with-emission-table-form.emissionTable">
+<table data-with-emission-table-form-target="emissionTable">
   <thead>
     <th></th>
     <th>Year</th>
@@ -13,7 +13,7 @@
     <% f.object&.emissions&.each do |year, value| %>
       <%= render "admin/cp/emissions_table_edit_row", year: year, value: value %>
     <% end %>
-    <tr data-target="with-emission-table-form.emissionRowAdd">
+    <tr data-with-emission-table-form-target="emissionRowAdd">
       <td colspan="4">
         <%= button_tag "Add new value", type: 'button', class: 'button button--raised', data: { action: "click->with-emission-table-form#addEmission" } %>
       </td>

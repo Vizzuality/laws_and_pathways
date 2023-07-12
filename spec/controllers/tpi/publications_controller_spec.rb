@@ -32,6 +32,12 @@ RSpec.describe TPI::PublicationsController, type: :controller do
         subject { get :show, params: {id: publication1.id, type: 'Publication'} }
 
         it { is_expected.to be_successful }
+
+        context 'when publication is searched by slug' do
+          subject { get :show, params: {id: publication1.slug, type: 'Publication'} }
+
+          it { is_expected.to be_successful }
+        end
       end
 
       context 'unpublished' do

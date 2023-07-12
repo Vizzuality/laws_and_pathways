@@ -1,13 +1,13 @@
-<section class="hero <%= 'header__margin' if @current_user.present? %>">
+<section class="hero">
   <div class="hero-head">
     <div class="navbar">
       <div class="container">
         <div class="brand">
           <%= link_to 'http://www.lse.ac.uk/' do %>
-            <img class="navbar-logo" src="<%= asset_path 'logo/LSE_logo.svg'%>" />
+            <img class="navbar-logo" src="<%= asset_path 'logo/LSE_logo.svg'%>" alt="London School of Economics and Political Science" />
           <% end %>
           <%= link_to 'http://www.lse.ac.uk/granthamInstitute' do %>
-            <img src="<%= asset_path 'logo/RICCE_logo.svg'%>" />
+            <img src="<%= asset_path 'logo/RICCE_logo.svg'%>" alt="Grantham Research Institute on Climate Change and the Environment" />
           <% end %>
         </div>
         <div class="navbar-menu">
@@ -109,14 +109,14 @@
 
           <div class="value-block">
             <a href="#map-section">
-              <img class="icon__world-map" src="<%= asset_path 'cclow/countries@2x.png' %>">
+              <img class="icon__world-map" src="<%= asset_path 'cclow/countries@2x.png' %>" alt="World map">
             </a>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <a href="#map-section" class="arrow-btn">
+  <a href="#map-section" class="arrow-btn" aria-label="Go to Map Section">
     <i class="fa fa-angle-down fa-2x"></i>
   </a>
 </section>

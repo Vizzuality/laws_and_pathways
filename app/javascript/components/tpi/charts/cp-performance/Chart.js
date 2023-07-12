@@ -1,40 +1,21 @@
 /* eslint-disable react/no-this-in-sfc */
 
-import React, { useEffect, useRef, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-
+import { ensure10sorted, useParsedChartData } from './chart-utils';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import uniqBy from 'lodash/uniqBy';
 import sortBy from 'lodash/sortBy';
-import cloneDeep from 'lodash/cloneDeep';
-import get from 'lodash/get';
 
-import PlusIcon from 'images/icons/plus.svg';
+import { getOptions, getMobileOptions } from './options';
 
-import { getOptions, getMobileOptions, COLORS } from './options';
-import { useOutsideClick } from 'shared/hooks';
 import { useChartData } from '../hooks';
 import { useDeviceInfo } from 'components/Responsive';
 
-import CompanySelector from './CompanySelector';
-import CompanyTag from './CompanyTag';
 import NestedDropdown from 'components/tpi/NestedDropdown';
-
-// get last emission also looking at targeted
-// const getLastEmission = (d) => d.data && d.data.length && d.data.slice(-1)[0][1];
-function getLastEmission(d) {
-  const lastEmissionYear = get(d, 'data.zones[0].value');
-  let lastEmission;
-  if (!lastEmissionYear) {
-    // get last emission
-    lastEmission = d.data && d.data.length && d.data.slice(-1)[0][1];
-  } else {
-    lastEmission = d.data && d.data.length && d.data.find(x => x[0] === lastEmissionYear)[1];
-  }
-  return parseFloat(lastEmission, 10);
-}
+import Legend from './Legend';
 
 function filterByShowValue(companyData, showByValue) {
   if (!showByValue) return companyData;
@@ -54,16 +35,6 @@ function filterByShowValue(companyData, showByValue) {
 
     return true;
   });
-}
-
-function applyColors(items) {
-  return items.map((d, idx) => ({...d, color: COLORS[idx % 10]}));
-}
-
-function ensure10sorted(companyData) {
-  return [...companyData]
-    .sort((a, b) => getLastEmission(b) - getLastEmission(a))
-    .slice(0, 10);
 }
 
 function getDropdownOptions(geographies, regions, marketCapGroups) {
@@ -91,12 +62,10 @@ function getDropdownOptions(geographies, regions, marketCapGroups) {
 }
 
 function CPPerformance({ dataUrl, companySelector, unit, sectorUrl }) {
-  const companySelectorWrapper = useRef();
   const { isMobile } = useDeviceInfo();
 
   const { data, error, loading } = useChartData(dataUrl);
   const [selectedCompanies, setSelectedCompanies] = useState([]); // Array of company names
-  const [showCompanySelector, setCompanySelectorVisible] = useState(false);
 
   const companyData = useMemo(() => data.filter(d => d.company), [data]);
   const companies = useMemo(() => companyData.map(d => d.company), [companyData]);
@@ -123,39 +92,7 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl }) {
     );
   }, [companyData, selectedShowBy]);
 
-  useOutsideClick(companySelectorWrapper, () => setCompanySelectorVisible(false));
-
-  const chartData = useMemo(
-    () => {
-      const benchmarks = data.filter(d => d.type === 'area');
-      const restData = applyColors(
-        companySelector
-          ? selectedCompanies.map(c => data.find(d => get(d, 'company.name') === c))
-          : data.filter(d => d.type !== 'area')
-      );
-
-      // do not why cloneDeep is needed, but highchart seems to mutate the data
-      return cloneDeep([...benchmarks, ...restData]);
-    },
-    [data, companySelector, selectedCompanies]
-  );
-  const legendItems = chartData.filter(d => d.type !== 'area');
-
-  // handlers
-  const handleAddCompaniesClick = (e) => {
-    if (e.currentTarget) e.currentTarget.blur();
-    setCompanySelectorVisible(!showCompanySelector);
-  };
-  const handleLegendItemRemove = (item) => {
-    setSelectedCompanies((selected) => selected.filter(s => s !== item.name));
-  };
-  const handleSelectedCompaniesChange = (selected) => {
-    setSelectedCompanies(
-      ensure10sorted(
-        companyData.filter(c => selected.includes(c.company.name))
-      ).map(c => c.name)
-    );
-  };
+  const chartData = useParsedChartData(data, companySelector, selectedCompanies);
 
   const subTitle = ((item) => {
     if (item.value === 'top_10') return null;
@@ -185,64 +122,15 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl }) {
   return (
     <div className="chart chart--cp-performance">
       {renderDropdown()}
-      <div className="legend">
-        <div className="legend-row">
-          {legendItems.map(
-            i => (
-              <CompanyTag
-                key={i.name}
-                className="legend-item"
-                item={i}
-                hideRemoveIcon={!companySelector}
-                onRemove={handleLegendItemRemove}
-              />
-            )
-          )}
-
-          {companySelector && (
-            <React.Fragment>
-              <span className="separator is-hidden-touch" />
-
-              <div className="chart-company-selector-wrapper is-hidden-touch" ref={companySelectorWrapper}>
-                <button type="button" className="button is-primary with-icon" onClick={handleAddCompaniesClick}>
-                  <img src={PlusIcon} />
-                  Add companies to the chart
-                </button>
-
-                {showCompanySelector && (
-                  <CompanySelector
-                    companies={companies.map(c => c.name).sort()}
-                    selected={selectedCompanies}
-                    onChange={handleSelectedCompaniesChange}
-                    onClose={() => setCompanySelectorVisible(false)}
-                  />
-                )}
-              </div>
-            </React.Fragment>
-          )}
-        </div>
-        {sectorUrl && (
-          <div className="legend-row">
-            <button
-              type="button"
-              onClick={() => { window.location.href = sectorUrl; }}
-              className="see-full-sector-btn is-hidden-desktop"
-            >See full sector chart
-            </button>
-          </div>
-        )}
-        <div className="legend-row">
-          <span className="legend-item">
-            <span className="line line--solid" />
-            Reported
-          </span>
-          <span className="legend-item">
-            <span className="line line--dotted" />
-            Targeted
-          </span>
-        </div>
-      </div>
-
+      <Legend
+        chartData={chartData}
+        setSelectedCompanies={setSelectedCompanies}
+        selectedCompanies={selectedCompanies}
+        sectorUrl={sectorUrl}
+        companyData={companyData}
+        companySelector={companySelector}
+        companies={companies}
+      />
       {loading ? (
         <p>Loading...</p>
       ) : (

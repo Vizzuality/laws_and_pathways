@@ -20,4 +20,10 @@ RSpec.describe InstrumentType, type: :model do
     subject.name = nil
     expect(subject).to have(1).errors_on(:name)
   end
+
+  it 'should be invalid if name is taken' do
+    create(:instrument_type, name: 'instrument_type')
+    subject.name = 'instrument_type'
+    expect(subject).to have(1).errors_on(:name)
+  end
 end

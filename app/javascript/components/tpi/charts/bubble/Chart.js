@@ -63,7 +63,10 @@ const BubbleChart = ({ levels, sectors }) => {
   const levelsSignature = levels && Object.keys(levels[Object.keys(levels)[0]]);
 
   return (
-    <div className="bubble-chart__container is-hidden-touch" style={{ gridTemplateColumns: `repeat(${levelsSignature.length + 1}, 1fr)` }}>
+    <div
+      className="bubble-chart__container bubble-chart__container--sectors is-hidden-touch"
+      style={{ gridTemplateColumns: `repeat(${levelsSignature.length + 1}, 1fr)` }}
+    >
       <div className="bubble-chart__legend-container">
         <div className="bubble-chart__title-container">
           <span className="bubble-chart__title">Market cap</span>
@@ -72,7 +75,7 @@ const BubbleChart = ({ levels, sectors }) => {
           />
         </div>
         <div className="bubble-chart__legend">
-          <img className="bubble-chart__legend-image" src={legendImage} />
+          <img className="bubble-chart__legend-image" src={legendImage} alt="Bubble size description" />
           <div className="bubble-chart__legend-titles-container">
             {Object.keys(COMPANIES_MARKET_CAP_GROUPS).map((companySize, i) => (
               <span
@@ -115,8 +118,11 @@ const ForceLayoutBubbleChart = (companiesBubbles, uniqueKey) => {
 };
 
 const getTooltipText = ({ tooltipContent }) => {
-  if (tooltipContent && tooltipContent.length) {
-    return tooltipContent.join('<br>');
+  if (tooltipContent) {
+    return `
+     <div class="bubble-tip-header">${tooltipContent.header}</div>
+     <div class="bubble-tip-text">${tooltipContent.value}</div>
+    `;
   }
   return '';
 };
@@ -143,13 +149,16 @@ const createRow = (dataRow, title, sectors) => {
 
   return (
     <React.Fragment key={Math.random()}>
-      <div className="bubble-chart__sector-link">
+      <div className="bubble-chart__row-link">
         <a href={sector.path}>{title}</a>
       </div>
       {dataRow.map((el, i) => {
         const companiesBubbles = el.map(company => ({
           value: COMPANIES_MARKET_CAP_GROUPS[company.market_cap_group],
-          tooltipContent: [company.name, `Level ${company.level}`],
+          tooltipContent: {
+            header: company.name,
+            value: `Level ${company.level}`
+          },
           path: company.path,
           color: LEVELS_COLORS[i]
         }));

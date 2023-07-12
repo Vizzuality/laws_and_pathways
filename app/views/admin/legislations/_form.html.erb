@@ -8,7 +8,7 @@
       <li><a href="#documents">Documents</a></li>
     </ul>
 
-    <%= hidden_field_tag :active_tab, params[:active_tab], 'data-target' => 'tabs.activeTab' %>
+    <%= hidden_field_tag :active_tab, params[:active_tab], 'data-tabs-target' => 'activeTab' %>
 
     <div class="tab-content">
       <div id="details">
@@ -24,8 +24,8 @@
             collection: DocumentType.order(Arel.sql('LOWER(name) ASC')) %>
           <%= f.input :instrument_ids, label: 'Instrument', as: :select,
             collection: Instrument.ordered_with_parent.to_select, input_html: { multiple: true } %>
-          <%= f.input :governance_ids, label: 'Governance', as: :select,
-            collection: Governance.ordered_with_parent.to_select, input_html: { multiple: true } %>
+          <%= f.input :theme_ids, label: 'Theme', as: :select,
+            collection: Theme.ordered_with_parent.to_select, input_html: { multiple: true } %>
           <%=
             Arbre::Context.new do
               columns do

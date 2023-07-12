@@ -15,8 +15,15 @@ class DataUpload < ApplicationRecord
 
   DEV_UPLOADERS = %w[Documents].freeze
   UPLOADERS = {
-    'Carbon Performance Assessments' => 'CPAssessments',
-    'Carbon Performance Benchmarks' => 'CPBenchmarks',
+    'Banks' => 'Banks',
+    'Bank Assessment Indicators' => 'BankAssessmentIndicators',
+    'Bank Assessments' => 'BankAssessments',
+    'Company Carbon Performance Assessments' => 'CompanyCPAssessments',
+    'Company Carbon Performance Benchmarks' => 'CompanyCPBenchmarks',
+    'Bank Carbon Performance Benchmarks' => 'BankCPBenchmarks',
+    'Bank Carbon Performance Assessments 2025' => 'BankCPAssessments2025',
+    'Bank Carbon Performance Assessments 2035' => 'BankCPAssessments2035',
+    'Bank Carbon Performance Assessments 2050' => 'BankCPAssessments2050',
     'Companies' => 'Companies',
     'Documents' => 'Documents',
     'Events' => 'Events',

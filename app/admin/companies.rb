@@ -1,5 +1,5 @@
 ActiveAdmin.register Company do
-  menu priority: 0, parent: 'TPI'
+  menu priority: 2, parent: 'TPI'
 
   decorate_with CompanyDecorator
 
@@ -99,8 +99,15 @@ ActiveAdmin.register Company do
                 attributes_table_for a do
                   row :publication_date
                   row :assessment_date
-                  row :cp_alignment
-                  row :cp_alignment_year
+                  row :cp_alignment_2025
+                  row :cp_alignment_2035
+                  row :cp_alignment_2050
+                  if a.region.present?
+                    row :region
+                    row :cp_regional_alignment_2025
+                    row :cp_regional_alignment_2035
+                    row :cp_regional_alignment_2050
+                  end
                   row :assumptions
                   row :last_reported_year
                 end
@@ -170,7 +177,7 @@ ActiveAdmin.register Company do
       end
 
       columns do
-        column { f.input :sector }
+        column { f.input :sector, collection: TPISector.companies.tpi_tool }
         column do
           f.input :market_cap_group,
                   as: :select,

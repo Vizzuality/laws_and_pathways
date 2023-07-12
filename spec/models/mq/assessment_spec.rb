@@ -12,7 +12,7 @@
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  discarded_at        :datetime
-#  methodology_version :integer
+#  methodology_version :integer          not null
 #
 
 require 'rails_helper'

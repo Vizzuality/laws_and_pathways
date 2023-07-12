@@ -7,10 +7,23 @@ module TPI
     before_action :fetch_sector, only: [:show, :user_download]
     before_action :redirect_if_numeric_or_historic_slug, only: [:show]
 
+    helper_method :any_cp_assessment?
+
     def index
       @companies_by_sectors = Rails.cache.fetch(TPICache::KEY, expires_in: TPICache::EXPIRES_IN) do
         ::Api::Charts::Sector.new(companies_scope(params)).companies_market_cap_by_sector
       end
+      @publications_and_articles = publications_and_articles
+      sectors_page = TPIPage.find_by(slug: 'publicly-listed-equities-content')
+      @methodology_description = Content.find_by(
+        page: sectors_page,
+        code: 'methodology_description'
+      )
+      @methodology_id = Content.find_by(
+        page: sectors_page,
+        code: 'methodology_publication_id'
+      )
+      @methodology_publication = Publication.find_by(id: @methodology_id&.text)
 
       fixed_navbar('Sectors', admin_tpi_sectors_path)
     end
@@ -73,6 +86,18 @@ module TPI
 
     private
 
+    def any_cp_assessment?
+      CP::Assessment.currently_published.companies.joins(company: :sector).where(companies: {sector: @sector}).any? &&
+        CP::Benchmark.where(sector: @sector).exists?
+    end
+
+    def publications_and_articles
+      Queries::TPI::NewsPublicationsQuery.new(
+        sectors: TPISector.companies.tpi_tool.pluck(:name).join(','),
+        tags: 'State of Transition,Carbon Performance,Publicly listed companies,Public consultations'
+      ).call.take(3)
+    end
+
     def send_user_download_file(companies_ids, filename)
       mq_assessments = MQ::Assessment
         .currently_published
@@ -82,7 +107,8 @@ module TPI
         .includes(company: [:sector, :geography, :mq_assessments])
       cp_assessments = CP::Assessment
         .currently_published
-        .where(company_id: companies_ids)
+        .companies
+        .where(cp_assessmentable_id: companies_ids)
         .joins(:company)
         .order('companies.name ASC, assessment_date DESC')
         .includes(company: [:geography, sector: [:cp_units]])
@@ -95,7 +121,7 @@ module TPI
     end
 
     def fetch_sector
-      @sector = TPISector.friendly.find(params[:id])
+      @sector = TPISector.companies.tpi_tool.friendly.find(params[:id])
     end
 
     def redirect_if_numeric_or_historic_slug
@@ -103,7 +129,8 @@ module TPI
     end
 
     def fetch_sectors
-      @sectors = TPISector.all.includes(:cluster).order(:name)
+      @sectors = TPISector.tpi_tool.with_companies.includes(:cluster).order(:name)
+      @sectors_json = @sectors.map { |s| s.as_json(except: [:created_at, :updated_at], methods: [:path]) }
     end
 
     def fetch_companies
@@ -116,7 +143,7 @@ module TPI
 
     def companies_scope(params)
       if params[:id]
-        TPISector.friendly.find(params[:id]).companies.published.active
+        TPISector.tpi_tool.friendly.find(params[:id]).companies.published.active
       else
         Company.published.active
       end

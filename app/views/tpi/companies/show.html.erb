@@ -1,6 +1,8 @@
 <% content_for :page_title, "#{@company.name} - Transition Pathway Initiative" %>
 <% content_for :page_description, "Assess how prepared #{@company.name} is for the transition to a low-carbon economy – its Management Quality and Carbon Performance." %>
 
+<% regional_view = @company.cp_alignment_region.present? && params[:view] == 'regional' %>
+
 <div class="company-page" data-controller="companies">
   <div class="dropdown-selector-company-page-wrapper">
     <%= react_component("DropdownSelector", { sectors: @sectors, companies: @companies, selectedOption: @company.name, defaultFilter: 'company' }) %>
@@ -9,16 +11,18 @@
   <div class="companies-header">
     <div class="container is-hidden-touch">
       <a href="#management-quality" class="link with-icon is-pulled-left">
-        <img src="<%= asset_path 'icons/arrow-down.svg'%>" />
+        <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
         Go to Management Quality
       </a>
-      <a href="#carbon-performance" class="link with-icon is-pulled-left">
-        <img src="<%= asset_path 'icons/arrow-down.svg'%>" />
-        Go to Carbon Performance
-      </a>
+      <% if @company_presenter.cp_assessments.any? %>
+        <a href="#carbon-performance" class="link with-icon is-pulled-left">
+          <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
+          Go to Carbon Performance
+        </a>
+      <% end %>
 
       <%= link_to user_download_all_tpi_sectors_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
-        <img src="<%= asset_path 'icons/download.svg'%>" />
+        <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
         Download All sectors data
       <% end %>
     </div>
@@ -26,11 +30,27 @@
       <a href="#management-quality" class="link with-icon is-pulled-left">
         Management Quality
       </a>
-      <a href="#carbon-performance" class="link with-icon is-pulled-left">
-        Carbon Performance
-      </a>
+      <% if @company_presenter.cp_assessments.any? %>
+        <a href="#carbon-performance" class="link with-icon is-pulled-left">
+          Carbon Performance
+        </a>
+      <% end %>
     </div>
   </div>
+
+  <% if @company.cp_alignment_region.present? %>
+    <section class="container change-view">
+      <div class="buttons has-addons" style="justify-content: flex-end;">
+        <%= link_to "Global benchmarks", {view: nil}, class: "button #{!regional_view ? 'is-primary' : 'is-secondary'}" %>
+        <%= link_to "Regional benchmarks", {view: 'regional'}, class: "button #{regional_view ? 'is-primary' : 'is-secondary'}" %>
+      </div>
+      <div class="has-text-right">
+        <% if regional_view %>
+          The regional benchmarks applied to this company are for <%= @company.cp_alignment_region %>.
+        <% end %>
+      </div>
+    </section>
+  <% end %>
 
   <section class="container summary-boxes">
     <div class="columns">
@@ -39,9 +59,9 @@
           <div class="summary-box summary-box--assessment">
             <h4>Management Quality</h4>
             <p>
-              <small>Number of assessments: <%= @company.mq_assessments.currently_published.size %></small>
+              <small>Number of assessments: <%= @company_presenter.mq_assessments.size %></small>
             </p>
-            <% if @company.mq_assessments.currently_published.any? %>
+            <% if @company_presenter.mq_assessments.any? %>
               <%= render 'mq_level', level: @company.mq_level, status: @company.mq_status %>
               <p>
                 <%= t("tpi.company.level_description.#{@company.mq_level.to_i}") %></h3>
@@ -50,37 +70,30 @@
           </div>
         </a>
       </div>
-      <div class="column">
+      <div class="column is-three-fifths">
         <a href="#carbon-performance" class="summary-box-link">
           <div class="summary-box summary-box--assessment">
             <h4>Carbon Performance</h4>
             <p>
-              <small>Number of assessments: <%= @company.cp_assessments.currently_published.size %></small>
+              <small>Number of assessments: <%= @company_presenter.cp_assessments.size %></small>
             </p>
 
-            <% if @company_presenter.cp_alignment.present? %>
-              <p class="cp-alignment">
-                <span class="cp-alignment__circle" style="background-color: <%= @company_presenter.cp_alignment.color %>">
-                </span>
-                <%= @company_presenter.cp_alignment.name %>
-              </p>
-              <% if !['not assessed', 'not aligned', 'no disclosure', nil].include?(@company.cp_alignment&.downcase) %>
-                <% if @company.cp_alignment_year.present? %>
-                  <p>
-                    The company’s emissions intensity aligns with the <%= @company.cp_alignment %> benchmark in <%= @company.cp_alignment_year %>
-                  </p>
-                <% else %>
-                  <p>
-                    The company’s emissions intensity and target are aligned
-                    with the Paris agreement benchmark of <%= @company.cp_alignment %>
-                  </p>
-                <% end %>
-              <% elsif @company.cp_alignment && @company.cp_alignment.downcase == 'not assessed' %>
-                <p>
-                  The company’s activities don't fit the scope of TPI’s Carbon
-                  Performance assessment of this sector, hence the company is not assessed.
-                </p>
-              <% end %>
+            <% unless regional_view %>
+              <div class="cp-alignments">
+                <% long_term_header = "Long-term<br/> alignment in #{@company.sector.name.downcase == 'electricity utilities' ? '2040-50' : '2050'}" %>
+
+                <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2025', alignment: @company_presenter.cp_alignment_2025 %>
+                <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: @company_presenter.cp_alignment_2035 %>
+                <%= render 'cp_alignment', header: long_term_header, alignment: @company_presenter.cp_alignment_2050 %>
+              </div>
+            <% else %>
+              <div class="cp-alignments">
+                <% long_term_header = "Long-term<br/> alignment in #{@company.sector.name.downcase == 'electricity utilities' ? '2040-50' : '2050'}" %>
+
+                <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2025', alignment: @company_presenter.cp_regional_alignment_2025 %>
+                <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: @company_presenter.cp_regional_alignment_2035 %>
+                <%= render 'cp_alignment', header: long_term_header, alignment: @company_presenter.cp_regional_alignment_2050 %>
+              </div>
             <% end %>
           </div>
         </a>
@@ -91,32 +104,32 @@
         <div class="summary-box">
           <div class="columns">
             <div class="column">
-              <%= render 'company_property', highlight: true, name: 'Geography', tooltip: t('.tooltips.geography') do %>
+              <%= render 'tpi/shared/property', highlight: false, name: 'Geography', tooltip: t('tpi.tooltips.geography') do %>
                 <%= @company.geography.name %>
               <% end %>
             </div>
             <div class="column">
-              <%= render 'company_property', highlight: true, name: 'Sector' do %>
+              <%= render 'tpi/shared/property', highlight: true, name: 'Sector' do %>
                 <%= link_to @company.sector.name, tpi_sector_path(@company.sector.slug) %>
               <% end %>
             </div>
             <div class="column">
-              <%= render 'company_property', highlight: false, name: 'Market cap (Group)', tooltip: t('.tooltips.market_cap') do %>
+              <%= render 'tpi/shared/property', highlight: false, name: 'Market cap (Group)', tooltip: t('tpi.tooltips.market_cap') do %>
                 <%= @company.market_cap_group %>
               <% end %>
             </div>
             <div class="column">
-              <%= render 'company_property', highlight: false, name: 'ISIN', tooltip: t('.tooltips.ISIN') do %>
+              <%= render 'tpi/shared/property', highlight: false, name: 'ISIN', tooltip: t('tpi.tooltips.ISIN') do %>
                 <%= @company.isin_array.join('<br/>').html_safe %>
               <% end %>
             </div>
             <div class="column">
-              <%= render 'company_property', highlight: false, name: 'SEDOL', tooltip: t('.tooltips.SEDOL') do %>
+              <%= render 'tpi/shared/property', highlight: false, name: 'SEDOL', tooltip: t('tpi.tooltips.SEDOL') do %>
                 <%= @company.sedol %>
               <% end %>
             </div>
             <div class="column">
-              <%= render 'company_property', highlight: true, name: 'CA100+ engagement', tooltip: t('.tooltips.CA100') do %>
+              <%= render 'tpi/shared/property', highlight: false, name: 'CA100+ engagement', tooltip: t('tpi.tooltips.CA100') do %>
                 <%= humanize_boolean(@company.ca100?) %>
               <% end %>
             </div>
@@ -126,23 +139,24 @@
     </div>
   </section>
 
-  <% if @company.mq_assessments.currently_published.any? %>
+  <% if @company_presenter.mq_assessments.any? %>
     <section id="management-quality" class="management-quality container">
       <div class="management-quality__header">
         <h4>
-          Management Quality: <%= @company.name %> <%= react_component("BaseTooltip", { content: t('.tooltips.mq_header') }) %>
+          Management Quality: <%= @company.name %>
         </h4>
 
         <div class="is-hidden-touch show-by-dropdown assessment-date__container">
           <div class="caption">
-            Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.mq_assessment_date') }) %>
+            Assessment Date:
           </div>
           <div class="date-dropdown">
             <%= react_component('RemoteDropdown', {
               name: 'mq_assessment_id',
               remote: true,
               url: mq_assessment_tpi_company_path(@company),
-              data: @company.mq_assessments.currently_published.order(assessment_date: :desc).map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}}
+              data: @company_presenter.mq_assessments.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
+              selected: params[:mq_assessment_id]
             }) %>
           </div>
         </div>
@@ -152,14 +166,15 @@
       </p>
       <div class="is-hidden-desktop assessment-date__container">
         <div class="caption">
-          Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.mq_assessment_date') }) %>
+          Assessment Date:
         </div>
         <div class="date-dropdown">
           <%= react_component('RemoteDropdown', {
             name: 'mq_assessment_id',
             remote: true,
             url: mq_assessment_tpi_company_path(@company),
-            data: @company.mq_assessments.currently_published.order(assessment_date: :desc).map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}}
+            data: @company_presenter.mq_assessments.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
+            selected: params[:mq_assessment_id]
           }) %>
         </div>
       </div>
@@ -171,18 +186,18 @@
     </section>
   <% end %>
 
-
-  <% if @company.cp_assessments.currently_published.any? %>
+  <% if @company_presenter.cp_assessments.any? %>
     <section id="carbon-performance" class="carbon-performance container">
       <div class="management-quality__header">
         <h4>
-          Carbon Performance <%= @company.name %> <%= react_component("BaseTooltip", { content: t('.tooltips.cp_header') }) %>
+          Carbon Performance <%= @company.name %>
         </h4>
         <p class="is-hidden-desktop"><%= "Carbon Performance alignment of companies in the #{@company.name} sector with the Paris agreement benchmarks." %></p>
+
         <div>
           <div class="show-by-dropdown assessment-date__container">
             <div class="caption">
-              Assessment Date: <%= react_component("BaseTooltip", { content: t('.tooltips.cp_assessment_date') }) %>
+              Assessment Date:
             </div>
 
             <div class="date-dropdown">
@@ -190,7 +205,9 @@
                 name: 'cp_assessment_id',
                 remote: true,
                 url: cp_assessment_tpi_company_path(@company),
-                data: @company.cp_assessments.currently_published.order(assessment_date: :desc).map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}}
+                params: regional_view ? "view=regional" : nil,
+                data: @company_presenter.cp_assessments.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
+                selected: params[:cp_assessment_id]
               }) %>
             </div>
           </div>
@@ -203,6 +220,6 @@
     </section>
   <% end %>
   <% if @company.latest_information.present? %>
-    <%= react_component("LatestInformation", { company: @company }) %>
+    <%= react_component("LatestInformation", { name: @company.name, latestInformation: @company.latest_information }) %>
   <% end %>
 </div>

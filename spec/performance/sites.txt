@@ -1,0 +1,13 @@
+https://tpi-staging.vizzuality.com/
+https://tpi-staging.vizzuality.com/sectors
+https://tpi-staging.vizzuality.com/sectors/airlines
+https://tpi-staging.vizzuality.com/companies/american-airlines
+https://tpi-staging.vizzuality.com/publications
+https://tpi-staging.vizzuality.com/faq
+https://cclow-staging.vizzuality.com/
+https://cclow-staging.vizzuality.com/legislation_and_policies
+https://cclow-staging.vizzuality.com/litigation_cases
+https://cclow-staging.vizzuality.com/geographies/european-union
+https://cclow-staging.vizzuality.com/geographies/european-union/climate_targets
+https://cclow-staging.vizzuality.com/geographies/european-union/climate_targets/Economy-wide
+https://cclow-staging.vizzuality.com/methodology-legislation

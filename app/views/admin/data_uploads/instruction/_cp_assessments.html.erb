@@ -118,10 +118,102 @@
         CP alignment
       </td>
       <td>
-        Carbon performance alignment status. One of: <%= CP::Alignment::NAMES.join(', ') %>
+        Carbon performance alignment for 2050 status. One of: <%= CP::Alignment::ALLOWED_NAMES.join(', ') %>
       </td>
       <td>
         No or unsuitable disclosure
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        CP alignment 2025
+      </td>
+      <td>
+        Carbon performance alignment for 2025 status. One of: <%= CP::Alignment::ALLOWED_NAMES.join(', ') %>
+      </td>
+      <td>
+        No or unsuitable disclosure
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        CP alignment 2035
+      </td>
+      <td>
+        Carbon performance alignment for 2035 status. One of: <%= CP::Alignment::ALLOWED_NAMES.join(', ') %>
+      </td>
+      <td>
+        No or unsuitable disclosure
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Region
+      </td>
+      <td>
+        Benchmark region, one of: <%= CP::Assessment::REGIONS.join(', ') %>
+      </td>
+      <td>
+        Europe
+      </td>
+      <td>
+        Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        CP regional alignment 2025
+      </td>
+      <td>
+        Carbon performance alignment for 2025 status. One of: <%= CP::Alignment::ALLOWED_NAMES.join(', ') %>
+      </td>
+      <td>
+        No or unsuitable disclosure
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        CP regional alignment 2035
+      </td>
+      <td>
+        Carbon performance regional alignment for 2035 status. One of: <%= CP::Alignment::ALLOWED_NAMES.join(', ') %>
+      </td>
+      <td>
+        No or unsuitable disclosure
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        CP regional alignment 2050
+      </td>
+      <td>
+        Carbon performance regional alignment for 2050 status. One of: <%= CP::Alignment::ALLOWED_NAMES.join(', ') %>
+      </td>
+      <td>
+        No or unsuitable disclosure
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Years with targets
+      </td>
+      <td>
+        Years for which company sets a target, delimited by semicolons (;)
+      </td>
+      <td>
+        2025;2030;2050
       </td>
       <td>
       </td>

@@ -24,7 +24,7 @@ import { EU_COUNTRIES, EU_ISO } from './constants';
 import MinusIcon from 'images/cclow/icons/minus.svg';
 import PlusIcon from 'images/cclow/icons/plus.svg';
 
-const geoUrl = 'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json';
+const geoUrl = '/cclow/world.topo.json';
 const projection = geoEqualEarth();
 
 function WorldMap({ zoomToGeographyIso }) {
@@ -102,7 +102,7 @@ function WorldMap({ zoomToGeographyIso }) {
 
   const DropdownIndicator = (props) => (
     <components.DropdownIndicator {...props}>
-      <img src={chevronIconBlack} />
+      <img src={chevronIconBlack} alt="chevron" />
     </components.DropdownIndicator>
   );
 
@@ -133,11 +133,20 @@ function WorldMap({ zoomToGeographyIso }) {
       })).sort((a, b) => a.active - b.active);
   };
 
+  const setPropertiesISO = (json) => {
+    if (!json) return;
+
+    json.objects.world.geometries.forEach((geo) => {
+      // eslint-disable-next-line no-param-reassign
+      geo.properties.ISO_A3 = geo.id;
+    });
+  };
+
   const setGeosWithEuropeanUnionBorders = (json) => {
     const geosWithEu = JSON.parse(JSON.stringify(json));
     const europeanUnionGeo = mergeArcs(
       geosWithEu,
-      geosWithEu.objects.ne_110m_admin_0_countries.geometries.filter(g => EU_COUNTRIES.includes(g.properties.ISO_A3))
+      geosWithEu.objects.world.geometries.filter(g => EU_COUNTRIES.includes(g.properties.ISO_A3))
     );
     const euGeoWithProperties = {
       ...europeanUnionGeo,
@@ -146,7 +155,7 @@ function WorldMap({ zoomToGeographyIso }) {
         NAME: 'European Union'
       }
     };
-    geosWithEu.objects.ne_110m_admin_0_countries.geometries.push(euGeoWithProperties);
+    geosWithEu.objects.world.geometries.push(euGeoWithProperties);
 
     setGeos(geosWithEu);
   };
@@ -175,6 +184,7 @@ function WorldMap({ zoomToGeographyIso }) {
     fetch(geoUrl)
       .then((response) => response.json())
       .then((json) => {
+        setPropertiesISO(json);
         setGeosWithEuropeanUnionBorders(json);
 
         if (zoomToGeographyIso) {
@@ -246,30 +256,34 @@ function WorldMap({ zoomToGeographyIso }) {
         </div>
         <div className="world-map__selectors">
           <div className="world-map__selector">
-            <label>Content</label>
-            <Select
-              options={contentOptions}
-              value={selectedContentOption}
-              onChange={setContentId}
-              isSearchable={false}
-              styles={customStyles}
-              components={{ DropdownIndicator }}
-              theme={customTheme}
-              width="300px"
-            />
+            <label>
+              Content
+              <Select
+                options={contentOptions}
+                value={selectedContentOption}
+                onChange={setContentId}
+                isSearchable={false}
+                styles={customStyles}
+                components={{ DropdownIndicator }}
+                theme={customTheme}
+                width="300px"
+              />
+            </label>
           </div>
           <div className="world-map__selector">
-            <label>Context</label>
-            <Select
-              options={contextOptions}
-              value={selectedContextOption}
-              onChange={setContextId}
-              isSearchable={false}
-              styles={customStyles}
-              components={{ DropdownIndicator }}
-              theme={customTheme}
-              width="300px"
-            />
+            <label>
+              Context
+              <Select
+                options={contextOptions}
+                value={selectedContextOption}
+                onChange={setContextId}
+                isSearchable={false}
+                styles={customStyles}
+                components={{ DropdownIndicator }}
+                theme={customTheme}
+                width="300px"
+              />
+            </label>
           </div>
           {!zoomToGeographyIso && (
             <div className="world-map__eu-aggregation-button-container">
@@ -298,6 +312,7 @@ function WorldMap({ zoomToGeographyIso }) {
                   return (
                     <Geography
                       key={geo.rsmKey}
+                      role="img"
                       data-tip=""
                       data-for="geographyTooltip"
                       id={`geo-${geo.properties.ISO_A3}`}

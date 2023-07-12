@@ -9,6 +9,8 @@
 #  updated_at   :datetime         not null
 #  emissions    :jsonb
 #  scenario     :string
+#  region       :string           default("Global"), not null
+#  category     :string           not null
 #
 
 require 'rails_helper'
@@ -26,5 +28,15 @@ RSpec.describe CP::Benchmark, type: :model do
   it 'should be invalid if date is nil' do
     subject.release_date = nil
     expect(subject).to have(1).errors_on(:release_date)
+  end
+
+  it 'should be invalid if region is unknown' do
+    subject.region = 'unknown'
+    expect(subject).to have(1).errors_on(:region)
+  end
+
+  it 'should be invalid without category' do
+    subject.category = nil
+    expect(subject).to have(1).errors_on(:category)
   end
 end

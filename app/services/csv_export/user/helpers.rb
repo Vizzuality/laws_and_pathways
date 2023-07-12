@@ -3,6 +3,10 @@ module CSVExport
     module Helpers
       private
 
+      def bom
+        "\xEF\xBB\xBF"
+      end
+
       def format_events(events)
         return unless events.any?
 
@@ -25,7 +29,7 @@ module CSVExport
       end
 
       def format_sectors(sectors)
-        sectors.map(&:name).sort.join(', ')
+        sectors.map(&:name).sort.join(';')
       end
 
       def format_boolean(value)

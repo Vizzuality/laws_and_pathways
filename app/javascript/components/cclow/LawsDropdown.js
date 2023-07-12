@@ -33,7 +33,7 @@ function LawsDropdownCategory({ title, icon, children }) {
   return (
     <div className="laws-dropdown__category">
       <div className="laws-dropdown__category-title">
-        <img className="laws-dropdown__category-icon" src={icon} />
+        <img className="laws-dropdown__category-icon" src={icon} alt="Category icon" />
         <span>{title}</span>
       </div>
       {children}
@@ -277,9 +277,9 @@ const LawsDropdown = () => {
           className="laws-input"
           onClick={handleInputClick}
         />
-        <a className="search-input__icon">
+        <div className="search-input__icon">
           <span className="icon icon__search" />
-        </a>
+        </div>
       </div>
       {isOpen && (
         <div className={cx('laws-dropdown__content', { loading: searching || typing })}>

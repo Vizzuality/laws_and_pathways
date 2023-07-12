@@ -18,6 +18,7 @@
 @import "rc-slider/assets";
 
 @import "cclow/buttons";
+@import "cclow/home";
 @import "cclow/pages";
 @import "cclow/collaborators";
 
@@ -25,6 +26,19 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+.cpr-banner {
+  background: #78a8fc;
+  color: #4d4e51;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+
+  a {
+    color: #4d4e51;
+    text-decoration: underline;
+  }
 }
 
 :root {

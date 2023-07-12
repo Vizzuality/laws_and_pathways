@@ -27,6 +27,16 @@ RSpec.describe Admin::LegislationsController, type: :controller, factory_default
     end
   end
 
+  describe 'GET index with .csv format' do
+    before :each do
+      get :index, format: 'csv'
+    end
+
+    it('returns CSV file') do
+      expect(response.header['Content-Type']).to include('text/csv')
+    end
+  end
+
   describe 'GET show' do
     subject { get :show, params: {id: legislation.id} }
 

@@ -3,7 +3,6 @@
 @import "tpi/colors";
 @import "tpi/variables";
 @import "tpi/mixins";
-@import "tpi/sizes";
 @import "tpi/typography";
 @import "tpi/inputs";
 @import "common/youtube";
@@ -16,15 +15,16 @@
 @import "bulma/sass/grid/all";
 @import "bulma/sass/layout/all";
 
+@import "tiny-slider/src/tiny-slider";
+
+@import "tpi/helpers";
 @import "tpi/buttons";
 @import "tpi/forms";
 @import "tpi/tags";
 
 @import "tpi/banner";
 @import "tpi/navbar";
-@import "tpi/hero";
 @import "tpi/publications";
-@import "tpi/testimonials";
 @import "tpi/bubble-chart";
 @import "tpi/charts";
 @import "tpi/base-tooltip";
@@ -36,8 +36,11 @@
 @import "tpi/search";
 @import "tpi/fixed-navbar";
 @import "tpi/nested-dropdown";
+@import "tpi/banking-question-legend";
+@import "tpi/latest-information";
 
 @import "tpi/pages/*";
+@import "tpi/shared/*";
 
 html {
   scroll-behavior: smooth;

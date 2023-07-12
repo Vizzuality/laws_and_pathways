@@ -8,7 +8,7 @@ RSpec.describe Queries::TPI::NewsPublicationsQuery do
     sector1 = create(:tpi_sector, name: 'sector1')
     sector2 = create(:tpi_sector, name: 'sector2')
 
-    create(
+    @news1 = create(
       :news_article,
       :published,
       keywords: [
@@ -16,14 +16,14 @@ RSpec.describe Queries::TPI::NewsPublicationsQuery do
         keyword2
       ]
     )
-    create(
+    @news2 = create(
       :news_article,
       :published,
       keywords: [
         keyword1
       ]
     )
-    create(
+    @news3 = create(
       :news_article,
       keywords: [
         keyword1,
@@ -32,9 +32,9 @@ RSpec.describe Queries::TPI::NewsPublicationsQuery do
       publication_date: 3.days.from_now
     )
 
-    create(:publication, :published, tpi_sectors: [sector1], keywords: [keyword1])
-    create(:publication, :published, tpi_sectors: [sector2])
-    create(:publication, tpi_sectors: [sector1], keywords: [keyword1], publication_date: 3.days.from_now)
+    @pub1 = create(:publication, :published, tpi_sectors: [sector1], keywords: [keyword1])
+    @pub2 = create(:publication, :published, tpi_sectors: [sector2])
+    @pub3 = create(:publication, tpi_sectors: [sector1], keywords: [keyword1], publication_date: 3.days.from_now)
   end
 
   subject { described_class }
@@ -48,6 +48,12 @@ RSpec.describe Queries::TPI::NewsPublicationsQuery do
     it 'should filter by tags' do
       results = subject.new(tags: 'keyword1').call
       expect(results.count).to eq(3)
+    end
+
+    it 'should filter by multiple tags' do
+      results = subject.new(tags: 'keyword1,keyword2').call
+      expect(results.count).to eq(3)
+      expect(results.map(&:id)).to contain_exactly(@news1.id, @news2.id, @pub1.id)
     end
 
     it 'should filter by sectors' do

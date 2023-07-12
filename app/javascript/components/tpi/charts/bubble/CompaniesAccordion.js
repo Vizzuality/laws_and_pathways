@@ -53,7 +53,7 @@ const customSelectStyles = {
 
 const DropdownIndicator = (props) => (
   <components.DropdownIndicator {...props}>
-    <img src={props.selectProps.menuIsOpen ? chevronUpIconBlack : chevronDownIconBlack} />
+    <img src={props.selectProps.menuIsOpen ? chevronUpIconBlack : chevronDownIconBlack} alt="Accordion toggle" />
   </components.DropdownIndicator>
 );
 

@@ -1,8 +1,9 @@
-$line-height: 24px;
-$max-lines: 3;
-$dots-space: 1.3rem;
-
 .company-page {
+  .change-view {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
   .companies-header {
     background: $blue;
 
@@ -34,10 +35,15 @@ $dots-space: 1.3rem;
     }
   }
 
+  .summary-boxes {
+    margin-top: 1.5rem;
+  }
+
   .summary-box {
     background: $grey;
     padding: 40px;
     border-bottom: none;
+    height: 100%;
 
     h3 {
       font-size: 16px;
@@ -55,30 +61,57 @@ $dots-space: 1.3rem;
       align-items: center;
       text-align: center;
       justify-content: center;
+    }
 
-      @include desktop {
-        height: 280px;
+    .cp-alignments {
+      width: 100%;
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      gap: 40px;
+
+      h5 {
+        font-size: 18px !important;
+      }
+
+      br {
+        display: none;
+      }
+
+      @include from($tablet) {
+        flex-direction: row;
+        gap: 10px;
+
+        br {
+          display: unset;
+        }
       }
     }
 
     .cp-alignment {
       font-family: $font-family-bold;
-      font-size: 20px;
+      font-size: 16px;
       padding: 30px 0;
       display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: left;
 
       &__circle {
+        flex-shrink: 0;
         width: 20px;
         height: 20px;
         border-radius: 50%;
         display: block;
         margin-right: 10px;
-        margin-top: 3px;
+        margin-top: -4px;
       }
 
       @include until($desktop) {
         display: flex;
-        padding-top: 1.5rem;
+        padding-top: 1rem;
         padding-bottom: 0;
 
         &__circle {
@@ -109,35 +142,24 @@ $dots-space: 1.3rem;
         }
       }
     }
+
+    @include desktop {
+      .columns {
+        justify-content: space-evenly;
+      }
+
+      .column {
+        flex-basis: unset;
+        flex-grow: unset;
+        flex-shrink: unset;
+      }
+    }
   }
 
   .summary-box-link {
     color: unset;
     &:hover, &:visited {
       color: unset;
-    }
-  }
-
-  .company-property {
-    &__name {
-      white-space: nowrap;
-      font-size: 12px;
-      line-height: 15px;
-      color: $grey-dark;
-
-      .base-tooltip {
-        margin-left: 5px;
-      }
-    }
-
-    &__value {
-      margin-top: 10px;
-      font-size: 16px;
-      line-height: 20px;
-    }
-
-    .highlight, a {
-      color: $blue-ribbon;
     }
   }
 
@@ -151,6 +173,12 @@ $dots-space: 1.3rem;
       align-items: center;
 
       margin-bottom: 40px;
+
+      h4 {
+        .base-tooltip__default-trigger {
+          transform: translateY(-3px);
+        }
+      }
 
       .show-by-dropdown {
         align-items: center;
@@ -345,116 +373,6 @@ $dots-space: 1.3rem;
     }
   }
 
-  .latest-information {
-    &__wrapper {
-      background-color: $blue-dark;
-      color: $white;
-      padding-top: 86px;
-      padding-bottom: 136px;
-    }
-
-    &__container {
-      margin: 0 auto;
-      max-width: 700px;
-
-      @include from($desktop) {
-        max-width: 850px;
-      }
-    }
-
-    &__header {
-      margin-bottom: 36px;
-      font-family: $family-sans-serif-bold;
-    }
-
-    &__description {
-      line-height: $line-height;
-      font-size: 16px;
-
-      a {
-        color: inherit;
-      }
-    }
-
-    &__description--folded {
-      max-height: calc(#{$line-height} * #{$max-lines});
-      overflow: hidden;
-      position: relative;
-      margin-right: calc(-1 * #{$dots-space});
-      padding-right: $dots-space;
-
-      &::before {
-        content: "[...]";
-        font-size: 12px;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-      }
-
-      &::after {
-        content: "";
-        position: absolute;
-        right: 0; /* note: not using bottom */
-        width: 1.7rem;
-        height: 1.7rem;
-        background: $blue-dark;
-        margin-top: 0.2rem;
-        margin-right: -5px;
-      }
-    }
-
-    &__button {
-      height: 30px;
-      width: 30px;
-      background-color: $blue-darker;
-      border-radius: 50%;
-      padding: 8px;
-      margin-right: 14px;
-    }
-
-    &__button-text {
-      font-size: 16px;
-      font-family: $family-sans-serif-bold;
-      color: $white;
-    }
-
-    &__button-container {
-      display: flex;
-      align-items: center;
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      margin-top: 40px;
-
-      &:focus {
-        outline-color: $yellow;
-        outline-style: solid;
-        outline-width: 2px;
-      }
-    }
-
-    @include until($desktop) {
-      &__wrapper {
-        padding: 1.5rem 0.75rem 2rem;
-      }
-
-      &__header {
-        margin-bottom: 20px;
-      }
-
-      &__description,
-      &__description--folded {
-        margin-bottom: 25px;
-        font-size: $size-6;
-        line-height: 24px;
-
-        &::before {
-          content: ''
-        }
-      }
-    }
-  }
-
   .carbon-performance {
     margin-top: 50px;
     margin-bottom: 50px;
@@ -465,6 +383,12 @@ $dots-space: 1.3rem;
       align-items: center;
 
       margin-bottom: 20px;
+
+      h4 {
+        .base-tooltip__default-trigger {
+          transform: translateY(-3px);
+        }
+      }
     }
 
     &__assumptions {

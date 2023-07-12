@@ -1,44 +1,6 @@
-<%= hidden_field_tag :input_publications_count, @publications_and_articles.size %>
+<%= hidden_field_tag :input_publications_count, count %>
 <div class="promoted-publications__publications">
-  <div class="publications__grid">
-    <% @publications_and_articles.each do |publication| %>
-      <div class="publication">
-        <% if publication.thumbnail.present? %>
-          <div class="publication__avatar" style="background-image: url(<%= url_for(publication.thumbnail) %>)"></div>
-        <% end %>
-
-
-        <div class="publication__content">
-          <div class="content__title-wrapper">
-            <div class="content__title">
-              <% if publication.is_a?(Publication) %>
-                <%= link_to publication.title, tpi_publication_path(id: publication.id, type: publication.class.name, format: 'pdf'),
-                    target: '_blank', class: 'link is-strong' %>
-              <% else %>
-                <%= link_to publication.title, tpi_publication_path(id: publication.id, type: publication.class.name), class: "link is-strong" %>
-              <% end %>
-            </div>
-          </div>
-          <p class="updated_at "><%= publication.publication_date.strftime('%d/%m/%Y') %></p>
-
-          <div class="content__message">
-            <p>
-              <% if publication.class.name.eql?("NewsArticle") %>
-                <%= truncate(strip_tags(publication.content), length: 100) %>
-              <% else %>
-                <%= publication.short_description %>
-              <% end %>
-            </p>
-          </div>
-          <% if publication.keywords.any? || publication.tpi_sectors.any? %>
-            <div class="publication__tags">
-              <% publication.tags_and_sectors.each do |tag| %>
-                <span class="tag"><%= tag %></span>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
+  <div class="publications__grid" id="publications-list">
+    <%= render 'tpi/publications/list', publications_and_articles: publications_and_articles %>
   </div>
 </div>

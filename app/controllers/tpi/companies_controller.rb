@@ -8,9 +8,9 @@ module TPI
     before_action :fetch_mq_assessment, only: [:show, :mq_assessment, :assessments_levels_chart_data]
 
     def show
-      @company_presenter = ::Api::Presenters::Company.new(@company)
+      @company_presenter = ::Api::Presenters::Company.new(@company, params[:view])
 
-      @sectors = TPISector.select(:id, :name, :slug).order(:name)
+      @sectors = TPISector.companies.tpi_tool.select(:id, :name, :slug).order(:name)
       @companies = Company.published.joins(:sector)
         .select(:id, :name, :slug, 'tpi_sectors.name as sector_name', :active)
         .order('tpi_sectors.name', :name)
@@ -41,7 +41,7 @@ module TPI
     # Type:     line chart
     # On pages: :show
     def emissions_chart_data
-      data = ::Api::Charts::CPAssessment.new(@cp_assessment).emissions_data
+      data = ::Api::Charts::CPAssessment.new(@cp_assessment, params[:view]).emissions_data
 
       render json: data.chart_json
     end
@@ -67,6 +67,8 @@ module TPI
     def fetch_cp_assessment
       @cp_assessment = if params[:cp_assessment_id].present?
                          @company.cp_assessments.find(params[:cp_assessment_id])
+                       elsif params[:view] == 'regional'
+                         @company.latest_cp_assessment_regional
                        else
                          @company.latest_cp_assessment
                        end

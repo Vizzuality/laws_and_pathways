@@ -49,7 +49,7 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller, retry: 3 do
       laws_sectors: [sector1],
       geography: geography,
       title: 'Example',
-      summary: 'Litigation example',
+      summary: '<div>Litigation <div>this div should not be removed</div> example</div>',
       events: [
         build(:litigation_event, date: Date.parse('2019-03-02')),
         build(:litigation_event, date: Date.parse('2019-05-01'))
@@ -64,7 +64,7 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller, retry: 3 do
       laws_sectors: [sector2],
       geography: geography,
       title: 'Litigation Example',
-      summary: 'Example',
+      summary: '<div>Example</div>',
       events: [
         create(:litigation_event, date: Date.parse('2018-03-03')),
         create(:litigation_event, date: Date.parse('2018-05-01'))
@@ -93,7 +93,7 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller, retry: 3 do
 
       it 'responds to csv' do
         get :index, format: :csv
-        expect(response.content_type).to eq('text/csv')
+        expect(response.content_type).to include('text/csv')
         # remove snapshot to update it (from spec/snapshots)
         # make sure no dynamic, sequenced entity values are used
 
@@ -118,7 +118,7 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller, retry: 3 do
 
       it 'responds to csv' do
         get :index, params: params, format: :csv
-        expect(response.content_type).to eq('text/csv')
+        expect(response.content_type).to include('text/csv')
       end
     end
 
@@ -140,7 +140,7 @@ RSpec.describe CCLOW::LitigationCasesController, type: :controller, retry: 3 do
 
       it 'responds to csv' do
         get :index, params: params, format: :csv
-        expect(response.content_type).to eq('text/csv')
+        expect(response.content_type).to include('text/csv')
       end
     end
   end

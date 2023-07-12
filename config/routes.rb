@@ -9,13 +9,14 @@ Rails.application.routes.draw do
       get '/tpi', to: redirect('/')
       get '/tpi/*rest', to: redirect('%{rest}')
 
-      get '/about', to: 'home#about'
       get '/newsletter', to: 'home#newsletter'
 
       get '/sandbox', to: 'home#sandbox' if Rails.env.development?
 
       get '/search', to: 'search#index'
       get '/sitemap', to: 'sitemaps#index'
+
+      get '/corporate-bond-issuers', to: 'home#corporate_bond_issuers'
 
       resources :sectors, only: [:show, :index] do
         collection do
@@ -36,6 +37,19 @@ Rails.application.routes.draw do
           get :assessments_levels_chart_data
           get :mq_assessment
           get :cp_assessment
+          get :user_download
+        end
+      end
+
+      resources :banks, only: [:show, :index] do
+        member do
+          get :emissions_chart_data
+          get :cp_matrix_data
+          get :assessment
+        end
+        collection do
+          get :index_assessment
+          get :average_bank_score_chart_data
           get :user_download
         end
       end

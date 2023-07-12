@@ -12,7 +12,7 @@
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  discarded_at        :datetime
-#  methodology_version :integer
+#  methodology_version :integer          not null
 #
 
 class QuestionFactoryHelper
@@ -41,7 +41,7 @@ FactoryBot.define do
         {
           level: QuestionFactoryHelper.get_question_level(nr),
           question: "Question nr #{nr}",
-          answer: %w[Yes No].sample
+          answer: (nr % 3).zero? ? 'No' : 'Yes'
         }
       end
     end

@@ -2,24 +2,25 @@
 #
 # Table name: geographies
 #
-#  id                       :bigint           not null, primary key
-#  geography_type           :string           not null
-#  iso                      :string           not null
-#  name                     :string           not null
-#  slug                     :string           not null
-#  region                   :string           not null
-#  federal                  :boolean          default(FALSE), not null
-#  federal_details          :text
-#  legislative_process      :text
-#  created_at               :datetime         not null
-#  updated_at               :datetime         not null
-#  visibility_status        :string           default("draft")
-#  created_by_id            :bigint
-#  updated_by_id            :bigint
-#  discarded_at             :datetime
-#  percent_global_emissions :string
-#  climate_risk_index       :string
-#  wb_income_group          :string
+#  id                         :bigint           not null, primary key
+#  geography_type             :string           not null
+#  iso                        :string           not null
+#  name                       :string           not null
+#  slug                       :string           not null
+#  region                     :string           not null
+#  federal                    :boolean          default(FALSE), not null
+#  federal_details            :text
+#  legislative_process        :text
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#  visibility_status          :string           default("draft")
+#  created_by_id              :bigint
+#  updated_by_id              :bigint
+#  discarded_at               :datetime
+#  percent_global_emissions   :string
+#  climate_risk_index         :string
+#  wb_income_group            :string
+#  external_litigations_count :integer          default(0)
 #
 
 class Geography < ApplicationRecord
@@ -92,6 +93,12 @@ class Geography < ApplicationRecord
   validates :federal, inclusion: {in: [true, false]}
   validates :region, inclusion: {in: REGIONS}
 
+  before_validation :trix_strip_outer_div
+
+  def trix_strip_outer_div
+    self.legislative_process = HTMLHelper.strip_outer_div(legislative_process) if legislative_process.present?
+  end
+
   def should_generate_new_friendly_id?
     name_changed? || super
   end
@@ -139,7 +146,7 @@ class Geography < ApplicationRecord
   end
 
   def laws_per_sector
-    targets.group_by(&:sector).map do |sector, targets|
+    targets.includes(:sector).group_by(&:sector).map do |sector, targets|
       {
         sector: sector&.name,
         ndc_targets_count:

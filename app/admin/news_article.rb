@@ -2,7 +2,7 @@ ActiveAdmin.register NewsArticle do
   config.batch_actions = false
   config.sort_order = 'publication_date_desc'
 
-  menu parent: 'TPI', priority: 8
+  menu parent: 'TPI', priority: 9
 
   decorate_with NewsArticleDecorator
 
@@ -51,6 +51,8 @@ ActiveAdmin.register NewsArticle do
     column :id
     column :title
     column :content
+    column(:sectors) { |l| l.tpi_sectors.map(&:name).join(Rails.application.config.csv_options[:entity_sep]) }
+    column :keywords, &:keywords_csv
     column :publication_date
   end
 

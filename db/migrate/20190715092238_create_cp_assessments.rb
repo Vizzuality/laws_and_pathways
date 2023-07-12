@@ -1,4 +1,4 @@
-class CreateCpAssessments < ActiveRecord::Migration[5.2]
+class CreateCPAssessments < ActiveRecord::Migration[5.2]
   def change
     create_table :cp_assessments do |t|
       t.references :company, foreign_key: {on_delete: :cascade}, index: true

@@ -1,4 +1,4 @@
-import { Controller } from 'stimulus';
+import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
   static targets = ['emissionTable', 'emissionRowTemplate', 'emissionRowAdd']
@@ -22,7 +22,7 @@ export default class extends Controller {
       const year = $(el).find('input[name=emission_year]').val();
       const value = parseFloat($(el).find('input[name=emission_value]').val());
 
-      if (!year || !value) return;
+      if (!year || Number.isNaN(value)) return;
 
       result[year] = value;
     });

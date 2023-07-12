@@ -194,6 +194,7 @@
 
     &__value {
       margin-left: 20px;
+      white-space: normal;
     }
 
     &__header {
@@ -210,5 +211,71 @@
       margin-bottom: 10px;
       font-size: 12px;
     }
+  }
+}
+
+.charts-container {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  @include desktop {
+    grid-template-columns: 1fr 1fr;
+  }
+  grid-gap: 20px;
+}
+
+
+.chart-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+
+  .individual-chart-title {
+    text-align: center;
+  }
+
+  .emissions-legend {
+    flex: 1;
+
+    .emissions-legend__item {
+      display: flex;
+      align-items: center;
+      font-size: $size-7;
+      margin-bottom: 5px;
+    }
+
+    .emissions-legend__circle {
+      width: 12px;
+      min-width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 8px;
+
+      &.line {
+        min-width: 2px;
+        width: 2px;
+        border-radius: 0;
+        margin: 0 13px 0 5px;
+      }
+    }
+  }
+
+}
+
+.cp_assessments_title,
+.cp_assessments_description {
+  padding: 0 10px;
+
+  @include desktop {
+    padding: 0;
+  }
+}
+
+.multiple-chart {
+  padding: 0 30px;
+
+  @include desktop {
+    padding: 0;
   }
 }

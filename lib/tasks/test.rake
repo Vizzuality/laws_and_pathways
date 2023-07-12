@@ -18,6 +18,9 @@ namespace :test do
     end
 
     system "pg_restore -j 8 --clean --no-owner --dbname=#{db_name} #{dump_path}"
+    ActiveRecord::Migration.check_pending!
+  rescue ActiveRecord::PendingMigrationError
+    abort 'ERROR: Pending migrations in test db dump. Please recreate db dump for system specs bin/rails test:db_dump'
   end
 
   private

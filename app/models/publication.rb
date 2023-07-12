@@ -12,6 +12,7 @@
 #  updated_by_id     :bigint
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  author            :string
 #
 
 class Publication < ApplicationRecord
@@ -19,8 +20,12 @@ class Publication < ApplicationRecord
   include PublicActivityTrackable
   include Taggable
   include ImageWithThumb
+  extend FriendlyId
+
+  friendly_id :title_prefixed_year, use: :slugged, routes: :default
 
   has_one_attached :file
+  has_one_attached :author_image
 
   tag_with :keywords
 
@@ -31,6 +36,10 @@ class Publication < ApplicationRecord
   validates :file, attached: true
   validates_presence_of :title, :short_description, :publication_date
 
+  def title_prefixed_year
+    "#{publication_date&.year} #{title}"
+  end
+
   def self.search(query)
     where('title ilike ? OR short_description ilike ?',
           "%#{query}%", "%#{query}%")
@@ -38,5 +47,9 @@ class Publication < ApplicationRecord
 
   def tags_and_sectors
     (keywords.map(&:name) + tpi_sectors.map(&:name)).compact.uniq.sort
+  end
+
+  def author_image_thumbnail
+    author_image.present? ? author_image.variant(resize_to_fill: [40, 40]) : nil
   end
 end

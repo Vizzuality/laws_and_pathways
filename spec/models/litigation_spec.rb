@@ -49,6 +49,14 @@ RSpec.describe Litigation, type: :model do
     expect(litigation.slug).to eq('new-title')
   end
 
+  it 'should trip outer div for trix fields before validation' do
+    subject.at_issue = '<div>Some content <div>do not remove this</div></div>'
+    subject.summary = '<div>Some content <div>do not remove this</div></div>'
+    expect(subject).to be_valid
+    expect(subject.at_issue).to eq('Some content <div>do not remove this</div>')
+    expect(subject.summary).to eq('Some content <div>do not remove this</div>')
+  end
+
   context 'full_text_search' do
     let_it_be(:litigation_1) {
       create(

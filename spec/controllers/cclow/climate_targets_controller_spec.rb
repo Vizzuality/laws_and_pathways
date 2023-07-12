@@ -70,7 +70,7 @@ RSpec.describe CCLOW::ClimateTargetsController, type: :controller, retry: 3 do
 
       it 'responds to csv' do
         get :index, format: :csv
-        expect(response.content_type).to eq('text/csv')
+        expect(response.content_type).to include('text/csv')
         # remove snapshot to update it (from spec/snapshots)
         # make sure no dynamic, sequenced entity values are used
         io = StringIO.new(response.body)
@@ -94,7 +94,7 @@ RSpec.describe CCLOW::ClimateTargetsController, type: :controller, retry: 3 do
 
       it 'responds to csv' do
         get :index, params: params, format: :csv
-        expect(response.content_type).to eq('text/csv')
+        expect(response.content_type).to include('text/csv')
       end
     end
 
@@ -111,7 +111,7 @@ RSpec.describe CCLOW::ClimateTargetsController, type: :controller, retry: 3 do
 
       it 'responds to csv' do
         get :index, params: params, format: :csv
-        expect(response.content_type).to eq('text/csv')
+        expect(response.content_type).to include('text/csv')
       end
     end
   end

@@ -46,6 +46,10 @@ FactoryBot::SyntaxRunner.class_eval do
   include ActiveSupport::Testing::FileFixtures
 end
 
+# TODO: remove when new capybara and selenium webdriver arrive
+# https://github.com/teamcapybara/capybara/issues/2511
+Selenium::WebDriver.logger.ignore(:browser_options)
+
 RSpec.configure do |config|
   config.request_snapshots_dir = 'spec/fixtures/snapshots'
 
@@ -56,33 +60,11 @@ RSpec.configure do |config|
   config.include CapybaraHelpers, type: :system
 
   config.render_views
-  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  # config.fixture_path = "#{::Rails.root}/spec/fixtures"
-
-  # If you're not using ActiveRecord, or you'd prefer not to run each of your
-  # examples within a transaction, remove the following line or assign false
-  # instead of true.
   config.use_transactional_fixtures = true
 
-  # RSpec Rails can automatically mix in different behaviours to your tests
-  # based on their file location, for example enabling you to call `get` and
-  # `post` in specs under `spec/controllers`.
-  #
-  # You can disable this behaviour by removing the line below, and instead
-  # explicitly tag your specs with their type, e.g.:
-  #
-  #     RSpec.describe UsersController, :type => :controller do
-  #       # ...
-  #     end
-  #
-  # The different available types are documented in the features, such as in
-  # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
-
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
-  # arbitrary gems may also be filtered via:
-  # config.filter_gems_from_backtrace("gem name")
   config.after :each, type: :controller do
     ActiveSupport::CurrentAttributes.reset_all
   end
@@ -119,6 +101,23 @@ RSpec.configure do |config|
     require 'rake'
     Rails.application.load_tasks if Rake::Task.tasks.empty?
     Rake::Task['test:db_load'].execute
+    # re-attach files for publications and news
+    Publication.find_each do |record|
+      record.image.attach(
+        io: File.open(Rails.root.join("db/seeds/tpi/files/#{record.image.filename}")),
+        filename: record.image.filename
+      )
+      record.file.attach(
+        io: File.open(Rails.root.join("db/seeds/tpi/files/#{record.file.filename}")),
+        filename: record.file.filename
+      )
+    end
+    NewsArticle.find_each do |record|
+      record.image.attach(
+        io: File.open(Rails.root.join("db/seeds/tpi/files/#{record.image.filename}")),
+        filename: record.image.filename
+      )
+    end
   end
 
   config.after(:all, type: :system) do

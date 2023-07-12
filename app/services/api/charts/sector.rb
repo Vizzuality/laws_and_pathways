@@ -129,7 +129,8 @@ module Api
         return if company.nil?
 
         company
-          .latest_sector_benchmarks
+          .sector
+          .latest_released_benchmarks(category: Company, region: 'Global')
           .sort_by(&:average_emission)
           .map.with_index do |benchmark, index|
             {

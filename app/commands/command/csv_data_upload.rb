@@ -25,14 +25,14 @@ module Command
     def call
       return false if invalid?
 
-      imported = false
-
+      result = false
       ActiveRecord::Base.transaction do
         imported = import_data
         data_upload.save! if imported
+        result = imported
       end
 
-      imported
+      result
     end
 
     def full_error_messages

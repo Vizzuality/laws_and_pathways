@@ -3,9 +3,14 @@ require 'rails_helper'
 # TODO: Extract all importers tests from here to separate files
 
 describe 'CSVDataUpload (integration)' do
+  let(:banks_csv) { fixture_file('banks.csv') }
+  let(:bank_assessment_indicators_csv) { fixture_file('bank_assessment_indicators.csv') }
+  let(:bank_assessments_csv) { fixture_file('bank_assessments.csv') }
   let(:companies_csv) { fixture_file('companies.csv') }
-  let(:cp_benchmarks_csv) { fixture_file('cp_benchmarks.csv') }
-  let(:cp_assessments_csv) { fixture_file('cp_assessments.csv') }
+  let(:company_cp_benchmarks_csv) { fixture_file('company_cp_benchmarks.csv') }
+  let(:company_cp_assessments_csv) { fixture_file('company_cp_assessments.csv') }
+  let(:bank_cp_benchmarks_csv) { fixture_file('bank_cp_benchmarks.csv') }
+  let(:bank_cp_assessments_csv) { fixture_file('bank_cp_assessments.csv') }
   let(:mq_assessments_csv) { fixture_file('mq_assessments.csv') }
   let(:geographies_csv) { fixture_file('geographies.csv') }
   let(:current_user_role) { 'super_user' }
@@ -28,6 +33,8 @@ describe 'CSVDataUpload (integration)' do
   end
 
   describe 'errors handling' do
+    before(:each) { allow_any_instance_of(Kernel).to receive(:warn) } # suppress warning message
+
     it 'sets error for unknown uploader class' do
       command = Command::CSVDataUpload.new(uploader: 'FooUploader', file: companies_csv)
 
@@ -68,9 +75,10 @@ describe 'CSVDataUpload (integration)' do
 
       command = expect_data_upload_results(
         CP::Assessment,
-        fixture_file('cp_assessments.csv', content: csv_content),
+        fixture_file('company_cp_assessments.csv', content: csv_content),
         {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
-        expected_success: false
+        expected_success: false,
+        custom_uploader: 'CompanyCPAssessments'
       )
       expect(command.errors.messages[:base])
         .to eq(['Error on row 1: Cannot parse date: 1/14/2021, expected formats: %Y-%m-%d, %d/%m/%Y.'])
@@ -83,7 +91,7 @@ describe 'CSVDataUpload (integration)' do
 
       it 'sets error when instrument type is missing' do
         csv_content = <<~CSV
-          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
+          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Themes","Litigation ids","Visibility status"
           ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law",,,,"instrument|existing type",,,"draft"
         CSV
 
@@ -101,7 +109,7 @@ describe 'CSVDataUpload (integration)' do
       it 'sets error when instrument is missing' do
         create(:instrument_type, name: 'Existing type')
         csv_content = <<~CSV
-          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
+          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Themes","Litigation ids","Visibility status"
            ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law",,,,"instrument|existing type",,,"draft"
         CSV
 
@@ -116,10 +124,10 @@ describe 'CSVDataUpload (integration)' do
           .to eq(["Error on row 1: Cannot find Instrument: 'instrument' of type 'Existing type'."])
       end
 
-      it 'sets error when governance type is missing' do
+      it 'sets error when theme type is missing' do
         csv_content = <<~CSV
-          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
-           ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law",,,,,"Existing gov|Existing gov type",,"draft"
+          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Themes","Litigation ids","Visibility status"
+           ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law",,,,,"Existing theme|Existing theme type",,"draft"
         CSV
 
         command = expect_data_upload_results(
@@ -130,14 +138,14 @@ describe 'CSVDataUpload (integration)' do
         )
 
         expect(command.errors.messages[:base])
-          .to eq(['Error on row 1: Cannot find Governance Type: Existing gov type.'])
+          .to eq(['Error on row 1: Cannot find Theme Type: Existing theme type.'])
       end
 
-      it 'sets error when governance is missing' do
-        create(:governance_type, name: 'Existing gov type')
+      it 'sets error when theme is missing' do
+        create(:theme_type, name: 'Existing theme type')
         csv_content = <<~CSV
-          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
-           ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law",,,,,"Existing gov|Existing gov type",,"draft"
+          "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Themes","Litigation ids","Visibility status"
+           ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law",,,,,"Existing theme|Existing theme type",,"draft"
         CSV
 
         command = expect_data_upload_results(
@@ -148,7 +156,7 @@ describe 'CSVDataUpload (integration)' do
         )
 
         expect(command.errors.messages[:base])
-          .to eq(["Error on row 1: Cannot find Governance: 'Existing gov' of type 'Existing gov type'."])
+          .to eq(["Error on row 1: Cannot find Theme: 'Existing theme' of type 'Existing theme type'."])
       end
     end
 
@@ -217,7 +225,7 @@ describe 'CSVDataUpload (integration)' do
       expect_data_upload_results(
         Company,
         fixture_file('companies.csv', content: csv_content, add_bom: true),
-        new_records: 3, not_changed_records: 0, rows: 3, updated_records: 0
+        {new_records: 3, not_changed_records: 0, rows: 3, updated_records: 0}
       )
     end
 
@@ -232,7 +240,7 @@ describe 'CSVDataUpload (integration)' do
       expect_data_upload_results(
         Litigation,
         litigations_csv,
-        new_records: 1, not_changed_records: 0, rows: 1, updated_records: 0
+        {new_records: 1, not_changed_records: 0, rows: 1, updated_records: 0}
       )
 
       litigation = Litigation.find_by(citation_reference_number: 'EWHC 2752')
@@ -250,11 +258,11 @@ describe 'CSVDataUpload (integration)' do
     create(:instrument, instrument_type: existing_instrument_type, name: 'Monitoring and evaluation')
     create(:instrument, instrument_type: gov_planning_instrument_type, name: 'Climate fund')
     create(:instrument, instrument_type: regulation_instrument_type, name: 'Building codes')
-    existing_governance_type = create(:governance_type, name: 'Existing Gov Type')
-    new_governance_type = create(:governance_type, name: 'new gov type')
-    create(:governance, governance_type: existing_governance_type, name: 'Existing Gov')
-    create(:governance, governance_type: existing_governance_type, name: 'governance 2')
-    create(:governance, governance_type: new_governance_type, name: 'governance 1')
+    existing_theme_type = create(:theme_type, name: 'Existing Theme Type')
+    new_theme_type = create(:theme_type, name: 'new theme type')
+    create(:theme, theme_type: existing_theme_type, name: 'Existing Theme')
+    create(:theme, theme_type: existing_theme_type, name: 'theme 2')
+    create(:theme, theme_type: new_theme_type, name: 'theme 1')
     litigation1 = create(:litigation)
     litigation2 = create(:litigation)
 
@@ -269,15 +277,15 @@ describe 'CSVDataUpload (integration)' do
     create(:document_type, name: 'Law')
 
     csv_content = <<~CSV
-      "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Governances","Litigation ids","Visibility status"
-       ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law","keyword1;Keyword2","Response1;response2","tsunami","instrument|existing type","Existing gov|Existing gov type",,"draft"
-       ,"legislative","Climate Law",#{parent_legislation.id},"15 Jan 2015","Description","Poland","POL","Waste","Mitigation;Adaptation","Law","keyword1","response1","flooding","Monitoring and evaluation|existing Type;Climate fund|Governance and planning;Building codes | Regulation","goveRnance 1|new gov type;governance 2|existing gov type","#{litigation1.id};#{litigation2.id}","pending"
+      "Id","Legislation type","Title","Parent Id","Date passed","Description","Geography","Geography iso","Sectors","Frameworks","Document types","Keywords","Responses","Natural hazards","Instruments","Themes","Litigation ids","Visibility status"
+       ,"executive","Finance Act 2011",,"01 Jan 2012","Description","United Kingdom","GBR","Transport",,"Law","keyword1;Keyword2","Response1;response2","tsunami","instrument|existing type","Existing theme|Existing theme type",,"draft"
+       ,"legislative","Climate Law",#{parent_legislation.id},"15 Jan 2015","Description","Poland","POL","Waste","Mitigation;Adaptation","Law","keyword1","response1","flooding","Monitoring and evaluation|existing Type;Climate fund|Governance and planning;Building codes | Regulation","theMe 1|new theme type;theme 2|existing theme type","#{litigation1.id};#{litigation2.id}","pending"
     CSV
 
     expect_data_upload_results(
       Legislation,
       fixture_file('legislations.csv', content: csv_content),
-      new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0
+      {new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0}
     )
 
     legislation = Legislation.find_by(title: 'Climate Law')
@@ -305,13 +313,13 @@ describe 'CSVDataUpload (integration)' do
       .to contain_exactly('Monitoring and evaluation', 'Climate fund', 'Building codes')
     expect(InstrumentType.all.pluck(:name)).to contain_exactly('Governance and planning', 'Regulation', 'Existing Type')
     expect(existing_instrument_type.instruments.map(&:name)).to contain_exactly('Instrument', 'Monitoring and evaluation')
-    expect(legislation.governances.map(&:name)).to contain_exactly('governance 1', 'governance 2')
-    expect(GovernanceType.all.pluck(:name)).to contain_exactly('new gov type', 'Existing Gov Type')
-    expect(existing_governance_type.governances.map(&:name)).to contain_exactly('Existing Gov', 'governance 2')
+    expect(legislation.themes.map(&:name)).to contain_exactly('theme 1', 'theme 2')
+    expect(ThemeType.all.pluck(:name)).to contain_exactly('new theme type', 'Existing Theme Type')
+    expect(existing_theme_type.themes.map(&:name)).to contain_exactly('Existing Theme', 'theme 2')
 
     legislation2 = Legislation.find_by(title: 'Finance Act 2011')
     expect(legislation2.instruments.map(&:name)).to contain_exactly('Instrument')
-    expect(legislation2.governances.map(&:name)).to contain_exactly('Existing Gov')
+    expect(legislation2.themes.map(&:name)).to contain_exactly('Existing Theme')
   end
 
   describe 'required columns return error' do
@@ -443,7 +451,7 @@ describe 'CSVDataUpload (integration)' do
       expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
     end
 
-    it 'for CP Assessments' do
+    it 'for Company CP Assessments' do
       csv_content = <<-CSV
         Publication Date
         2020-01
@@ -451,9 +459,27 @@ describe 'CSVDataUpload (integration)' do
 
       command = expect_data_upload_results(
         CP::Assessment,
-        fixture_file('cp-assessments.csv', content: csv_content),
+        fixture_file('company-cp-assessments.csv', content: csv_content),
         {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
-        expected_success: false
+        expected_success: false,
+        custom_uploader: 'CompanyCPAssessments'
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for Bank CP Assessments' do
+      csv_content = <<-CSV
+        Publication Date
+        2020-01
+      CSV
+
+      command = expect_data_upload_results(
+        CP::Assessment,
+        fixture_file('bank-cp-assessments-2025.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false,
+        custom_uploader: 'BankCPAssessments2025'
       )
 
       expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
@@ -475,7 +501,7 @@ describe 'CSVDataUpload (integration)' do
       expect(command.errors.messages[:base]).to eq(['CSV missing header: Id', 'CSV missing header: Eventable id'])
     end
 
-    it 'for CP Benchmarks' do
+    it 'for CP Company Benchmarks' do
       csv_content = <<-CSV
         Scenario
         2 degrees
@@ -483,9 +509,27 @@ describe 'CSVDataUpload (integration)' do
 
       command = expect_data_upload_results(
         CP::Benchmark,
-        fixture_file('cp-benchmarks.csv', content: csv_content),
+        fixture_file('company_cp_benchmarks.csv', content: csv_content),
         {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
-        expected_success: false
+        expected_success: false,
+        custom_uploader: 'CompanyCPBenchmarks'
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for CP Bank Benchmarks' do
+      csv_content = <<-CSV
+        Scenario
+        2 degrees
+      CSV
+
+      command = expect_data_upload_results(
+        CP::Benchmark,
+        fixture_file('bank_cp_benchmarks.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false,
+        custom_uploader: 'BankCPBenchmarks'
       )
 
       expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
@@ -504,7 +548,7 @@ describe 'CSVDataUpload (integration)' do
       expect_to_change = [:title, :slug, :tsv, :updated_at, :parent_id]
       expect_not_to_change = [
         *(to_update.attributes.symbolize_keys.keys - expect_to_change),
-        :tag_ids, :event_ids, :instrument_ids, :governance_ids, :target_ids, :litigation_ids
+        :tag_ids, :event_ids, :instrument_ids, :theme_ids, :target_ids, :litigation_ids
       ]
 
       expect_changes(to_update, expect_to_change, expect_not_to_change) do
@@ -531,7 +575,7 @@ describe 'CSVDataUpload (integration)' do
       expect_to_change = [:keyword_ids]
       expect_not_to_change = [
         *(to_update.attributes.symbolize_keys.keys - expect_to_change),
-        :event_ids, :instrument_ids, :governance_ids, :target_ids, :litigation_ids
+        :event_ids, :instrument_ids, :theme_ids, :target_ids, :litigation_ids
       ]
 
       expect_changes(to_update, expect_to_change, expect_not_to_change) do
@@ -710,8 +754,8 @@ describe 'CSVDataUpload (integration)' do
       end
     end
 
-    it 'works for CP Benchmarks' do
-      to_update = create(:cp_benchmark)
+    it 'works for Company CP Benchmarks' do
+      to_update = create(:cp_benchmark, category: 'Company')
       csv_content = <<-CSV
         Id,Scenario
         #{to_update.id},2 degrees
@@ -725,15 +769,40 @@ describe 'CSVDataUpload (integration)' do
       expect_changes(to_update, expect_to_change, expect_not_to_change) do
         expect_data_upload_results(
           CP::Benchmark,
-          fixture_file('cp_benchmarks.csv', content: csv_content),
+          fixture_file('company_cp_benchmarks.csv', content: csv_content),
           {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
-          expected_success: true
+          expected_success: true,
+          custom_uploader: 'CompanyCPBenchmarks'
         )
         to_update.reload
       end
     end
 
-    it 'works for CP Assessments' do
+    it 'works for Bank CP Benchmarks' do
+      to_update = create(:cp_benchmark, category: 'Bank')
+      csv_content = <<-CSV
+        Id,Scenario
+        #{to_update.id},2 degrees
+      CSV
+
+      expect_to_change = [:scenario, :updated_at]
+      expect_not_to_change = [
+        *(to_update.attributes.symbolize_keys.keys - expect_to_change)
+      ]
+
+      expect_changes(to_update, expect_to_change, expect_not_to_change) do
+        expect_data_upload_results(
+          CP::Benchmark,
+          fixture_file('bank_cp_benchmarks.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
+          expected_success: true,
+          custom_uploader: 'BankCPBenchmarks'
+        )
+        to_update.reload
+      end
+    end
+
+    it 'works for Company CP Assessments' do
       to_update = create(:cp_assessment, company: create(:company))
       csv_content = <<-CSV
         Id,Publication Date
@@ -748,9 +817,34 @@ describe 'CSVDataUpload (integration)' do
       expect_changes(to_update, expect_to_change, expect_not_to_change) do
         expect_data_upload_results(
           CP::Assessment,
-          fixture_file('cp_assessments.csv', content: csv_content),
+          fixture_file('company_cp_assessments.csv', content: csv_content),
           {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
-          expected_success: true
+          expected_success: true,
+          custom_uploader: 'CompanyCPAssessments'
+        )
+        to_update.reload
+      end
+    end
+
+    it 'works for Bank CP Assessments' do
+      to_update = create(:cp_assessment, cp_assessmentable: create(:bank))
+      csv_content = <<-CSV
+        Id,Publication Date
+        #{to_update.id},2020-01
+      CSV
+
+      expect_to_change = [:publication_date, :updated_at]
+      expect_not_to_change = [
+        *(to_update.attributes.symbolize_keys.keys - expect_to_change)
+      ]
+
+      expect_changes(to_update, expect_to_change, expect_not_to_change) do
+        expect_data_upload_results(
+          CP::Assessment,
+          fixture_file('bank_cp_assessments.csv', content: csv_content),
+          {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 1},
+          expected_success: true,
+          custom_uploader: 'BankCPAssessments2025'
         )
         to_update.reload
       end
@@ -801,7 +895,7 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       Litigation,
       litigations_csv,
-      new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1
+      {new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1}
     )
 
     litigation = Litigation.find_by(title: 'Litigation number 1')
@@ -839,7 +933,7 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       LitigationSide,
       litigation_sides_csv,
-      new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1
+      {new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1}
     )
 
     updated_side.reload
@@ -869,7 +963,7 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       Document,
       documents_csv,
-      new_records: 1, not_changed_records: 0, rows: 1, updated_records: 0
+      {new_records: 1, not_changed_records: 0, rows: 1, updated_records: 0}
     )
 
     created = Document.last
@@ -893,7 +987,7 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       ExternalLegislation,
       external_laws_csv,
-      new_records: 1, not_changed_records: 0, rows: 1, updated_records: 0
+      {new_records: 1, not_changed_records: 0, rows: 1, updated_records: 0}
     )
 
     created = ExternalLegislation.last
@@ -919,12 +1013,12 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       Event,
       events_csv,
-      new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1
+      {new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1}
     )
     expect_data_upload_results(
       Event,
       events_csv,
-      new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0
+      {new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0}
     )
 
     litigation_event.reload
@@ -950,7 +1044,7 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       Company,
       companies_csv,
-      new_records: 7, not_changed_records: 0, rows: 7, updated_records: 0
+      {new_records: 7, not_changed_records: 0, rows: 7, updated_records: 0}
     )
   end
 
@@ -974,7 +1068,7 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       Target,
       targets_csv,
-      new_records: 2, not_changed_records: 0, rows: 3, updated_records: 1
+      {new_records: 2, not_changed_records: 0, rows: 3, updated_records: 1}
     )
 
     updated_target.reload
@@ -1016,34 +1110,54 @@ describe 'CSVDataUpload (integration)' do
     expect(latest.legislation_ids).to include(law.id)
   end
 
-  it 'imports CSV files with CP Benchmarks data' do
+  it 'imports CSV files with Company CP Benchmarks data' do
     expect_data_upload_results(
       CP::Benchmark,
-      cp_benchmarks_csv,
-      new_records: 6, not_changed_records: 0, rows: 6, updated_records: 0
+      company_cp_benchmarks_csv,
+      {new_records: 6, not_changed_records: 0, rows: 6, updated_records: 0},
+      custom_uploader: 'CompanyCPBenchmarks'
     )
     # subsequent import should not create or update any record
     expect_data_upload_results(
       CP::Benchmark,
-      cp_benchmarks_csv,
-      new_records: 0, not_changed_records: 6, rows: 6, updated_records: 0
+      company_cp_benchmarks_csv,
+      {new_records: 0, not_changed_records: 6, rows: 6, updated_records: 0},
+      custom_uploader: 'CompanyCPBenchmarks'
     )
   end
 
-  it 'imports CSV files with CP Assessments data' do
+  it 'imports CSV files with Bank CP Benchmarks data' do
+    expect_data_upload_results(
+      CP::Benchmark,
+      bank_cp_benchmarks_csv,
+      {new_records: 6, not_changed_records: 0, rows: 6, updated_records: 0},
+      custom_uploader: 'BankCPBenchmarks'
+    )
+    # subsequent import should not create or update any record
+    expect_data_upload_results(
+      CP::Benchmark,
+      bank_cp_benchmarks_csv,
+      {new_records: 0, not_changed_records: 6, rows: 6, updated_records: 0},
+      custom_uploader: 'BankCPBenchmarks'
+    )
+  end
+
+  it 'imports CSV files with Company CP Assessments data' do
     acme_company = create(:company, name: 'ACME', id: 1000)
     acme_materials = create(:company, name: 'ACME Materials', id: 2000)
 
     expect_data_upload_results(
       CP::Assessment,
-      cp_assessments_csv,
-      new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0
+      company_cp_assessments_csv,
+      {new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0},
+      custom_uploader: 'CompanyCPAssessments'
     )
     # subsequent import should not create or update any record
     expect_data_upload_results(
       CP::Assessment,
-      cp_assessments_csv,
-      new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0
+      company_cp_assessments_csv,
+      {new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0},
+      custom_uploader: 'CompanyCPAssessments'
     )
 
     assessment = acme_company.cp_assessments.last
@@ -1061,10 +1175,62 @@ describe 'CSVDataUpload (integration)' do
       '2019' => 99,
       '2020' => 98
     )
-    expect(assessment.cp_alignment).to eq('No or unsuitable disclosure')
-    expect(assessment.cp_alignment_year_override).to eq(2030)
-    expect(assessment2.cp_alignment).to eq('Not Aligned')
-    expect(assessment2.cp_alignment_year_override).to be_nil
+    expect(assessment.cp_alignment_2050).to eq('No or unsuitable disclosure')
+    expect(assessment.cp_alignment_2025).to eq('Paris Pledges')
+    expect(assessment.cp_alignment_2035).to eq('National Pledges')
+    expect(assessment.cp_regional_alignment_2025).to eq('1.5 Degrees')
+    expect(assessment.cp_regional_alignment_2035).to eq('2 Degrees')
+    expect(assessment.cp_regional_alignment_2050).to eq('International Pledges')
+    expect(assessment2.cp_alignment_2050).to eq('Not Aligned')
+  end
+
+  it 'imports CSV files with Bank CP Assessments data' do
+    bastion_bank = create(:bank, id: 2, name: 'Bastion Banks Inc.')
+    edge_bank = create(:bank, id: 11, name: 'Edge Bank Inc.')
+
+    expect_data_upload_results(
+      CP::Assessment,
+      bank_cp_assessments_csv,
+      {new_records: 8, not_changed_records: 0, rows: 8, updated_records: 0},
+      custom_uploader: 'BankCPAssessments2025'
+    )
+    expect_data_upload_results(
+      CP::Assessment,
+      bank_cp_assessments_csv,
+      {new_records: 0, not_changed_records: 8, rows: 8, updated_records: 0},
+      custom_uploader: 'BankCPAssessments2035'
+    )
+    # subsequent import should not create or update any record
+    expect_data_upload_results(
+      CP::Assessment,
+      bank_cp_assessments_csv,
+      {new_records: 0, not_changed_records: 8, rows: 8, updated_records: 0},
+      custom_uploader: 'BankCPAssessments2025'
+    )
+
+    assessment = bastion_bank.cp_assessments.last
+    assessment2 = edge_bank.cp_assessments.last
+
+    expect(assessment.assessment_date).to eq(Date.parse('30/06/2022'))
+    expect(assessment.publication_date).to eq(DateTime.strptime('2022-09', '%Y-%m').to_date)
+    expect(assessment.emissions).to eq(
+      {'2019' => 0.3,
+       '2020' => 0.4,
+       '2021' => 0.3,
+       '2022' => 0.3,
+       '2023' => 0.3,
+       '2024' => 0.3,
+       '2025' => 0.2}
+    )
+    expect(assessment.sector.name).to eq('Electric Utilities (Regional)')
+    expect(assessment.region).to eq('North-America')
+    expect(assessment.cp_alignment_2050).to be_nil
+    expect(assessment.cp_alignment_2025).to be_nil
+    expect(assessment.cp_alignment_2035).to be_nil
+    expect(assessment.cp_matrices.find_by(portfolio: 'Corporate lending').cp_alignment_2025).to eq('National Pledges')
+    expect(assessment.cp_matrices.find_by(portfolio: 'Corporate lending').cp_alignment_2035).to eq('National Pledges')
+    expect(assessment.cp_matrices.find_by(portfolio: 'Corporate lending').cp_alignment_2050).to be_nil
+    expect(assessment2.cp_matrices.find_by(portfolio: 'Project finance').cp_alignment_2025).to eq('Below 2 Degrees')
   end
 
   it 'imports CSV files with MQ Assessments data' do
@@ -1074,13 +1240,13 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       MQ::Assessment,
       mq_assessments_csv,
-      new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0
+      {new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0}
     )
     # subsequent import should not create or update any record
     expect_data_upload_results(
       MQ::Assessment,
       mq_assessments_csv,
-      new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0
+      {new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0}
     )
 
     assessment = acme_company.mq_assessments.last
@@ -1097,6 +1263,66 @@ describe 'CSVDataUpload (integration)' do
     expect(assessment.questions[1].answer).to eq('Yes')
   end
 
+  it 'imports CSV files with Banks data' do
+    create(:bank, name: 'Edge Bank Inc.')
+
+    expect_data_upload_results(
+      Bank,
+      banks_csv,
+      {new_records: 3, not_changed_records: 0, rows: 4, updated_records: 1}
+    )
+
+    bank = Bank.find_by(name: 'Edge Bank Inc.')
+    expect(bank.geography.iso).to eq('GBR')
+    expect(bank.latest_information).to eq('Another example of latest information')
+    expect(bank.sedol).to eq('304323')
+    expect(bank.isin).to eq('GB34343243')
+    expect(bank.market_cap_group).to eq('large')
+  end
+
+  it 'imports CSV files with Bank Assessment Indicators data' do
+    create(:bank_assessment_indicator, indicator_type: 'area', number: '1', text: 'Old Commitment')
+
+    expect_data_upload_results(
+      BankAssessmentIndicator,
+      bank_assessment_indicators_csv,
+      {new_records: 23, not_changed_records: 0, rows: 24, updated_records: 1}
+    )
+
+    changed = BankAssessmentIndicator.find_by(number: '1')
+    expect(changed.text).to eq('Commitment')
+
+    expect(BankAssessmentIndicator.area.count).to eq(3)
+    expect(BankAssessmentIndicator.indicator.count).to eq(4)
+    expect(BankAssessmentIndicator.sub_indicator.count).to eq(17)
+    expect(BankAssessmentIndicator.sub_indicator.find_by(number: '2.2.b').text)
+      .to eq("Do the targets cover the bank's material financing activities in at least one high-risk sector?")
+  end
+
+  it 'imports CSV files with Bank Assessment data' do
+    create(:bank, name: 'Edge Bank Inc.')
+    create(:bank, name: 'New National Bank System')
+
+    # I don't have time, import indicators again
+    expect_data_upload_results(
+      BankAssessmentIndicator,
+      bank_assessment_indicators_csv,
+      {new_records: 24, not_changed_records: 0, rows: 24, updated_records: 0}
+    )
+
+    expect_data_upload_results(
+      BankAssessment,
+      bank_assessments_csv,
+      {new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0}
+    )
+
+    assessment = Bank.find_by(name: 'Edge Bank Inc.').assessments.last
+    expect(assessment.assessment_date).to eq(Date.parse('2022-02-25'))
+    expect(assessment.results_by_indicator_type['area'].map(&:percentage)).to contain_exactly(25.0, 0.0, 100.0)
+    expect(assessment.results_by_indicator_type['indicator'].first.percentage).to eq(25.0)
+    expect(assessment.results_by_indicator_type['sub_indicator'].first.answer).to eq('Yes')
+  end
+
   it 'import CSV file with Geographies data' do
     create(:political_group, name: 'OECD')
     create(:political_group, name: 'G20')
@@ -1107,13 +1333,13 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       Geography,
       geographies_csv,
-      new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1
+      {new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1}
     )
     # subsequent import should not create or update any record
     expect_data_upload_results(
       Geography,
       geographies_csv,
-      new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0
+      {new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0}
     )
 
     geography = Geography.find_by(iso: 'USA')
@@ -1129,8 +1355,8 @@ describe 'CSVDataUpload (integration)' do
     expect(geography.federal_details).to be
   end
 
-  def expect_data_upload_results(uploaded_resource_klass, csv, expected_details, expected_success: true)
-    uploader_name = uploaded_resource_klass.name.tr('::', '').pluralize
+  def expect_data_upload_results(uploaded_resource_klass, csv, expected_details, expected_success: true, custom_uploader: nil)
+    uploader_name = custom_uploader || uploaded_resource_klass.name.tr('::', '').pluralize
     command = Command::CSVDataUpload.new(uploader: uploader_name, file: csv)
 
     expect do

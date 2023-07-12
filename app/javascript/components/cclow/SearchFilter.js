@@ -115,7 +115,7 @@ class SearchFilter extends Component {
         <div className="select-field" onClick={this.handleCloseOptions}>
           <span>{filterName}</span>
           <span className="toggle-indicator">
-            <img src={minus} alt="" />
+            <img src={minus} alt="Close Search Box" />
           </span>
         </div>
         <div>
@@ -123,7 +123,7 @@ class SearchFilter extends Component {
             <div className="search-input-container">
               <input id="search-input" type="text" onChange={this.handleSearchInput} />
               <label htmlFor="search-input">
-                <img src={search} />
+                <img src={search} alt="Search" />
               </label>
             </div>
           )}
@@ -159,7 +159,7 @@ class SearchFilter extends Component {
       <div className={`filter-container ${className}`}>
         <div className="control-field" onClick={() => this.setShowOptions(true)}>
           <div className="select-field">
-            <span>{filterName}</span><span className="toggle-indicator"><img src={plus} alt="" /></span>
+            <span>{filterName}</span><span className="toggle-indicator"><img src={plus} alt="Open Search Box" /></span>
           </div>
           {selectedCount !== 0 && <div className="selected-count">{selectedCount} selected</div>}
         </div>

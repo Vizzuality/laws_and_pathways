@@ -1,5 +1,8 @@
 require "#{Rails.root}/lib/timed_logger"
 
+TPISector.reset_column_information
+Company.reset_column_information
+
 # admin users
 # envs: DEV
 if (Rails.env.development? || Rails.env.test?) && !AdminUser.find_by(email: 'admin@example.com')
@@ -93,11 +96,6 @@ if Rails.env.development? || Rails.env.test? || ENV['SEED_DATA']
   TimedLogger.log('Import geographies') do
     CSVImport::Geographies.new(seed_file('geographies.csv'), allow_tags_adding: true).call
   end
-
-  # import NewsArticles
-  # TimedLogger.log('Import news articles') do
-  #   CSVImport::NewsArticles.new(seed_file('tpi-news.csv')).call
-  # end
 
   Seed::TPIData.call
   Seed::CCLOWData.call

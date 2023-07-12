@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <% title = content_for?(:page_title) ? content_for(:page_title) : 'Climate Change Laws of the World' %>
     <% description = content_for?(:page_description) ? content_for(:page_description) : "Climate Change Laws of the World is a global database of climate change laws, policies, climate targets and litigation cases" %>
@@ -37,11 +37,22 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
 
+    <% if ie_browser? %>
+      <script crossorigin="anonymous" src="https://polyfill.io/v3/polyfill.min.js?features=default%2Ces5%2Ces6%2CArray.prototype.filter%2CArray.prototype.find%2CArray.prototype.findIndex%2CArray.prototype.flat%2CArray.prototype.flatMap%2CArray.prototype.includes%2CDate.prototype.toISOString%2CObject.entries%2CObject.values%2CString.prototype.repeat%2Cfetch"></script>
+    <% end %>
+
     <%= stylesheet_link_tag 'cclow' %>
     <%= javascript_pack_tag 'cclow' %>
   </head>
   <body>
     <%= render "layouts/cclow/fixed-navbar" %>
+    <% if @current_user.present? %>
+      <div class="header__margin">
+      </div>
+    <% end %>
+    <div class="cpr-banner ">
+      Climate Change Laws of the World will soon be upgraded to be AI powered, <a href="https://www.lse.ac.uk/granthaminstitute/news/new-partnership-launches-ai-powered-global-climate-law-and-policy-database" target="_blank" rel="noopener noreferrer">see full announcement</a>
+    </div>
     <% if controller_name == 'home' && action_name == 'index'  %>
       <%= render "cclow/home/hero" %>
     <% else %>

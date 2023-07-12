@@ -1,0 +1,11 @@
+<div class="property">
+  <div class="property__name">
+    <%= name %>
+    <% if defined?(tooltip) %>
+      <%= react_component("BaseTooltip", { content: tooltip }) %>
+    <% end %>
+  </div>
+  <div class="property__value<%= ' highlight' if highlight.present? %>">
+    <%= yield%>
+  </div>
+</div>

@@ -3,6 +3,7 @@
 import Rails from '@rails/ujs';
 import ReactRailsUJS from 'react_ujs';
 
+import 'shared';
 import 'tpi';
 
 window.Rails = Rails;

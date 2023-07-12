@@ -20,6 +20,16 @@ RSpec.describe Admin::CompaniesController, type: :controller do
     it { is_expected.to be_successful }
   end
 
+  describe 'GET index with .csv format' do
+    before :each do
+      get :index, format: 'csv'
+    end
+
+    it('returns CSV file') do
+      expect(response.header['Content-Type']).to include('text/csv')
+    end
+  end
+
   describe 'GET show' do
     subject { get :show, params: {id: company.id} }
 
@@ -101,7 +111,7 @@ RSpec.describe Admin::CompaniesController, type: :controller do
         create(:litigation_side, connected_entity_type: 'Company', connected_entity_id: company.id)
       end
       let!(:mq_assessment) { create(:mq_assessment, company: company) }
-      let!(:cp_assessment) { create(:cp_assessment, company: company) }
+      let!(:cp_assessment) { create(:cp_assessment, cp_assessmentable: company) }
 
       subject { delete :destroy, params: {id: company.id} }
 

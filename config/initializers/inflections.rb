@@ -17,4 +17,5 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'MQ'
   inflect.acronym 'TPI'
   inflect.acronym 'CSV'
+  inflect.acronym 'HTML'
 end

@@ -311,6 +311,176 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: bank_assessment_indicators; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.bank_assessment_indicators (
+    id bigint NOT NULL,
+    indicator_type character varying NOT NULL,
+    number character varying NOT NULL,
+    text text NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: bank_assessment_indicators_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.bank_assessment_indicators_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bank_assessment_indicators_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.bank_assessment_indicators_id_seq OWNED BY public.bank_assessment_indicators.id;
+
+
+--
+-- Name: bank_assessment_results; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.bank_assessment_results (
+    id bigint NOT NULL,
+    bank_assessment_id bigint,
+    bank_assessment_indicator_id bigint,
+    answer character varying,
+    percentage double precision,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: bank_assessment_results_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.bank_assessment_results_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bank_assessment_results_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.bank_assessment_results_id_seq OWNED BY public.bank_assessment_results.id;
+
+
+--
+-- Name: bank_assessments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.bank_assessments (
+    id bigint NOT NULL,
+    bank_id bigint,
+    assessment_date date NOT NULL,
+    notes text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: bank_assessments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.bank_assessments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bank_assessments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.bank_assessments_id_seq OWNED BY public.bank_assessments.id;
+
+
+--
+-- Name: banks; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.banks (
+    id bigint NOT NULL,
+    geography_id bigint,
+    name character varying NOT NULL,
+    slug character varying NOT NULL,
+    isin character varying NOT NULL,
+    sedol character varying,
+    market_cap_group character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    latest_information text
+);
+
+
+--
+-- Name: banks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.banks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: banks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.banks_id_seq OWNED BY public.banks.id;
+
+
+--
+-- Name: case_studies; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.case_studies (
+    id bigint NOT NULL,
+    organization character varying NOT NULL,
+    link character varying,
+    text character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: case_studies_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.case_studies_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: case_studies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.case_studies_id_seq OWNED BY public.case_studies.id;
+
+
+--
 -- Name: companies; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -366,7 +536,8 @@ CREATE TABLE public.contents (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     content_type character varying,
-    "position" integer
+    "position" integer,
+    code character varying
 );
 
 
@@ -395,7 +566,6 @@ ALTER SEQUENCE public.contents_id_seq OWNED BY public.contents.id;
 
 CREATE TABLE public.cp_assessments (
     id bigint NOT NULL,
-    company_id bigint,
     publication_date date NOT NULL,
     assessment_date date,
     emissions jsonb,
@@ -404,8 +574,18 @@ CREATE TABLE public.cp_assessments (
     updated_at timestamp without time zone NOT NULL,
     discarded_at timestamp without time zone,
     last_reported_year integer,
-    cp_alignment character varying,
-    cp_alignment_year_override integer
+    cp_alignment_2050 character varying,
+    cp_alignment_2025 character varying,
+    cp_alignment_2035 character varying,
+    years_with_targets integer[],
+    region character varying,
+    cp_regional_alignment_2025 character varying,
+    cp_regional_alignment_2035 character varying,
+    cp_regional_alignment_2050 character varying,
+    cp_assessmentable_type character varying,
+    cp_assessmentable_id bigint,
+    sector_id bigint,
+    final_disclosure_year integer
 );
 
 
@@ -439,7 +619,9 @@ CREATE TABLE public.cp_benchmarks (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     emissions jsonb,
-    scenario character varying
+    scenario character varying,
+    region character varying DEFAULT 'Global'::character varying NOT NULL,
+    category character varying NOT NULL
 );
 
 
@@ -460,6 +642,41 @@ CREATE SEQUENCE public.cp_benchmarks_id_seq
 --
 
 ALTER SEQUENCE public.cp_benchmarks_id_seq OWNED BY public.cp_benchmarks.id;
+
+
+--
+-- Name: cp_matrices; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.cp_matrices (
+    id bigint NOT NULL,
+    cp_assessment_id bigint NOT NULL,
+    portfolio character varying NOT NULL,
+    cp_alignment_2025 character varying,
+    cp_alignment_2035 character varying,
+    cp_alignment_2050 character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: cp_matrices_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.cp_matrices_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: cp_matrices_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.cp_matrices_id_seq OWNED BY public.cp_matrices.id;
 
 
 --
@@ -725,81 +942,6 @@ ALTER SEQUENCE public.geographies_id_seq OWNED BY public.geographies.id;
 
 
 --
--- Name: governance_types; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.governance_types (
-    id bigint NOT NULL,
-    name character varying,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    discarded_at timestamp without time zone
-);
-
-
---
--- Name: governance_types_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.governance_types_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: governance_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.governance_types_id_seq OWNED BY public.governance_types.id;
-
-
---
--- Name: governances; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.governances (
-    id bigint NOT NULL,
-    name character varying,
-    governance_type_id bigint,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    discarded_at timestamp without time zone
-);
-
-
---
--- Name: governances_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.governances_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: governances_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.governances_id_seq OWNED BY public.governances.id;
-
-
---
--- Name: governances_legislations; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.governances_legislations (
-    legislation_id bigint NOT NULL,
-    governance_id bigint NOT NULL
-);
-
-
---
 -- Name: images; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1042,6 +1184,16 @@ ALTER SEQUENCE public.legislations_targets_id_seq OWNED BY public.legislations_t
 
 
 --
+-- Name: legislations_themes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.legislations_themes (
+    legislation_id bigint NOT NULL,
+    theme_id bigint NOT NULL
+);
+
+
+--
 -- Name: litigation_sides; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1119,45 +1271,6 @@ CREATE SEQUENCE public.litigations_id_seq
 --
 
 ALTER SEQUENCE public.litigations_id_seq OWNED BY public.litigations.id;
-
-
---
--- Name: locations; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.locations (
-    id bigint NOT NULL,
-    location_type character varying NOT NULL,
-    iso character varying NOT NULL,
-    name character varying NOT NULL,
-    slug character varying NOT NULL,
-    region character varying NOT NULL,
-    federal boolean DEFAULT false NOT NULL,
-    federal_details text,
-    approach_to_climate_change text,
-    legislative_process text,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: locations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.locations_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.locations_id_seq OWNED BY public.locations.id;
 
 
 --
@@ -1255,7 +1368,8 @@ CREATE TABLE public.pages (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     menu character varying,
-    type character varying
+    type character varying,
+    "position" integer
 );
 
 
@@ -1292,7 +1406,9 @@ CREATE TABLE public.publications (
     created_by_id bigint,
     updated_by_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    author character varying,
+    slug text NOT NULL
 );
 
 
@@ -1332,38 +1448,6 @@ CREATE TABLE public.publications_tpi_sectors (
 CREATE TABLE public.schema_migrations (
     version character varying NOT NULL
 );
-
-
---
--- Name: sectors; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.sectors (
-    id bigint NOT NULL,
-    name character varying NOT NULL,
-    slug character varying NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: sectors_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.sectors_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: sectors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.sectors_id_seq OWNED BY public.sectors.id;
 
 
 --
@@ -1509,6 +1593,71 @@ ALTER SEQUENCE public.testimonials_id_seq OWNED BY public.testimonials.id;
 
 
 --
+-- Name: theme_types; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.theme_types (
+    id bigint NOT NULL,
+    name character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    discarded_at timestamp without time zone
+);
+
+
+--
+-- Name: theme_types_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.theme_types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: theme_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.theme_types_id_seq OWNED BY public.theme_types.id;
+
+
+--
+-- Name: themes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.themes (
+    id bigint NOT NULL,
+    name character varying,
+    theme_type_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    discarded_at timestamp without time zone
+);
+
+
+--
+-- Name: themes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.themes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: themes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.themes_id_seq OWNED BY public.themes.id;
+
+
+--
 -- Name: tpi_sector_clusters; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1549,7 +1698,9 @@ CREATE TABLE public.tpi_sectors (
     slug character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    cluster_id bigint
+    cluster_id bigint,
+    show_in_tpi_tool boolean DEFAULT true NOT NULL,
+    categories character varying[] DEFAULT '{}'::character varying[]
 );
 
 
@@ -1615,6 +1766,41 @@ ALTER TABLE ONLY public.admin_users ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: bank_assessment_indicators id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessment_indicators ALTER COLUMN id SET DEFAULT nextval('public.bank_assessment_indicators_id_seq'::regclass);
+
+
+--
+-- Name: bank_assessment_results id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessment_results ALTER COLUMN id SET DEFAULT nextval('public.bank_assessment_results_id_seq'::regclass);
+
+
+--
+-- Name: bank_assessments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessments ALTER COLUMN id SET DEFAULT nextval('public.bank_assessments_id_seq'::regclass);
+
+
+--
+-- Name: banks id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.banks ALTER COLUMN id SET DEFAULT nextval('public.banks_id_seq'::regclass);
+
+
+--
+-- Name: case_studies id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.case_studies ALTER COLUMN id SET DEFAULT nextval('public.case_studies_id_seq'::regclass);
+
+
+--
 -- Name: companies id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1640,6 +1826,13 @@ ALTER TABLE ONLY public.cp_assessments ALTER COLUMN id SET DEFAULT nextval('publ
 --
 
 ALTER TABLE ONLY public.cp_benchmarks ALTER COLUMN id SET DEFAULT nextval('public.cp_benchmarks_id_seq'::regclass);
+
+
+--
+-- Name: cp_matrices id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.cp_matrices ALTER COLUMN id SET DEFAULT nextval('public.cp_matrices_id_seq'::regclass);
 
 
 --
@@ -1689,20 +1882,6 @@ ALTER TABLE ONLY public.friendly_id_slugs ALTER COLUMN id SET DEFAULT nextval('p
 --
 
 ALTER TABLE ONLY public.geographies ALTER COLUMN id SET DEFAULT nextval('public.geographies_id_seq'::regclass);
-
-
---
--- Name: governance_types id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.governance_types ALTER COLUMN id SET DEFAULT nextval('public.governance_types_id_seq'::regclass);
-
-
---
--- Name: governances id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.governances ALTER COLUMN id SET DEFAULT nextval('public.governances_id_seq'::regclass);
 
 
 --
@@ -1762,13 +1941,6 @@ ALTER TABLE ONLY public.litigations ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
--- Name: locations id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.locations ALTER COLUMN id SET DEFAULT nextval('public.locations_id_seq'::regclass);
-
-
---
 -- Name: mq_assessments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1797,13 +1969,6 @@ ALTER TABLE ONLY public.publications ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
--- Name: sectors id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.sectors ALTER COLUMN id SET DEFAULT nextval('public.sectors_id_seq'::regclass);
-
-
---
 -- Name: taggings id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1829,6 +1994,20 @@ ALTER TABLE ONLY public.targets ALTER COLUMN id SET DEFAULT nextval('public.targ
 --
 
 ALTER TABLE ONLY public.testimonials ALTER COLUMN id SET DEFAULT nextval('public.testimonials_id_seq'::regclass);
+
+
+--
+-- Name: theme_types id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.theme_types ALTER COLUMN id SET DEFAULT nextval('public.theme_types_id_seq'::regclass);
+
+
+--
+-- Name: themes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.themes ALTER COLUMN id SET DEFAULT nextval('public.themes_id_seq'::regclass);
 
 
 --
@@ -1902,6 +2081,46 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 
 --
+-- Name: bank_assessment_indicators bank_assessment_indicators_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessment_indicators
+    ADD CONSTRAINT bank_assessment_indicators_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bank_assessment_results bank_assessment_results_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessment_results
+    ADD CONSTRAINT bank_assessment_results_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bank_assessments bank_assessments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessments
+    ADD CONSTRAINT bank_assessments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: banks banks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.banks
+    ADD CONSTRAINT banks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: case_studies case_studies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.case_studies
+    ADD CONSTRAINT case_studies_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: companies companies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1931,6 +2150,14 @@ ALTER TABLE ONLY public.cp_assessments
 
 ALTER TABLE ONLY public.cp_benchmarks
     ADD CONSTRAINT cp_benchmarks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cp_matrices cp_matrices_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.cp_matrices
+    ADD CONSTRAINT cp_matrices_pkey PRIMARY KEY (id);
 
 
 --
@@ -1987,22 +2214,6 @@ ALTER TABLE ONLY public.friendly_id_slugs
 
 ALTER TABLE ONLY public.geographies
     ADD CONSTRAINT geographies_pkey PRIMARY KEY (id);
-
-
---
--- Name: governance_types governance_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.governance_types
-    ADD CONSTRAINT governance_types_pkey PRIMARY KEY (id);
-
-
---
--- Name: governances governances_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.governances
-    ADD CONSTRAINT governances_pkey PRIMARY KEY (id);
 
 
 --
@@ -2070,14 +2281,6 @@ ALTER TABLE ONLY public.litigations
 
 
 --
--- Name: locations locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.locations
-    ADD CONSTRAINT locations_pkey PRIMARY KEY (id);
-
-
---
 -- Name: mq_assessments mq_assessments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2118,14 +2321,6 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
--- Name: sectors sectors_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.sectors
-    ADD CONSTRAINT sectors_pkey PRIMARY KEY (id);
-
-
---
 -- Name: taggings taggings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2155,6 +2350,22 @@ ALTER TABLE ONLY public.targets
 
 ALTER TABLE ONLY public.testimonials
     ADD CONSTRAINT testimonials_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: theme_types theme_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.theme_types
+    ADD CONSTRAINT theme_types_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: themes themes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.themes
+    ADD CONSTRAINT themes_pkey PRIMARY KEY (id);
 
 
 --
@@ -2279,6 +2490,55 @@ CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON public.admin_us
 
 
 --
+-- Name: index_bank_assessment_indicators_on_indicator_type_and_number; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_bank_assessment_indicators_on_indicator_type_and_number ON public.bank_assessment_indicators USING btree (indicator_type, number);
+
+
+--
+-- Name: index_bank_assessment_results_on_bank_assessment_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_bank_assessment_results_on_bank_assessment_id ON public.bank_assessment_results USING btree (bank_assessment_id);
+
+
+--
+-- Name: index_bank_assessment_results_on_bank_assessment_indicator_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_bank_assessment_results_on_bank_assessment_indicator_id ON public.bank_assessment_results USING btree (bank_assessment_indicator_id);
+
+
+--
+-- Name: index_bank_assessments_on_bank_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_bank_assessments_on_bank_id ON public.bank_assessments USING btree (bank_id);
+
+
+--
+-- Name: index_banks_on_geography_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_banks_on_geography_id ON public.banks USING btree (geography_id);
+
+
+--
+-- Name: index_banks_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_banks_on_name ON public.banks USING btree (name);
+
+
+--
+-- Name: index_banks_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_banks_on_slug ON public.banks USING btree (slug);
+
+
+--
 -- Name: index_companies_on_discarded_at; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2328,10 +2588,10 @@ CREATE INDEX index_contents_on_page_id ON public.contents USING btree (page_id);
 
 
 --
--- Name: index_cp_assessments_on_company_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_cp_assessments_on_cp_assessmentable; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_cp_assessments_on_company_id ON public.cp_assessments USING btree (company_id);
+CREATE INDEX index_cp_assessments_on_cp_assessmentable ON public.cp_assessments USING btree (cp_assessmentable_type, cp_assessmentable_id);
 
 
 --
@@ -2342,10 +2602,24 @@ CREATE INDEX index_cp_assessments_on_discarded_at ON public.cp_assessments USING
 
 
 --
+-- Name: index_cp_assessments_on_sector_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_cp_assessments_on_sector_id ON public.cp_assessments USING btree (sector_id);
+
+
+--
 -- Name: index_cp_benchmarks_on_sector_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_cp_benchmarks_on_sector_id ON public.cp_benchmarks USING btree (sector_id);
+
+
+--
+-- Name: index_cp_matrices_on_cp_assessment_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_cp_matrices_on_cp_assessment_id ON public.cp_matrices USING btree (cp_assessment_id);
 
 
 --
@@ -2468,41 +2742,6 @@ CREATE INDEX index_geographies_on_updated_by_id ON public.geographies USING btre
 
 
 --
--- Name: index_governance_types_on_discarded_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_governance_types_on_discarded_at ON public.governance_types USING btree (discarded_at);
-
-
---
--- Name: index_governances_legislations_on_governance_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_governances_legislations_on_governance_id ON public.governances_legislations USING btree (governance_id);
-
-
---
--- Name: index_governances_legislations_on_legislation_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_governances_legislations_on_legislation_id ON public.governances_legislations USING btree (legislation_id);
-
-
---
--- Name: index_governances_on_discarded_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_governances_on_discarded_at ON public.governances USING btree (discarded_at);
-
-
---
--- Name: index_governances_on_governance_type_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_governances_on_governance_type_id ON public.governances USING btree (governance_type_id);
-
-
---
 -- Name: index_images_on_content_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2514,6 +2753,13 @@ CREATE INDEX index_images_on_content_id ON public.images USING btree (content_id
 --
 
 CREATE INDEX index_instrument_types_on_discarded_at ON public.instrument_types USING btree (discarded_at);
+
+
+--
+-- Name: index_instrument_types_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_instrument_types_on_name ON public.instrument_types USING btree (name);
 
 
 --
@@ -2542,6 +2788,13 @@ CREATE INDEX index_instruments_on_discarded_at ON public.instruments USING btree
 --
 
 CREATE INDEX index_instruments_on_instrument_type_id ON public.instruments USING btree (instrument_type_id);
+
+
+--
+-- Name: index_instruments_on_name_and_instrument_type_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_instruments_on_name_and_instrument_type_id ON public.instruments USING btree (name, instrument_type_id);
 
 
 --
@@ -2671,6 +2924,20 @@ CREATE UNIQUE INDEX index_legislations_targets_on_target_id_and_legislation_id O
 
 
 --
+-- Name: index_legislations_themes_on_legislation_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_legislations_themes_on_legislation_id ON public.legislations_themes USING btree (legislation_id);
+
+
+--
+-- Name: index_legislations_themes_on_theme_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_legislations_themes_on_theme_id ON public.legislations_themes USING btree (theme_id);
+
+
+--
 -- Name: index_litigation_sides_connected_entity; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2748,27 +3015,6 @@ CREATE INDEX index_litigations_on_updated_by_id ON public.litigations USING btre
 
 
 --
--- Name: index_locations_on_iso; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_locations_on_iso ON public.locations USING btree (iso);
-
-
---
--- Name: index_locations_on_region; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_locations_on_region ON public.locations USING btree (region);
-
-
---
--- Name: index_locations_on_slug; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_locations_on_slug ON public.locations USING btree (slug);
-
-
---
 -- Name: index_mq_assessments_on_company_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2818,6 +3064,13 @@ CREATE INDEX index_publications_on_created_by_id ON public.publications USING bt
 
 
 --
+-- Name: index_publications_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_publications_on_slug ON public.publications USING btree (slug);
+
+
+--
 -- Name: index_publications_on_updated_by_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2836,20 +3089,6 @@ CREATE INDEX index_publications_tpi_sectors_on_publication_id ON public.publicat
 --
 
 CREATE INDEX index_publications_tpi_sectors_on_tpi_sector_id ON public.publications_tpi_sectors USING btree (tpi_sector_id);
-
-
---
--- Name: index_sectors_on_name; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_sectors_on_name ON public.sectors USING btree (name);
-
-
---
--- Name: index_sectors_on_slug; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_sectors_on_slug ON public.sectors USING btree (slug);
 
 
 --
@@ -2916,6 +3155,41 @@ CREATE INDEX index_targets_on_updated_by_id ON public.targets USING btree (updat
 
 
 --
+-- Name: index_theme_types_on_discarded_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_theme_types_on_discarded_at ON public.theme_types USING btree (discarded_at);
+
+
+--
+-- Name: index_theme_types_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_theme_types_on_name ON public.theme_types USING btree (name);
+
+
+--
+-- Name: index_themes_on_discarded_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_themes_on_discarded_at ON public.themes USING btree (discarded_at);
+
+
+--
+-- Name: index_themes_on_name_and_theme_type_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_themes_on_name_and_theme_type_id ON public.themes USING btree (name, theme_type_id);
+
+
+--
+-- Name: index_themes_on_theme_type_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_themes_on_theme_type_id ON public.themes USING btree (theme_type_id);
+
+
+--
 -- Name: index_tpi_sectors_on_cluster_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2940,21 +3214,21 @@ CREATE UNIQUE INDEX index_tpi_sectors_on_slug ON public.tpi_sectors USING btree 
 -- Name: legislations tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.legislations FOR EACH ROW EXECUTE PROCEDURE public.legislation_tsv_trigger();
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.legislations FOR EACH ROW EXECUTE FUNCTION public.legislation_tsv_trigger();
 
 
 --
 -- Name: litigations tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.litigations FOR EACH ROW EXECUTE PROCEDURE public.litigation_tsv_trigger();
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.litigations FOR EACH ROW EXECUTE FUNCTION public.litigation_tsv_trigger();
 
 
 --
 -- Name: targets tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.targets FOR EACH ROW EXECUTE PROCEDURE public.target_tsv_trigger();
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.targets FOR EACH ROW EXECUTE FUNCTION public.target_tsv_trigger();
 
 
 --
@@ -2971,6 +3245,14 @@ ALTER TABLE ONLY public.targets
 
 ALTER TABLE ONLY public.legislations_targets
     ADD CONSTRAINT fk_rails_0dcade7ab2 FOREIGN KEY (target_id) REFERENCES public.targets(id) ON DELETE CASCADE;
+
+
+--
+-- Name: legislations fk_rails_18e11db07f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.legislations
+    ADD CONSTRAINT fk_rails_18e11db07f FOREIGN KEY (geography_id) REFERENCES public.geographies(id);
 
 
 --
@@ -3006,6 +3288,22 @@ ALTER TABLE ONLY public.instruments
 
 
 --
+-- Name: companies fk_rails_1e99f51bd6; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT fk_rails_1e99f51bd6 FOREIGN KEY (geography_id) REFERENCES public.geographies(id);
+
+
+--
+-- Name: bank_assessment_results fk_rails_2796dae392; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessment_results
+    ADD CONSTRAINT fk_rails_2796dae392 FOREIGN KEY (bank_assessment_id) REFERENCES public.bank_assessments(id);
+
+
+--
 -- Name: news_articles fk_rails_286df43ea0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3019,6 +3317,14 @@ ALTER TABLE ONLY public.news_articles
 
 ALTER TABLE ONLY public.legislations
     ADD CONSTRAINT fk_rails_2d705f7c8d FOREIGN KEY (parent_id) REFERENCES public.legislations(id);
+
+
+--
+-- Name: geographies fk_rails_318296af0e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.geographies
+    ADD CONSTRAINT fk_rails_318296af0e FOREIGN KEY (updated_by_id) REFERENCES public.admin_users(id);
 
 
 --
@@ -3046,19 +3352,35 @@ ALTER TABLE ONLY public.mq_assessments
 
 
 --
--- Name: cp_assessments fk_rails_454b8ce365; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: companies fk_rails_4604e9667e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT fk_rails_4604e9667e FOREIGN KEY (headquarters_geography_id) REFERENCES public.geographies(id);
+
+
+--
+-- Name: bank_assessment_results fk_rails_46970f9780; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessment_results
+    ADD CONSTRAINT fk_rails_46970f9780 FOREIGN KEY (bank_assessment_indicator_id) REFERENCES public.bank_assessment_indicators(id);
+
+
+--
+-- Name: geographies fk_rails_4b7c42813d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.geographies
+    ADD CONSTRAINT fk_rails_4b7c42813d FOREIGN KEY (created_by_id) REFERENCES public.admin_users(id);
+
+
+--
+-- Name: cp_assessments fk_rails_4c218774c4; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.cp_assessments
-    ADD CONSTRAINT fk_rails_454b8ce365 FOREIGN KEY (company_id) REFERENCES public.companies(id) ON DELETE CASCADE;
-
-
---
--- Name: legislations fk_rails_53881fe3dc; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.legislations
-    ADD CONSTRAINT fk_rails_53881fe3dc FOREIGN KEY (geography_id) REFERENCES public.geographies(id);
+    ADD CONSTRAINT fk_rails_4c218774c4 FOREIGN KEY (sector_id) REFERENCES public.tpi_sectors(id);
 
 
 --
@@ -3094,6 +3416,22 @@ ALTER TABLE ONLY public.litigation_sides
 
 
 --
+-- Name: bank_assessments fk_rails_68427d4c57; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bank_assessments
+    ADD CONSTRAINT fk_rails_68427d4c57 FOREIGN KEY (bank_id) REFERENCES public.banks(id) ON DELETE CASCADE;
+
+
+--
+-- Name: targets fk_rails_68ebac20c0; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.targets
+    ADD CONSTRAINT fk_rails_68ebac20c0 FOREIGN KEY (geography_id) REFERENCES public.geographies(id);
+
+
+--
 -- Name: publications fk_rails_6984032012; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3102,11 +3440,19 @@ ALTER TABLE ONLY public.publications
 
 
 --
--- Name: governances fk_rails_767317104d; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: cp_matrices fk_rails_7501b6962b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.governances
-    ADD CONSTRAINT fk_rails_767317104d FOREIGN KEY (governance_type_id) REFERENCES public.governance_types(id);
+ALTER TABLE ONLY public.cp_matrices
+    ADD CONSTRAINT fk_rails_7501b6962b FOREIGN KEY (cp_assessment_id) REFERENCES public.cp_assessments(id);
+
+
+--
+-- Name: themes fk_rails_767317104d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.themes
+    ADD CONSTRAINT fk_rails_767317104d FOREIGN KEY (theme_type_id) REFERENCES public.theme_types(id);
 
 
 --
@@ -3158,27 +3504,11 @@ ALTER TABLE ONLY public.litigations
 
 
 --
--- Name: geographies fk_rails_930b18a10c; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.geographies
-    ADD CONSTRAINT fk_rails_930b18a10c FOREIGN KEY (updated_by_id) REFERENCES public.admin_users(id);
-
-
---
 -- Name: active_storage_variant_records fk_rails_993965df05; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.active_storage_variant_records
     ADD CONSTRAINT fk_rails_993965df05 FOREIGN KEY (blob_id) REFERENCES public.active_storage_blobs(id);
-
-
---
--- Name: targets fk_rails_9bc990d5d8; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.targets
-    ADD CONSTRAINT fk_rails_9bc990d5d8 FOREIGN KEY (geography_id) REFERENCES public.geographies(id);
 
 
 --
@@ -3198,14 +3528,6 @@ ALTER TABLE ONLY public.publications
 
 
 --
--- Name: geographies fk_rails_b0c4e90fda; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.geographies
-    ADD CONSTRAINT fk_rails_b0c4e90fda FOREIGN KEY (created_by_id) REFERENCES public.admin_users(id);
-
-
---
 -- Name: contents fk_rails_b169e370d5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3214,19 +3536,19 @@ ALTER TABLE ONLY public.contents
 
 
 --
+-- Name: banks fk_rails_b7a12616f3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.banks
+    ADD CONSTRAINT fk_rails_b7a12616f3 FOREIGN KEY (geography_id) REFERENCES public.geographies(id);
+
+
+--
 -- Name: legislations fk_rails_ba015eb89e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.legislations
     ADD CONSTRAINT fk_rails_ba015eb89e FOREIGN KEY (updated_by_id) REFERENCES public.admin_users(id);
-
-
---
--- Name: companies fk_rails_bf059545a3; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.companies
-    ADD CONSTRAINT fk_rails_bf059545a3 FOREIGN KEY (geography_id) REFERENCES public.geographies(id);
 
 
 --
@@ -3251,14 +3573,6 @@ ALTER TABLE ONLY public.targets
 
 ALTER TABLE ONLY public.data_uploads
     ADD CONSTRAINT fk_rails_e965439ee4 FOREIGN KEY (uploaded_by_id) REFERENCES public.admin_users(id);
-
-
---
--- Name: companies fk_rails_ff92b68e2b; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.companies
-    ADD CONSTRAINT fk_rails_ff92b68e2b FOREIGN KEY (headquarters_geography_id) REFERENCES public.geographies(id);
 
 
 --
@@ -3391,6 +3705,31 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210305132256'),
 ('20210316164558'),
 ('20210514085536'),
-('20211116114117');
+('20211116114117'),
+('20220215170029'),
+('20220218100325'),
+('20220218100643'),
+('20220221123402'),
+('20220310091530'),
+('20220324160017'),
+('20220324184534'),
+('20220324190738'),
+('20220704085154'),
+('20220704092137'),
+('20220704094334'),
+('20220704094826'),
+('20220719121521'),
+('20220722075902'),
+('20220722100953'),
+('20220822094300'),
+('20220822102328'),
+('20220902105018'),
+('20220908080811'),
+('20230612083439'),
+('20230613101102'),
+('20230620080704'),
+('20230622073030'),
+('20230622093001'),
+('20230712074753');
 
 

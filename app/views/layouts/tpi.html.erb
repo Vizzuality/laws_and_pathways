@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <% title = content_for?(:page_title) ? content_for(:page_title) : 'Transition Pathway Initiative' %>
     <% description = content_for?(:page_description) ? content_for(:page_description) : "The Transition Pathway Initiative (TPI) is a global, asset-owner led initiative which assesses companies' preparedness for the transition to a low carbon economy." %>
@@ -36,6 +36,10 @@
     <link rel="mask-icon" href="/tpi/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
+
+    <% if ie_browser? %>
+      <script crossorigin="anonymous" src="https://polyfill.io/v3/polyfill.min.js?features=default%2Ces5%2Ces6%2CArray.prototype.filter%2CArray.prototype.find%2CArray.prototype.findIndex%2CArray.prototype.flat%2CArray.prototype.flatMap%2CArray.prototype.includes%2CDate.prototype.toISOString%2CObject.entries%2CObject.values%2CString.prototype.repeat%2Cfetch"></script>
+    <% end %>
 
     <%= stylesheet_link_tag 'tpi' %>
     <%= javascript_pack_tag 'tpi' %>

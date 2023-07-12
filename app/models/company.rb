@@ -40,14 +40,20 @@ class Company < ApplicationRecord
 
   has_many :mq_assessments, class_name: 'MQ::Assessment', inverse_of: :company
   has_one :latest_mq_assessment, -> { currently_published.order(assessment_date: :desc) }, class_name: 'MQ::Assessment'
-  has_many :cp_assessments, class_name: 'CP::Assessment', inverse_of: :company
-  has_one :latest_cp_assessment, -> { currently_published.order(assessment_date: :desc) }, class_name: 'CP::Assessment'
+  has_many :cp_assessments, class_name: 'CP::Assessment', as: :cp_assessmentable
+  has_one :latest_cp_assessment, -> {
+                                   currently_published.order(assessment_date: :desc)
+                                 }, class_name: 'CP::Assessment', as: :cp_assessmentable
+  has_one :latest_cp_assessment_regional, -> { currently_published.regional.order(assessment_date: :desc) },
+          class_name: 'CP::Assessment', as: :cp_assessmentable
   has_many :litigation_sides, as: :connected_entity
   has_many :litigations, through: :litigation_sides
 
   delegate :level, :status, :status_description_short,
            to: :latest_mq_assessment, prefix: :mq, allow_nil: true
-  delegate :cp_alignment, :cp_alignment_year, to: :latest_cp_assessment, allow_nil: true
+  delegate :cp_alignment_2050, :cp_alignment_2025, :cp_alignment_2035,
+           :cp_regional_alignment_2050, :cp_regional_alignment_2025, :cp_regional_alignment_2035,
+           to: :latest_cp_assessment, allow_nil: true
 
   validates :ca100, inclusion: {in: [true, false]}
   validates_presence_of :name, :slug, :isin, :market_cap_group
@@ -63,14 +69,6 @@ class Company < ApplicationRecord
     name
   end
 
-  def latest_sector_benchmarks
-    sector.latest_released_benchmarks
-  end
-
-  def latest_sector_benchmarks_before_last_assessment
-    sector.latest_benchmarks_for_date(latest_cp_assessment&.publication_date)
-  end
-
   def isin_array
     return [] if isin.blank?
 
@@ -79,6 +77,10 @@ class Company < ApplicationRecord
 
   def is_4_star?
     mq_level.eql?('4STAR')
+  end
+
+  def cp_alignment_region
+    latest_cp_assessment_regional&.region
   end
 
   def path

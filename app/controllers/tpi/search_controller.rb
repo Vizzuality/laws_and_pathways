@@ -4,7 +4,7 @@ module TPI
       @query = params[:query]
 
       if @query.present?
-        @sectors = TPISector.search(params[:query]).order(:name)
+        @sectors = TPISector.companies.search(params[:query]).order(:name)
         @companies = TPI::CompanyDecorator.decorate_collection(
           Company.published.search(params[:query]).order(:name)
         )

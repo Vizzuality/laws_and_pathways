@@ -1,14 +1,32 @@
 <%= react_component("Navbar", {
   items: [
     {
-      entry: 'TPI tool',
-      path: tpi_sectors_path,
-      content: @tpi_tool_pages,
+      entry: 'TPI online tool',
+      content: [
+        {
+          title: 'Publicly listed equities',
+          path: tpi_sectors_path,
+        },
+        {
+          title: 'Corporate bonds issuers',
+          path: tpi_corporate_bond_issuers_path
+        },
+        {
+          title: 'Banks',
+          path: tpi_banks_path
+        },
+        {
+          title: 'Sovereign bonds issuers',
+          path: tpi_publications_path(tags: 'ASCOR')
+        }
+      ],
       active: active_menu_page?([
         tpi_sectors_path,
+        tpi_banks_path,
+        tpi_corporate_bond_issuers_path,
         { controller: 'tpi/sectors', action: 'show' },
-        { controller: 'tpi/companies', action: 'show' },
-        *@tpi_tool_pages_paths
+        { controller: 'tpi/banks', action: 'show' },
+        { controller: 'tpi/companies', action: 'show' }
       ])
     },
     {
@@ -18,8 +36,23 @@
     },
     {
       entry: 'About',
-      content: @about_pages,
+      content: [
+        @about_tpi_centre.empty? ? nil : {
+          title: 'TPI Global Climate Transition Centre',
+          content: @about_tpi_centre
+        },
+        @about_tpi_ltd.empty? ? nil : {
+          title: 'TPI Ltd.',
+          content: @about_tpi_ltd
+        },
+        *@about_pages
+      ].compact,
       active: active_menu_page?(@about_pages_paths)
+    },
+    {
+      entry: "Use of the Centre's data",
+      path: '/use-of-the-centre-s-data',
+      active: active_menu_page?('/use-of-the-centre-s-data')
     },
     {
       entry: 'Newsletter',
@@ -39,4 +72,4 @@
       action: '/search',
     },
   },
-}) %>
+  }) %>

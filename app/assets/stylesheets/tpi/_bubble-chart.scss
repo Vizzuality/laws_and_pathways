@@ -1,10 +1,10 @@
-
 @import "colors";
 @import "typography";
 
 $tape-height: 8px;
 $tape-color: rgba(25,25,25,0.1);
 $cell-height: 80px;
+$cell-height-banks: 100px;
 $legend-image-width: 60px;
 
 .bubble-chart__container {
@@ -12,12 +12,24 @@ $legend-image-width: 60px;
   padding: 50px 0;
   /* CSS GRID */
   display: grid;
-  grid-template-rows: 150px auto;
   grid-row-gap: 4px;
   align-items: center;
 
-  & > *:nth-child(6n) {
-    border-right: none;
+  &--sectors {
+    grid-template-rows: 150px auto;
+
+    & > *:nth-child(6n) {
+      border-right: none;
+    }
+  }
+
+  &--banks {
+    grid-template-rows: 100px auto;
+    padding-top: 120px;
+
+    & > *:nth-child(7n) {
+      border-right: none;
+    }
   }
 }
 
@@ -43,6 +55,12 @@ $legend-image-width: 60px;
   }
 }
 
+.bubble-chart__container--banks {
+  .bubble-chart__cell {
+    height: $cell-height-banks;
+  }
+}
+
 .bubble-chart_circle {
   circle:hover {
     stroke-width: 14;
@@ -51,11 +69,24 @@ $legend-image-width: 60px;
 }
 
 .bubble-tip {
-  background-color: $white;
-  border: 1px solid $black;
   font-size: 14px;
   padding: 10px;
   z-index: 5;
+  background-color: $white;
+  border: 1px solid $black;
+
+  &-header {
+    opacity: 0.9;
+    text-transform: uppercase;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  &-text {
+    margin-top: 2px;
+    font-size: 20px;
+    font-weight: bold;
+  }
 }
 
 .bubble-chart__legend-container {
@@ -69,6 +100,22 @@ $legend-image-width: 60px;
   align-items: center;
 }
 
+.bubble-chart__container--banks {
+  .bubble-chart__title-container {
+    position: absolute;
+    top: -50px;
+  }
+
+  .bubble-chart__header {
+    position: absolute;
+    right: 0;
+    top: -50px;
+    transform: translateX(100%);
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
+
 .bubble-chart__title {
   color: $grey-dark;
   font-size: $size-6;
@@ -78,7 +125,12 @@ $legend-image-width: 60px;
 .bubble-chart__legend {
   display: flex;
   position: relative;
-  margin-top: 20px;
+}
+
+.bubble-chart__container--sectors {
+  .bubble-chart__legend {
+    margin-top: 20px;
+  }
 }
 
 .bubble-chart__legend-image {
@@ -106,15 +158,37 @@ $legend-image-width: 60px;
   padding-left: 20px;
 }
 
-.bubble-chart__level-container {
-  position: absolute;
-  top: 20%;
+.bubble-chart__container--sectors {
+  .bubble-chart__level-container {
+    position: absolute;
+    top: 20%;
+  }
+
+  .bubble-chart__level-title {
+    font-family: $font-family-bold;
+    font-size: 16px;
+    color: $black;
+  }
 }
 
-.bubble-chart__level-title {
-  font-family: $font-family-bold;
-  font-size: 16px;
-  color: rgba(0,0,0,0.9);
+.bubble-chart__container--banks {
+  .bubble-chart__level-title {
+    font-family: $font-family-bold;
+    font-size: 12px;
+    color: $black;
+  }
+
+  .bubble-chart__level {
+    text-align: center;
+  }
+
+  .bubble-chart__legend-container + .bubble-chart__level {
+    text-align: left;
+  }
+
+  .bubble-chart__level {
+    padding-left: 0px;
+  }
 }
 
 .bubble-chart__level-subtitle {
@@ -122,7 +196,7 @@ $legend-image-width: 60px;
   font-size: 12px;
 }
 
-.bubble-chart__sector-link {
+.bubble-chart__row-link {
   color: $blue-dark;
   text-align: right;
   padding-right: 50px;

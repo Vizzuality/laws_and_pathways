@@ -1,0 +1,18 @@
+<h3 class="cp_assessments_title" style="margin: 25px 0">
+  Carbon performance of <%= @bank.name %>
+</h3>
+<% cp_assessments = Queries::TPI::LatestCPAssessmentsQuery.new(category: Bank, cp_assessmentable: @bank).call %>
+<% cp_sectors = TPISector.for_category(Bank).order(:name).map { |sector|
+   cp_assessment = cp_assessments[[@bank, sector]]&.first
+    {
+      name: sector.name,
+      assessment: cp_assessment,
+      dataUrl: emissions_chart_data_tpi_bank_path(bank, sector_id: sector.id),
+      unit: cp_assessment&.unit
+    }
+  }.select { |sector| sector[:assessment].present? && sector[:assessment].emissions.present? } %>
+<div style="margin: 25px 0">
+  <%= react_component('charts/cp-performance/MultipleChart', {
+    sectors: cp_sectors
+  }) %>
+</div>

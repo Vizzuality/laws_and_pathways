@@ -1,4 +1,11 @@
 module ApplicationHelper
+  def ie_browser?
+    return false if request.user_agent.blank?
+
+    (request.user_agent.include?('MSIE') && !request.user_agent.include?('Opera')) ||
+      request.user_agent.match?(/Trident\/.*?; rv:(.*?)/)
+  end
+
   def humanize_boolean(value)
     value ? 'Yes' : 'No'
   end
@@ -23,5 +30,20 @@ module ApplicationHelper
     rescue ActionController::UrlGenerationError
       false
     end
+  end
+
+  def svg(filename, options = {})
+    filepath = Rails.root.join('app', 'assets', 'images', "#{filename}.svg")
+
+    if File.exist?(filepath)
+      file = File.read(filepath)
+      doc = Nokogiri::HTML::DocumentFragment.parse file
+      svg = doc.at_css 'svg'
+      svg['class'] = options[:class] if options[:class].present?
+    else
+      doc = "<!-- SVG #{filename} not found -->"
+    end
+
+    raw doc
   end
 end

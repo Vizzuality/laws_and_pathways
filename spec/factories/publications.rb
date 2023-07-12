@@ -12,6 +12,7 @@
 #  updated_by_id     :bigint
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  author            :string
 #
 
 FactoryBot.define do
@@ -19,6 +20,7 @@ FactoryBot.define do
     tpi_sectors { |a| [a.association(:tpi_sector)] }
 
     title { 'MyString' }
+    author { 'Author' }
     short_description { 'MyText' }
     publication_date { '2019-12-02' }
     file { fixture_file_upload(Rails.root.join('spec', 'support', 'fixtures', 'files', 'test.pdf'), 'pdf') }

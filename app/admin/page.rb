@@ -7,10 +7,10 @@
 
     decorate_with PageDecorator
 
-    menu priority: (page_class == 'TPIPage' ? 7 : 6),
+    menu priority: (page_class == 'TPIPage' ? 8 : 6),
          parent: (page_class == 'TPIPage' ? 'TPI' : 'Laws')
 
-    permit_params :title, :slug, :description, :menu,
+    permit_params :title, :slug, :description, :menu, :position,
                   contents_attributes: [
                     *permit_params_for(:contents),
                     images_attributes: permit_params_for(:images)
@@ -22,6 +22,7 @@
 
     index do
       column :title, &:title_link
+      column(:preview_link) { |page| link_to 'Preview', page.preview_url }
       column :slug
       column :menu
       actions
@@ -38,6 +39,7 @@
             row :title
             row :slug
             row :menu
+            row :position
             row :description
           end
         end

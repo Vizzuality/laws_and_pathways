@@ -7,6 +7,8 @@ namespace :reimport do
     CP::Assessment.delete_all
     MQ::Assessment.delete_all
     CP::Benchmark.delete_all
+    NewsArticle.destroy_all
+    Publication.destroy_all
 
     Seed::TPIData.call
   end

@@ -1,0 +1,30 @@
+@import "../colors";
+@import "../typography";
+
+.matrix-tabs {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 30px;
+  flex-direction: column;
+  margin-left: 10px;
+
+  @include desktop {
+    flex-direction: row;
+    margin-left: 0;
+  }
+}
+
+.tab {
+  padding: 30px;
+  color:$blue-dark;
+
+  &:hover {
+    border-color: $grey;
+    background-color: $grey;
+  }
+
+  &.active {
+    color: $white;
+    background-color: $blue-dark;
+  }
+}

@@ -16,12 +16,22 @@ $size-9: 0.5rem;
 
 @font-face {
   font-family: "BrownTT Regular";
-  src: font-url("BrownTT-Regular.ttf") format("truetype");
+  src: font-url('BrownTT-Regular.eot');
+  src: font-url('BrownTT-Regular.eot?#iefix') format('embedded-opentype'),
+       font-url('BrownTT-Regular.woff2') format('woff2'),
+       font-url('BrownTT-Regular.woff') format('woff'),
+       font-url("BrownTT-Regular.ttf") format("truetype");
+  font-display: swap;
 }
 
 @font-face {
   font-family: "BrownTT Bold";
-  src: font-url("BrownTT-Bold.ttf") format("truetype");
+  src: font-url('BrownTT-Bold.eot');
+  src: font-url('BrownTT-Bold.eot?#iefix') format('embedded-opentype'),
+       font-url('BrownTT-Bold.woff2') format('woff2'),
+       font-url('BrownTT-Bold.woff') format('woff'),
+       font-url("BrownTT-Bold.ttf") format("truetype");
+  font-display: swap;
 }
 
 h1 {

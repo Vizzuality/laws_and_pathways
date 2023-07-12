@@ -9,7 +9,7 @@
       <li><a href="#sides">Sides</a></li>
     </ul>
 
-    <%= hidden_field_tag :active_tab, params[:active_tab], 'data-target' => 'tabs.activeTab' %>
+    <%= hidden_field_tag :active_tab, params[:active_tab], 'data-tabs-target' => 'activeTab' %>
 
     <div class="tab-content">
 
@@ -20,12 +20,12 @@
           <%= f.input :jurisdiction %>
           <%= f.input :citation_reference_number %>
           <%= f.input :laws_sector_ids, label: 'Sectors', as: :select,
-            collection: LawsSector.order(:name), input_html: { multiple: true } %>
+                                                                                                                                                                                            collection: LawsSector.order(:name), input_html: { multiple: true } %>
           <%= f.input :document_type, as: :select, collection: array_to_select_collection(Litigation::DOCUMENT_TYPES) %>
           <%= f.input :summary, as: :trix %>
           <%= f.input :at_issue, as: :trix %>
-          <%= f.input :legislation_ids, as: :selected_list, label: 'Connected Laws', fields: [:title], display_name: :display_name, order: 'title_asc' %>
-          <%= f.input :external_legislation_ids, as: :selected_list, label: 'Connected External Laws', fields: [:name], display_name: :display_name, order: 'name_asc' %>
+          <%= f.input :legislation_ids, as: :selected_list, label: 'Connected Laws', url: filter_admin_legislations_path, display_name: :display_name %>
+          <%= f.input :external_legislation_ids, as: :selected_list, label: 'Connected External Laws', url: filter_admin_external_legislations_path, display_name: :display_name %>
           <%= f.input :visibility_status, as: :select %>
           <%= f.input :keyword_ids, as: :tags, label: 'Keywords', collection: Keyword.ordered_by_name %>
           <%= f.input :response_ids, as: :tags, label: 'Responses (e.g. adaptation or mitigation)', collection: Response.ordered_by_name %>

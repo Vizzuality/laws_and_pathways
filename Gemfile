@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.2'
+ruby '3.0.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1.1'
@@ -16,6 +16,7 @@ gem 'rubyzip'
 gem 'turbolinks', '~> 5'
 gem 'bootsnap', '>= 1.4.2', require: false
 
+gem 'activerecord-import'
 gem 'acts_as_list'
 gem 'activeadmin', '2.9.0' # TODO: update when csv export is fixed, check bom options
 gem 'activeadmin_addons'
@@ -24,9 +25,7 @@ gem 'cancancan'
 gem 'draper-cancancan'
 gem 'draper'
 
-gem 'octokit', '~> 4.15.0'
-
-gem 'google-cloud-storage', require: false
+gem 'google-cloud-storage', '~> 1.36.2', require: false
 
 gem 'discard'
 gem 'public_activity'
@@ -43,6 +42,7 @@ gem 'font-awesome-rails'
 gem 'react-rails'
 
 gem 'appsignal'
+gem 'rubyXL'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -62,7 +62,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'super_diff'
   gem 'test-prof'
-  gem 'webdrivers', '~> 4.0'
+  gem 'webdrivers'
 end
 
 group :development do
@@ -79,6 +79,7 @@ group :development do
   gem 'capistrano-yarn'
   gem 'countries' # just to generate country flags using rake task flags:generate
   gem 'listen', '>= 3.0.5', '< 3.2'
+  # gem 'octokit', '~> 4.0' # used for generate flags - maybe could be removed
   gem 'rubocop'
   gem 'rubocop-performance'
   gem 'spring'

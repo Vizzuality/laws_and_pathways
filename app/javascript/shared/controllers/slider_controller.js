@@ -1,4 +1,4 @@
-import { Controller } from 'stimulus';
+import { Controller } from '@hotwired/stimulus';
 import { tns } from 'tiny-slider/src/tiny-slider';
 
 export default class extends Controller {
@@ -24,6 +24,10 @@ export default class extends Controller {
           items: 3,
           controls: true
         }
+      },
+      onInit(slider) {
+        slider.nextButton.setAttribute('aria-label', 'Next');
+        slider.prevButton.setAttribute('aria-label', 'Previous');
       }
     });
   }

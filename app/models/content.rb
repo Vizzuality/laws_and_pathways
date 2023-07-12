@@ -10,6 +10,7 @@
 #  updated_at   :datetime         not null
 #  content_type :string
 #  position     :integer
+#  code         :string
 #
 
 class Content < ApplicationRecord
@@ -22,5 +23,28 @@ class Content < ApplicationRecord
 
   with_options allow_destroy: true, reject_if: :all_blank do
     accepts_nested_attributes_for :images
+  end
+
+  def removeable?
+    code.nil?
+  end
+
+  def simple_text?
+    %w[
+      total_market_cap
+      sectors
+      combined_aum
+      methodology_publication_id
+    ].include? code
+  end
+
+  def static_content?
+    %w[
+      total_market_cap
+      sectors
+      combined_aum
+      methodology_description
+      methodology_publication_id
+    ].include? code
   end
 end

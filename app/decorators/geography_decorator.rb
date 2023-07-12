@@ -24,7 +24,7 @@ class GeographyDecorator < Draper::Decorator
   end
 
   def flag_image(size = :small)
-    h.image_tag "flags/#{model.iso}.svg", height: FLAG_SIZES[size]
+    h.image_tag "flags/#{model.iso}.svg", height: FLAG_SIZES[size], alt: "#{model.name} flag"
   rescue Sprockets::Rails::Helper::AssetNotFound
     'No flag available'
   end

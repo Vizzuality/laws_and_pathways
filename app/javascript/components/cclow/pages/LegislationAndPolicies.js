@@ -26,7 +26,7 @@ function LegislationAndPolicies(props) {
     types_filter_options,
     instruments_filter_options,
     natural_hazards_filter_options,
-    governances_filter_options,
+    themes_filter_options,
     sectors_options
   } = props;
 
@@ -128,11 +128,11 @@ function LegislationAndPolicies(props) {
       }
     },
     {
-      name: 'governances',
-      title: 'Governances',
-      options: governances_filter_options,
+      name: 'themes',
+      title: 'Themes',
+      options: themes_filter_options,
       params: {
-        governance: paramIntegerArray
+        theme: paramIntegerArray
       }
     }
   ];
@@ -169,7 +169,7 @@ function LegislationAndPolicies(props) {
           <div className="meta">
             {legislation.geography && (
               <a href={legislation.geography_path}>
-                <img src={`/images/flags/${legislation.geography.iso}.svg`} alt="" />
+                <img src={`/images/flags/${legislation.geography.iso}.svg`} alt={`${legislation.geography.name} flag`} />
                 {legislation.geography.name}
               </a>
             )}
@@ -201,7 +201,7 @@ LegislationAndPolicies.defaultProps = {
   types_filter_options: [],
   instruments_filter_options: [],
   natural_hazards_filter_options: [],
-  governances_filter_options: [],
+  themes_filter_options: [],
   sectors_options: []
 };
 
@@ -217,7 +217,7 @@ LegislationAndPolicies.propTypes = {
   types_filter_options: PropTypes.array,
   instruments_filter_options: PropTypes.array,
   natural_hazards_filter_options: PropTypes.array,
-  governances_filter_options: PropTypes.array,
+  themes_filter_options: PropTypes.array,
   sectors_options: PropTypes.array
 };
 

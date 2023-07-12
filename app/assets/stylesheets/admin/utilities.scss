@@ -30,6 +30,12 @@ table.cell-centered {
   }
 }
 
+.table-scroll {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
 .table_tools {
   .scopes {
     display: flex;
