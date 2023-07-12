@@ -8,7 +8,7 @@
       <div class="content__title-wrapper">
         <div class="content__title">
           <% if publication.is_a?(Publication) %>
-            <%= link_to publication.title, tpi_publication_path(id: publication.id, type: publication.class.name, format: 'pdf'),
+            <%= link_to publication.title, tpi_publication_path(id: publication.slug, type: publication.class.name, format: 'pdf'),
                target: '_blank', class: 'link is-strong' %>
           <% else %>
             <%= link_to publication.title, tpi_publication_path(id: publication.id, type: publication.class.name), class: "link is-strong" %>

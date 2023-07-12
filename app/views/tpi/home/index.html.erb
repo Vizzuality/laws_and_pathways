@@ -228,7 +228,7 @@
         <div class="slider" data-tpi-home-slider-target="items">
           <% @latest_researches.each do |research| %>
             <div>
-              <%= link_to tpi_publication_path(id: research.id, type: research.class.name, format: 'pdf'), target: '_blank', class: 'research-box' do %>
+              <%= link_to tpi_publication_path(id: research.slug, type: research.class.name, format: 'pdf'), target: '_blank', class: 'research-box' do %>
                 <img src="<%= url_for(research.image) %>" />
                 <div class="research-box__title">
                   <% if research.author_image.present? %>
