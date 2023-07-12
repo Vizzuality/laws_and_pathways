@@ -225,7 +225,7 @@ describe 'CSVDataUpload (integration)' do
       expect_data_upload_results(
         Company,
         fixture_file('companies.csv', content: csv_content, add_bom: true),
-        new_records: 3, not_changed_records: 0, rows: 3, updated_records: 0
+        {new_records: 3, not_changed_records: 0, rows: 3, updated_records: 0}
       )
     end
 
@@ -240,7 +240,7 @@ describe 'CSVDataUpload (integration)' do
       expect_data_upload_results(
         Litigation,
         litigations_csv,
-        new_records: 1, not_changed_records: 0, rows: 1, updated_records: 0
+        {new_records: 1, not_changed_records: 0, rows: 1, updated_records: 0}
       )
 
       litigation = Litigation.find_by(citation_reference_number: 'EWHC 2752')
@@ -285,7 +285,7 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       Legislation,
       fixture_file('legislations.csv', content: csv_content),
-      new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0
+      {new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0}
     )
 
     legislation = Legislation.find_by(title: 'Climate Law')
@@ -895,7 +895,7 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       Litigation,
       litigations_csv,
-      new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1
+      {new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1}
     )
 
     litigation = Litigation.find_by(title: 'Litigation number 1')
@@ -933,7 +933,7 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       LitigationSide,
       litigation_sides_csv,
-      new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1
+      {new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1}
     )
 
     updated_side.reload
@@ -963,7 +963,7 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       Document,
       documents_csv,
-      new_records: 1, not_changed_records: 0, rows: 1, updated_records: 0
+      {new_records: 1, not_changed_records: 0, rows: 1, updated_records: 0}
     )
 
     created = Document.last
@@ -987,7 +987,7 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       ExternalLegislation,
       external_laws_csv,
-      new_records: 1, not_changed_records: 0, rows: 1, updated_records: 0
+      {new_records: 1, not_changed_records: 0, rows: 1, updated_records: 0}
     )
 
     created = ExternalLegislation.last
@@ -1013,12 +1013,12 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       Event,
       events_csv,
-      new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1
+      {new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1}
     )
     expect_data_upload_results(
       Event,
       events_csv,
-      new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0
+      {new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0}
     )
 
     litigation_event.reload
@@ -1044,7 +1044,7 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       Company,
       companies_csv,
-      new_records: 7, not_changed_records: 0, rows: 7, updated_records: 0
+      {new_records: 7, not_changed_records: 0, rows: 7, updated_records: 0}
     )
   end
 
@@ -1068,7 +1068,7 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       Target,
       targets_csv,
-      new_records: 2, not_changed_records: 0, rows: 3, updated_records: 1
+      {new_records: 2, not_changed_records: 0, rows: 3, updated_records: 1}
     )
 
     updated_target.reload
@@ -1240,13 +1240,13 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       MQ::Assessment,
       mq_assessments_csv,
-      new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0
+      {new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0}
     )
     # subsequent import should not create or update any record
     expect_data_upload_results(
       MQ::Assessment,
       mq_assessments_csv,
-      new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0
+      {new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0}
     )
 
     assessment = acme_company.mq_assessments.last
@@ -1269,7 +1269,7 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       Bank,
       banks_csv,
-      new_records: 3, not_changed_records: 0, rows: 4, updated_records: 1
+      {new_records: 3, not_changed_records: 0, rows: 4, updated_records: 1}
     )
 
     bank = Bank.find_by(name: 'Edge Bank Inc.')
@@ -1286,7 +1286,7 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       BankAssessmentIndicator,
       bank_assessment_indicators_csv,
-      new_records: 23, not_changed_records: 0, rows: 24, updated_records: 1
+      {new_records: 23, not_changed_records: 0, rows: 24, updated_records: 1}
     )
 
     changed = BankAssessmentIndicator.find_by(number: '1')
@@ -1307,13 +1307,13 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       BankAssessmentIndicator,
       bank_assessment_indicators_csv,
-      new_records: 24, not_changed_records: 0, rows: 24, updated_records: 0
+      {new_records: 24, not_changed_records: 0, rows: 24, updated_records: 0}
     )
 
     expect_data_upload_results(
       BankAssessment,
       bank_assessments_csv,
-      new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0
+      {new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0}
     )
 
     assessment = Bank.find_by(name: 'Edge Bank Inc.').assessments.last
@@ -1333,13 +1333,13 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       Geography,
       geographies_csv,
-      new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1
+      {new_records: 1, not_changed_records: 0, rows: 2, updated_records: 1}
     )
     # subsequent import should not create or update any record
     expect_data_upload_results(
       Geography,
       geographies_csv,
-      new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0
+      {new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0}
     )
 
     geography = Geography.find_by(iso: 'USA')

@@ -3,7 +3,7 @@ require: rubocop-performance
 AllCops:
   NewCops: enable
   SuggestExtensions: false
-  TargetRubyVersion: 2.7.2
+  TargetRubyVersion: 2.7.8
   Exclude:
     - 'bin/*'
     - 'db/schema.rb'
