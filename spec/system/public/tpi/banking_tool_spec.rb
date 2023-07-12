@@ -12,15 +12,15 @@ describe 'Banking Tool', type: 'system', site: 'tpi' do
 
     it 'loads average bank score chart' do
       within '.chart--bank-average-score' do
-        expect(page).to have_selector('text', text: '1. Commitment')
+        expect(page).to have_selector('text', text: '1. Net zero commitment')
       end
     end
 
     it 'loads bubble chart' do
       within '.bubble-chart__container' do
         expect(page).to have_text('Market cap')
-        expect(page).to have_text('1. Commitment')
-        expect(page).to have_text('2. Targets')
+        expect(page).to have_text('1. Net zero commitment')
+        expect(page).to have_text('2. Target methodology')
       end
     end
   end
@@ -43,16 +43,16 @@ describe 'Banking Tool', type: 'system', site: 'tpi' do
     end
 
     it 'shows assessment results' do
-      within_banking_area 'Commitment' do
+      within_banking_area 'Net zero commitment' do
         expect(page).to have_selector('.bank-assessment__area-value-value', text: '25%')
       end
 
-      within_banking_area 'Targets' do
+      within_banking_area 'Target methodology' do
+        expect(page).to have_selector('.bank-assessment__area-value-value', text: '25%')
+      end
+
+      within_banking_area 'Decarbonisation strategy' do
         expect(page).to have_selector('.bank-assessment__area-value-value', text: '0%')
-      end
-
-      within_banking_area 'Decarbonization Strategy' do
-        expect(page).to have_selector('.bank-assessment__area-value-value', text: '25%')
       end
     end
 

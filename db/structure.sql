@@ -1376,7 +1376,8 @@ CREATE TABLE public.publications (
     updated_by_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    author character varying
+    author character varying,
+    slug text NOT NULL
 );
 
 
@@ -3010,6 +3011,13 @@ CREATE INDEX index_publications_on_created_by_id ON public.publications USING bt
 
 
 --
+-- Name: index_publications_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_publications_on_slug ON public.publications USING btree (slug);
+
+
+--
 -- Name: index_publications_on_updated_by_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3658,6 +3666,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230613101102'),
 ('20230620080704'),
 ('20230622073030'),
-('20230622093001');
+('20230622093001'),
+('20230712074753');
 
 
