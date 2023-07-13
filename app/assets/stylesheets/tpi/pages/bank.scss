@@ -186,6 +186,7 @@ $see-more-width-tablet: 130px;
     &__area-header {
       padding: 30px 20px;
       position: relative;
+      flex-flow: wrap;
 
       @include tablet {
         display: flex;
@@ -212,6 +213,18 @@ $see-more-width-tablet: 130px;
         font-weight: 400;
         text-transform: uppercase;
       }
+    }
+
+    &__area-indicator {
+      width: 100%;
+
+      @include tablet {
+        width: calc(100% - 550px);
+      }
+    }
+
+    &__area-comment {
+      width: 100%;
     }
 
     &__area-value {

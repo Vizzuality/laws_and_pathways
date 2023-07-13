@@ -12,7 +12,7 @@ ActiveAdmin.register BankAssessmentIndicator do
 
   data_export_sidebar 'BankAssessmentIndicators', display_name: 'Indicators'
 
-  permit_params :number, :indicator_type, :text
+  permit_params :number, :indicator_type, :text, :comment
 
   show do
     attributes_table do
@@ -20,6 +20,7 @@ ActiveAdmin.register BankAssessmentIndicator do
       row :number
       row :indicator_type
       row :text
+      row :comment
       row :created_at
       row :updated_at
     end
@@ -34,6 +35,7 @@ ActiveAdmin.register BankAssessmentIndicator do
       f.input :indicator_type, as: :select, collection: BankAssessmentIndicator::INDICATOR_TYPES
       f.input :number
       f.input :text
+      f.input :comment
     end
 
     f.actions

@@ -320,7 +320,8 @@ CREATE TABLE public.bank_assessment_indicators (
     number character varying NOT NULL,
     text text NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    comment text
 );
 
 
@@ -3730,6 +3731,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230620080704'),
 ('20230622073030'),
 ('20230622093001'),
-('20230712074753');
+('20230712074753'),
+('20230713121501');
 
 
