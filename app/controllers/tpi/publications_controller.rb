@@ -72,7 +72,7 @@ module TPI
       @publication = if params[:type].eql?('NewsArticle')
                        NewsArticle.published.find(params[:id])
                      else
-                       Publication.published.find(params[:id])
+                       Publication.published.find_by(id: params[:id]) || Publication.published.find_by!(slug: params[:id])
                      end
     end
 

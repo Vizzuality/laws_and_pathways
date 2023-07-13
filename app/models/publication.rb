@@ -20,6 +20,9 @@ class Publication < ApplicationRecord
   include PublicActivityTrackable
   include Taggable
   include ImageWithThumb
+  extend FriendlyId
+
+  friendly_id :title_prefixed_year, use: :slugged, routes: :default
 
   has_one_attached :file
   has_one_attached :author_image
@@ -32,6 +35,10 @@ class Publication < ApplicationRecord
 
   validates :file, attached: true
   validates_presence_of :title, :short_description, :publication_date
+
+  def title_prefixed_year
+    "#{publication_date&.year} #{title}"
+  end
 
   def self.search(query)
     where('title ilike ? OR short_description ilike ?',
