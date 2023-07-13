@@ -13,9 +13,9 @@ ActiveAdmin.register CP::Assessment do
 
   filter :assessment_date
   filter :publication_date, as: :select, collection: proc { CP::Assessment.all_publication_dates }
-  filter :company
+  filter :company, as: :select, collection: proc { Company.all }
   filter :company_sector_id, as: :select, collection: proc { TPISector.companies.all }
-  filter :bank
+  filter :bank, as: :select, collection: proc { Bank.all }
 
   scope('Banks') { |scope| scope.where(cp_assessmentable_type: 'Bank') }
   scope('Companies') { |scope| scope.where(cp_assessmentable_type: 'Company') }

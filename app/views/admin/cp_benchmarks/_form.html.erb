@@ -1,5 +1,5 @@
 <%= semantic_form_for [:admin, resource], builder: ActiveAdmin::FormBuilder, html: {'data-controller' => 'check-modified with-emission-table-form'} do |f| %>
-  <%= f.semantic_errors(*f.object.errors.keys) %>
+  <%= f.semantic_errors(*f.object.errors.attribute_names) %>
 
   <%= f.inputs do %>
     <%= f.input :sector, collection: TPISector.tpi_tool %>

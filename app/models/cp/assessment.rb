@@ -34,8 +34,8 @@ module CP
     REGIONS = CP::Benchmark::REGIONS
 
     belongs_to :cp_assessmentable, polymorphic: true
-    belongs_to :company, foreign_type: 'Company', foreign_key: 'cp_assessmentable_id', optional: true
-    belongs_to :bank, foreign_type: 'Bank', foreign_key: 'cp_assessmentable_id', optional: true
+    belongs_to :company, -> { joins(:cp_assessments) }, foreign_key: :cp_assessmentable_id, optional: true
+    belongs_to :bank, -> { joins(:cp_assessments) }, foreign_key: :cp_assessmentable_id, optional: true
     belongs_to :sector, class_name: 'TPISector', foreign_key: 'sector_id'
 
     has_many :cp_matrices, class_name: 'CP::Matrix', foreign_key: 'cp_assessment_id', inverse_of: :cp_assessment,

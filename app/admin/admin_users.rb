@@ -41,7 +41,7 @@ ActiveAdmin.register AdminUser do
          collection: proc { array_to_select_collection(AdminUser::ROLES, :titleize) }
 
   form html: {'data-controller' => 'check-modified'} do |f|
-    f.semantic_errors(*f.object.errors.keys)
+    f.semantic_errors(*f.object.errors.attribute_names)
 
     tabs do
       tab :details do
