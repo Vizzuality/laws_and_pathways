@@ -153,6 +153,7 @@
       justify-content: space-between;
       margin: 10px 0;
       font-size: 14px;
+      flex-wrap: wrap;
 
       &--bold {
         font-family: $font-family-bold;
