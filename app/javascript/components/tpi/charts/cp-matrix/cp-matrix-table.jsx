@@ -49,7 +49,7 @@ function CPMatrixTable({ data, meta }) {
 
   if (!data) return <div>no data</div>;
 
-  const shortenTitle = (title) => {
+  const shortenTitleWithTooltip = (title) => {
     const truncateString = (str, maxLength) => {
       if (str.length <= maxLength) {
         return str;
@@ -59,7 +59,11 @@ function CPMatrixTable({ data, meta }) {
     };
 
     if (title.length > 28) {
-      return <div title={title}>{truncateString(title, 32)}</div>;
+      return (
+        <div title={title} data-tip={title}>
+          {truncateString(title, 32)}
+        </div>
+      );
     }
     return title;
   };
@@ -106,7 +110,7 @@ function CPMatrixTable({ data, meta }) {
       title: portfolio,
       className: 'vertical-align-center',
       children: sectors.map((sector, i) => ({
-        title: shortenTitle(sector),
+        title: shortenTitleWithTooltip(sector),
         dataIndex: sector,
         key: sector,
         width: 120,
