@@ -18,13 +18,16 @@ const COLORS = {
   '1.5 Degrees': { color: '#57BE77' }
 };
 
-function ColorDot({ value }) {
+function ColorDot({ value, small }) {
   if (!value) return null;
 
   return (
     <div className="color-dot-container">
       <span
-        className={cx('color-dot', { withBorder: COLORS[value]?.border })}
+        className={cx('color-dot', {
+          withBorder: COLORS[value]?.border,
+          small
+        })}
         style={{ backgroundColor: COLORS[value]?.color }}
       />
     </div>
@@ -32,11 +35,13 @@ function ColorDot({ value }) {
 }
 
 ColorDot.defaultProps = {
-  value: null
+  value: null,
+  small: false
 };
 
 ColorDot.propTypes = {
-  value: PropTypes.string
+  value: PropTypes.string,
+  small: PropTypes.bool
 };
 
 function CPMatrixTable({ data, meta }) {
@@ -134,7 +139,7 @@ function CPMatrixTable({ data, meta }) {
       <div className="cp-matrix-legend">
         {Object.keys(COLORS).map((key) => (
           <div className="legend-item" key={`legend-item-${key}`}>
-            <ColorDot value={key} />
+            <ColorDot value={key} small />
             <span className="legend-text">{key}</span>
           </div>
         ))}
