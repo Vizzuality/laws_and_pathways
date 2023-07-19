@@ -59,6 +59,7 @@ Rails.application.routes.draw do
           get :partial
         end
       end
+      get '/publications/uploads/:slug', to: 'publications#download_file', as: :publication_download_file
     end
   end
 

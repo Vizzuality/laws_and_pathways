@@ -40,7 +40,7 @@
   </url>
   <% @publications.each do |publication| %>
     <url>
-      <loc><%= "#{@host}#{tpi_publication_path(publication.slug, type: 'Publication', format: 'pdf')}" %></loc>
+      <loc><%= "#{@host}#{tpi_publication_download_file_path(slug: publication.slug)}" %></loc>
     </url>
   <% end %>
   <% @news.each do |news| %>

@@ -27,14 +27,14 @@ RSpec.describe TPI::SitemapsController, type: :controller do
       expect(response.body).to have_css('url loc', text: tpi_company_url(company1.slug, **host_params))
       expect(response.body).to have_css('url loc', text: tpi_bank_url(bank.slug, **host_params))
       expect(response.body).to have_css('url loc', text: "https://#{host_params[:host]}/#{page1.slug}")
-      expect(response.body).to have_css('url loc', text: tpi_publication_url(publication1.slug, format: :pdf, type: 'Publication', **host_params))
+      expect(response.body).to have_css('url loc', text: tpi_publication_download_file_path(slug: publication1.slug, **host_params))
       expect(response.body).to have_css('url loc', text: tpi_publication_url(article1, type: 'NewsArticle', **host_params))
     end
 
     it('should not return unpublished entities') do
       subject
       expect(response.body).not_to have_css('url loc', text: tpi_company_url(company2.slug, **host_params))
-      expect(response.body).not_to have_css('url loc', text: tpi_publication_url(publication2.slug, format: :pdf, type: 'Publication', **host_params))
+      expect(response.body).not_to have_css('url loc', text: tpi_publication_download_file_path(slug: publication2.slug, **host_params))
       expect(response.body).not_to have_css('url loc', text: tpi_publication_url(article2, type: 'NewsArticle', **host_params))
     end
   end

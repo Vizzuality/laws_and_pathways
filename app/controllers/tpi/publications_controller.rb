@@ -44,6 +44,11 @@ module TPI
       end
     end
 
+    def download_file
+      @publication = Publication.published.find_by! slug: params[:slug]
+      stream_publication_file
+    end
+
     private
 
     def stream_publication_file
