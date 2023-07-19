@@ -247,6 +247,48 @@
   }
 }
 
+.rc-table-header {
+  appearance: none;
+}
+
+.rc-table-body {
+  overflow-y: hidden !important;
+  overflow-x: scroll !important;
+  scrollbar-width: thin;
+  scrollbar-color: $grey-medium $white;
+  appearance: none;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $grey-medium;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: $white;
+    border-radius: 3px;
+  }
+
+  &::-moz-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-moz-scrollbar-thumb {
+    background-color: $grey-medium;
+    border-radius: 3px;
+  }
+
+  &::-moz-scrollbar-track {
+    background-color: transparent;
+    border-radius: 3px;
+  }
+}
+
 .scroll-arrow {
   transform: rotate(-90deg);
   opacity: 0;
