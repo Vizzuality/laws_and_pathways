@@ -247,12 +247,12 @@
         top: 0;
         right: -1px;
         bottom: -1px;
-        width: 20px;
+        width: 40px;
         transform: translateX(100%);
         transition: box-shadow 0.3s;
         content: '';
         pointer-events: none;
-        box-shadow: inset 10px 0 8px -8px $grey-dark;
+        box-shadow: inset 20px 0 20px -5px $blue-light;
 
         opacity: 0.25;
       }
@@ -267,12 +267,12 @@
       top: 0;
       right: -1px;
       bottom: -1px;
-      width: 10px;
+      width: 40px;
       transform: scaleX(-1);
       transition: box-shadow 0.3s;
       content: '';
       pointer-events: none;
-      box-shadow: inset 10px 0 8px -6px $grey-dark;
+      box-shadow: inset 20px 0 20px -5px $blue-light;
       opacity: 0.17;
     }
   }
