@@ -1,13 +1,14 @@
 /* eslint-disable operator-linebreak */
 /* eslint-disable function-paren-newline */
 /* eslint-disable implicit-arrow-linebreak */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Table from 'rc-table';
 import ReactTooltip from 'react-tooltip';
 import cx from 'classnames';
 import chevronIcon from 'images/icon-go-to-arrow.svg';
 import { useScrollClasses } from './cp-matrix-table-hooks';
+import chevronDownIconBlack from 'images/icon_chevron_dark/chevron_down_black-1.svg';
 
 const COLORS = {
   'Not assessable using TPI’s methodology': { color: '#CACBCE' },
@@ -45,7 +46,8 @@ ColorDot.propTypes = {
 };
 
 function CPMatrixTable({ data, meta }) {
-  useScrollClasses();
+  const [hasScrolled, setHasScrolled] = useState(false);
+  useScrollClasses(setHasScrolled, hasScrolled);
 
   if (!data) return <div>no data</div>;
 
@@ -134,12 +136,21 @@ function CPMatrixTable({ data, meta }) {
 
   return (
     <div className="cp-matrix-table">
-      <Table
-        columns={columns}
-        data={parsedData}
-        className="cp-matrix-table bordered"
-        scroll={{ y: false, x: 800 }}
-      />
+      <div className="table-container">
+        <Table
+          columns={columns}
+          data={parsedData}
+          className="cp-matrix-table bordered"
+          scroll={{ y: false, x: 800 }}
+        />
+        <div className={cx('scroll-hint', { hidden: hasScrolled })}>
+          Scroll{' '}
+          <img src={chevronDownIconBlack} alt="" className="scroll-arrow" />
+          <img src={chevronDownIconBlack} alt="" className="scroll-arrow" />
+          <img src={chevronDownIconBlack} alt="" className="scroll-arrow" />
+          <img src={chevronDownIconBlack} alt="" className="scroll-arrow" />
+        </div>
+      </div>
       <div className="cp-matrix-legend">
         {Object.keys(COLORS).map((key) => (
           <div className="legend-item" key={`legend-item-${key}`}>
