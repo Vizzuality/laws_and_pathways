@@ -292,6 +292,8 @@
 .scroll-arrow {
   transform: rotate(-90deg);
   opacity: 0;
+  height: 6px;
+  margin-bottom: 1px;
 
   &:not(:first-of-type) {
     margin-left: -2px;
