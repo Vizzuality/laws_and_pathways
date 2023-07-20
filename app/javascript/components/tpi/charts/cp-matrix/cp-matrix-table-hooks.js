@@ -5,18 +5,20 @@ const SCROLL_POSITIONS = {
   partiallyScrolled: 1,
   fullyScrolled: 2
 };
-export const useScrollClasses = () => {
+export const useScrollClasses = (setHasScrolled, hasScrolled) => {
   const [scrollPosition, setScrollPosition] = useState(
     SCROLL_POSITIONS.notScrolled
   );
-
-  useScrollPosition(setScrollPosition);
+  useScrollPosition(setScrollPosition, setHasScrolled, hasScrolled);
   useAddScrollClass(scrollPosition);
 };
 
-export const useScrollPosition = (setScrollPosition) => {
+export const useScrollPosition = (setScrollPosition, setHasScrolled, hasScrolled) => {
   useEffect(() => {
     const handleTableScroll = () => {
+      if (!hasScrolled) {
+        setHasScrolled(true);
+      }
       const tableContent = document.querySelector('.rc-table-body');
       if (!tableContent) return;
       const isScrolled = tableContent.scrollLeft > 0;
@@ -59,7 +61,7 @@ export const useScrollPosition = (setScrollPosition) => {
     return () => {
       removeTableScrollListener();
     };
-  }, [setScrollPosition]);
+  }, [setScrollPosition, setHasScrolled, hasScrolled]);
 };
 
 export const useAddScrollClass = (scrollPosition) => {
