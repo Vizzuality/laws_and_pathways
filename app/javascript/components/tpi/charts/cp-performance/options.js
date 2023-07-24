@@ -5,7 +5,7 @@ import { renderToString } from 'react-dom/server';
 import merge from 'lodash/merge';
 import Tooltip from './Tooltip';
 
-export const COLORS = ['#00C170', '#ED3D4A', '#FFDD49', '#440388', '#FF9600', '#B75038', '#00A8FF', '#F78FB3', '#191919', '#F602B4'];
+export const COLORS = ['#595B5D', '#ED3D4A', '#FFDD49', '#440388', '#FF9600', '#B75038', '#86A9F9', '#F78FB3', '#191919', '#F602B4'];
 
 export function getOptions({ chartData, unit }) {
   return {
@@ -78,6 +78,8 @@ export function getOptions({ chartData, unit }) {
       crosshairs: true,
       shared: true,
       useHTML: true,
+      outside: true,
+      distance: 50,
       formatter() {
         const xValue = this.x;
         const yValues = this.points.filter(p => p.series.name !== 'Target Years').map(p => ({

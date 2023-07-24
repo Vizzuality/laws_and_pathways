@@ -1,13 +1,13 @@
+// hide SVG tooltip, we only display HTML one
+.highcharts-tooltip-box {
+  display: none;
+}
+
 .chart--cp-all-sectors {
   justify-content: unset;
 
   div[data-highcharts-chart] {
     width: 100%;
-  }
-
-  // hide SVG tooltip, we only display HTML one
-  .highcharts-tooltip-box {
-    display: none;
   }
 
   .highcharts-axis-labels {
