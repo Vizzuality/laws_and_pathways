@@ -2,6 +2,7 @@ import get from 'lodash/get';
 import { useMemo } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import { COLORS } from './options';
+import hexToRgba from 'hex-to-rgba';
 
 // get last emission also looking at targeted
 // const getLastEmission = (d) => d.data && d.data.length && d.data.slice(-1)[0][1];
@@ -29,7 +30,8 @@ function applyColors(items) {
 
 export const useParsedChartData = (data, companySelector, selectedCompanies) => useMemo(
   () => {
-    const benchmarks = data.filter(d => d.type === 'area');
+    const benchmarks = data.filter(d => d.type === 'area')
+      .map(d => ({...d, color: hexToRgba(d.color, 0.2), fillColor: hexToRgba(d.fillColor, 0.2) }));
     const restData = applyColors(
       companySelector
         ? selectedCompanies.map(c => data.find(d => get(d, 'company.name') === c))
