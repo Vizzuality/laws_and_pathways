@@ -113,7 +113,7 @@ RSpec.describe Api::Charts::CPAssessment do
            sector: @sector_a,
            region: 'Europe',
            cp_assessmentable: @bank_sector_a_1,
-           emissions: {'2017' => 100.0, '2018' => 70.0, '2019' => 110.0})
+           emissions: {'2017' => 110.0, '2018' => 80.0, '2019' => 110.0})
     create(:cp_assessment,
            assessment_date: 11.months.ago,
            publication_date: 11.months.ago,
@@ -218,7 +218,7 @@ RSpec.describe Api::Charts::CPAssessment do
       context 'for last assessment' do
         subject { described_class.new(@bank_sector_a_1.latest_cp_assessment, 'regional') }
 
-        it 'returns emissions data from: company, sector avg & sector benchmarks' do
+        it 'returns emissions data from: bank, sector avg & sector benchmarks' do
           bank_sector_a_1_data = subject.emissions_data.find { |s| s[:name] == @bank_sector_a_1.name }[:data]
           sector_average_data = subject.emissions_data.find { |s| s[:name] == "#{@sector_a.name} sector mean" }[:data]
           cp_benchmarks_data = subject.emissions_data.find { |s| s[:name] == 'scenario' }[:data]
@@ -226,7 +226,7 @@ RSpec.describe Api::Charts::CPAssessment do
           avg_2017 = ((100.0 + 40.0 + 30.0) / 3).round(2)
           avg_2018 = ((70.0 + 50.0 + 20.0) / 3).round(2)
 
-          expect(bank_sector_a_1_data).to eq(2017 => 100.0, 2018 => 70.0, 2019 => 110.0)
+          expect(bank_sector_a_1_data).to eq(2017 => 110.0, 2018 => 80.0, 2019 => 110.0)
           # sector average_data is only up to last_reported_year
           expect(sector_average_data).to eq(2017 => avg_2017, 2018 => avg_2018)
           expect(cp_benchmarks_data).to eq(2016 => 115.5, 2017 => 122.0, 2018 => 124.0)
