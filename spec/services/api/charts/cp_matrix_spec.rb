@@ -4,12 +4,14 @@ RSpec.describe Api::Charts::CPMatrix do
   before_all do
     @bank_sector1 = create :tpi_sector, categories: [Bank]
     @bank_sector2 = create :tpi_sector, categories: [Bank]
+    @bank_sector3 = create :tpi_sector, categories: [Bank]
     @company_sector1 = create :tpi_sector, categories: [Company]
 
     @bank = create :bank
 
     @cp_assessment1 = create :cp_assessment, cp_assessmentable: @bank, sector: @bank_sector1
     @cp_assessment2 = create :cp_assessment, cp_assessmentable: @bank, sector: @bank_sector2
+    @cp_assessment_empty_assumption = create :cp_assessment, cp_assessmentable: @bank, sector: @bank_sector3, assumptions: '0'
 
     @cp_matrix1 = create :cp_matrix, cp_assessment: @cp_assessment1, portfolio: 'Mortgages'
     @cp_matrix2 = create :cp_matrix, cp_assessment: @cp_assessment1, portfolio: 'Auto Loans'
@@ -29,7 +31,7 @@ RSpec.describe Api::Charts::CPMatrix do
       end
 
       it 'should return all sectors inside meta' do
-        expect(subject[:meta][:sectors]).to contain_exactly(@bank_sector1.name, @bank_sector2.name)
+        expect(subject[:meta][:sectors]).to contain_exactly(@bank_sector1.name, @bank_sector2.name, @bank_sector3.name)
       end
 
       it 'should return all portfolio categories inside meta' do
@@ -37,9 +39,9 @@ RSpec.describe Api::Charts::CPMatrix do
       end
 
       it 'should return all band sectors for each alignment year' do
-        expect(subject[:data]['2025'].keys).to contain_exactly(@bank_sector1.name, @bank_sector2.name)
-        expect(subject[:data]['2035'].keys).to contain_exactly(@bank_sector1.name, @bank_sector2.name)
-        expect(subject[:data]['2050'].keys).to contain_exactly(@bank_sector1.name, @bank_sector2.name)
+        expect(subject[:data]['2025'].keys).to contain_exactly(@bank_sector1.name, @bank_sector2.name, @bank_sector3.name)
+        expect(subject[:data]['2035'].keys).to contain_exactly(@bank_sector1.name, @bank_sector2.name, @bank_sector3.name)
+        expect(subject[:data]['2050'].keys).to contain_exactly(@bank_sector1.name, @bank_sector2.name, @bank_sector3.name)
       end
 
       it 'should return all portfolio for each sector' do
@@ -50,6 +52,10 @@ RSpec.describe Api::Charts::CPMatrix do
       it 'should return assumptions for each sector' do
         expect(subject[:data]['2025'][@bank_sector1.name][:assumptions]).to eq(@cp_assessment1.assumptions)
         expect(subject[:data]['2025'][@bank_sector2.name][:assumptions]).to eq(@cp_assessment2.assumptions)
+      end
+
+      it 'should return nil if assumption is zero' do
+        expect(subject[:data]['2025'][@bank_sector3.name][:assumptions]).to be_nil
       end
 
       it 'should return alignment values for selected portfolio' do

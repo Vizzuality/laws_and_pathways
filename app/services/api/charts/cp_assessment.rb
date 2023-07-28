@@ -2,6 +2,10 @@ module Api
   module Charts
     class CPAssessment
       BENCHMARK_FILL_COLORS = ['#86A9F9', '#5587F7', '#2465F5', '#0A4BDC', '#083AAB'].freeze
+      BANK_COMPANY_SECTOR_PAIRS = {
+        'Electric Utilities (Global)' => 'Electricity Utilities',
+        'Electric Utilities (Regional)' => 'Electricity Utilities'
+      }.freeze
 
       attr_reader :assessment
 
@@ -163,7 +167,6 @@ module Api
         emissions_for_year = sector_all_emissions
           .map { |emissions| emissions[year] }
           .compact
-
         return nil if emissions_for_year.empty?
 
         (emissions_for_year.sum / emissions_for_year.count).round(2)
@@ -186,17 +189,20 @@ module Api
 
       # @return [Array<Hash>] list of { year => value } pairs from all Companies or Banks from current TPISector
       def sector_all_emissions
-        @sector_all_emissions ||= CP::Assessment
-          .where(
-            sector_id: sector.id,
-            publication_date: [..assessment.publication_date],
-            cp_assessmentable_type: @category,
-            cp_assessmentable_id: @category.constantize.published.select(:id)
-          )
-        @sector_all_emissions = @sector_all_emissions.where(region: region) if regional_view?
+        @sector_all_emissions = sector_all_emissions_for_company
+        @sector_all_emissions = @sector_all_emissions.where(region: region) if regional_view? && @category != 'Bank'
         @sector_all_emissions.group_by(&:cp_assessmentable_id).flat_map do |_id, cp_assessments|
           cp_assessments.max_by(&:publication_date)&.emissions&.transform_keys(&:to_i)
         end
+      end
+
+      def sector_all_emissions_for_company
+        CP::Assessment.joins(:sector).where(
+          tpi_sectors: {name: [sector.name, BANK_COMPANY_SECTOR_PAIRS[sector.name]]},
+          publication_date: [..assessment.publication_date],
+          cp_assessmentable_type: Company.to_s,
+          cp_assessmentable_id: Company.published.select(:id)
+        )
       end
 
       # @return [Integer]

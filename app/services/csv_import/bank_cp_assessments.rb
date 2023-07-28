@@ -14,6 +14,7 @@ module CSVImport
           assessment.assumptions = row[:assumptions].presence if row.header?(:assumptions)
           assessment.emissions = parse_emissions(row) if emission_headers?(row)
           assessment.final_disclosure_year = row[:final_disclosure_year] if row.header?(:final_disclosure_year)
+          assessment.last_reported_year = row[:last_reported_year] if row.header?(:last_reported_year)
           assessment.years_with_targets = get_years_with_targets(row) if row.header?(:years_with_targets)
 
           was_new_record = assessment.new_record?

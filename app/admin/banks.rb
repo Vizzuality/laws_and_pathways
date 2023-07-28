@@ -88,7 +88,7 @@ ActiveAdmin.register Bank do
                   row :publication_date
                   row :assessment_date
                   row :assumptions
-                  row :final_disclosure_year
+                  row :last_reported_year
                   panel 'Emissions', style: 'margin: 10px' do
                     render 'admin/cp/emissions_table', emissions: a.emissions
                   end
@@ -144,6 +144,10 @@ ActiveAdmin.register Bank do
       columns do
         column { f.input :isin, as: :tags }
         column { f.input :sedol }
+      end
+
+      columns do
+        column { f.input :latest_information, as: :text }
       end
     end
 

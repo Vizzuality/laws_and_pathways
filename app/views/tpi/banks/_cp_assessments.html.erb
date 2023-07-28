@@ -1,6 +1,9 @@
-<h3 class="cp_assessments_title" style="margin: 25px 0">
+<h3 class="cp_assessments_title" style="margin: 25px 0 0 0">
   Carbon performance of <%= @bank.name %>
 </h3>
+<p>
+  The sectoral means are computed from the company data in TPI’s Carbon Performance Assessments
+</p>
 <% cp_assessments = Queries::TPI::LatestCPAssessmentsQuery.new(category: Bank, cp_assessmentable: @bank).call %>
 <% cp_sectors = TPISector.for_category(Bank).order(:name).map { |sector|
    cp_assessment = cp_assessments[[@bank, sector]]&.first
