@@ -145,6 +145,10 @@ ActiveAdmin.register Bank do
         column { f.input :isin, as: :tags }
         column { f.input :sedol }
       end
+
+      columns do
+        column { f.input :latest_information, as: :text }
+      end
     end
 
     f.actions
