@@ -19,16 +19,26 @@ module Api
         %w[2025 2035 2050].each_with_object({}) do |year, result|
           result[year] = sectors.each_with_object({}) do |sector, section|
             cp_assessment = cp_assessments[[cp_assessmentable, sector]]&.first
-            portfolio_values = CP::Portfolio::NAMES.each_with_object({}) do |portfolio, row|
-              value = cp_assessment&.cp_matrices&.detect { |m| m.portfolio == portfolio }
-              row[portfolio] = value&.public_send "cp_alignment_#{year}"
-            end
+            portfolio_values = portfolio_values_from cp_assessment, year
             section[sector.name] = {
-              assumptions: cp_assessment&.assumptions,
+              assumptions: assumption_for(cp_assessment&.assumptions),
               portfolio_values: portfolio_values,
               has_emissions: cp_assessment&.emissions&.present?
             }
           end
+        end
+      end
+
+      def assumption_for(value)
+        return nil if value.blank? || value == '0'
+
+        value
+      end
+
+      def portfolio_values_from(cp_assessment, year)
+        CP::Portfolio::NAMES.each_with_object({}) do |portfolio, row|
+          value = cp_assessment&.cp_matrices&.detect { |m| m.portfolio == portfolio }
+          row[portfolio] = value&.public_send "cp_alignment_#{year}"
         end
       end
 
