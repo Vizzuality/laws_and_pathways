@@ -36,14 +36,17 @@ export function createSVGElement(element) {
 export function groupAllAreaSeries() {
   // this will group all area series under one element
   // it will be possible to set opacity for all areas at once to make it looks as on designs
-  const seriesGroup = document.querySelector('.chart--cp-performance g.highcharts-series-group');
-  const groupedAreas = seriesGroup.querySelector('.areas-group') || createSVGGroup('areas-group');
-  const series = [...seriesGroup.querySelectorAll('g.highcharts-area-series')];
+  const performanceChart = document.querySelector('.chart--cp-performance');
+  const seriesGroups = performanceChart.getElementsByClassName('highcharts-series-group');
+  Array.from(seriesGroups).forEach((seriesGroup) => {
+    const groupedAreas = seriesGroup.querySelector('.areas-group') || createSVGGroup('areas-group');
+    const series = [...seriesGroup.querySelectorAll('g.highcharts-area-series')];
 
-  seriesGroup.appendChild(groupedAreas);
+    seriesGroup.appendChild(groupedAreas);
 
-  series.forEach(serie => {
-    groupedAreas.appendChild(serie);
+    series.forEach(serie => {
+      groupedAreas.appendChild(serie);
+    });
   });
 }
 
