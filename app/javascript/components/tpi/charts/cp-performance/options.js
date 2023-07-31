@@ -4,6 +4,7 @@ import { groupAllAreaSeries, renderBenchmarksLabels } from './helpers';
 import { renderToString } from 'react-dom/server';
 import merge from 'lodash/merge';
 import Tooltip from './Tooltip';
+import hexToRgba from 'hex-to-rgba';
 
 export const COLORS = ['#595B5D', '#ED3D4A', '#FFDD49', '#440388', '#FF9600', '#B75038', '#86A9F9', '#F78FB3', '#191919', '#F602B4'];
 
@@ -85,7 +86,7 @@ export function getOptions({ chartData, unit }) {
         const xValue = this.x;
         const yValues = this.points.filter(p => p.series.name !== 'Target Years').map(p => ({
           value: p.y,
-          color: p.series.color,
+          color: hexToRgba(p.series.color, 0.3),
           title: p.series.name,
           dashStyle: p.point.zone.dashStyle,
           isTargeted: p.point.zone.dashStyle === 'dot',

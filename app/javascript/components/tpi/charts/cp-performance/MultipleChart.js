@@ -6,6 +6,7 @@ import { useParsedChartData } from './chart-utils';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import cx from 'classnames';
+import hexToRgba from 'hex-to-rgba';
 
 import { getMultipleOptions, getMultipleMobileOptions } from './options';
 
@@ -21,7 +22,10 @@ const EmissionsLegend = ({ data }) => {
     <div className="emissions-legend">
       {filteredData.map((d) => (
         <div className="emissions-legend__item" key={d.name}>
-          <div className={cx('emissions-legend__circle', { line: d.type !== 'area' })} style={{ backgroundColor: d.color }} />
+          <div
+            className={cx('emissions-legend__circle', { line: d.type !== 'area' })}
+            style={{ backgroundColor: d.type === 'area' ? hexToRgba(d.color, 0.3) : d.color }}
+          />
           <div className="emissions-legend__text">{d.name}</div>
         </div>
       ))}
