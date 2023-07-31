@@ -20,6 +20,7 @@
     margin: 10px 0;
     font-size: 14px;
     flex-wrap: wrap;
+    white-space: break-spaces;
 
     &--bold {
       font-family: $font-family-bold;
@@ -116,6 +117,7 @@
     .legend-row {
       display: flex;
       flex-wrap: wrap;
+      white-space: break-spaces;
       margin-bottom: 20px;
 
       > * {
