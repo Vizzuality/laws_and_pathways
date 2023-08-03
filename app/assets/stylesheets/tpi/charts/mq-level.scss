@@ -1,3 +1,8 @@
+// hide SVG tooltip, we only display HTML one
+.highcharts-tooltip-box {
+  display: none;
+}
+
 .chart--mq-level {
   min-height: 300px;
   display: flex;
@@ -14,11 +19,6 @@
     max-width: 100%;
 
     overflow: unset !important;
-  }
-
-  // hide SVG tooltip, we only display HTML one
-  .highcharts-tooltip-box {
-    display: none;
   }
 
   .tooltip {

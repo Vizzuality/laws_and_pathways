@@ -10,12 +10,12 @@
   </div>
 </div>
 
-<% areas = assessment.results_by_indicator_type["area"] %>
+<% areas = assessment.results.of_type("area").order('length(bank_assessment_indicators.number), bank_assessment_indicators.number') %>
 <% areas.each do |area| %>
   <input id="<%= dom_id(area) %>" type="checkbox" class="toggle" />
   <div class="bank-assessment__area">
     <div for="<%= dom_id(area) %>" class="bank-assessment__area-header">
-      <div>
+      <div class="bank-assessment__area-indicator">
         <small>Area <%= area.indicator.number %></small>
         <h2><%= area.indicator.text %></h2>
       </div>
@@ -57,6 +57,11 @@
           </div>
         <% end %>
       </div>
+      <% if area.indicator.comment.present? %>
+        <div class="bank-assessment__area-comment">
+          <%= area.indicator.comment %>
+        </div>
+      <% end %>
       <label class="bank-assessment__more" for="<%= dom_id(area) %>">
       </label>
     </div>

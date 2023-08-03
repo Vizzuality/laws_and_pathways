@@ -72,6 +72,40 @@ ActiveAdmin.register Bank do
           end
         end
       end
+
+      tab :cp_assessments do
+        panel 'Carbon Performance Assessments' do
+          if resource.cp_assessments.empty?
+            div class: 'padding-20' do
+              'No Carbon Performance Assessments for this bank yet'
+            end
+          else
+            resource.cp_assessments.latest_first.decorate.map do |a|
+              panel a.title_link, class: 'benchmark' do
+                attributes_table_for a do
+                  row :sector
+                  row :region
+                  row :publication_date
+                  row :assessment_date
+                  row :assumptions
+                  row :last_reported_year
+                  panel 'Emissions', style: 'margin: 10px' do
+                    render 'admin/cp/emissions_table', emissions: a.emissions
+                  end
+                  panel 'Carbon Performance Matrix', style: 'margin: 10px' do
+                    attributes_table_for a.cp_matrices do
+                      row :portfolio
+                      row :cp_alignment_2025
+                      row :cp_alignment_2035
+                      row :cp_alignment_2050
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
     end
 
     active_admin_comments
@@ -110,6 +144,10 @@ ActiveAdmin.register Bank do
       columns do
         column { f.input :isin, as: :tags }
         column { f.input :sedol }
+      end
+
+      columns do
+        column { f.input :latest_information, as: :text }
       end
     end
 

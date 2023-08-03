@@ -8,6 +8,7 @@ RSpec.describe Admin::BanksController, type: :controller do
     attributes_for(:bank).merge(geography_id: geography.id)
   }
   let(:invalid_attributes) { valid_attributes.merge(isin: nil) }
+  let(:page) { Capybara::Node::Simple.new(response.body) }
 
   before { sign_in admin }
 
@@ -30,7 +31,23 @@ RSpec.describe Admin::BanksController, type: :controller do
   describe 'GET show' do
     subject { get :show, params: {id: bank.id} }
 
+    let!(:cp_assessment) { create(:cp_assessment, cp_assessmentable: bank) }
+    let!(:cp_matrix) { create(:cp_matrix, cp_assessment: cp_assessment) }
+
     it { is_expected.to be_successful }
+
+    it 'shows cp assessment' do
+      subject
+      expect(page).to have_text(cp_assessment.sector.name)
+      expect(page).to have_text(cp_assessment.region)
+    end
+
+    it 'shows cp matrix data' do
+      subject
+      expect(page).to have_selector '.row-cp_alignment_2025', text: cp_matrix.cp_alignment_2025
+      expect(page).to have_selector '.row-cp_alignment_2035', text: cp_matrix.cp_alignment_2035
+      expect(page).to have_selector '.row-cp_alignment_2050', text: cp_matrix.cp_alignment_2050
+    end
   end
 
   describe 'GET new' do

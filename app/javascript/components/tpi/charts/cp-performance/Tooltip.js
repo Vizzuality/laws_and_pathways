@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import orderBy from 'lodash/orderBy';
-import hexToRgba from 'hex-to-rgba';
 
 function Tooltip({ xValue, yValues, unit }) {
   const companyValues = yValues.filter(v => !v.isBenchmark);
@@ -38,7 +37,7 @@ function Tooltip({ xValue, yValues, unit }) {
           <span className="cp-tooltip__value-title">
             <span
               className="circle"
-              style={{backgroundColor: hexToRgba(y.color, 0.2)}}
+              style={{ backgroundColor: y.color }}
             />
             {y.title}
           </span>

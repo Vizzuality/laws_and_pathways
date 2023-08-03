@@ -4,6 +4,6 @@ class DateAfterValidator < ActiveModel::EachValidator
 
     min_date = options[:with]
 
-    record.errors[attribute] << (options[:message] || "must be after #{min_date}") if value < min_date
+    record.errors.add(attribute, options[:message] || "must be after #{min_date}") if value < min_date
   end
 end

@@ -53,22 +53,28 @@ module CSVExport
       end
 
       def results_columns
-        @results_columns ||= assessments
-          .first
-          .results
-          .includes(:indicator)
-          .order('bank_assessment_indicators.number')
-          .map do |result|
-            next nil if result.indicator.sub_area?
-
-            type = result.indicator.indicator_type
-            number = result.indicator.number
+        @results_columns ||= begin
+          indicators = indicator_areas.map { |area| [area, child_indicators[area.number]] }.flatten
+          indicators.map do |indicator|
             OpenStruct.new(
-              type: type,
-              number: number,
-              column_name: "#{type.humanize} #{number}"
+              type: indicator.indicator_type,
+              number: indicator.number,
+              column_name: "#{indicator.indicator_type.humanize} #{indicator.number}"
             )
-          end.compact
+          end
+        end
+      end
+
+      def indicator_areas
+        @indicator_areas ||= BankAssessmentIndicator
+          .where(indicator_type: 'area')
+          .order('length(number), number')
+      end
+
+      def child_indicators
+        @child_indicators ||= BankAssessmentIndicator
+          .where.not(indicator_type: %w[area sub_area])
+          .group_by { |r| r.number.split('.').first }
       end
     end
   end

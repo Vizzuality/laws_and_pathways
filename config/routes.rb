@@ -43,6 +43,8 @@ Rails.application.routes.draw do
 
       resources :banks, only: [:show, :index] do
         member do
+          get :emissions_chart_data
+          get :cp_matrix_data
           get :assessment
         end
         collection do
@@ -57,6 +59,7 @@ Rails.application.routes.draw do
           get :partial
         end
       end
+      get '/publications/uploads/:slug', to: 'publications#download_file', as: :publication_download_file
     end
   end
 

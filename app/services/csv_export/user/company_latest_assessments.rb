@@ -104,7 +104,7 @@ module CSVExport
       end
 
       def get_cp_assessments_hash(assessments)
-        assessments.group_by(&:company_id).transform_values do |grouped|
+        assessments.group_by(&:cp_assessmentable_id).transform_values do |grouped|
           grouped.sort_by(&:publication_date)
         end
       end

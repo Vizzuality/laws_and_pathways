@@ -1,4 +1,4 @@
-class CreateMqAssessments < ActiveRecord::Migration[5.2]
+class CreateMQAssessments < ActiveRecord::Migration[5.2]
   def change
     create_table :mq_assessments do |t|
       t.references :company, foreign_key: {on_delete: :cascade}, index: true

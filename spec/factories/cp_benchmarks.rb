@@ -10,12 +10,14 @@
 #  emissions    :jsonb
 #  scenario     :string
 #  region       :string           default("Global"), not null
+#  category     :string           not null
 #
 
 FactoryBot.define do
   factory :cp_benchmark, class: CP::Benchmark do
     association :sector, factory: :tpi_sector
 
+    category { 'Company' }
     release_date { 5.days.ago.to_date }
     scenario { 'Paris pledges' }
     region { 'Global' }

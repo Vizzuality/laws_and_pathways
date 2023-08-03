@@ -2,12 +2,14 @@ module TPI
   class BankAssessmentPresenter
     attr_reader :assessment
 
+    delegate :results, to: :assessment
+
     def initialize(assessment)
       @assessment = assessment
     end
 
     def child_indicators(result, indicator_type)
-      @results_by_indicator_type[indicator_type].select { |r| r.indicator.number.start_with?(result.indicator.number) }
+      results_by_indicator_type[indicator_type].select { |r| r.indicator.number.start_with?("#{result.indicator.number}.") }
     end
 
     def results_by_indicator_type

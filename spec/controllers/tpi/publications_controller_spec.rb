@@ -65,4 +65,10 @@ RSpec.describe TPI::PublicationsController, type: :controller do
       end
     end
   end
+
+  describe 'GET download_file' do
+    subject { get :download_file, params: {slug: publication1.slug} }
+
+    it { is_expected.to be_successful }
+  end
 end

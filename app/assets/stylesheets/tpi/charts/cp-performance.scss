@@ -1,3 +1,100 @@
+// hide SVG tooltip, we only display HTML one
+.highcharts-tooltip-box {
+  display: none;
+}
+
+.cp-tooltip {
+  font-family: $font-family-regular;
+  background-color: $white;
+  border: 1px solid $dark;
+  min-width: 300px;
+  padding: 20px;
+
+  @include mobile {
+    opacity: .85;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    font-size: 14px;
+    flex-wrap: wrap;
+    white-space: break-spaces;
+
+    &--bold {
+      font-family: $font-family-bold;
+    }
+
+    &--targets {
+      font-size: 12px;
+      color: $grey-dark;
+
+      span {
+        line-height: 15px;;
+      }
+    }
+  }
+
+  &__value-title {
+    display: flex;
+    align-items: center;
+
+    .line {
+      margin-right: 15px;
+      width: 20px;
+    }
+
+    .circle {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 1px solid $grey-dark;
+      margin-right: 19px;
+    }
+
+    small {
+      color: $grey-dark;
+      font-size: 12px;
+      margin-left: 5px;
+    }
+  }
+
+  &__value {
+    margin-left: 20px;
+    white-space: normal;
+  }
+
+  &__header {
+    @extend .cp-tooltip__row;
+
+    font-size: 12px;
+    font-family: $font-family-bold;
+    margin-bottom: 20px;
+  }
+
+  &__targets {
+    color: $grey-dark;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+
+  .line {
+    display: block;
+    width: 40px;
+    margin-right: 10px;
+
+    &--dotted {
+      border-bottom: 4px dotted black;
+    }
+
+    &--solid {
+      border-bottom: 4px solid black;
+    }
+  }
+}
+
 .chart--cp-performance {
   @import 'chart-company-selector';
 
@@ -20,6 +117,7 @@
     .legend-row {
       display: flex;
       flex-wrap: wrap;
+      white-space: break-spaces;
       margin-bottom: 20px;
 
       > * {
@@ -128,87 +226,73 @@
     overflow: unset !important;
   }
 
-  // hide SVG tooltip, we only display HTML one
-  .highcharts-tooltip-box {
-    display: none;
-  }
-
   .highcharts-series-group {
     mix-blend-mode: multiply;
   }
+}
 
-  .cp-tooltip {
-    font-family: $font-family-regular;
-    background-color: $white;
-    border: 1px solid $dark;
-    min-width: 300px;
-    padding: 20px;
+.charts-container {
+  display: grid;
+  grid-template-columns: 1fr;
 
-    @include mobile {
-      opacity: .85;
-    }
+  @include desktop {
+    grid-template-columns: 1fr 1fr;
+  }
+  grid-gap: 20px;
+}
 
-    &__row {
-      display: flex;
-      justify-content: space-between;
-      margin: 10px 0;
-      font-size: 14px;
 
-      &--bold {
-        font-family: $font-family-bold;
-      }
+.chart-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
 
-      &--targets {
-        font-size: 12px;
-        color: $grey-dark;
+  .individual-chart-title {
+    text-align: center;
+  }
 
-        span {
-          line-height: 15px;;
-        }
-      }
-    }
+  .emissions-legend {
+    flex: 1;
 
-    &__value-title {
+    .emissions-legend__item {
       display: flex;
       align-items: center;
+      font-size: $size-7;
+      margin-bottom: 5px;
+    }
 
-      .line {
-        margin-right: 15px;
-        width: 20px;
-      }
+    .emissions-legend__circle {
+      width: 12px;
+      min-width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 8px;
 
-      .circle {
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        border: 1px solid $grey-dark;
-        margin-right: 19px;
-      }
-
-      small {
-        color: $grey-dark;
-        font-size: 12px;
-        margin-left: 5px;
+      &.line {
+        min-width: 2px;
+        width: 2px;
+        border-radius: 0;
+        margin: 0 13px 0 5px;
       }
     }
+  }
 
-    &__value {
-      margin-left: 20px;
-    }
+}
 
-    &__header {
-      @extend .cp-tooltip__row;
+.cp_assessments_title,
+.cp_assessments_description {
+  padding: 0 10px;
 
-      font-size: 12px;
-      font-family: $font-family-bold;
-      margin-bottom: 20px;
-    }
+  @include desktop {
+    padding: 0;
+  }
+}
 
-    &__targets {
-      color: $grey-dark;
-      margin-top: 20px;
-      margin-bottom: 10px;
-      font-size: 12px;
-    }
+.multiple-chart {
+  padding: 0 30px;
+
+  @include desktop {
+    padding: 0;
   }
 }

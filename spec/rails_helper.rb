@@ -43,11 +43,13 @@ end
 
 FactoryBot::SyntaxRunner.class_eval do
   include ActionDispatch::TestProcess
+  include ActiveSupport::Testing::FileFixtures
 end
 
 # TODO: remove when new capybara and selenium webdriver arrive
 # https://github.com/teamcapybara/capybara/issues/2511
 Selenium::WebDriver.logger.ignore(:browser_options)
+Webdrivers::Chromedriver.required_version = '114.0.5735.90' # NOTE: remove when issues with 115 gets fixed (probably at selenium-webdriver 4.10.1)
 
 RSpec.configure do |config|
   config.request_snapshots_dir = 'spec/fixtures/snapshots'
