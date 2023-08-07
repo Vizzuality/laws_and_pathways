@@ -11,7 +11,7 @@ module Queries
       def call
         query = initial_query
         query = query.where(cp_assessmentable_id: cp_assessmentable.id) if cp_assessmentable.present?
-        query.group_by { |a| [a.cp_assessmentable, a.sector] }
+        query.sort_by { |a| [a.cp_assessmentable.try(:name), a.sector.name] }.group_by { |a| [a.cp_assessmentable, a.sector] }
       end
 
       private
