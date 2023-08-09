@@ -28,6 +28,7 @@ module Seed
         run_importer CSVImport::MQAssessments.new(seed_file('mq-assessments-M1.csv'))
         run_importer CSVImport::MQAssessments.new(seed_file('mq-assessments-M2.csv'))
         run_importer CSVImport::MQAssessments.new(seed_file('mq-assessments-M3.csv'))
+        run_importer CSVImport::MQAssessments.new(seed_file('mq-assessments-M5.csv'))
       end
 
       TimedLogger.log('Import Bank Data') do

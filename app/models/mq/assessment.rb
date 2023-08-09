@@ -20,7 +20,12 @@ module MQ
     include DiscardableModel
     include TPICache
 
-    LEVELS = %w[0 1 2 3 4 4STAR].freeze
+    LEVELS = %w[0 1 2 3 4 4STAR 5].freeze
+    BETA_METHODOLOGIES = [5].freeze # taken into account only when beta is enabled
+    BETA_LEVELS_PER_METHODOLOGY = { # which levels should be automatically added and marked as BETAs based on methodology
+      5 => %w[5]
+    }.freeze
+    BETA_LEVELS = BETA_LEVELS_PER_METHODOLOGY.values.flatten.freeze
 
     belongs_to :company, inverse_of: :mq_assessments
 
@@ -28,6 +33,8 @@ module MQ
     scope :all_publication_dates, -> { distinct.order(publication_date: :desc).pluck(:publication_date) }
     scope :all_methodology_versions, -> { distinct.order(methodology_version: :asc).pluck(:methodology_version) }
     scope :currently_published, -> { where('publication_date <= ?', DateTime.now) }
+    scope :without_beta_methodologies, -> { where.not(methodology_version: BETA_METHODOLOGIES) }
+    scope :only_beta_methodologies, -> { where(methodology_version: BETA_METHODOLOGIES) }
 
     validates :level, inclusion: {in: LEVELS}
     validates_presence_of :assessment_date, :publication_date, :level, :methodology_version
@@ -90,6 +97,14 @@ module MQ
 
     def questions_by_level
       questions.group_by(&:level)
+    end
+
+    def beta_methodology?
+      BETA_METHODOLOGIES.include? methodology_version
+    end
+
+    def beta_levels
+      Array.wrap BETA_LEVELS_PER_METHODOLOGY[methodology_version]
     end
   end
 end

@@ -6,7 +6,7 @@
     <g id="TPI-visuals" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="TPI---Individual-sector" transform="translate(-456.000000, -1368.000000)">
             <g id="trending-up-copy-3-icons/trending-down" transform="translate(456.000000, 1368.000000)">
-                <rect id="Rectangle" fill-opacity="0.8" fill="#052161" fill-rule="nonzero" x="0" y="0" width="20" height="20"></rect>
+                <rect id="Rectangle" x="0" y="0" width="20" height="20"></rect>
                 <g id="trending-up" transform="translate(10.500000, 9.500000) rotate(-180.000000) translate(-10.500000, -9.500000) translate(6.000000, 5.000000)" stroke="#ED3D4A" stroke-width="2">
                     <line x1="9" y1="0" x2="0.5" y2="8.5" id="Path"></line>
                     <polyline id="Path" points="3 0 9 0 9 6"></polyline>
