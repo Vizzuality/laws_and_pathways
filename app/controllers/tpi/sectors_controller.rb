@@ -11,7 +11,9 @@ module TPI
 
     def index
       @companies_by_sectors = Rails.cache.fetch(TPICache::KEY, expires_in: TPICache::EXPIRES_IN) do
-        ::Api::Charts::Sector.new(companies_scope(params)).companies_market_cap_by_sector
+        ::Api::Charts::Sector.new(
+          companies_scope(params), enable_beta_mq_assessments: true # TODO: take from session + modify TPICache::KEY here
+        ).companies_market_cap_by_sector
       end
       @publications_and_articles = publications_and_articles
       sectors_page = TPIPage.find_by(slug: 'publicly-listed-equities-content')
@@ -45,7 +47,10 @@ module TPI
     # Type:     pie chart
     # On pages: :index, :show
     def levels_chart_data
-      data = ::Api::Charts::Sector.new(companies_scope(params)).companies_count_by_level
+      data = ::Api::Charts::Sector.new(
+        companies_scope(params),
+        enable_beta_mq_assessments: true # TODO: take from session
+      ).companies_count_by_level
 
       render json: data.chart_json
     end

@@ -70,12 +70,14 @@ en:
         '2': Building Capacity
         '3': Integrating into Operational Decision Making
         '4': Strategic Assessment
+        '5': Transition Planning and Implementation
       level_description_short:
         '0': Unaware
         '1': Awareness
         '2': Building capacity
         '3': Integrating into operatinal decision making
         '4': Strategic assessment
+        '5': Transition planning and implementation
   cclow:
     geography:
       event_types:

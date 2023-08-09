@@ -284,6 +284,10 @@
             &--yes {
               @include mq-level-backgrounds;
 
+              &.level5 {
+                background-color: $tpi-level4;
+              }
+
               background-image: image-url('icons/check.svg');
             }
 
@@ -480,6 +484,10 @@
 
       &--yes {
         @include mq-level-backgrounds;
+
+        &.level5 {
+          background-color: $tpi-level4;
+        }
       }
 
       &--not-applicable {
