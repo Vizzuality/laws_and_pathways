@@ -75,7 +75,7 @@ module Api
       #   { '0' => 13, '1' => 63, '2' => 61, '3' => 71, '4' => 63, '4STAR' => 6}
       #
       def companies_count_by_level
-        result = @empty_levels
+        result = @empty_levels.transform_values(&:size)
         companies_grouped_by_latest_assessment_level.each do |level, companies|
           result[level.to_i.to_s] = companies.size
         end

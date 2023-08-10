@@ -10,31 +10,44 @@
 
   <div class="companies-header">
     <div class="container is-hidden-touch">
-      <a href="#management-quality" class="link with-icon is-pulled-left">
-        <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
-        Go to Management Quality
-      </a>
-      <% if @company_presenter.cp_assessments.any? %>
-        <a href="#carbon-performance" class="link with-icon is-pulled-left">
-          <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
-          Go to Carbon Performance
-        </a>
-      <% end %>
-
-      <%= link_to user_download_all_tpi_sectors_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
-        <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
-        Download All sectors data
-      <% end %>
+      <div class="mq-beta-scores">
+        <%= render 'tpi/shared/mq_beta_scores' %>
+        <div class="mq-beta-scores__divider"></div>
+        <div>
+          <a href="#management-quality" class="link with-icon is-pulled-left">
+            <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
+            Go to Management Quality
+          </a>
+          <% if @company_presenter.cp_assessments.any? %>
+            <a href="#carbon-performance" class="link with-icon is-pulled-left">
+              <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
+              Go to Carbon Performance
+            </a>
+          <% end %>
+        </div>
+        <div class="mq-beta-scores__download-button">
+          <%= link_to user_download_all_tpi_sectors_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
+            <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
+            Download All sectors data
+          <% end %>
+        </div>
+      </div>
     </div>
     <div class="container is-hidden-desktop">
-      <a href="#management-quality" class="link with-icon is-pulled-left">
-        Management Quality
-      </a>
-      <% if @company_presenter.cp_assessments.any? %>
-        <a href="#carbon-performance" class="link with-icon is-pulled-left">
-          Carbon Performance
-        </a>
-      <% end %>
+      <div class="mq-beta-scores">
+        <%= render 'tpi/shared/mq_beta_scores' %>
+        <div class="mq-beta-scores__divider"></div>
+        <div>
+          <a href="#management-quality" class="link with-icon is-pulled-left">
+            Management Quality
+          </a>
+          <% if @company_presenter.cp_assessments.any? %>
+            <a href="#carbon-performance" class="link with-icon is-pulled-left">
+              Carbon Performance
+            </a>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 

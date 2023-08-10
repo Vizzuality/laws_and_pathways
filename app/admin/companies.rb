@@ -212,7 +212,8 @@ ActiveAdmin.register Company do
         :geography,
         :sector,
         :headquarters_geography,
-        :latest_mq_assessment,
+        :latest_mq_assessment_only_beta_methodologies,
+        :latest_mq_assessment_without_beta_methodologies,
         *csv_includes
       )
     end

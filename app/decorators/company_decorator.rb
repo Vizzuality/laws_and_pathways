@@ -6,9 +6,10 @@ class CompanyDecorator < Draper::Decorator
   end
 
   def mq_level_tag
-    return if model.latest_mq_assessment.nil?
+    mq_assessment = model.latest_mq_assessment_only_beta_methodologies || model.latest_mq_assessment_without_beta_methodologies
+    return if mq_assessment.nil?
 
-    model.latest_mq_assessment.decorate.level_tag
+    mq_assessment.decorate.level_tag
   end
 
   def preview_url
