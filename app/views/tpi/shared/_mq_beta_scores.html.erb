@@ -1,0 +1,13 @@
+<div>
+  <span class="mq-beta-scores__text">MQ Methodology</span>
+  <%= link_to disable_beta_data_tpi_mq_assessments_path,
+              class: class_names('button', 'is-primary', 'with-border': !session[:enable_beta_mq_assessments]),
+              style: "min-width: 0;" do %>
+    Current
+  <% end %>
+  <%= link_to enable_beta_data_tpi_mq_assessments_path,
+              class: class_names('button', 'is-primary', 'mq-beta-scores__beta-button', 'with-border': session[:enable_beta_mq_assessments]),
+              style: "min-width: 0;" do %>
+    BETA
+  <% end %>
+</div>

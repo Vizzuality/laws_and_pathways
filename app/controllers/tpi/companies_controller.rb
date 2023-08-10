@@ -61,7 +61,7 @@ module TPI
 
     def fetch_company
       @company = TPI::CompanyDecorator.decorate(Company.published.friendly.find(params[:id]))
-      @company.show_beta_mq_assessments = true # TODO: take from session
+      @company.show_beta_mq_assessments = session[:enable_beta_mq_assessments]
     end
 
     def redirect_if_numeric_or_historic_slug

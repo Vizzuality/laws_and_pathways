@@ -10,9 +10,12 @@ module TPI
     helper_method :any_cp_assessment?
 
     def index
-      @companies_by_sectors = Rails.cache.fetch(TPICache::KEY, expires_in: TPICache::EXPIRES_IN) do
+      @companies_by_sectors = Rails.cache.fetch(
+        "#{TPICache::KEY}-mq-beta-scores-#{session[:enable_beta_mq_assessments]}",
+        expires_in: TPICache::EXPIRES_IN
+      ) do
         ::Api::Charts::Sector.new(
-          companies_scope(params), enable_beta_mq_assessments: true # TODO: take from session + modify TPICache::KEY here
+          companies_scope(params), enable_beta_mq_assessments: session[:enable_beta_mq_assessments]
         ).companies_market_cap_by_sector
       end
       @publications_and_articles = publications_and_articles
@@ -49,7 +52,7 @@ module TPI
     def levels_chart_data
       data = ::Api::Charts::Sector.new(
         companies_scope(params),
-        enable_beta_mq_assessments: true # TODO: take from session
+        enable_beta_mq_assessments: session[:enable_beta_mq_assessments]
       ).companies_count_by_level
 
       render json: data.chart_json

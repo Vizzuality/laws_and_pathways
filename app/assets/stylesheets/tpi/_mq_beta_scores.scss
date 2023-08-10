@@ -1,0 +1,40 @@
+.mq-beta-scores {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+  @include until($desktop) {
+    flex-direction: column;
+  }
+
+  &__text {
+    color: white;
+    line-height: 40px;
+    margin-right: 10px;
+  }
+
+  &__divider {
+    margin: 0 15px 0 5px;
+    border-right: 1px solid rgba(255, 255, 255, 0.5);
+
+    @include until($desktop) {
+      display: none;
+    }
+  }
+
+  &__beta-button:before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 5px;
+    display: inline-block;
+    background-color: $tpi-level5-background-color;
+    vertical-align: middle;
+  }
+
+  &__download-button {
+    flex-grow: 4;
+    text-align: right;
+  }
+}
