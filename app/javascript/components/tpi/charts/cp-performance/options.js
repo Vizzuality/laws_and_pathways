@@ -92,7 +92,7 @@ export function getOptions({ chartData, unit }) {
           isTargeted: p.point.zone.dashStyle === 'dot',
           isBenchmark: p.series.type === 'area'
         }));
-
+        console.log('s', this.points, chartData);
         return renderToString(
           <Tooltip xValue={xValue} yValues={yValues} unit={unit} />
         );
@@ -140,13 +140,15 @@ export function getMultipleOptions({ chartData, unit }) {
   const options = getOptions({ chartData, unit });
   return {
     ...options,
-    chart: { ...options.chart, height: 300, width: 400 },
-    events: {
-      render() {
-        // Group area series and add a className only to allow grouped opacity change to 0.3
-        groupAllAreaSeries();
-      }
-    },
+    chart: { ...options.chart,
+      height: 300,
+      width: 400,
+      events: {
+        render() {
+          // Group area series and add a className only to allow grouped opacity change to 0.3
+          groupAllAreaSeries();
+        }
+      }},
     yAxis: {
       title: {
         text: unit,
@@ -165,13 +167,15 @@ export function getMultipleMobileOptions({ chartData, unit }) {
   const options = getMobileOptions({ chartData, unit });
   return {
     ...options,
-    chart: { ...options.chart, height: 300, width: 400 },
-    events: {
-      render() {
-        // Group area series and add a className only to allow grouped opacity change to 0.3
-        groupAllAreaSeries();
-      }
-    },
+    chart: { ...options.chart,
+      height: 300,
+      width: 400,
+      events: {
+        render() {
+          // Group area series and add a className only to allow grouped opacity change to 0.3
+          groupAllAreaSeries();
+        }
+      }},
     yAxis: {
       title: {
         text: unit,
