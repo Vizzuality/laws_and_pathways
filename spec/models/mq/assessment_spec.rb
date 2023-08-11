@@ -92,4 +92,25 @@ RSpec.describe MQ::Assessment, type: :model do
       expect(current.status).to eq('unchanged')
     end
   end
+
+  describe '#beta_methodology?' do
+    let(:beta_methodology) { MQ::Assessment::BETA_METHODOLOGIES.first }
+
+    let(:assessment) { create(:mq_assessment, company: company) }
+    let!(:beta_assessment) { create(:mq_assessment, company: company, methodology_version: beta_methodology) }
+
+    it 'should return correct value' do
+      expect(assessment.beta_methodology?).to be_falsey
+      expect(beta_assessment.beta_methodology?).to be_truthy
+    end
+  end
+
+  describe '#beta_levels' do
+    let(:beta_methodology) { MQ::Assessment::BETA_METHODOLOGIES.first }
+    let!(:beta_assessment) { create(:mq_assessment, company: company, methodology_version: beta_methodology) }
+
+    it 'should return correct value' do
+      expect(beta_assessment.beta_levels).to eq(MQ::Assessment::BETA_LEVELS_PER_METHODOLOGY[beta_methodology])
+    end
+  end
 end
