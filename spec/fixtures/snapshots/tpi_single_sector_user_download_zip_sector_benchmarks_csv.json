@@ -3,7 +3,6 @@
     "Benchmark ID": "Energy_01/05/2013",
     "Sector name": "Energy",
     "Scenario name": "Paris Pledges",
-    "Region": "Global",
     "Release date": "01/05/2013",
     "Unit": null,
     "2013": "121",
@@ -11,13 +10,13 @@
     "2015": "125",
     "2016": "120",
     "2017": "125",
-    "2018": "128"
+    "2018": "128",
+    "Region": "Global"
   },
   {
     "Benchmark ID": "Technology_01/05/2011",
     "Sector name": "Technology",
     "Scenario name": "Below 2 Degrees",
-    "Region": "Global",
     "Release date": "01/05/2011",
     "Unit": null,
     "2013": "121",
@@ -25,13 +24,13 @@
     "2015": "125",
     "2016": "120",
     "2017": "125",
-    "2018": "128"
+    "2018": "128",
+    "Region": "Global"
   },
   {
     "Benchmark ID": "Technology_01/05/2011",
     "Sector name": "Technology",
     "Scenario name": "Paris Pledges",
-    "Region": "Global",
     "Release date": "01/05/2011",
     "Unit": null,
     "2013": "121",
@@ -39,7 +38,8 @@
     "2015": "125",
     "2016": "120",
     "2017": "125",
-    "2018": "128"
+    "2018": "128",
+    "Region": "Global"
   },
   {
     "Benchmark ID": "OECD_Technology_01/05/2011",

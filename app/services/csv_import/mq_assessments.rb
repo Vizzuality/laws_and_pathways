@@ -47,8 +47,7 @@ module CSVImport
       find_record_by(:id, row) ||
         MQ::Assessment.find_or_initialize_by(
           company: find_company!(row),
-          assessment_date: assessment_date(row),
-          methodology_version: row[:methodology_version].to_s
+          assessment_date: assessment_date(row)
         )
     end
 

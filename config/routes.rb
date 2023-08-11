@@ -60,13 +60,6 @@ Rails.application.routes.draw do
         end
       end
       get '/publications/uploads/:slug', to: 'publications#download_file', as: :publication_download_file
-
-      resources :mq_assessments, only: [:show] do
-        collection do
-          get :enable_beta_data
-          get :disable_beta_data
-        end
-      end
     end
   end
 

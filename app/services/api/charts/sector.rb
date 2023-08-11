@@ -2,7 +2,7 @@ module Api
   module Charts
     class Sector
       BENCHMARK_FILL_COLORS = ['#86A9F9', '#5587F7', '#2465F5', '#0A4BDC', '#083AAB'].freeze
-      DEFAULT_EMPTY_LEVELS = {
+      EMPTY_LEVELS = {
         '0' => [],
         '1' => [],
         '2' => [],
@@ -10,11 +10,8 @@ module Api
         '4' => []
       }.freeze
 
-      def initialize(company_scope, enable_beta_mq_assessments: false)
+      def initialize(company_scope)
         @company_scope = company_scope
-        @enable_beta_mq_assessments = enable_beta_mq_assessments
-        @beta_levels = MQ::Assessment::BETA_LEVELS.each_with_object({}) { |l, r| r[l] = [] }
-        @empty_levels = (enable_beta_mq_assessments ? DEFAULT_EMPTY_LEVELS.merge(@beta_levels) : DEFAULT_EMPTY_LEVELS).deep_dup
       end
 
       # Returns Companies summaries (name, status) grouped by their latest MQ assessments levels.
@@ -34,10 +31,12 @@ module Api
       #    ]
       #   }
       def companies_summaries_by_level
-        result = @empty_levels
+        result = EMPTY_LEVELS.deep_dup
+
         companies_grouped_by_latest_assessment_level.each do |level, companies|
           result[level.to_i.to_s].concat(companies_summary(companies)).sort_by! { |c| c[:name] }
         end
+
         result
       end
 
@@ -59,7 +58,7 @@ module Api
         companies_grouped_by_sector.map do |sector, companies|
           [
             sector,
-            @empty_levels.merge(
+            EMPTY_LEVELS.deep_dup.merge(
               companies_market_cap(companies).group_by { |c| c[:level] }.sort.to_h
             )
           ]
@@ -75,11 +74,9 @@ module Api
       #   { '0' => 13, '1' => 63, '2' => 61, '3' => 71, '4' => 63, '4STAR' => 6}
       #
       def companies_count_by_level
-        result = @empty_levels.transform_values(&:size)
-        companies_grouped_by_latest_assessment_level.each do |level, companies|
-          result[level.to_i.to_s] = companies.size
-        end
-        result.sort.to_h
+        companies_grouped_by_latest_assessment_level
+          .map { |level, companies| [level, companies.size] }
+          .sort.to_h
       end
 
       # Returns companies emissions, which includes:
@@ -109,23 +106,14 @@ module Api
 
       def companies_grouped_by_latest_assessment_level
         @company_scope
-          .includes(
-            :latest_mq_assessment_without_beta_methodologies,
-            :latest_mq_assessment_only_beta_methodologies
-          )
-          .map { |c| update_beta_mq_assessments_visibility c }
+          .includes(:latest_mq_assessment)
           .reject { |c| c.mq_level.nil? }
           .group_by { |c| c.mq_level.to_i.to_s }
       end
 
       def companies_grouped_by_sector
         @company_scope
-          .includes(
-            :sector,
-            :latest_mq_assessment_without_beta_methodologies,
-            :latest_mq_assessment_only_beta_methodologies
-          )
-          .map { |c| update_beta_mq_assessments_visibility c }
+          .includes(:sector, :latest_mq_assessment)
           .group_by { |company| company.sector.name }
       end
 
@@ -209,11 +197,6 @@ module Api
         return {} unless emissions
 
         emissions.transform_keys(&:to_i)
-      end
-
-      def update_beta_mq_assessments_visibility(company)
-        company.show_beta_mq_assessments = @enable_beta_mq_assessments
-        company
       end
     end
   end

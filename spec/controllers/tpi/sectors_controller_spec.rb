@@ -36,8 +36,7 @@ RSpec.describe TPI::SectorsController, type: :controller do
       ],
       mq_assessments: [
         build(:mq_assessment, assessment_date: '2013-05-01', publication_date: '2013-05-01'),
-        build(:mq_assessment, assessment_date: '2014-05-01', publication_date: '2014-05-01'),
-        build(:mq_assessment, methodology_version: 5, assessment_date: '2016-05-01', publication_date: '2015-05-01')
+        build(:mq_assessment, assessment_date: '2014-05-01', publication_date: '2014-05-01')
       ],
       sector: sector1,
       market_cap_group: 'large',
@@ -155,9 +154,7 @@ RSpec.describe TPI::SectorsController, type: :controller do
         expect(entries_names).to include("CP_Assessments_#{timestamp}.csv")
         expect(entries_names).to include("CP_Assessments_Regional_#{timestamp}.csv")
         expect(entries_names).to include('Company_Latest_Assessments.csv')
-        expect(entries_names).to include('Company_Latest_Assessments_BETA_5.0.csv')
         expect(entries_names).to include("MQ_Assessments_Methodology_1_#{timestamp}.csv")
-        expect(entries_names).to include("MQ_Assessments_Methodology_5_BETA_#{timestamp}.csv")
         expect(entries_names).to include('User guide TPI files.xlsx')
 
         expect(entries_csv_json["Sector_Benchmarks_#{timestamp}.csv"])
@@ -168,12 +165,10 @@ RSpec.describe TPI::SectorsController, type: :controller do
           .to match_snapshot('tpi_single_sector_user_download_cp_assessments_regional_csv')
         expect(entries_csv_json['Company_Latest_Assessments.csv'])
           .to match_snapshot('tpi_single_sector_user_company_latest_assessments_csv')
-        expect(entries_csv_json['Company_Latest_Assessments_BETA_5.0.csv'])
-          .to match_snapshot('tpi_single_sector_user_company_latest_assessments_beta_5.0_csv')
+        expect(entries_csv_json['Company_Latest_Assessments.csv'])
+          .to match_snapshot('tpi_single_sector_user_company_latest_assessments_csv')
         expect(entries_csv_json["MQ_Assessments_Methodology_1_#{timestamp}.csv"])
           .to match_snapshot('tpi_single_sector_user_mq_assessments_methodology_1_csv')
-        expect(entries_csv_json["MQ_Assessments_Methodology_5_BETA_#{timestamp}.csv"])
-          .to match_snapshot('tpi_single_sector_user_mq_assessments_methodology_5_beta_csv')
       end
     end
   end
@@ -207,9 +202,7 @@ RSpec.describe TPI::SectorsController, type: :controller do
         expect(entries_names).to include("Sector_Benchmarks_#{timestamp}.csv")
         expect(entries_names).to include("CP_Assessments_#{timestamp}.csv")
         expect(entries_names).to include('Company_Latest_Assessments.csv')
-        expect(entries_names).to include('Company_Latest_Assessments_BETA_5.0.csv')
         expect(entries_names).to include("MQ_Assessments_Methodology_1_#{timestamp}.csv")
-        expect(entries_names).to include("MQ_Assessments_Methodology_5_BETA_#{timestamp}.csv")
         expect(entries_names).to include('User guide TPI files.xlsx')
 
         expect(entries_csv_json["Sector_Benchmarks_#{timestamp}.csv"])
@@ -218,12 +211,10 @@ RSpec.describe TPI::SectorsController, type: :controller do
           .to match_snapshot('tpi_all_sectors_user_download_cp_assessments_csv')
         expect(entries_csv_json['Company_Latest_Assessments.csv'])
           .to match_snapshot('tpi_all_sectors_user_company_latest_assessments_csv')
-        expect(entries_csv_json['Company_Latest_Assessments_BETA_5.0.csv'])
-          .to match_snapshot('tpi_all_sectors_user_company_latest_assessments_beta_5.0_csv')
+        expect(entries_csv_json['Company_Latest_Assessments.csv'])
+          .to match_snapshot('tpi_all_sectors_user_company_latest_assessments_csv')
         expect(entries_csv_json["MQ_Assessments_Methodology_1_#{timestamp}.csv"])
           .to match_snapshot('tpi_all_sectors_user_mq_assessments_methodology_1_csv')
-        expect(entries_csv_json["MQ_Assessments_Methodology_5_BETA_#{timestamp}.csv"])
-          .to match_snapshot('tpi_all_sectors_user_mq_assessments_methodology_5_beta_csv')
       end
     end
   end

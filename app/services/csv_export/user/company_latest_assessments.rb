@@ -1,8 +1,7 @@
 module CSVExport
   module User
     class CompanyLatestAssessments
-      def initialize(mq_assessments, cp_assessments, enable_beta_mq_assessments: false)
-        @enable_beta_mq_assessments = enable_beta_mq_assessments
+      def initialize(mq_assessments, cp_assessments)
         @companies = (mq_assessments.map(&:company) + cp_assessments.map(&:company)).uniq
         @latest_mq_assessments_hash = get_latest_mq_assessments_hash(mq_assessments)
         @cp_assessments_hash = get_cp_assessments_hash(cp_assessments)
@@ -95,7 +94,6 @@ module CSVExport
       private
 
       def get_latest_mq_assessments_hash(assessments)
-        assessments = assessments.reject(&:beta_methodology?) unless @enable_beta_mq_assessments
         latest_methodology = assessments
           .select { |a| a.methodology_version.present? }
           .max_by(&:methodology_version)&.methodology_version

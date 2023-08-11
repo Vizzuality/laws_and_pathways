@@ -80,28 +80,16 @@ RSpec.describe Company, type: :model do
   end
 
   describe '#latest_mq_assessment' do
-    let(:beta_methodology_version) { MQ::Assessment::BETA_METHODOLOGIES.first }
-    let(:company) do
-      create(:company, mq_assessments: [
-               build(:mq_assessment, assessment_date: '2012-05-01'),
-               build(:mq_assessment, assessment_date: '2019-05-01'),
-               build(:mq_assessment, assessment_date: '2013-05-01'),
-               build(:mq_assessment, assessment_date: '2018-05-01'),
-               build(:mq_assessment, assessment_date: '2019-06-01', methodology_version: beta_methodology_version),
-               build(:mq_assessment, assessment_date: '2020-01-01', publication_date: 1.year.from_now)
-             ])
-    end
-
     it 'returns last MQ assessments with most recent assessment date' do
+      company = create(:company, mq_assessments: [
+                         build(:mq_assessment, assessment_date: '2012-05-01'),
+                         build(:mq_assessment, assessment_date: '2019-05-01'),
+                         build(:mq_assessment, assessment_date: '2013-05-01'),
+                         build(:mq_assessment, assessment_date: '2018-05-01'),
+                         build(:mq_assessment, assessment_date: '2020-01-01', publication_date: 1.year.from_now)
+                       ])
+
       expect(company.latest_mq_assessment.assessment_date.to_s).to eq('01/05/2019')
-    end
-
-    context 'when beta methodologies are taken into account' do
-      before { company.show_beta_mq_assessments = true }
-
-      it 'returns last MQ assessments including BETA scores with most recent assessment date' do
-        expect(company.latest_mq_assessment.assessment_date.to_s).to eq('01/06/2019')
-      end
     end
   end
 end

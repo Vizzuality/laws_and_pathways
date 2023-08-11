@@ -28,8 +28,6 @@ class Company < ApplicationRecord
   include TPICache
   extend FriendlyId
 
-  attr_accessor :show_beta_mq_assessments
-
   friendly_id :name, use: [:slugged, :history], routes: :default
 
   MARKET_CAP_GROUPS = %w[small medium large unlisted].freeze
@@ -41,12 +39,6 @@ class Company < ApplicationRecord
   belongs_to :headquarters_geography, class_name: 'Geography'
 
   has_many :mq_assessments, class_name: 'MQ::Assessment', inverse_of: :company
-  has_one :latest_mq_assessment_without_beta_methodologies, -> {
-    currently_published.without_beta_methodologies.order(assessment_date: :desc)
-  }, class_name: 'MQ::Assessment'
-  has_one :latest_mq_assessment_only_beta_methodologies, -> {
-    currently_published.only_beta_methodologies.order(assessment_date: :desc)
-  }, class_name: 'MQ::Assessment'
   has_one :latest_mq_assessment, -> { currently_published.order(assessment_date: :desc) }, class_name: 'MQ::Assessment'
   has_many :cp_assessments, class_name: 'CP::Assessment', as: :cp_assessmentable
   has_one :latest_cp_assessment, -> {
@@ -68,12 +60,6 @@ class Company < ApplicationRecord
   validates_uniqueness_of :slug, :name
 
   scope :active, -> { where(active: true) }
-
-  def latest_mq_assessment
-    return latest_mq_assessment_without_beta_methodologies if show_beta_mq_assessments.blank?
-
-    latest_mq_assessment_only_beta_methodologies || latest_mq_assessment_without_beta_methodologies
-  end
 
   def should_generate_new_friendly_id?
     name_changed? || super
