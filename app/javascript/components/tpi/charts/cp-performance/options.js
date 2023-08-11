@@ -15,7 +15,7 @@ export function getOptions({ chartData, unit }) {
       marginTop: 30,
       events: {
         render() {
-          // Group area series and add a classname only to allow grouped opacity change to 0.3
+          // Group area series and add a className only to allow grouped opacity change to 0.3
           groupAllAreaSeries();
           renderBenchmarksLabels(this);
         }
@@ -141,6 +141,12 @@ export function getMultipleOptions({ chartData, unit }) {
   return {
     ...options,
     chart: { ...options.chart, height: 300, width: 400 },
+    events: {
+      render() {
+        // Group area series and add a className only to allow grouped opacity change to 0.3
+        groupAllAreaSeries();
+      }
+    },
     yAxis: {
       title: {
         text: unit,
@@ -160,6 +166,12 @@ export function getMultipleMobileOptions({ chartData, unit }) {
   return {
     ...options,
     chart: { ...options.chart, height: 300, width: 400 },
+    events: {
+      render() {
+        // Group area series and add a className only to allow grouped opacity change to 0.3
+        groupAllAreaSeries();
+      }
+    },
     yAxis: {
       title: {
         text: unit,
