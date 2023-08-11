@@ -16,8 +16,9 @@ import { useDeviceInfo } from 'components/Responsive';
 import Legend from './Legend';
 
 const EmissionsLegend = ({ data }) => {
-  // Target Years won't show on the chart if there are less than two data points
-  const filteredData = data.filter(d => !(d.name === 'Target Years' && d.data.length < 2));
+  // General legend items are already shown and shouldn't be included. We also don't want to show the legend item for the target years.
+  const generalLegendItemsName = data.filter(d => d.type !== 'area' && d.name !== 'Target Years').map(d => d.name);
+  const filteredData = data.filter(d => !generalLegendItemsName.concat('Target Years').includes(d.name));
   return (
     <div className="emissions-legend">
       {filteredData.map((d) => (
