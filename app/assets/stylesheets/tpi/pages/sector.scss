@@ -21,10 +21,8 @@ $tape-color: rgba(25,25,25,0.1);
 
     a {
       color: white;
-    }
-
-    a + a {
-      margin-left: 20px;
+      line-height: 40px;
+      margin-right: 10px;
     }
 
     @include until($desktop) {

@@ -10,7 +10,8 @@ const LEVELS_SUBTITLES = {
   1: 'Awareness',
   2: 'Building capacity',
   3: 'Integrating into operational decision making',
-  4: 'Strategic assessment'
+  4: 'Strategic assessment',
+  5: 'Transition planning and implementation'
 };
 
 const blueDarkColor = '#2E3152';
