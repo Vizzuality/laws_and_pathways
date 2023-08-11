@@ -12,11 +12,11 @@ import chevronDownIconBlack from 'images/icon_chevron_dark/chevron_down_black-1.
 
 const COLORS = {
   'Not assessable using TPI’s methodology': { color: '#CACBCE' },
-  'No or unsuitable disclosure': { color: 'white', border: true },
+  'No disclosure': { color: 'grey', line: true },
   'Not Aligned': { color: '#ED3D4A' },
-  'National Pledges': { color: '#F99602' },
+  '1.5 Degrees': { color: '#57BE77' },
   'Below 2 Degrees': { color: '#F9DF65' },
-  '1.5 Degrees': { color: '#57BE77' }
+  'National Pledges': { color: '#F99602' }
 };
 
 function ColorDot({ value, small }) {
@@ -27,6 +27,7 @@ function ColorDot({ value, small }) {
       <span
         className={cx('color-dot', {
           withBorder: COLORS[value]?.border,
+          line: COLORS[value]?.line,
           small
         })}
         style={{ backgroundColor: COLORS[value]?.color }}

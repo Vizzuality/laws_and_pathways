@@ -60,6 +60,11 @@
       height: 10px;
       width: 10px;
     }
+
+    &.line {
+      height: 2px;
+      border-radius: 0;
+    }
   }
 
   .withBorder {
