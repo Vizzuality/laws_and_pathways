@@ -35,7 +35,7 @@ RSpec.describe MQ::Assessment, type: :model do
   end
 
   it 'should be invalid if level not recognized' do
-    subject.level = '5'
+    subject.level = '7'
     expect(subject).to have(1).errors_on(:level)
   end
 

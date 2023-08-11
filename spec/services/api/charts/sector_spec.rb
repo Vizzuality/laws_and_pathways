@@ -55,7 +55,10 @@ RSpec.describe Api::Charts::Sector do
   describe '.companies_count' do
     it 'returns companies count grouped by their level' do
       expect(subject.companies_count_by_level).to eq(
+        '0' => 0,
         '1' => 1,
+        '2' => 0,
+        '3' => 0,
         '4' => 1
       )
     end
@@ -96,7 +99,7 @@ RSpec.describe Api::Charts::Sector do
   describe '.companies_market_cap_by_sector' do
     it 'returns Companies grouped by their sector and level' do
       expect(subject.companies_market_cap_by_sector).to eq(
-        'Airlines' => {
+        sector.name => {
           '0' => [],
           '1' => [
             {
@@ -114,7 +117,7 @@ RSpec.describe Api::Charts::Sector do
           '3' => [],
           '4' => []
         },
-        'Autos' => {
+        sector2.name => {
           '0' => [],
           '1' => [],
           '2' => [],

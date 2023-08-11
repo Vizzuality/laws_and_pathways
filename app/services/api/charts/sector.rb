@@ -14,7 +14,7 @@ module Api
         @company_scope = company_scope
         @enable_beta_mq_assessments = enable_beta_mq_assessments
         @beta_levels = MQ::Assessment::BETA_LEVELS.each_with_object({}) { |l, r| r[l] = [] }
-        @empty_levels = enable_beta_mq_assessments ? DEFAULT_EMPTY_LEVELS.merge(@beta_levels) : DEFAULT_EMPTY_LEVELS
+        @empty_levels = enable_beta_mq_assessments ? DEFAULT_EMPTY_LEVELS.deep_merge(@beta_levels) : DEFAULT_EMPTY_LEVELS.deep_dup
       end
 
       # Returns Companies summaries (name, status) grouped by their latest MQ assessments levels.
