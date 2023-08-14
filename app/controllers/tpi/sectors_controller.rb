@@ -36,7 +36,9 @@ module TPI
     def show
       @sector_companies = @companies.active.select { |c| c.sector_id == @sector.id }
 
-      @companies_by_levels = ::Api::Charts::Sector.new(companies_scope(params)).companies_summaries_by_level
+      @companies_by_levels = ::Api::Charts::Sector.new(
+        companies_scope(params), enable_beta_mq_assessments: session[:enable_beta_mq_assessments]
+      ).companies_summaries_by_level
 
       @publications_and_articles = @sector.publications_and_articles
 
@@ -51,8 +53,7 @@ module TPI
     # On pages: :index, :show
     def levels_chart_data
       data = ::Api::Charts::Sector.new(
-        companies_scope(params),
-        enable_beta_mq_assessments: session[:enable_beta_mq_assessments]
+        companies_scope(params), enable_beta_mq_assessments: session[:enable_beta_mq_assessments]
       ).companies_count_by_level
 
       render json: data.chart_json
@@ -63,7 +64,9 @@ module TPI
     # Type:     line chart
     # On pages: :show
     def emissions_chart_data
-      data = ::Api::Charts::Sector.new(companies_scope(params)).companies_emissions_data
+      data = ::Api::Charts::Sector.new(
+        companies_scope(params), enable_beta_mq_assessments: session[:enable_beta_mq_assessments]
+      ).companies_emissions_data
 
       render json: data.chart_json
     end
