@@ -22,6 +22,7 @@
   flex-direction: column;
   flex-grow: 1;
   padding: 40px 32px;
+  margin: 0;
 
   @media (min-width: 640px) {
     left: 50%;
@@ -51,6 +52,8 @@
 
   .close-btn {
     cursor: pointer;
+    background-color: transparent;
+    border: none;
     position: absolute;
     top: 27px;
     right: 21px;
@@ -62,5 +65,13 @@
       height: 18px;
       width: 18px;
     }
+  }
+
+  .actions {
+    display: flex;
+  }
+
+  .margin-left {
+    margin-left: 8px;
   }
 }

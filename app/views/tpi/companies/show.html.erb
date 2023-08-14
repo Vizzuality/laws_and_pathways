@@ -7,7 +7,9 @@
   <div class="dropdown-selector-company-page-wrapper">
     <%= react_component("DropdownSelector", { sectors: @sectors, companies: @companies, selectedOption: @company.name, defaultFilter: 'company' }) %>
   </div>
-
+  <%= react_component('MqBetaModal', {
+    enabled: session[:enable_beta_mq_assessments]
+  }) %>
   <div class="companies-header">
     <div class="container is-hidden-touch">
       <div class="mq-beta-scores">
@@ -34,7 +36,7 @@
       </div>
     </div>
     <div class="container is-hidden-desktop">
-      <div class="mq-beta-scores">
+      <div class="mq-beta-scores is-hidden-desktop">
         <%= render 'tpi/shared/mq_beta_scores' %>
         <div class="mq-beta-scores__divider"></div>
         <div>
