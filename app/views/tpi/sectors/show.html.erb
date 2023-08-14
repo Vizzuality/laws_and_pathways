@@ -1,6 +1,10 @@
 <% content_for :page_title, "#{@sector.name} - Transition Pathway Initiative" %>
 <% content_for :page_description, "Description: Compare and assess how prepared the world’s top companies in the #{@sector.name} sector are for the transition to a low-carbon economy." %>
 
+<%= react_component('MqBetaModal', {
+  enabled: session[:enable_beta_mq_assessments]
+}) %>
+
 <div class="sector-page">
   <div class="dropdown-selector-sector-page-wrapper">
     <%= react_component("DropdownSelector", {
