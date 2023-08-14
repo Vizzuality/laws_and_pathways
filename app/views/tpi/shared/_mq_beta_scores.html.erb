@@ -10,4 +10,7 @@
               style: "min-width: 0;" do %>
     BETA
   <% end %>
+  <%= react_component('MqBetaModal', {
+    enabled: session[:enable_beta_mq_assessments]
+  }) %>
 </div>
