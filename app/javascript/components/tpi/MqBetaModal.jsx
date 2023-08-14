@@ -19,6 +19,10 @@ const MqBetaModal = ({ enabled }) => {
 
   const handleOnRequestClose = () => {
     setDisplayed(true);
+  };
+
+  const handleDoNotShowAgain = () => {
+    setDisplayed(true);
     setPopupDismissed(true);
     localStorage.setItem(TPI_MODAL_DISMISSED, true);
   };
@@ -31,9 +35,14 @@ const MqBetaModal = ({ enabled }) => {
         title="Management Quality (MQ) methodology"
       >
         <div>
-          <div className="close-btn" data-action="click->cookies-consent#close">
+          <button
+            type="button"
+            className="close-btn"
+            onClick={handleOnRequestClose}
+            aria-label="Proceed with Management Quality (MQ) methodology preview"
+          >
             <div className="icon__close" />
-          </div>
+          </button>
           <div className="modal-title">Management Quality (MQ) methodology</div>
           <div className="content">
             <p>
@@ -60,13 +69,22 @@ const MqBetaModal = ({ enabled }) => {
               toggle.
             </p>
           </div>
-          <button
-            type="button"
-            className="button is-primary"
-            onClick={handleOnRequestClose}
-          >
-            Proceed
-          </button>
+          <div className="actions">
+            <button
+              type="button"
+              className="button is-primary"
+              onClick={handleOnRequestClose}
+            >
+              Proceed
+            </button>
+            <button
+              type="button"
+              className="button is-secondary margin-left"
+              onClick={handleDoNotShowAgain}
+            >
+              Don&apos;t show this again
+            </button>
+          </div>
         </div>
       </CustomModal>
     </OverlayProvider>
