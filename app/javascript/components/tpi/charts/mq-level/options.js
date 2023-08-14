@@ -50,11 +50,16 @@ export function getOptions({ chartData }) {
     },
     yAxis: {
       min: 0,
-      max: 4,
+      max: 5,
       tickInterval: 1,
       labels: {
         style: {
           fontSize: '12px'
+        },
+        useHTML: true,
+        stagger: 0,
+        formatter() {
+          return this.value === 5 ? '5 [BETA]' : this.value;
         }
       },
       title: {
