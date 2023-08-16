@@ -2,7 +2,8 @@
 <% content_for :page_description, "The TPI tool is a corporate climate action benchmark which assesses how prepared companies are for the transition to a low-carbon economy." %>
 
 <%= react_component('MqBetaModal', {
-  enabled: session[:enable_beta_mq_assessments]
+  enabled: session[:enable_beta_mq_assessments],
+  page: "company"
 }) %>
 
 <div class="sectors-index-page">

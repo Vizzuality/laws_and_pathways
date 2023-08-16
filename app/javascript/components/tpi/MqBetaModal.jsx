@@ -1,24 +1,34 @@
+/* eslint-disable operator-linebreak */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CustomModal from './Modal';
 import { OverlayProvider } from '@react-aria/overlays';
 
 const TPI_MODAL_DISMISSED = 'TPI_MODAL_DISMISSED';
+const TPI_MODAL_PAGES_SHOWN = 'TPI_MODAL_PAGES_SHOWN';
 
-const MqBetaModal = ({ enabled }) => {
+const MqBetaModal = ({ enabled, page }) => {
   const [displayed, setDisplayed] = useState(false);
 
   const isDismissed = localStorage.getItem(TPI_MODAL_DISMISSED);
+  const pagesShown = localStorage.getItem(TPI_MODAL_PAGES_SHOWN);
+  const hasBeenShownInPage =
+    pagesShown?.includes(page) ||
+    (page === 'company' && pagesShown?.includes('companies'));
   const [popupDismissed, setPopupDismissed] = useState(
     JSON.parse(isDismissed) || false
   );
 
-  if (popupDismissed) {
+  if (popupDismissed || hasBeenShownInPage) {
     return null;
   }
 
   const handleOnRequestClose = () => {
     setDisplayed(true);
+    localStorage.setItem(
+      TPI_MODAL_PAGES_SHOWN,
+      pagesShown ? `${pagesShown},${page}` : page
+    );
   };
 
   const handleDoNotShowAgain = () => {
@@ -92,7 +102,8 @@ const MqBetaModal = ({ enabled }) => {
 };
 
 MqBetaModal.propTypes = {
-  enabled: PropTypes.bool.isRequired
+  enabled: PropTypes.bool.isRequired,
+  page: PropTypes.oneOf(['sector', 'company', 'companies']).isRequired
 };
 
 export default MqBetaModal;
