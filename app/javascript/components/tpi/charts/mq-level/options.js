@@ -8,6 +8,7 @@ const greyDark = '#595B5D';
 const dark = '#191919';
 
 export function getOptions({ chartData }) {
+  const yAxisMaxLevel = chartData.filter(d => d.name === 'Level')?.[0]?.data?.length;
   return merge({}, defaultOptions, {
     chart: {
       marginTop: 50,
@@ -50,7 +51,7 @@ export function getOptions({ chartData }) {
     },
     yAxis: {
       min: 0,
-      max: 5,
+      max: yAxisMaxLevel,
       tickInterval: 1,
       labels: {
         style: {
