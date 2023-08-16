@@ -31,7 +31,10 @@ module TPI
     # Type:     line chart
     # On pages: :show
     def assessments_levels_chart_data
-      data = ::Api::Charts::MQAssessment.new(@mq_assessment).assessments_levels_data
+      data = ::Api::Charts::MQAssessment.new(
+        @mq_assessment,
+        enable_beta_mq_assessments: @company.show_beta_mq_assessments
+      ).assessments_levels_data
 
       render json: data.chart_json
     end
@@ -58,6 +61,7 @@ module TPI
 
     def fetch_company
       @company = TPI::CompanyDecorator.decorate(Company.published.friendly.find(params[:id]))
+      @company.show_beta_mq_assessments = session[:enable_beta_mq_assessments]
     end
 
     def redirect_if_numeric_or_historic_slug

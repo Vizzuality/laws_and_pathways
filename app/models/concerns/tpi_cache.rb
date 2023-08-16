@@ -10,5 +10,7 @@ module TPICache
 
   def clear_tpi_cache
     Rails.cache.delete(KEY)
+    Rails.cache.delete("#{KEY}-mq-beta-scores-true")
+    Rails.cache.delete("#{KEY}-mq-beta-scores-false")
   end
 end

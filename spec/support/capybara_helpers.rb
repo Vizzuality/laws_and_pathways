@@ -20,4 +20,17 @@ module CapybaraHelpers
       yield if block_given?
     end
   end
+
+  def with_mq_beta_scores
+    within '.mq-beta-scores' do
+      click_on 'BETA'
+    end
+    within '.modal-content' do
+      click_on 'Proceed'
+    end
+    yield
+    within '.mq-beta-scores' do
+      click_on 'Current'
+    end
+  end
 end

@@ -22,7 +22,7 @@ const LEVELS_COLORS = [
   '#2465F5',
   '#0A4BDC',
   '#083AAB',
-  '#042b82'
+  '#60EDE5'
 ];
 
 const LEVELS_SUBTITLES = {
@@ -91,7 +91,7 @@ const BubbleChart = ({ levels, sectors }) => {
       {levelsSignature.map((el, i) => (
         <div className="bubble-chart__level" key={`${el}-${i}-${Math.random()}`}>
           <div className="bubble-chart__level-container">
-            <div className="bubble-chart__level-title">{`Level ${el}`}</div>
+            <div className="bubble-chart__level-title">{`Level ${el === '5' ? '5 [BETA]' : el}`}</div>
             <div className="bubble-chart__level-subtitle">{LEVELS_SUBTITLES[el]}</div>
           </div>
         </div>
