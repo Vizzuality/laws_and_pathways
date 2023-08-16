@@ -12,7 +12,7 @@ import chevronDownIconBlack from 'images/icon_chevron_dark/chevron_down_black-1.
 
 const COLORS = {
   'Not assessable using TPI’s methodology': { color: '#CACBCE' },
-  'No disclosure': { color: 'grey', line: true },
+  'No or unsuitable disclosure': { color: 'grey', line: true },
   'Not Aligned': { color: '#ED3D4A' },
   '1.5 Degrees': { color: '#57BE77' },
   'Below 2 Degrees': { color: '#F9DF65' },
