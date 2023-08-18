@@ -1,5 +1,5 @@
 /* eslint-disable operator-linebreak */
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import CustomModal from './Modal';
 import { OverlayProvider } from '@react-aria/overlays';
@@ -18,6 +18,15 @@ const MqBetaModal = ({ enabled, page }) => {
   const [popupDismissed, setPopupDismissed] = useState(
     JSON.parse(isDismissed) || false
   );
+
+  const mainButtonRef = useRef();
+
+  // Put focus on the Proceed button on render
+  useEffect(() => {
+    if (mainButtonRef.current) {
+      mainButtonRef.current.focus();
+    }
+  }, [mainButtonRef]);
 
   if (popupDismissed || hasBeenShownInPage) {
     return null;
@@ -84,6 +93,7 @@ const MqBetaModal = ({ enabled, page }) => {
               type="button"
               className="button is-primary"
               onClick={handleOnRequestClose}
+              ref={mainButtonRef}
             >
               Proceed
             </button>
