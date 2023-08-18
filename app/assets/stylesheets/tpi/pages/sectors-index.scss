@@ -11,6 +11,14 @@
       color: white;
       line-height: 40px;
       margin-right: 10px;
+
+      &.no-margin {
+        margin-right: 0;
+      }
+
+      &.weight-normal {
+        font-family: $family-sans-serif;
+      }
     }
 
     @include until($desktop) {

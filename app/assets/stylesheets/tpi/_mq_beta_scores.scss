@@ -7,6 +7,10 @@
     flex-direction: column;
   }
 
+  &__container {
+    display: flex;
+  }
+
   &__text {
     color: white;
     line-height: 40px;
@@ -15,7 +19,7 @@
 
   &__divider {
     margin: 0 15px 0 5px;
-    border-right: 1px solid rgba(255, 255, 255, 0.5);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
 
     @include until($desktop) {
       display: none;
@@ -36,5 +40,9 @@
   &__download-button {
     flex-grow: 4;
     text-align: right;
+
+    @include until($desktop) {
+      margin-bottom: 10px;
+    }
   }
 }
