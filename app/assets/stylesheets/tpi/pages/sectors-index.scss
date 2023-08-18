@@ -16,6 +16,9 @@
         margin-right: 0;
       }
 
+      &.weight-normal {
+        font-family: $family-sans-serif;
+      }
     }
 
     @include until($desktop) {
