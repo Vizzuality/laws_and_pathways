@@ -87,7 +87,7 @@ $tape-color: rgba(25,25,25,0.1);
 
         li {
           display: flex;
-          padding: 5px 0;
+          padding: 2px 0;
         }
 
         .mq-level-trend {
@@ -99,18 +99,22 @@ $tape-color: rgba(25,25,25,0.1);
         @include mq-level-backgrounds;
 
         &.level0 {
-          margin-top: 120px;
+          margin-top: 150px;
         }
 
         &.level1 {
-          margin-top: 90px;
+          margin-top: 120px;
         }
 
         &.level2 {
-          margin-top: 60px;
+          margin-top: 90px;
         }
 
         &.level3 {
+          margin-top: 60px;
+        }
+
+        &.level4 {
           margin-top: 30px;
         }
       }
