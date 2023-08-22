@@ -65,23 +65,22 @@ const MqBetaModal = ({ enabled, page }) => {
           <div className="modal-title">Management Quality (MQ) methodology</div>
           <div className="content">
             <p>
-              The TPI Centre&apos;s is in the process of developing an update
-              its Management Quality (MQ) methodology, which will be version
-              5.0.
+              The TPI Centre has developed an update to its Management Quality
+              (MQ) methodology, which is displayed here as a BETA methodology.
             </p>
             <p>
-              By clicking &quot;Proceed&quot; you are now accessing a preview of
-              this data. Please note, this is an additional data service and
-              will not replace the current methodology until further notice.
+              By clicking &quot;Proceed&quot; you are now accessing this data.
+              Please note, this is an additional data service and will not
+              replace the existing MQ methodology until further notice.
             </p>
             <p>
               Data from the current framework will remain available on the
-              website at least until 2024.
+              website until at least September 2024.
             </p>
             <p>
-              The detailed methodology note behind MQ methodology version 5.0,
+              The detailed methodology note behind the BETA MQ methodology,
               including a section discussing methodological differences between
-              version 5.0 and 4.0, can be found here.
+              it and the existing methodology, can be found here.
             </p>
             <p>
               Carbon Performance assessments are not affected by using this
