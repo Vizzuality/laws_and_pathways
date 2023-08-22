@@ -13,7 +13,7 @@ const SingleCell = ({ width, height, handleNodeClick, data, uniqueKey, showToolt
       color: data[index].color,
       tooltipContent: data[index].tooltipContent,
       path: data[index].path,
-      radius: data[index].value
+      radius: data[index].value / 2 // 50% of radius to fit all bubbles
     };
   });
 
