@@ -21,8 +21,7 @@
       </div>
 
       <%= react_component('charts/mq-level', {
-        dataUrl: assessments_levels_chart_data_tpi_company_path(@company.id, mq_assessment_id: assessment.id),
-        betaLevels: assessment.beta_levels
+        dataUrl: assessments_levels_chart_data_tpi_company_path(@company.id, mq_assessment_id: assessment.id)
       }) %>
     </div>
   </div>

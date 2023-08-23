@@ -8,8 +8,7 @@ const greyDark = '#595B5D';
 const dark = '#191919';
 
 export function getOptions({ chartData }) {
-  const yAxisDataLevels = chartData.find(d => d.name === 'Level')?.data?.map(d => d[1]);
-  const yAxisMaxLevel = yAxisDataLevels?.length > 0 ? Math.max(...yAxisDataLevels) : 0;
+  const yAxisMaxLevel = chartData.find(d => d.name === 'Max Level')?.data || 4;
   return merge({}, defaultOptions, {
     chart: {
       marginTop: 50,
@@ -73,7 +72,7 @@ export function getOptions({ chartData }) {
         y: -20
       }
     },
-    series: chartData.map(d => ({
+    series: chartData.filter(d => ['Level', 'Current Level'].includes(d.name)).map(d => ({
       ...d,
       clip: false,
       lineWidth: 5,

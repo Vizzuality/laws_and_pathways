@@ -31,6 +31,10 @@ module Api
           {
             name: 'Current Level',
             data: [[assessment.assessment_date.to_s, assessment.level.to_i]]
+          },
+          {
+            name: 'Max Level',
+            data: assessment.beta_methodology? ? assessment.beta_levels.last.to_i : 4
           }
         ]
       end
