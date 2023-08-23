@@ -94,7 +94,7 @@ RSpec.describe MQ::Assessment, type: :model do
   end
 
   describe '#beta_methodology?' do
-    let(:beta_methodology) { MQ::Assessment::BETA_METHODOLOGIES.first }
+    let(:beta_methodology) { MQ::Assessment::BETA_METHODOLOGIES.keys.first }
 
     let(:assessment) { create(:mq_assessment, company: company) }
     let!(:beta_assessment) { create(:mq_assessment, company: company, methodology_version: beta_methodology) }
@@ -106,11 +106,11 @@ RSpec.describe MQ::Assessment, type: :model do
   end
 
   describe '#beta_levels' do
-    let(:beta_methodology) { MQ::Assessment::BETA_METHODOLOGIES.first }
+    let(:beta_methodology) { MQ::Assessment::BETA_METHODOLOGIES.keys.first }
     let!(:beta_assessment) { create(:mq_assessment, company: company, methodology_version: beta_methodology) }
 
     it 'should return correct value' do
-      expect(beta_assessment.beta_levels).to eq(MQ::Assessment::BETA_LEVELS_PER_METHODOLOGY[beta_methodology])
+      expect(beta_assessment.beta_levels).to eq(MQ::Assessment::BETA_METHODOLOGIES[beta_methodology][:levels])
     end
   end
 end

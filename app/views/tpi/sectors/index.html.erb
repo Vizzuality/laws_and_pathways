@@ -56,18 +56,15 @@
     <p>Distribution of companies in All sectors according to the management of their greenhouse gas emissions and of risks and opportunities to the low-carbon transition.</p>
 
     <%= react_component('charts/mq-sector-pie', {
-      dataUrl: levels_chart_data_tpi_sectors_path,
-      betaLevels: MQ::Assessment::BETA_LEVELS
+      dataUrl: levels_chart_data_tpi_sectors_path
     }) %>
     <%= react_component("charts/bubble/Chart", {
       levels: @companies_by_sectors,
-      sectors: @sectors_json,
-      betaLevels: MQ::Assessment::BETA_LEVELS
+      sectors: @sectors_json
     }) %>
     <%= react_component("charts/bubble/CompaniesAccordion", {
       levels: @companies_by_sectors,
-      sectors: @sectors_json,
-      betaLevels: MQ::Assessment::BETA_LEVELS
+      sectors: @sectors_json
     }) %>
   </section>
 

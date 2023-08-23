@@ -37,7 +37,7 @@
       <div class="mq-assessment-answers">
         <% questions.each do |question| %>
 
-          <p class="mq-assessment-question">
+          <p class="<%= class_names('mq-assessment-question', 'highlight-question': MQ::Assessment::BETA_METHODOLOGIES.dig(assessment.methodology_version, :highlight_questions)&.include?(question.number.to_s)) %>">
             <span class="mq-assessment-answer mq-assessment-answer--<%= question.answer.parameterize %> level<%= level %>">
             </span>
             <%= question.number %>. <%= question.question %>

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Api::Charts::MQAssessment do
-  let(:beta_methodology) { MQ::Assessment::BETA_METHODOLOGIES.first }
-  let(:beta_level) { MQ::Assessment::BETA_LEVELS_PER_METHODOLOGY[beta_methodology].first }
+  let(:beta_methodology) { MQ::Assessment::BETA_METHODOLOGIES.keys.first }
+  let(:beta_level) { MQ::Assessment::BETA_METHODOLOGIES[beta_methodology][:levels].first }
 
   describe '.assessments_levels_data' do
     context 'when company has several MQ assessments over last years' do

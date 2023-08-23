@@ -5,8 +5,8 @@ RSpec.describe Api::Charts::Sector do
   let_it_be(:sector2) { create(:tpi_sector, name: 'Autos') }
   let_it_be(:company) { create(:company, sector: sector) }
   let_it_be(:company2) { create(:company, sector: sector2) }
-  let_it_be(:beta_methodology_version) { MQ::Assessment::BETA_METHODOLOGIES.first }
-  let_it_be(:beta_level) { MQ::Assessment::BETA_LEVELS_PER_METHODOLOGY[beta_methodology_version].first }
+  let_it_be(:beta_methodology_version) { MQ::Assessment::BETA_METHODOLOGIES.keys.first }
+  let_it_be(:beta_level) { MQ::Assessment::BETA_METHODOLOGIES[beta_methodology_version][:levels].first }
 
   subject { described_class.new(Company) }
 

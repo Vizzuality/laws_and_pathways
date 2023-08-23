@@ -242,7 +242,7 @@
         border-left: 2px solid $hawkes-blue;
 
         &.level5 {
-          background-color: rgba($tpi-level5-background-color, 0.15) ;
+          background-color: rgba($tpi-level5-background-color, 0.15);
         }
 
         &__header {
@@ -260,8 +260,11 @@
 
         .mq-assessment-question {
           margin: 30px 0;
-
           position: relative;
+
+          &.highlight-question {
+            background-color: rgba($tpi-level5-background-color, 0.15);
+          }
 
           .mq-assessment-answer {
             width: 36px;
