@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Api::Charts::MQAssessment do
-  let(:beta_methodology) { MQ::Assessment::BETA_METHODOLOGIES.first }
-  let(:beta_level) { MQ::Assessment::BETA_LEVELS_PER_METHODOLOGY[beta_methodology].first }
+  let(:beta_methodology) { MQ::Assessment::BETA_METHODOLOGIES.keys.first }
+  let(:beta_level) { MQ::Assessment::BETA_METHODOLOGIES[beta_methodology][:levels].first }
 
   describe '.assessments_levels_data' do
     context 'when company has several MQ assessments over last years' do
@@ -52,6 +52,10 @@ RSpec.describe Api::Charts::MQAssessment do
                          ['08/08/2018', 2]
                        ],
                        name: 'Current Level'
+                     },
+                     {
+                       data: 4,
+                       name: 'Max Level'
                      }
                    ])
         end
@@ -60,7 +64,7 @@ RSpec.describe Api::Charts::MQAssessment do
       context 'when beta assessments are enabled' do
         subject do
           described_class.new(
-            company.mq_assessments.where(assessment_date: '2018-08-08').first,
+            company.mq_assessments.where(assessment_date: '2021-03-03').first,
             enable_beta_mq_assessments: true
           )
         end
@@ -83,9 +87,13 @@ RSpec.describe Api::Charts::MQAssessment do
                        },
                        {
                          data: [
-                           ['08/08/2018', 2]
+                           ['03/03/2021', beta_level.to_i]
                          ],
                          name: 'Current Level'
+                       },
+                       {
+                         data: beta_level.to_i,
+                         name: 'Max Level'
                        }
                      ])
           end
@@ -115,6 +123,10 @@ RSpec.describe Api::Charts::MQAssessment do
                      {
                        data: [['08/08/2018', 2]],
                        name: 'Current Level'
+                     },
+                     {
+                       data: 4,
+                       name: 'Max Level'
                      }
                    ])
         end

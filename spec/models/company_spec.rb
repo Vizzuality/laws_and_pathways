@@ -80,7 +80,7 @@ RSpec.describe Company, type: :model do
   end
 
   describe '#latest_mq_assessment' do
-    let(:beta_methodology_version) { MQ::Assessment::BETA_METHODOLOGIES.first }
+    let(:beta_methodology_version) { MQ::Assessment::BETA_METHODOLOGIES.keys.first }
     let(:company) do
       create(:company, mq_assessments: [
                build(:mq_assessment, assessment_date: '2012-05-01'),
