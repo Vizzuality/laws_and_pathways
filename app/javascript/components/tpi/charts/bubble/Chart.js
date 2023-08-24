@@ -22,7 +22,7 @@ const LEVELS_COLORS = [
   '#2465F5',
   '#0A4BDC',
   '#083AAB',
-  '#60EDE5'
+  '#9747FF'
 ];
 
 const LEVELS_SUBTITLES = {

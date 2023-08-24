@@ -10,7 +10,7 @@ export function getOptions({ chartData }) {
       styledMode: true,
       type: 'pie'
     },
-    colors: ['#86A9F9', '#5587F7', '#2465F5', '#0A4BDC', '#083AAB', '#60EDE5'],
+    colors: ['#86A9F9', '#5587F7', '#2465F5', '#0A4BDC', '#083AAB', '#9747FF'],
     tooltip: {
       enabled: false
     },
