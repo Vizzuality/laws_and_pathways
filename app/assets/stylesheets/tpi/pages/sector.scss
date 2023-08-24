@@ -71,12 +71,13 @@ $tape-color: rgba(25,25,25,0.1);
 
       &__title {
         position: relative;
-        height: 40px;
+        height: 60px;
         margin-bottom: 50px;
       }
 
       &__companies {
         flex: 1;
+        line-height: 1.25;
 
         padding: 12px 24px;
         color: white;
@@ -86,14 +87,16 @@ $tape-color: rgba(25,25,25,0.1);
         }
 
         li {
-          display: flex;
           padding: 2px 0;
         }
 
         .mq-level-trend {
           @include mq-level-trend(20px);
+          background-color: rgba(0, 0, 0, 0.4);
 
-          margin-left: 5px;
+          &__container {
+            vertical-align: bottom;
+          }
         }
 
         @include mq-level-backgrounds;
