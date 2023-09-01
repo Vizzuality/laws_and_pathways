@@ -1,13 +1,16 @@
-<div class="mq-beta-scores__container">
-  <span class="mq-beta-scores__text">MQ Methodology</span>
-  <%= link_to disable_beta_data_tpi_mq_assessments_path,
-              class: class_names('button', 'is-primary', 'no-margin', 'weight-normal': session[:enable_beta_mq_assessments], 'with-border': !session[:enable_beta_mq_assessments]),
-              style: "min-width: 0;" do %>
-    Current (V4.0)
-  <% end %>
-  <%= link_to enable_beta_data_tpi_mq_assessments_path,
-              class: class_names('button', 'is-primary', 'mq-beta-scores__beta-button', 'with-border': session[:enable_beta_mq_assessments]),
-              style: "min-width: 0;" do %>
-    BETA (V5.0)
-  <% end %>
-</div>
+<% if ENV['MQ_BETA_ENABLED'].to_s  === 'true' %>
+  <div class="mq-beta-scores__container">
+    <span class="mq-beta-scores__text">MQ Methodology</span>
+    <%= link_to disable_beta_data_tpi_mq_assessments_path,
+                class: class_names('button', 'is-primary', 'no-margin', 'weight-normal': session[:enable_beta_mq_assessments], 'with-border': !session[:enable_beta_mq_assessments]),
+                style: "min-width: 0;" do %>
+      Current (V4.0)
+    <% end %>
+      <%= link_to enable_beta_data_tpi_mq_assessments_path,
+                  class: class_names('button', 'is-primary', 'mq-beta-scores__beta-button', 'with-border': session[:enable_beta_mq_assessments]),
+                  style: "min-width: 0;" do %>
+        BETA (V5.0)
+      <% end %>
+  </div>
+  <div class="mq-beta-scores__divider"></div>
+<% end %>
