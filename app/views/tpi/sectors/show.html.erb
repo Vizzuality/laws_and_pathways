@@ -71,7 +71,7 @@
       <% @companies_by_levels.each do |level, companies| -%>
         <div class="sector-level column">
           <div class="sector-level__title">
-            <h5>Level <%= level %></h5>
+            <h5>Level <%= level.to_i === 5 ? "#{level} [BETA]" : level %></h5>
             <p><%= t("tpi.company.level_description_short.#{level.to_i}") %></p>
           </div>
           <div class="sector-level__companies level<%= level.to_i %>">
