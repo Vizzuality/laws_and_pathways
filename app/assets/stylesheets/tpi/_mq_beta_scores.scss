@@ -9,22 +9,38 @@
 
   &__container {
     display: flex;
+    border: 1px solid $white;
+    padding: 4px 4px 4px 14px;
   }
 
   &__text {
-    color: white;
+    color: $white;
     line-height: 40px;
     margin-right: 10px;
   }
 
   &__divider {
     margin: 0 15px 0 5px;
-    border-right: 1px solid rgba(255, 255, 255, 0.2);
 
     @include until($desktop) {
       display: none;
     }
   }
+
+
+  .button {
+    background-color: rgba($white ,0.2);
+
+    &.active {
+      background-color: $white;
+      color: $blue-dark;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
 
   &__beta-button:before {
     content: "";
@@ -41,6 +57,10 @@
   &__download-button {
     flex-grow: 4;
     text-align: right;
+
+    .button {
+      background-color: $blue;
+    }
 
     @include until($desktop) {
       margin-bottom: 10px;
