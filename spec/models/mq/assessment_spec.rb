@@ -35,7 +35,7 @@ RSpec.describe MQ::Assessment, type: :model do
   end
 
   it 'should be invalid if level not recognized' do
-    subject.level = '5'
+    subject.level = '7'
     expect(subject).to have(1).errors_on(:level)
   end
 
@@ -90,6 +90,27 @@ RSpec.describe MQ::Assessment, type: :model do
       create(:mq_assessment, company: company, assessment_date: 12.months.ago, level: '3')
       current = create(:mq_assessment, company: company, assessment_date: 6.months.ago, level: '3')
       expect(current.status).to eq('unchanged')
+    end
+  end
+
+  describe '#beta_methodology?' do
+    let(:beta_methodology) { MQ::Assessment::BETA_METHODOLOGIES.keys.first }
+
+    let(:assessment) { create(:mq_assessment, company: company) }
+    let!(:beta_assessment) { create(:mq_assessment, company: company, methodology_version: beta_methodology) }
+
+    it 'should return correct value' do
+      expect(assessment.beta_methodology?).to be_falsey
+      expect(beta_assessment.beta_methodology?).to be_truthy
+    end
+  end
+
+  describe '#beta_levels' do
+    let(:beta_methodology) { MQ::Assessment::BETA_METHODOLOGIES.keys.first }
+    let!(:beta_assessment) { create(:mq_assessment, company: company, methodology_version: beta_methodology) }
+
+    it 'should return correct value' do
+      expect(beta_assessment.beta_levels).to eq(MQ::Assessment::BETA_METHODOLOGIES[beta_methodology][:levels])
     end
   end
 end

@@ -220,7 +220,7 @@ RSpec.describe Api::Charts::CPAssessment do
 
         it 'returns emissions data from: bank, sector avg & sector benchmarks' do
           bank_sector_a_1_data = subject.emissions_data.find { |s| s[:name] == @bank_sector_a_1.name }[:data]
-          sector_average_data = subject.emissions_data.find { |s| s[:name] == "#{@sector_a.name} sector mean" }[:data]
+          sector_average_data = subject.emissions_data.find { |s| s[:name] == 'Sector mean' }[:data]
           cp_benchmarks_data = subject.emissions_data.find { |s| s[:name] == 'scenario' }[:data]
 
           avg_2017 = ((100.0 + 40.0 + 30.0) / 3).round(2)
@@ -243,7 +243,7 @@ RSpec.describe Api::Charts::CPAssessment do
 
         it 'returns emissions data from: company, sector avg & sector benchmarks' do
           bank_sector_a_1_data = subject.emissions_data.find { |s| s[:name] == @bank_sector_a_1.name }[:data]
-          sector_average_data = subject.emissions_data.find { |s| s[:name] == "#{@sector_a.name} sector mean" }[:data]
+          sector_average_data = subject.emissions_data.find { |s| s[:name] == 'Sector mean' }[:data]
           cp_benchmarks_data = subject.emissions_data.find { |s| s[:name] == 'scenario' }[:data]
 
           avg_2017 = ((90.0 + 40.0 + 30.0) / 3).round(2)

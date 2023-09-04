@@ -95,4 +95,12 @@
   &.level4 {
     background-color: $tpi-level4;
   }
+
+  &.level5 {
+    background-color: $tpi-level5-background-color;
+
+    .mq-level-trend__container {
+      background-color: $tpi-level5-background-color;
+    }
+  }
 }

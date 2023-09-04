@@ -21,10 +21,8 @@ $tape-color: rgba(25,25,25,0.1);
 
     a {
       color: white;
-    }
-
-    a + a {
-      margin-left: 20px;
+      line-height: 40px;
+      margin-right: 10px;
     }
 
     @include until($desktop) {
@@ -72,12 +70,14 @@ $tape-color: rgba(25,25,25,0.1);
       }
 
       &__title {
-        height: 40px;
+        position: relative;
+        height: 60px;
         margin-bottom: 50px;
       }
 
       &__companies {
         flex: 1;
+        line-height: 1.25;
 
         padding: 12px 24px;
         color: white;
@@ -87,31 +87,37 @@ $tape-color: rgba(25,25,25,0.1);
         }
 
         li {
-          display: flex;
-          padding: 5px 0;
+          padding: 3px 0;
         }
 
         .mq-level-trend {
           @include mq-level-trend(20px);
+          background-color: rgba(0, 0, 0, 0.4);
 
-          margin-left: 5px;
+          &__container {
+            vertical-align: bottom;
+          }
         }
 
         @include mq-level-backgrounds;
 
         &.level0 {
-          margin-top: 120px;
+          margin-top: 150px;
         }
 
         &.level1 {
-          margin-top: 90px;
+          margin-top: 120px;
         }
 
         &.level2 {
-          margin-top: 60px;
+          margin-top: 90px;
         }
 
         &.level3 {
+          margin-top: 60px;
+        }
+
+        &.level4 {
           margin-top: 30px;
         }
       }

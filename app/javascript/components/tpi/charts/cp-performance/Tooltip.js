@@ -6,6 +6,7 @@ function Tooltip({ xValue, yValues, unit }) {
   const companyValues = yValues.filter(v => !v.isBenchmark);
   const benchmarkValues = yValues.filter(v => v.isBenchmark);
   const companyValuesSorted = orderBy(companyValues, 'value', 'desc');
+  const noTargets = benchmarkValues.length === 0;
 
   return (
     <div className="cp-tooltip">
@@ -31,19 +32,19 @@ function Tooltip({ xValue, yValues, unit }) {
       <div className="cp-tooltip__targets">
         TARGETS
       </div>
-
-      {benchmarkValues.map(y => (
-        <div key={y.title} className="cp-tooltip__row cp-tooltip__row--targets">
-          <span className="cp-tooltip__value-title">
-            <span
-              className="circle"
-              style={{ backgroundColor: y.color }}
-            />
-            {y.title}
-          </span>
-          <span className="cp-tooltip__value">{y.value}</span>
-        </div>
-      ))}
+      {noTargets ? 'The bank has not disclosed any financed emissions reduction target'
+        : benchmarkValues.map(y => (
+          <div key={y.title} className="cp-tooltip__row cp-tooltip__row--targets">
+            <span className="cp-tooltip__value-title">
+              <span
+                className="circle"
+                style={{ backgroundColor: y.color }}
+              />
+              {y.title}
+            </span>
+            <span className="cp-tooltip__value">{y.value}</span>
+          </div>
+        ))}
     </div>
   );
 }

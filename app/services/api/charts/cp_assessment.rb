@@ -123,7 +123,9 @@ module Api
       end
 
       def emissions_data_from_sector
-        name = if regional_view? && @category != 'Bank'
+        name = if @category == 'Bank'
+                 'Sector mean'
+               elsif regional_view?
                  "#{region} #{sector.name} sector mean"
                else
                  "#{sector.name} sector mean"

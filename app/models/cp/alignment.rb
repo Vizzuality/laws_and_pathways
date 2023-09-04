@@ -20,6 +20,7 @@ module CP
       'international pledges' => '#FF9600', # orange
       'not aligned' => '#ED3D4A', # red
       'no or unsuitable disclosure' => '#595B5D', # black
+      'no disclosure' => '#595B5D', # black
       'not assessable using tpi’s methodology' => '#CFD7ED' # grey
     }.freeze
 
@@ -36,6 +37,7 @@ module CP
       'National Pledges',
       'Not Aligned',
       'No or unsuitable disclosure',
+      'No disclosure',
       'Not Assessed',
       'Not assessable using TPI’s methodology'
     ].freeze

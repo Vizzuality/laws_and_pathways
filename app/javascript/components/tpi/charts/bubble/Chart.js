@@ -22,7 +22,7 @@ const LEVELS_COLORS = [
   '#2465F5',
   '#0A4BDC',
   '#083AAB',
-  '#042b82'
+  '#9747FF'
 ];
 
 const LEVELS_SUBTITLES = {
@@ -30,7 +30,8 @@ const LEVELS_SUBTITLES = {
   1: 'Awareness',
   2: 'Building capacity',
   3: 'Integrating into operational decision making',
-  4: 'Strategic assessment'
+  4: 'Strategic assessment',
+  5: 'Transition planning and implementation'
 };
 
 const tooltipDisclaimer = 'Companies have to answer “yes” to all questions on a level to move to the next one';
@@ -89,9 +90,9 @@ const BubbleChart = ({ levels, sectors }) => {
         </div>
       </div>
       {levelsSignature.map((el, i) => (
-        <div className="bubble-chart__level" key={`${el}-${i}-${Math.random()}`}>
+        <div className={`bubble-chart__level ${i === levelsSignature.length - 1 ? 'last' : ''}`} key={`${el}-${i}-${Math.random()}`}>
           <div className="bubble-chart__level-container">
-            <div className="bubble-chart__level-title">{`Level ${el}`}</div>
+            <div className="bubble-chart__level-title">{`Level ${el === '5' ? '5 [BETA]' : el}`}</div>
             <div className="bubble-chart__level-subtitle">{LEVELS_SUBTITLES[el]}</div>
           </div>
         </div>
@@ -166,7 +167,7 @@ const createRow = (dataRow, title, sectors) => {
         const uniqueKey = `${title}-${el.length}-${i}`;
 
         return (
-          <div className="bubble-chart__cell" key={uniqueKey}>
+          <div className={`bubble-chart__cell ${i === dataRow.length - 1 ? 'last' : ''}`} key={uniqueKey}>
             {ForceLayoutBubbleChart(companiesBubbles, uniqueKey)}
           </div>
         );

@@ -1,0 +1,77 @@
+@import 'colors';
+
+.modal-overlay {
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba($dark, 0.5);
+}
+
+.modal-content {
+  background-color: $white;
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  right: 4px;
+  transform: translateY(-50%);
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 40px 32px;
+  margin: 0;
+
+  @media (min-width: 640px) {
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%; // sm:w-4/5
+  }
+
+  @media (min-width: 768px) {
+    width: 66.66667%; // md:w-2/3
+  }
+
+  @media (min-width: 1280px) {
+    width: 45%; // xl:w-2/5
+  }
+
+  .modal-title {
+    margin-bottom: 20px;
+    color: $dark;
+    font-size: $size-5;
+    font-weight: bold;
+  }
+
+  .content {
+    line-height: 140%; /* 22.4px */
+    margin-bottom: 20px;
+  }
+
+  .close-btn {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    top: 27px;
+    right: 21px;
+
+    .icon__close {
+      background-image: image-url('cclow/icons/close.svg');
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 18px;
+      width: 18px;
+    }
+  }
+
+  .actions {
+    display: flex;
+  }
+
+  .margin-left {
+    margin-left: 8px;
+  }
+}

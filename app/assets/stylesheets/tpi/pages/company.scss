@@ -13,10 +13,8 @@
 
     a {
       color: white;
-    }
-
-    a + a {
-      margin-left: 20px;
+      line-height: 40px;
+      margin-right: 10px;
     }
 
     @include until($desktop) {
@@ -235,13 +233,19 @@
       }
     }
 
+    $assesment-level-padding: 40px;
+
     .mq-assessment-questions {
       margin-top: 50px;
 
       .mq-assessment-level {
-        padding: 40px;
+        padding: $assesment-level-padding;
 
         border-left: 2px solid $hawkes-blue;
+
+        &.level5 {
+          background-color: rgba($tpi-level5-background-color, 0.15);
+        }
 
         &__header {
           font-size: 16px;
@@ -258,8 +262,28 @@
 
         .mq-assessment-question {
           margin: 30px 0;
-
           position: relative;
+
+          &.highlight-question {
+            .question-text {
+              display: block;
+              position: relative;
+              background-color: rgba($tpi-level5-background-color, 0.15);
+              // Use z-index to make sure the question is below the icon
+              z-index: -1;
+
+              // Use transform, padding and width to show the background on the full space of the question
+              @include until($desktop) {
+                width: calc(100% + #{$assesment-level-padding} + #{$assesment-level-padding});
+                transform: translate(-27px, 0px);
+                padding: 13px $assesment-level-padding 8px 27px;
+              }
+
+              width: calc(100% + #{$assesment-level-padding} + #{$assesment-level-padding});
+              transform: translate(-$assesment-level-padding, -13px);
+              padding: 13px $assesment-level-padding 8px $assesment-level-padding;
+            }
+          }
 
           .mq-assessment-answer {
             width: 36px;
@@ -283,6 +307,10 @@
 
             &--yes {
               @include mq-level-backgrounds;
+
+              &.level5 {
+                background-color: $tpi-level4;
+              }
 
               background-image: image-url('icons/check.svg');
             }
@@ -480,6 +508,10 @@
 
       &--yes {
         @include mq-level-backgrounds;
+
+        &.level5 {
+          background-color: $tpi-level4;
+        }
       }
 
       &--not-applicable {

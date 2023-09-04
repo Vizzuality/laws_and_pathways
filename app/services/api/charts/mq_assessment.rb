@@ -5,8 +5,9 @@ module Api
 
       delegate :company, to: :assessment, allow_nil: true
 
-      def initialize(assessment)
+      def initialize(assessment, enable_beta_mq_assessments: false)
         @assessment = assessment
+        @enable_beta_mq_assessments = enable_beta_mq_assessments
       end
 
       # Returns MQ assessments Levels for each year for given Company.
@@ -30,6 +31,10 @@ module Api
           {
             name: 'Current Level',
             data: [[assessment.assessment_date.to_s, assessment.level.to_i]]
+          },
+          {
+            name: 'Max Level',
+            data: assessment.beta_methodology? ? assessment.beta_levels.last.to_i : 4
           }
         ]
       end
@@ -39,7 +44,11 @@ module Api
       def company_mq_assessments
         return [] unless company.present?
 
-        @company_mq_assessments ||= company.mq_assessments.currently_published.order(:assessment_date)
+        @company_mq_assessments ||= begin
+          query = company.mq_assessments.currently_published.order(:assessment_date)
+          query = query.without_beta_methodologies unless @enable_beta_mq_assessments
+          query
+        end
       end
     end
   end

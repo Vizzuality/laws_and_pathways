@@ -18,9 +18,10 @@ $legend-image-width: 60px;
   &--sectors {
     grid-template-rows: 150px auto;
 
-    & > *:nth-child(6n) {
+    .last {
       border-right: none;
     }
+
   }
 
   &--banks {

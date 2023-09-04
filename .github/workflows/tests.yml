@@ -1,6 +1,7 @@
 env:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
+  MQ_BETA_ENABLED: 'true'
 
 name: Tests
 on: push
@@ -58,6 +59,7 @@ jobs:
           PGHOST: localhost
           PGUSER: ${{ env.POSTGRES_USER }}
           PGPASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          MQ_BETA_ENABLED: ${{ env.MQ_BETA_ENABLED }}
         run: yarn test:rails
       - name: Upload Code Coverage
         uses: actions/upload-artifact@v2

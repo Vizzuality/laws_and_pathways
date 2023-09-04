@@ -25,7 +25,9 @@ module Api
       end
 
       def mq_assessments
-        @company.mq_assessments.currently_published.order(assessment_date: :desc)
+        query = @company.mq_assessments.currently_published.order(assessment_date: :desc)
+        query = query.without_beta_methodologies unless @company.show_beta_mq_assessments
+        query
       end
 
       def cp_alignment_2025
