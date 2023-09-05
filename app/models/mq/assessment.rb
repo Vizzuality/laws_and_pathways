@@ -56,8 +56,8 @@ module MQ
 
     def status
       return 'new' unless previous.present?
-      return 'up' if level > previous.level
-      return 'down' if level < previous.level
+      return 'up' if level > previous.level && previous.methodology_version == methodology_version
+      return 'down' if level < previous.level && previous.methodology_version == methodology_version
 
       'unchanged'
     end

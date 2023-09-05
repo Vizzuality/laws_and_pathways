@@ -163,7 +163,7 @@ RSpec.describe Api::Charts::Sector do
             {id: company2.id, name: company2.name, status: 'new', level: '4STAR', slug: company2.slug}
           ],
           beta_level => [
-            {id: company.id, name: company.name, status: 'up', level: beta_level, slug: company.slug}
+            {id: company.id, name: company.name, status: 'unchanged', level: beta_level, slug: company.slug}
           ]
         )
       end
@@ -200,7 +200,7 @@ RSpec.describe Api::Charts::Sector do
                 market_cap_group: company.market_cap_group,
                 level: beta_level,
                 level4STAR: false,
-                status: 'up'
+                status: 'unchanged'
               }
             ]
           },
