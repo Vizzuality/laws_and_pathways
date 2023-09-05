@@ -91,6 +91,12 @@ RSpec.describe MQ::Assessment, type: :model do
       current = create(:mq_assessment, company: company, assessment_date: 6.months.ago, level: '3')
       expect(current.status).to eq('unchanged')
     end
+
+    it 'should be unchanged if methodology version is different' do
+      create(:mq_assessment, company: company, assessment_date: 12.months.ago, level: '3', methodology_version: 1)
+      current = create(:mq_assessment, company: company, assessment_date: 6.months.ago, level: '2', methodology_version: 2)
+      expect(current.status).to eq('unchanged')
+    end
   end
 
   describe '#beta_methodology?' do
