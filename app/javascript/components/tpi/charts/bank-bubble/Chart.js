@@ -155,7 +155,9 @@ const createRow = (dataRow, area, index) => (
         color: result.color
       }));
 
-      const uniqueKey = `${area.replace(/[&/\\#,+()$~%.'":*?<>{}]/g, '')}-${el.length}-${i}`;
+      // Remove special characters from the key to be able to use d3-select as it uses querySelector
+      const cleanKey = area.replace(/[^a-zA-Z0-9\-_:.]/g, '');
+      const uniqueKey = `${cleanKey}-${el.length}-${i}`;
 
       return (
         <div className="bubble-chart__cell" key={uniqueKey}>

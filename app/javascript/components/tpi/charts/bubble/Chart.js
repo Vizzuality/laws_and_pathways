@@ -164,7 +164,9 @@ const createRow = (dataRow, title, sectors) => {
           color: LEVELS_COLORS[i]
         }));
 
-        const uniqueKey = `${title}-${el.length}-${i}`;
+        // Remove special characters from the key to be able to use d3-select as it uses querySelector
+        const cleanKey = title.replace(/[^a-zA-Z0-9\-_:.]/g, '');
+        const uniqueKey = `${cleanKey}-${el.length}-${i}`;
 
         return (
           <div className={`bubble-chart__cell ${i === dataRow.length - 1 ? 'last' : ''}`} key={uniqueKey}>
