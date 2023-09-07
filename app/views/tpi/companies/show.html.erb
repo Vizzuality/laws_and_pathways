@@ -15,7 +15,7 @@
   <div class="companies-header">
     <div class="container is-hidden-touch">
       <div class="mq-beta-scores">
-        <%= render 'tpi/shared/mq_beta_scores' %>
+        <%= render 'tpi/shared/mq_beta_scores', { has_data: @company.beta_mq_assessments? } %>
         <div>
           <a href="#management-quality" class="link with-icon is-pulled-left">
             <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
@@ -38,7 +38,7 @@
     </div>
     <div class="container is-hidden-desktop">
       <div class="mq-beta-scores is-hidden-desktop">
-        <%= render 'tpi/shared/mq_beta_scores' %>
+        <%= render 'tpi/shared/mq_beta_scores', { has_data: @company.beta_mq_assessments? } %>
         <div>
           <a href="#management-quality" class="link with-icon is-pulled-left">
             Management Quality
