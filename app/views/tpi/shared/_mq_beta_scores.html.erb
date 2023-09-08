@@ -1,4 +1,8 @@
 <% if ENV['MQ_BETA_ENABLED'].to_s  == 'true' %>
+  <% link_html = link_to(enable_beta_data_tpi_mq_assessments_path,
+                         class: class_names('button', 'is-primary', 'mq-beta-scores__beta-button', 'active': session[:enable_beta_mq_assessments], 'disabled': !has_data),
+                         style: "min-width: 0;") { "BETA (V5.0)" } %>
+
   <div class="mq-beta-scores__container">
     <span class="mq-beta-scores__text">MQ Methodology</span>
     <%= link_to disable_beta_data_tpi_mq_assessments_path,
@@ -6,14 +10,15 @@
                 style: "min-width: 0;" do %>
       Current (V4.0)
     <% end %>
-    <% link_html = link_to(enable_beta_data_tpi_mq_assessments_path,
-                       class: class_names('button', 'is-primary', 'mq-beta-scores__beta-button', 'active': session[:enable_beta_mq_assessments], 'disabled': !has_data),
-                       style: "min-width: 0;") { "BETA (V5.0)" } %>
-    <%= react_component("InfoTooltip", {
-      trigger: link_html,
-      content: 'It is not currently possible to show Beta (V5.0) scores for this company. Scores for the current methodology (V4.0) are shown in their place.',
-      html: true,
-    }) %>
+    <% if has_data %>
+      <%= link_html %>
+    <% else %>
+      <%= react_component("InfoTooltip", {
+        trigger: link_html,
+        content: 'It is not currently possible to show Beta (V5.0) scores for this company. Scores for the current methodology (V4.0) are shown in their place.',
+        html: true,
+      }) %>
+    <% end %>
   </div>
   <div class="mq-beta-scores__divider"></div>
 <% end %>
