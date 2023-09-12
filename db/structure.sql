@@ -311,6 +311,41 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: ascor_countries; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.ascor_countries (
+    id bigint NOT NULL,
+    name character varying,
+    iso character varying,
+    region character varying,
+    wb_lending_group character varying,
+    fiscal_monitor_category character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: ascor_countries_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.ascor_countries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: ascor_countries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.ascor_countries_id_seq OWNED BY public.ascor_countries.id;
+
+
+--
 -- Name: bank_assessment_indicators; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1767,6 +1802,13 @@ ALTER TABLE ONLY public.admin_users ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: ascor_countries id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_countries ALTER COLUMN id SET DEFAULT nextval('public.ascor_countries_id_seq'::regclass);
+
+
+--
 -- Name: bank_assessment_indicators id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2079,6 +2121,14 @@ ALTER TABLE ONLY public.admin_users
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: ascor_countries ascor_countries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_countries
+    ADD CONSTRAINT ascor_countries_pkey PRIMARY KEY (id);
 
 
 --
@@ -2488,6 +2538,20 @@ CREATE UNIQUE INDEX index_admin_users_on_email ON public.admin_users USING btree
 --
 
 CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON public.admin_users USING btree (reset_password_token);
+
+
+--
+-- Name: index_ascor_countries_on_iso; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_ascor_countries_on_iso ON public.ascor_countries USING btree (iso);
+
+
+--
+-- Name: index_ascor_countries_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_ascor_countries_on_name ON public.ascor_countries USING btree (name);
 
 
 --
@@ -3732,6 +3796,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230622073030'),
 ('20230622093001'),
 ('20230712074753'),
-('20230713121501');
+('20230713121501'),
+('20230912074824');
 
 

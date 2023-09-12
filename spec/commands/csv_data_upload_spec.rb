@@ -13,6 +13,7 @@ describe 'CSVDataUpload (integration)' do
   let(:bank_cp_assessments_csv) { fixture_file('bank_cp_assessments.csv') }
   let(:mq_assessments_csv) { fixture_file('mq_assessments.csv') }
   let(:geographies_csv) { fixture_file('geographies.csv') }
+  let(:ascor_countries_csv) { fixture_file('ascor_countries.csv') }
   let(:current_user_role) { 'super_user' }
   let(:current_user) { build(:admin_user, role: current_user_role) }
   let_it_be(:countries) do
@@ -21,6 +22,11 @@ describe 'CSVDataUpload (integration)' do
       create(:geography, iso: 'GBR', name: 'United Kingdom'),
       create(:geography, iso: 'JPN', name: 'Japan'),
       create(:geography, iso: 'USA', name: 'United States')
+    ]
+  end
+  let_it_be(:ascor_countries) do
+    [
+      create(:ascor_country, iso: 'USA', name: 'United States')
     ]
   end
 
@@ -414,6 +420,23 @@ describe 'CSVDataUpload (integration)' do
         fixture_file('geographies.csv', content: csv_content),
         {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
         expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for ASCOR countries' do
+      csv_content = <<-CSV
+        Name
+        New Name
+      CSV
+
+      command = expect_data_upload_results(
+        ASCOR::Country,
+        fixture_file('ascor_countries.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false,
+        custom_uploader: 'ASCORCountries'
       )
 
       expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
@@ -1353,6 +1376,29 @@ describe 'CSVDataUpload (integration)' do
     expect(geography.political_groups_list).to include('OECD', 'G20')
     expect(geography.federal).to be_truthy
     expect(geography.federal_details).to be
+  end
+
+  it 'import CSV file with ASCOR countries data' do
+    # USA is already created
+    expect_data_upload_results(
+      ASCOR::Country,
+      ascor_countries_csv,
+      {new_records: 1, not_changed_records: 1, rows: 2, updated_records: 0},
+      custom_uploader: 'ASCORCountries'
+    )
+    # subsequent import should not create or update any record
+    expect_data_upload_results(
+      ASCOR::Country,
+      ascor_countries_csv,
+      {new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0},
+      custom_uploader: 'ASCORCountries'
+    )
+
+    country = ASCOR::Country.find_by(iso: 'JPN')
+    expect(country.name).to eq('Japan')
+    expect(country.region).to eq('Asia')
+    expect(country.wb_lending_group).to eq('High-income economies')
+    expect(country.fiscal_monitor_category).to eq('Advanced economies')
   end
 
   def expect_data_upload_results(uploaded_resource_klass, csv, expected_details, expected_success: true, custom_uploader: nil)
