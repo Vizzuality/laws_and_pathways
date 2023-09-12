@@ -311,6 +311,44 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: ascor_benchmarks; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.ascor_benchmarks (
+    id bigint NOT NULL,
+    country_id bigint NOT NULL,
+    publication_date date,
+    emissions_metric character varying,
+    emissions_boundary character varying,
+    land_use character varying,
+    units character varying,
+    benchmark_type character varying,
+    emissions jsonb DEFAULT '{}'::jsonb,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: ascor_benchmarks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.ascor_benchmarks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: ascor_benchmarks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.ascor_benchmarks_id_seq OWNED BY public.ascor_benchmarks.id;
+
+
+--
 -- Name: ascor_countries; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1802,6 +1840,13 @@ ALTER TABLE ONLY public.admin_users ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: ascor_benchmarks id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_benchmarks ALTER COLUMN id SET DEFAULT nextval('public.ascor_benchmarks_id_seq'::regclass);
+
+
+--
 -- Name: ascor_countries id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2121,6 +2166,14 @@ ALTER TABLE ONLY public.admin_users
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: ascor_benchmarks ascor_benchmarks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_benchmarks
+    ADD CONSTRAINT ascor_benchmarks_pkey PRIMARY KEY (id);
 
 
 --
@@ -2538,6 +2591,13 @@ CREATE UNIQUE INDEX index_admin_users_on_email ON public.admin_users USING btree
 --
 
 CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON public.admin_users USING btree (reset_password_token);
+
+
+--
+-- Name: index_ascor_benchmarks_on_country_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_ascor_benchmarks_on_country_id ON public.ascor_benchmarks USING btree (country_id);
 
 
 --
@@ -3337,6 +3397,14 @@ ALTER TABLE ONLY public.companies
 
 
 --
+-- Name: ascor_benchmarks fk_rails_1b5ff247ca; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_benchmarks
+    ADD CONSTRAINT fk_rails_1b5ff247ca FOREIGN KEY (country_id) REFERENCES public.ascor_countries(id);
+
+
+--
 -- Name: targets fk_rails_1bc68932f6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3797,6 +3865,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230622093001'),
 ('20230712074753'),
 ('20230713121501'),
-('20230912074824');
+('20230912074824'),
+('20230912103652');
 
 

@@ -63,6 +63,10 @@ module Seed
       TimedLogger.log('Import ASCOR Countries') do
         run_importer CSVImport::ASCORCountries.new(seed_file('ascor_countries.csv'))
       end
+
+      TimedLogger.log('Import ASCOR Benchmarks') do
+        run_importer CSVImport::ASCORBenchmarks.new(seed_file('ascor_benchmarks.csv'))
+      end
     end
 
     def import_sector_clusters

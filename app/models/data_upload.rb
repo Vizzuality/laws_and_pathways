@@ -16,6 +16,7 @@ class DataUpload < ApplicationRecord
   DEV_UPLOADERS = %w[Documents].freeze
   UPLOADERS = {
     'ASCOR Countries' => 'ASCORCountries',
+    'ASCOR Benchmarks' => 'ASCORBenchmarks',
     'Banks' => 'Banks',
     'Bank Assessment Indicators' => 'BankAssessmentIndicators',
     'Bank Assessments' => 'BankAssessments',

@@ -22,6 +22,7 @@ ActiveAdmin.register ASCOR::Country do
 
   show do
     attributes_table do
+      row :id
       row :name
       row :iso, label: 'Country ISO code'
       row :region
