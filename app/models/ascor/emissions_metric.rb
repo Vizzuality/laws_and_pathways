@@ -1,7 +1,7 @@
 class ASCOR::EmissionsMetric
   VALUES = [
     'Absolute',
-    'Per capital emissions',
+    'Per capita emissions',
     'PPP-adjusted GDP emissions'
   ].freeze
 end

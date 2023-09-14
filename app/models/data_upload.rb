@@ -17,6 +17,7 @@ class DataUpload < ApplicationRecord
   UPLOADERS = {
     'ASCOR Countries' => 'ASCORCountries',
     'ASCOR Benchmarks' => 'ASCORBenchmarks',
+    'ASCOR Pathways' => 'ASCORPathways',
     'Banks' => 'Banks',
     'Bank Assessment Indicators' => 'BankAssessmentIndicators',
     'Bank Assessments' => 'BankAssessments',

@@ -15,6 +15,7 @@ describe 'CSVDataUpload (integration)' do
   let(:geographies_csv) { fixture_file('geographies.csv') }
   let(:ascor_countries_csv) { fixture_file('ascor_countries.csv') }
   let(:ascor_benchmarks_csv) { fixture_file('ascor_benchmarks.csv') }
+  let(:ascor_pathways_csv) { fixture_file('ascor_pathways.csv') }
   let(:current_user_role) { 'super_user' }
   let(:current_user) { build(:admin_user, role: current_user_role) }
   let_it_be(:countries) do
@@ -455,6 +456,23 @@ describe 'CSVDataUpload (integration)' do
         {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
         expected_success: false,
         custom_uploader: 'ASCORBenchmarks'
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for ASCOR pathways' do
+      csv_content = <<-CSV
+        Country,Publication Date
+        New Country,2020-01
+      CSV
+
+      command = expect_data_upload_results(
+        ASCOR::Pathway,
+        fixture_file('ascor_pathways.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false,
+        custom_uploader: 'ASCORPathways'
       )
 
       expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
@@ -1451,6 +1469,46 @@ describe 'CSVDataUpload (integration)' do
       '2022' => 11.5,
       '2023' => 11.5
     )
+  end
+
+  it 'import CSV file with ASCOR pathways data' do
+    create(:ascor_country, iso: 'JPN', name: 'Japan')
+
+    expect_data_upload_results(
+      ASCOR::Pathway,
+      ascor_pathways_csv,
+      {new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0},
+      custom_uploader: 'ASCORPathways'
+    )
+    # subsequent import should not create or update any record
+    expect_data_upload_results(
+      ASCOR::Benchmark,
+      ascor_pathways_csv,
+      {new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0},
+      custom_uploader: 'ASCORPathways'
+    )
+
+    pathway = ASCOR::Pathway.joins(:country).find_by ascor_countries: {iso: 'JPN'}
+
+    expect(pathway.publication_date).to eq(Date.new(2023, 12))
+    expect(pathway.assessment_date).to eq(Date.new(2023, 10, 30))
+    expect(pathway.emissions_metric).to eq('Per capita emissions')
+    expect(pathway.emissions_boundary).to eq('Production')
+    expect(pathway.land_use).to eq('Total excluding LULUCF')
+    expect(pathway.units).to eq('tCO2e/capita')
+    expect(pathway.emissions).to eq(
+      '2005' => 11.5,
+      '2006' => 11.5,
+      '2007' => 11.5,
+      '2008' => 11.5,
+      '2009' => 11.5,
+      '2010' => 11.5,
+      '2011' => 11.5,
+      '2012' => 11.5
+    )
+    expect(pathway.trend_1_year).to eq('+2%')
+    expect(pathway.trend_3_year).to eq('+4%')
+    expect(pathway.trend_5_year).to eq('0%')
   end
 
   def expect_data_upload_results(uploaded_resource_klass, csv, expected_details, expected_success: true, custom_uploader: nil)

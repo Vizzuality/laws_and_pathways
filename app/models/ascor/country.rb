@@ -19,6 +19,7 @@ class ASCOR::Country < ApplicationRecord
   ].freeze
 
   has_many :benchmarks, class_name: 'ASCOR::Benchmark', foreign_key: :country_id, dependent: :destroy
+  has_many :pathways, class_name: 'ASCOR::Pathway', foreign_key: :country_id, dependent: :destroy
 
   validates_presence_of :name, :iso, :region, :wb_lending_group, :fiscal_monitor_category
   validates_uniqueness_of :name, :iso

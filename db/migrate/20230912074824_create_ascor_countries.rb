@@ -1,4 +1,4 @@
-class CreateAscorCountries < ActiveRecord::Migration[6.1]
+class CreateASCORCountries < ActiveRecord::Migration[6.1]
   def change
     create_table :ascor_countries do |t|
       t.string :name, index: { unique: true }

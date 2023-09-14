@@ -384,6 +384,48 @@ ALTER SEQUENCE public.ascor_countries_id_seq OWNED BY public.ascor_countries.id;
 
 
 --
+-- Name: ascor_pathways; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.ascor_pathways (
+    id bigint NOT NULL,
+    country_id bigint NOT NULL,
+    emissions_metric character varying,
+    emissions_boundary character varying,
+    land_use character varying,
+    units character varying,
+    assessment_date date,
+    publication_date date,
+    last_reported_year integer,
+    trend_1_year character varying,
+    trend_3_year character varying,
+    trend_5_year character varying,
+    emissions jsonb DEFAULT '{}'::jsonb,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: ascor_pathways_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.ascor_pathways_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: ascor_pathways_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.ascor_pathways_id_seq OWNED BY public.ascor_pathways.id;
+
+
+--
 -- Name: bank_assessment_indicators; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1854,6 +1896,13 @@ ALTER TABLE ONLY public.ascor_countries ALTER COLUMN id SET DEFAULT nextval('pub
 
 
 --
+-- Name: ascor_pathways id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_pathways ALTER COLUMN id SET DEFAULT nextval('public.ascor_pathways_id_seq'::regclass);
+
+
+--
 -- Name: bank_assessment_indicators id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2182,6 +2231,14 @@ ALTER TABLE ONLY public.ascor_benchmarks
 
 ALTER TABLE ONLY public.ascor_countries
     ADD CONSTRAINT ascor_countries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ascor_pathways ascor_pathways_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_pathways
+    ADD CONSTRAINT ascor_pathways_pkey PRIMARY KEY (id);
 
 
 --
@@ -2612,6 +2669,13 @@ CREATE UNIQUE INDEX index_ascor_countries_on_iso ON public.ascor_countries USING
 --
 
 CREATE UNIQUE INDEX index_ascor_countries_on_name ON public.ascor_countries USING btree (name);
+
+
+--
+-- Name: index_ascor_pathways_on_country_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_ascor_pathways_on_country_id ON public.ascor_pathways USING btree (country_id);
 
 
 --
@@ -3469,6 +3533,14 @@ ALTER TABLE ONLY public.litigations
 
 
 --
+-- Name: ascor_pathways fk_rails_3d14118f90; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_pathways
+    ADD CONSTRAINT fk_rails_3d14118f90 FOREIGN KEY (country_id) REFERENCES public.ascor_countries(id);
+
+
+--
 -- Name: images fk_rails_3ddaef631e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3866,6 +3938,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230712074753'),
 ('20230713121501'),
 ('20230912074824'),
-('20230912103652');
+('20230912103652'),
+('20230914065509');
 
 
