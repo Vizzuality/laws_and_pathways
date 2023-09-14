@@ -16,6 +16,7 @@ describe 'CSVDataUpload (integration)' do
   let(:ascor_countries_csv) { fixture_file('ascor_countries.csv') }
   let(:ascor_benchmarks_csv) { fixture_file('ascor_benchmarks.csv') }
   let(:ascor_pathways_csv) { fixture_file('ascor_pathways.csv') }
+  let(:ascor_assessment_indicators_csv) { fixture_file('ascor_assessment_indicators.csv') }
   let(:current_user_role) { 'super_user' }
   let(:current_user) { build(:admin_user, role: current_user_role) }
   let_it_be(:countries) do
@@ -473,6 +474,23 @@ describe 'CSVDataUpload (integration)' do
         {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
         expected_success: false,
         custom_uploader: 'ASCORPathways'
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for ASCOR assessment indicator' do
+      csv_content = <<-CSV
+        Code,Type,Text
+        EP,indicator,Test
+      CSV
+
+      command = expect_data_upload_results(
+        ASCOR::AssessmentIndicator,
+        fixture_file('ascor_assessment_indicators.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false,
+        custom_uploader: 'ASCORAssessmentIndicators'
       )
 
       expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
@@ -1509,6 +1527,26 @@ describe 'CSVDataUpload (integration)' do
     expect(pathway.trend_1_year).to eq('+2%')
     expect(pathway.trend_3_year).to eq('+4%')
     expect(pathway.trend_5_year).to eq('0%')
+  end
+
+  it 'import CSV file with ASCOR assessment indicators data' do
+    expect_data_upload_results(
+      ASCOR::AssessmentIndicator,
+      ascor_assessment_indicators_csv,
+      {new_records: 9, not_changed_records: 0, rows: 9, updated_records: 0},
+      custom_uploader: 'ASCORAssessmentIndicators'
+    )
+    # subsequent import should not create or update any record
+    expect_data_upload_results(
+      ASCOR::Benchmark,
+      ascor_assessment_indicators_csv,
+      {new_records: 0, not_changed_records: 9, rows: 9, updated_records: 0},
+      custom_uploader: 'ASCORAssessmentIndicators'
+    )
+
+    indicator = ASCOR::AssessmentIndicator.find_by code: 'EP'
+    expect(indicator.indicator_type).to eq('pillar')
+    expect(indicator.text).to eq('Emissions Pathways')
   end
 
   def expect_data_upload_results(uploaded_resource_klass, csv, expected_details, expected_success: true, custom_uploader: nil)

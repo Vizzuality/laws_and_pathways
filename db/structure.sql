@@ -311,6 +311,39 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: ascor_assessment_indicators; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.ascor_assessment_indicators (
+    id bigint NOT NULL,
+    indicator_type character varying,
+    code character varying,
+    text text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: ascor_assessment_indicators_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.ascor_assessment_indicators_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: ascor_assessment_indicators_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.ascor_assessment_indicators_id_seq OWNED BY public.ascor_assessment_indicators.id;
+
+
+--
 -- Name: ascor_benchmarks; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1882,6 +1915,13 @@ ALTER TABLE ONLY public.admin_users ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: ascor_assessment_indicators id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_assessment_indicators ALTER COLUMN id SET DEFAULT nextval('public.ascor_assessment_indicators_id_seq'::regclass);
+
+
+--
 -- Name: ascor_benchmarks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2215,6 +2255,14 @@ ALTER TABLE ONLY public.admin_users
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: ascor_assessment_indicators ascor_assessment_indicators_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_assessment_indicators
+    ADD CONSTRAINT ascor_assessment_indicators_pkey PRIMARY KEY (id);
 
 
 --
@@ -3939,6 +3987,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230713121501'),
 ('20230912074824'),
 ('20230912103652'),
-('20230914065509');
+('20230914065509'),
+('20230914100201');
 
 

@@ -10,7 +10,7 @@ ActiveAdmin.register ASCOR::Country do
   filter :name_contains, label: 'Name'
   filter :region, as: :check_boxes, collection: proc { Geography::REGIONS }
 
-  data_export_sidebar 'ASCORCountries'
+  data_export_sidebar 'ASCORCountries', display_name: 'ASCOR Countries'
 
   index do
     column :name

@@ -13,7 +13,7 @@ ActiveAdmin.register ASCOR::Pathway do
   filter :emissions_boundary, as: :select, collection: -> { ASCOR::EmissionsBoundary::VALUES }
   filter :land_use, as: :select, collection: -> { ASCOR::LandUse::VALUES }
 
-  data_export_sidebar 'ASCORPathways'
+  data_export_sidebar 'ASCORPathways', display_name: 'ASCOR Pathways'
 
   index do
     column :country

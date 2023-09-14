@@ -71,6 +71,10 @@ module Seed
       TimedLogger.log('Import ASCOR Pathways') do
         run_importer CSVImport::ASCORPathways.new(seed_file('ascor_pathways.csv'))
       end
+
+      TimedLogger.log('Import ASCOR Assessment Indicators') do
+        run_importer CSVImport::ASCORAssessmentIndicators.new(seed_file('ascor_assessment_indicators.csv'))
+      end
     end
 
     def import_sector_clusters

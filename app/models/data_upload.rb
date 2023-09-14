@@ -18,6 +18,7 @@ class DataUpload < ApplicationRecord
     'ASCOR Countries' => 'ASCORCountries',
     'ASCOR Benchmarks' => 'ASCORBenchmarks',
     'ASCOR Pathways' => 'ASCORPathways',
+    'ASCOR Assessment Indicators' => 'ASCORAssessmentIndicators',
     'Banks' => 'Banks',
     'Bank Assessment Indicators' => 'BankAssessmentIndicators',
     'Bank Assessments' => 'BankAssessments',

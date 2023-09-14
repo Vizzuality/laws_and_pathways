@@ -13,7 +13,7 @@ ActiveAdmin.register ASCOR::Benchmark do
   filter :land_use, as: :select, collection: -> { ASCOR::LandUse::VALUES }
   filter :benchmark_type, as: :select, collection: -> { ASCOR::BenchmarkType::VALUES }
 
-  data_export_sidebar 'ASCORBenchmarks'
+  data_export_sidebar 'ASCORBenchmarks', display_name: 'ASCOR Benchmarks'
 
   index do
     column :country
