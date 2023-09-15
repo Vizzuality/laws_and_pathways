@@ -17,6 +17,7 @@ describe 'CSVDataUpload (integration)' do
   let(:ascor_benchmarks_csv) { fixture_file('ascor_benchmarks.csv') }
   let(:ascor_pathways_csv) { fixture_file('ascor_pathways.csv') }
   let(:ascor_assessment_indicators_csv) { fixture_file('ascor_assessment_indicators.csv') }
+  let(:ascor_assessments_csv) { fixture_file('ascor_assessments.csv') }
   let(:current_user_role) { 'super_user' }
   let(:current_user) { build(:admin_user, role: current_user_role) }
   let_it_be(:countries) do
@@ -491,6 +492,23 @@ describe 'CSVDataUpload (integration)' do
         {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
         expected_success: false,
         custom_uploader: 'ASCORAssessmentIndicators'
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for ASCOR assessments' do
+      csv_content = <<-CSV
+        Country,Publication Date
+        New Country,2020-01
+      CSV
+
+      command = expect_data_upload_results(
+        ASCOR::Assessment,
+        fixture_file('ascor_assessments.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false,
+        custom_uploader: 'ASCORAssessments'
       )
 
       expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
@@ -1547,6 +1565,38 @@ describe 'CSVDataUpload (integration)' do
     indicator = ASCOR::AssessmentIndicator.find_by code: 'EP'
     expect(indicator.indicator_type).to eq('pillar')
     expect(indicator.text).to eq('Emissions Pathways')
+  end
+
+  it 'import CSV file with ASCOR assessments data' do
+    create :ascor_country, iso: 'JPN', name: 'Japan'
+    create :ascor_assessment_indicator, code: 'EP.2.a', indicator_type: 'indicator',
+                                        text: 'Has the country set a 2030 emission reduction target?'
+
+    expect_data_upload_results(
+      ASCOR::Assessment,
+      ascor_assessments_csv,
+      {new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0},
+      custom_uploader: 'ASCORAssessments'
+    )
+    # subsequent import should not create or update any record
+    expect_data_upload_results(
+      ASCOR::Assessment,
+      ascor_assessments_csv,
+      {new_records: 0, not_changed_records: 0, rows: 2, updated_records: 2},
+      custom_uploader: 'ASCORAssessments'
+    )
+
+    assessment = ASCOR::Assessment.joins(:country).find_by ascor_countries: {iso: 'USA'}
+    indicator = assessment.results.joins(:indicator).find_by ascor_assessment_indicators: {code: 'EP.2.a'}
+
+    expect(assessment.publication_date).to eq(Date.new(2023, 12))
+    expect(assessment.assessment_date).to eq(Date.new(2023, 10, 30))
+    expect(assessment.research_notes).to be_nil
+    expect(assessment.further_information).to be_nil
+    expect(indicator.answer).to eq('Yes')
+    expect(indicator.source_name).to eq('NDC')
+    expect(indicator.source_date).to eq('2021')
+    expect(indicator.source_link).to eq('https://unfccc.int/sites/default/files/NDC/2022-06/United%20States%20NDC%20April%2021%202021%20Final.pdf')
   end
 
   def expect_data_upload_results(uploaded_resource_klass, csv, expected_details, expected_success: true, custom_uploader: nil)
