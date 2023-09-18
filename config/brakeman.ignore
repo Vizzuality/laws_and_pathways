@@ -26,7 +26,7 @@
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/tpi/companies/show.html.erb",
-      "line": 119,
+      "line": 138,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "TPI::CompanyDecorator.decorate(Company.published.friendly.find(params[:id])).isin_array.join(\"<br/>\")",
       "render_path": [
@@ -57,7 +57,7 @@
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/tpi/sectors/index.html.erb",
-      "line": 69,
+      "line": 88,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "Content.find_by(:page => TPIPage.find_by(:slug => \"publicly-listed-equities-content\"), :code => \"methodology_description\").text",
       "render_path": [
@@ -65,7 +65,7 @@
           "type": "controller",
           "class": "TPI::SectorsController",
           "method": "index",
-          "line": 27,
+          "line": 34,
           "file": "app/controllers/tpi/sectors_controller.rb",
           "rendered": {
             "name": "tpi/sectors/index",
@@ -115,6 +115,37 @@
     {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
+      "fingerprint": "676ca9689a6d791bb430ef6c784efd5c6e1bc2c1e9fa6c8d4d941e5195b8cfa3",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/tpi/sovereign_bonds_issuers/index.html.erb",
+      "line": 36,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "Content.find_by(:page => TPIPage.find_by(:slug => \"ascor\"), :code => \"methodology_description\").text",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "TPI::SovereignBondsIssuersController",
+          "method": "index",
+          "line": 15,
+          "file": "app/controllers/tpi/sovereign_bonds_issuers_controller.rb",
+          "rendered": {
+            "name": "tpi/sovereign_bonds_issuers/index",
+            "file": "app/views/tpi/sovereign_bonds_issuers/index.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "tpi/sovereign_bonds_issuers/index"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
       "fingerprint": "706d39fa59d9d21efd30e74335f485b1c9c89e762698cd86e923220f36b2965b",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
@@ -127,7 +158,7 @@
           "type": "controller",
           "class": "TPI::BanksController",
           "method": "index",
-          "line": 26,
+          "line": 27,
           "file": "app/controllers/tpi/banks_controller.rb",
           "rendered": {
             "name": "tpi/banks/index",
@@ -308,6 +339,6 @@
       "note": ""
     }
   ],
-  "updated": "2022-09-06 13:32:13 +0200",
+  "updated": "2023-09-18 12:05:22 +0200",
   "brakeman_version": "5.2.3"
 }
