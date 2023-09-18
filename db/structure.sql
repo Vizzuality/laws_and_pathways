@@ -459,6 +459,7 @@ ALTER SEQUENCE public.ascor_benchmarks_id_seq OWNED BY public.ascor_benchmarks.i
 CREATE TABLE public.ascor_countries (
     id bigint NOT NULL,
     name character varying,
+    slug character varying,
     iso character varying,
     region character varying,
     wb_lending_group character varying,
@@ -2846,6 +2847,13 @@ CREATE UNIQUE INDEX index_ascor_countries_on_iso ON public.ascor_countries USING
 --
 
 CREATE UNIQUE INDEX index_ascor_countries_on_name ON public.ascor_countries USING btree (name);
+
+
+--
+-- Name: index_ascor_countries_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_ascor_countries_on_slug ON public.ascor_countries USING btree (slug);
 
 
 --

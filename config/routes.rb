@@ -54,6 +54,12 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :sovereign_bonds_issuers, only: [:show, :index] do
+        collection do
+          get :user_download
+        end
+      end
+
       resources :publications, only: [:index, :show] do
         collection do
           get :partial

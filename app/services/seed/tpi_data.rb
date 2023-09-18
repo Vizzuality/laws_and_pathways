@@ -210,6 +210,7 @@ module Seed
         end
       end
       TPISector.find_or_create_by!(name: 'Banks', show_in_tpi_tool: false)
+      TPISector.find_or_create_by!(name: 'ASCOR', show_in_tpi_tool: false)
     end
   end
 end

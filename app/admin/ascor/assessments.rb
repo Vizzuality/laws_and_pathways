@@ -35,7 +35,7 @@ ActiveAdmin.register ASCOR::Assessment do
     end
 
     panel 'Assessment Results' do
-      table_for resource.results.includes(:indicator) do
+      table_for resource.results.includes(:indicator).order(:id) do
         column(:indicator)
         column(:answer)
         column(:source_name)
