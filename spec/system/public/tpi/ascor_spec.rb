@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-describe 'Sovereign bonds issuers', type: 'system', site: 'tpi' do
+describe 'ASCOR', type: 'system', site: 'tpi' do
   describe 'all countries page' do
     before do
-      visit '/sovereign_bonds_issuers'
+      visit '/ascor'
     end
 
     it 'loads the page' do
@@ -13,7 +13,7 @@ describe 'Sovereign bonds issuers', type: 'system', site: 'tpi' do
 
   describe 'single country page' do
     before do
-      visit '/sovereign_bonds_issuers/japan'
+      visit '/ascor/japan'
     end
   end
 end

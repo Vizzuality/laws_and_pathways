@@ -54,7 +54,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :sovereign_bonds_issuers, only: [:show, :index] do
+      resources :ascor, only: [:show, :index] do
         collection do
           get :user_download
         end

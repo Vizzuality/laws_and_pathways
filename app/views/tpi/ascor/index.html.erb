@@ -1,11 +1,11 @@
 <% content_for :page_title, "ASCOR Tool - Transition Pathway Initiative" %>
 
-<div class="sovereign-bonds-page">
+<div class="ascor-page">
   <div class="dropdown-selector-wrapper">
     <!-- TODO: React component needs to be replaced!!! -->
     <%= react_component("BankDropdown", { banks: @countries_json, selectedOption: 'All countries' }) %>
 
-    <div class="sovereign-bonds-header container">
+    <div class="ascor-header container">
       <div>
         <% if @methodology_publication.present? %>
           <a href="#methodology" class="link with-icon is-pulled-left">
@@ -19,7 +19,7 @@
         </a>
       </div>
 
-      <%= link_to user_download_tpi_sovereign_bonds_issuers_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
+      <%= link_to user_download_tpi_ascor_index_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
         <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
         Download all ASCOR data
       <% end %>

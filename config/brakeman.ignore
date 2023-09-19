@@ -1,6 +1,37 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "16cf341536f52272758f6cfb2dd18fc4c78ff00efbc1055a560e986e2f73af0c",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/tpi/ascor/index.html.erb",
+      "line": 36,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "Content.find_by(:page => TPIPage.find_by(:slug => \"ascor\"), :code => \"methodology_description\").text",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "TPI::ASCORController",
+          "method": "index",
+          "line": 15,
+          "file": "app/controllers/tpi/ascor_controller.rb",
+          "rendered": {
+            "name": "tpi/ascor/index",
+            "file": "app/views/tpi/ascor/index.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "tpi/ascor/index"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
       "warning_type": "Dynamic Render Path",
       "warning_code": 15,
       "fingerprint": "5823e1db30c5459848a7064bb3984576a1cfe2bb67d716fd5c80a666f467dd0d",
@@ -110,37 +141,6 @@
       },
       "user_input": null,
       "confidence": "High",
-      "note": ""
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 2,
-      "fingerprint": "676ca9689a6d791bb430ef6c784efd5c6e1bc2c1e9fa6c8d4d941e5195b8cfa3",
-      "check_name": "CrossSiteScripting",
-      "message": "Unescaped model attribute",
-      "file": "app/views/tpi/sovereign_bonds_issuers/index.html.erb",
-      "line": 36,
-      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "Content.find_by(:page => TPIPage.find_by(:slug => \"ascor\"), :code => \"methodology_description\").text",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "TPI::SovereignBondsIssuersController",
-          "method": "index",
-          "line": 15,
-          "file": "app/controllers/tpi/sovereign_bonds_issuers_controller.rb",
-          "rendered": {
-            "name": "tpi/sovereign_bonds_issuers/index",
-            "file": "app/views/tpi/sovereign_bonds_issuers/index.html.erb"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "tpi/sovereign_bonds_issuers/index"
-      },
-      "user_input": null,
-      "confidence": "Medium",
       "note": ""
     },
     {
@@ -339,6 +339,6 @@
       "note": ""
     }
   ],
-  "updated": "2023-09-18 12:05:22 +0200",
+  "updated": "2023-09-19 10:16:26 +0200",
   "brakeman_version": "5.2.3"
 }

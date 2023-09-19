@@ -1,12 +1,12 @@
 <% content_for :page_title, "#{@country.name} - Transition Pathway Initiative" %>
 
-<div class="sovereign-bonds-page">
+<div class="ascor-page">
   <div class="dropdown-selector-wrapper">
     <!-- TODO: React component needs to be replaced!!! -->
     <%= react_component("BankDropdown", { banks: @countries_json, selectedOption: 'All countries' }) %>
 
-    <div class="sovereign-bonds-header container">
-      <div class="sovereign-bonds-header__assessment-dropdown">
+    <div class="ascor-header container">
+      <div class="ascor-header__assessment-dropdown">
         <div class="caption">
           Assessment Date:
         </div>
@@ -15,14 +15,14 @@
             name: 'assessment_id',
             remote: true,
             theme: 'blue',
-            url: tpi_sovereign_bonds_issuer_path(@country),
+            url: tpi_ascor_path(@country),
             data: @country.assessments.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
             selected: params[:assessment_id]
           }) %>
         </div>
       </div>
 
-      <%= link_to user_download_tpi_sovereign_bonds_issuers_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
+      <%= link_to user_download_tpi_ascor_index_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
         <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
         Download all ASCOR data
       <% end %>

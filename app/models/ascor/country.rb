@@ -33,6 +33,6 @@ class ASCOR::Country < ApplicationRecord
   validates :fiscal_monitor_category, inclusion: {in: MONITOR_CATEGORIES}, allow_nil: true
 
   def path
-    Rails.application.routes.url_helpers.tpi_sovereign_bonds_issuer_path slug
+    Rails.application.routes.url_helpers.tpi_ascor_path slug
   end
 end

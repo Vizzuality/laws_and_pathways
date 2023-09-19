@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe TPI::SovereignBondsIssuersController, type: :controller do
+RSpec.describe TPI::ASCORController, type: :controller do
   let_it_be(:ascor_country) { create :ascor_country }
 
   describe 'GET index' do

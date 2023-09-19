@@ -1,5 +1,5 @@
 module TPI
-  class SovereignBondsIssuersController < TPIController
+  class ASCORController < TPIController
     before_action :fetch_ascor_countries, only: [:index, :show]
     before_action :fetch_ascor_country, only: [:show]
 
