@@ -1,0 +1,10 @@
+Id,Type,Code,Text
+,pillar,EP,Emissions Pathways
+,area,EP.1,Emissions Trends
+,custom_indicator,EP.1.a,What is the level of the country's GHG emissions in the last available year?
+,custom_indicator,EP.1.b,What is the most recent 3-year trend (average annual percentage change) in GHG emissions?
+,indicator,EP.1.c,Is the most recent 3-year trend aligned with the reductions needed to meet the country’s 2030 benchmark?
+,indicator,EP.1.d,Is the most recent 3-year trend aligned with the reductions needed to meet the country’s 2030 fair share allowance?
+,area,EP.2,2030 Target
+,indicator,EP.2.a,Has the country set a 2030 emission reduction target?
+,indicator,EP.2.a.i,What is the target reduction relative to absolute 2019 emissions?

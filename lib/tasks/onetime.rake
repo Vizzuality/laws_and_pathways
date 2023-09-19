@@ -110,6 +110,19 @@ class OneTimeTasks
             text: '107'
           )
         end
+
+        tpi_ascor_page = TPIPage.create_with(menu: :no_menu_entry).find_or_create_by!(title: 'ASCOR', slug: 'ascor')
+        tpi_ascor_page.contents.destroy_all
+        tpi_ascor_page.contents.create!(
+          title: 'Methodology',
+          code: 'methodology_description',
+          text: '<div>TODO</div>'
+        )
+        tpi_ascor_page.contents.create!(
+          title: 'Methodology Publication ID',
+          code: 'methodology_publication_id',
+          text: 'TODO'
+        )
       end
     end
   end

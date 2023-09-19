@@ -1,0 +1,93 @@
+.ascor-page {
+  .ascor-header {
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__assessment-dropdown {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      color: white;
+
+      @include tablet {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+
+    a {
+      color: white;
+      margin-right: 20px;
+    }
+
+    @include until($desktop) {
+      padding: 0 0.75rem;
+      font-size: $size-7;
+      height: 60px;
+      font-family: $font-family-regular;
+    }
+  }
+
+  .dropdown-selector-wrapper {
+    background-color: $blue;
+
+    .dropdown-selector__container {
+      @include desktop {
+        padding: $container-top-padding $container-side-padding 40px $container-side-padding;
+      }
+    }
+
+    @include desktop {
+      height: 335px;
+    }
+  }
+
+  section {
+    margin-top: 70px;
+
+    > p {
+      margin-top: 30px;
+    }
+
+    @include until($desktop) {
+      margin-top: 40px;
+      padding: 0 0.75rem;
+
+      h4 {
+        font-size: $size-5 !important;
+      }
+
+      > p {
+        margin-top: 15px;
+        font-size: $size-6;
+        color: $grey-dark;
+      }
+    }
+  }
+
+  #methodology {
+    display: flex;
+
+    .pages__content {
+      margin-bottom: 0;
+
+      > div {
+        margin-top: 30px;
+      }
+
+      @include until($desktop) {
+        h4 {
+          font-size: $size-5 !important;
+        }
+
+        > div {
+          margin-top: 15px;
+          font-size: $size-6;
+          color: $grey-dark;
+        }
+      }
+    }
+  }
+}
