@@ -1,5 +1,5 @@
 class ASCOR::AssessmentIndicator < ApplicationRecord
-  INDICATOR_TYPES = %w[pillar area indicator custom_indicator].freeze
+  INDICATOR_TYPES = %w[pillar area indicator metric].freeze
   enum indicator_type: array_to_enum_hash(INDICATOR_TYPES)
 
   has_many :results, class_name: 'ASCOR::AssessmentResult', foreign_key: :indicator_id, dependent: :destroy

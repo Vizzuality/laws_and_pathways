@@ -1556,20 +1556,21 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       ASCOR::AssessmentIndicator,
       ascor_assessment_indicators_csv,
-      {new_records: 9, not_changed_records: 0, rows: 9, updated_records: 0},
+      {new_records: 7, not_changed_records: 0, rows: 7, updated_records: 0},
       custom_uploader: 'ASCORAssessmentIndicators'
     )
     # subsequent import should not create or update any record
     expect_data_upload_results(
       ASCOR::Benchmark,
       ascor_assessment_indicators_csv,
-      {new_records: 0, not_changed_records: 9, rows: 9, updated_records: 0},
+      {new_records: 0, not_changed_records: 7, rows: 7, updated_records: 0},
       custom_uploader: 'ASCORAssessmentIndicators'
     )
 
-    indicator = ASCOR::AssessmentIndicator.find_by code: 'EP'
-    expect(indicator.indicator_type).to eq('pillar')
-    expect(indicator.text).to eq('Emissions Pathways')
+    indicator = ASCOR::AssessmentIndicator.find_by code: 'EP.1'
+    expect(indicator.indicator_type).to eq('area')
+    expect(indicator.text).to eq('Emissions Trends')
+    expect(indicator.units_or_response_type).to eq('Yes/No/Partial')
   end
 
   it 'import CSV file with ASCOR assessments data' do
