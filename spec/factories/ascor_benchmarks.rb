@@ -3,8 +3,7 @@ FactoryBot.define do
     country factory: :ascor_country
     publication_date { '2021-09' }
     emissions_metric { 'Absolute' }
-    emissions_boundary { 'Production' }
-    land_use { 'Total excluding LULUCF' }
+    emissions_boundary { 'Production - excluding LULUCF' }
     units { 'MtCO2e' }
     benchmark_type { 'National 1.5C benchmark' }
     emissions do

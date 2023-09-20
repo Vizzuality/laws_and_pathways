@@ -424,7 +424,6 @@ CREATE TABLE public.ascor_benchmarks (
     publication_date date,
     emissions_metric character varying,
     emissions_boundary character varying,
-    land_use character varying,
     units character varying,
     benchmark_type character varying,
     emissions jsonb DEFAULT '{}'::jsonb,

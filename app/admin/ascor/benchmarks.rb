@@ -4,13 +4,11 @@ ActiveAdmin.register ASCOR::Benchmark do
 
   menu label: 'Benchmarks', parent: 'ASCOR', priority: 2
 
-  permit_params :country_id, :publication_date, :emissions_metric, :emissions_boundary, :land_use, :units, :benchmark_type,
-                :emissions
+  permit_params :country_id, :publication_date, :emissions_metric, :emissions_boundary, :units, :benchmark_type, :emissions
 
   filter :country, as: :select, collection: -> { ASCOR::Country.all.order(:name) }
   filter :emissions_metric, as: :select, collection: -> { ASCOR::EmissionsMetric::VALUES }
   filter :emissions_boundary, as: :select, collection: -> { ASCOR::EmissionsBoundary::VALUES }
-  filter :land_use, as: :select, collection: -> { ASCOR::LandUse::VALUES }
   filter :benchmark_type, as: :select, collection: -> { ASCOR::BenchmarkType::VALUES }
 
   data_export_sidebar 'ASCORBenchmarks', display_name: 'ASCOR Benchmarks'
@@ -19,7 +17,6 @@ ActiveAdmin.register ASCOR::Benchmark do
     column :country
     column :emissions_metric
     column :emissions_boundary
-    column :land_use
     column :units
     column :benchmark_type
 
@@ -33,7 +30,6 @@ ActiveAdmin.register ASCOR::Benchmark do
       row :publication_date
       row :emissions_metric
       row :emissions_boundary
-      row :land_use
       row :units
       row :benchmark_type
       row :created_at
@@ -55,7 +51,6 @@ ActiveAdmin.register ASCOR::Benchmark do
       f.input :publication_date, as: :datepicker
       f.input :emissions_metric, as: :select, collection: ASCOR::EmissionsMetric::VALUES
       f.input :emissions_boundary, as: :select, collection: ASCOR::EmissionsBoundary::VALUES
-      f.input :land_use, as: :select, collection: ASCOR::LandUse::VALUES
       f.input :units
       f.input :benchmark_type, as: :select, collection: ASCOR::BenchmarkType::VALUES
       f.input :emissions, as: :hidden, input_html: {value: f.object.emissions.to_json, id: 'input_emissions'}
@@ -79,7 +74,6 @@ ActiveAdmin.register ASCOR::Benchmark do
     column(:publication_date) { |b| b.publication_date.to_s(:year_month) }
     column :emissions_metric
     column :emissions_boundary
-    column :land_use
     column :units
     column :benchmark_type
 

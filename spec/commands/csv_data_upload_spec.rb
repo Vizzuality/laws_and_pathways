@@ -1495,16 +1495,20 @@ describe 'CSVDataUpload (integration)' do
 
     expect(benchmark.publication_date).to eq(Date.new(2023, 12))
     expect(benchmark.emissions_metric).to eq('Absolute')
-    expect(benchmark.emissions_boundary).to eq('Production')
-    expect(benchmark.land_use).to eq('Total excluding LULUCF')
+    expect(benchmark.emissions_boundary).to eq('Production - excluding LULUCF')
     expect(benchmark.units).to eq('MtCO2e')
     expect(benchmark.benchmark_type).to eq('National 1.5C benchmark')
     expect(benchmark.emissions).to eq(
-      '2019' => 11.5,
-      '2020' => 11.5,
-      '2021' => 11.5,
-      '2022' => 11.5,
-      '2023' => 11.5
+      '2021' => 6220.0,
+      '2022' => 5845.0,
+      '2023' => 5470.0,
+      '2024' => 5095.0,
+      '2025' => 4720.0,
+      '2026' => 4345.0,
+      '2027' => 3970.0,
+      '2028' => 3595.0,
+      '2029' => 3219.0,
+      '2030' => 2844.0
     )
   end
 

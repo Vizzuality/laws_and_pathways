@@ -20,11 +20,6 @@ RSpec.describe ASCOR::Benchmark, type: :model do
     expect(subject).to have(1).errors_on(:emissions_boundary)
   end
 
-  it 'should be invalid without land_use' do
-    subject.land_use = nil
-    expect(subject).to have(1).errors_on(:land_use)
-  end
-
   it 'should be invalid without units' do
     subject.units = nil
     expect(subject).to have(1).errors_on(:units)
@@ -43,10 +38,5 @@ RSpec.describe ASCOR::Benchmark, type: :model do
   it 'should be invalid if emissions_boundary is not in BOUNDARIES' do
     subject.emissions_boundary = 'TEST'
     expect(subject).to have(1).errors_on(:emissions_boundary)
-  end
-
-  it 'should be invalid if land_use is not in LAND_USES' do
-    subject.land_use = 'TEST'
-    expect(subject).to have(1).errors_on(:land_use)
   end
 end
