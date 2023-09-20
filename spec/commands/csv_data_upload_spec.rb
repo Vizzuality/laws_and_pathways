@@ -1471,6 +1471,7 @@ describe 'CSVDataUpload (integration)' do
     expect(country.region).to eq('Asia')
     expect(country.wb_lending_group).to eq('High-income economies')
     expect(country.fiscal_monitor_category).to eq('Advanced economies')
+    expect(country.type_of_party).to eq('Annex I')
   end
 
   it 'import CSV file with ASCOR benchmarks data' do

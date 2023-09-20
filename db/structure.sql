@@ -465,7 +465,8 @@ CREATE TABLE public.ascor_countries (
     wb_lending_group character varying,
     fiscal_monitor_category character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    type_of_party character varying
 );
 
 
@@ -4151,6 +4152,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230914065509'),
 ('20230914100201'),
 ('20230915063557'),
-('20230915064402');
+('20230915064402'),
+('20230920083300');
 
 

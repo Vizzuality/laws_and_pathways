@@ -56,4 +56,9 @@ RSpec.describe ASCOR::Country, type: :model do
     subject.fiscal_monitor_category = 'TEST'
     expect(subject).to have(1).errors_on(:fiscal_monitor_category)
   end
+
+  it 'should be invalid if type_of_party is not in TYPES_OF_PARTY' do
+    subject.type_of_party = 'TEST'
+    expect(subject).to have(1).errors_on(:type_of_party)
+  end
 end
