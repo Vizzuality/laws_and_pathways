@@ -3,7 +3,6 @@ FactoryBot.define do
     country factory: :ascor_country
     assessment_date { 1.year.ago }
     publication_date { 11.months.ago }
-    research_notes { 'Research notes' }
-    further_information { 'Further information' }
+    notes { 'Research notes' }
   end
 end

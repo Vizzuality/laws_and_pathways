@@ -4,9 +4,8 @@ ActiveAdmin.register ASCOR::Assessment do
 
   menu label: 'Assessments', parent: 'ASCOR', priority: 5
 
-  permit_params :country_id, :assessment_date, :publication_date, :research_notes, :further_information,
-                results_attributes: [:id, :assessment_id, :indicator_id, :answer, :source_name, :source_date,
-                                     :source_link, :_destroy]
+  permit_params :country_id, :assessment_date, :publication_date, :notes,
+                results_attributes: [:id, :assessment_id, :indicator_id, :answer, :source, :_destroy]
 
   filter :country
   filter :assessment_date, as: :select
@@ -14,10 +13,12 @@ ActiveAdmin.register ASCOR::Assessment do
   data_export_sidebar 'ASCORAssessments', display_name: 'ASCOR Assessments'
 
   index do
+    selectable_column
+    id_column
     column :country
     column :assessment_date
     column :publication_date
-    column :research_notes
+    column :notes
 
     actions
   end
@@ -28,8 +29,7 @@ ActiveAdmin.register ASCOR::Assessment do
       row :country
       row :assessment_date
       row :publication_date
-      row :research_notes
-      row :further_information
+      row :notes
       row :created_at
       row :updated_at
     end
@@ -38,9 +38,8 @@ ActiveAdmin.register ASCOR::Assessment do
       table_for resource.results.includes(:indicator).order(:id) do
         column(:indicator)
         column(:answer)
-        column(:source_name)
-        column(:source_date)
-        column(:source_link)
+        column(:source)
+        column(:year)
       end
     end
 
@@ -54,17 +53,15 @@ ActiveAdmin.register ASCOR::Assessment do
       f.input :country, as: :select, collection: ASCOR::Country.all.order(:name)
       f.input :assessment_date, as: :datepicker
       f.input :publication_date, as: :datepicker
-      f.input :research_notes
-      f.input :further_information
+      f.input :notes
     end
 
     f.has_many :results, allow_destroy: true, heading: false do |ff|
       ff.inputs 'Assessment Results' do
         ff.input :indicator, as: :select, collection: ASCOR::AssessmentIndicator.all.order(:code)
         ff.input :answer
-        ff.input :source_name
-        ff.input :source_date
-        ff.input :source_link
+        ff.input :source
+        ff.input :year
       end
     end
 
@@ -78,31 +75,28 @@ ActiveAdmin.register ASCOR::Assessment do
     end
     column :assessment_date
     column :publication_date
-    ASCOR::AssessmentIndicator.order(:id).all.each do |indicator|
-      if indicator.indicator_type.in? %w[area indicator]
-        column "#{indicator.indicator_type.capitalize} #{indicator.code}", humanize_name: false do |resource|
-          controller.assessment_results[[resource.id, indicator.id]]&.first&.answer
-        end
-      end
-      next unless indicator.indicator_type.in? %w[indicator custom_indicator]
-
-      column "Source name #{indicator.code}", humanize_name: false do |resource|
-        controller.assessment_results[[resource.id, indicator.indicator_type, indicator.code]]&.first&.source_name
-      end
-      column "Source date #{indicator.code}", humanize_name: false do |resource|
-        controller.assessment_results[[resource.id, indicator.indicator_type, indicator.code]]&.first&.source_date
-      end
-      column "Source link #{indicator.code}", humanize_name: false do |resource|
-        controller.assessment_results[[resource.id, indicator.indicator_type, indicator.code]]&.first&.source_link
+    ASCOR::AssessmentIndicator.where.not(indicator_type: 'pillar')
+      .where.not(code: %w[EP.1.a.i EP.1.a.ii]).order(:id).all.each do |indicator|
+      column "#{indicator.indicator_type} #{indicator.code}", humanize_name: false do |resource|
+        controller.assessment_results[[resource.id, indicator.id]]&.first&.answer
       end
     end
-    column :research_notes
-    column :further_information
+    ASCOR::AssessmentIndicator.where(indicator_type: %w[indicator metric]).order(:id).all.each do |indicator|
+      column "source #{indicator.indicator_type} #{indicator.code}", humanize_name: false do |resource|
+        controller.assessment_results[[resource.id, indicator.id]]&.first&.source
+      end
+    end
+    ASCOR::AssessmentIndicator.where(indicator_type: 'metric').order(:id).all.each do |indicator|
+      column "year #{indicator.indicator_type} #{indicator.code}", humanize_name: false do |resource|
+        controller.assessment_results[[resource.id, indicator.id]]&.first&.year
+      end
+    end
+    column :notes
   end
 
   controller do
     def assessment_results
-      @assessment_results ||= ASCOR::AssessmentResult.group_by { |r| [r.assessment_id, r.indicator_id] }
+      @assessment_results ||= ASCOR::AssessmentResult.all.group_by { |r| [r.assessment_id, r.indicator_id] }
     end
   end
 end

@@ -16,6 +16,8 @@ ActiveAdmin.register ASCOR::Pathway do
   data_export_sidebar 'ASCORPathways', display_name: 'ASCOR Pathways'
 
   index do
+    selectable_column
+    id_column
     column :country
     column :assessment_date
     column :emissions_metric

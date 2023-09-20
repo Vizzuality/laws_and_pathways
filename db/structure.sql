@@ -353,11 +353,10 @@ CREATE TABLE public.ascor_assessment_results (
     assessment_id bigint NOT NULL,
     indicator_id bigint NOT NULL,
     answer character varying,
-    source_name character varying,
-    source_date character varying,
-    source_link character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    source character varying,
+    year character varying
 );
 
 
@@ -389,10 +388,9 @@ CREATE TABLE public.ascor_assessments (
     country_id bigint NOT NULL,
     assessment_date date,
     publication_date date,
-    research_notes text,
-    further_information text,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    notes text
 );
 
 

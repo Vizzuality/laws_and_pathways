@@ -13,6 +13,8 @@ ActiveAdmin.register ASCOR::Country do
   data_export_sidebar 'ASCORCountries', display_name: 'ASCOR Countries'
 
   index do
+    selectable_column
+    id_column
     column :name
     column 'Country ISO code', :iso
     column :region

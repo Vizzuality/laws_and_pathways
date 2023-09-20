@@ -3,8 +3,7 @@ FactoryBot.define do
     assessment factory: :ascor_assessment
     indicator factory: :ascor_assessment_indicator
     answer { 'Yes' }
-    source_name { 'Source name' }
-    source_date { '2021' }
-    source_link { 'https://www.google.com' }
+    source { 'https://www.google.com' }
+    year { '2018' }
   end
 end

@@ -14,6 +14,8 @@ ActiveAdmin.register ASCOR::Benchmark do
   data_export_sidebar 'ASCORBenchmarks', display_name: 'ASCOR Benchmarks'
 
   index do
+    selectable_column
+    id_column
     column :country
     column :emissions_metric
     column :emissions_boundary

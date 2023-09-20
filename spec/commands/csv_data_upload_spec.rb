@@ -1575,8 +1575,10 @@ describe 'CSVDataUpload (integration)' do
 
   it 'import CSV file with ASCOR assessments data' do
     create :ascor_country, iso: 'JPN', name: 'Japan'
-    create :ascor_assessment_indicator, code: 'EP.2.a', indicator_type: 'indicator',
-                                        text: 'Has the country set a 2030 emission reduction target?'
+    create :ascor_assessment_indicator, code: 'EP.1.a', indicator_type: 'indicator',
+                                        text: 'Have the country’s emissions decreased in recent years?'
+    create :ascor_assessment_indicator, code: 'EP.1.a.i', indicator_type: 'metric',
+                                        text: "What is the country's most recent emissions level?"
 
     expect_data_upload_results(
       ASCOR::Assessment,
@@ -1592,17 +1594,19 @@ describe 'CSVDataUpload (integration)' do
       custom_uploader: 'ASCORAssessments'
     )
 
-    assessment = ASCOR::Assessment.joins(:country).find_by ascor_countries: {iso: 'USA'}
-    indicator = assessment.results.joins(:indicator).find_by ascor_assessment_indicators: {code: 'EP.2.a'}
+    assessment = ASCOR::Assessment.joins(:country).find_by ascor_countries: {iso: 'JPN'}
+    indicator_1 = assessment.results.joins(:indicator).find_by ascor_assessment_indicators: {code: 'EP.1.a'}
+    indicator_2 = assessment.results.joins(:indicator).find_by ascor_assessment_indicators: {code: 'EP.1.a.i'}
 
+    expect(assessment.notes).to be_nil
     expect(assessment.publication_date).to eq(Date.new(2023, 12))
     expect(assessment.assessment_date).to eq(Date.new(2023, 10, 30))
-    expect(assessment.research_notes).to be_nil
-    expect(assessment.further_information).to be_nil
-    expect(indicator.answer).to eq('Yes')
-    expect(indicator.source_name).to eq('NDC')
-    expect(indicator.source_date).to eq('2021')
-    expect(indicator.source_link).to eq('https://unfccc.int/sites/default/files/NDC/2022-06/United%20States%20NDC%20April%2021%202021%20Final.pdf')
+    expect(indicator_1.answer).to eq('Yes')
+    expect(indicator_2.answer).to be_nil
+    expect(indicator_1.source).to eq('https://zenodo.org/record/7727476')
+    expect(indicator_2.source).to be_nil
+    expect(indicator_1.year).to be_nil
+    expect(indicator_2.year).to eq('2010')
   end
 
   def expect_data_upload_results(uploaded_resource_klass, csv, expected_details, expected_success: true, custom_uploader: nil)
