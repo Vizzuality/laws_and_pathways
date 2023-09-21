@@ -10,10 +10,9 @@ module CSVImport
         benchmark.publication_date = parse_date(row[:publication_date]) if row.header?(:publication_date)
         benchmark.emissions_metric = row[:emissions_metric] if row.header?(:emissions_metric)
         benchmark.emissions_boundary = row[:emissions_boundary] if row.header?(:emissions_boundary)
-        benchmark.land_use = row[:land_use] if row.header?(:land_use)
         benchmark.units = row[:units] if row.header?(:units)
         benchmark.benchmark_type = row[:benchmark_type] if row.header?(:benchmark_type)
-        benchmark.emissions = parse_emissions(row) if emission_headers?(row)
+        benchmark.emissions = parse_emissions(row, thousands_separator: ',') if emission_headers?(row)
 
         was_new_record = benchmark.new_record?
         any_changes = benchmark.changed?
@@ -40,7 +39,6 @@ module CSVImport
           country: countries[row[:country]].first,
           emissions_metric: row[:emissions_metric],
           emissions_boundary: row[:emissions_boundary],
-          land_use: row[:land_use],
           benchmark_type: row[:benchmark_type]
         )
     end

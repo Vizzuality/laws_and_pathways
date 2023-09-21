@@ -9,15 +9,19 @@ module CSVImport
         pathway.country = countries[row[:country]].first if row.header?(:country)
         pathway.emissions_metric = row[:emissions_metric] if row.header?(:emissions_metric)
         pathway.emissions_boundary = row[:emissions_boundary] if row.header?(:emissions_boundary)
-        pathway.land_use = row[:land_use] if row.header?(:land_use)
         pathway.units = row[:units] if row.header?(:units)
         pathway.assessment_date = assessment_date(row) if row.header?(:assessment_date)
         pathway.publication_date = publication_date(row) if row.header?(:publication_date)
-        pathway.last_reported_year = row[:last_reported_year] if row.header?(:last_reported_year)
-        pathway.emissions = parse_emissions(row) if emission_headers?(row)
-        pathway.trend_1_year = row[:'1year_trend'] if row.header?(:'1year_trend')
-        pathway.trend_3_year = row[:'3year_trend'] if row.header?(:'3year_trend')
-        pathway.trend_5_year = row[:'5year_trend'] if row.header?(:'5year_trend')
+        pathway.last_historical_year = row[:last_historical_year] if row.header?(:last_historical_year)
+        pathway.trend_1_year = row[:metric_ep1aii_1year] if row.header?(:metric_ep1aii_1year)
+        pathway.trend_3_year = row[:metric_ep1aii_3year] if row.header?(:metric_ep1aii_3year)
+        pathway.trend_5_year = row[:metric_ep1aii_5year] if row.header?(:metric_ep1aii_5year)
+        pathway.trend_source = row[:source_metric_ep1aii] if row.header?(:source_metric_ep1aii)
+        pathway.trend_year = row[:year_metric_ep1aii] if row.header?(:year_metric_ep1aii)
+        pathway.recent_emission_level = string_to_float(row[:metric_ep1ai]) if row.header?(:metric_ep1ai)
+        pathway.recent_emission_source = row[:source_metric_ep1ai] if row.header?(:source_metric_ep1ai)
+        pathway.recent_emission_year = row[:year_metric_ep1ai] if row.header?(:year_metric_ep1ai)
+        pathway.emissions = parse_emissions(row, thousands_separator: ',') if emission_headers?(row)
 
         was_new_record = pathway.new_record?
         any_changes = pathway.changed?
@@ -44,7 +48,6 @@ module CSVImport
           country: countries[row[:country]].first,
           emissions_metric: row[:emissions_metric],
           emissions_boundary: row[:emissions_boundary],
-          land_use: row[:land_use],
           assessment_date: assessment_date(row)
         )
     end

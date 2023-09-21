@@ -4,7 +4,7 @@ ActiveAdmin.register ASCOR::Country do
 
   menu label: 'Countries', parent: 'ASCOR', priority: 1
 
-  permit_params :name, :iso, :region, :wb_lending_group, :fiscal_monitor_category
+  permit_params :name, :iso, :region, :wb_lending_group, :fiscal_monitor_category, :type_of_party
 
   filter :iso_contains, label: 'ISO'
   filter :name_contains, label: 'Name'
@@ -13,6 +13,8 @@ ActiveAdmin.register ASCOR::Country do
   data_export_sidebar 'ASCORCountries', display_name: 'ASCOR Countries'
 
   index do
+    selectable_column
+    id_column
     column :name
     column 'Country ISO code', :iso
     column :region
@@ -24,10 +26,11 @@ ActiveAdmin.register ASCOR::Country do
     attributes_table do
       row :id
       row :name
-      row :iso, label: 'Country ISO code'
+      row 'Country ISO code', &:iso
       row :region
-      row :wb_lending_group, label: 'World Bank lending group'
-      row :fiscal_monitor_category, label: 'International Monetary Fund fiscal monitor category'
+      row 'World Bank lending group', &:wb_lending_group
+      row 'International Monetary Fund fiscal monitor category', &:fiscal_monitor_category
+      row 'Type of Party to the United Nations Framework Convention on Climate Change', &:type_of_party
     end
 
     active_admin_comments
@@ -43,6 +46,8 @@ ActiveAdmin.register ASCOR::Country do
       f.input :wb_lending_group, as: :select, collection: ASCOR::Country::LENDING_GROUPS, label: 'World Bank lending group'
       f.input :fiscal_monitor_category, as: :select, collection: ASCOR::Country::MONITOR_CATEGORIES,
                                         label: 'International Monetary Fund fiscal monitor category'
+      f.input :type_of_party, as: :select, collection: ASCOR::Country::TYPE_OF_PARTY,
+                              label: 'Type of Party to the United Nations Framework Convention on Climate Change'
     end
 
     f.actions
@@ -55,5 +60,6 @@ ActiveAdmin.register ASCOR::Country do
     column :region
     column 'World Bank lending group', humanize_name: false, &:wb_lending_group
     column 'International Monetary Fund fiscal monitor category', humanize_name: false, &:fiscal_monitor_category
+    column 'Type of Party to the United Nations Framework Convention on Climate Change', humanize_name: false, &:type_of_party
   end
 end

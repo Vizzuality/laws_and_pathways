@@ -19,6 +19,10 @@ class ASCOR::Country < ApplicationRecord
     'Emerging market economies',
     'Low-income developing countries'
   ].freeze
+  TYPE_OF_PARTY = [
+    'Annex I',
+    'Non-Annex I'
+  ].freeze
 
   friendly_id :name, use: [:slugged, :history], routes: :default
 
@@ -31,6 +35,7 @@ class ASCOR::Country < ApplicationRecord
   validates :region, inclusion: {in: REGIONS}, allow_nil: true
   validates :wb_lending_group, inclusion: {in: LENDING_GROUPS}, allow_nil: true
   validates :fiscal_monitor_category, inclusion: {in: MONITOR_CATEGORIES}, allow_nil: true
+  validates :type_of_party, inclusion: {in: TYPE_OF_PARTY}, allow_nil: true
 
   def path
     Rails.application.routes.url_helpers.tpi_ascor_path slug

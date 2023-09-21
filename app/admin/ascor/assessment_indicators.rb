@@ -19,6 +19,7 @@ ActiveAdmin.register ASCOR::AssessmentIndicator do
       row :code
       row :indicator_type
       row :text
+      row :units_or_response_type
       row :created_at
       row :updated_at
     end
@@ -33,6 +34,7 @@ ActiveAdmin.register ASCOR::AssessmentIndicator do
       f.input :indicator_type, as: :select, collection: ASCOR::AssessmentIndicator::INDICATOR_TYPES
       f.input :code
       f.input :text
+      f.input :units_or_response_type
     end
 
     f.actions
@@ -51,5 +53,6 @@ ActiveAdmin.register ASCOR::AssessmentIndicator do
     column :type, &:indicator_type
     column :code
     column :text
+    column :units_or_response_type
   end
 end

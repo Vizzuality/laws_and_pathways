@@ -1,26 +1,26 @@
-Id,Name,Country ISO code,Region,World Bank lending group,International Monetary Fund fiscal monitor category
-,United States,USA,North America,High-income economies,Advanced economies
-,Japan,JPN,Asia,High-income economies,Advanced economies
-,France,FRA,Europe,High-income economies,Advanced economies
-,Italy,ITA,Europe,High-income economies,Advanced economies
-,Egypt,EGY,Africa,Lower-middle-income economies,Emerging market economies
-,Uruguay,URY,Latin America and Caribbean,High-income economies,Emerging market economies
-,Saudi Arabia,SAU,Asia,High-income economies,Emerging market economies
-,Australia,AUS,Oceania,High-income economies,Advanced economies
-,Mexico,MEX,Latin America and Caribbean,Upper-middle-income economies,Emerging market economies
-,China,CHN,Asia,Upper-middle-income economies,Emerging market economies
-,Poland,POL,Europe,High-income economies,Emerging market economies
-,Indonesia,IDN,Asia,Lower-middle-income economies,Emerging market economies
-,Kazakhstan,KAZ,Asia,Upper-middle-income economies,Emerging market economies
-,Canada,CAN,North America,High-income economies,Advanced economies
-,Thailand,THA,Asia,Upper-middle-income economies,Emerging market economies
-,Chile,CHL,Latin America and Caribbean,High-income economies,Emerging market economies
-,South Africa,ZAF,Africa,Upper-middle-income economies,Emerging market economies
-,Brazil,BRA,Latin America and Caribbean,Upper-middle-income economies,Emerging market economies
-,Kenya,KEN,Africa,Lower-middle-income economies,Low-income developing countries
-,Morocco,MAR,Africa,Lower-middle-income economies,Emerging market economies
-,Germany,DEU,Europe,High-income economies,Advanced economies
-,United Kingdom,GBR,Europe,High-income economies,Advanced economies
-,India,IND,Asia,Lower-middle-income economies,Emerging market economies
-,Barbados,BRB,Latin America and Caribbean,High-income economies,Emerging market economies
-,Bangladesh,BGD,Asia,Lower-middle-income economies,Low-income developing countries
+Id,Name,Country ISO code,Region,World Bank lending group,International Monetary Fund fiscal monitor category,Type of Party to the United Nations Framework Convention on Climate Change
+,United States,USA,North America,High-income economies,Advanced economies,Annex I
+,Japan,JPN,Asia,High-income economies,Advanced economies,Annex I
+,France,FRA,Europe,High-income economies,Advanced economies,Annex I
+,Italy,ITA,Europe,High-income economies,Advanced economies,Annex I
+,Egypt,EGY,Africa,Lower-middle-income economies,Emerging market economies,Non-Annex I
+,Uruguay,URY,Latin America and Caribbean,High-income economies,Emerging market economies,Non-Annex I
+,Saudi Arabia,SAU,Asia,High-income economies,Emerging market economies,Non-Annex I
+,Australia,AUS,Oceania,High-income economies,Advanced economies,Annex I
+,Mexico,MEX,Latin America and Caribbean,Upper-middle-income economies,Emerging market economies,Non-Annex I
+,China,CHN,Asia,Upper-middle-income economies,Emerging market economies,Non-Annex I
+,Poland,POL,Europe,High-income economies,Emerging market economies,Annex I
+,Indonesia,IDN,Asia,Lower-middle-income economies,Emerging market economies,Non-Annex I
+,Kazakhstan,KAZ,Asia,Upper-middle-income economies,Emerging market economies,Non-Annex I
+,Canada,CAN,North America,High-income economies,Advanced economies,Annex I
+,Thailand,THA,Asia,Upper-middle-income economies,Emerging market economies,Non-Annex I
+,Chile,CHL,Latin America and Caribbean,High-income economies,Emerging market economies,Non-Annex I
+,South Africa,ZAF,Africa,Upper-middle-income economies,Emerging market economies,Non-Annex I
+,Brazil,BRA,Latin America and Caribbean,Upper-middle-income economies,Emerging market economies,Non-Annex I
+,Kenya,KEN,Africa,Lower-middle-income economies,Low-income developing countries,Non-Annex I
+,Morocco,MAR,Africa,Lower-middle-income economies,Emerging market economies,Non-Annex I
+,Germany,DEU,Europe,High-income economies,Advanced economies,Annex I
+,United Kingdom,GBR,Europe,High-income economies,Advanced economies,Annex I
+,India,IND,Asia,Lower-middle-income economies,Emerging market economies,Non-Annex I
+,Barbados,BRB,Latin America and Caribbean,High-income economies,Emerging market economies,Non-Annex I
+,Bangladesh,BGD,Asia,Lower-middle-income economies,Low-income developing countries,Non-Annex I

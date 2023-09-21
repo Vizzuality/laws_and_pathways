@@ -1,6 +1,8 @@
 class ASCOR::EmissionsBoundary
-  VALUES = %w[
-    Production
-    Consumption
+  VALUES = [
+    'Production - excluding LULUCF',
+    'Production - only LULUCF',
+    'Consumption - excluding LULUCF',
+    'Consumption - only LULUCF'
   ].freeze
 end

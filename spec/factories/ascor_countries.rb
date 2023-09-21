@@ -5,5 +5,6 @@ FactoryBot.define do
     region { 'North America' }
     wb_lending_group { 'High-income economies' }
     fiscal_monitor_category { 'Advanced economies' }
+    type_of_party { 'Annex I' }
   end
 end

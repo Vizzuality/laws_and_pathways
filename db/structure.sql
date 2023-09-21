@@ -320,7 +320,8 @@ CREATE TABLE public.ascor_assessment_indicators (
     code character varying,
     text text,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    units_or_response_type character varying
 );
 
 
@@ -352,11 +353,10 @@ CREATE TABLE public.ascor_assessment_results (
     assessment_id bigint NOT NULL,
     indicator_id bigint NOT NULL,
     answer character varying,
-    source_name character varying,
-    source_date character varying,
-    source_link character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    source character varying,
+    year integer
 );
 
 
@@ -388,10 +388,9 @@ CREATE TABLE public.ascor_assessments (
     country_id bigint NOT NULL,
     assessment_date date,
     publication_date date,
-    research_notes text,
-    further_information text,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    notes text
 );
 
 
@@ -424,7 +423,6 @@ CREATE TABLE public.ascor_benchmarks (
     publication_date date,
     emissions_metric character varying,
     emissions_boundary character varying,
-    land_use character varying,
     units character varying,
     benchmark_type character varying,
     emissions jsonb DEFAULT '{}'::jsonb,
@@ -465,7 +463,8 @@ CREATE TABLE public.ascor_countries (
     wb_lending_group character varying,
     fiscal_monitor_category character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    type_of_party character varying
 );
 
 
@@ -497,17 +496,21 @@ CREATE TABLE public.ascor_pathways (
     country_id bigint NOT NULL,
     emissions_metric character varying,
     emissions_boundary character varying,
-    land_use character varying,
     units character varying,
     assessment_date date,
     publication_date date,
-    last_reported_year integer,
+    last_historical_year integer,
     trend_1_year character varying,
     trend_3_year character varying,
     trend_5_year character varying,
     emissions jsonb DEFAULT '{}'::jsonb,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    trend_source character varying,
+    trend_year integer,
+    recent_emission_level double precision,
+    recent_emission_source character varying,
+    recent_emission_year integer
 );
 
 
@@ -4151,6 +4154,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230914065509'),
 ('20230914100201'),
 ('20230915063557'),
-('20230915064402');
+('20230915064402'),
+('20230920083300');
 
 

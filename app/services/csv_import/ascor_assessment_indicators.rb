@@ -9,6 +9,7 @@ module CSVImport
         indicator.indicator_type = row[:type].downcase
         indicator.code = row[:code]
         indicator.text = row[:text]
+        indicator.units_or_response_type = row[:units_or_response_type] if row.header?(:units_or_response_type)
 
         was_new_record = indicator.new_record?
         any_changes = indicator.changed?

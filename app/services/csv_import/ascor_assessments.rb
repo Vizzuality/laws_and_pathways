@@ -9,8 +9,7 @@ module CSVImport
         assessment.country = countries[row[:country]].first if row.header?(:country)
         assessment.assessment_date = assessment_date(row) if row.header?(:assessment_date)
         assessment.publication_date = publication_date(row) if row.header?(:publication_date)
-        assessment.research_notes = row[:research_notes] if row.header?(:research_notes)
-        assessment.further_information = row[:box_for_further_information] if row.header?(:box_for_further_information)
+        assessment.notes = row[:notes] if row.header?(:notes)
 
         was_new_record = assessment.new_record?
 
@@ -49,9 +48,8 @@ module CSVImport
         value_key = "#{indicator.indicator_type}_#{indicator.code.underscore}".to_sym
         result = ASCOR::AssessmentResult.find_or_initialize_by(assessment: assessment, indicator: indicator)
         result.answer = row[value_key] if row.header?(value_key)
-        [:source_name, :source_date, :source_link].each do |attr|
-          key = "#{attr}_#{indicator.code.underscore}".to_sym
-          result.public_send("#{attr}=", row[key]) if row.header?(key)
+        [:source, :year].each do |attr|
+          result.public_send("#{attr}=", row["#{attr}_#{value_key}".to_sym]) if row.header?("#{attr}_#{value_key}".to_sym)
         end
         result.save!
       end

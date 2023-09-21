@@ -1471,6 +1471,7 @@ describe 'CSVDataUpload (integration)' do
     expect(country.region).to eq('Asia')
     expect(country.wb_lending_group).to eq('High-income economies')
     expect(country.fiscal_monitor_category).to eq('Advanced economies')
+    expect(country.type_of_party).to eq('Annex I')
   end
 
   it 'import CSV file with ASCOR benchmarks data' do
@@ -1494,16 +1495,20 @@ describe 'CSVDataUpload (integration)' do
 
     expect(benchmark.publication_date).to eq(Date.new(2023, 12))
     expect(benchmark.emissions_metric).to eq('Absolute')
-    expect(benchmark.emissions_boundary).to eq('Production')
-    expect(benchmark.land_use).to eq('Total excluding LULUCF')
+    expect(benchmark.emissions_boundary).to eq('Production - excluding LULUCF')
     expect(benchmark.units).to eq('MtCO2e')
     expect(benchmark.benchmark_type).to eq('National 1.5C benchmark')
     expect(benchmark.emissions).to eq(
-      '2019' => 11.5,
-      '2020' => 11.5,
-      '2021' => 11.5,
-      '2022' => 11.5,
-      '2023' => 11.5
+      '2021' => 6220.0,
+      '2022' => 5845.0,
+      '2023' => 5470.0,
+      '2024' => 5095.0,
+      '2025' => 4720.0,
+      '2026' => 4345.0,
+      '2027' => 3970.0,
+      '2028' => 3595.0,
+      '2029' => 3219.0,
+      '2030' => 2844.0
     )
   end
 
@@ -1524,53 +1529,77 @@ describe 'CSVDataUpload (integration)' do
       custom_uploader: 'ASCORPathways'
     )
 
-    pathway = ASCOR::Pathway.joins(:country).find_by ascor_countries: {iso: 'JPN'}
+    pathway = ASCOR::Pathway.joins(:country).find_by ascor_countries: {iso: 'USA'}
 
     expect(pathway.publication_date).to eq(Date.new(2023, 12))
     expect(pathway.assessment_date).to eq(Date.new(2023, 10, 30))
-    expect(pathway.emissions_metric).to eq('Per capita emissions')
-    expect(pathway.emissions_boundary).to eq('Production')
-    expect(pathway.land_use).to eq('Total excluding LULUCF')
-    expect(pathway.units).to eq('tCO2e/capita')
+    expect(pathway.emissions_metric).to eq('Absolute')
+    expect(pathway.emissions_boundary).to eq('Production - excluding LULUCF')
+    expect(pathway.units).to eq('MtCO2e')
+    expect(pathway.trend_1_year).to eq('3.9%')
+    expect(pathway.trend_3_year).to eq('-2.3%')
+    expect(pathway.trend_5_year).to eq('-0.9%')
+    expect(pathway.trend_source).to eq('https://zenodo.org/record/7727475')
+    expect(pathway.trend_year).to eq(2021)
+    expect(pathway.recent_emission_level).to eq(6220.0)
+    expect(pathway.recent_emission_source).to eq('https://zenodo.org/record/7727475')
+    expect(pathway.recent_emission_year).to eq(2021)
     expect(pathway.emissions).to eq(
-      '2005' => 11.5,
-      '2006' => 11.5,
-      '2007' => 11.5,
-      '2008' => 11.5,
-      '2009' => 11.5,
-      '2010' => 11.5,
-      '2011' => 11.5,
-      '2012' => 11.5
+      '2006' => 7380.0,
+      '2007' => 7480.0,
+      '2008' => 7260.0,
+      '2009' => 6800.0,
+      '2010' => 7020.0,
+      '2011' => 6860.0,
+      '2012' => 6620.0,
+      '2013' => 6800.0,
+      '2014' => 6860.0,
+      '2015' => 6700.0,
+      '2016' => 6550.0,
+      '2017' => 6510.0,
+      '2018' => 6700.0,
+      '2019' => 6580.0,
+      '2020' => 5990.0,
+      '2021' => 6220.0,
+      '2022' => 5981.5,
+      '2023' => 5743.0,
+      '2024' => 5504.5,
+      '2025' => 5266.0,
+      '2026' => 5027.5,
+      '2027' => 4789.0,
+      '2028' => 4550.4,
+      '2029' => 4311.9,
+      '2030' => 4073.4
     )
-    expect(pathway.trend_1_year).to eq('+2%')
-    expect(pathway.trend_3_year).to eq('+4%')
-    expect(pathway.trend_5_year).to eq('0%')
   end
 
   it 'import CSV file with ASCOR assessment indicators data' do
     expect_data_upload_results(
       ASCOR::AssessmentIndicator,
       ascor_assessment_indicators_csv,
-      {new_records: 9, not_changed_records: 0, rows: 9, updated_records: 0},
+      {new_records: 7, not_changed_records: 0, rows: 7, updated_records: 0},
       custom_uploader: 'ASCORAssessmentIndicators'
     )
     # subsequent import should not create or update any record
     expect_data_upload_results(
       ASCOR::Benchmark,
       ascor_assessment_indicators_csv,
-      {new_records: 0, not_changed_records: 9, rows: 9, updated_records: 0},
+      {new_records: 0, not_changed_records: 7, rows: 7, updated_records: 0},
       custom_uploader: 'ASCORAssessmentIndicators'
     )
 
-    indicator = ASCOR::AssessmentIndicator.find_by code: 'EP'
-    expect(indicator.indicator_type).to eq('pillar')
-    expect(indicator.text).to eq('Emissions Pathways')
+    indicator = ASCOR::AssessmentIndicator.find_by code: 'EP.1'
+    expect(indicator.indicator_type).to eq('area')
+    expect(indicator.text).to eq('Emissions Trends')
+    expect(indicator.units_or_response_type).to eq('Yes/No/Partial')
   end
 
   it 'import CSV file with ASCOR assessments data' do
     create :ascor_country, iso: 'JPN', name: 'Japan'
-    create :ascor_assessment_indicator, code: 'EP.2.a', indicator_type: 'indicator',
-                                        text: 'Has the country set a 2030 emission reduction target?'
+    create :ascor_assessment_indicator, code: 'EP.1.a', indicator_type: 'indicator',
+                                        text: 'Have the country’s emissions decreased in recent years?'
+    create :ascor_assessment_indicator, code: 'EP.1.a.i', indicator_type: 'metric',
+                                        text: "What is the country's most recent emissions level?"
 
     expect_data_upload_results(
       ASCOR::Assessment,
@@ -1586,17 +1615,19 @@ describe 'CSVDataUpload (integration)' do
       custom_uploader: 'ASCORAssessments'
     )
 
-    assessment = ASCOR::Assessment.joins(:country).find_by ascor_countries: {iso: 'USA'}
-    indicator = assessment.results.joins(:indicator).find_by ascor_assessment_indicators: {code: 'EP.2.a'}
+    assessment = ASCOR::Assessment.joins(:country).find_by ascor_countries: {iso: 'JPN'}
+    indicator_1 = assessment.results.joins(:indicator).find_by ascor_assessment_indicators: {code: 'EP.1.a'}
+    indicator_2 = assessment.results.joins(:indicator).find_by ascor_assessment_indicators: {code: 'EP.1.a.i'}
 
+    expect(assessment.notes).to be_nil
     expect(assessment.publication_date).to eq(Date.new(2023, 12))
     expect(assessment.assessment_date).to eq(Date.new(2023, 10, 30))
-    expect(assessment.research_notes).to be_nil
-    expect(assessment.further_information).to be_nil
-    expect(indicator.answer).to eq('Yes')
-    expect(indicator.source_name).to eq('NDC')
-    expect(indicator.source_date).to eq('2021')
-    expect(indicator.source_link).to eq('https://unfccc.int/sites/default/files/NDC/2022-06/United%20States%20NDC%20April%2021%202021%20Final.pdf')
+    expect(indicator_1.answer).to eq('Yes')
+    expect(indicator_2.answer).to be_nil
+    expect(indicator_1.source).to eq('https://zenodo.org/record/7727476')
+    expect(indicator_2.source).to be_nil
+    expect(indicator_1.year).to be_nil
+    expect(indicator_2.year).to eq(2010)
   end
 
   def expect_data_upload_results(uploaded_resource_klass, csv, expected_details, expected_success: true, custom_uploader: nil)
