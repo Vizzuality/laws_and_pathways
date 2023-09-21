@@ -3,11 +3,10 @@ FactoryBot.define do
     country factory: :ascor_country
     assessment_date { 1.year.ago }
     publication_date { 11.months.ago }
-    last_reported_year { 2010 }
+    last_historical_year { 2010 }
 
     emissions_metric { 'Absolute' }
-    emissions_boundary { 'Production' }
-    land_use { 'Total excluding LULUCF' }
+    emissions_boundary { 'Production - excluding LULUCF' }
     units { 'MtCO2e' }
     emissions do
       {
@@ -22,5 +21,10 @@ FactoryBot.define do
     trend_1_year { '0%' }
     trend_3_year { '+6%' }
     trend_5_year { '+8%' }
+    trend_source { 'https://zenodo.org/record/7727481' }
+    trend_year { 2018 }
+    recent_emission_level { 128 }
+    recent_emission_source { 'https://zenodo.org/record/7727481' }
+    recent_emission_year { 2018 }
   end
 end

@@ -356,7 +356,7 @@ CREATE TABLE public.ascor_assessment_results (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     source character varying,
-    year character varying
+    year integer
 );
 
 
@@ -496,17 +496,21 @@ CREATE TABLE public.ascor_pathways (
     country_id bigint NOT NULL,
     emissions_metric character varying,
     emissions_boundary character varying,
-    land_use character varying,
     units character varying,
     assessment_date date,
     publication_date date,
-    last_reported_year integer,
+    last_historical_year integer,
     trend_1_year character varying,
     trend_3_year character varying,
     trend_5_year character varying,
     emissions jsonb DEFAULT '{}'::jsonb,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    trend_source character varying,
+    trend_year integer,
+    recent_emission_level double precision,
+    recent_emission_source character varying,
+    recent_emission_year integer
 );
 
 

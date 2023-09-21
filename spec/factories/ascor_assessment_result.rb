@@ -4,6 +4,6 @@ FactoryBot.define do
     indicator factory: :ascor_assessment_indicator
     answer { 'Yes' }
     source { 'https://www.google.com' }
-    year { '2018' }
+    year { 2018 }
   end
 end

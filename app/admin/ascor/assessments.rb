@@ -15,7 +15,7 @@ ActiveAdmin.register ASCOR::Assessment do
   index do
     selectable_column
     id_column
-    column :country
+    column :country, sortable: 'ascor_countries.name'
     column :assessment_date
     column :publication_date
     column :notes

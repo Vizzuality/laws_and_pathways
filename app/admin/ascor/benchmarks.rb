@@ -16,7 +16,7 @@ ActiveAdmin.register ASCOR::Benchmark do
   index do
     selectable_column
     id_column
-    column :country
+    column :country, sortable: 'ascor_countries.name'
     column :emissions_metric
     column :emissions_boundary
     column :units

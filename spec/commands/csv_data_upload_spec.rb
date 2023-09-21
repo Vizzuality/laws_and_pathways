@@ -1529,27 +1529,48 @@ describe 'CSVDataUpload (integration)' do
       custom_uploader: 'ASCORPathways'
     )
 
-    pathway = ASCOR::Pathway.joins(:country).find_by ascor_countries: {iso: 'JPN'}
+    pathway = ASCOR::Pathway.joins(:country).find_by ascor_countries: {iso: 'USA'}
 
     expect(pathway.publication_date).to eq(Date.new(2023, 12))
     expect(pathway.assessment_date).to eq(Date.new(2023, 10, 30))
-    expect(pathway.emissions_metric).to eq('Per capita emissions')
-    expect(pathway.emissions_boundary).to eq('Production')
-    expect(pathway.land_use).to eq('Total excluding LULUCF')
-    expect(pathway.units).to eq('tCO2e/capita')
+    expect(pathway.emissions_metric).to eq('Absolute')
+    expect(pathway.emissions_boundary).to eq('Production - excluding LULUCF')
+    expect(pathway.units).to eq('MtCO2e')
+    expect(pathway.trend_1_year).to eq('3.9%')
+    expect(pathway.trend_3_year).to eq('-2.3%')
+    expect(pathway.trend_5_year).to eq('-0.9%')
+    expect(pathway.trend_source).to eq('https://zenodo.org/record/7727475')
+    expect(pathway.trend_year).to eq(2021)
+    expect(pathway.recent_emission_level).to eq(6220.0)
+    expect(pathway.recent_emission_source).to eq('https://zenodo.org/record/7727475')
+    expect(pathway.recent_emission_year).to eq(2021)
     expect(pathway.emissions).to eq(
-      '2005' => 11.5,
-      '2006' => 11.5,
-      '2007' => 11.5,
-      '2008' => 11.5,
-      '2009' => 11.5,
-      '2010' => 11.5,
-      '2011' => 11.5,
-      '2012' => 11.5
+      '2006' => 7380.0,
+      '2007' => 7480.0,
+      '2008' => 7260.0,
+      '2009' => 6800.0,
+      '2010' => 7020.0,
+      '2011' => 6860.0,
+      '2012' => 6620.0,
+      '2013' => 6800.0,
+      '2014' => 6860.0,
+      '2015' => 6700.0,
+      '2016' => 6550.0,
+      '2017' => 6510.0,
+      '2018' => 6700.0,
+      '2019' => 6580.0,
+      '2020' => 5990.0,
+      '2021' => 6220.0,
+      '2022' => 5981.5,
+      '2023' => 5743.0,
+      '2024' => 5504.5,
+      '2025' => 5266.0,
+      '2026' => 5027.5,
+      '2027' => 4789.0,
+      '2028' => 4550.4,
+      '2029' => 4311.9,
+      '2030' => 4073.4
     )
-    expect(pathway.trend_1_year).to eq('+2%')
-    expect(pathway.trend_3_year).to eq('+4%')
-    expect(pathway.trend_5_year).to eq('0%')
   end
 
   it 'import CSV file with ASCOR assessment indicators data' do
@@ -1606,7 +1627,7 @@ describe 'CSVDataUpload (integration)' do
     expect(indicator_1.source).to eq('https://zenodo.org/record/7727476')
     expect(indicator_2.source).to be_nil
     expect(indicator_1.year).to be_nil
-    expect(indicator_2.year).to eq('2010')
+    expect(indicator_2.year).to eq(2010)
   end
 
   def expect_data_upload_results(uploaded_resource_klass, csv, expected_details, expected_success: true, custom_uploader: nil)

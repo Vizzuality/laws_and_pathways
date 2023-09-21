@@ -26,11 +26,11 @@ ActiveAdmin.register ASCOR::Country do
     attributes_table do
       row :id
       row :name
-      row :iso, label: 'Country ISO code'
+      row 'Country ISO code', &:iso
       row :region
-      row :wb_lending_group, label: 'World Bank lending group'
-      row :fiscal_monitor_category, label: 'International Monetary Fund fiscal monitor category'
-      row :type_of_party, label: 'Type of Party to the United Nations Framework Convention on Climate Change'
+      row 'World Bank lending group', &:wb_lending_group
+      row 'International Monetary Fund fiscal monitor category', &:fiscal_monitor_category
+      row 'Type of Party to the United Nations Framework Convention on Climate Change', &:type_of_party
     end
 
     active_admin_comments

@@ -5,7 +5,7 @@ module CSVImport
 
       def parse_emissions(row, thousands_separator: '')
         row.headers.grep(EMISSION_YEAR_PATTERN).reduce({}) do |acc, year|
-          next acc unless row[year].present?
+          next acc if row[year].blank? || row[year] == 'NA'
 
           acc.merge(year.to_s.to_i => string_to_float(row[year], thousands_separator: thousands_separator))
         end
