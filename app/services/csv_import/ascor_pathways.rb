@@ -18,7 +18,9 @@ module CSVImport
         pathway.trend_5_year = row[:metric_ep1aii_5year] if row.header?(:metric_ep1aii_5year)
         pathway.trend_source = row[:source_metric_ep1aii] if row.header?(:source_metric_ep1aii)
         pathway.trend_year = row[:year_metric_ep1aii] if row.header?(:year_metric_ep1aii)
-        pathway.recent_emission_level = string_to_float(row[:metric_ep1ai]) if row.header?(:metric_ep1ai)
+        if row.header?(:metric_ep1ai)
+          pathway.recent_emission_level = string_to_float(row[:metric_ep1ai], thousands_separator: ',')
+        end
         pathway.recent_emission_source = row[:source_metric_ep1ai] if row.header?(:source_metric_ep1ai)
         pathway.recent_emission_year = row[:year_metric_ep1ai] if row.header?(:year_metric_ep1ai)
         pathway.emissions = parse_emissions(row, thousands_separator: ',') if emission_headers?(row)

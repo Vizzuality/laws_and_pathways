@@ -1541,7 +1541,7 @@ describe 'CSVDataUpload (integration)' do
     expect(pathway.trend_5_year).to eq('-0.9%')
     expect(pathway.trend_source).to eq('https://zenodo.org/record/7727475')
     expect(pathway.trend_year).to eq(2021)
-    expect(pathway.recent_emission_level).to eq(6220.0)
+    expect(pathway.recent_emission_level).to eq(-792.3)
     expect(pathway.recent_emission_source).to eq('https://zenodo.org/record/7727475')
     expect(pathway.recent_emission_year).to eq(2021)
     expect(pathway.emissions).to eq(

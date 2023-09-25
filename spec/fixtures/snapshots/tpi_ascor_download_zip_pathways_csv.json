@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "12",
+    "Country": "United States",
+    "Emissions metric": "Absolute",
+    "Emissions boundary": "Production - excluding LULUCF",
+    "Units": "MtCO2e",
+    "Assessment date": "10/09/2021",
+    "Publication date": "01/01/2022",
+    "Last historical year": "2010",
+    "metric EP1.a.i": "128.0",
+    "source metric EP1.a.i": "https://zenodo.org/record/7727481",
+    "year metric EP1.a.i": "2018",
+    "metric EP1.a.ii 1-year": "0%",
+    "metric EP1.a.ii 3-year": "+6%",
+    "metric EP1.a.ii 5-year": "+8%",
+    "source metric EP1.a.ii": "https://zenodo.org/record/7727481",
+    "year metric EP1.a.ii": "2018",
+    "2013": "121",
+    "2014": "124",
+    "2015": "125",
+    "2016": "120",
+    "2017": "125",
+    "2018": "128"
+  }
+]
