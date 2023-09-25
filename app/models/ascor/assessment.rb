@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: ascor_assessments
+#
+#  id               :bigint           not null, primary key
+#  country_id       :bigint           not null
+#  assessment_date  :date
+#  publication_date :date
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  notes            :text
+#
 class ASCOR::Assessment < ApplicationRecord
   belongs_to :country, class_name: 'ASCOR::Country', foreign_key: :country_id
 

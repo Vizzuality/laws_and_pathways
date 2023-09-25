@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: ascor_assessment_indicators
+#
+#  id                     :bigint           not null, primary key
+#  indicator_type         :string
+#  code                   :string
+#  text                   :text
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  units_or_response_type :string
+#
 require 'rails_helper'
 
 RSpec.describe ASCOR::AssessmentIndicator, type: :model do

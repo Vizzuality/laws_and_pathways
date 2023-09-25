@@ -18,7 +18,7 @@ module CSVImport
       def string_to_float(string, thousands_separator: ',')
         return string.to_f unless string.is_a?(String)
 
-        string.delete(thousands_separator).delete(' ').to_f
+        string.delete(thousands_separator).delete("\t").delete(' ').to_f
       end
     end
   end

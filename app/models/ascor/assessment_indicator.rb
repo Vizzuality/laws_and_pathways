@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: ascor_assessment_indicators
+#
+#  id                     :bigint           not null, primary key
+#  indicator_type         :string
+#  code                   :string
+#  text                   :text
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  units_or_response_type :string
+#
 class ASCOR::AssessmentIndicator < ApplicationRecord
   INDICATOR_TYPES = %w[pillar area indicator metric].freeze
   enum indicator_type: array_to_enum_hash(INDICATOR_TYPES)
