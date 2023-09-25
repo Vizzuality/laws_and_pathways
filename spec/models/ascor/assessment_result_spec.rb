@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: ascor_assessment_results
+#
+#  id            :bigint           not null, primary key
+#  assessment_id :bigint           not null
+#  indicator_id  :bigint           not null
+#  answer        :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  source        :string
+#  year          :integer
+#
 require 'rails_helper'
 
 RSpec.describe ASCOR::AssessmentResult, type: :model do

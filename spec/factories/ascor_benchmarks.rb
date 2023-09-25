@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: ascor_benchmarks
+#
+#  id                 :bigint           not null, primary key
+#  country_id         :bigint           not null
+#  publication_date   :date
+#  emissions_metric   :string
+#  emissions_boundary :string
+#  units              :string
+#  benchmark_type     :string
+#  emissions          :jsonb
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#
 FactoryBot.define do
   factory :ascor_benchmark, class: 'ASCOR::Benchmark' do
     country factory: :ascor_country

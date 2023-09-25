@@ -19,7 +19,9 @@ module TPI
     end
 
     def user_download
-      render json: {}
+      render zip: {
+        'ASCOR_indicators.xlsx' => Api::CSVToExcel.new(CSVExport::ASCOR::AssessmentIndicators.new.call).call
+      }, filename: "TPI ASCOR data - #{Time.now.strftime('%d%m%Y')}"
     end
 
     private

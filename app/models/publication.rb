@@ -13,6 +13,7 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  author            :string
+#  slug              :text             not null
 #
 
 class Publication < ApplicationRecord
