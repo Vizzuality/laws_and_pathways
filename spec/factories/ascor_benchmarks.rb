@@ -16,7 +16,7 @@
 FactoryBot.define do
   factory :ascor_benchmark, class: 'ASCOR::Benchmark' do
     country factory: :ascor_country
-    publication_date { '2021-09' }
+    publication_date { Date.new(2021, 9) }
     emissions_metric { 'Absolute' }
     emissions_boundary { 'Production - excluding LULUCF' }
     units { 'MtCO2e' }

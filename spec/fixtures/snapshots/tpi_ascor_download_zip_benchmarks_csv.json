@@ -1,0 +1,17 @@
+[
+  {
+    "Id": "4",
+    "Country": "United States",
+    "Publication date": "01/09/2021",
+    "Emissions metric": "Absolute",
+    "Emissions boundary": "Production - excluding LULUCF",
+    "Units": "MtCO2e",
+    "Benchmark type": "National 1.5C benchmark",
+    "2013": "121",
+    "2014": "124",
+    "2015": "125",
+    "2016": "120",
+    "2017": "125",
+    "2018": "128"
+  }
+]

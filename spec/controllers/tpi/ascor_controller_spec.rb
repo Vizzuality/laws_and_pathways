@@ -7,6 +7,7 @@ RSpec.describe TPI::ASCORController, type: :controller do
   let_it_be(:ascor_assessment_result) do
     create :ascor_assessment_result, assessment: ascor_assessment, indicator: ascor_assessment_indicator
   end
+  let_it_be(:ascor_benchmark) { create :ascor_benchmark, country: ascor_country }
 
   describe 'GET index' do
     subject { get :index }
@@ -48,11 +49,13 @@ RSpec.describe TPI::ASCORController, type: :controller do
         expect(entries_names).to include('ASCOR_countries.xlsx')
         expect(entries_names).to include('ASCOR_indicators.xlsx')
         expect(entries_names).to include('ASCOR_assessments_results.xlsx')
+        expect(entries_names).to include('ASCOR_benchmarks.xlsx')
 
         expect(entries_csv_json['ASCOR_countries.xlsx']).to match_snapshot('tpi_ascor_download_zip_countries_csv')
         expect(entries_csv_json['ASCOR_indicators.xlsx']).to match_snapshot('tpi_ascor_download_zip_indicators_csv')
         expect(entries_csv_json['ASCOR_assessments_results.xlsx'])
           .to match_snapshot('tpi_ascor_download_zip_assessment_indicators_csv')
+        expect(entries_csv_json['ASCOR_benchmarks.xlsx']).to match_snapshot('tpi_ascor_download_zip_benchmarks_csv')
       end
     end
   end

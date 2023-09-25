@@ -25,8 +25,8 @@
 FactoryBot.define do
   factory :ascor_pathway, class: 'ASCOR::Pathway' do
     country factory: :ascor_country
-    assessment_date { 1.year.ago }
-    publication_date { 11.months.ago }
+    assessment_date { Date.new(2021, 9, 10) }
+    publication_date { Date.new(2022, 1) }
     last_historical_year { 2010 }
 
     emissions_metric { 'Absolute' }

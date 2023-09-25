@@ -22,7 +22,8 @@ module TPI
       render zip: {
         'ASCOR_countries.xlsx' => Api::CSVToExcel.new(CSVExport::ASCOR::Countries.new.call).call,
         'ASCOR_indicators.xlsx' => Api::CSVToExcel.new(CSVExport::ASCOR::AssessmentIndicators.new.call).call,
-        'ASCOR_assessments_results.xlsx' => Api::CSVToExcel.new(CSVExport::ASCOR::Assessments.new.call).call
+        'ASCOR_assessments_results.xlsx' => Api::CSVToExcel.new(CSVExport::ASCOR::Assessments.new.call).call,
+        'ASCOR_benchmarks.xlsx' => Api::CSVToExcel.new(CSVExport::ASCOR::Benchmarks.new.call).call
       }, filename: "TPI ASCOR data - #{Time.now.strftime('%d%m%Y')}"
     end
 
