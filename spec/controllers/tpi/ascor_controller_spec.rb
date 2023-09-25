@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.describe TPI::ASCORController, type: :controller do
   let_it_be(:ascor_country) { create :ascor_country }
   let_it_be(:ascor_assessment_indicator) { create :ascor_assessment_indicator }
+  let_it_be(:ascor_assessment) { create :ascor_assessment, country: ascor_country }
+  let_it_be(:ascor_assessment_result) do
+    create :ascor_assessment_result, assessment: ascor_assessment, indicator: ascor_assessment_indicator
+  end
 
   describe 'GET index' do
     subject { get :index }
@@ -42,8 +46,11 @@ RSpec.describe TPI::ASCORController, type: :controller do
         end
 
         expect(entries_names).to include('ASCOR_indicators.xlsx')
+        expect(entries_names).to include('ASCOR_assessments_results.xlsx')
 
         expect(entries_csv_json['ASCOR_indicators.xlsx']).to match_snapshot('tpi_ascor_download_zip_indicators_csv')
+        expect(entries_csv_json['ASCOR_assessments_results.xlsx'])
+          .to match_snapshot('tpi_ascor_download_zip_assessment_indicators_csv')
       end
     end
   end
