@@ -21,7 +21,7 @@ const SINGLE_CELL_SVG_HEIGHT = 100 * SCALE;
 const tooltipDisclaimer = 'Market cap size';
 let tooltip = null;
 
-const BubbleChart = ({ results }) => {
+const BubbleChart = ({ results, disabled_bubbles_areas }) => {
   const tooltipEl = '<div id="bubble-chart-tooltip" class="bubble-tip" hidden style="position:absolute;"></div>';
   useEffect(() => {
     document.body.insertAdjacentHTML('beforeend', tooltipEl);
@@ -91,7 +91,7 @@ const BubbleChart = ({ results }) => {
           </div>
         </div>
       ))}
-      {Object.keys(parsedData).map((area, index) => createRow(parsedData[area], area, index + 1))}
+      {Object.keys(parsedData).map((area, index) => createRow(parsedData[area], area, index + 1, disabled_bubbles_areas))}
     </div>
   );
 };
@@ -139,13 +139,13 @@ const hideTooltip = () => {
   tooltip.setAttribute('hidden', true);
 };
 
-const createRow = (dataRow, area, index) => (
+const createRow = (dataRow, area, index, disabled_bubbles_areas) => (
   <React.Fragment key={Math.random()}>
     <div className="bubble-chart__row-link">
       {index}.&nbsp;{area}
     </div>
     {dataRow.map((el, i) => {
-      const companiesBubbles = el.map(result => ({
+      const companiesBubbles = disabled_bubbles_areas.includes(area) ? [] : el.map(result => ({
         value: COMPANIES_MARKET_CAP_GROUPS[result.market_cap_group],
         tooltipContent: {
           header: result.bank_name,
@@ -168,6 +168,10 @@ const createRow = (dataRow, area, index) => (
   </React.Fragment>
 );
 
+BubbleChart.defaultProps = {
+  disabled_bubbles_areas: []
+};
+
 BubbleChart.propTypes = {
   results: PropTypes.arrayOf(PropTypes.shape({
     area: PropTypes.string.isRequired,
@@ -176,6 +180,7 @@ BubbleChart.propTypes = {
     bank_id: PropTypes.number.isRequired,
     bank_name: PropTypes.string.isRequired,
     bank_path: PropTypes.string.isRequired
-  })).isRequired
+  })).isRequired,
+  disabled_bubbles_areas: PropTypes.arrayOf(PropTypes.string)
 };
 export default BubbleChart;

@@ -544,7 +544,8 @@ CREATE TABLE public.bank_assessment_indicators (
     text text NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    comment text
+    comment text,
+    disable_bubbles_at_chart boolean DEFAULT false
 );
 
 
@@ -4155,6 +4156,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230914100201'),
 ('20230915063557'),
 ('20230915064402'),
-('20230920083300');
+('20230920083300'),
+('20230926075145');
 
 

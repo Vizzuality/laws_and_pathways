@@ -58,7 +58,7 @@ DropdownIndicator.propTypes = {
   selectProps: PropTypes.object.isRequired
 };
 
-const CompaniesAccordion = ({ results }) => {
+const CompaniesAccordion = ({ results, disabled_bubbles_areas }) => {
   const areas = uniq(results.map(r => r.area));
   const selectOptions = areas.map((level) => ({label: level, value: level}));
   const [openItems, setOpenItems] = useState([]);
@@ -82,7 +82,9 @@ const CompaniesAccordion = ({ results }) => {
     }
   });
 
-  const activeArea = parsedData[activeOption.value];
+  const activeArea = disabled_bubbles_areas.includes(activeOption.value)
+    ? Array.from({ length: ranges.length }, () => [])
+    : parsedData[activeOption.value];
 
   function setOpenItemByIndex(index) {
     setOpenItems(openItems.includes(index) ? openItems.filter(i => i !== index) : [...openItems, index]);
@@ -113,21 +115,21 @@ const CompaniesAccordion = ({ results }) => {
             <div className="item-header" onClick={() => setOpenItemByIndex(i)}>
               <div className="item-title">
                 <div>Score Range</div>
-                <div>{activeArea[i].length} {activeArea[i].length === 1 ? 'company' : 'companies'}</div>
+                <div>{activeArea[i].length} {activeArea[i].length === 1 ? 'bank' : 'banks'}</div>
               </div>
               <div className="sector-subtitle">{range.min}-{range.max}%</div>
             </div>
             <div className="item-body">
               <hr />
-              {activeArea[i].length === 0 && <div className="no-companies">No companies</div>}
+              {activeArea[i].length === 0 && <div className="no-companies">No banks</div>}
               {activeArea[i].length > 0 && (
                 <ul className="companies-list">
-                  {sortBy(activeArea[i], 'bank_name').map((company, index) => (
+                  {sortBy(activeArea[i], 'bank_name').map((bank, index) => (
                     <li
                       key={`chart-companies-${index}`}
-                      onClick={() => { window.location.href = company.bank_path; }}
+                      onClick={() => { window.location.href = bank.bank_path; }}
                     >
-                      {company.bank_name}
+                      {bank.bank_name}
                     </li>
                   ))}
                 </ul>
@@ -141,6 +143,7 @@ const CompaniesAccordion = ({ results }) => {
 };
 
 CompaniesAccordion.defaultProps = {
+  disabled_bubbles_areas: []
 };
 
 CompaniesAccordion.propTypes = {
@@ -151,6 +154,7 @@ CompaniesAccordion.propTypes = {
     bank_id: PropTypes.number.isRequired,
     bank_name: PropTypes.string.isRequired,
     bank_path: PropTypes.string.isRequired
-  })).isRequired
+  })).isRequired,
+  disabled_bubbles_areas: PropTypes.arrayOf(PropTypes.string)
 };
 export default CompaniesAccordion;
