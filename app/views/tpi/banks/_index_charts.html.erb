@@ -1,9 +1,12 @@
-<%= react_component('charts/average-bank-score', { dataUrl: average_bank_score_chart_data_tpi_banks_path }) %>
+<%= react_component('charts/average-bank-score', {
+  dataUrl: average_bank_score_chart_data_tpi_banks_path,
+  disabled_areas: BankAssessmentIndicator.area.where(is_placeholder: true).map { |area| "#{area.number}. #{area.text}" }
+}) %>
 <%= react_component('charts/bank-bubble/Chart', {
   results: @results,
-  disabled_bubbles_areas: BankAssessmentIndicator.area.where(disable_bubbles_at_chart: true).pluck(:text)
+  disabled_bubbles_areas: BankAssessmentIndicator.area.where(is_placeholder: true).pluck(:text)
 }) %>
 <%= react_component('charts/bank-bubble/CompaniesAccordion', {
   results: @results,
-  disabled_bubbles_areas: BankAssessmentIndicator.area.where(disable_bubbles_at_chart: true).pluck(:text)
+  disabled_bubbles_areas: BankAssessmentIndicator.area.where(is_placeholder: true).pluck(:text)
 }) %>

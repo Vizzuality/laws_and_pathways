@@ -32,6 +32,8 @@ module CSVExport
               assessment.bank.sedol&.tr(',', ';')&.tr(' ', ''),
               assessment.assessment_date,
               results_columns.map do |column|
+                next 'N/A' if column.is_placeholder
+
                 all_results[[assessment.id, column.type, column.number]]&.first&.decorate&.value
               end,
               assessment.bank.latest_information&.squish
@@ -54,12 +56,13 @@ module CSVExport
 
       def results_columns
         @results_columns ||= begin
-          indicators = indicator_areas.map { |area| [area, child_indicators[area.number]] }.flatten
+          indicators = indicator_areas.values.flatten.map { |area| [area, child_indicators[area.number]] }.flatten
           indicators.map do |indicator|
             OpenStruct.new(
               type: indicator.indicator_type,
               number: indicator.number,
-              column_name: "#{indicator.indicator_type.humanize} #{indicator.number}"
+              column_name: "#{indicator.indicator_type.humanize} #{indicator.number}",
+              is_placeholder: indicator_areas[indicator.number.split('.').first]&.first&.is_placeholder
             )
           end
         end
@@ -69,6 +72,7 @@ module CSVExport
         @indicator_areas ||= BankAssessmentIndicator
           .where(indicator_type: 'area')
           .order('length(number), number')
+          .group_by(&:number)
       end
 
       def child_indicators

@@ -53,7 +53,11 @@
         </div>
         <% if area.percentage < 5 %>
           <div class="bank-assessment__area-value-value">
-            <%= number_with_precision(area.percentage, precision: 1, strip_insignificant_zeros: true) %>%
+            <% if area.indicator.is_placeholder %>
+              N/A
+            <% else %>
+              <%= number_with_precision(area.percentage, precision: 1, strip_insignificant_zeros: true) %>%
+            <% end %>
           </div>
         <% end %>
       </div>
@@ -83,12 +87,12 @@
             </div>
 
             <div class="bank-assessment__sub-area-content">
-              <%= render "indicators", assessment: assessment, indicators: assessment.child_indicators(sub_area, "indicator") %>
+              <%= render "indicators", assessment: assessment, area: area, indicators: assessment.child_indicators(sub_area, "indicator") %>
             </div>
           </div>
         <% end %>
       <% else %>
-        <%= render "indicators", assessment: assessment, indicators: assessment.child_indicators(area, "indicator") %>
+        <%= render "indicators", assessment: assessment, area: area, indicators: assessment.child_indicators(area, "indicator") %>
       <% end %>
     </div>
   </div>
