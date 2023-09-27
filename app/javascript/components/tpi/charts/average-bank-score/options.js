@@ -2,7 +2,7 @@ import merge from 'lodash/merge';
 
 import defaultOptions from '../default-options';
 
-export function getOptions(data, isMobile) {
+export function getOptions(data, isMobile, disabled_areas) {
   return merge({}, defaultOptions, {
     chart: {
       type: 'bar'
@@ -61,7 +61,7 @@ export function getOptions(data, isMobile) {
         dataLabels: {
           enabled: true,
           formatter() {
-            return `${Number(this.y).toFixed(1)}%`;
+            return (disabled_areas.includes(this.x)) ? 'N/A' : `${Number(this.y).toFixed(1)}%`;
           }
         },
         states: {

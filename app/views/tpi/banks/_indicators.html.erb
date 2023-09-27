@@ -6,7 +6,11 @@
       </h4>
       <div class="bank-assessment__indicator-value">
         <div>
-          <%= number_with_precision(indicator.percentage, precision: 1, strip_insignificant_zeros: true) %>%
+          <% if area.indicator.is_placeholder %>
+            N/A
+          <% else %>
+            <%= number_with_precision(indicator.percentage, precision: 1, strip_insignificant_zeros: true) %>%
+          <% end %>
         </div>
       </div>
     </div>
