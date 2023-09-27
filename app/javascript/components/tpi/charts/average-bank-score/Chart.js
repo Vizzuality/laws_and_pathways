@@ -10,10 +10,10 @@ import { getOptions } from './options';
 import { useChartData } from '../hooks';
 import { useDeviceInfo } from 'components/Responsive';
 
-function AverageBankScore({ dataUrl }) {
+function AverageBankScore({ dataUrl, disabled_areas }) {
   const { data, error, loading } = useChartData(dataUrl);
   const { isMobile } = useDeviceInfo();
-  const options = getOptions(data, isMobile);
+  const options = getOptions(data, isMobile, disabled_areas);
   const noData = !loading && data && data.length === 0;
 
   return (
@@ -38,8 +38,13 @@ function AverageBankScore({ dataUrl }) {
   );
 }
 
+AverageBankScore.defaultProps = {
+  disabled_areas: []
+};
+
 AverageBankScore.propTypes = {
-  dataUrl: PropTypes.string.isRequired
+  dataUrl: PropTypes.string.isRequired,
+  disabled_areas: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default AverageBankScore;

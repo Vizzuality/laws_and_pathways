@@ -12,7 +12,7 @@ ActiveAdmin.register BankAssessmentIndicator do
 
   data_export_sidebar 'BankAssessmentIndicators', display_name: 'Indicators'
 
-  permit_params :number, :indicator_type, :text, :comment, :disable_bubbles_at_chart
+  permit_params :number, :indicator_type, :text, :comment, :is_placeholder
 
   show do
     attributes_table do
@@ -21,7 +21,7 @@ ActiveAdmin.register BankAssessmentIndicator do
       row :indicator_type
       row :text
       row :comment
-      row :disable_bubbles_at_chart
+      row :is_placeholder
       row :created_at
       row :updated_at
     end
@@ -37,7 +37,7 @@ ActiveAdmin.register BankAssessmentIndicator do
       f.input :number
       f.input :text
       f.input :comment
-      f.input :disable_bubbles_at_chart
+      f.input :is_placeholder
     end
 
     f.actions
