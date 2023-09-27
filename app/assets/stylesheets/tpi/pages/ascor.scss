@@ -1,46 +1,116 @@
 .ascor-page {
-  .ascor-header {
-    min-height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    &__assessment-dropdown {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      color: white;
-
-      @include tablet {
-        flex-direction: row;
-        align-items: center;
-      }
-    }
-
-    a {
-      color: white;
-      margin-right: 20px;
-    }
-
-    @include until($desktop) {
-      padding: 0 0.75rem;
-      font-size: $size-7;
-      height: 60px;
-      font-family: $font-family-regular;
-    }
-  }
-
   .dropdown-selector-wrapper {
-    background-color: $blue;
+    position: relative;
+    background-color: $ascor-background-color;
 
     .dropdown-selector__container {
+      background-color: $ascor-background-color;
+
       @include desktop {
         padding: $container-top-padding $container-side-padding 40px $container-side-padding;
       }
     }
 
+    .dropdown-selector__container--active {
+      background-color: $white;
+    }
+
+    .dropdown-selector__wrapper {
+      background-color: $ascor-background-color;
+    }
+
+    .dropdown-selector__active-button {
+      background-color: $dark;
+    }
+
     @include desktop {
       height: 335px;
+    }
+
+    .left-icon {
+      background-image: image-url('tpi/ascor/circles_1.svg');
+      width: 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+      position: absolute;
+      background-position-y: 30px;
+    }
+
+    .right-icon {
+      background-image: image-url('tpi/ascor/circles_2.svg');
+      width: 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+      position: absolute;
+      background-position-x: 100%;
+    }
+
+    .bottom-icon {
+      background-image: image-url('tpi/ascor/logo.png');
+      width: 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+      position: absolute;
+      background-position: 50px 260px;
+    }
+
+    .ascor-header {
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      &.show-version {
+        justify-content: space-between;
+
+        @include tablet {
+          padding-left: 20px;
+        }
+
+        @include desktop {
+          padding-left: calc((960px - 608px)/2);
+        }
+
+        @include widescreen {
+          padding-left: calc((1152px - 608px)/2);
+        }
+      }
+
+      &__assessment-dropdown {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        color: white;
+
+        @include tablet {
+          flex-direction: row;
+          align-items: center;
+        }
+      }
+
+      .button {
+        background-color: $ascor-background-color;
+      }
+
+      .button:hover {
+        background-color: $dark;
+      }
+
+      a {
+        color: white;
+        margin-right: 20px;
+      }
+
+      .links {
+        padding-right: 20px;
+      }
+
+      @include until($desktop) {
+        padding: 0 0.75rem;
+        font-size: $size-7;
+        height: 60px;
+        font-family: $font-family-regular;
+      }
     }
   }
 

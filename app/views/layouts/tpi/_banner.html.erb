@@ -10,26 +10,7 @@
           />
         <% end %>
       </div>
-      <div class="column is-offset-3 partners__container">
-        <p class="partners__title">Hosted by:</p>
-
-        <div class="partners">
-          <a href="http://www.lse.ac.uk/">
-            <img
-              src="<%= asset_path 'tpi/partners/lse.png' %>"
-              alt="The London School of Economics and Political Sciences"
-              class="partners__lse"
-            />
-          </a>
-          <a href="http://www.lse.ac.uk/GranthamInstitute/">
-            <img
-              src="<%= asset_path 'tpi/partners/grantham.png' %>"
-              alt="Grantham Research Institute on Climate Change and the Environment"
-              class="partners__grantham"
-            />
-          </a>
-        </div>
-      </div>
+      <%= content_for?(:hosted_by) ? content_for(:hosted_by) : render('layouts/tpi/hosted_by') %>
     </div>
   </div>
 </div>

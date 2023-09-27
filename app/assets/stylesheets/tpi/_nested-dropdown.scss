@@ -111,4 +111,13 @@
       color: $white;
     }
   }
+
+  &--ascor:not(.nested-dropdown--open) {
+    background: $ascor-background-color;
+
+    .nested-dropdown__title {
+      border: 1px solid $white;
+      color: $white;
+    }
+  }
 }

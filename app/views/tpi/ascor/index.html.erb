@@ -1,19 +1,24 @@
 <% content_for :page_title, "ASCOR Tool - Transition Pathway Initiative" %>
+<% content_for :hosted_by do %><span></span><% end %>
 
 <div class="ascor-page">
   <div class="dropdown-selector-wrapper">
+    <div class="left-icon"></div>
+    <div class="right-icon"></div>
+    <div class="bottom-icon"></div>
+
     <!-- TODO: React component needs to be replaced!!! -->
     <%= react_component("BankDropdown", { banks: @countries_json, selectedOption: 'All countries' }) %>
 
     <div class="ascor-header container">
-      <div>
+      <div class="links">
         <% if @methodology_publication.present? %>
-          <a href="#methodology" class="link with-icon is-pulled-left">
+          <a href="#methodology" class="link with-icon">
             <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" class="is-hidden-touch" />
             Methodology
           </a>
         <% end %>
-        <a href="#publications" class="link with-icon is-pulled-left">
+        <a href="#publications" class="link with-icon">
           <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" class="is-hidden-touch" />
           Publications
         </a>
