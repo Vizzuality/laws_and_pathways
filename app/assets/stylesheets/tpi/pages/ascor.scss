@@ -114,6 +114,32 @@
     }
   }
 
+  .bubble-chart-header {
+    margin-bottom: 20px;
+
+    @include desktop {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &__assessment-dropdown {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+
+  .bubble-chart-description {
+    margin-bottom: 40px;
+    font-size: 14px;
+    line-height: 1.75;
+
+    @include desktop {
+      max-width: 60%;
+    }
+  }
+
   section {
     margin-top: 70px;
 
