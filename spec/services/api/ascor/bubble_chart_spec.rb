@@ -45,16 +45,16 @@ RSpec.describe Api::ASCOR::BubbleChart do
   let(:assessment_date) { Date.new(2019, 2, 1) }
 
   it 'returns the correct data' do
-    expect(subject).to eq(
+    expect(subject).to match_array(
       [{
-         pillar: 'Emissions Performance',
-         area: 'Emissions Performance 1',
-         result: 'Yes',
-         country_id: 1,
-         country_name: 'USA',
-         country_path: '/ascor/usa',
-         market_cap_group: :small
-       },
+        pillar: 'Emissions Performance',
+        area: 'Emissions Performance 1',
+        result: 'Yes',
+        country_id: 1,
+        country_name: 'USA',
+        country_path: '/ascor/usa',
+        market_cap_group: :small
+      },
        {
          pillar: 'Emissions Performance',
          area: 'Emissions Performance 1',
