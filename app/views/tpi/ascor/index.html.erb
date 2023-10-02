@@ -31,6 +31,37 @@
     </div>
   </div>
 
+  <!-- TODO: Finalise bubble chart section -->
+  <!-- All React components code (even mobile one) goes into tpi/ascor/bubble_chart partial -->
+  <section class="container">
+    <div class="bubble-chart-header">
+      <h2 class="is-size-4">
+        Lorem ipsum dolor sit amet consectetur.
+      </h2>
+
+      <div class="bubble-chart-header__assessment-dropdown">
+        <div class="caption">
+          Assessment Date:
+        </div>
+        <div class="date-dropdown">
+          <%= react_component('RemoteDropdown', {
+            name: 'assessment_date',
+            remote: true,
+            url: index_assessment_tpi_ascor_index_path,
+            data: @assessment_dates.map {|v| {label: v&.strftime('%d %B %Y'), value: v}},
+            selected: @assessment_date
+          }) %>
+        </div>
+      </div>
+    </div>
+    <div class="bubble-chart-description">
+      Lorem ipsum dolor sit amet consectetur. Viverra vestibulum eget vitae justo morbi eget.
+    </div>
+    <div id="bubble-chart">
+      <%= render 'tpi/ascor/bubble_chart' %>
+    </div>
+  </section>
+
   <% if @methodology_publication.present? %>
     <section id="methodology" class="container">
       <div class="columns">

@@ -56,6 +56,7 @@ Rails.application.routes.draw do
 
       resources :ascor, only: [:show, :index] do
         collection do
+          get :index_assessment
           get :user_download
         end
       end

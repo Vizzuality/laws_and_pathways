@@ -16,4 +16,7 @@ class ASCOR::AssessmentResult < ApplicationRecord
   belongs_to :indicator, class_name: 'ASCOR::AssessmentIndicator', foreign_key: :indicator_id
 
   validates_uniqueness_of :indicator_id, scope: :assessment_id
+
+  scope :of_type, ->(type) { includes(:indicator).where(ascor_assessment_indicators: {indicator_type: type}) }
+  scope :by_date, ->(date) { includes(:assessment).where(ascor_assessments: {assessment_date: date}) }
 end
