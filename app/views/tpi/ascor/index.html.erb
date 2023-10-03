@@ -62,6 +62,37 @@
     </div>
   </section>
 
+  <!-- TODO: Finalise emissions chart section -->
+  <!-- All React component code goes into tpi/ascor/emissions_chart partial -->
+  <section class="container">
+    <div class="emissions-chart-header">
+      <h2 class="is-size-4">
+        Country emission pathways
+      </h2>
+
+      <div class="emissions-chart-header__assessment-dropdown">
+        <div class="caption">
+          Assessment Date:
+        </div>
+        <div class="date-dropdown">
+          <%= react_component('RemoteDropdown', {
+            name: 'emissions_assessment_date',
+            remote: true,
+            url: index_emissions_assessment_tpi_ascor_index_path,
+            data: @assessment_dates.map {|v| {label: v&.strftime('%d %B %Y'), value: v}},
+            selected: @emissions_assessment_date
+          }) %>
+        </div>
+      </div>
+    </div>
+    <div class="emissions-chart-description">
+      Country emission pathways are assessed in several ways to account for a variety of factors and uncertainties. The emission metrics considered include the following options: production and consumption-based emissions; exclusion of LULUCF emissions and LULUCF emissions alone; and emissions on an absolute and intensity basis (per capita and per PPP-adjusted GDP). Targeted future pathways are included only for absolute production-based emissions excluding LULUCF as this is the basis on which 2030 targets are assessed. Note that pathways end in 2030 because long-term net zero targets are often stated on a different emission boundary from the one considered in the 2030 target assessments (e.g. including only CO₂ emissions rather than all Kyoto greenhouse gases).
+    </div>
+    <div id="emissions-chart">
+      <%= render 'tpi/ascor/emissions_chart' %>
+    </div>
+  </section>
+
   <% if @methodology_publication.present? %>
     <section id="methodology" class="container">
       <div class="columns">

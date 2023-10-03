@@ -57,6 +57,8 @@ Rails.application.routes.draw do
       resources :ascor, only: [:show, :index] do
         collection do
           get :index_assessment
+          get :index_emissions_assessment
+          get :emissions_chart_data
           get :user_download
         end
       end

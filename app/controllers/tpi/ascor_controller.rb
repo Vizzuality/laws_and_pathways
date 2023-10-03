@@ -3,6 +3,7 @@ module TPI
     before_action :fetch_ascor_countries, only: [:index, :show]
     before_action :fetch_ascor_country, only: [:show]
     before_action :fetch_assessment_date, only: [:index, :show, :index_assessment]
+    before_action :fetch_emissions_assessment_date, only: [:index]
     before_action :fetch_ascor_assessment_results, only: [:index, :index_assessment]
 
     def index
@@ -21,6 +22,19 @@ module TPI
     end
 
     def index_assessment; end
+
+    def index_emissions_assessment; end
+
+    def emissions_chart_data
+      data = ::Api::ASCOR::EmissionsChart.new(
+        @emissions_assessment_date,
+        params[:emissions_metric],
+        params[:emissions_boundary],
+        params[:country_ids]
+      ).call
+
+      render json: data.chart_json
+    end
 
     def user_download
       render zip: {
@@ -45,6 +59,10 @@ module TPI
 
     def fetch_assessment_date
       @assessment_date = params[:assessment_date] || ASCOR::Assessment.maximum(:assessment_date)
+    end
+
+    def fetch_emissions_assessment_date
+      @emissions_assessment_date = params[:emissions_assessment_date] || ASCOR::Assessment.maximum(:assessment_date)
     end
 
     def fetch_ascor_assessment_results

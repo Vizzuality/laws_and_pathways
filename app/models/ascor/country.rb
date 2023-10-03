@@ -38,6 +38,7 @@ class ASCOR::Country < ApplicationRecord
     'Annex I',
     'Non-Annex I'
   ].freeze
+  DEFAULT_COUNTRIES = %w[USA CAN GBR FRA DEU ITA JPN RUS].freeze
 
   friendly_id :name, use: [:slugged, :history], routes: :default
 
