@@ -1,3 +1,6 @@
 <!-- TODO: React components need to be replaced!!! -->
-<%#= react_component('charts/bank-bubble/Chart', { results: @ascor_assessment_results }) %>
-<%#= react_component('charts/bank-bubble/CompaniesAccordion', { results: @ascor_assessment_results }) %>
+<%#= react_component('charts/country-bubble/Chart', { results: @ascor_assessment_results }) %>
+<%= react_component('charts/country-bubble/Chart', {
+  results: @ascor_assessment_results,
+  # disabled_bubbles_areas: BankAssessmentIndicator.area.where(is_placeholder: true).pluck(:text)
+}) %>
