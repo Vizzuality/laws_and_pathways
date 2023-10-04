@@ -1,8 +1,8 @@
 module TPI
   class ASCORController < TPIController
     before_action :fetch_ascor_countries, only: [:index, :show]
-    before_action :fetch_ascor_country, only: [:show]
-    before_action :fetch_assessment_date, only: [:index, :show, :index_assessment]
+    before_action :fetch_ascor_country, only: [:show, :show_assessment]
+    before_action :fetch_assessment_date, only: [:index, :show, :index_assessment, :show_assessment]
     before_action :fetch_emissions_assessment_date, only: [:index]
     before_action :fetch_ascor_assessment_results, only: [:index, :index_assessment]
 
@@ -18,12 +18,15 @@ module TPI
     end
 
     def show
+      @assessment = ASCOR::Assessment.find_by country: @country, assessment_date: @assessment_date
       fixed_navbar("ASCOR Country #{@country.name}", admin_ascor_country_path(@country.id))
     end
 
     def index_assessment; end
 
     def index_emissions_assessment; end
+
+    def show_assessment; end
 
     def emissions_chart_data
       data = ::Api::ASCOR::EmissionsChart.new(

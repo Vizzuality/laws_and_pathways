@@ -1,0 +1,53 @@
+<% pillars = ASCOR::AssessmentIndicator.pillar.order(:id) %>
+<% areas = ASCOR::AssessmentIndicator.area.order(:id) %>
+<% indicators = ASCOR::AssessmentIndicator.indicator.order(:id) %>
+<% metrics = ASCOR::AssessmentIndicator.metric.order(:id) %>
+
+<%= react_component('AscorQuestionLegend') %>
+<% pillars.each_with_index do |pillar, i| %>
+  <div class="country-assessment__pillar">
+    <div class="country-assessment__pillar__subtitle"><%= "Pillar #{i + 1}" %></div>
+    <h2 class="country-assessment__pillar__title"><%= pillar.text %></h2>
+
+    <% areas.select { |a| a.code.include? pillar.code }.each do |area| %>
+      <input id="<%= dom_id(area) %>" type="checkbox" class="toggle" />
+      <div class="country-assessment__area-block">
+        <div class="country-assessment__area">
+          <div class="country-assessment__area__title">
+            <%= "Area #{area.code}" %>
+            <strong><%= area.text %></strong>
+          </div>
+          <label class="country-assessment__more" for="<%= dom_id(area) %>"></label>
+        </div>
+
+        <div class="country-assessment__indicators" for="<%= dom_id(area) %>">
+          <% indicators.select { |i| i.code.include? area.code }.each do |indicator| %>
+            <div class="country-assessment__indicator">
+              <div class="country-assessment__indicator__title">
+                <%= "#{indicator.code.split('.').last}. #{indicator.text}" %>
+              </div>
+
+              <% metrics.select { |m| m.code.include? indicator.code }.each do |metric| %>
+                <div class="country-assessment__metric">
+                  <div class="country-assessment__metric__title">
+                    <%= "#{metric.code.split('.').last}. #{metric.text}" %>
+                  </div>
+                  <% value = @assessment.results.find { |r| r.indicator_id == metric.id }.answer %>
+                  <% if metric.code == 'EP.1.a.i' %>
+                    <!-- TODO: Custom dynamic indicator -->
+                  <% elsif metric.code == 'EP.1.a.ii' %>
+                    <!-- TODO: Custom dynamic indicator -->
+                  <% elsif value.present? %>
+                    <div class="country-assessment__metric__value">
+                      <%= value %>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

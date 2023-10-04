@@ -21,6 +21,15 @@ module CapybaraHelpers
     end
   end
 
+  def within_ascor_pillar(header_text)
+    within(
+      :xpath,
+      "(.//div[#{contains_class('country-assessment__pillar')}]//h2[contains(., '#{header_text}')]/../../..)[1]"
+    ) do
+      yield if block_given?
+    end
+  end
+
   def with_mq_beta_scores
     within '.mq-beta-scores' do
       click_on 'BETA'

@@ -55,6 +55,9 @@ Rails.application.routes.draw do
       end
 
       resources :ascor, only: [:show, :index] do
+        member do
+          get :show_assessment
+        end
         collection do
           get :index_assessment
           get :index_emissions_assessment

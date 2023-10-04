@@ -22,7 +22,7 @@
             theme: 'ascor',
             url: tpi_ascor_path(@country),
             data: @country.assessments.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
-            selected: params[:assessment_id]
+            selected: @assessment_date
           }) %>
         </div>
       </div>
@@ -33,4 +33,10 @@
       <% end %>
     </div>
   </div>
+
+  <% if @assessment.present? %>
+    <section class="container country-assessment" id="assessment">
+      <%= render 'assessment', assessment: @assessment %>
+    </section>
+  <% end %>
 </div>
