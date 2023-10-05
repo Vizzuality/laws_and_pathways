@@ -1,7 +1,7 @@
 module Api
   module ASCOR
     class EmissionsChart
-      attr_accessor :assessment_date, :emissions_assessment_date, :emissions_metric, :emissions_boundary, :country_ids
+      attr_accessor :assessment_date, :emissions_metric, :emissions_boundary, :country_ids
 
       def initialize(assessment_date, emissions_metric, emissions_boundary, country_ids)
         @assessment_date = assessment_date
@@ -27,7 +27,7 @@ module Api
       end
 
       def collect_metadata
-        {unit: pathways.values.flatten.first.units}
+        {unit: pathways.values.flatten.first&.units}
       end
 
       def countries
