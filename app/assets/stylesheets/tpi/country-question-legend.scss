@@ -1,6 +1,6 @@
 .country-question-legend {
-  background: #F5F8FF;
-  border: 1px solid #CFD7ED;
+  border: 1px solid $grey-lighter-medium;
+  background-color: $white;
   position: fixed;
 
   bottom: 0;
@@ -69,19 +69,40 @@
       }
 
       &--no:before {
-        background-image: image-url('icons/x.svg');
-        background-color: #ED3D4A;
+        background-image: image-url('tpi/ascor/oval.svg');
+        background-color: #F26E6E;
+        background-size: 20px;
       }
 
       &--yes:before {
-        background-image: image-url('icons/check.svg');
-        background-color: #5587F7;
+        background-image: image-url('tpi/ascor/oval.svg');
+        background-color: #17B091;
+        background-size: 20px;
       }
 
       &--not-applicable:before {
-        background-image: image-url('icons/oval.svg');
-        background-color: #C0C2C3;
-        background-size: 5px;
+        background-image: image-url('tpi/ascor/not_applicable.svg');
+        background-size: 20px;
+      }
+
+      &--no-data:before {
+        background-image: image-url('tpi/ascor/no_data.svg');
+        background-size: 20px;
+      }
+
+      &--partial:before {
+        background-image: image-url('tpi/ascor/partial.svg');
+        background-size: 20px;
+      }
+
+      &--no-disclosure:before {
+        background-image: image-url('tpi/ascor/no_disclosure.svg');
+        background-size: 20px;
+      }
+
+      &--excempt:before {
+        background-image: image-url('tpi/ascor/excempt.svg');
+        background-size: 20px;
       }
     }
   }

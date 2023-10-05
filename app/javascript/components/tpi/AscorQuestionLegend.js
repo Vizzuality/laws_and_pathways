@@ -40,14 +40,26 @@ const AscorQuestionLegend = () => {
         Legend
       </div>
       <div className="country-question-legend__content">
-        <div className="country-question-legend-answer country-question-legend-answer--yes">
-            Yes
-        </div>
         <div className="country-question-legend-answer country-question-legend-answer--no">
-            No
+          No
+        </div>
+        <div className="country-question-legend-answer country-question-legend-answer--partial">
+          Partial
+        </div>
+        <div className="country-question-legend-answer country-question-legend-answer--yes">
+          Yes
+        </div>
+        <div className="country-question-legend-answer country-question-legend-answer--no-data">
+          No data
         </div>
         <div className="country-question-legend-answer country-question-legend-answer--not-applicable">
-            Not applicable
+          Not applicable
+        </div>
+        <div className="country-question-legend-answer country-question-legend-answer--no-disclosure">
+          No disclosure
+        </div>
+        <div className="country-question-legend-answer country-question-legend-answer--excempt">
+          Excempt
         </div>
       </div>
     </div>

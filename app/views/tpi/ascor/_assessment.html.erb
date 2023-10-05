@@ -9,11 +9,11 @@
     <div class="country-assessment__pillar__subtitle"><%= "Pillar #{i + 1}" %></div>
     <h2 class="country-assessment__pillar__title"><%= pillar.text %></h2>
 
-    <% areas.select { |a| a.code.include? pillar.code }.each do |area| %>
+    <% ascor_sub_indicators_for(pillar, areas).each do |area| %>
       <input id="<%= dom_id(area) %>" type="checkbox" class="toggle" />
       <div class="country-assessment__area-block">
         <div class="country-assessment__area">
-          <div class="country-assessment__area__title">
+          <div class="country-assessment__area__title country-assessment__icon country-assessment__icon--<%= ascor_icon_for(area, @assessment) %>">
             <%= "Area #{area.code}" %>
             <strong><%= area.text %></strong>
           </div>
@@ -21,25 +21,31 @@
         </div>
 
         <div class="country-assessment__indicators" for="<%= dom_id(area) %>">
-          <% indicators.select { |i| i.code.include? area.code }.each do |indicator| %>
+          <% ascor_sub_indicators_for(area, indicators).each do |indicator| %>
             <div class="country-assessment__indicator">
-              <div class="country-assessment__indicator__title">
+              <div class="country-assessment__indicator__title country-assessment__icon country-assessment__icon--<%= ascor_icon_for(indicator, @assessment) %>">
                 <%= "#{indicator.code.split('.').last}. #{indicator.text}" %>
               </div>
 
-              <% metrics.select { |m| m.code.include? indicator.code }.each do |metric| %>
+              <% ascor_sub_indicators_for(indicator, metrics).each do |metric| %>
                 <div class="country-assessment__metric">
+                  <div class="country-assessment__metric__value">
+                    <% if metric.code == 'EP.1.a.i' %>
+                      <!-- TODO: Custom dynamic indicator -->
+                    <% elsif metric.code == 'EP.1.a.ii' %>
+                      <!-- TODO: Custom dynamic indicator -->
+                    <% elsif ascor_assessment_result_for(metric, @assessment).answer.present? %>
+                      <div class="country-assessment__metric__value__text">
+                        <%= ascor_assessment_result_for(metric, @assessment).answer %>
+                      </div>
+                    <% end %>
+                  </div>
                   <div class="country-assessment__metric__title">
                     <%= "#{metric.code.split('.').last}. #{metric.text}" %>
                   </div>
-                  <% value = @assessment.results.find { |r| r.indicator_id == metric.id }.answer %>
-                  <% if metric.code == 'EP.1.a.i' %>
-                    <!-- TODO: Custom dynamic indicator -->
-                  <% elsif metric.code == 'EP.1.a.ii' %>
-                    <!-- TODO: Custom dynamic indicator -->
-                  <% elsif value.present? %>
-                    <div class="country-assessment__metric__value">
-                      <%= value %>
+                  <% if ascor_assessment_result_for(metric, @assessment).source.present? %>
+                    <div class="country-assessment__metric__source">
+                      <%= link_to 'Source', ascor_assessment_result_for(metric, @assessment).source %>
                     </div>
                   <% end %>
                 </div>

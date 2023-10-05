@@ -3,7 +3,7 @@ module TPI
     before_action :fetch_ascor_countries, only: [:index, :show]
     before_action :fetch_ascor_country, only: [:show, :show_assessment]
     before_action :fetch_assessment_date, only: [:index, :show, :index_assessment, :show_assessment]
-    before_action :fetch_emissions_assessment_date, only: [:index]
+    before_action :fetch_emissions_assessment_date, only: [:index, :emissions_chart_data]
     before_action :fetch_ascor_assessment_results, only: [:index, :index_assessment]
 
     def index
