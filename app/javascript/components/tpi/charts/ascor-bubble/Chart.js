@@ -4,6 +4,15 @@ import SingleCell from './SingleCell';
 
 import { SCORE_RANGES } from './constants';
 
+const SCALE = 1.25;
+
+// radius of bubbles
+const COMPANIES_MARKET_CAP_GROUPS = {
+  large: 10 * SCALE,
+  medium: 5 * SCALE,
+  small: 3 * SCALE
+};
+
 const SINGLE_CELL_SVG_WIDTH = 120;
 const SINGLE_CELL_SVG_HEIGHT = 100;
 
@@ -157,7 +166,7 @@ const createRow = (dataRow, area, pillars, disabled_bubbles_areas) => {
         const countriesBubbles = disabled_bubbles_areas.includes(area)
           ? []
           : el.map((result) => ({
-            value: 10,
+            value: COMPANIES_MARKET_CAP_GROUPS[result.market_cap_group],
             tooltipContent: {
               header: result.country_name,
               value: result.result
