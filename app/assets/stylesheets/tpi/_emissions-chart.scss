@@ -1,0 +1,120 @@
+@import "variables";
+
+.emissions {
+  &__filters {
+    margin-bottom: 66px;
+    display: flex;
+    justify-content: space-between;
+
+    &__emissions {
+      display: flex;
+      gap: 12px;
+    }
+
+    &__country-selector {
+      .button {
+        padding: 12px 16px;
+      }
+
+      &__countries {
+        height: 0;
+        overflow: hidden;
+
+        &.--countries-open {
+          overflow: visible;
+        }
+
+        &__wrapper {
+          z-index: 10;
+          position: relative;
+          top: 18px;
+          padding: 24px;
+          border: 1px solid $grey-dark;
+          background: #fff;
+        }
+
+        &__label {
+          color: $grey-dark;
+          font-family: $family-sans-serif;
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 15px;
+        }
+
+        &__list {
+          max-height: 300px;
+          overflow-y: auto;
+          margin-block: 24px;
+          position: relative;
+
+          li {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 16px;
+
+            input {
+              width: 24px;
+              height: 24px;
+            }
+          }
+        }
+
+        &__button {
+          display: flex;
+          justify-content: flex-end;
+        }
+      }
+    }
+  }
+  &__chart {
+    &__tooltip {
+      &__header {
+        display: flex;
+        justify-content: space-between;
+        color: $dark;
+        font-family: $family-sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      &__item {
+        display: flex;
+        justify-content: space-between;
+        gap: 30px;
+        > div {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .--target {
+          color: $grey-dark;
+          font-weight: 400;
+        }
+      }
+    }
+    &__legend {
+      margin-top: 60px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+
+      &__label {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        padding: 7px 12px;
+        border: 1px solid rgba(89, 91, 93, 0.5);
+
+        span {
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          display: inline-block;
+          color: $grey-dark;
+        }
+      }
+    }
+  }
+}
