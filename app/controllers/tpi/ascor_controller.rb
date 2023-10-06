@@ -19,6 +19,7 @@ module TPI
 
     def show
       @assessment = ASCOR::Assessment.find_by country: @country, assessment_date: @assessment_date
+      @recent_emissions = Api::ASCOR::RecentEmissions.new(@assessment_date, @country).call
       fixed_navbar("ASCOR Country #{@country.name}", admin_ascor_country_path(@country.id))
     end
 

@@ -321,17 +321,34 @@ $see-more-width-tablet: 130px;
 
     &__indicator {
       margin-bottom: 1px;
+      outline: solid 1px $grey-lighter-medium;
+      margin-left: 40px;
+      padding: 15px 45px 15px 20px;
+      display: flex;
 
       &__title {
-        outline: solid 1px $grey-lighter-medium;
         font-family: $family-sans-serif;
         font-weight: 700;
         font-size: 16px;
-        margin-left: 40px;
-        padding: 15px 20px;
         display: flex;
         align-items: center;
         gap: 25px;
+        flex-grow: 2;
+      }
+
+      &__source {
+        font-family: $family-sans-serif;
+        font-size: 14px !important;
+        line-height: 40px;
+
+        a {
+          color: $grey-dark;
+          text-decoration: underline;
+        }
+
+        a:hover {
+          color: $dark;
+        }
       }
     }
 
