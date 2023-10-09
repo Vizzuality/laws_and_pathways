@@ -41,7 +41,7 @@ module Api
       end
 
       def pillars
-        ::ASCOR::AssessmentIndicator.where(indicator_type: :pillar).group_by(&:code)
+        @pillars ||= ::ASCOR::AssessmentIndicator.where(indicator_type: :pillar).group_by(&:code)
       end
 
       def recent_emission_levels
@@ -52,10 +52,11 @@ module Api
 
       def market_cap_groups
         @market_cap_groups ||= begin
-          min = ::ASCOR::Pathway.where(MARKET_CAP_QUERY).where(assessment_date: assessment_date).minimum(:recent_emission_level)
-          max = ::ASCOR::Pathway.where(MARKET_CAP_QUERY).where(assessment_date: assessment_date).maximum(:recent_emission_level)
-          step = (max.to_f - min.to_f) / 3
-          {min..min + step => :small, min + step..min + (2 * step) => :medium, min + (2 * step)..max => :large}
+          values = ::ASCOR::Pathway.where(MARKET_CAP_QUERY).where(assessment_date: assessment_date)
+            .pluck(:recent_emission_level).sort
+          {values.first..values[(values.size * 1.0 / 3).ceil - 1] => :small,
+           values[(values.size * 1.0 / 3).ceil - 1]..values[(values.size * 2.0 / 3).ceil - 1] => :medium,
+           values[(values.size * 2.0 / 3).ceil - 1]..values.last => :large}
         end
       end
     end
