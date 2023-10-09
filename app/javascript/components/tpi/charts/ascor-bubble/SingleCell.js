@@ -4,8 +4,6 @@ import { range } from 'd3-array';
 import { select } from 'd3-selection';
 import * as d3 from 'd3-force';
 
-import { partialGradient } from './constants';
-
 const SingleCell = ({
   width,
   height,
@@ -49,8 +47,7 @@ const SingleCell = ({
     u.enter()
       .append('circle')
       .attr('r', (d) => d.radius)
-      .style('fill', (d) => (d.value === 'Partial' ? 'url(#partial-gradient)' : d.color))
-      .style('stroke', (d) => d.color)
+      .style('fill', (d) => d.color)
       .merge(u)
       .attr('cx', (d) => d.x)
       .attr('cy', (d) => d.y)
@@ -71,22 +68,6 @@ const SingleCell = ({
         height="100%"
         viewBox={`0 0 ${width} ${height}`}
       >
-        <defs>
-          <pattern
-            id="partial-gradient"
-            patternUnits="userSpaceOnUse"
-            width="2"
-            height="8"
-            patternTransform="rotate(90)"
-          >
-            <rect
-              width="1"
-              height="8"
-              transform="translate(0,0)"
-              fill={partialGradient.color}
-            />
-          </pattern>
-        </defs>
         <g
           className="bubble-chart_circle_country"
           transform={`translate(${width / 2}, ${height / 2})`}
