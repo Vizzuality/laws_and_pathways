@@ -371,11 +371,19 @@ $see-more-width-tablet: 130px;
       }
     }
 
-    &__metric {
+    &__metric-block {
       margin-left: 60px;
-      padding: 30px 45px 30px 45px;
+      padding: 30px 45px 0 45px;
       border-left: solid 3px $grey-lighter-medium;
+
+      @include tablet {
+        margin-left: 80px;
+      }
+    }
+
+    &__metric {
       display: flex;
+      padding-bottom: 30px;
       position: relative;
       flex-wrap: wrap;
 
@@ -390,10 +398,10 @@ $see-more-width-tablet: 130px;
 
       &__text {
         background: $dark;
-        padding: 5px 0;
+        padding: 5px 10px;
         color: $white;
         font-weight: 600;
-        margin-top: 20px;
+        margin-top: 10px;
         border: solid 1px $grey-lighter-medium;
         text-align: center;
         min-width: 80px;
@@ -412,10 +420,6 @@ $see-more-width-tablet: 130px;
         a:hover {
           color: $dark;
         }
-      }
-
-      @include tablet {
-        margin-left: 80px;
       }
     }
 
