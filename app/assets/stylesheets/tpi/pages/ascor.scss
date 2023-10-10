@@ -62,9 +62,14 @@ $see-more-width-tablet: 130px;
       display: flex;
       align-items: center;
       justify-content: flex-end;
+      flex-wrap: wrap;
 
       &.show-version {
         justify-content: space-between;
+
+        @include mobile {
+          justify-content: flex-end;
+        }
 
         @include tablet {
           padding-left: 20px;
@@ -81,9 +86,13 @@ $see-more-width-tablet: 130px;
 
       &__assessment-dropdown {
         display: flex;
-        flex-direction: column;
         gap: 10px;
         color: white;
+        margin-right: 20px;
+
+        .caption {
+          line-height: 35px;
+        }
 
         @include tablet {
           flex-direction: row;
@@ -223,7 +232,7 @@ $see-more-width-tablet: 130px;
     &__pillar {
       outline: solid 1px $grey-lighter-medium;
       margin-bottom: 1px;
-      padding: 30px 0 0 40px;
+      padding: 30px 0 0 20px;
 
       &.active {
         background-color: transparentize($grey-lighter-medium, 0.4);
@@ -244,11 +253,15 @@ $see-more-width-tablet: 130px;
         font-family: $family-sans-serif;
         font-size: 12px;
       }
+
+      @include tablet {
+        padding: 30px 0 0 40px;
+      }
     }
 
     &__area {
       outline: solid 1px $grey-lighter-medium;
-      margin-left: 40px;
+      margin-left: 20px;
       padding: 15px 20px;
       position: relative;
       background-color: white;
@@ -260,6 +273,14 @@ $see-more-width-tablet: 130px;
         display: flex;
         align-items: center;
         gap: 25px;
+
+        div:first-child {
+          min-width: 80px;
+        }
+      }
+
+      @include tablet {
+        margin-left: 40px;
       }
     }
 
@@ -268,8 +289,8 @@ $see-more-width-tablet: 130px;
         content: '';
         display: block;
 
-        width: 40px;
-        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
         border-radius: 50%;
         background-repeat: no-repeat;
         background-position: center;
@@ -277,17 +298,11 @@ $see-more-width-tablet: 130px;
       }
 
       &--no:before {
-        background-image: image-url('tpi/ascor/oval.svg');
-        background-color: #F26E6E;
-        width: 38px;
-        height: 38px;
+        background-image: image-url('tpi/ascor/no.svg');
       }
 
       &--yes:before {
-        background-image: image-url('tpi/ascor/oval.svg');
-        background-color: #17B091;
-        width: 38px;
-        height: 38px;
+        background-image: image-url('tpi/ascor/yes.svg');
       }
 
       &--not-applicable:before {
@@ -322,7 +337,7 @@ $see-more-width-tablet: 130px;
     &__indicator {
       margin-bottom: 1px;
       outline: solid 1px $grey-lighter-medium;
-      margin-left: 40px;
+      margin-left: 20px;
       padding: 15px 45px 15px 20px;
       display: flex;
 
@@ -350,33 +365,39 @@ $see-more-width-tablet: 130px;
           color: $dark;
         }
       }
+
+      @include tablet {
+        margin-left: 40px;
+      }
     }
 
     &__metric {
-      margin-left: 80px;
+      margin-left: 60px;
       padding: 30px 45px 30px 45px;
       border-left: solid 3px $grey-lighter-medium;
       display: flex;
       position: relative;
+      flex-wrap: wrap;
 
       &__title {
         flex-grow:2
       }
 
-      &__value {
-        &__text {
-          background: $dark;
-          padding: 5px 0;
-          color: $white;
-          font-weight: 600;
-          position: absolute;
-          left: -45px;
-          top: 25px;
-          border: solid 3px $grey-lighter-medium;
-          text-align: center;
-          min-width: 80px;
-          font-size: small;
-        }
+      &__break {
+        flex-basis: 100%;
+        height: 0;
+      }
+
+      &__text {
+        background: $dark;
+        padding: 5px 0;
+        color: $white;
+        font-weight: 600;
+        margin-top: 20px;
+        border: solid 1px $grey-lighter-medium;
+        text-align: center;
+        min-width: 80px;
+        font-size: small;
       }
 
       &__source {
@@ -391,6 +412,10 @@ $see-more-width-tablet: 130px;
         a:hover {
           color: $dark;
         }
+      }
+
+      @include tablet {
+        margin-left: 80px;
       }
     }
 
