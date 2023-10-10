@@ -47,7 +47,7 @@
                       </div>
                       <% if ascor_assessment_result_for(metric, @assessment).source.present? %>
                         <div class="country-assessment__metric__source">
-                          <%= link_to 'Source', ascor_assessment_result_for(metric, @assessment).source %>
+                          <%= link_to "Source (#{ascor_assessment_result_for(metric, @assessment).year})", ascor_assessment_result_for(metric, @assessment).source %>
                         </div>
                       <% end %>
                       <% if ascor_assessment_result_for(metric, @assessment).answer.present? %>

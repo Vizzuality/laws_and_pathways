@@ -38,5 +38,11 @@ describe 'ASCOR', type: 'system', site: 'tpi' do
         end
       end
     end
+
+    it 'generates EP.1.a.i and EP.1.a.ii metrics' do
+      find("label[for='ascor_assessment_indicator_#{ASCOR::AssessmentIndicator.find_by(code: 'EP.1').id}']").click
+      expect(page).to have_text("i. What is the country's most recent emissions level?")
+      expect(page).to have_text("ii. What is the country's most recent emissions trend?")
+    end
   end
 end
