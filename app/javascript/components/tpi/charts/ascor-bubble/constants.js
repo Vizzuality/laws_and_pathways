@@ -5,14 +5,10 @@ export const SCORE_RANGES = [
   },
   {
     value: 'Partial',
-    color: '#17B091'
+    color: '#F9A400'
   },
   {
     value: 'Yes',
     color: '#17B091'
   }
 ];
-
-export const partialGradient = {
-  color: SCORE_RANGES[1].color
-};
