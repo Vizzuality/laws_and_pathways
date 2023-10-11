@@ -35,15 +35,16 @@ export const options = {
         color: '#595B5D',
         fontSize: '12px'
       }
+    },
+    title: {
+      useHTML: true,
+      align: 'high'
     }
   },
   credits: {
     enabled: false
   },
   xAxis: {
-    accessibility: {
-      rangeDescription: 'Range: 2005 to 2030'
-    },
     lineColor: '#595B5D',
     lineWidth: 1,
     tickColor: '#595B5D',
@@ -52,7 +53,8 @@ export const options = {
       style: {
         color: '#0A4BDC',
         fontSize: '14px'
-      }
+      },
+      overflow: 'allow'
     }
   },
   legend: {
@@ -69,12 +71,12 @@ export const options = {
       return `<div class="emissions__chart__legend__label"><span style="background-color:${this.color}"></span>${this.name}</div>`;
     },
     className: 'emissions__chart__legend'
-    // enabled: false,
   },
   tooltip: {
     shared: true,
-    headerFormat:
-      "<div class='emissions__chart__tooltip__header'><span>{point.key}</span> <span>gCO2 / country</span></div>",
+    headerFormat: `<div class='emissions__chart__tooltip__header'>
+        <span>{point.key}</span> <span>{series.userOptions.custom.unit} / country</span>
+      </div>`,
     pointFormatter() {
       return `<div class='emissions__chart__tooltip__item'>
           <div>
@@ -92,12 +94,11 @@ export const options = {
       color: '#191919',
       fontSize: '14px'
     },
-    borderWidth: 1,
-    borderColor: '#595B5D',
-    backgroundColor: '#ffffff',
+    borderWidth: 0,
     crosshairs: true,
-    padding: 24,
-    className: 'country-emissions-tooltip',
+    padding: 0,
+    shadow: false,
+    className: 'emissions__chart__tooltip',
     useHTML: true
   },
   chart: {
@@ -121,13 +122,43 @@ export const options = {
     rules: [
       {
         condition: {
-          maxWidth: 500
+          maxWidth: 992
         },
         chartOptions: {
           legend: {
-            layout: 'horizontal',
-            align: 'center',
-            verticalAlign: 'bottom'
+            align: 'left',
+            padding: 0,
+            itemDistance: 10,
+            alignColumns: false,
+            margin: 0,
+            itemMarginTop: 0
+          },
+          yAxis: {
+            labels: {
+              align: 'center',
+              distance: 5,
+              padding: 0,
+              style: {
+                fontSize: '10px'
+              }
+            },
+            title: {
+              reserveSpace: false,
+              rotation: 0,
+              style: {
+                fontSize: '10px'
+              }
+            }
+          },
+          xAxis: {
+            labels: {
+              style: {
+                fontSize: '10px'
+              }
+            }
+          },
+          chart: {
+            height: 350
           }
         }
       }
