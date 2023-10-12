@@ -69,14 +69,12 @@
       }
 
       &--no:before {
-        background-image: image-url('tpi/ascor/oval.svg');
-        background-color: #F26E6E;
+        background-image: image-url('tpi/ascor/no.svg');
         background-size: 20px;
       }
 
       &--yes:before {
-        background-image: image-url('tpi/ascor/oval.svg');
-        background-color: #17B091;
+        background-image: image-url('tpi/ascor/yes.svg');
         background-size: 20px;
       }
 

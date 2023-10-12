@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Select from './Select';
+import Select from '../../Select';
 import CountrySelector from './CountrySelector';
 
 const MAX_SELECTED_COUNTRIES = 10;
