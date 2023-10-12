@@ -235,7 +235,7 @@ $see-more-width-tablet: 130px;
       padding: 30px 0 0 20px;
 
       &.active {
-        background-color: transparentize($grey-lighter-medium, 0.4);
+        background-color: transparentize($ascor-background-color, 0.96);
       }
 
       &__title {
