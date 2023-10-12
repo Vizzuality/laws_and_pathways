@@ -60,7 +60,7 @@ const AscorRecentEmissions = ({
         </div>
         { recentEmissions.source && (
           <div className="country-assessment__metric__source">
-            <a href={recentEmissions.source}>Source ({recentEmissions.year})</a>
+            <a target="_blank" rel="noreferrer" href={recentEmissions.source}>Source ({recentEmissions.year})</a>
           </div>
         )}
         { recentEmissions.value && (
