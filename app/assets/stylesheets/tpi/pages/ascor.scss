@@ -26,6 +26,13 @@ $see-more-width-tablet: 130px;
       background-color: $dark;
     }
 
+    .dropdown-selector__option {
+      &:hover {
+        background-color: $ascor-background-color;
+        color: #fff;
+      }
+    }
+
     @include desktop {
       height: 335px;
     }
