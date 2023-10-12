@@ -9,13 +9,17 @@ import { options } from './options';
 
 const EmissionsChart = ({ chartData }) => {
   const { data, metadata } = chartData;
+
   return (
     <div className="emissions__chart">
       <HighchartsReact
         highcharts={Highcharts}
         options={{
           ...options,
-          yAxis: { ...options.yAxis, title: { text: metadata.unit } },
+          yAxis: {
+            ...options.yAxis,
+            title: { ...options.yAxis.title, text: metadata.unit }
+          },
           series: data,
           title: { text: '' }
         }}

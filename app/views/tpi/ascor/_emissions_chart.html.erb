@@ -1,11 +1,11 @@
-<%= react_component('charts/emissions', {
+<%= react_component('charts/ascor-emissions', {
   emissions_metric_filter: ASCOR::EmissionsMetric::VALUES,
   default_emissions_metric_filter: 'Absolute',
   emissions_boundary_filter: ASCOR::EmissionsBoundary::VALUES,
   default_emissions_boundary_filter: 'Production - excluding LULUCF',
-  countries: ASCOR::Country.all.map { |c| { id: c.id, iso: c.iso, name: c.name } },
+  countries: ASCOR::Country.all.sort_by(&:name).map { |c| { id: c.id, iso: c.iso, name: c.name } },
   default_countries: ASCOR::Country.where(iso: ASCOR::Country::DEFAULT_COUNTRIES).map(&:id),
-  emissions_data_url: index_emissions_assessment_tpi_ascor_index_path
+  emissions_data_url: emissions_chart_data_tpi_ascor_index_path
 }) %>
 <%= react_component('InfoModal', {
   title: "Country emission pathways",

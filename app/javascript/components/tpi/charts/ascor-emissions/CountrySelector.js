@@ -13,7 +13,7 @@ const CountrySelector = ({
     defaultSelectedCountries
   );
 
-  const _countries = countries.sort((a) => (selectedCountries?.includes(a.id) ? -1 : 1));
+  const _countries = countries.sort((a, b) => (a.name < b.name ? -1 : 1));
 
   const handleSelectedCountry = (event) => {
     const { checked, value } = event.target;

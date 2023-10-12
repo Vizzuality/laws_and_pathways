@@ -1,13 +1,17 @@
 @import "variables";
 
 .emissions {
+  padding-bottom: 30px;
   &__filters {
     margin-bottom: 66px;
     display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
     justify-content: space-between;
 
     &__emissions {
       display: flex;
+      flex-wrap: wrap;
       gap: 12px;
     }
 
@@ -69,7 +73,24 @@
     }
   }
   &__chart {
+    > div,
+    .highcharts-container {
+      overflow: visible !important;
+
+      @include until($breakpoint-desktop) {
+        .highcharts-axis-title {
+          transform: translateY(-15px) !important;
+          left: 0 !important;
+        }
+      }
+    }
+
     &__tooltip {
+      > span {
+        background-color: #fff;
+        padding: 24px;
+        border: 1px solid $grey-dark;
+      }
       &__header {
         display: flex;
         justify-content: space-between;
@@ -94,11 +115,15 @@
         }
       }
     }
+
     &__legend {
       margin-top: 60px;
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
+      @include until($breakpoint-desktop) {
+        margin-top: 30px;
+      }
 
       &__label {
         display: flex;
@@ -106,14 +131,53 @@
         gap: 8px;
         padding: 7px 12px;
         border: 1px solid rgba(89, 91, 93, 0.5);
+        color: $grey-dark;
+        font-family: $family-sans-serif;
+        font-size: 12px;
+
+        @include until($breakpoint-desktop) {
+          // margin-top: 30px;
+          padding: 6px 10px;
+          font-size: 10px;
+        }
 
         span {
           width: 16px;
           height: 16px;
           border-radius: 50%;
           display: inline-block;
-          color: $grey-dark;
+
+          @include until($breakpoint-desktop) {
+            width: 12px;
+            height: 12px;
+          }
         }
+      }
+    }
+    .highcharts-legend > div > div {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      width: 80vw;
+      margin-top: 44px;
+
+      @include until($breakpoint-desktop) {
+        margin-top: 24px;
+      }
+
+      .highcharts-legend-item.highcharts-line-series {
+        position: relative !important;
+        top: 0 !important;
+        left: 0 !important;
+
+        span {
+          position: relative !important;
+          top: 0 !important;
+          left: 0 !important;
+        }
+      }
+      .highcharts-legend-item-hidden {
+        opacity: 0.5 !important;
       }
     }
   }
