@@ -78,7 +78,7 @@ const AscorRecentEmissions = ({
         </div>
         { trend.source && (
           <div className="country-assessment__metric__source">
-            <a href={trend.source}>Source ({trend.year})</a>
+            <a  target="_blank" rel="noreferrer" href={trend.source}>Source ({trend.year})</a>
           </div>
         )}
         { trendValue.value && (
