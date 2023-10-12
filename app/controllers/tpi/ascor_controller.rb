@@ -37,7 +37,7 @@ module TPI
         params[:country_ids]
       ).call
 
-      render json: data.chart_json
+      render json: data
     end
 
     def user_download

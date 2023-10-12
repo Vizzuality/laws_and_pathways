@@ -232,7 +232,7 @@ $see-more-width-tablet: 130px;
     &__pillar {
       outline: solid 1px $grey-lighter-medium;
       margin-bottom: 1px;
-      padding: 30px 0 0 20px;
+      padding: 30px 0 0 10px;
 
       &.active {
         background-color: transparentize($ascor-background-color, 0.96);
@@ -261,8 +261,7 @@ $see-more-width-tablet: 130px;
 
     &__area {
       outline: solid 1px $grey-lighter-medium;
-      margin-left: 20px;
-      padding: 15px 20px;
+      padding: 15px 20px 30px 20px;
       position: relative;
       background-color: white;
       display: flex;
@@ -281,6 +280,7 @@ $see-more-width-tablet: 130px;
 
       @include tablet {
         margin-left: 40px;
+        padding: 15px 20px;
       }
     }
 
@@ -337,7 +337,6 @@ $see-more-width-tablet: 130px;
     &__indicator {
       margin-bottom: 1px;
       outline: solid 1px $grey-lighter-medium;
-      margin-left: 20px;
       padding: 15px 45px 15px 20px;
       display: flex;
 
@@ -372,7 +371,7 @@ $see-more-width-tablet: 130px;
     }
 
     &__metric-block {
-      margin-left: 60px;
+      margin-left: 40px;
       padding: 30px 45px 0 45px;
       border-left: solid 3px $grey-lighter-medium;
 

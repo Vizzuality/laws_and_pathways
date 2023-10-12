@@ -7,7 +7,7 @@ module Api
         @assessment_date = assessment_date
         @emissions_metric = emissions_metric || 'Absolute'
         @emissions_boundary = emissions_boundary || 'Production - excluding LULUCF'
-        @country_ids = country_ids
+        @country_ids = country_ids.is_a?(String) ? country_ids.split(',') : Array.wrap(country_ids)
       end
 
       def call
