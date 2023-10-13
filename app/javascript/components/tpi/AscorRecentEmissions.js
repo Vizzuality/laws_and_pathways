@@ -30,6 +30,11 @@ const AscorRecentEmissions = ({
         <div className="country-assessment__metric__title">
           i. What is the country&apos;s most recent emissions level?
         </div>
+        { recentEmissions.source && (
+          <div className="country-assessment__metric__source">
+            <a target="_blank" rel="noreferrer" href={recentEmissions.source}>Source ({recentEmissions.year})</a>
+          </div>
+        )}
         <div className="country-assessment__break" />
         <div className="emissions__filters assessments">
           <div className="emissions__filters__emissions">
@@ -51,11 +56,6 @@ const AscorRecentEmissions = ({
             />
           </div>
         </div>
-        { recentEmissions.source && (
-          <div className="country-assessment__metric__source">
-            <a target="_blank" rel="noreferrer" href={recentEmissions.source}>Source ({recentEmissions.year})</a>
-          </div>
-        )}
         { recentEmissions.value !== null && (
           <>
             <div className="country-assessment__break" />
@@ -69,6 +69,11 @@ const AscorRecentEmissions = ({
         <div className="country-assessment__metric__title">
           ii. What is the country&apos;s most recent emissions trend?
         </div>
+        { trend.source && (
+          <div className="country-assessment__metric__source">
+            <a target="_blank" rel="noreferrer" href={trend.source}>Source ({trend.year})</a>
+          </div>
+        )}
         <div className="country-assessment__break" />
         <div className="emissions__filters assessments">
           <div className="emissions__filters__emissions">
@@ -82,11 +87,6 @@ const AscorRecentEmissions = ({
             />
           </div>
         </div>
-        { trend.source && (
-          <div className="country-assessment__metric__source">
-            <a target="_blank" rel="noreferrer" href={trend.source}>Source ({trend.year})</a>
-          </div>
-        )}
         { trendValue.value && (
           <>
             <div className="country-assessment__break" />
