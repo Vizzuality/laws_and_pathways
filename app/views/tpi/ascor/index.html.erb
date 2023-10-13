@@ -25,7 +25,7 @@
 
       <%= link_to user_download_tpi_ascor_index_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
         <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
-        Download all ASCOR data
+        Download ASCOR data
       <% end %>
     </div>
   </div>
@@ -109,7 +109,7 @@
 
   <hr>
 
-  <section id="publications" class="section promoted-publications">
+  <section id="publications" class="section ascor-page__promoted-publications promoted-publications">
     <div class="container">
       <div class="promoted-publications__title">
         <div class="promoted-publications__title-text">Publications and news</div>
@@ -129,4 +129,6 @@
       </div>
     </div>
   </section>
+
+  <%= render 'contact' %>
 </div>

@@ -26,37 +26,30 @@ const AscorRecentEmissions = ({
 
   return (
     <>
-      <div className="emissions__filters assessments">
-        <div className="emissions__filters__emissions">
-          <Select
-            options={emissions_metric_filter}
-            onSelect={handleSelect}
-            value={filters.emissions_metric}
-            name="emissions_metric"
-            placeholder="Emissions Metric"
-            label="Emissions Metric"
-          />
-          <Select
-            options={emissions_boundary_filter}
-            onSelect={handleSelect}
-            value={filters.emissions_boundary}
-            name="emissions_boundary"
-            placeholder="Emissions Boundary"
-            label="Emissions Boundary"
-          />
-          <Select
-            options={trend_filters}
-            onSelect={handleSelect}
-            value={filters.trends}
-            name="trends"
-            placeholder="Trends"
-            label="Trends"
-          />
-        </div>
-      </div>
       <div className="country-assessment__metric">
         <div className="country-assessment__metric__title">
           i. What is the country&apos;s most recent emissions level?
+        </div>
+        <div className="country-assessment__break" />
+        <div className="emissions__filters assessments">
+          <div className="emissions__filters__emissions">
+            <Select
+              options={emissions_metric_filter}
+              onSelect={handleSelect}
+              value={filters.emissions_metric}
+              name="emissions_metric"
+              placeholder="Emissions Metric"
+              label="Emissions Metric"
+            />
+            <Select
+              options={emissions_boundary_filter}
+              onSelect={handleSelect}
+              value={filters.emissions_boundary}
+              name="emissions_boundary"
+              placeholder="Emissions Boundary"
+              label="Emissions Boundary"
+            />
+          </div>
         </div>
         { recentEmissions.source && (
           <div className="country-assessment__metric__source">
@@ -65,7 +58,7 @@ const AscorRecentEmissions = ({
         )}
         { recentEmissions.value !== null && (
           <>
-            <div className="country-assessment__metric__break" />
+            <div className="country-assessment__break" />
             <div className="country-assessment__metric__text">
               {recentEmissions.value} {recentEmissions.unit}
             </div>
@@ -76,6 +69,19 @@ const AscorRecentEmissions = ({
         <div className="country-assessment__metric__title">
           ii. What is the country&apos;s most recent emissions trend?
         </div>
+        <div className="country-assessment__break" />
+        <div className="emissions__filters assessments">
+          <div className="emissions__filters__emissions">
+            <Select
+              options={trend_filters}
+              onSelect={handleSelect}
+              value={filters.trends}
+              name="trends"
+              placeholder="Trends"
+              label="Trends"
+            />
+          </div>
+        </div>
         { trend.source && (
           <div className="country-assessment__metric__source">
             <a target="_blank" rel="noreferrer" href={trend.source}>Source ({trend.year})</a>
@@ -83,7 +89,7 @@ const AscorRecentEmissions = ({
         )}
         { trendValue.value && (
           <>
-            <div className="country-assessment__metric__break" />
+            <div className="country-assessment__break" />
             <div className="country-assessment__metric__text">
               {trendValue.value}
             </div>

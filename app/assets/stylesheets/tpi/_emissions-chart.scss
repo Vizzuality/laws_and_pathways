@@ -10,14 +10,14 @@
     justify-content: space-between;
 
     &.assessments {
-      margin-bottom: 30px;
+      margin-top: 10px;
+      margin-bottom: 0px;
     }
 
     &__emissions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      flex-wrap: wrap;
     }
 
     &__country-selector {

@@ -133,6 +133,14 @@ $see-more-width-tablet: 130px;
     }
   }
 
+  .base-tooltip__default-trigger {
+    background-color: $ascor-green;
+
+    &:hover {
+      background-color: transparentize($ascor-green, 0.4);
+    }
+  }
+
   .bubble-chart-header {
     margin-bottom: 20px;
 
@@ -232,9 +240,20 @@ $see-more-width-tablet: 130px;
     }
   }
 
+  .button {
+    background-color: $ascor-green;
+    color: $white;
+    border: 0;
+
+    &:hover {
+      color: $white;
+      background-color: transparentize($ascor-green, 0.4);
+    }
+  }
+
   .country-assessment {
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-top: 60px;
+    margin-bottom: 60px;
 
     &__pillar {
       outline: solid 1px $grey-lighter-medium;
@@ -377,6 +396,11 @@ $see-more-width-tablet: 130px;
       }
     }
 
+    &__break {
+      flex-basis: 100%;
+      height: 0;
+    }
+
     &__metric-block {
       margin-left: 40px;
       padding: 30px 45px 0 45px;
@@ -395,11 +419,6 @@ $see-more-width-tablet: 130px;
 
       &__title {
         flex-grow:2
-      }
-
-      &__break {
-        flex-basis: 100%;
-        height: 0;
       }
 
       &__text {
@@ -483,6 +502,69 @@ $see-more-width-tablet: 130px;
         &::after {
           transform: rotate(-180deg);
         }
+      }
+    }
+  }
+
+  .contacts {
+    width: 100%;
+    height: 380px;
+    background-color: $ascor-green;
+    position: relative;
+
+    &__icon {
+      background-image: image-url('tpi/ascor/circles_3.svg');
+      width: 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+      position: absolute;
+      display: none;
+
+      @include tablet {
+        background-position-x: calc(50% - 250px);
+        display: block;
+      }
+
+      @include widescreen {
+        background-position-x: 200px;
+      }
+    }
+
+    &__info {
+      padding-top: 80px;
+      margin: 0 auto;
+      width: 400px;
+
+      h3 {
+        font-family: $family-sans-serif;
+        font-size: 24px !important;
+        font-weight: 700;
+        padding: 20px 0;
+      }
+
+      p {
+        font-size: 14px;
+        margin-bottom: 50px
+      }
+
+      .button {
+        background-color: $ascor-background-color;
+        color: $white;
+        display: inline-block;
+
+        &:hover {
+          background-color: $dark;
+          border: 0;
+        }
+      }
+
+      &__link {
+        font-weight: bold;
+        text-decoration: underline;
+      }
+
+      @include tablet {
+        margin: 0 0 0 50%;
       }
     }
   }
