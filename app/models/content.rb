@@ -33,6 +33,7 @@ class Content < ApplicationRecord
     %w[
       total_market_cap
       sectors
+      supporters_without_logo
       combined_aum
       methodology_publication_id
     ].include? code
@@ -42,6 +43,7 @@ class Content < ApplicationRecord
     %w[
       total_market_cap
       sectors
+      supporters_without_logo
       combined_aum
       methodology_description
       methodology_publication_id

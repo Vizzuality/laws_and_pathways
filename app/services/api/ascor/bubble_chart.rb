@@ -35,9 +35,9 @@ module Api
 
       def calculate_market_cap_group(country_id)
         recent_emission_level = recent_emission_levels[country_id]&.first&.recent_emission_level
-        return :small if recent_emission_level.blank?
+        return :medium if recent_emission_level.blank?
 
-        market_cap_groups.find { |range, _| range.include?(recent_emission_level) }&.last || :small
+        market_cap_groups.find { |range, _| range.include?(recent_emission_level) }&.last || :medium
       end
 
       def pillars
@@ -53,7 +53,7 @@ module Api
       def market_cap_groups
         @market_cap_groups ||= begin
           values = ::ASCOR::Pathway.where(MARKET_CAP_QUERY).where(assessment_date: assessment_date)
-            .pluck(:recent_emission_level).sort
+            .where.not(recent_emission_level: nil).pluck(:recent_emission_level).sort
           {values.first..values[(values.size * 1.0 / 3).ceil - 1] => :small,
            values[(values.size * 1.0 / 3).ceil - 1]..values[(values.size * 2.0 / 3).ceil - 1] => :medium,
            values[(values.size * 2.0 / 3).ceil - 1]..values.last => :large}

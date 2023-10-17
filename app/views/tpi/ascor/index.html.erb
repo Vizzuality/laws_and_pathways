@@ -7,8 +7,7 @@
     <div class="right-icon"></div>
     <div class="bottom-icon"></div>
 
-    <!-- TODO: React component needs to be replaced!!! -->
-    <%= react_component("BankDropdown", { banks: @countries_json, selectedOption: 'All countries' }) %>
+    <%= react_component("AscorDropdown", { banks: @countries_json, selectedOption: 'All countries' }) %>
 
     <div class="ascor-header container">
       <div class="links">
@@ -26,7 +25,7 @@
 
       <%= link_to user_download_tpi_ascor_index_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
         <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
-        Download all ASCOR data
+        Download ASCOR data
       <% end %>
     </div>
   </div>
@@ -61,8 +60,6 @@
     </div>
   </section>
 
-  <!-- TODO: Finalise emissions chart section -->
-  <!-- All React component code goes into tpi/ascor/emissions_chart partial -->
   <section class="container">
     <div class="emissions-chart-header">
       <h2 class="is-size-4">
@@ -112,7 +109,7 @@
 
   <hr>
 
-  <section id="publications" class="section promoted-publications">
+  <section id="publications" class="section ascor-page__promoted-publications promoted-publications">
     <div class="container">
       <div class="promoted-publications__title">
         <div class="promoted-publications__title-text">Publications and news</div>
@@ -132,4 +129,6 @@
       </div>
     </div>
   </section>
+
+  <%= render 'contact' %>
 </div>

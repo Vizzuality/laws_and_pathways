@@ -796,3 +796,13 @@
     justify-content: center;
   }
 }
+
+.linkedin-widget {
+  height: 600px !important;
+  overflow: auto !important;
+
+  .sk-linkedin-page-post-profile-info {
+    width: 100% !important;
+    padding: 0 5px;
+  }
+}

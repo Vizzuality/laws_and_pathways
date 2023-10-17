@@ -3,8 +3,7 @@ import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Filters from './Filters';
 import EmissionsChart from './Chart';
-// import { useChartData } from '../hooks';
-import mockedData from './mockedData';
+import { useChartData } from '../hooks';
 
 const initialData = {
   data: [],
@@ -19,8 +18,8 @@ const Emissions = ({
   emissions_boundary_filter,
   default_emissions_boundary_filter,
   countries,
-  default_countries
-  // emissions_data_url
+  default_countries,
+  emissions_data_url
 }) => {
   const [filters, setFilters] = useState({
     emissions_metric: default_emissions_metric_filter,
@@ -32,8 +31,7 @@ const Emissions = ({
     setFilters((_filters) => ({ ..._filters, ...filter }));
   };
 
-  // const { data } = useChartData(emissions_data_url, filters);
-  const data = mockedData;
+  const { data } = useChartData(emissions_data_url, filters);
 
   const chartData = useMemo(
     () => (Array.isArray(data)
@@ -45,7 +43,11 @@ const Emissions = ({
             name: countries.find(
               (country) => country.id === Number(countryId)
             ).name,
-            data: Object.entries(emissions).map(([year, value]) => ({x: Number(year), y: value})),
+            custom: { unit: data.metadata.unit },
+            data: Object.entries(emissions).map(([year, value]) => ({
+              x: Number(year),
+              y: value
+            })),
             zoneAxis: 'x',
             zones: [
               {
@@ -87,8 +89,8 @@ Emissions.propTypes = {
       name: PropTypes.string.isRequired
     })
   ).isRequired,
-  default_countries: PropTypes.arrayOf(PropTypes.number).isRequired
-  // emissions_data_url: PropTypes.string.isRequired
+  default_countries: PropTypes.arrayOf(PropTypes.number).isRequired,
+  emissions_data_url: PropTypes.string.isRequired
 };
 
 export default Emissions;

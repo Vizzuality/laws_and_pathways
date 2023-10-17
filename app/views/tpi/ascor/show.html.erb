@@ -7,8 +7,7 @@
     <div class="right-icon"></div>
     <div class="bottom-icon"></div>
 
-    <!-- TODO: React component needs to be replaced!!! -->
-    <%= react_component("BankDropdown", { banks: @countries_json, selectedOption: 'All countries' }) %>
+    <%= react_component("AscorDropdown", { banks: @countries_json, selectedOption: @country.name }) %>
 
     <div class="ascor-header container show-version">
       <div class="ascor-header__assessment-dropdown">
@@ -29,7 +28,7 @@
 
       <%= link_to user_download_tpi_ascor_index_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
         <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
-        Download all ASCOR data
+        Download ASCOR data
       <% end %>
     </div>
   </div>
@@ -39,4 +38,6 @@
       <%= render 'assessment', assessment: @assessment %>
     </section>
   <% end %>
+
+  <%= render 'contact' %>
 </div>

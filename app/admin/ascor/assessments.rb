@@ -5,7 +5,7 @@ ActiveAdmin.register ASCOR::Assessment do
   menu label: 'Assessments', parent: 'ASCOR', priority: 5
 
   permit_params :country_id, :assessment_date, :publication_date, :notes,
-                results_attributes: [:id, :assessment_id, :indicator_id, :answer, :source, :_destroy]
+                results_attributes: [:id, :assessment_id, :indicator_id, :answer, :source, :year, :_destroy]
 
   filter :country
   filter :assessment_date, as: :select

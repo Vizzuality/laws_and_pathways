@@ -37,7 +37,7 @@ module TPI
         params[:country_ids]
       ).call
 
-      render json: data.chart_json
+      render json: data
     end
 
     def user_download
@@ -54,7 +54,10 @@ module TPI
 
     def fetch_ascor_countries
       @countries = ASCOR::Country.all.order(:name)
-      @countries_json = @countries.map { |s| s.as_json(except: [:created_at, :updated_at], methods: [:path]) }
+      @countries_json = [
+        {name: 'All countries', path: tpi_ascor_index_path},
+        *@countries.as_json(only: [:name], methods: [:path])
+      ]
     end
 
     def fetch_ascor_country
