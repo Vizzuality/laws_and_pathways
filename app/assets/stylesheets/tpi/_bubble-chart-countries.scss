@@ -1,0 +1,195 @@
+@import "colors";
+@import "typography";
+$tape-height: 8px;
+$tape-color: rgba(25, 25, 25, 0.1);
+$cell-height: 80px;
+$cell-height-banks: 100px;
+$legend-image-width: 60px;
+
+.bubble-chart__container__grid {
+  display: none;
+  @include desktop {
+    grid-template-columns: 0.5fr 0.5fr 1.5fr 1fr 1fr 1fr;
+    padding: 0;
+    display: grid;
+  }
+}
+
+.bubble-chart__container__mobile {
+  display: block;
+  width: 100%;
+  padding: 10px;
+
+  .country-bubble-mobile {
+    width: 100%;
+    border: 1px solid $ascor-background-color;
+
+    > ul > li:last-of-type .country-bubble-mobile__item {
+      border-bottom: none;
+    }
+
+    &__item {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      font-size: 16px;
+      font-style: normal;
+
+      &.--pillar {
+        font-weight: 700;
+        font-family: $font-family-bold;
+        background: $ascor-background-color;
+        color: #fff;
+        padding: 20px 10px;
+        cursor: pointer;
+        border-bottom: 1px solid $grey-medium;
+        &.--open {
+          border-bottom: none;
+        }
+      }
+      &.--area {
+        color: #000;
+        padding: 10px;
+        font-family: $font-family-regular;
+        border-top: 1px solid $ascor-background-color;
+        cursor: pointer;
+        &.--open {
+          border-bottom: 1px solid $grey-medium;
+        }
+      }
+
+      .chevron-icon {
+        width: 12px;
+      }
+
+      &__result {
+        font-family: $font-family-regular;
+        font-size: 16px;
+
+        &__title {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          width: 100%;
+          padding: 10px;
+          border-bottom: 1px solid $grey-medium;
+          cursor: pointer;
+          min-height: 45px;
+          position: relative;
+
+          div {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+          }
+        }
+
+        &:not(:last-of-type) .country-bubble-mobile__item__result__title {
+          border-bottom-style: dashed;
+        }
+
+        &.--open {
+          .country-bubble-mobile__item__result__title {
+            border-bottom: none;
+            position: absolute;
+          }
+          .country-bubble-mobile__item__result__countries {
+            border-bottom: 1px solid $grey-medium;
+            border-bottom-style: dashed;
+          }
+        }
+
+        &:last-of-type {
+          .country-bubble-mobile__item__result__countries {
+            border-bottom: none;
+          }
+        }
+
+        &__countries {
+          padding: 10px 0px 10px 42px;
+          min-height: 45px;
+          li:not(:last-of-type) {
+            padding-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.bubble-chart__cell-country {
+  position: relative;
+  height: $cell-height-banks;
+  display: flex;
+  align-items: center;
+  border-right: calc(#{$tape-height / 2}) dashed $tape-color;
+
+  & > *:first-child {
+    margin: auto;
+    z-index: 1;
+  }
+
+  &::before {
+    background-color: $tape-color;
+    content: "";
+    position: absolute;
+    top: calc(50% - #{$tape-height / 2});
+    height: $tape-height;
+    width: calc(100% + #{$tape-height / 2});
+  }
+}
+
+.bubble-chart_circle_country {
+  circle:hover {
+    stroke-width: 3;
+    stroke: $black !important;
+  }
+}
+
+.bubble-chart__level-country {
+  border-right: calc(#{$tape-height / 2}) dashed $tape-color;
+  position: relative;
+  padding-left: 20px;
+  height: 100%;
+}
+
+.bubble-chart__level-title-country {
+  height: 100%;
+  font-family: $font-family-bold;
+  font-size: 16px;
+  color: $black;
+  margin-bottom: 20px;
+}
+
+.bubble-chart__level-area-country {
+  font-family: $font-family-bold;
+  font-size: 16px;
+  background-color: $ascor-background-color;
+  color: white;
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  color: $black;
+  text-align: end;
+  margin-right: 14px;
+  grid-column: span 2;
+  height: 100%;
+  padding: 46px 0 46px;
+  gap: 16px;
+  background-color: white;
+
+  &__line {
+    border: 8px solid #e8e8e8;
+    border-right: none;
+    height: 100%;
+    flex: 1;
+  }
+
+  &__area {
+    text-align: end;
+    padding-right: 14px;
+    flex: 1;
+  }
+}

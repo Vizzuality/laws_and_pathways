@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { range } from 'd3-array';
 import { select } from 'd3-selection';
 import * as d3 from 'd3-force';
+import { SCORE_RANGES } from './constants';
 
 const SingleCell = ({
   width,
@@ -20,7 +21,7 @@ const SingleCell = ({
 
   const nodes = range(data.length).map(function (index) {
     return {
-      color: data[index].color,
+      color: SCORE_RANGES[data[index].result],
       tooltipContent: data[index].tooltipContent,
       path: data[index].path,
       radius: data[index].value,
@@ -30,8 +31,8 @@ const SingleCell = ({
 
   const simulation = () => {
     d3.forceSimulation(nodes)
-      .force('charge', d3.forceManyBody().strength(60))
-      .force('y', d3.forceY().strength(0.45).y(0))
+      .force('charge', d3.forceManyBody().strength(10))
+      .force('y', d3.forceY().strength(0.3).y(0))
       .force(
         'collision',
         d3.forceCollide().radius(function (d) {
