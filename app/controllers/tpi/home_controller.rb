@@ -16,7 +16,8 @@ module TPI
         stats: {
           companies_count: Company.published.count,
           countries_count: Company.select(:geography_id).distinct.count,
-          supporters_count: TPIPage.find_by(slug: 'supporters')&.contents&.flat_map(&:images)&.count,
+          supporters_count: TPIPage.find_by(slug: 'supporters')&.contents&.flat_map(&:images)&.count.to_i +
+            page&.contents&.find_by(code: 'supporters_without_logo')&.text.to_i,
           total_market_cap: page&.contents&.find_by(code: 'total_market_cap')&.text || '-',
           combined_aum: page&.contents&.find_by(code: 'combined_aum')&.text || '-',
           sectors_count: TPISector.with_companies.count
