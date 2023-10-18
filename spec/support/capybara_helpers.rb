@@ -42,4 +42,10 @@ module CapybaraHelpers
       click_on 'Current'
     end
   end
+
+  def for_mobile_screen
+    current_window.resize_to(375, 812)
+    yield
+    current_window.resize_to(1400, 800)
+  end
 end

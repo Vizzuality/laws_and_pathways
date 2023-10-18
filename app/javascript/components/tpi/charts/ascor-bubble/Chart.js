@@ -1,8 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import SingleCell from './SingleCell';
 
-import { SCORE_RANGES } from './constants';
+import { SCORE_RANGES, VALUES } from './constants';
+import { groupBy, keys, pickBy, values } from 'lodash';
+
+import ChartMobile from './chart-mobile';
+
+const DESKTOP_MIN_WIDTH = 992;
 
 const SCALE = 1.25;
 
@@ -18,55 +23,76 @@ const SINGLE_CELL_SVG_HEIGHT = 100;
 
 let tooltip = null;
 
-const BubbleChart = ({ results, disabled_bubbles_areas }) => {
+const BubbleChart = ({ results }) => {
   const tooltipEl = '<div id="bubble-chart-tooltip" class="bubble-tip" hidden style="position:absolute;"></div>';
   useEffect(() => {
     document.body.insertAdjacentHTML('beforeend', tooltipEl);
     tooltip = document.getElementById('bubble-chart-tooltip');
   }, []);
-  const ranges = SCORE_RANGES.map((range) => range.value);
+  const ranges = keys(SCORE_RANGES);
 
-  const parsedData = {};
-  const pillars = {};
+  const parsedData = useMemo(
+    () => values(values(groupBy(results, 'pillar'))).map((value) => ({
+      pillar: value[0].pillar,
+      values: values(groupBy(value, 'area')).map((areaValues) => {
+        const vValues = pickBy(
+          groupBy(areaValues, 'result'),
+          (_value, key) => key in VALUES
+        );
+        const v = {
+          ...VALUES,
+          ...vValues
+        };
+        return {
+          area: areaValues[0].area,
+          values: values(v)
+        };
+      })
+    })),
+    [results]
+  );
 
-  results.forEach((result) => {
-    if (parsedData[result.area] === undefined) {
-      parsedData[result.area] = Array.from({ length: ranges.length }, () => []);
-    }
-    const rangeIndex = SCORE_RANGES.findIndex(
-      (range) => result.result === range.value
-    );
-    if (rangeIndex >= 0) {
-      parsedData[result.area][rangeIndex].push({
-        ...result,
-        color: SCORE_RANGES[rangeIndex].color
-      });
+  const [isMobile, setIsMobile] = React.useState(true);
+
+  const handleResize = () => {
+    if (window.innerWidth < DESKTOP_MIN_WIDTH) {
+      setIsMobile(true);
     } else {
-      console.error('WRONG INDEX', result);
+      setIsMobile(false);
     }
-    if (pillars[result.pillar] === undefined) {
-      pillars[result.pillar] = [result.area];
-    } else {
-      pillars[result.pillar] = pillars[result.pillar].includes(result.area)
-        ? pillars[result.pillar]
-        : [...pillars[result.pillar], result.area];
+  };
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      handleResize();
+      window.addEventListener('resize', handleResize);
     }
-  });
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
-    <div
-      className="bubble-chart__container bubble-chart__container is-hidden-touch"
-      style={{ gridTemplateColumns: '0.5fr 0.5fr 1.5fr 1fr 1fr 1fr' }}
-    >
-      <div className="bubble-chart__level-title-country">Pillar</div>
-      <div className="bubble-chart__level-title-country">Area</div>
-      <div />
-      {ranges.map((range) => (
-        <div className="bubble-chart__level-country" key={range}>
-          <div className="bubble-chart__level-title-country">{range}</div>
+    <div>
+      <div className="bubble-chart__container bubble-chart__container__grid">
+        <div className="bubble-chart__level-title-country">Pillar</div>
+        <div className="bubble-chart__level-title-country">Area</div>
+        <div />
+        {ranges.map((range) => (
+          <div className="bubble-chart__level-country" key={range}>
+            <div className="bubble-chart__level-title-country">{range}</div>
+          </div>
+        ))}
+      </div>
+      {isMobile ? (
+        <div className="bubble-chart__container bubble-chart__container__mobile">
+          <ChartMobile data={parsedData} />
         </div>
-      ))}
-      {Object.keys(parsedData).map((area) => createRow(parsedData[area], area, pillars, disabled_bubbles_areas))}
+      ) : (
+        <div className="bubble-chart__container bubble-chart__container__grid">
+          <ChartRows data={parsedData} isMobile={isMobile} />
+        </div>
+      )}
     </div>
   );
 };
@@ -115,82 +141,60 @@ const hideTooltip = () => {
   tooltip.setAttribute('hidden', true);
 };
 
-const createRow = (dataRow, area, pillars, disabled_bubbles_areas) => {
-  const pillarEntries = Object.entries(pillars);
-
-  const pillarIndex = pillarEntries.findIndex(([, value]) => value.includes(area));
-  const pillar = pillarEntries[pillarIndex];
-
-  const pillarSpan = pillar && pillar[1].length;
-  const pillarName = pillar[0];
+const ChartRows = ({ data }) => data?.map((pillar, pillarIndex) => {
+  const pillarName = pillar.pillar;
+  const pillarSpan = pillar.values.length;
   const pillarAcronym = pillarName
     .split(' ')
     .map((word) => word[0])
     .join('');
 
-  const areaIndex = pillar && pillar[1].findIndex((el) => el === area);
-
   return (
-    <React.Fragment key={Math.random()}>
+    <>
       <div
         className="bubble-chart__level-area-country"
         style={{
-          gridRow: `span ${pillarSpan}`,
-          display: areaIndex === 0 ? 'block' : 'none'
+          gridRow: `span ${pillarSpan}`
         }}
+        key={pillarName}
       >
-        {pillarIndex + 1}.&nbsp;{pillarName}
+        <span style={{ flex: 1 }}>
+          {pillarIndex + 1}.&nbsp;{pillarName}
+        </span>
+        <div className="bubble-chart__level-area-country__line" />
       </div>
-      {areaIndex === 0 && (
-        <div
-          style={{
-            gridRow: `span ${pillarSpan}`,
-            height: '100%',
-            padding: '46px 0 46px'
-          }}
-        >
-          <div
-            style={{
-              border: pillarSpan > 1 && '8px solid #E8E8E8',
-              borderRight: 'none',
-              height: '100%'
-            }}
-          />
-        </div>
-      )}
-      <div className="bubble-chart__level-area-country">
-        {pillarAcronym} {areaIndex + 1}. {area}
-      </div>
-      {dataRow.map((el, i) => {
-        const countriesBubbles = disabled_bubbles_areas.includes(area)
-          ? []
-          : el.map((result) => ({
-            value: COMPANIES_MARKET_CAP_GROUPS[result.market_cap_group],
-            tooltipContent: {
-              header: result.country_name,
-              value: result.result
-            },
-            path: result.country_path,
-            color: result.color,
-            result: result.result
-          }));
 
-        // Remove special characters from the key to be able to use d3-select as it uses querySelector
-        const cleanKey = area.replace(/[^a-zA-Z\-_:.]/g, '');
-        const uniqueKey = `${cleanKey}-${el.length}-${i}`;
-
-        return (
-          <div className="bubble-chart__cell-country" key={uniqueKey}>
-            {ForceLayoutBubbleChart(countriesBubbles, uniqueKey)}
+      {pillar.values.map(({ area, values: areaValues }, areaIndex) => (
+        <>
+          <div key={area} className="bubble-chart__level-area-country__area">
+            {pillarAcronym} {areaIndex + 1}. {area}
           </div>
-        );
-      })}
-    </React.Fragment>
+          {areaValues.map((areaValuesResult, i) => {
+            const countriesBubbles = areaValuesResult.map((result) => ({
+              value: COMPANIES_MARKET_CAP_GROUPS[result.market_cap_group],
+              tooltipContent: {
+                header: result.country_name,
+                value: result.result
+              },
+              path: result.country_path,
+              color: result.color,
+              result: result.result
+            }));
+
+            // Remove special characters from the key to be able to use d3-select as it uses querySelector
+            const cleanKey = area.replace(/[^a-zA-Z\-_:.]/g, '');
+            const uniqueKey = `${cleanKey}-${areaIndex}-${i}`;
+            return (
+              <div className="bubble-chart__cell-country" key={uniqueKey}>
+                {ForceLayoutBubbleChart(countriesBubbles, uniqueKey)}
+              </div>
+            );
+          })}
+        </>
+      ))}
+    </>
   );
-};
-BubbleChart.defaultProps = {
-  disabled_bubbles_areas: []
-};
+});
 
 BubbleChart.propTypes = {
   results: PropTypes.arrayOf(
@@ -203,7 +207,6 @@ BubbleChart.propTypes = {
       result: PropTypes.string.isRequired,
       pillar: PropTypes.string.isRequired
     })
-  ).isRequired,
-  disabled_bubbles_areas: PropTypes.arrayOf(PropTypes.string)
+  ).isRequired
 };
 export default BubbleChart;

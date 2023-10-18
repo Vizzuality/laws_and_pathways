@@ -10,8 +10,18 @@ describe 'ASCOR', type: 'system', site: 'tpi' do
       expect(page).to have_text('All countries')
     end
 
-    it 'loads bubble chart' do
-      within '.bubble-chart__container' do
+    it 'loads the mobile version of bubble chart  ' do
+      for_mobile_screen do
+        within all('.bubble-chart__container')[0] do # mobile version
+          expect(page).to have_text('Emissions Pathways')
+          expect(page).to have_text('Climate Policies')
+          expect(page).to have_text('Climate Finance')
+        end
+      end
+    end
+
+    it 'loads desktop version of bubble chart' do
+      within all('.bubble-chart__container')[1] do # desktop version
         expect(page).to have_text('1. Emissions Pathways')
         expect(page).to have_text('2. Climate Policies')
         expect(page).to have_text('3. Climate Finance')

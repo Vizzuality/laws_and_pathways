@@ -2,7 +2,7 @@
 @import "typography";
 
 $tape-height: 8px;
-$tape-color: rgba(25,25,25,0.1);
+$tape-color: rgba(25, 25, 25, 0.1);
 $cell-height: 80px;
 $cell-height-banks: 100px;
 $legend-image-width: 60px;
@@ -21,7 +21,6 @@ $legend-image-width: 60px;
     .last {
       border-right: none;
     }
-
   }
 
   &--banks {
@@ -62,39 +61,10 @@ $legend-image-width: 60px;
   }
 }
 
-.bubble-chart__cell-country {
-  position: relative;
-  height: $cell-height-banks;
-  display: flex;
-  align-items: center;
-  border-right: calc(#{$tape-height / 2}) dashed $tape-color;
-
-  & > *:first-child {
-    margin: auto;
-    z-index: 1;
-  }
-
-  &::before {
-    background-color: $tape-color;
-    content: "";
-    position: absolute;
-    top: calc(50% - #{$tape-height / 2});
-    height: $tape-height;
-    width: calc(100% + #{$tape-height / 2});
-  }
-}
-
 .bubble-chart_circle {
   circle:hover {
     stroke-width: 14;
     stroke: $black;
-  }
-}
-
-.bubble-chart_circle_country {
-  circle:hover {
-    stroke-width: 3;
-    stroke: $black!important;
   }
 }
 
@@ -199,28 +169,6 @@ $legend-image-width: 60px;
     font-size: 16px;
     color: $black;
   }
-}
-
-.bubble-chart__level-country {
-  border-right: calc(#{$tape-height / 2}) dotted $tape-color;
-  position: relative;
-  padding-left: 20px;
-  height: 100%;
-}
-
-.bubble-chart__level-title-country {
-  height: 100%;
-  font-family: $font-family-bold;
-  font-size: 16px;
-  color: $black;
-}
-
-.bubble-chart__level-area-country {
-  font-family: $font-family-bold;
-  font-size: 16px;
-  color: $black;
-  text-align: end;
-  margin-right: 14px;
 }
 
 .bubble-chart__container--banks {
