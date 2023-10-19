@@ -1,0 +1,16 @@
+<%= react_component('charts/ascor-emissions', {
+  emissions_metric_filter: ASCOR::EmissionsMetric::VALUES,
+  default_emissions_metric_filter: 'Absolute',
+  emissions_boundary_filter: ASCOR::EmissionsBoundary::VALUES,
+  default_emissions_boundary_filter: 'Production - excluding LULUCF',
+  countries: ASCOR::Country.all.sort_by(&:name).map { |c| { id: c.id, iso: c.iso, name: c.name } },
+  default_countries: ASCOR::Country.where(iso: ASCOR::Country::DEFAULT_COUNTRIES).map(&:id),
+  emissions_data_url: emissions_chart_data_tpi_ascor_index_path
+}) %>
+<%= react_component('InfoModal', {
+  title: "Country emission pathways",
+  text: "<p>Country emission pathways are assessed in several ways to account for a variety of factors and uncertainties. The emission metrics considered include the following options: production and consumption-based emissions; exclusion of LULUCF emissions and LULUCF emissions alone; and emissions on an absolute and intensity basis (per capita and per PPP-adjusted GDP).</p>" \
+        "<p>Targeted future pathways are included only for absolute production-based emissions excluding LULUCF as this is the basis on which 2030 targets are assessed.</p>" \
+        "<p>Pathways end in 2030 because long-term net zero targets are often stated on a different emission boundary from the one considered in the 2030 target assessments (e.g. including only CO₂ emissions rather than all Kyoto greenhouse gases).</p>",
+  element: "#emissions-chart-info"
+}) %>

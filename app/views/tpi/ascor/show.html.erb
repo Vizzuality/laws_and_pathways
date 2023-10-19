@@ -1,0 +1,43 @@
+<% content_for :page_title, "#{@country.name} - Transition Pathway Initiative" %>
+<% content_for :hosted_by do %><span></span><% end %>
+
+<div class="ascor-page">
+  <div class="dropdown-selector-wrapper">
+    <div class="left-icon"></div>
+    <div class="right-icon"></div>
+    <div class="bottom-icon"></div>
+
+    <%= react_component("AscorDropdown", { banks: @countries_json, selectedOption: @country.name }) %>
+
+    <div class="ascor-header container show-version">
+      <div class="ascor-header__assessment-dropdown">
+        <div class="caption">
+          Assessment Date:
+        </div>
+        <div class="date-dropdown">
+          <%= react_component('RemoteDropdown', {
+            name: 'assessment_id',
+            remote: true,
+            theme: 'ascor',
+            url: tpi_ascor_path(@country),
+            data: @country.assessments.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
+            selected: @assessment_date
+          }) %>
+        </div>
+      </div>
+
+      <%= link_to user_download_tpi_ascor_index_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
+        <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
+        Download ASCOR data
+      <% end %>
+    </div>
+  </div>
+
+  <% if @assessment.present? %>
+    <section class="container country-assessment" id="assessment">
+      <%= render 'assessment', assessment: @assessment %>
+    </section>
+  <% end %>
+
+  <%= render 'contact' %>
+</div>

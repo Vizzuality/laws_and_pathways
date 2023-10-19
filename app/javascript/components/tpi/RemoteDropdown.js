@@ -43,7 +43,7 @@ function RemoteDropdown({ url, theme, params, data, selected, name }) {
     window.Rails.fire(Select.current, 'change');
     setLabel(item.label);
   };
-  const chevron = !isOpen && theme === 'blue' ? chevronIconWhite : chevronIconBlack;
+  const chevron = !isOpen && (theme === 'blue' || theme === 'ascor') ? chevronIconWhite : chevronIconBlack;
 
   return (
     <>

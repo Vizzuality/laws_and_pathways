@@ -2,7 +2,7 @@
 @import "typography";
 
 $tape-height: 8px;
-$tape-color: rgba(25,25,25,0.1);
+$tape-color: rgba(25, 25, 25, 0.1);
 $cell-height: 80px;
 $cell-height-banks: 100px;
 $legend-image-width: 60px;
@@ -21,7 +21,6 @@ $legend-image-width: 60px;
     .last {
       border-right: none;
     }
-
   }
 
   &--banks {

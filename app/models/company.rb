@@ -75,6 +75,10 @@ class Company < ApplicationRecord
     latest_mq_assessment_only_beta_methodologies || latest_mq_assessment_without_beta_methodologies
   end
 
+  def beta_mq_assessments?
+    mq_assessments.only_beta_methodologies.exists?
+  end
+
   def should_generate_new_friendly_id?
     name_changed? || super
   end

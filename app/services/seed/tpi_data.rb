@@ -59,6 +59,26 @@ module Seed
       TimedLogger.log('Create Publications') do
         create_publications
       end
+
+      TimedLogger.log('Import ASCOR Countries') do
+        run_importer CSVImport::ASCORCountries.new(seed_file('ascor_countries.csv'))
+      end
+
+      TimedLogger.log('Import ASCOR Benchmarks') do
+        run_importer CSVImport::ASCORBenchmarks.new(seed_file('ascor_benchmarks.csv'))
+      end
+
+      TimedLogger.log('Import ASCOR Pathways') do
+        run_importer CSVImport::ASCORPathways.new(seed_file('ascor_pathways.csv'))
+      end
+
+      TimedLogger.log('Import ASCOR Assessment Indicators') do
+        run_importer CSVImport::ASCORAssessmentIndicators.new(seed_file('ascor_assessment_indicators.csv'))
+      end
+
+      TimedLogger.log('Import ASCOR Assessments') do
+        run_importer CSVImport::ASCORAssessments.new(seed_file('ascor_assessments.csv'))
+      end
     end
 
     def import_sector_clusters
@@ -190,6 +210,7 @@ module Seed
         end
       end
       TPISector.find_or_create_by!(name: 'Banks', show_in_tpi_tool: false)
+      TPISector.find_or_create_by!(name: 'ASCOR', show_in_tpi_tool: false)
     end
   end
 end
