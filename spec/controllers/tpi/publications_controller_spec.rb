@@ -29,19 +29,19 @@ RSpec.describe TPI::PublicationsController, type: :controller do
   describe 'GET show' do
     context 'publication' do
       context 'published' do
-        subject { get :show, params: {id: publication1.id, type: 'Publication'} }
+        subject { get :show, params: {id: publication1.id} }
 
         it { is_expected.to be_successful }
 
         context 'when publication is searched by slug' do
-          subject { get :show, params: {id: publication1.slug, type: 'Publication'} }
+          subject { get :show, params: {id: publication1.slug} }
 
           it { is_expected.to be_successful }
         end
       end
 
       context 'unpublished' do
-        subject { get :show, params: {id: publication4.id, type: 'Publication'} }
+        subject { get :show, params: {id: publication4.slug} }
 
         it 'not found' do
           expect { subject }.to raise_exception(ActiveRecord::RecordNotFound)
@@ -51,13 +51,13 @@ RSpec.describe TPI::PublicationsController, type: :controller do
 
     context 'news article' do
       context 'published' do
-        subject { get :show, params: {id: news_article1.id, type: 'NewsArticle'} }
+        subject { get :show_news_article, params: {id: news_article1.id} }
 
         it { is_expected.to be_successful }
       end
 
       context 'unpublished' do
-        subject { get :show, params: {id: news_article4.id, type: 'NewsArticle'} }
+        subject { get :show_news_article, params: {id: news_article4.id} }
 
         it 'not found' do
           expect { subject }.to raise_exception(ActiveRecord::RecordNotFound)
