@@ -9,20 +9,25 @@ import { useQueryParam } from 'shared/hooks';
 const ALL_OPTION_NAME = 'All';
 const SHOW_ON_PAGE = 9;
 
-const Filters = ({ tags, sectors, resultsSize }) => {
+const Filters = ({ types, tags, sectors, resultsSize }) => {
   const [isFilterOpen, setIsFiltersOpen] = useState(false);
   const [resultsCount, setResultsCount] = useState(resultsSize);
+  const [queryTypesParam, setQueryTypes] = useQueryParam('types');
   const [queryTagsParam, setQueryTags] = useQueryParam('tags');
   const [querySectorsParam, setQuerySectors] = useQueryParam('sectors');
   const [offset, setOffset] = useState(0);
 
+  const activeTypes = useMemo(() => {
+    const typesWithAllOption = [ALL_OPTION_NAME, ...types];
+    const queryTypes = (queryTypesParam || '').split(',').filter(x => x);
+    return typesWithAllOption.map(type => ({
+      name: type,
+      active: queryTypes.length > 0 ? queryTypes.includes(type) : type === ALL_OPTION_NAME
+    }));
+  }, [types, queryTypesParam]);
   const activeTags = useMemo(() => {
     const queryTags = (queryTagsParam || '').split(',').filter(x => x);
-    const tagsWithAllOption = [
-      ALL_OPTION_NAME,
-      ...queryTags.filter(x => !tags.includes(x)),
-      ...tags
-    ];
+    const tagsWithAllOption = [ALL_OPTION_NAME, ...tags];
     return tagsWithAllOption.map(tag => ({
       name: tag,
       active: queryTags.length > 0 ? queryTags.includes(tag) : tag === ALL_OPTION_NAME
@@ -71,7 +76,11 @@ const Filters = ({ tags, sectors, resultsSize }) => {
     };
   }, [handleLoadMore]);
 
-  const refreshPublicationsHtml = (_tags, _sectors, _offset) => {
+  const refreshPublicationsHtml = (_types, _tags, _sectors, _offset) => {
+    const activeTypesQueryParam = _types
+      .filter(t => t.active && t.name !== ALL_OPTION_NAME)
+      .map(t => encodeURIComponent(t.name))
+      .join(', ');
     const activeTagsQueryParam = _tags
       .filter(t => t.active && t.name !== ALL_OPTION_NAME)
       .map(t => encodeURIComponent(t.name))
@@ -81,7 +90,7 @@ const Filters = ({ tags, sectors, resultsSize }) => {
       .map(s => encodeURIComponent(s.name))
       .join(', ');
 
-    const query = `tags=${activeTagsQueryParam}&sectors=${activeSectorsQueryParam}&offset=${_offset}`;
+    const query = `types=${activeTypesQueryParam}&tags=${activeTagsQueryParam}&sectors=${activeSectorsQueryParam}&offset=${_offset}`;
     const url = `/publications/partial?${query}`;
 
     fetch(url)
@@ -98,8 +107,31 @@ const Filters = ({ tags, sectors, resultsSize }) => {
   };
 
   useEffect(() => {
-    refreshPublicationsHtml(activeTags, activeSectors, offset);
-  }, [activeTags, activeSectors, offset]);
+    refreshPublicationsHtml(activeTypes, activeTags, activeSectors, offset);
+  }, [activeTypes, activeTags, activeSectors, offset]);
+
+  const handleTypeClick = (type) => {
+    const otherOptions = optionsWithoutALL(activeTypes);
+
+    const shouldALLbeSelected = isAllClicked(type) && (isOtherOptionsActive(otherOptions) || isAllSelected(otherOptions));
+
+    if (shouldALLbeSelected) {
+      const typesWithALLSelected = activeTypes.map(s => ({
+        name: s.name,
+        active: s.name === ALL_OPTION_NAME
+      }));
+      setOffset(0);
+      setQueryTypes(typesWithALLSelected.filter(s => s.active).map((s) => s.name).join(','));
+    } else {
+      const updatedTypes = activeTypes.map(s => {
+        if (s.name === type.name) { return { name: s.name, active: !s.active }; }
+        if (s.name === ALL_OPTION_NAME) { return { name: s.name, active: false }; }
+        return { name: s.name, active: s.active };
+      });
+      setOffset(0);
+      setQueryTypes(updatedTypes.filter(s => s.active).map((s) => s.name).join(','));
+    }
+  };
 
   const handleTagClick = (tag) => {
     const otherOptions = optionsWithoutALL(activeTags);
@@ -172,6 +204,18 @@ const Filters = ({ tags, sectors, resultsSize }) => {
         {isFilterOpen
           && (
             <div className="filters__container">
+              <div className="filters__title">Type</div>
+              <div className="filters__tags-container">
+                {activeTypes.length && activeTypes.map(type => (
+                  <button
+                    type="button"
+                    onClick={() => handleTypeClick(type)}
+                    className={cx('filters__tag', {'filters__tag-selected': type.active})}
+                  >
+                    {type.name}
+                  </button>
+                ))}
+              </div>
               <div className="filters__title">Tag</div>
               <div className="filters__tags-container">
                 {activeTags.length && activeTags.map(tag => (
@@ -204,6 +248,7 @@ const Filters = ({ tags, sectors, resultsSize }) => {
 };
 
 Filters.propTypes = {
+  types: PropTypes.array.isRequired,
   tags: PropTypes.array.isRequired,
   sectors: PropTypes.array.isRequired,
   resultsSize: PropTypes.number.isRequired

@@ -1,0 +1,17 @@
+<% content_for :page_title, "#{@news_article.title} - Transition Pathway Initiative" %>
+<% content_for :page_description, strip_tags(@news_article.content).first(160) if @news_article.content.present? %>
+
+<div class="container">
+  <div class="pages__grid">
+    <div class="pages__content">
+      <h1 class="pages__title"><%= @news_article.title %></h1>
+      <p class="pages__date"><%= @news_article.publication_date.strftime('%d/%m/%Y') %></p>
+      <% if @news_article.image.present? %>
+        <div class="pages__image"><%= image_tag(@news_article.image) %></div>
+      <% end %>
+      <div class="pages__description">
+        <%= @news_article.content&.html_safe %>
+      </div>
+    </div>
+  </div>
+</div>

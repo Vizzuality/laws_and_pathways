@@ -208,6 +208,37 @@
     {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
+      "fingerprint": "7e53284632294fa27278fa7cd09aa0c3f4cd1d13c20c23b60a4a3f6df3f5a36a",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/tpi/publications/show_news_article.erb",
+      "line": 13,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "NewsArticle.published.find(params[:id]).content",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "TPI::PublicationsController",
+          "method": "show_news_article",
+          "line": 49,
+          "file": "app/controllers/tpi/publications_controller.rb",
+          "rendered": {
+            "name": "tpi/publications/show_news_article",
+            "file": "app/views/tpi/publications/show_news_article.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "tpi/publications/show_news_article"
+      },
+      "user_input": null,
+      "confidence": "High",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
       "fingerprint": "9d653b3157d282bd93ff7fbacf0d06a462c2a31c640dfc883fc00040975d3b71",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
@@ -339,6 +370,6 @@
       "note": ""
     }
   ],
-  "updated": "2023-09-19 10:16:26 +0200",
+  "updated": "2023-10-19 11:42:02 +0200",
   "brakeman_version": "5.2.3"
 }

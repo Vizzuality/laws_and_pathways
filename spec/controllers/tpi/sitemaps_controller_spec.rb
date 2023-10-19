@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-# rubocop:disable Layout/LineLength
 RSpec.describe TPI::SitemapsController, type: :controller do
   let_it_be(:company1) { create(:company, :published) }
   let_it_be(:company2) { create(:company, :draft) }
@@ -27,16 +26,15 @@ RSpec.describe TPI::SitemapsController, type: :controller do
       expect(response.body).to have_css('url loc', text: tpi_company_url(company1.slug, **host_params))
       expect(response.body).to have_css('url loc', text: tpi_bank_url(bank.slug, **host_params))
       expect(response.body).to have_css('url loc', text: "https://#{host_params[:host]}/#{page1.slug}")
-      expect(response.body).to have_css('url loc', text: tpi_publication_download_file_path(slug: publication1.slug, **host_params))
-      expect(response.body).to have_css('url loc', text: tpi_publication_url(article1, type: 'NewsArticle', **host_params))
+      expect(response.body).to have_css('url loc', text: tpi_publication_url(id: publication1.slug, **host_params))
+      expect(response.body).to have_css('url loc', text: show_news_article_tpi_publication_path(article1, **host_params))
     end
 
     it('should not return unpublished entities') do
       subject
       expect(response.body).not_to have_css('url loc', text: tpi_company_url(company2.slug, **host_params))
-      expect(response.body).not_to have_css('url loc', text: tpi_publication_download_file_path(slug: publication2.slug, **host_params))
-      expect(response.body).not_to have_css('url loc', text: tpi_publication_url(article2, type: 'NewsArticle', **host_params))
+      expect(response.body).not_to have_css('url loc', text: tpi_publication_url(id: publication2.slug, **host_params))
+      expect(response.body).not_to have_css('url loc', text: show_news_article_tpi_publication_path(article2, **host_params))
     end
   end
 end
-# rubocop:enable Layout/LineLength
