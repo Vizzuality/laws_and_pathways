@@ -10,6 +10,7 @@
 #  updated_by_id    :bigint
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  is_insight       :boolean          default(FALSE)
 #
 
 FactoryBot.define do
@@ -19,6 +20,7 @@ FactoryBot.define do
     tpi_sectors { |a| [a.association(:tpi_sector)] }
     publication_date { '2019-11-29' }
     image { fixture_file_upload(Rails.root.join('spec', 'support', 'fixtures', 'files', 'test.jpg'), 'jpg') }
+    is_insight { false }
 
     association :created_by, factory: :admin_user
     updated_by { created_by }

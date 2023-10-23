@@ -6,7 +6,7 @@ ActiveAdmin.register NewsArticle do
 
   decorate_with NewsArticleDecorator
 
-  permit_params :title, :content, :publication_date,
+  permit_params :title, :content, :publication_date, :is_insight,
                 :created_by_id, :updated_by_id,
                 :image, :keywords_string, tpi_sector_ids: []
 
@@ -30,6 +30,7 @@ ActiveAdmin.register NewsArticle do
           row :image do |t|
             image_tag(url_for(t.image)) if t.image.present?
           end
+          row :is_insight
           row :updated_at
           row :updated_by
           row :created_at
@@ -43,6 +44,7 @@ ActiveAdmin.register NewsArticle do
   index do
     column 'Title', :title_link
     column :publication_date
+    column :is_insight
 
     actions
   end
@@ -54,6 +56,7 @@ ActiveAdmin.register NewsArticle do
     column(:sectors) { |l| l.tpi_sectors.map(&:name).join(Rails.application.config.csv_options[:entity_sep]) }
     column :keywords, &:keywords_csv
     column :publication_date
+    column :is_insight
   end
 
   form html: {'data-controller' => 'check-modified'} do |f|
@@ -67,6 +70,7 @@ ActiveAdmin.register NewsArticle do
                                collection: TPISector.order(:name), input_html: {multiple: true}
       f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags, collection: Keyword.pluck(:name)
       f.input :image, as: :file, input_html: {accept: 'image/*'}
+      f.input :is_insight
     end
 
     f.actions

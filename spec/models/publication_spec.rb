@@ -14,6 +14,7 @@
 #  updated_at        :datetime         not null
 #  author            :string
 #  slug              :text             not null
+#  summary           :text
 #
 
 require 'rails_helper'

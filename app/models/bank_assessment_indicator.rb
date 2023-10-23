@@ -9,6 +9,7 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  comment        :text
+#  is_placeholder :boolean          default(FALSE)
 #
 class BankAssessmentIndicator < ApplicationRecord
   INDICATOR_TYPES = %w[area sub_area indicator sub_indicator].freeze

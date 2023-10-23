@@ -9,6 +9,7 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  comment        :text
+#  is_placeholder :boolean          default(FALSE)
 #
 FactoryBot.define do
   factory :bank_assessment_indicator, class: BankAssessmentIndicator do
