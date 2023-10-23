@@ -9,7 +9,7 @@
 
       <div class="pages__content__flex">
         <% if @publication.image.present? %>
-          <div class="pages__image"><%= image_tag(@publication.image) %></div>
+          <div class="pages__image" style="margin-bottom: 0;"><%= image_tag(@publication.image) %></div>
         <% end %>
         <div class="pages__description">
           <p><%= @publication.short_description %></p>

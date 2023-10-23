@@ -25,6 +25,13 @@
           <% end %>
         </p>
       </div>
+      <div class="publication__content-type">
+        <% if publication.is_a?(NewsArticle) %>
+          <%= publication.is_insight? ? 'Insights' : 'News' %>
+        <% else %>
+          Publications
+        <% end %>
+      </div>
       <% if publication.keywords.any? || publication.tpi_sectors.any? %>
         <div class="publication__tags">
           <% publication.tags_and_sectors.each do |tag| %>

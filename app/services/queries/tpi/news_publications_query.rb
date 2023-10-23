@@ -7,7 +7,7 @@ module Queries
       attr_accessor :tags, :sectors, :types
 
       def call
-        (publications + news).uniq.sort_by(&:publication_date).reverse!
+        (publications + news + insights).uniq.sort_by(&:publication_date).reverse!
       end
 
       private
@@ -21,7 +21,13 @@ module Queries
       def news
         return NewsArticle.none if types.present? && !types.include?('News')
 
-        filter_scope(NewsArticle.published)
+        filter_scope(NewsArticle.published.not_insights)
+      end
+
+      def insights
+        return NewsArticle.none if types.present? && !types.include?('Insights')
+
+        filter_scope(NewsArticle.published.insights)
       end
 
       def filter_scope(scope)

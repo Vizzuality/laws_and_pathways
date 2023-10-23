@@ -23,6 +23,8 @@ class NewsArticle < ApplicationRecord
   has_and_belongs_to_many :tpi_sectors
 
   scope :published, -> { where('publication_date <= ?', DateTime.now) }
+  scope :insights, -> { where(is_insight: true) }
+  scope :not_insights, -> { where(is_insight: false) }
 
   validates_presence_of :title, :content, :publication_date
 
