@@ -1,0 +1,7 @@
+(function () {
+  document.getElementById('bubble-chart').innerHTML = "<%= j render('bubble_chart') %>";
+  const newUrl = new URL(window.location.href);
+  newUrl.searchParams.set('assessment_date', <%= @assessment_date %>);
+  window.history.replaceState({}, '', newUrl.href);
+  ReactRailsUJS.mountComponents('#bubble-chart');
+})();

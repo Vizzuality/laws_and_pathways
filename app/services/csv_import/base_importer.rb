@@ -51,8 +51,8 @@ module CSVImport
       @csv ||= parse_csv
     end
 
-    def find_record_by(attr_name, row)
-      resource_klass.find_by(attr_name.to_sym => row[attr_name]&.strip)
+    def find_record_by(attr_name, row, column_name: nil)
+      resource_klass.find_by(attr_name.to_sym => row[column_name || attr_name]&.strip)
     end
 
     def prepare_overridden_resource(row)
