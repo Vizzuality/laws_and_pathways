@@ -22,9 +22,9 @@ FactoryBot.define do
     title { 'MyString' }
     author { 'Author' }
     short_description { 'MyText' }
+    summary { 'MyText' }
     publication_date { '2019-12-02' }
     file { fixture_file_upload(Rails.root.join('spec', 'support', 'fixtures', 'files', 'test.pdf'), 'pdf') }
-    is_insight { false }
 
     trait :published do
       publication_date { 20.days.ago }

@@ -8,7 +8,11 @@
       <div class="content__title-wrapper">
         <div class="content__title">
           <% if publication.is_a?(Publication) %>
-            <%= link_to publication.title, tpi_publication_path(id: publication.slug), class: 'link is-strong' %>
+            <% if publication.summary.present? %>
+              <%= link_to publication.title, tpi_publication_path(id: publication.slug), class: 'link is-strong' %>
+            <% else %>
+              <%= link_to publication.title, tpi_publication_download_file_path(slug: publication.slug), target: '_blank', class: 'link is-strong' %>
+            <% end %>
           <% else %>
             <%= link_to publication.title, show_news_article_tpi_publication_path(id: publication.id), class: "link is-strong" %>
           <% end %>

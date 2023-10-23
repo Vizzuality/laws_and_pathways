@@ -36,7 +36,8 @@ RSpec.describe Admin::PublicationsController, type: :controller do
         attributes_for(
           :publication,
           title: 'My amazing title',
-          short_description: 'Test short_description'
+          short_description: 'Test short_description',
+          summary: 'Test summary'
         )
       end
 
@@ -48,6 +49,7 @@ RSpec.describe Admin::PublicationsController, type: :controller do
         last_publication_created.tap do |g|
           expect(g.title).to eq(valid_params[:title])
           expect(g.short_description).to eq(valid_params[:short_description])
+          expect(g.summary).to eq(valid_params[:summary])
         end
       end
 
