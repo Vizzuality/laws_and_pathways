@@ -321,6 +321,12 @@
               background-size: 8px;
             }
 
+            &--no-data {
+              background-image: image-url('icons/oval.svg');
+              background-color: #C0C2C3;
+              background-size: 8px;
+            }
+
             @include until($desktop) {
               top: 0;
               left: -45px;
@@ -515,6 +521,10 @@
       }
 
       &--not-applicable {
+        background-color: #C0C2C3;
+      }
+
+      &--no-data {
         background-color: #C0C2C3;
       }
     }
