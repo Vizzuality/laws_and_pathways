@@ -1260,7 +1260,10 @@ describe 'CSVDataUpload (integration)' do
     expect(assessment.questions[0].answer).to eq('Yes')
     expect(assessment.questions[1].question).to eq('Question two, level 1?')
     expect(assessment.questions[1].level).to eq('1')
-    expect(assessment.questions[1].answer).to eq('Yes')
+    expect(assessment.questions[1].answer).to eq('No')
+    expect(assessment.questions[2].question).to eq('Question three, level 2?')
+    expect(assessment.questions[2].level).to eq('2')
+    expect(assessment.questions[2].answer).to eq('No data')
   end
 
   it 'imports CSV files with Banks data' do
