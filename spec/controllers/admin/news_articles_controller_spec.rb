@@ -36,7 +36,8 @@ RSpec.describe Admin::NewsArticlesController, type: :controller do
         attributes_for(
           :news_article,
           title: 'My amazing title',
-          content: 'Test Content'
+          content: 'Test Content',
+          is_insight: true
         )
       end
 
@@ -48,6 +49,7 @@ RSpec.describe Admin::NewsArticlesController, type: :controller do
         last_news_article_created.tap do |g|
           expect(g.title).to eq(valid_params[:title])
           expect(g.content).to eq(valid_params[:content])
+          expect(g.is_insight).to be_truthy
         end
       end
 

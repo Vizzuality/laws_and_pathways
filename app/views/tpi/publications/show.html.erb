@@ -1,24 +1,31 @@
 <% content_for :page_title, "#{@publication.title} - Transition Pathway Initiative" %>
-<% if @publication.class.name.eql?("NewsArticle") %>
-  <% content_for :page_description, strip_tags(@publication.content).first(160) if @publication.content.present? %>
-<% else %>
-  <% content_for :page_description, @publication.short_description&.first(160) %>
-<% end %>
+<% content_for :page_description, @publication.short_description&.first(160) %>
 
 <div class="container">
   <div class="pages__grid">
     <div class="pages__content">
       <h1 class="pages__title"><%= @publication.title %></h1>
       <p class="pages__date"><%= @publication.publication_date.strftime('%d/%m/%Y') %></p>
-      <% if @publication.class.name.eql?("NewsArticle") && @publication.image.present? %>
-        <div class="pages__image"><%= image_tag(@publication.image) %></div>
-      <% end %>
-      <div class="pages__description">
-        <% if @publication.class.name.eql?("NewsArticle") %>
-          <%= @publication.content&.html_safe %>
-        <% else %>
-          <%= @publication.short_description %>
+
+      <div class="pages__content__flex">
+        <% if @publication.image.present? %>
+          <div class="pages__image" style="margin-bottom: 0;"><%= image_tag(@publication.image) %></div>
         <% end %>
+        <div class="pages__description">
+          <p><%= @publication.short_description %></p>
+          <% if @publication.keywords.any? || @publication.tpi_sectors.any? %>
+            <div class="publication__tags">
+              <% @publication.tags_and_sectors.each do |tag| %>
+                <span class="tag"><%= tag %></span>
+              <% end %>
+            </div>
+          <% end %>
+          <div class="pages__description">
+            <%= @publication.summary&.html_safe %>
+          </div>
+
+          <%= link_to 'Download file', tpi_publication_download_file_path(slug: @publication.slug), target: '_blank', class: 'button is-primary' %>
+        </div>
       </div>
     </div>
   </div>

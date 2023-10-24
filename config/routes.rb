@@ -55,6 +55,9 @@ Rails.application.routes.draw do
       end
 
       resources :publications, only: [:index, :show] do
+        member do
+          get :show_news_article
+        end
         collection do
           get :partial
         end

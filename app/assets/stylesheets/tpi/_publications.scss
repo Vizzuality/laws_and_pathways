@@ -257,6 +257,16 @@ $max-lines: 3;
       margin-bottom: 22px;
     }
   }
+
+  &__content-type {
+    color: $grey-dark;
+    margin-top: 10px;
+    font-size: $size-7;
+    border: 1px solid rgba($grey-dark, 0.5);
+    padding-left: $size-7;
+    padding-right: $size-7;
+    display: inline-block;
+  }
 }
 
 .publications__grid {

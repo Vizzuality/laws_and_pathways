@@ -7,7 +7,7 @@ ActiveAdmin.register Publication do
   decorate_with PublicationDecorator
 
   permit_params :title, :author, :author_image, :short_description, :publication_date,
-                :file, :image, :created_by_id, :updated_by_id,
+                :file, :image, :created_by_id, :updated_by_id, :summary,
                 :keywords_string, tpi_sector_ids: []
 
   filter :title
@@ -20,6 +20,7 @@ ActiveAdmin.register Publication do
         attributes_table do
           row :title
           row :short_description
+          row :summary
           row :author
           row :author_image do |p|
             if p.author_image.present?
@@ -63,6 +64,7 @@ ActiveAdmin.register Publication do
       f.input :author
       f.input :author_image, as: :file, hint: preview_file_tag(f.object.author_image), input_html: {accept: 'image/*'}
       f.input :short_description, as: :text
+      f.input :summary, as: :trix, embed_youtube: true
       f.input :publication_date, as: :date_time_picker
       f.input :tpi_sector_ids, label: 'Sectors', as: :select,
                                collection: TPISector.order(:name), input_html: {multiple: true}

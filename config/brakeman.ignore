@@ -26,7 +26,7 @@
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/tpi/companies/show.html.erb",
-      "line": 119,
+      "line": 138,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "TPI::CompanyDecorator.decorate(Company.published.friendly.find(params[:id])).isin_array.join(\"<br/>\")",
       "render_path": [
@@ -57,7 +57,7 @@
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/tpi/sectors/index.html.erb",
-      "line": 69,
+      "line": 88,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "Content.find_by(:page => TPIPage.find_by(:slug => \"publicly-listed-equities-content\"), :code => \"methodology_description\").text",
       "render_path": [
@@ -65,7 +65,7 @@
           "type": "controller",
           "class": "TPI::SectorsController",
           "method": "index",
-          "line": 27,
+          "line": 34,
           "file": "app/controllers/tpi/sectors_controller.rb",
           "rendered": {
             "name": "tpi/sectors/index",
@@ -127,7 +127,7 @@
           "type": "controller",
           "class": "TPI::BanksController",
           "method": "index",
-          "line": 26,
+          "line": 27,
           "file": "app/controllers/tpi/banks_controller.rb",
           "rendered": {
             "name": "tpi/banks/index",
@@ -172,6 +172,37 @@
       },
       "user_input": "::Target.find(params[:id])",
       "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "7e53284632294fa27278fa7cd09aa0c3f4cd1d13c20c23b60a4a3f6df3f5a36a",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/tpi/publications/show_news_article.erb",
+      "line": 13,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "NewsArticle.published.find(params[:id]).content",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "TPI::PublicationsController",
+          "method": "show_news_article",
+          "line": 49,
+          "file": "app/controllers/tpi/publications_controller.rb",
+          "rendered": {
+            "name": "tpi/publications/show_news_article",
+            "file": "app/views/tpi/publications/show_news_article.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "tpi/publications/show_news_article"
+      },
+      "user_input": null,
+      "confidence": "High",
       "note": ""
     },
     {
@@ -308,6 +339,6 @@
       "note": ""
     }
   ],
-  "updated": "2022-09-06 13:32:13 +0200",
+  "updated": "2023-10-19 11:42:02 +0200",
   "brakeman_version": "5.2.3"
 }

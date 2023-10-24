@@ -7,6 +7,7 @@ module TPI
     before_action :fetch_tags, only: [:index]
     before_action :fetch_sectors, only: [:index]
     before_action :fetch_publication, only: [:show]
+    before_action :fetch_news_article, only: [:show_news_article]
 
     def index
       results = Queries::TPI::NewsPublicationsQuery.new(filter_params).call
@@ -36,12 +37,15 @@ module TPI
       respond_to do |format|
         format.html do
           admin_panel_path = polymorphic_path([:admin, @publication])
-          fixed_navbar("#{@publication.class.name.underscore.humanize} #{@publication.title}", admin_panel_path)
-
-          redirect_to '' unless @publication
+          fixed_navbar(@publication.title.to_s, admin_panel_path)
         end
         format.pdf { stream_publication_file }
       end
+    end
+
+    def show_news_article
+      admin_panel_path = polymorphic_path([:admin, @news_article])
+      fixed_navbar((@news_article[:title]).to_s, admin_panel_path)
     end
 
     def download_file
@@ -70,15 +74,15 @@ module TPI
     end
 
     def filter_params
-      params.permit(:tags, :sectors)
+      params.permit(:tags, :sectors, :types)
     end
 
     def fetch_publication
-      @publication = if params[:type].eql?('NewsArticle')
-                       NewsArticle.published.find(params[:id])
-                     else
-                       Publication.published.find_by(id: params[:id]) || Publication.published.find_by!(slug: params[:id])
-                     end
+      @publication = Publication.published.find_by(id: params[:id]) || Publication.published.find_by!(slug: params[:id])
+    end
+
+    def fetch_news_article
+      @news_article = NewsArticle.published.find params[:id]
     end
 
     def fetch_tags
