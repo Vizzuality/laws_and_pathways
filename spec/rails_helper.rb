@@ -52,6 +52,7 @@ Selenium::WebDriver.logger.ignore(:browser_options)
 
 RSpec.configure do |config|
   config.request_snapshots_dir = 'spec/fixtures/snapshots'
+  config.request_snapshots_dynamic_attributes = ['Id', 'Country Id']
 
   config.include FactoryBot::Syntax::Methods
   config.include Devise::Test::ControllerHelpers, type: :controller

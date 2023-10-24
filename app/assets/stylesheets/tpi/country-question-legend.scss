@@ -1,0 +1,107 @@
+.country-question-legend {
+  border: 1px solid $grey-lighter-medium;
+  background-color: $white;
+  position: fixed;
+
+  bottom: 0;
+  right: 0;
+
+  font-size: 12px;
+
+  z-index: 10;
+
+  transition: opacity .5s ease-out;
+  opacity: 0;
+
+  @include desktop {
+    bottom: unset;
+    right: unset;
+    top: 50%;
+    left: 15px;
+  }
+
+  @media (min-width: 1530px) {
+    left: unset;
+    right: calc(#{$widescreen} + (100vw - #{$widescreen}) / 2);
+  }
+
+  &--active {
+    opacity: 1;
+  }
+
+  &__header {
+    display: none;
+
+    padding: 10px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #CFD7ED;
+
+    @include desktop {
+      display: block;
+    }
+  }
+
+  &__content {
+    padding: 15px;
+    display: flex;
+    gap: 15px;
+
+    @include desktop {
+      flex-direction: column;
+    }
+
+    .country-question-legend-answer {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      &:before {
+        content: '';
+        display: block;
+        margin-top: -3px;
+
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 9px;
+      }
+
+      &--no:before {
+        background-image: image-url('tpi/ascor/no.svg');
+        background-size: 20px;
+      }
+
+      &--yes:before {
+        background-image: image-url('tpi/ascor/yes.svg');
+        background-size: 20px;
+      }
+
+      &--not-applicable:before {
+        background-image: image-url('tpi/ascor/not_applicable.svg');
+        background-size: 20px;
+      }
+
+      &--no-data:before {
+        background-image: image-url('tpi/ascor/no_data.svg');
+        background-size: 20px;
+      }
+
+      &--partial:before {
+        background-image: image-url('tpi/ascor/partial.svg');
+        background-size: 20px;
+      }
+
+      &--no-disclosure:before {
+        background-image: image-url('tpi/ascor/no_disclosure.svg');
+        background-size: 20px;
+      }
+
+      &--excempt:before {
+        background-image: image-url('tpi/ascor/excempt.svg');
+        background-size: 20px;
+      }
+    }
+  }
+}

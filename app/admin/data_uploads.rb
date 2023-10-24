@@ -1,5 +1,5 @@
 ActiveAdmin.register DataUpload do
-  menu parent: 'Administration', priority: 2
+  menu parent: 'Administration', priority: 3
 
   decorate_with DataUploadDecorator
 

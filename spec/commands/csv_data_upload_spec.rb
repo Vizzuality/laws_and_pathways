@@ -13,6 +13,11 @@ describe 'CSVDataUpload (integration)' do
   let(:bank_cp_assessments_csv) { fixture_file('bank_cp_assessments.csv') }
   let(:mq_assessments_csv) { fixture_file('mq_assessments.csv') }
   let(:geographies_csv) { fixture_file('geographies.csv') }
+  let(:ascor_countries_csv) { fixture_file('ascor_countries.csv') }
+  let(:ascor_benchmarks_csv) { fixture_file('ascor_benchmarks.csv') }
+  let(:ascor_pathways_csv) { fixture_file('ascor_pathways.csv') }
+  let(:ascor_assessment_indicators_csv) { fixture_file('ascor_assessment_indicators.csv') }
+  let(:ascor_assessments_csv) { fixture_file('ascor_assessments.csv') }
   let(:current_user_role) { 'super_user' }
   let(:current_user) { build(:admin_user, role: current_user_role) }
   let_it_be(:countries) do
@@ -21,6 +26,11 @@ describe 'CSVDataUpload (integration)' do
       create(:geography, iso: 'GBR', name: 'United Kingdom'),
       create(:geography, iso: 'JPN', name: 'Japan'),
       create(:geography, iso: 'USA', name: 'United States')
+    ]
+  end
+  let_it_be(:ascor_countries) do
+    [
+      create(:ascor_country, iso: 'USA', name: 'United States')
     ]
   end
 
@@ -414,6 +424,91 @@ describe 'CSVDataUpload (integration)' do
         fixture_file('geographies.csv', content: csv_content),
         {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
         expected_success: false
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for ASCOR countries' do
+      csv_content = <<-CSV
+        Name
+        New Name
+      CSV
+
+      command = expect_data_upload_results(
+        ASCOR::Country,
+        fixture_file('ascor_countries.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false,
+        custom_uploader: 'ASCORCountries'
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for ASCOR benchmarks' do
+      csv_content = <<-CSV
+        Country,Publication Date
+        New Country,2020-01
+      CSV
+
+      command = expect_data_upload_results(
+        ASCOR::Benchmark,
+        fixture_file('ascor_benchmarks.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false,
+        custom_uploader: 'ASCORBenchmarks'
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for ASCOR pathways' do
+      csv_content = <<-CSV
+        Country,Publication Date
+        New Country,2020-01
+      CSV
+
+      command = expect_data_upload_results(
+        ASCOR::Pathway,
+        fixture_file('ascor_pathways.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false,
+        custom_uploader: 'ASCORPathways'
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for ASCOR assessment indicator' do
+      csv_content = <<-CSV
+        Code,Type,Text
+        EP,indicator,Test
+      CSV
+
+      command = expect_data_upload_results(
+        ASCOR::AssessmentIndicator,
+        fixture_file('ascor_assessment_indicators.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false,
+        custom_uploader: 'ASCORAssessmentIndicators'
+      )
+
+      expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
+    end
+
+    it 'for ASCOR assessments' do
+      csv_content = <<-CSV
+        Country,Publication Date
+        New Country,2020-01
+      CSV
+
+      command = expect_data_upload_results(
+        ASCOR::Assessment,
+        fixture_file('ascor_assessments.csv', content: csv_content),
+        {new_records: 0, not_changed_records: 0, rows: 1, updated_records: 0},
+        expected_success: false,
+        custom_uploader: 'ASCORAssessments'
       )
 
       expect(command.errors.messages[:base]).to eq(['CSV missing header: Id'])
@@ -1356,6 +1451,186 @@ describe 'CSVDataUpload (integration)' do
     expect(geography.political_groups_list).to include('OECD', 'G20')
     expect(geography.federal).to be_truthy
     expect(geography.federal_details).to be
+  end
+
+  it 'import CSV file with ASCOR countries data' do
+    # USA is already created
+    expect_data_upload_results(
+      ASCOR::Country,
+      ascor_countries_csv,
+      {new_records: 1, not_changed_records: 1, rows: 2, updated_records: 0},
+      custom_uploader: 'ASCORCountries'
+    )
+    # subsequent import should not create or update any record
+    expect_data_upload_results(
+      ASCOR::Country,
+      ascor_countries_csv,
+      {new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0},
+      custom_uploader: 'ASCORCountries'
+    )
+
+    country = ASCOR::Country.find_by(iso: 'JPN')
+    expect(country.name).to eq('Japan')
+    expect(country.region).to eq('Asia')
+    expect(country.wb_lending_group).to eq('High-income economies')
+    expect(country.fiscal_monitor_category).to eq('Advanced economies')
+    expect(country.type_of_party).to eq('Annex I')
+  end
+
+  it 'import CSV file with ASCOR benchmarks data' do
+    create(:ascor_country, iso: 'JPN', name: 'Japan')
+
+    expect_data_upload_results(
+      ASCOR::Benchmark,
+      ascor_benchmarks_csv,
+      {new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0},
+      custom_uploader: 'ASCORBenchmarks'
+    )
+    # subsequent import should not create or update any record
+    expect_data_upload_results(
+      ASCOR::Benchmark,
+      ascor_benchmarks_csv,
+      {new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0},
+      custom_uploader: 'ASCORBenchmarks'
+    )
+
+    benchmark = ASCOR::Benchmark.joins(:country).find_by ascor_countries: {iso: 'JPN'}
+
+    expect(benchmark.publication_date).to eq(Date.new(2023, 12))
+    expect(benchmark.emissions_metric).to eq('Absolute')
+    expect(benchmark.emissions_boundary).to eq('Production - excluding LULUCF')
+    expect(benchmark.units).to eq('MtCO2e')
+    expect(benchmark.benchmark_type).to eq('National 1.5C benchmark')
+    expect(benchmark.emissions).to eq(
+      '2021' => 6220.0,
+      '2022' => 5845.0,
+      '2023' => 5470.0,
+      '2024' => 5095.0,
+      '2025' => 4720.0,
+      '2026' => 4345.0,
+      '2027' => 3970.0,
+      '2028' => 3595.0,
+      '2029' => 3219.0,
+      '2030' => 2844.0
+    )
+  end
+
+  it 'import CSV file with ASCOR pathways data' do
+    create(:ascor_country, iso: 'JPN', name: 'Japan')
+
+    expect_data_upload_results(
+      ASCOR::Pathway,
+      ascor_pathways_csv,
+      {new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0},
+      custom_uploader: 'ASCORPathways'
+    )
+    # subsequent import should not create or update any record
+    expect_data_upload_results(
+      ASCOR::Benchmark,
+      ascor_pathways_csv,
+      {new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0},
+      custom_uploader: 'ASCORPathways'
+    )
+
+    pathway = ASCOR::Pathway.joins(:country).find_by ascor_countries: {iso: 'USA'}
+
+    expect(pathway.publication_date).to eq(Date.new(2023, 12))
+    expect(pathway.assessment_date).to eq(Date.new(2023, 10, 30))
+    expect(pathway.emissions_metric).to eq('Absolute')
+    expect(pathway.emissions_boundary).to eq('Production - excluding LULUCF')
+    expect(pathway.units).to eq('MtCO2e')
+    expect(pathway.trend_1_year).to eq('3.9%')
+    expect(pathway.trend_3_year).to eq('-2.3%')
+    expect(pathway.trend_5_year).to eq('-0.9%')
+    expect(pathway.trend_source).to eq('https://zenodo.org/record/7727475')
+    expect(pathway.trend_year).to eq(2021)
+    expect(pathway.recent_emission_level).to eq(-792.3)
+    expect(pathway.recent_emission_source).to eq('https://zenodo.org/record/7727475')
+    expect(pathway.recent_emission_year).to eq(2021)
+    expect(pathway.emissions).to eq(
+      '2006' => 7380.0,
+      '2007' => 7480.0,
+      '2008' => 7260.0,
+      '2009' => 6800.0,
+      '2010' => 7020.0,
+      '2011' => 6860.0,
+      '2012' => 6620.0,
+      '2013' => 6800.0,
+      '2014' => 6860.0,
+      '2015' => 6700.0,
+      '2016' => 6550.0,
+      '2017' => 6510.0,
+      '2018' => 6700.0,
+      '2019' => 6580.0,
+      '2020' => 5990.0,
+      '2021' => 6220.0,
+      '2022' => 5981.5,
+      '2023' => 5743.0,
+      '2024' => 5504.5,
+      '2025' => 5266.0,
+      '2026' => 5027.5,
+      '2027' => 4789.0,
+      '2028' => 4550.4,
+      '2029' => 4311.9,
+      '2030' => 4073.4
+    )
+  end
+
+  it 'import CSV file with ASCOR assessment indicators data' do
+    expect_data_upload_results(
+      ASCOR::AssessmentIndicator,
+      ascor_assessment_indicators_csv,
+      {new_records: 7, not_changed_records: 0, rows: 7, updated_records: 0},
+      custom_uploader: 'ASCORAssessmentIndicators'
+    )
+    # subsequent import should not create or update any record
+    expect_data_upload_results(
+      ASCOR::Benchmark,
+      ascor_assessment_indicators_csv,
+      {new_records: 0, not_changed_records: 7, rows: 7, updated_records: 0},
+      custom_uploader: 'ASCORAssessmentIndicators'
+    )
+
+    indicator = ASCOR::AssessmentIndicator.find_by code: 'EP.1'
+    expect(indicator.indicator_type).to eq('area')
+    expect(indicator.text).to eq('Emissions Trends')
+    expect(indicator.units_or_response_type).to eq('Yes/No/Partial')
+  end
+
+  it 'import CSV file with ASCOR assessments data' do
+    create :ascor_country, iso: 'JPN', name: 'Japan'
+    create :ascor_assessment_indicator, code: 'EP.1.a', indicator_type: 'indicator',
+                                        text: 'Have the country’s emissions decreased in recent years?'
+    create :ascor_assessment_indicator, code: 'EP.1.a.i', indicator_type: 'metric',
+                                        text: "What is the country's most recent emissions level?"
+
+    expect_data_upload_results(
+      ASCOR::Assessment,
+      ascor_assessments_csv,
+      {new_records: 2, not_changed_records: 0, rows: 2, updated_records: 0},
+      custom_uploader: 'ASCORAssessments'
+    )
+    # subsequent import should not create or update any record
+    expect_data_upload_results(
+      ASCOR::Assessment,
+      ascor_assessments_csv,
+      {new_records: 0, not_changed_records: 0, rows: 2, updated_records: 2},
+      custom_uploader: 'ASCORAssessments'
+    )
+
+    assessment = ASCOR::Assessment.joins(:country).find_by ascor_countries: {iso: 'JPN'}
+    indicator_1 = assessment.results.joins(:indicator).find_by ascor_assessment_indicators: {code: 'EP.1.a'}
+    indicator_2 = assessment.results.joins(:indicator).find_by ascor_assessment_indicators: {code: 'EP.1.a.i'}
+
+    expect(assessment.notes).to be_nil
+    expect(assessment.publication_date).to eq(Date.new(2023, 12))
+    expect(assessment.assessment_date).to eq(Date.new(2023, 10, 30))
+    expect(indicator_1.answer).to eq('Yes')
+    expect(indicator_2.answer).to be_nil
+    expect(indicator_1.source).to eq('https://zenodo.org/record/7727476')
+    expect(indicator_2.source).to be_nil
+    expect(indicator_1.year).to be_nil
+    expect(indicator_2.year).to eq(2010)
   end
 
   def expect_data_upload_results(uploaded_resource_klass, csv, expected_details, expected_success: true, custom_uploader: nil)

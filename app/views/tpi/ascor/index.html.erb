@@ -1,0 +1,134 @@
+<% content_for :page_title, "ASCOR Tool - Transition Pathway Initiative" %>
+<% content_for :hosted_by do %><span></span><% end %>
+
+<div class="ascor-page">
+  <div class="dropdown-selector-wrapper">
+    <div class="left-icon"></div>
+    <div class="right-icon"></div>
+    <div class="bottom-icon"></div>
+
+    <%= react_component("AscorDropdown", { banks: @countries_json, selectedOption: 'All countries' }) %>
+
+    <div class="ascor-header container">
+      <div class="links">
+        <% if @methodology_publication.present? %>
+          <a href="#methodology" class="link with-icon">
+            <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" class="is-hidden-touch" />
+            Methodology
+          </a>
+        <% end %>
+        <a href="#publications" class="link with-icon">
+          <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" class="is-hidden-touch" />
+          Publications
+        </a>
+      </div>
+
+      <%= link_to user_download_tpi_ascor_index_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
+        <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
+        Download ASCOR data
+      <% end %>
+    </div>
+  </div>
+
+  <section class="container">
+    <div class="bubble-chart-header">
+      <h2 class="is-size-4">
+        ASCOR country assessment results
+        <span class="base-tooltip__default-trigger" id="bubble-chart-info">?</span>
+      </h2>
+
+      <div class="bubble-chart-header__assessment-dropdown">
+        <div class="caption">
+          Assessment Date:
+        </div>
+        <div class="date-dropdown">
+          <%= react_component('RemoteDropdown', {
+            name: 'assessment_date',
+            remote: true,
+            url: index_assessment_tpi_ascor_index_path,
+            data: @assessment_dates.map {|v| {label: v&.strftime('%d %B %Y'), value: v}},
+            selected: @assessment_date
+          }) %>
+        </div>
+      </div>
+    </div>
+    <div class="bubble-chart-description">
+      Countries are assessed across the ASCOR framework’s three pillars and thirteen topic areas.
+    </div>
+    <div id="bubble-chart">
+      <%= render 'tpi/ascor/bubble_chart' %>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="emissions-chart-header">
+      <h2 class="is-size-4">
+        Country emission pathways
+        <span class="base-tooltip__default-trigger" id="emissions-chart-info">?</span>
+      </h2>
+
+      <div class="emissions-chart-header__assessment-dropdown">
+        <div class="caption">
+          Assessment Date:
+        </div>
+        <div class="date-dropdown">
+          <%= react_component('RemoteDropdown', {
+            name: 'emissions_assessment_date',
+            remote: true,
+            url: index_emissions_assessment_tpi_ascor_index_path,
+            data: @assessment_dates.map {|v| {label: v&.strftime('%d %B %Y'), value: v}},
+            selected: @emissions_assessment_date
+          }) %>
+        </div>
+      </div>
+    </div>
+    <div class="emissions-chart-description">
+      Country emissions assessed using different metrics, focusing on absolute production-based emissions, excluding LULUCF, to align with 2030 targets.
+    </div>
+    <div id="emissions-chart">
+      <%= render 'tpi/ascor/emissions_chart' %>
+    </div>
+  </section>
+
+  <% if @methodology_publication.present? %>
+    <section id="methodology" class="container">
+      <div class="columns">
+        <div class="column pages__content">
+          <h4>Methodology</h4>
+
+          <div>
+            <%= @methodology_description&.text&.html_safe %>
+          </div>
+        </div>
+        <div class="column">
+          <%= render 'tpi/publications/list', publications_and_articles: [@methodology_publication] %>
+        </div>
+      </div>
+    </section>
+  <% end %>
+
+  <hr>
+
+  <section id="publications" class="section ascor-page__promoted-publications promoted-publications">
+    <div class="container">
+      <div class="promoted-publications__title">
+        <div class="promoted-publications__title-text">Publications and news</div>
+
+        <%= link_to 'View all publications and news', tpi_publications_path, class: 'button is-secondary is-hidden-touch' %>
+      </div>
+
+      <% if @publications_and_articles.any? %>
+        <%= render "tpi/publications/promoted", publications_and_articles: @publications_and_articles, count: @publications_and_articles.count %>
+      <% else %>
+        <div class="promoted-publications__no-data">
+          There are currently no articles related to ASCOR available, but check all our other publications and news.
+        </div>
+      <% end %>
+      <div class="view-all-btn__container">
+        <a href="/publications" class="button is-secondary is-hidden-desktop">View all news</a>
+      </div>
+    </div>
+  </section>
+
+  <%= render 'contact' %>
+</div>

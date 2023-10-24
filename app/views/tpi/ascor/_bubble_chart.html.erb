@@ -1,0 +1,7 @@
+<%= react_component('charts/ascor-bubble/Chart', { results: @ascor_assessment_results }) %>
+<%= react_component('InfoModal', {
+  title: "ASCOR country assessment results",
+  text: "<p>Countries are assessed across the ASCOR framework’s three pillars and thirteen topic areas.</p>" \
+        "<p>The area-level result is Yes if all indicators within the area are assessed as Yes, Partial if some of the indicators within the area are assessed as Yes, and No if all of the indicators within the area are assessed as No.</p>",
+  element: "#bubble-chart-info"
+}) %>
