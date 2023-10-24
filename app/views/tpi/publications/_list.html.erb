@@ -18,6 +18,15 @@
           <% end %>
         </div>
       </div>
+
+      <div class="publication__content-type">
+        <% if publication.is_a?(NewsArticle) %>
+          <%= publication.is_insight? ? 'Insights' : 'News' %>
+        <% else %>
+          Publications
+        <% end %>
+      </div>
+
       <p class="updated_at "><%= publication.publication_date.strftime('%d/%m/%Y') %></p>
 
       <div class="content__message">
@@ -29,13 +38,7 @@
           <% end %>
         </p>
       </div>
-      <div class="publication__content-type">
-        <% if publication.is_a?(NewsArticle) %>
-          <%= publication.is_insight? ? 'Insights' : 'News' %>
-        <% else %>
-          Publications
-        <% end %>
-      </div>
+
       <% if publication.keywords.any? || publication.tpi_sectors.any? %>
         <div class="publication__tags">
           <% publication.tags_and_sectors.each do |tag| %>
