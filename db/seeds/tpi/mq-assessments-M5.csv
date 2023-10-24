@@ -1,181 +1,181 @@
 Id,Methodology version,Company id,Company,Assessment date,Publication date,Level,Notes,Q1L0|Does the company acknowledge climate change as a significant issue for the business?,Q2L1|Does the company recognise climate change as a relevant risk and/or opportunity for the business?,Q3L1|Does the company have a policy (or equivalent) commitment to action on climate change?,Q4L2|Has the company set greenhouse gas emission reduction targets?,Q5L2|Has the company published information on its Scope 1 and 2 greenhouse gas emissions?,Q6L3|Has the company nominated a board member or board committee with explicit responsibility for oversight of the climate change policy?,Q7L3|Has the company set quantitative targets for reducing its greenhouse gas emissions?,Q8L3|Does the company report on Scope 3 emissions?,Q9L3|Has the company had its operational (Scope 1 and/or 2) greenhouse gas emissions data verified?,Q10L3|Does the company support domestic and international efforts to mitigate climate change?,Q11L3|Does the company disclose its membership and involvement in trade associations engaged in climate issues?,Q12L3|Does the company have a process to manage climate-related risks?,Q13L3|Has the company set long-term quantitative targets for reducing its greenhouse gas emissions?,Q14L4|Does the company's remuneration for senior executives incorporate climate change performance?,Q15L4|Does the company incorporate climate change risks and opportunities in their strategy?,Q16L4|Does the company incorporate climate change risks and opportunities in their strategy?,Q17L4|Does the company disclose an internal price of carbon?,Q18L4|Does the company disclose the actions necessary to meet its emissions-reduction targets?,Q19L5|Does the company quantify the key elements of its emissions reduction strategy and the proportional impact of each action in achieving its targets?,Q20L5|Does the company’s transition plan clarify the role that will be played by offsets and/or negative emissions technologies?,Q21L5|Does the company commit to phasing out capital expenditure on carbon intensive assets or products?,Q22L5|Does the company align future capital expenditures with its long-term decarbonisation goals and disclose how the alignment is determined?,Q23L5|Does the company ensure consistency between its climate change policy and the positions taken by trade associations of which it is a member?
-,5,1087,Subaru,09/07/2022,2020-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Yes,No,Yes,Yes,No,No,No,No,No,No
-,5,1539,NS United Kaiun Kaisha,09/07/2022,2020-12,1,,Yes,No,No,Yes,No,No,Yes,No,No,No,No,No,Not applicable,Yes,No,No,No,No,No,No,No,No,No
-,5,1537,Iino Kaiun Kaisha,09/07/2022,2020-12,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1315,NYK Line,09/07/2022,2020-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No
-,5,1314,MOL,09/07/2022,2020-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Not applicable,Yes,No,Yes,No,No,No,No,No,No,No
-,5,1077,Mitsubishi,09/07/2022,2020-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,No,Yes,Yes,No,No,Yes,Yes,No,No,No,No,No,No
-,5,1076,Mazda,09/07/2022,2020-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Yes,No,Yes,Yes,No,No,No,No,No,No
-,5,1319,K Line,09/07/2022,2020-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No
-,5,1275,Japan Airlines,09/07/2022,2020-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,No,Yes,Not applicable,Yes,No,No,No,Yes,No,No,No,No,No
-,5,1029,Geely,09/07/2022,2020-12,1,,Yes,No,No,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1006,Ferrari,09/07/2022,2020-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,No,No,No,No,Yes,No,No,No,No,No,No,No,No,No
-,5,1318,COSCO Shipping Holdings,09/07/2022,2020-12,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1326,COSCO Shipping Energy,09/07/2022,2020-12,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1270,China Southern,09/07/2022,2020-12,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1538,China Merchants Energy Shipping,09/07/2022,2020-12,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1540,BYD,09/07/2022,2020-12,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1002,Brilliance,09/07/2022,2020-12,0,,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1269,ANA Group,09/07/2022,2020-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Not applicable,Yes,Yes,Yes,No,No,No,No,No,No,No
-,5,1267,Air China,09/07/2022,2020-12,1,,Yes,No,Yes,No,No,No,No,No,Yes,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1294,AGL Energy,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No
-,5,1021,China Coal,09/07/2022,2020-10,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1023,China Petroleum & Chemical,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No,Yes,No,No,No,No,No,No,No,No,No,No,No
-,5,1312,China Resources Power,09/07/2022,2020-10,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1025,China Shenhua Energy,09/07/2022,2020-10,2,,Yes,Yes,Yes,No,Yes,No,No,No,Yes,No,No,Yes,No,No,No,No,No,No,No,No,No,No,No
-,5,1027,Chubu Electric Power,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No,No,No,No,No,No
-,5,1311,Chugoku,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Not applicable,Yes,No,Yes,No,Yes,No,No,No,No,No
-,5,1031,CNOOC,09/07/2022,2020-10,2,,Yes,Yes,Yes,No,Yes,No,No,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1526,Coronado Global Resources,09/07/2022,2020-10,2,,Yes,Yes,Yes,No,Yes,No,No,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1057,Ecopetrol,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1503,EDP,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No
-,5,1310,Electric Power Development,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,No,No,No,No,No,No
-,5,1063,Enel,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No
-,5,1065,Eni,09/07/2022,2020-10,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
-,5,1194,Equinor,09/07/2022,2020-10,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
-,5,1522,Fortescue,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No,Yes,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1516,Galp Energia,09/07/2022,2020-10,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
-,5,1103,Inner Mongolia Yitai Coal,09/07/2022,2020-10,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1518,INPEX,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No
-,5,1105,Jastrzebska Spolka Weglowa,09/07/2022,2020-10,2,,Yes,Yes,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1108,Eneos (Oil & Gas),09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,No,Yes,No,No,No,No,No,No
-,5,1300,Kansai Elec Power,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Not applicable,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
-,5,1307,Kyushu Elec Power,09/07/2022,2020-10,1,,Yes,Yes,No,Yes,Yes,No,Yes,Yes,No,Yes,No,No,Not applicable,Yes,No,No,No,No,No,No,No,No,No
-,5,1529,Mitsubishi Corp,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No
-,5,1530,Mitsui & Co (Coal Mining),09/07/2022,2020-10,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,No,No,Yes,No,No,No,No,No,No,No,No,No,No,No
-,5,1527,New Hope,09/07/2022,2020-10,1,,Yes,Yes,No,No,Yes,Yes,No,No,No,No,No,Yes,No,No,No,No,No,No,No,No,No,No,No
-,5,1528,Nippon Coke & Engineering,09/07/2022,2020-10,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1534,Oil Search,09/07/2022,2020-10,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,Yes,Yes,No,No,No,No,No
-,5,1145,OMV,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No
-,5,1146,Origin Energy,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Not applicable,Yes,No,No,Yes,Yes,No,No,No,No,No
-,5,1147,Orsted,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes,No,No,No,No,No
-,5,1154,Petrochina,09/07/2022,2020-10,1,,Yes,No,Yes,Yes,Yes,No,Yes,No,No,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1313,PGE,09/07/2022,2020-10,1,,Yes,No,Yes,Yes,No,No,Yes,No,Yes,No,No,No,Not applicable,Yes,No,No,No,No,No,No,No,No,No
-,5,1224,Santos,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,Yes,Yes,Yes,Yes,No,Yes,No,No,No,No,No,No
-,5,1514,South32 (Diversified mining),09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Yes
-,5,1531,Sumitomo Corp,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,No,Yes,No,No,No,No,No,No,No,No,No
-,5,1302,Terna,09/07/2022,2020-10,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
-,5,1304,Tohoku Elec Power,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,No,Yes,No,Yes,No,No,No,No,No
-,5,1301,TEPCO,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No
-,5,1234,Washington H. Soul Pattinson,09/07/2022,2020-10,2,,Yes,Yes,Yes,No,No,Yes,No,No,No,No,No,Yes,No,No,No,No,Yes,No,No,No,No,No,No
-,5,1238,Whitehaven Coal,09/07/2022,2020-10,2,,Yes,Yes,Yes,No,Yes,Yes,No,No,No,No,No,Yes,No,No,No,No,Yes,No,No,No,No,No,No
-,5,1239,Woodside Petroleum,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Yes,No,Yes,No,No,No,No,No,No,No,No
-,5,1242,Yanzhou Coal Mining,09/07/2022,2020-10,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1360,South32 (Coal Mining),09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Yes
-,5,1519,Eneos (Coal Mining),09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,No,Yes,No,No,No,No,No,No
-,5,1014,Daikin Industries,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No
-,5,1009,Fiat Chrysler,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No,No,No,No
-,5,1096,Hitachi,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,Yes,Yes,No,No,No,No,No
-,5,1052,Honda,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No,No
-,5,1007,Nippon Steel,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Not applicable,Yes,No,No,Yes,No,No,No,No,No,No
-,5,1080,Nissan,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
-,5,1046,Panasonic,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Not applicable,Yes,Yes,Yes,Yes,No,No,No,No,No,No
-,5,1116,Qantas,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,No,No,No,No,No,No,No,No
-,5,1175,SAIC motor,09/07/2022,2020-10,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1090,Suzuki,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,No
-,5,1042,Toray Industries,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes,No,No,No,No,No
-,5,1097,Toyota,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes
-,5,1114,Wesfarmers,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Not applicable,Yes,No,No,No,Yes,No,No,No,No,No
-,5,1240,Woolworths,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Not applicable,Yes,No,No,No,No,No,No,No,No,No
-,5,1189,South32 (Aluminium),09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Yes
-,5,1125,AP Moller – Maersk,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,No,Yes,Not applicable,Yes,No,Yes,No,No,No,No,No,No,No
-,5,1040,Adelaide Brighton,09/07/2022,2020-10,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1265,Anhui Conch Cement,09/07/2022,2020-10,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1092,Bluescope Steel,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,No,Yes,Not applicable,Yes,Yes,No,No,No,No,No,No,No,No
-,5,1115,Boral,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Not applicable,No,No,No,Yes,No,No,No,No,No,No
-,5,1170,Rio Tinto (Aluminium),09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,No,Yes,No,Yes,Yes,Yes,Yes,Yes
-,5,1358,Rio Tinto (Diversified mining),09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,No,Yes,No,Yes,Yes,Yes,Yes,Yes
-,5,1187,Oji Holdings,09/07/2022,2020-02,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Not applicable,No,No,Yes,Yes,Yes,No,No,No,No,No
-,5,1197,Shandong Chenming,09/07/2022,2020-02,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1198,Sumitomo Osaka Cement,09/07/2022,2020-02,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1202,Taiheiyo Cement,09/07/2022,2020-02,1,,Yes,No,Yes,Yes,Yes,No,Yes,Yes,Yes,No,No,No,Not applicable,Yes,No,No,No,No,No,No,No,No,No
-,5,1209,Tenaris,09/07/2022,2020-02,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1292,UACJ,09/07/2022,2020-02,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,Yes,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1230,Voestalpine,09/07/2022,2020-02,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes,No,No,No,No,No
-,5,1497,Mitsui & Co,09/07/2022,2020-02,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,No,Yes,Yes,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1290,Norsk Hydro,09/07/2022,2020-02,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Not applicable,No,Yes,Yes,No,No,No,No,No,No,No
-,5,1134,Nisshin Steel,09/07/2022,2020-02,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1183,Nippon Paper Industries,09/07/2022,2020-02,2,,Yes,Yes,Yes,Yes,No,No,Yes,No,No,No,Yes,Yes,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1289,Nippon Light Metal,09/07/2022,2020-02,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Not applicable,Yes,No,No,Yes,No,No,No,No,No,No
-,5,1178,Nine Dragons Paper Industries,09/07/2022,2020-02,0,,No,No,No,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1168,Lee & Man Paper Manufacturing,09/07/2022,2020-02,1,,Yes,No,No,No,Yes,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1112,Kobe Steel,09/07/2022,2020-02,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1106,JFE Holdings,09/07/2022,2020-02,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,No,No,Not applicable,Yes,No,No,No,No,No,No,No,No,No
-,5,1144,Hokuetsu,09/07/2022,2020-02,1,,Yes,No,Yes,Yes,No,No,Yes,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1126,Daio Paper,09/07/2022,2020-02,1,,Yes,No,Yes,Yes,No,No,Yes,No,No,No,No,No,Not applicable,Yes,No,No,No,No,No,No,No,No,No
-,5,1288,China Zhongwang,09/07/2022,2020-02,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1024,China Resources Cement Holdings,09/07/2022,2020-02,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1022,China National Building Materials,09/07/2022,2020-02,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1287,Chalco,09/07/2022,2020-02,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1286,Alumina,09/07/2022,2020-02,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Not applicable,Yes,No,No,No,No,No,No,No,No,No
-,5,1473,Shin-Etsu Chemical,09/07/2022,2020-02,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No,No,No,No,No,No
-,5,1477,Asahi Kasei,09/07/2022,2020-02,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No
-,5,1267,Air China,09/07/2022,2019-12,1,,Yes,No,Yes,No,No,No,No,No,Yes,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1269,ANA Group,09/07/2022,2019-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No,No,No,No,No,No
-,5,1270,China Southern,09/07/2022,2019-12,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1275,Japan Airlines,09/07/2022,2019-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No,No,No,Yes,Not applicable,Yes,No,No,No,Yes,No,No,No,No,No
-,5,1314,MOL,09/07/2022,2019-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,No,No,No,No,No,No
-,5,1315,NYK Line,09/07/2022,2019-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No,No,No,No,No,No
-,5,1318,COSCO Shipping Holdings,09/07/2022,2019-12,2,,Yes,Yes,Yes,No,No,No,No,No,Yes,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1319,K Line,09/07/2022,2019-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No
-,5,1326,COSCO Shipping Energy,09/07/2022,2019-12,1,,Yes,No,Yes,No,Yes,No,No,Yes,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1076,Mazda,09/07/2022,2019-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes
-,5,1077,Mitsubishi,09/07/2022,2019-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,No
-,5,1087,Subaru,09/07/2022,2019-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,No,No,No,No
-,5,1002,Brilliance,09/07/2022,2019-12,0,,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1006,Ferrari,09/07/2022,2019-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No,Yes,No,No,No,No,No,No,No,No,No,No,No
-,5,1029,Geely,09/07/2022,2019-12,1,,Yes,No,No,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1014,Daikin Industries,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes,No,No,No,No,No
-,5,1096,Hitachi,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,Yes,No,No,No,No,No,No
-,5,1007,Nippon Steel,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Not applicable,Yes,No,No,No,No,No,No,No,No,No
-,5,1046,Panasonic,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,Yes,No,No,No,No,No,No
-,5,1358,Rio Tinto (Diversified mining),09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes
-,5,1224,Santos,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,No,No,No,No,No,No
-,5,1042,Toray Industries,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,Yes,No,No,No,No,No
-,5,1114,Wesfarmers,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes
-,5,1240,Woolworths,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,No,Yes,Yes,Yes,No,No,No,No,No,No
-,5,1009,Fiat Chrysler,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No,No,No,No
-,5,1052,Honda,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes
-,5,1080,Nissan,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No
-,5,1175,SAIC motor,09/07/2022,2019-09,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1090,Suzuki,09/07/2022,2019-09,1,,Yes,No,Yes,Yes,Yes,No,Yes,Yes,No,No,No,No,Yes,No,No,No,No,No,No,No,No,No,No
-,5,1097,Toyota,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes
-,5,1116,Qantas,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,No,No,No,No,No,No
-,5,1304,Tohoku Elec Power,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,No,Yes,No,Yes,No,No,No,No,No
-,5,1294,AGL Energy,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No
-,5,1312,China Resources Power,09/07/2022,2019-09,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1027,Chubu Electric Power,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,No,No,No,No,No,No
-,5,1311,Chugoku,09/07/2022,2019-09,1,,Yes,No,Yes,No,Yes,No,No,Yes,Yes,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1310,Electric Power Development,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,No,Yes,No,No,Yes,Yes,Yes,Yes,Yes
-,5,1063,Enel,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No
-,5,1300,Kansai Elec Power,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
-,5,1307,Kyushu Elec Power,09/07/2022,2019-09,1,,Yes,No,Yes,Yes,Yes,No,Yes,Yes,Yes,No,No,No,Not applicable,Yes,No,No,No,No,No,No,No,No,No
-,5,1146,Origin Energy,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Not applicable,Yes,Yes,No,Yes,Yes,No,No,No,No,No
-,5,1147,Orsted,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No,No,No,No,No,No
-,5,1313,PGE,09/07/2022,2019-09,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1125,AP Moller – Maersk,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,No,No,No,No,No,No,No,No
-,5,1301,TEPCO,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
-,5,1302,Terna,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes,No,No,No,No,No
-,5,1023,China Petroleum & Chemical,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,No,No
-,5,1031,CNOOC,09/07/2022,2019-09,2,,Yes,Yes,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1057,Ecopetrol,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No
-,5,1065,Eni,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No
-,5,1194,Equinor,09/07/2022,2019-09,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
-,5,1108,Eneos (Oil & Gas),09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No,No,No,No
-,5,1145,OMV,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No
-,5,1154,Petrochina,09/07/2022,2019-09,1,,Yes,No,Yes,No,No,No,No,No,No,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1239,Woodside Petroleum,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No,No,No,No,No,No,No
-,5,1021,China Coal,09/07/2022,2019-09,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1025,China Shenhua Energy,09/07/2022,2019-09,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1103,Inner Mongolia Yitai Coal,09/07/2022,2019-09,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1105,Jastrzebska Spolka Weglowa,09/07/2022,2019-09,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1360,South32 (Coal Mining),09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No
-,5,1234,Washington H. Soul Pattinson,09/07/2022,2019-09,0,,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1238,Whitehaven Coal,09/07/2022,2019-09,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1242,Yanzhou Coal Mining,09/07/2022,2019-09,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
-,5,1040,Adelaide Brighton,09/07/2022,2019-09,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1265,Anhui Conch Cement,09/07/2022,2019-09,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No,No,No,No
-,5,1170,Rio Tinto (Aluminium),09/07/2022,2019-09,5,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,Yes
-,5,1189,South32 (Aluminium),09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No
-,5,1092,Bluescope Steel,09/07/2022,2019-09,2,,Yes,Yes,Yes,No,Yes,Yes,No,No,No,Yes,No,Yes,Not applicable,No,No,No,Yes,No,No,No,No,No,No
-,5,1115,Boral,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,No,No,Yes,No,No,No,No,No,No
+,5,1087,Subaru,09/07/2022,2020-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Yes,No,Yes,Yes,No,No,No data,No,No,No
+,5,1539,NS United Kaiun Kaisha,09/07/2022,2020-12,1,,Yes,No,No,Yes,No,No,Yes,No,No,No,No,No,Not applicable,Yes,No,No,No,No,No,No data,No,No,No
+,5,1537,Iino Kaiun Kaisha,09/07/2022,2020-12,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1315,NYK Line,09/07/2022,2020-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No data,No,No,No
+,5,1314,MOL,09/07/2022,2020-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Not applicable,Yes,No,Yes,No,No,No,No data,No,No,No
+,5,1077,Mitsubishi,09/07/2022,2020-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,No,Yes,Yes,No,No,Yes,Yes,No,No,No data,No,No,No
+,5,1076,Mazda,09/07/2022,2020-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Yes,No,Yes,Yes,No,No,No data,No,No,No
+,5,1319,K Line,09/07/2022,2020-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No data,No,No,No
+,5,1275,Japan Airlines,09/07/2022,2020-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,No,Yes,Not applicable,Yes,No,No,No,Yes,No,No data,No,No,No
+,5,1029,Geely,09/07/2022,2020-12,1,,Yes,No,No,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1006,Ferrari,09/07/2022,2020-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,No,No,No,No,Yes,No,No,No,No,No,No data,No,No,No
+,5,1318,COSCO Shipping Holdings,09/07/2022,2020-12,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1326,COSCO Shipping Energy,09/07/2022,2020-12,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1270,China Southern,09/07/2022,2020-12,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1538,China Merchants Energy Shipping,09/07/2022,2020-12,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1540,BYD,09/07/2022,2020-12,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1002,Brilliance,09/07/2022,2020-12,0,,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1269,ANA Group,09/07/2022,2020-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Not applicable,Yes,Yes,Yes,No,No,No,No data,No,No,No
+,5,1267,Air China,09/07/2022,2020-12,1,,Yes,No,Yes,No,No,No,No,No,Yes,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1294,AGL Energy,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No data,No,No,No
+,5,1021,China Coal,09/07/2022,2020-10,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1023,China Petroleum & Chemical,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No,Yes,No,No,No,No,No,No,No,No data,No,No,No
+,5,1312,China Resources Power,09/07/2022,2020-10,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1025,China Shenhua Energy,09/07/2022,2020-10,2,,Yes,Yes,Yes,No,Yes,No,No,No,Yes,No,No,Yes,No,No,No,No,No,No,No,No data,No,No,No
+,5,1027,Chubu Electric Power,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,No,No,No data,No,No,No
+,5,1311,Chugoku,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Not applicable,Yes,No,Yes,No,Yes,No,No data,No,No,No
+,5,1031,CNOOC,09/07/2022,2020-10,2,,Yes,Yes,Yes,No,Yes,No,No,No,Yes,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1526,Coronado Global Resources,09/07/2022,2020-10,2,,Yes,Yes,Yes,No,Yes,No,No,No,Yes,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1057,Ecopetrol,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1503,EDP,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No data,No,No,No
+,5,1310,Electric Power Development,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,No,No,No data,No,No,No
+,5,1063,Enel,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No data,No,No,No
+,5,1065,Eni,09/07/2022,2020-10,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No data,Yes,Yes,Yes
+,5,1194,Equinor,09/07/2022,2020-10,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No data,Yes,Yes,Yes
+,5,1522,Fortescue,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No,Yes,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1516,Galp Energia,09/07/2022,2020-10,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No data,Yes,Yes,Yes
+,5,1103,Inner Mongolia Yitai Coal,09/07/2022,2020-10,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1518,INPEX,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No data,No,No,No
+,5,1105,Jastrzebska Spolka Weglowa,09/07/2022,2020-10,2,,Yes,Yes,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1108,Eneos (Oil & Gas),09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,No,Yes,No,No,No data,No,No,No
+,5,1300,Kansai Elec Power,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Not applicable,Yes,No,Yes,Yes,Yes,Yes,No data,Yes,Yes,Yes
+,5,1307,Kyushu Elec Power,09/07/2022,2020-10,1,,Yes,Yes,No,Yes,Yes,No,Yes,Yes,No,Yes,No,No,Not applicable,Yes,No,No,No,No,No,No data,No,No,No
+,5,1529,Mitsubishi Corp,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No data,No,No,No
+,5,1530,Mitsui & Co (Coal Mining),09/07/2022,2020-10,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,No,No,Yes,No,No,No,No,No,No,No,No data,No,No,No
+,5,1527,New Hope,09/07/2022,2020-10,1,,Yes,Yes,No,No,Yes,Yes,No,No,No,No,No,Yes,No,No,No,No,No,No,No,No data,No,No,No
+,5,1528,Nippon Coke & Engineering,09/07/2022,2020-10,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1534,Oil Search,09/07/2022,2020-10,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,Yes,Yes,No,No data,No,No,No
+,5,1145,OMV,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No data,No,No,No
+,5,1146,Origin Energy,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Not applicable,Yes,No,No,Yes,Yes,No,No data,No,No,No
+,5,1147,Orsted,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes,No,No data,No,No,No
+,5,1154,Petrochina,09/07/2022,2020-10,1,,Yes,No,Yes,Yes,Yes,No,Yes,No,No,No,Yes,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1313,PGE,09/07/2022,2020-10,1,,Yes,No,Yes,Yes,No,No,Yes,No,Yes,No,No,No,Not applicable,Yes,No,No,No,No,No,No data,No,No,No
+,5,1224,Santos,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,Yes,Yes,Yes,Yes,No,Yes,No,No,No data,No,No,No
+,5,1514,South32 (Diversified mining),09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,Yes,Yes,No data,Yes,Yes,Yes
+,5,1531,Sumitomo Corp,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,No,Yes,No,No,No,No,No,No data,No,No,No
+,5,1302,Terna,09/07/2022,2020-10,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,Yes,No data,Yes,Yes,Yes
+,5,1304,Tohoku Elec Power,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,No,Yes,No,Yes,No,No data,No,No,No
+,5,1301,TEPCO,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No data,No,No,No
+,5,1234,Washington H. Soul Pattinson,09/07/2022,2020-10,2,,Yes,Yes,Yes,No,No,Yes,No,No,No,No,No,Yes,No,No,No,No,Yes,No,No,No data,No,No,No
+,5,1238,Whitehaven Coal,09/07/2022,2020-10,2,,Yes,Yes,Yes,No,Yes,Yes,No,No,No,No,No,Yes,No,No,No,No,Yes,No,No,No data,No,No,No
+,5,1239,Woodside Petroleum,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Yes,No,Yes,No,No,No,No,No data,No,No,No
+,5,1242,Yanzhou Coal Mining,09/07/2022,2020-10,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1360,South32 (Coal Mining),09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,Yes,Yes,Yes,No data,Yes,Yes,Yes
+,5,1519,Eneos (Coal Mining),09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,No,Yes,No,No,No data,No,No,No
+,5,1014,Daikin Industries,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No data,No,No,No
+,5,1009,Fiat Chrysler,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No data,No,No,No
+,5,1096,Hitachi,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,Yes,Yes,No,No data,No,No,No
+,5,1052,Honda,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No data,No,No,No
+,5,1007,Nippon Steel,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Not applicable,Yes,No,No,Yes,No,No,No data,No,No,No
+,5,1080,Nissan,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No data,Yes,Yes,Yes
+,5,1046,Panasonic,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Not applicable,Yes,Yes,Yes,Yes,No,No,No data,No,No,No
+,5,1116,Qantas,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,No,No,No,No,No data,No,No,No
+,5,1175,SAIC motor,09/07/2022,2020-10,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1090,Suzuki,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Yes,No,No,No,No,No,No,No data,No,No,No
+,5,1042,Toray Industries,09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes,No,No data,No,No,No
+,5,1097,Toyota,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No data,Yes,Yes,Yes
+,5,1114,Wesfarmers,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Not applicable,Yes,No,No,No,Yes,No,No data,No,No,No
+,5,1240,Woolworths,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Not applicable,Yes,No,No,No,No,No,No data,No,No,No
+,5,1189,South32 (Aluminium),09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Not applicable,No,Yes,No,Yes,Yes,Yes,No data,Yes,Yes,Yes
+,5,1125,AP Moller – Maersk,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,No,Yes,Not applicable,Yes,No,Yes,No,No,No,No data,No,No,No
+,5,1040,Adelaide Brighton,09/07/2022,2020-10,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1265,Anhui Conch Cement,09/07/2022,2020-10,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1092,Bluescope Steel,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,No,Yes,Not applicable,Yes,Yes,No,No,No,No,No data,No,No,No
+,5,1115,Boral,09/07/2022,2020-10,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Not applicable,No,No,No,Yes,No,No,No data,No,No,No
+,5,1170,Rio Tinto (Aluminium),09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,No,Yes,No,Yes,No data,Yes,Yes,Yes
+,5,1358,Rio Tinto (Diversified mining),09/07/2022,2020-10,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,No,Yes,No,Yes,No data,Yes,Yes,Yes
+,5,1187,Oji Holdings,09/07/2022,2020-02,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Not applicable,No,No,Yes,Yes,Yes,No,No data,No,No,No
+,5,1197,Shandong Chenming,09/07/2022,2020-02,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1198,Sumitomo Osaka Cement,09/07/2022,2020-02,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1202,Taiheiyo Cement,09/07/2022,2020-02,1,,Yes,No,Yes,Yes,Yes,No,Yes,Yes,Yes,No,No,No,Not applicable,Yes,No,No,No,No,No,No data,No,No,No
+,5,1209,Tenaris,09/07/2022,2020-02,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1292,UACJ,09/07/2022,2020-02,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,Yes,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1230,Voestalpine,09/07/2022,2020-02,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes,No,No data,No,No,No
+,5,1497,Mitsui & Co,09/07/2022,2020-02,2,,Yes,Yes,Yes,No,Yes,Yes,No,Yes,Yes,No,Yes,Yes,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1290,Norsk Hydro,09/07/2022,2020-02,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Not applicable,No,Yes,Yes,No,No,No,No data,No,No,No
+,5,1134,Nisshin Steel,09/07/2022,2020-02,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1183,Nippon Paper Industries,09/07/2022,2020-02,2,,Yes,Yes,Yes,Yes,No,No,Yes,No,No,No,Yes,Yes,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1289,Nippon Light Metal,09/07/2022,2020-02,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Not applicable,Yes,No,No,Yes,No,No,No data,No,No,No
+,5,1178,Nine Dragons Paper Industries,09/07/2022,2020-02,0,,No,No,No,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1168,Lee & Man Paper Manufacturing,09/07/2022,2020-02,1,,Yes,No,No,No,Yes,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1112,Kobe Steel,09/07/2022,2020-02,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1106,JFE Holdings,09/07/2022,2020-02,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,No,No,No,Not applicable,Yes,No,No,No,No,No,No data,No,No,No
+,5,1144,Hokuetsu,09/07/2022,2020-02,1,,Yes,No,Yes,Yes,No,No,Yes,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1126,Daio Paper,09/07/2022,2020-02,1,,Yes,No,Yes,Yes,No,No,Yes,No,No,No,No,No,Not applicable,Yes,No,No,No,No,No,No data,No,No,No
+,5,1288,China Zhongwang,09/07/2022,2020-02,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1024,China Resources Cement Holdings,09/07/2022,2020-02,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1022,China National Building Materials,09/07/2022,2020-02,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1287,Chalco,09/07/2022,2020-02,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1286,Alumina,09/07/2022,2020-02,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Not applicable,Yes,No,No,No,No,No,No data,No,No,No
+,5,1473,Shin-Etsu Chemical,09/07/2022,2020-02,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No,No,No data,No,No,No
+,5,1477,Asahi Kasei,09/07/2022,2020-02,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No data,No,No,No
+,5,1267,Air China,09/07/2022,2019-12,1,,Yes,No,Yes,No,No,No,No,No,Yes,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1269,ANA Group,09/07/2022,2019-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No,No,No data,No,No,No
+,5,1270,China Southern,09/07/2022,2019-12,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1275,Japan Airlines,09/07/2022,2019-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No,No,No,Yes,Not applicable,Yes,No,No,No,Yes,No,No data,No,No,No
+,5,1314,MOL,09/07/2022,2019-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,No,No,No data,No,No,No
+,5,1315,NYK Line,09/07/2022,2019-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No,No,No data,No,No,No
+,5,1318,COSCO Shipping Holdings,09/07/2022,2019-12,2,,Yes,Yes,Yes,No,No,No,No,No,Yes,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1319,K Line,09/07/2022,2019-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No data,No,No,No
+,5,1326,COSCO Shipping Energy,09/07/2022,2019-12,1,,Yes,No,Yes,No,Yes,No,No,Yes,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1076,Mazda,09/07/2022,2019-12,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No,Yes,No data,Yes,Yes,Yes
+,5,1077,Mitsubishi,09/07/2022,2019-12,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,Yes,Yes,Yes,No,No,No,No,No,No,No data,No,No,No
+,5,1087,Subaru,09/07/2022,2019-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,No,Yes,Yes,No,No,No data,No,No,No
+,5,1002,Brilliance,09/07/2022,2019-12,0,,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1006,Ferrari,09/07/2022,2019-12,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No,Yes,No,No,No,No,No,No,No,No data,No,No,No
+,5,1029,Geely,09/07/2022,2019-12,1,,Yes,No,No,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1014,Daikin Industries,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes,No,No data,No,No,No
+,5,1096,Hitachi,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,Yes,No,No,No data,No,No,No
+,5,1007,Nippon Steel,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Not applicable,Yes,No,No,No,No,No,No data,No,No,No
+,5,1046,Panasonic,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,Yes,No,No,No data,No,No,No
+,5,1358,Rio Tinto (Diversified mining),09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No data,Yes,Yes,Yes
+,5,1224,Santos,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,No,No,No data,No,No,No
+,5,1042,Toray Industries,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,Yes,No,No data,No,No,No
+,5,1114,Wesfarmers,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,Yes,Yes,No data,Yes,Yes,Yes
+,5,1240,Woolworths,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,No,Yes,Yes,Yes,No,No,No data,No,No,No
+,5,1009,Fiat Chrysler,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No data,No,No,No
+,5,1052,Honda,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No data,Yes,Yes,Yes
+,5,1080,Nissan,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No data,No,No,No
+,5,1175,SAIC motor,09/07/2022,2019-09,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1090,Suzuki,09/07/2022,2019-09,1,,Yes,No,Yes,Yes,Yes,No,Yes,Yes,No,No,No,No,Yes,No,No,No,No,No,No,No data,No,No,No
+,5,1097,Toyota,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No data,Yes,Yes,Yes
+,5,1116,Qantas,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,No,No,No data,No,No,No
+,5,1304,Tohoku Elec Power,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,No,Yes,No,Yes,No,No data,No,No,No
+,5,1294,AGL Energy,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No data,No,No,No
+,5,1312,China Resources Power,09/07/2022,2019-09,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1027,Chubu Electric Power,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Not applicable,Yes,No,Yes,No,No,No,No data,No,No,No
+,5,1311,Chugoku,09/07/2022,2019-09,1,,Yes,No,Yes,No,Yes,No,No,Yes,Yes,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1310,Electric Power Development,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,No,Yes,No,No,Yes,No data,Yes,Yes,Yes
+,5,1063,Enel,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No data,No,No,No
+,5,1300,Kansai Elec Power,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,Yes,No data,Yes,Yes,Yes
+,5,1307,Kyushu Elec Power,09/07/2022,2019-09,1,,Yes,No,Yes,Yes,Yes,No,Yes,Yes,Yes,No,No,No,Not applicable,Yes,No,No,No,No,No,No data,No,No,No
+,5,1146,Origin Energy,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Not applicable,Yes,Yes,No,Yes,Yes,No,No data,No,No,No
+,5,1147,Orsted,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,No,No,No,No data,No,No,No
+,5,1313,PGE,09/07/2022,2019-09,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1125,AP Moller – Maersk,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,No,No,No,No,No,No data,No,No,No
+,5,1301,TEPCO,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,Yes,No data,Yes,Yes,Yes
+,5,1302,Terna,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,Yes,Not applicable,Yes,Yes,Yes,No,Yes,No,No data,No,No,No
+,5,1023,China Petroleum & Chemical,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,Yes,No,No,No,No,No,No,No,No data,No,No,No
+,5,1031,CNOOC,09/07/2022,2019-09,2,,Yes,Yes,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1057,Ecopetrol,09/07/2022,2019-09,3,,Yes,Yes,Yes,Yes,Yes,Yes,No,No,Yes,Yes,No,Yes,No,No,No,No,No,No,No,No data,No,No,No
+,5,1065,Eni,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No data,No,No,No
+,5,1194,Equinor,09/07/2022,2019-09,4STAR,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No data,Yes,Yes,Yes
+,5,1108,Eneos (Oil & Gas),09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No data,No,No,No
+,5,1145,OMV,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No data,No,No,No
+,5,1154,Petrochina,09/07/2022,2019-09,1,,Yes,No,Yes,No,No,No,No,No,No,No,Yes,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1239,Woodside Petroleum,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,Yes,No,No,No,No,No data,No,No,No
+,5,1021,China Coal,09/07/2022,2019-09,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1025,China Shenhua Energy,09/07/2022,2019-09,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1103,Inner Mongolia Yitai Coal,09/07/2022,2019-09,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1105,Jastrzebska Spolka Weglowa,09/07/2022,2019-09,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1360,South32 (Coal Mining),09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No data,No,No,No
+,5,1234,Washington H. Soul Pattinson,09/07/2022,2019-09,0,,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1238,Whitehaven Coal,09/07/2022,2019-09,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1242,Yanzhou Coal Mining,09/07/2022,2019-09,1,,Yes,No,Yes,No,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No data,No,No,No
+,5,1040,Adelaide Brighton,09/07/2022,2019-09,2,,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1265,Anhui Conch Cement,09/07/2022,2019-09,1,,Yes,No,Yes,No,No,No,No,No,No,No,No,No,Not applicable,No,No,No,No,No,No,No data,No,No,No
+,5,1170,Rio Tinto (Aluminium),09/07/2022,2019-09,5,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,Yes,No data,No,Yes,Yes
+,5,1189,South32 (Aluminium),09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,Yes,Yes,Yes,Yes,Yes,No,No data,No,No,No
+,5,1092,Bluescope Steel,09/07/2022,2019-09,2,,Yes,Yes,Yes,No,Yes,Yes,No,No,No,Yes,No,Yes,Not applicable,No,No,No,Yes,No,No,No data,No,No,No
+,5,1115,Boral,09/07/2022,2019-09,4,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Not applicable,No,No,No,Yes,No,No,No data,No,No,No
