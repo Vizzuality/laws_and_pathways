@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
@@ -10,6 +10,13 @@ import { options } from './options';
 const EmissionsChart = ({ chartData }) => {
   const { data, metadata } = chartData;
 
+  const hasNegative = useMemo(
+    () => data.some((series) => series.data?.some((point) => point?.y < 0)),
+    [data]
+  );
+
+  const minTickInterval = useMemo(() => data?.[0]?.data?.[0]?.x, [data]);
+
   return (
     <div className="emissions__chart">
       <HighchartsReact
@@ -18,7 +25,12 @@ const EmissionsChart = ({ chartData }) => {
           ...options,
           yAxis: {
             ...options.yAxis,
+            min: hasNegative ? null : 0,
             title: { ...options.yAxis.title, text: metadata.unit }
+          },
+          xAxis: {
+            ...options.xAxis,
+            min: minTickInterval
           },
           series: data,
           title: { text: '' }

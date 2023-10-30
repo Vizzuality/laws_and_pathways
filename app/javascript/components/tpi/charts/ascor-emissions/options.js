@@ -49,6 +49,7 @@ export const options = {
     lineWidth: 1,
     tickColor: '#595B5D',
     tickInterval: 5,
+    startOnTick: true,
     labels: {
       style: {
         color: '#0A4BDC',
