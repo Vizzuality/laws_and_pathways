@@ -32,7 +32,20 @@ const SingleCell = ({
   const simulation = () => {
     d3.forceSimulation(nodes)
       .force('charge', d3.forceManyBody().strength(10))
-      .force('y', d3.forceY().strength(0.3).y(0))
+      .force(
+        'x',
+        d3
+          .forceX()
+          .strength(0.1)
+          .x(width / 2)
+      )
+      .force(
+        'y',
+        d3
+          .forceY()
+          .strength(0.5)
+          .y(height / 2)
+      )
       .force(
         'collision',
         d3.forceCollide().radius(function (d) {
@@ -69,10 +82,7 @@ const SingleCell = ({
         height="100%"
         viewBox={`0 0 ${width} ${height}`}
       >
-        <g
-          className="bubble-chart_circle_country"
-          transform={`translate(${width / 2}, ${height / 2})`}
-        />
+        <g className="bubble-chart_circle_country" />
       </svg>
     </Fragment>
   );

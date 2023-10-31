@@ -9,14 +9,22 @@ import ChartMobile from './chart-mobile';
 
 const DESKTOP_MIN_WIDTH = 992;
 
-const SCALE = 1.25;
+const SCALE = 1;
 
 // radius of bubbles
 const COMPANIES_MARKET_CAP_GROUPS = {
-  large: 10 * SCALE,
-  medium: 5 * SCALE,
-  small: 3 * SCALE
+  small: 6 * SCALE,
+  medium: 10 * SCALE,
+  large: 14 * SCALE,
+  xLarge: 18 * SCALE
 };
+
+const COMPANIES_MARKET_CAP_GROUPS_KEYS = [
+  '1st Quartile',
+  '2nd Quartile',
+  '3rd Quartile',
+  '4th Quartile'
+];
 
 const SINGLE_CELL_SVG_WIDTH = 120;
 const SINGLE_CELL_SVG_HEIGHT = 100;
@@ -93,6 +101,25 @@ const BubbleChart = ({ results }) => {
           <ChartRows data={parsedData} isMobile={isMobile} />
         </div>
       )}
+      <div>
+        <div className="bubble-chart__legend">
+          <p>Per capita emission intensity</p>
+          {Object.entries(COMPANIES_MARKET_CAP_GROUPS).map(
+            ([key, value], index) => (
+              <div className="bubble-chart__legend__item" key={key}>
+                <div
+                  className="bubble-chart__legend__item__circle"
+                  style={{
+                    width: `${value * 2 * SCALE}px`,
+                    height: `${value * 2 * SCALE}px`
+                  }}
+                />
+                <span>{COMPANIES_MARKET_CAP_GROUPS_KEYS[index]}</span>
+              </div>
+            )
+          )}
+        </div>
+      </div>
     </div>
   );
 };
