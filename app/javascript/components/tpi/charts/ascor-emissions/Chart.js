@@ -11,11 +11,9 @@ const EmissionsChart = ({ chartData }) => {
   const { data, metadata } = chartData;
 
   const hasNegative = useMemo(
-    () => data.some((series) => series.data?.some((point) => point?.y < 0)),
+    () => data.every((series) => series.data?.every((point) => point?.y < 0)),
     [data]
   );
-
-  const minTickInterval = useMemo(() => data?.[0]?.data?.[0]?.x, [data]);
 
   return (
     <div className="emissions__chart">
@@ -26,14 +24,10 @@ const EmissionsChart = ({ chartData }) => {
           yAxis: {
             ...options.yAxis,
             min: hasNegative ? null : 0,
+            max: hasNegative ? 0 : null,
             title: { ...options.yAxis.title, text: metadata.unit }
           },
-          xAxis: {
-            ...options.xAxis,
-            min: minTickInterval
-          },
-          series: data,
-          title: { text: '' }
+          series: data
         }}
       />
     </div>
