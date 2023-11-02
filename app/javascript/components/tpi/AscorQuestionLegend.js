@@ -7,25 +7,33 @@ const AscorQuestionLegend = () => {
   const isChecked = () => {
     let anyChecked = false;
 
-    document.querySelectorAll('.country-assessment > .country-assessment__pillar').forEach((section) => {
-      let areaChecked = false;
+    document
+      .querySelectorAll('.country-assessment > .country-assessment__pillar')
+      .forEach((section) => {
+        let areaChecked = false;
 
-      section.querySelectorAll('input.toggle').forEach((input) => {
-        areaChecked = areaChecked || input.checked;
-        anyChecked = anyChecked || input.checked;
+        section.querySelectorAll('input.toggle').forEach((input) => {
+          areaChecked = areaChecked || input.checked;
+          anyChecked = anyChecked || input.checked;
+        });
+        return areaChecked
+          ? section.classList.add('active')
+          : section.classList.remove('active');
       });
-      return areaChecked ? section.classList.add('active') : section.classList.remove('active');
-    });
 
     setVisible(anyChecked);
   };
 
   useEffect(() => {
     const eventListeners = [];
-    document.querySelectorAll('.country-assessment > .country-assessment__pillar > input.toggle').forEach((input) => {
-      const listener = input.addEventListener('click', isChecked);
-      eventListeners.push([input, listener]);
-    });
+    document
+      .querySelectorAll(
+        '.country-assessment > .country-assessment__pillar > input.toggle'
+      )
+      .forEach((input) => {
+        const listener = input.addEventListener('click', isChecked);
+        eventListeners.push([input, listener]);
+      });
 
     return () => {
       eventListeners.forEach(([input, listener]) => {
@@ -35,10 +43,12 @@ const AscorQuestionLegend = () => {
   });
 
   return (
-    <div className={cx('country-question-legend', { 'country-question-legend--active': isVisible })}>
-      <div className="banking-question-legend__header">
-        Legend
-      </div>
+    <div
+      className={cx('country-question-legend', {
+        'country-question-legend--active': isVisible
+      })}
+    >
+      <div className="banking-question-legend__header">Legend</div>
       <div className="country-question-legend__content">
         <div className="country-question-legend-answer country-question-legend-answer--no">
           No
@@ -59,14 +69,13 @@ const AscorQuestionLegend = () => {
           No disclosure
         </div>
         <div className="country-question-legend-answer country-question-legend-answer--excempt">
-          Excempt
+          Exempt
         </div>
       </div>
     </div>
   );
 };
 
-AscorQuestionLegend.propTypes = {
-};
+AscorQuestionLegend.propTypes = {};
 
 export default AscorQuestionLegend;
