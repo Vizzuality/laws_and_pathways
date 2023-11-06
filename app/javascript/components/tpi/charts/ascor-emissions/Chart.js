@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
@@ -10,6 +10,11 @@ import { options } from './options';
 const EmissionsChart = ({ chartData }) => {
   const { data, metadata } = chartData;
 
+  const hasNegative = useMemo(
+    () => data.every((series) => series.data?.every((point) => point?.y < 0)),
+    [data]
+  );
+
   return (
     <div className="emissions__chart">
       <HighchartsReact
@@ -18,10 +23,11 @@ const EmissionsChart = ({ chartData }) => {
           ...options,
           yAxis: {
             ...options.yAxis,
+            min: hasNegative ? null : 0,
+            max: hasNegative ? 0 : null,
             title: { ...options.yAxis.title, text: metadata.unit }
           },
-          series: data,
-          title: { text: '' }
+          series: data
         }}
       />
     </div>

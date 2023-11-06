@@ -6,7 +6,9 @@ export const colors = [
   '#FFDD49',
   '#00A8FF',
   '#F602B4',
-  '#191919'
+  '#191919',
+  '#9747FF',
+  '#595B5D'
 ];
 
 const tooltipLegendLine = (
@@ -28,9 +30,8 @@ export const options = {
     lineWidth: 1,
     visible: true,
     tickColor: '#595B5D',
-    tickAmount: 8,
     labels: {
-      padding: 10,
+      align: 'right',
       style: {
         color: '#595B5D',
         fontSize: '12px'
@@ -49,6 +50,8 @@ export const options = {
     lineWidth: 1,
     tickColor: '#595B5D',
     tickInterval: 5,
+    min: 2005,
+    max: 2030,
     labels: {
       style: {
         color: '#0A4BDC',

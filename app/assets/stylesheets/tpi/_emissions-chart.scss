@@ -159,6 +159,9 @@
         }
       }
     }
+    .highcharts-root {
+      overflow: visible !important;
+    }
     .highcharts-legend > div > div {
       display: flex;
       gap: 12px;
