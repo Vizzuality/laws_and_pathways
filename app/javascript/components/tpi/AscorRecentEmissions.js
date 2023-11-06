@@ -60,7 +60,8 @@ const AscorRecentEmissions = ({
           <>
             <div className="country-assessment__break" />
             <div className="country-assessment__metric__text">
-              {recentEmissions.value} {recentEmissions.unit}
+              <span>{recentEmissions.value} </span>
+              <span dangerouslySetInnerHTML={{__html: recentEmissions.unit.replace('₂', '<sub>2</sub>')}} />
             </div>
           </>
         )}

@@ -431,6 +431,10 @@ $see-more-width-tablet: 130px;
         text-align: center;
         min-width: 80px;
         font-size: small;
+
+        sub {
+          font-size: 8px;
+        }
       }
 
       &__source {
