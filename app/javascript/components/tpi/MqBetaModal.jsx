@@ -6,7 +6,7 @@ import { OverlayProvider } from '@react-aria/overlays';
 
 const TPI_MODAL_DISMISSED = 'TPI_MODAL_DISMISSED';
 const TPI_MODAL_PAGES_SHOWN = 'TPI_MODAL_PAGES_SHOWN';
-const MQ_REPORT_PUBLICATION_LINK = '/static_files/23-10-20 MQ V5 Report for publication.pptx';
+const MQ_REPORT_PUBLICATION_LINK = '/static_files/23-11-02 MQ V5 Report for publication.pptx';
 
 const MqBetaModal = ({ enabled, page }) => {
   const [displayed, setDisplayed] = useState(false);
@@ -79,9 +79,8 @@ const MqBetaModal = ({ enabled, page }) => {
               website until at least September 2024.
             </p>
             <p>
-              The detailed methodology note behind the BETA MQ methodology,
-              including a section discussing methodological differences between
-              it and the existing methodology, can be found <a href={MQ_REPORT_PUBLICATION_LINK}>here</a>.
+              A report detailing what’s new in the BETA MQ methodology,
+              and a review of its impact on company scoring, can be found <a href={MQ_REPORT_PUBLICATION_LINK}>here</a>.
             </p>
             <p>
               Carbon Performance assessments are not affected by using this
