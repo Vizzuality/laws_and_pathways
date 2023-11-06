@@ -63,7 +63,7 @@ const MqBetaModal = ({ enabled, page }) => {
           >
             <div className="icon__close" />
           </button>
-          <div className="modal-title">Management Quality (MQ) methodology</div>
+          <div className="modal-title">Management Quality methodology</div>
           <div className="content">
             <p>
               The TPI Centre has developed an update to its Management Quality

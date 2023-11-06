@@ -26,7 +26,7 @@ module Api
         [
           {
             name: 'Level',
-            data: results
+            data: results + [[results.last.first, 5]]
           },
           {
             name: 'Current Level',
@@ -34,7 +34,7 @@ module Api
           },
           {
             name: 'Max Level',
-            data: assessment.beta_methodology? ? assessment.beta_levels.last.to_i : 4
+            data: @enable_beta_mq_assessments ? MQ::Assessment::BETA_METHODOLOGIES.keys.max : 4
           }
         ]
       end
