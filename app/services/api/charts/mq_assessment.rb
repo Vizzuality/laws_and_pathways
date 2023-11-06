@@ -26,7 +26,7 @@ module Api
         [
           {
             name: 'Level',
-            data: results + [[results.last.first, 5]]
+            data: results
           },
           {
             name: 'Current Level',
