@@ -6,7 +6,7 @@ import { OverlayProvider } from '@react-aria/overlays';
 
 const TPI_MODAL_DISMISSED = 'TPI_MODAL_DISMISSED';
 const TPI_MODAL_PAGES_SHOWN = 'TPI_MODAL_PAGES_SHOWN';
-const MQ_REPORT_PUBLICATION_LINK = '/static_files/23-11-02 MQ V5 Report for publication.pptx';
+const MQ_REPORT_PUBLICATION_LINK = '/static_files/Raising the Bar. TPI\'s new Management Quality framework.pdf';
 
 const MqBetaModal = ({ enabled, page }) => {
   const [displayed, setDisplayed] = useState(false);
@@ -80,7 +80,7 @@ const MqBetaModal = ({ enabled, page }) => {
             </p>
             <p>
               A report detailing what’s new in the BETA MQ methodology,
-              and a review of its impact on company scoring, can be found <a href={MQ_REPORT_PUBLICATION_LINK}>here</a>.
+              and a review of its impact on company scoring, can be found <a href={MQ_REPORT_PUBLICATION_LINK} rel="noreferrer" target="_blank">here</a>.
             </p>
             <p>
               Carbon Performance assessments are not affected by using this
