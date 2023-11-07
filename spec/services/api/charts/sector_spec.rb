@@ -5,6 +5,7 @@ RSpec.describe Api::Charts::Sector do
   let_it_be(:sector2) { create(:tpi_sector, name: 'Autos') }
   let_it_be(:company) { create(:company, sector: sector) }
   let_it_be(:company2) { create(:company, sector: sector2) }
+  let_it_be(:company3) { create(:company, sector: sector2) }
   let_it_be(:beta_methodology_version) { MQ::Assessment::BETA_METHODOLOGIES.keys.first }
   let_it_be(:beta_level) { MQ::Assessment::BETA_METHODOLOGIES[beta_methodology_version][:levels].first }
 
@@ -34,6 +35,13 @@ RSpec.describe Api::Charts::Sector do
       company: company,
       assessment_date: '2020-01-01',
       level: beta_level,
+      methodology_version: beta_methodology_version
+    )
+    create(
+      :mq_assessment,
+      company: company3,
+      assessment_date: '2020-01-01',
+      level: 3,
       methodology_version: beta_methodology_version
     )
     # should be ignored
@@ -128,7 +136,18 @@ RSpec.describe Api::Charts::Sector do
           '4' => []
         },
         sector2.name => {
-          '0' => [],
+          '0' => [
+            {
+              name: company3.name,
+              slug: company3.slug,
+              path: company3.path,
+              sector: company3.sector.name,
+              market_cap_group: company3.market_cap_group,
+              level: company3.mq_level.to_i.to_s,
+              level4STAR: false,
+              status: company3.mq_status
+            }
+          ],
           '1' => [],
           '2' => [],
           '3' => [],
@@ -158,10 +177,10 @@ RSpec.describe Api::Charts::Sector do
           '0' => [],
           '1' => [],
           '2' => [],
-          '3' => [],
-          '4' => [
-            {id: company2.id, name: company2.name, status: 'new', level: '4STAR', slug: company2.slug}
+          '3' => [
+            {id: company3.id, name: company3.name, status: 'new', level: '3', slug: company3.slug}
           ],
+          '4' => [],
           beta_level => [
             {id: company.id, name: company.name, status: 'unchanged', level: beta_level, slug: company.slug}
           ]
@@ -175,8 +194,8 @@ RSpec.describe Api::Charts::Sector do
           '0' => 0,
           '1' => 0,
           '2' => 0,
-          '3' => 0,
-          '4' => 1,
+          '3' => 1,
+          '4' => 0,
           beta_level => 1
         )
       end
@@ -208,19 +227,19 @@ RSpec.describe Api::Charts::Sector do
             '0' => [],
             '1' => [],
             '2' => [],
-            '3' => [],
-            '4' => [
+            '3' => [
               {
-                name: company2.name,
-                slug: company2.slug,
-                path: company2.path,
-                sector: company2.sector.name,
-                market_cap_group: company2.market_cap_group,
-                level: company2.mq_level.to_i.to_s,
-                level4STAR: true,
-                status: company2.mq_status
+                name: company3.name,
+                slug: company3.slug,
+                path: company3.path,
+                sector: company3.sector.name,
+                market_cap_group: company3.market_cap_group,
+                level: '3',
+                level4STAR: false,
+                status: 'new'
               }
             ],
+            '4' => [],
             beta_level => []
           }
         )

@@ -34,7 +34,7 @@ module Api
           },
           {
             name: 'Max Level',
-            data: @enable_beta_mq_assessments ? MQ::Assessment::BETA_METHODOLOGIES.keys.max : 4
+            data: max_level
           }
         ]
       end
@@ -49,6 +49,13 @@ module Api
           query = query.without_beta_methodologies unless @enable_beta_mq_assessments
           query
         end
+      end
+
+      def max_level
+        beta_assessment = company_mq_assessments.detect(&:beta_methodology?)
+        return 4 unless beta_assessment.present?
+
+        beta_assessment.beta_levels.last.to_i
       end
     end
   end
