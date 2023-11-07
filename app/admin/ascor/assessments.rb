@@ -18,7 +18,6 @@ ActiveAdmin.register ASCOR::Assessment do
     column :country, sortable: 'ascor_countries.name'
     column :assessment_date
     column :publication_date
-    column :notes
 
     actions
   end
@@ -29,7 +28,7 @@ ActiveAdmin.register ASCOR::Assessment do
       row :country
       row :assessment_date
       row :publication_date
-      row :notes
+      row 'Research Notes', &:notes
       row :created_at
       row :updated_at
     end
@@ -53,7 +52,7 @@ ActiveAdmin.register ASCOR::Assessment do
       f.input :country, as: :select, collection: ASCOR::Country.all.order(:name)
       f.input :assessment_date, as: :datepicker
       f.input :publication_date, as: :datepicker
-      f.input :notes
+      f.input :notes, label: 'Research Notes'
     end
 
     f.has_many :results, allow_destroy: true, heading: false do |ff|
@@ -91,7 +90,7 @@ ActiveAdmin.register ASCOR::Assessment do
         controller.assessment_results[[resource.id, indicator.id]]&.first&.year
       end
     end
-    column :notes
+    column 'Research Notes', &:notes
   end
 
   controller do

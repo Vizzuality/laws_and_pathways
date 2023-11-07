@@ -253,7 +253,7 @@ $see-more-width-tablet: 130px;
 
   .country-assessment {
     margin-top: 60px;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
 
     &__pillar {
       outline: solid 1px $grey-lighter-medium;
@@ -508,6 +508,10 @@ $see-more-width-tablet: 130px;
         }
       }
     }
+  }
+
+  .notes {
+    margin-bottom: 30px;
   }
 
   .contacts {
