@@ -9,7 +9,7 @@ module CSVImport
         assessment.country = countries[row[:country]].first if row.header?(:country)
         assessment.assessment_date = assessment_date(row) if row.header?(:assessment_date)
         assessment.publication_date = publication_date(row) if row.header?(:publication_date)
-        assessment.notes = row[:notes] if row.header?(:notes)
+        assessment.notes = row[:research_notes] if row.header?(:research_notes)
 
         was_new_record = assessment.new_record?
 

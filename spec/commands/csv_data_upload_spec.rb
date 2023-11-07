@@ -1622,7 +1622,7 @@ describe 'CSVDataUpload (integration)' do
     indicator_1 = assessment.results.joins(:indicator).find_by ascor_assessment_indicators: {code: 'EP.1.a'}
     indicator_2 = assessment.results.joins(:indicator).find_by ascor_assessment_indicators: {code: 'EP.1.a.i'}
 
-    expect(assessment.notes).to be_nil
+    expect(assessment.notes).to eq('Research notes')
     expect(assessment.publication_date).to eq(Date.new(2023, 12))
     expect(assessment.assessment_date).to eq(Date.new(2023, 10, 30))
     expect(indicator_1.answer).to eq('Yes')
