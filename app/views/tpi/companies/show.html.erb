@@ -74,7 +74,7 @@
           <div class="summary-box summary-box--assessment">
             <h4>Management Quality</h4>
             <p>
-              <small>Number of assessments: <%= @company_presenter.mq_assessments.size %></small>
+              <small>Number of assessments: <%= hide_mq_assessments_with_same_date(@company_presenter.mq_assessments).size %></small>
             </p>
             <% if @company_presenter.mq_assessments.any? %>
               <%= render 'mq_level', level: @company.mq_level, status: @company.mq_status %>
@@ -170,7 +170,7 @@
               name: 'mq_assessment_id',
               remote: true,
               url: mq_assessment_tpi_company_path(@company),
-              data: @company_presenter.mq_assessments.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
+              data: hide_mq_assessments_with_same_date(@company_presenter.mq_assessments).map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
               selected: params[:mq_assessment_id]
             }) %>
           </div>

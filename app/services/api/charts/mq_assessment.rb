@@ -34,7 +34,7 @@ module Api
           },
           {
             name: 'Max Level',
-            data: assessment.beta_methodology? ? assessment.beta_levels.last.to_i : 4
+            data: max_level
           }
         ]
       end
@@ -47,8 +47,21 @@ module Api
         @company_mq_assessments ||= begin
           query = company.mq_assessments.currently_published.order(:assessment_date)
           query = query.without_beta_methodologies unless @enable_beta_mq_assessments
-          query
+          hide_mq_assessments_with_same_date query
         end
+      end
+
+      def max_level
+        beta_assessment = company_mq_assessments.detect(&:beta_methodology?)
+        return 4 unless beta_assessment.present?
+
+        beta_assessment.beta_levels.last.to_i
+      end
+
+      def hide_mq_assessments_with_same_date(assessments)
+        result = []
+        assessments.group_by(&:assessment_date).each { |_date, a| result << a.max_by(&:methodology_version) }
+        result
       end
     end
   end

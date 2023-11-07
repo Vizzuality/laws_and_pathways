@@ -7,19 +7,20 @@
       <h1 class="pages__title"><%= @publication.title %></h1>
       <p class="pages__date"><%= @publication.publication_date.strftime('%d/%m/%Y') %></p>
 
-      <div class="pages__content__flex">
+      <div>
         <% if @publication.image.present? %>
           <div class="pages__image" style="margin-bottom: 0;"><%= image_tag(@publication.image) %></div>
         <% end %>
-        <div class="pages__description">
-          <p><%= @publication.short_description %></p>
+        <div class="pages__description" style="font-size: 20px;">
           <% if @publication.keywords.any? || @publication.tpi_sectors.any? %>
-            <div class="publication__tags">
+            <div class="publication__tags" style="margin-bottom: 0px;">
               <% @publication.tags_and_sectors.each do |tag| %>
                 <span class="tag"><%= tag %></span>
               <% end %>
             </div>
           <% end %>
+          <p style="margin-bottom: 20px;"><%= @publication.short_description %></p>
+
           <div class="pages__description">
             <%= @publication.summary&.html_safe %>
           </div>

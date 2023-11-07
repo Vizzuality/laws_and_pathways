@@ -259,10 +259,10 @@ $max-lines: 3;
   }
 
   &__content-type {
-    color: $grey-dark;
-    margin-top: 10px;
+    color: $blue;
+    margin: 0 0 10px 0;
     font-size: $size-7;
-    border: 1px solid rgba($grey-dark, 0.5);
+    border: 1px solid rgba($blue, 0.5);
     padding-left: $size-7;
     padding-right: $size-7;
     display: inline-block;

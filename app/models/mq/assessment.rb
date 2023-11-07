@@ -49,7 +49,7 @@ module MQ
       # keep select and sort by, company - mq assessments will be cached once
       company
         .mq_assessments
-        .currently_published
+        .select { |a| a.publication_date <= DateTime.now }
         .select { |a| a.assessment_date < assessment_date }
         .sort_by(&:assessment_date)
     end

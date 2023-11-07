@@ -20,14 +20,10 @@ module TPI
       end
       @publications_and_articles = publications_and_articles
       sectors_page = TPIPage.find_by(slug: 'publicly-listed-equities-content')
-      @methodology_description = Content.find_by(
-        page: sectors_page,
-        code: 'methodology_description'
-      )
-      @methodology_id = Content.find_by(
-        page: sectors_page,
-        code: 'methodology_publication_id'
-      )
+      @methodology_description = Content.find_by(page: sectors_page, code: 'methodology_description')
+      @methodology_id = Content.find_by(page: sectors_page, code: 'methodology_publication_id')
+      @beta_methodology_id = Content.find_by(page: sectors_page, code: 'beta_methodology_publication_id')
+      @methodology_id = @beta_methodology_id || @methodology_id if session[:enable_beta_mq_assessments]
       @methodology_publication = Publication.find_by(id: @methodology_id&.text)
 
       fixed_navbar('Sectors', admin_tpi_sectors_path)

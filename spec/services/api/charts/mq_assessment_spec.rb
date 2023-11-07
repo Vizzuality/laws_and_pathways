@@ -17,6 +17,7 @@ RSpec.describe Api::Charts::MQAssessment do
         create(:mq_assessment, company: company, assessment_date: '2018-08-08', publication_date: '2018-08-08', level: '2')
         create(:mq_assessment, company: company, assessment_date: '2019-02-02', publication_date: '2019-02-02', level: '4')
         create(:mq_assessment, company: company, assessment_date: '2020-03-03', publication_date: '2020-03-03', level: '3')
+        create(:mq_assessment, company: company, assessment_date: '2021-03-03', publication_date: '2021-03-03', level: '4')
         # beta scores
         create(:mq_assessment,
                company: company,
@@ -43,7 +44,8 @@ RSpec.describe Api::Charts::MQAssessment do
                          ['01/01/2018', 3],
                          ['08/08/2018', 2],
                          ['02/02/2019', 4],
-                         ['03/03/2020', 3]
+                         ['03/03/2020', 3],
+                         ['03/03/2021', 4]
                        ],
                        name: 'Level'
                      },
@@ -64,7 +66,7 @@ RSpec.describe Api::Charts::MQAssessment do
       context 'when beta assessments are enabled' do
         subject do
           described_class.new(
-            company.mq_assessments.where(assessment_date: '2021-03-03').first,
+            company.mq_assessments.where(assessment_date: '2021-03-03', methodology_version: beta_methodology).first,
             enable_beta_mq_assessments: true
           )
         end

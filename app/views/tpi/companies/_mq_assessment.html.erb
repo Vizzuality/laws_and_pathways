@@ -15,9 +15,9 @@
 
   <div class="column">
     <div class="mq-assessment-box">
-      <div class="is-hidden-touch">Nr of assessments: <%= assessment.previous_assessments.size + 1 %></div>
+      <div class="is-hidden-touch">Nr of assessments: <%= hide_mq_assessments_with_same_date(assessment.previous_assessments).size + 1 %></div>
       <div class="is-hidden-desktop">
-        Number of assessments: <span class="assessment-count"><%= assessment.previous_assessments.size + 1 %></span>
+        Number of assessments: <span class="assessment-count"><%= hide_mq_assessments_with_same_date(assessment.previous_assessments).size + 1 %></span>
       </div>
 
       <%= react_component('charts/mq-level', {
