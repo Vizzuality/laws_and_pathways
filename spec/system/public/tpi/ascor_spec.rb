@@ -13,7 +13,7 @@ describe 'ASCOR', type: 'system', site: 'tpi' do
     it 'loads the mobile version of bubble chart  ' do
       for_mobile_screen do
         within all('.bubble-chart__container')[0] do # mobile version
-          expect(page).to have_text('Emissions Pathways')
+          expect(page).to have_text('Emission Pathways')
           expect(page).to have_text('Climate Policies')
           expect(page).to have_text('Climate Finance')
         end
@@ -22,11 +22,11 @@ describe 'ASCOR', type: 'system', site: 'tpi' do
 
     it 'loads desktop version of bubble chart' do
       within all('.bubble-chart__container')[1] do # desktop version
-        expect(page).to have_text('1. Emissions Pathways')
+        expect(page).to have_text('1. Emission Pathways')
         expect(page).to have_text('2. Climate Policies')
         expect(page).to have_text('3. Climate Finance')
 
-        expect(page).to have_text('EP 1. Emissions Trends')
+        expect(page).to have_text('EP 1. Emission Trends')
         expect(page).to have_text('CP 1. Climate Legislation')
         expect(page).to have_text('CF 1. International Climate Finance')
       end

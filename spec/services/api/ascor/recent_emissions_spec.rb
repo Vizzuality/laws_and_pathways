@@ -18,7 +18,7 @@ RSpec.describe Api::ASCOR::RecentEmissions do
            trend_5_year: '+ 9%',
            trend_source: 'source',
            trend_year: 2019,
-           recent_emission_level: 100,
+           recent_emission_level: '100',
            recent_emission_source: 'source',
            recent_emission_year: 2019
     create :ascor_pathway,
@@ -32,7 +32,7 @@ RSpec.describe Api::ASCOR::RecentEmissions do
            trend_5_year: '+ 8%',
            trend_source: 'source 2',
            trend_year: 2020,
-           recent_emission_level: 200,
+           recent_emission_level: '200',
            recent_emission_source: 'source 2',
            recent_emission_year: 2020
     create :ascor_pathway, country: create(:ascor_country, id: 2, name: 'Czechia', iso: 'CZE')
@@ -43,7 +43,7 @@ RSpec.describe Api::ASCOR::RecentEmissions do
     expect(subject).to match_array(
       [
         {
-          value: 100,
+          value: '100',
           source: 'source',
           year: 2019,
           unit: 'MtCO2e',
@@ -53,14 +53,14 @@ RSpec.describe Api::ASCOR::RecentEmissions do
             source: 'source',
             year: 2019,
             values: [
-              {filter: '1 year trend', value: '+ 6%'},
-              {filter: '3 years trend', value: '+ 8%'},
-              {filter: '5 years trend', value: '+ 9%'}
+              {filter: '5-year trend', value: '+ 9%'},
+              {filter: '3-year trend', value: '+ 8%'},
+              {filter: 'year-on-year trend', value: '+ 6%'}
             ]
           }
         },
         {
-          value: 200,
+          value: '200',
           source: 'source 2',
           year: 2020,
           unit: 'MtCO2e',
@@ -70,9 +70,9 @@ RSpec.describe Api::ASCOR::RecentEmissions do
             source: 'source 2',
             year: 2020,
             values: [
-              {filter: '1 year trend', value: '- 6%'},
-              {filter: '3 years trend', value: '+ 6%'},
-              {filter: '5 years trend', value: '+ 8%'}
+              {filter: '5-year trend', value: '+ 8%'},
+              {filter: '3-year trend', value: '+ 6%'},
+              {filter: 'year-on-year trend', value: '- 6%'}
             ]
           }
         }
