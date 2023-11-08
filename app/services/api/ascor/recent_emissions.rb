@@ -21,9 +21,9 @@ module Api
               source: pathway.trend_source,
               year: pathway.trend_year,
               values: [
-                {filter: '1 year trend', value: pathway.trend_1_year},
-                {filter: '3 years trend', value: pathway.trend_3_year},
-                {filter: '5 years trend', value: pathway.trend_5_year}
+                {filter: '5-year trend', value: pathway.trend_5_year},
+                {filter: '3-year trend', value: pathway.trend_3_year},
+                {filter: 'year-on-year trend', value: pathway.trend_1_year}
               ]
             }
           }
