@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import cx from 'classnames';
+import React, { useEffect } from 'react';
 
 const AscorQuestionLegend = () => {
-  const [isVisible, setVisible] = useState(false);
-
   const isChecked = () => {
     let anyChecked = false;
 
@@ -20,8 +17,6 @@ const AscorQuestionLegend = () => {
           ? section.classList.add('active')
           : section.classList.remove('active');
       });
-
-    setVisible(anyChecked);
   };
 
   useEffect(() => {
@@ -43,11 +38,7 @@ const AscorQuestionLegend = () => {
   });
 
   return (
-    <div
-      className={cx('country-question-legend', {
-        'country-question-legend--active': isVisible
-      })}
-    >
+    <div className="country-question-legend country-question-legend--active">
       <div className="banking-question-legend__header">Legend</div>
       <div className="country-question-legend__content">
         <div className="country-question-legend-answer country-question-legend-answer--no">
