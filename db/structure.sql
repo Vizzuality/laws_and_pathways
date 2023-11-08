@@ -508,7 +508,7 @@ CREATE TABLE public.ascor_pathways (
     updated_at timestamp(6) without time zone NOT NULL,
     trend_source character varying,
     trend_year integer,
-    recent_emission_level double precision,
+    recent_emission_level character varying,
     recent_emission_source character varying,
     recent_emission_year integer
 );
@@ -4162,6 +4162,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230926075145'),
 ('20230927112905'),
 ('20231023101859'),
-('20231023120255');
+('20231023120255'),
+('20231108125346');
 
 
