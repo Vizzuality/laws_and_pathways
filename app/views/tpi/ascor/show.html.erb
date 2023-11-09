@@ -40,7 +40,7 @@
   <% end %>
 
   <div class="container notes">
-    <% if @assessment.notes.present? %>
+    <% if @assessment&.notes.present? %>
       <h6>Research notes:</h6>
       <p>
         <%= @assessment.notes %>

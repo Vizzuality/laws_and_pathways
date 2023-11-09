@@ -22,4 +22,6 @@ class ASCOR::Benchmark < ApplicationRecord
   validates :emissions_metric, inclusion: {in: ASCOR::EmissionsMetric::VALUES}, allow_nil: true
   validates :emissions_boundary, inclusion: {in: ASCOR::EmissionsBoundary::VALUES}, allow_nil: true
   validates :benchmark_type, inclusion: {in: ASCOR::BenchmarkType::VALUES}, allow_nil: true
+
+  scope :currently_published, -> { where('ascor_benchmarks.publication_date <= ?', DateTime.now) }
 end
