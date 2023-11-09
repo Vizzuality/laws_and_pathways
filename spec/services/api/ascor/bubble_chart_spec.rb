@@ -53,7 +53,7 @@ RSpec.describe Api::ASCOR::BubbleChart do
         country_id: 1,
         country_name: 'USA',
         country_path: '/ascor/usa',
-        market_cap_group: :small
+        market_cap_group: 2
       },
        {
          pillar: 'Emissions Performance',
@@ -62,7 +62,7 @@ RSpec.describe Api::ASCOR::BubbleChart do
          country_id: 2,
          country_name: 'Japan',
          country_path: '/ascor/japan',
-         market_cap_group: :medium
+         market_cap_group: 3
        },
        {
          pillar: 'Emissions Performance',
@@ -71,7 +71,7 @@ RSpec.describe Api::ASCOR::BubbleChart do
          country_id: 1,
          country_name: 'USA',
          country_path: '/ascor/usa',
-         market_cap_group: :small
+         market_cap_group: 2
        },
        {
          pillar: 'Emissions Performance',
@@ -80,7 +80,7 @@ RSpec.describe Api::ASCOR::BubbleChart do
          country_id: 2,
          country_name: 'Japan',
          country_path: '/ascor/japan',
-         market_cap_group: :medium
+         market_cap_group: 3
        },
        {
          pillar: 'Climate Performance',
@@ -89,7 +89,7 @@ RSpec.describe Api::ASCOR::BubbleChart do
          country_id: 1,
          country_name: 'USA',
          country_path: '/ascor/usa',
-         market_cap_group: :small
+         market_cap_group: 2
        },
        {
          pillar: 'Climate Performance',
@@ -98,7 +98,7 @@ RSpec.describe Api::ASCOR::BubbleChart do
          country_id: 2,
          country_name: 'Japan',
          country_path: '/ascor/japan',
-         market_cap_group: :medium
+         market_cap_group: 3
        }]
     )
   end
