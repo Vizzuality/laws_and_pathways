@@ -146,9 +146,9 @@ const ForceLayoutBubbleChart = (countriesBubbles, uniqueKey) => {
 const getTooltipText = ({ tooltipContent }) => {
   if (tooltipContent) {
     return `
-     <div class="bubble-tip-header">
-        <span>${tooltipContent.header}</span>
-        <span>${tooltipContent.header}</span>
+     <div>
+        <p class="bubble-tip-header">${tooltipContent.header}</p>
+        <p class="bubble-tip-text">${tooltipContent.emission_size}</p>
      </div>
     `;
   }
@@ -203,16 +203,19 @@ const ChartRows = ({ data }) => data?.map((pillar, pillarIndex) => {
             {pillarAcronym} {areaIndex + 1}. {area}
           </div>
           {areaValues.map((areaValuesResult, i) => {
-            const countriesBubbles = areaValuesResult.map((result) => ({
-              value: COMPANIES_MARKET_CAP_GROUPS[result.market_cap_group],
-              tooltipContent: {
-                header: result.country_name,
-                value: result.result
-              },
-              path: result.country_path,
-              color: result.color,
-              result: result.result
-            }));
+            const countriesBubbles = areaValuesResult.map((result) => {
+              const emission_size = COMPANIES_MARKET_CAP_GROUPS_KEYS[result.market_cap_group - 1];
+              return {
+                value: COMPANIES_MARKET_CAP_GROUPS[result.market_cap_group],
+                tooltipContent: {
+                  header: result.country_name,
+                  emission_size
+                },
+                path: result.country_path,
+                color: result.color,
+                result: result.result
+              };
+            });
 
             // Remove special characters from the key to be able to use d3-select as it uses querySelector
 
