@@ -1,6 +1,7 @@
 module Api
   module ASCOR
     class BubbleChart
+      NUMBER_OF_MARKET_CAP_GROUPS = 4
       MARKET_CAP_QUERY = {
         emissions_metric: 'Intensity per capita',
         emissions_boundary: 'Production - excluding LULUCF'
@@ -34,10 +35,10 @@ module Api
       private
 
       def calculate_market_cap_group(country_id)
-        recent_emission_level = recent_emission_levels[country_id]&.first&.recent_emission_level
-        return :medium if recent_emission_level.blank?
+        recent_emission_level = recent_emission_levels[country_id]&.first&.recent_emission_level.to_f
+        return 1 if recent_emission_level.blank?
 
-        market_cap_groups.find { |range, _| range.include?(recent_emission_level) }&.last || :medium
+        market_cap_groups.find { |range, _| range.include?(recent_emission_level) }&.last || 1
       end
 
       def pillars
@@ -53,11 +54,19 @@ module Api
       def market_cap_groups
         @market_cap_groups ||= begin
           values = ::ASCOR::Pathway.where(MARKET_CAP_QUERY).where(assessment_date: assessment_date)
-            .where.not(recent_emission_level: nil).pluck(:recent_emission_level).sort
-          {values.first..values[(values.size * 1.0 / 3).ceil - 1] => :small,
-           values[(values.size * 1.0 / 3).ceil - 1]..values[(values.size * 2.0 / 3).ceil - 1] => :medium,
-           values[(values.size * 2.0 / 3).ceil - 1]..values.last => :large}
+            .pluck(:recent_emission_level).map(&:to_f).compact.sort
+          NUMBER_OF_MARKET_CAP_GROUPS.times.each_with_object({}) do |i, result|
+            next if values.empty?
+
+            result[values[cap_index_for(i, values.size)]..values[cap_index_for(i + 1, values.size)]] = i + 1
+          end
         end
+      end
+
+      def cap_index_for(index, size)
+        return 0 if index.zero?
+
+        (size * index / NUMBER_OF_MARKET_CAP_GROUPS.to_f).ceil - 1
       end
     end
   end
