@@ -137,6 +137,11 @@ $legend-image-width: 60px;
     height: $tape-height;
     width: calc(100% + #{$tape-height / 2});
   }
+
+  .--replaced {
+    font-size: 12px;
+    transform: translateY(-12px);
+  }
 }
 
 .bubble-chart_circle_country {
