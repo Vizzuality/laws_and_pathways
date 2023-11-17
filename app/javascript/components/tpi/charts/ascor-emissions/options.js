@@ -35,7 +35,8 @@ export const options = {
       style: {
         color: '#595B5D',
         fontSize: '12px'
-      }
+      },
+      format: '{value}'
     },
     title: {
       useHTML: true,
@@ -54,7 +55,6 @@ export const options = {
     max: 2030,
     labels: {
       style: {
-        color: '#0A4BDC',
         fontSize: '14px'
       },
       overflow: 'allow'
