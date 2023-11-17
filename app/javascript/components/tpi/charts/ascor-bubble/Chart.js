@@ -13,10 +13,10 @@ const SCALE = 1;
 
 // radius of bubbles
 const COMPANIES_MARKET_CAP_GROUPS = {
-  small: 6 * SCALE,
-  medium: 10 * SCALE,
-  large: 14 * SCALE,
-  xLarge: 18 * SCALE
+  1: 6 * SCALE,
+  2: 9 * SCALE,
+  3: 12 * SCALE,
+  4: 15 * SCALE
 };
 
 const COMPANIES_MARKET_CAP_GROUPS_KEYS = [
@@ -30,6 +30,9 @@ const SINGLE_CELL_SVG_WIDTH = 120;
 const SINGLE_CELL_SVG_HEIGHT = 100;
 
 let tooltip = null;
+
+const AREA_TO_REPLACE = 'Renewable Opportunities';
+const AREA_TO_REPLACE_VALUE = 'No area-level results';
 
 const BubbleChart = ({ results }) => {
   const tooltipEl = '<div id="bubble-chart-tooltip" class="bubble-tip" hidden style="position:absolute;"></div>';
@@ -143,7 +146,10 @@ const ForceLayoutBubbleChart = (countriesBubbles, uniqueKey) => {
 const getTooltipText = ({ tooltipContent }) => {
   if (tooltipContent) {
     return `
-     <div class="bubble-tip-header">${tooltipContent.header}</div>
+     <div>
+        <p class="bubble-tip-header">${tooltipContent.header}</p>
+        <p class="bubble-tip-text">${tooltipContent.emission_size}</p>
+     </div>
     `;
   }
   return '';
@@ -197,23 +203,31 @@ const ChartRows = ({ data }) => data?.map((pillar, pillarIndex) => {
             {pillarAcronym} {areaIndex + 1}. {area}
           </div>
           {areaValues.map((areaValuesResult, i) => {
-            const countriesBubbles = areaValuesResult.map((result) => ({
-              value: COMPANIES_MARKET_CAP_GROUPS[result.market_cap_group],
-              tooltipContent: {
-                header: result.country_name,
-                value: result.result
-              },
-              path: result.country_path,
-              color: result.color,
-              result: result.result
-            }));
+            const countriesBubbles = areaValuesResult.map((result) => {
+              const emission_size = COMPANIES_MARKET_CAP_GROUPS_KEYS[result.market_cap_group - 1];
+              return {
+                value: COMPANIES_MARKET_CAP_GROUPS[result.market_cap_group],
+                tooltipContent: {
+                  header: result.country_name,
+                  emission_size
+                },
+                path: result.country_path,
+                color: result.color,
+                result: result.result
+              };
+            });
 
             // Remove special characters from the key to be able to use d3-select as it uses querySelector
+
             const cleanKey = area.replace(/[^a-zA-Z\-_:.]/g, '');
             const uniqueKey = `${cleanKey}-${areaIndex}-${i}`;
             return (
               <div className="bubble-chart__cell-country" key={uniqueKey}>
-                {ForceLayoutBubbleChart(countriesBubbles, uniqueKey)}
+                {area === AREA_TO_REPLACE ? (
+                  <span className="--replaced">{AREA_TO_REPLACE_VALUE}</span>
+                ) : (
+                  ForceLayoutBubbleChart(countriesBubbles, uniqueKey)
+                )}
               </div>
             );
           })}
