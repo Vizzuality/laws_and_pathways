@@ -30,4 +30,6 @@ class ASCOR::Pathway < ApplicationRecord
   validates_presence_of :emissions_metric, :emissions_boundary, :units, :assessment_date
   validates :emissions_metric, inclusion: {in: ASCOR::EmissionsMetric::VALUES}, allow_nil: true
   validates :emissions_boundary, inclusion: {in: ASCOR::EmissionsBoundary::VALUES}, allow_nil: true
+
+  scope :currently_published, -> { where('ascor_pathways.publication_date <= ?', DateTime.now) }
 end

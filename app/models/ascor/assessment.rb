@@ -19,4 +19,6 @@ class ASCOR::Assessment < ApplicationRecord
   validates_presence_of :assessment_date
 
   accepts_nested_attributes_for :results, allow_destroy: true
+
+  scope :currently_published, -> { where('ascor_assessments.publication_date <= ?', DateTime.now) }
 end
