@@ -120,6 +120,17 @@ $button-border-width: 4px;
     }
   }
 
+  &.is-emphasis {
+    background-color: $ascor-green !important;
+    color: $ascor-color !important;
+    img {
+      filter: brightness(0.1);
+    }
+    &:hover {
+      background-color: transparentize($ascor-green, 0.4) !important;
+    }
+  }
+
   &.with-icon {
     img {
       margin-right: 10px;

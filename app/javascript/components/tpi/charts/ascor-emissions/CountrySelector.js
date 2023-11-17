@@ -41,7 +41,7 @@ const CountrySelector = ({
   return (
     <div className="emissions__filters__country-selector">
       <button
-        className="button is-primary"
+        className="button is-emphasis"
         onClick={() => setCountriesOpen((open) => !open)}
         type="button"
       >

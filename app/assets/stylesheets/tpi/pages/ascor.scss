@@ -135,7 +135,7 @@ $see-more-width-tablet: 130px;
 
   .base-tooltip__default-trigger {
     background-color: $ascor-green;
-
+    color: $ascor-color;
     &:hover {
       background-color: transparentize($ascor-green, 0.4);
     }
