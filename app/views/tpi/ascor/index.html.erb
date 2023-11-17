@@ -23,7 +23,7 @@
         </a>
       </div>
 
-      <%= link_to user_download_tpi_ascor_index_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
+      <%= link_to user_download_tpi_ascor_index_path, class: 'button is-emphasis is-pulled-right with-icon with-border' do %>
         <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
         Download ASCOR data
       <% end %>
@@ -114,7 +114,7 @@
       <div class="promoted-publications__title">
         <div class="promoted-publications__title-text">Publications and news</div>
 
-        <%= link_to 'View all publications and news', tpi_publications_path, class: 'button is-secondary is-hidden-touch' %>
+        <%= link_to 'View all publications and news', tpi_publications_path, class: 'button is-emphasis is-hidden-touch' %>
       </div>
 
       <% if @publications_and_articles.any? %>
