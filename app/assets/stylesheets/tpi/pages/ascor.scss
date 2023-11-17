@@ -10,8 +10,7 @@ $see-more-width-tablet: 130px;
       background-color: $ascor-background-color;
 
       @include desktop {
-        padding: $container-top-padding $container-side-padding 40px
-          $container-side-padding;
+        padding: $container-top-padding $container-side-padding 40px $container-side-padding;
       }
     }
 
@@ -39,7 +38,7 @@ $see-more-width-tablet: 130px;
     }
 
     .left-icon {
-      background-image: image-url("tpi/ascor/circles_1.svg");
+      background-image: image-url('tpi/ascor/circles_1.svg');
       width: 100%;
       height: 100%;
       background-repeat: no-repeat;
@@ -48,7 +47,7 @@ $see-more-width-tablet: 130px;
     }
 
     .right-icon {
-      background-image: image-url("tpi/ascor/circles_2.svg");
+      background-image: image-url('tpi/ascor/circles_2.svg');
       width: 100%;
       height: 100%;
       background-repeat: no-repeat;
@@ -57,7 +56,7 @@ $see-more-width-tablet: 130px;
     }
 
     .bottom-icon {
-      background-image: image-url("tpi/ascor/logo.png");
+      background-image: image-url('tpi/ascor/logo.png');
       width: 100%;
       height: 100%;
       background-repeat: no-repeat;
@@ -84,11 +83,11 @@ $see-more-width-tablet: 130px;
         }
 
         @include desktop {
-          padding-left: calc((960px - 608px) / 2);
+          padding-left: calc((960px - 608px)/2);
         }
 
         @include widescreen {
-          padding-left: calc((1152px - 608px) / 2);
+          padding-left: calc((1152px - 608px)/2);
         }
       }
 
@@ -137,7 +136,6 @@ $see-more-width-tablet: 130px;
   .base-tooltip__default-trigger {
     background-color: $ascor-green;
     color: $ascor-color;
-
     &:hover {
       background-color: transparentize($ascor-green, 0.4);
     }
@@ -314,7 +312,7 @@ $see-more-width-tablet: 130px;
 
     &__icon {
       &:before {
-        content: "";
+        content: '';
         display: block;
 
         min-width: 40px;
@@ -326,31 +324,31 @@ $see-more-width-tablet: 130px;
       }
 
       &--no:before {
-        background-image: image-url("tpi/ascor/no.svg");
+        background-image: image-url('tpi/ascor/no.svg');
       }
 
       &--yes:before {
-        background-image: image-url("tpi/ascor/yes.svg");
+        background-image: image-url('tpi/ascor/yes.svg');
       }
 
       &--not-applicable:before {
-        background-image: image-url("tpi/ascor/not_applicable.svg");
+        background-image: image-url('tpi/ascor/not_applicable.svg');
       }
 
       &--no-data:before {
-        background-image: image-url("tpi/ascor/no_data.svg");
+        background-image: image-url('tpi/ascor/no_data.svg');
       }
 
       &--partial:before {
-        background-image: image-url("tpi/ascor/partial.svg");
+        background-image: image-url('tpi/ascor/partial.svg');
       }
 
       &--no-disclosure:before {
-        background-image: image-url("tpi/ascor/no_disclosure.svg");
+        background-image: image-url('tpi/ascor/no_disclosure.svg');
       }
 
       &--excempt:before {
-        background-image: image-url("tpi/ascor/excempt.svg");
+        background-image: image-url('tpi/ascor/excempt.svg');
       }
     }
 
@@ -420,7 +418,7 @@ $see-more-width-tablet: 130px;
       flex-wrap: wrap;
 
       &__title {
-        flex-grow: 2;
+        flex-grow:2
       }
 
       &__text {
@@ -466,7 +464,7 @@ $see-more-width-tablet: 130px;
       width: $see-more-width;
       right: -1px;
       bottom: -1px;
-      border: 1px solid #cfd7ed;
+      border: 1px solid #CFD7ED;
       user-select: none;
 
       @include tablet {
@@ -475,17 +473,17 @@ $see-more-width-tablet: 130px;
 
       &:before {
         color: $grey-dark;
-        content: "See more";
+        content: 'See more';
         display: block;
         font-size: 12px;
         margin-top: 3px;
       }
 
       &:after {
-        content: "";
+        content: '';
         display: block;
 
-        background-image: image-url("icons/chevron-gray.svg");
+        background-image: image-url('icons/chevron-gray.svg');
         background-repeat: no-repeat;
         background-position: right center;
         background-size: 16px;
@@ -502,7 +500,7 @@ $see-more-width-tablet: 130px;
 
       .country-assessment__more {
         &:before {
-          content: "See less";
+          content: 'See less';
         }
 
         &::after {
@@ -523,7 +521,7 @@ $see-more-width-tablet: 130px;
     position: relative;
 
     &__icon {
-      background-image: image-url("tpi/ascor/circles_3.svg");
+      background-image: image-url('tpi/ascor/circles_3.svg');
       width: 100%;
       height: 100%;
       background-repeat: no-repeat;
@@ -554,7 +552,7 @@ $see-more-width-tablet: 130px;
 
       p {
         font-size: 14px;
-        margin-bottom: 50px;
+        margin-bottom: 50px
       }
 
       .button {
