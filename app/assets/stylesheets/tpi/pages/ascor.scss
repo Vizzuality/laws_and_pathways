@@ -252,7 +252,7 @@ $see-more-width-tablet: 130px;
   }
 
   .country-assessment {
-    margin-top: 60px;
+    margin-top: 30px;
     margin-bottom: 30px;
 
     &__pillar {
@@ -601,6 +601,55 @@ $see-more-width-tablet: 130px;
 
       @include tablet {
         margin: 0 0 0 50%;
+      }
+    }
+  }
+
+  .summary-box {
+    outline: solid 1px $grey-lighter-medium;
+    background-color: transparentize($ascor-background-color, 0.96);
+    margin-top: 1.5rem;
+    padding: 40px;
+    height: 100%;
+
+    h3 {
+      font-size: 16px;
+      line-height: 20px;
+    }
+
+    small {
+      font-size: 12px;
+      color: $grey-dark;
+    }
+
+    @include until($desktop) {
+      padding: 1.5rem 0.75rem;
+
+      .mq-level {
+        font-size: 1.5rem;
+      }
+    }
+
+    @include until($desktop) {
+      .columns {
+        display: table;
+
+        .column {
+          display: inline-flex;
+          width: 50%;
+        }
+      }
+    }
+
+    @include desktop {
+      .columns {
+        justify-content: space-evenly;
+      }
+
+      .column {
+        flex-basis: unset;
+        flex-grow: unset;
+        flex-shrink: unset;
       }
     }
   }

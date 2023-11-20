@@ -33,6 +33,8 @@
     </div>
   </div>
 
+  <%= render 'country_details', country: @country %>
+
   <% if @assessment.present? %>
     <section class="container country-assessment" id="assessment">
       <%= render 'assessment', assessment: @assessment %>
