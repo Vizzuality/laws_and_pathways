@@ -38,7 +38,14 @@ describe 'ASCOR', type: 'system', site: 'tpi' do
       visit '/ascor/japan'
     end
 
+    it 'shows assessment pillars' do
+      ASCOR::AssessmentIndicator.pillar.order(:id).each do |pillar|
+        expect(page).to have_text(pillar.text.upcase)
+      end
+    end
+
     it 'shows assessment results' do
+      find_all('label.country-assessment__more.pillar').each(&:click)
       areas = ASCOR::AssessmentIndicator.area.order(:id)
       ASCOR::AssessmentIndicator.pillar.order(:id).each do |pillar|
         within_ascor_pillar pillar.text do
@@ -50,7 +57,8 @@ describe 'ASCOR', type: 'system', site: 'tpi' do
     end
 
     it 'generates EP.1.a.i and EP.1.a.ii metrics' do
-      find("label[for='ascor_assessment_indicator_#{ASCOR::AssessmentIndicator.find_by(code: 'EP.1').id}']").click
+      find_all('label.country-assessment__more.pillar').each(&:click)
+      find("label[for='area-ascor_assessment_indicator_#{ASCOR::AssessmentIndicator.find_by(code: 'EP.1').id}']").click
       expect(page).to have_text("i. What is the country's most recent emissions level?")
       expect(page).to have_text("ii. What is the country's most recent emissions trend?")
     end

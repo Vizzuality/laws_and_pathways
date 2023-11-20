@@ -5,32 +5,38 @@
 
 <%= react_component('AscorQuestionLegend') %>
 <% pillars.each_with_index do |pillar, i| %>
+  <input id="pillar-<%= dom_id(pillar) %>" type="checkbox" class="toggle pillar" />
   <div class="country-assessment__pillar">
-    <div class="country-assessment__pillar__subtitle"><%= "Pillar #{i + 1}" %></div>
-    <h2 class="country-assessment__pillar__title"><%= pillar.text %></h2>
+    <div class="country-assessment__pillar__header">
+      <div class="country-assessment__pillar__subtitle"><%= "Pillar #{i + 1}" %></div>
+      <h2 class="country-assessment__pillar__title"><%= pillar.text %></h2>
+      <label class="country-assessment__more pillar" for="pillar-<%= dom_id(pillar) %>"></label>
+    </div>
 
-    <% ascor_sub_indicators_for(pillar, areas).each do |area| %>
-      <input id="<%= dom_id(area) %>" type="checkbox" class="toggle" />
-      <div class="country-assessment__area-block">
-        <div class="country-assessment__area">
-          <div class="country-assessment__area__title country-assessment__icon country-assessment__icon--<%= ascor_icon_for(area, @assessment) %>">
-            <div><%= "Area #{area.code}" %></div>
-            <div><strong><%= area.text %></strong></div>
+    <div class="country-assessment__areas" for="pillar-<%= dom_id(pillar) %>">
+      <% ascor_sub_indicators_for(pillar, areas).each do |area| %>
+        <input id="area-<%= dom_id(area) %>" type="checkbox" class="toggle area" />
+        <div class="country-assessment__area-block">
+          <div class="country-assessment__area">
+            <div class="country-assessment__area__title country-assessment__icon country-assessment__icon--<%= ascor_icon_for(area, @assessment) %>">
+              <div><%= "Area #{area.code}" %></div>
+              <div><strong><%= area.text %></strong></div>
+            </div>
+            <label class="country-assessment__more" for="area-<%= dom_id(area) %>"></label>
           </div>
-          <label class="country-assessment__more" for="<%= dom_id(area) %>"></label>
-        </div>
 
-        <div class="country-assessment__indicators" for="<%= dom_id(area) %>">
-          <% if ascor_sub_indicators_for(area, indicators).present? %>
-            <%= render 'tpi/ascor/assessment_indicators', area: area, indicators: ascor_sub_indicators_for(area, indicators), metrics: metrics %>
-            <% if area.code == 'EP.2' %>
-              <%= render 'tpi/ascor/benchmarks_chart' %>
+          <div class="country-assessment__indicators" for="area-<%= dom_id(area) %>">
+            <% if ascor_sub_indicators_for(area, indicators).present? %>
+              <%= render 'tpi/ascor/assessment_indicators', area: area, indicators: ascor_sub_indicators_for(area, indicators), metrics: metrics %>
+              <% if area.code == 'EP.2' %>
+                <%= render 'tpi/ascor/benchmarks_chart' %>
+              <% end %>
+            <% else %>
+              <%= render 'tpi/ascor/assessment_metrics', metrics: ascor_sub_indicators_for(area, metrics) %>
             <% end %>
-          <% else %>
-            <%= render 'tpi/ascor/assessment_metrics', metrics: ascor_sub_indicators_for(area, metrics) %>
-          <% end %>
+          </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 <% end %>
