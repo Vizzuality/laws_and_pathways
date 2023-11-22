@@ -87,8 +87,8 @@ const BubbleChart = ({ results }) => {
     <div>
       <div className="bubble-chart__container bubble-chart__container__grid">
         <div className="bubble-chart__level-title-country">Pillar</div>
-        <div className="bubble-chart__level-title-country">Area</div>
         <div />
+        <div className="bubble-chart__level-title-country">Area</div>
         {ranges.map((range) => (
           <div className="bubble-chart__level-country" key={range}>
             <div className="bubble-chart__level-title-country">{range}</div>

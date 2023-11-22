@@ -156,6 +156,8 @@ $legend-image-width: 60px;
   position: relative;
   padding-left: 20px;
   height: 100%;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .bubble-chart__level-title-country {
@@ -163,6 +165,7 @@ $legend-image-width: 60px;
   font-family: $font-family-bold;
   font-size: 16px;
   color: $black;
+  text-align: center;
   margin-bottom: 20px;
 }
 
