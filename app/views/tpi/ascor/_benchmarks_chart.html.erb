@@ -1,3 +1,3 @@
-<%#= react_component('charts/ascor-benchmarks', { # TODO: Finalise react component
+<%= react_component('charts/ascor-benchmarks/Chart', {
   data: Api::ASCOR::BenchmarksChart.new(@assessment_date, @country.id).call
 }) %>

@@ -29,7 +29,9 @@
             <% if ascor_sub_indicators_for(area, indicators).present? %>
               <%= render 'tpi/ascor/assessment_indicators', area: area, indicators: ascor_sub_indicators_for(area, indicators), metrics: metrics %>
               <% if area.code == 'EP.2' %>
-                <%= render 'tpi/ascor/benchmarks_chart' %>
+                <div class="country-assessment__metric-block">
+                  <%= render 'tpi/ascor/benchmarks_chart' %>
+                </div>
               <% end %>
             <% else %>
               <%= render 'tpi/ascor/assessment_metrics', metrics: ascor_sub_indicators_for(area, metrics) %>
