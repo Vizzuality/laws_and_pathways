@@ -74,7 +74,7 @@
 ,area,CF.3,Transparency in Climate Spending,Yes/No/Partial
 ,indicator,CF.3.a,Has the country disclosed its climate-related expenditures?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
 ,indicator,CF.3.b,Does the country apply climate budget tagging?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
-,area,CF.4,Renewable Opportunities,
+,area,CF.4,Renewable Energy Opportunities,
 ,metric,CF.4.i,What is the country's prospective solar energy capacity?,MW/GDP
 ,metric,CF.4.ii,What is the country’s prospective wind energy capacity?,MW/GDP
 ,metric,CF.4.iii,What is the country’s prospective geothermal energy capacity?,MW/GDP

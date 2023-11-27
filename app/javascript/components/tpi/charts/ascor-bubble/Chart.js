@@ -31,7 +31,7 @@ const SINGLE_CELL_SVG_HEIGHT = 100;
 
 let tooltip = null;
 
-const AREA_TO_REPLACE = 'Renewable Opportunities';
+const AREA_TO_REPLACE = 'Renewable Energy Opportunities';
 const AREA_TO_REPLACE_VALUE = 'No area-level results';
 
 const BubbleChart = ({ results }) => {
