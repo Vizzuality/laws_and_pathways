@@ -81,7 +81,7 @@ const AscorQuestionLegend = () => {
         <div className="country-question-legend-answer country-question-legend-answer--no-disclosure">
           No disclosure
         </div>
-        <div className="country-question-legend-answer country-question-legend-answer--excempt">
+        <div className="country-question-legend-answer country-question-legend-answer--exempt">
           Exempt
         </div>
       </div>
