@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import cx from 'classnames';
+import React, { useEffect } from 'react';
 
 const AscorQuestionLegend = () => {
-  const [isVisible, setVisible] = useState(false);
-
   const isCheckedArea = () => {
     let anyChecked = false;
 
@@ -22,16 +19,6 @@ const AscorQuestionLegend = () => {
       });
   };
 
-  const isCheckedPillar = () => {
-    let anyChecked = false;
-
-    document.querySelectorAll('.country-assessment > input.toggle.pillar').forEach((input) => {
-      anyChecked = anyChecked || input.checked;
-    });
-
-    setVisible(anyChecked);
-  };
-
   useEffect(() => {
     const eventListeners = [];
     document
@@ -43,15 +30,6 @@ const AscorQuestionLegend = () => {
         eventListeners.push([input, listener]);
       });
 
-    document
-      .querySelectorAll(
-        '.country-assessment > input.toggle.pillar'
-      )
-      .forEach((input) => {
-        const listener = input.addEventListener('click', isCheckedPillar);
-        eventListeners.push([input, listener]);
-      });
-
     return () => {
       eventListeners.forEach(([input, listener]) => {
         input.removeEventListener('click', listener);
@@ -60,7 +38,7 @@ const AscorQuestionLegend = () => {
   });
 
   return (
-    <div className={cx('banking-question-legend', { 'banking-question-legend--active': isVisible })}>
+    <div className="banking-question-legend banking-question-legend--active">
       <div className="banking-question-legend__header">Legend</div>
       <div className="country-question-legend__content">
         <div className="country-question-legend-answer country-question-legend-answer--no">
