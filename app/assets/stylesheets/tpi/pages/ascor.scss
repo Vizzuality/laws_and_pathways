@@ -238,6 +238,12 @@ $see-more-width-tablet: 130px;
         }
       }
     }
+
+    .pages__publication {
+      @include tablet {
+        max-width: 400px;
+      }
+    }
   }
 
   .button {
