@@ -645,13 +645,15 @@ $see-more-width-tablet: 130px;
 
     @include desktop {
       .columns {
-        justify-content: space-evenly;
+        flex-wrap: wrap;
       }
 
       .column {
         flex-basis: unset;
         flex-grow: unset;
         flex-shrink: unset;
+        min-width: 50%;
+        max-width: 50%;
       }
     }
   }
