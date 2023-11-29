@@ -475,7 +475,7 @@ $see-more-width-tablet: 130px;
       width: $see-more-width;
       right: -1px;
       bottom: -1px;
-      border: 1px solid #CFD7ED;
+      border: 1px solid #E9E9EB;
       user-select: none;
 
       @include tablet {
@@ -645,15 +645,13 @@ $see-more-width-tablet: 130px;
 
     @include desktop {
       .columns {
-        flex-wrap: wrap;
+        justify-content: space-evenly;
       }
 
       .column {
         flex-basis: unset;
         flex-grow: unset;
         flex-shrink: unset;
-        min-width: 50%;
-        max-width: 50%;
       }
     }
   }

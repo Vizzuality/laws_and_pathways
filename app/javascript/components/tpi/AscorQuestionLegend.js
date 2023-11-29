@@ -38,8 +38,8 @@ const AscorQuestionLegend = () => {
   });
 
   return (
-    <div className="banking-question-legend banking-question-legend--active">
-      <div className="banking-question-legend__header">Legend</div>
+    <div className="country-question-legend country-question-legend--active">
+      <div className="country-question-legend__header">Legend</div>
       <div className="country-question-legend__content">
         <div className="country-question-legend-answer country-question-legend-answer--no">
           No

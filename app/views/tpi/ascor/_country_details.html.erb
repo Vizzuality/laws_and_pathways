@@ -16,12 +16,12 @@
       <% end %>
     </div>
     <div class="column">
-     <%= render 'tpi/shared/property', highlight: false, name: 'International Monetary Fund fiscal monitor category' do %>
+     <%= render 'tpi/shared/property', highlight: false, name: 'IMF Fiscal Monitor Category', tooltip: 'International Monetary Fund fiscal monitor category' do %>
        <%= country.fiscal_monitor_category %>
       <% end %>
     </div>
     <div class="column">
-      <%= render 'tpi/shared/property', highlight: false, name: 'Type of Party to the United Nations Framework Convention on Climate Change' do %>
+      <%= render 'tpi/shared/property', highlight: false, name: 'Type of Party to the UNFCCC', tooltip: 'Type of Party to the United Nations Framework Convention on Climate Change' do %>
         <%= country.type_of_party %>
       <% end %>
     </div>
