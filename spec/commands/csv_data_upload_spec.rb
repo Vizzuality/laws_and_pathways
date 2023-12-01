@@ -1472,7 +1472,7 @@ describe 'CSVDataUpload (integration)' do
     country = ASCOR::Country.find_by(iso: 'JPN')
     expect(country.name).to eq('Japan')
     expect(country.region).to eq('Asia')
-    expect(country.wb_lending_group).to eq('High-income economies')
+    expect(country.wb_lending_group).to eq('High-income')
     expect(country.fiscal_monitor_category).to eq('Advanced economies')
     expect(country.type_of_party).to eq('Annex I')
   end

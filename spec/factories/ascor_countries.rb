@@ -18,7 +18,7 @@ FactoryBot.define do
     name { 'United States' }
     iso { 'USA' }
     region { 'North America' }
-    wb_lending_group { 'High-income economies' }
+    wb_lending_group { 'High-income' }
     fiscal_monitor_category { 'Advanced economies' }
     type_of_party { 'Annex I' }
   end

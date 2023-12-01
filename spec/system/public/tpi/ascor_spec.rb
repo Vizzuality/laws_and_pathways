@@ -45,7 +45,7 @@ describe 'ASCOR', type: 'system', site: 'tpi' do
       expect(page).to have_text('Region')
       expect(page).to have_text('Asia')
       expect(page).to have_text('World Bank lending group')
-      expect(page).to have_text('High-income economies')
+      expect(page).to have_text('High-income')
       expect(page).to have_text('IMF Fiscal Monitor Category')
       expect(page).to have_text('Advanced economies')
       expect(page).to have_text('Type of Party to the UNFCCC')

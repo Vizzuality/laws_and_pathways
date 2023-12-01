@@ -24,11 +24,7 @@ class ASCOR::Country < ApplicationRecord
     'North America',
     'Oceania'
   ].freeze
-  LENDING_GROUPS = [
-    'High-income economies',
-    'Upper-middle-income economies',
-    'Lower-middle-income economies'
-  ].freeze
+  LENDING_GROUPS = %w[High-income Upper-middle-income Lower-middle-income Low-income].freeze
   MONITOR_CATEGORIES = [
     'Advanced economies',
     'Emerging market economies',
@@ -36,7 +32,10 @@ class ASCOR::Country < ApplicationRecord
   ].freeze
   TYPE_OF_PARTY = [
     'Annex I',
-    'Non-Annex I'
+    'Non-Annex I',
+    'Annex I and Annex II',
+    'Non-Annex I and Non-Annex II',
+    'Annex I and Non-Annex II'
   ].freeze
   DEFAULT_COUNTRIES = %w[USA CAN GBR FRA DEU ITA JPN RUS].freeze
 
