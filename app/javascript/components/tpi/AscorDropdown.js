@@ -15,7 +15,7 @@ import chevronIconBlack from 'images/icon_chevron_dark/chevron_down_black-1.svg'
 const ESCAPE_KEY = 27;
 const ENTER_KEY = 13;
 
-const AscorSelector = ({ banks, selectedOption }) => {
+const AscorSelector = ({ countries, selectedOption }) => {
   const [searchValue, setSearchValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const inputEl = useRef(null);
@@ -32,18 +32,18 @@ const AscorSelector = ({ banks, selectedOption }) => {
     return searchResults;
   };
 
-  const searchResults = useMemo(() => (searchValue ? fuse(banks) : []), [searchValue]);
+  const searchResults = useMemo(() => (searchValue ? fuse(countries) : []), [searchValue]);
 
   const options = useMemo(() => (searchValue
-    ? searchResults : banks),
-  [searchValue, banks]);
+    ? searchResults : countries),
+  [searchValue, countries]);
 
   const input = () => (
     <input
       ref={inputEl}
       className="dropdown-selector__input"
       onChange={e => setSearchValue(e.target.value)}
-      placeholder="Type or select bank"
+      placeholder="Type or select country"
     />
   );
 
@@ -172,7 +172,7 @@ const AscorSelector = ({ banks, selectedOption }) => {
 };
 
 AscorSelector.propTypes = {
-  banks: PropTypes.array.isRequired,
+  countries: PropTypes.array.isRequired,
   selectedOption: PropTypes.string.isRequired
 };
 
