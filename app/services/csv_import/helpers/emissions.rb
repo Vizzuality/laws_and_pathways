@@ -15,7 +15,8 @@ module CSVImport
         row.headers.grep(EMISSION_YEAR_PATTERN).any?
       end
 
-      def string_to_float(string, thousands_separator: ',')
+      def string_to_float(string, thousands_separator: ',', ignored_texts: [])
+        return string if ignored_texts.include?(string.downcase)
         return nil if string.blank?
         return string.to_f unless string.is_a?(String)
 

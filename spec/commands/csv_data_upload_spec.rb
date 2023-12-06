@@ -1533,6 +1533,7 @@ describe 'CSVDataUpload (integration)' do
     )
 
     pathway = ASCOR::Pathway.joins(:country).find_by ascor_countries: {iso: 'USA'}
+    pathway_2 = ASCOR::Pathway.joins(:country).find_by ascor_countries: {iso: 'JPN'}
 
     expect(pathway.publication_date).to eq(Date.new(2023, 12))
     expect(pathway.assessment_date).to eq(Date.new(2023, 10, 30))
@@ -1574,6 +1575,7 @@ describe 'CSVDataUpload (integration)' do
       '2029' => 4311.9,
       '2030' => 4073.4
     )
+    expect(pathway_2.recent_emission_level).to eq('No data')
   end
 
   it 'import CSV file with ASCOR assessment indicators data' do

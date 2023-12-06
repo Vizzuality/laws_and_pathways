@@ -18,7 +18,7 @@
 #  updated_at             :datetime         not null
 #  trend_source           :string
 #  trend_year             :integer
-#  recent_emission_level  :float
+#  recent_emission_level  :string
 #  recent_emission_source :string
 #  recent_emission_year   :integer
 #
