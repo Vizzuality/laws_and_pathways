@@ -112,7 +112,7 @@ AscorRecentEmissions.propTypes = {
   default_trend_filter: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      value: PropTypes.number,
+      value: PropTypes.string,
       source: PropTypes.string,
       year: PropTypes.number,
       unit: PropTypes.string.isRequired,

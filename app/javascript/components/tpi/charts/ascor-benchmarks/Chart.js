@@ -54,6 +54,7 @@ const Chart = ({ data: { data, metadata } }) => {
           ...options,
           yAxis: {
             ...options.yAxis,
+            min: 0,
             title: { ...options.yAxis.title, text: metadata.unit }
           },
           series: chartData

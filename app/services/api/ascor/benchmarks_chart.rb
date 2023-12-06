@@ -38,7 +38,7 @@ module Api
       end
 
       def benchmarks
-        @benchmarks ||= ::ASCOR::Benchmark.where(country_id: country_id)
+        @benchmarks ||= ::ASCOR::Benchmark.where(country_id: country_id).sort_by(&:benchmark_type).reverse
       end
     end
   end
