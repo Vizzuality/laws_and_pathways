@@ -8,8 +8,10 @@ module TPI
 
     def index
       @assessment_dates = ASCOR::Assessment.pluck(:assessment_date).uniq
-      @publications_and_articles = Publication.joins(:tags).includes(:tpi_sectors).where(tags: {name: 'ASCOR'}) +
+      @publications_and_articles = (
+        Publication.joins(:tags).includes(:tpi_sectors).where(tags: {name: 'ASCOR'}) +
         NewsArticle.joins(:tags).where(tags: {name: 'ASCOR'})
+      ).uniq.sort_by(&:publication_date).reverse!.take(3)
       ascor_page = TPIPage.find_by(slug: 'ascor')
       @methodology_description = Content.find_by(page: ascor_page, code: 'methodology_description')
       @methodology_id = Content.find_by(page: ascor_page, code: 'methodology_publication_id')
