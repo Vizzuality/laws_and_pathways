@@ -1,0 +1,29 @@
+<section class="container summary-box">
+  <div class="columns">
+    <div class="column">
+      <%= render 'tpi/shared/property', highlight: false, name: 'ISO' do %>
+        <%= country.iso %>
+      <% end %>
+    </div>
+    <div class="column">
+      <%= render 'tpi/shared/property', highlight: false, name: 'Region' do %>
+        <%= country.region %>
+      <% end %>
+    </div>
+    <div class="column">
+      <%= render 'tpi/shared/property', highlight: false, name: 'World Bank lending group' do %>
+        <%= country.wb_lending_group %>
+      <% end %>
+    </div>
+    <div class="column">
+     <%= render 'tpi/shared/property', highlight: false, name: 'IMF Fiscal Monitor Category', tooltip: 'International Monetary Fund fiscal monitor category' do %>
+       <%= country.fiscal_monitor_category %>
+      <% end %>
+    </div>
+    <div class="column">
+      <%= render 'tpi/shared/property', highlight: false, name: 'Type of Party to the UNFCCC', tooltip: 'Type of Party to the United Nations Framework Convention on Climate Change' do %>
+        <%= country.type_of_party %>
+      <% end %>
+    </div>
+  </div>
+</section>

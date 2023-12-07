@@ -1,0 +1,658 @@
+$see-more-width: 100px;
+$see-more-width-tablet: 130px;
+
+.ascor-page {
+  .dropdown-selector-wrapper {
+    position: relative;
+    background-color: $ascor-background-color;
+
+    .dropdown-selector__container {
+      background-color: $ascor-background-color;
+
+      @include desktop {
+        padding: $container-top-padding $container-side-padding 40px $container-side-padding;
+      }
+    }
+
+    .dropdown-selector__container--active {
+      background-color: $white;
+    }
+
+    .dropdown-selector__wrapper {
+      background-color: $ascor-background-color;
+    }
+
+    .dropdown-selector__active-button {
+      background-color: $dark;
+    }
+
+    .dropdown-selector__option {
+      &:hover {
+        background-color: $ascor-background-color;
+        color: #fff;
+      }
+    }
+
+    @include desktop {
+      height: 335px;
+    }
+
+    .left-icon {
+      background-image: image-url('tpi/ascor/circles_1.svg');
+      width: 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+      position: absolute;
+      background-position-y: 30px;
+    }
+
+    .right-icon {
+      background-image: image-url('tpi/ascor/circles_2.svg');
+      width: 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+      position: absolute;
+      background-position-x: 100%;
+    }
+
+    .bottom-icon {
+      background-image: image-url('tpi/ascor/logo.png');
+      width: 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+      position: absolute;
+      background-position: 50px 260px;
+    }
+
+    .ascor-header {
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+
+      &.show-version {
+        justify-content: space-between;
+
+        @include mobile {
+          justify-content: flex-end;
+        }
+
+        @include tablet {
+          padding-left: 20px;
+        }
+
+        @include desktop {
+          padding-left: calc((960px - 608px)/2);
+        }
+
+        @include widescreen {
+          padding-left: calc((1152px - 608px)/2);
+        }
+      }
+
+      &__assessment-dropdown {
+        display: flex;
+        gap: 10px;
+        color: white;
+        margin-right: 20px;
+
+        .caption {
+          line-height: 35px;
+        }
+
+        @include tablet {
+          flex-direction: row;
+          align-items: center;
+        }
+      }
+
+      .button {
+        background-color: $ascor-background-color;
+      }
+
+      .button:hover {
+        background-color: $dark;
+      }
+
+      a {
+        color: white;
+        margin-right: 20px;
+      }
+
+      .links {
+        padding-right: 20px;
+      }
+
+      @include until($desktop) {
+        padding: 0 0.75rem;
+        font-size: $size-7;
+        height: 60px;
+        font-family: $font-family-regular;
+      }
+    }
+  }
+
+  .base-tooltip__default-trigger {
+    background-color: $ascor-green;
+    color: $ascor-color;
+    &:hover {
+      background-color: transparentize($ascor-green, 0.4);
+    }
+  }
+
+  .bubble-chart-header {
+    margin-bottom: 20px;
+
+    @include desktop {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &__assessment-dropdown {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+
+  .bubble-chart-description {
+    margin-bottom: 40px;
+    font-size: 14px;
+    line-height: 1.75;
+
+    @include desktop {
+      max-width: 500px;
+    }
+  }
+
+  .emissions-chart-header {
+    margin-bottom: 20px;
+
+    @include desktop {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &__assessment-dropdown {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+
+  .emissions-chart-description {
+    margin-bottom: 40px;
+    font-size: 14px;
+    line-height: 1.75;
+
+    @include desktop {
+      max-width: 500px;
+    }
+  }
+
+  section {
+    margin-top: 70px;
+
+    > p {
+      margin-top: 30px;
+    }
+
+    @include until($desktop) {
+      margin-top: 40px;
+      padding: 0 0.75rem;
+
+      h4 {
+        font-size: $size-5 !important;
+      }
+
+      > p {
+        margin-top: 15px;
+        font-size: $size-6;
+        color: $grey-dark;
+      }
+    }
+  }
+
+  #methodology {
+    display: flex;
+
+    .pages__content {
+      margin-bottom: 0;
+
+      > div {
+        margin-top: 30px;
+      }
+
+      @include until($desktop) {
+        h4 {
+          font-size: $size-5 !important;
+        }
+
+        > div {
+          margin-top: 15px;
+          font-size: $size-6;
+          color: $grey-dark;
+        }
+      }
+    }
+
+    .pages__publication {
+      @include tablet {
+        max-width: 400px;
+      }
+    }
+  }
+
+  .button {
+    background-color: $ascor-green;
+    color: $white;
+    border: 0;
+
+    &:hover {
+      color: $white;
+      background-color: transparentize($ascor-green, 0.4);
+    }
+  }
+
+  .country-assessment {
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    &__pillar {
+      outline: solid 1px $grey-lighter-medium;
+      margin-bottom: 1px;
+      padding: 30px 0 0 10px;
+
+      &.active {
+        background-color: transparentize($ascor-background-color, 0.96);
+      }
+
+      &__header {
+        position: relative;
+        padding-bottom: 10px;
+      }
+
+      &__title {
+        color: $dark;
+        font-family: $family-sans-serif;
+        font-size: 24px !important;
+        line-height: 1.7rem;
+        font-weight: 400;
+        text-transform: uppercase;
+        margin: 5px 0 40px 0;
+      }
+
+      &__subtitle {
+        color: $grey-dark;
+        font-family: $family-sans-serif;
+        font-size: 12px;
+      }
+
+      @include tablet {
+        padding: 30px 0 0 40px;
+      }
+    }
+
+    &__area {
+      outline: solid 1px $grey-lighter-medium;
+      padding: 15px 20px 30px 20px;
+      position: relative;
+      background-color: white;
+      display: flex;
+
+      &__title {
+        font-family: $family-sans-serif;
+        font-size: 20px !important;
+        display: flex;
+        align-items: center;
+        gap: 25px;
+
+        div:first-child {
+          min-width: 80px;
+        }
+      }
+
+      @include tablet {
+        margin-left: 40px;
+        padding: 15px 20px;
+      }
+    }
+
+    &__icon {
+      &:before {
+        content: '';
+        display: block;
+
+        min-width: 40px;
+        min-height: 40px;
+        border-radius: 50%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 40px;
+      }
+
+      &--no:before {
+        background-image: image-url('tpi/ascor/no.svg');
+      }
+
+      &--yes:before {
+        background-image: image-url('tpi/ascor/yes.svg');
+      }
+
+      &--not-applicable:before {
+        background-image: image-url('tpi/ascor/not_applicable.svg');
+      }
+
+      &--no-data:before {
+        background-image: image-url('tpi/ascor/no_data.svg');
+      }
+
+      &--partial:before {
+        background-image: image-url('tpi/ascor/partial.svg');
+      }
+
+      &--no-disclosure:before {
+        background-image: image-url('tpi/ascor/no_disclosure.svg');
+      }
+
+      &--exempt:before {
+        background-image: image-url('tpi/ascor/exempt.svg');
+      }
+    }
+
+    input.toggle {
+      display: none;
+    }
+
+    &__indicators {
+      display: none;
+    }
+
+    &__indicator {
+      margin-bottom: 1px;
+      outline: solid 1px $grey-lighter-medium;
+      padding: 15px 45px 15px 20px;
+      display: flex;
+
+      &__title {
+        font-family: $family-sans-serif;
+        font-weight: 700;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        flex-grow: 2;
+      }
+
+      &__source {
+        font-family: $family-sans-serif;
+        font-size: 14px !important;
+        line-height: 40px;
+
+        a {
+          color: $grey-dark;
+          text-decoration: underline;
+        }
+
+        a:hover {
+          color: $dark;
+        }
+      }
+
+      @include tablet {
+        margin-left: 40px;
+      }
+    }
+
+    &__break {
+      flex-basis: 100%;
+      height: 0;
+    }
+
+    &__metric-block {
+      margin-left: 40px;
+      padding: 30px 45px 0 45px;
+      border-left: solid 3px $grey-lighter-medium;
+
+      @include tablet {
+        margin-left: 80px;
+      }
+    }
+
+    &__metric {
+      display: flex;
+      padding-bottom: 30px;
+      position: relative;
+      flex-wrap: wrap;
+
+      &__title {
+        flex-grow:2
+      }
+
+      &__text {
+        background: $dark;
+        padding: 5px 10px;
+        color: $white;
+        font-weight: 600;
+        margin-top: 10px;
+        border: solid 1px $grey-lighter-medium;
+        text-align: center;
+        min-width: 80px;
+        font-size: small;
+
+        sub {
+          font-size: 8px;
+        }
+      }
+
+      &__source {
+        font-family: $family-sans-serif;
+        font-size: 14px !important;
+
+        a {
+          color: $grey-dark;
+          text-decoration: underline;
+        }
+
+        a:hover {
+          color: $dark;
+        }
+      }
+    }
+
+    &__more {
+      cursor: pointer;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-left: 10px;
+      padding-right: 10px;
+      height: 30px;
+      width: $see-more-width;
+      right: -1px;
+      bottom: -1px;
+      border: 1px solid #E9E9EB;
+      user-select: none;
+
+      @include tablet {
+        width: $see-more-width-tablet;
+      }
+
+      &:before {
+        color: $grey-dark;
+        content: 'See more';
+        display: block;
+        font-size: 12px;
+        margin-top: 3px;
+      }
+
+      &:after {
+        content: '';
+        display: block;
+
+        background-image: image-url('icons/chevron-gray.svg');
+        background-repeat: no-repeat;
+        background-position: right center;
+        background-size: 16px;
+
+        height: 16px;
+        width: 16px;
+      }
+    }
+
+    input.toggle.pillar:checked + .country-assessment__pillar {
+      .country-assessment__areas {
+        display: block;
+      }
+
+      .country-assessment__more.pillar {
+        top: 25px;
+        bottom: -1px;
+
+        &:before {
+          content: 'See less';
+        }
+
+        &::after {
+          transform: rotate(-180deg);
+        }
+      }
+    }
+
+    input.toggle.area:checked + .country-assessment__area-block {
+      .country-assessment__indicators {
+        display: block;
+      }
+
+      .country-assessment__more {
+        &:before {
+          content: 'See less';
+        }
+
+        &::after {
+          transform: rotate(-180deg);
+        }
+      }
+    }
+  }
+
+  .notes {
+    margin-bottom: 30px;
+  }
+
+  .contacts {
+    width: 100%;
+    height: 380px;
+    background-color: $ascor-green;
+    position: relative;
+
+    &__icon {
+      background-image: image-url('tpi/ascor/circles_3.svg');
+      width: 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+      position: absolute;
+      display: none;
+
+      @include tablet {
+        background-position-x: calc(50% - 250px);
+        display: block;
+      }
+
+      @include widescreen {
+        background-position-x: 200px;
+      }
+    }
+
+    &__info {
+      padding-top: 80px;
+      margin: 0 auto;
+      width: 400px;
+
+      h3 {
+        font-family: $family-sans-serif;
+        font-size: 24px !important;
+        font-weight: 700;
+        padding: 20px 0;
+      }
+
+      p {
+        font-size: 14px;
+        margin-bottom: 50px
+      }
+
+      .button {
+        background-color: $ascor-background-color;
+        color: $white;
+        display: inline-block;
+
+        &:hover {
+          background-color: $dark;
+          border: 0;
+        }
+      }
+
+      &__link {
+        font-weight: bold;
+        text-decoration: underline;
+      }
+
+      @include tablet {
+        margin: 0 0 0 50%;
+      }
+    }
+  }
+
+  .summary-box {
+    outline: solid 1px $grey-lighter-medium;
+    background-color: transparentize($ascor-background-color, 0.96);
+    margin-top: 1.5rem;
+    padding: 40px;
+    height: 100%;
+
+    h3 {
+      font-size: 16px;
+      line-height: 20px;
+    }
+
+    small {
+      font-size: 12px;
+      color: $grey-dark;
+    }
+
+    @include until($desktop) {
+      padding: 1.5rem 0.75rem;
+
+      .mq-level {
+        font-size: 1.5rem;
+      }
+    }
+
+    @include until($desktop) {
+      .columns {
+        display: table;
+
+        .column {
+          display: inline-flex;
+          width: 50%;
+        }
+      }
+    }
+
+    @include desktop {
+      .columns {
+        justify-content: space-evenly;
+      }
+
+      .column {
+        flex-basis: unset;
+        flex-grow: unset;
+        flex-shrink: unset;
+      }
+    }
+  }
+}

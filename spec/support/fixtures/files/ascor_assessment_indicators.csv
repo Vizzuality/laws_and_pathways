@@ -1,0 +1,8 @@
+Id,Type,Code,Text,Units or response type
+,pillar,EP,Emissions Pathways,
+,area,EP.1,Emissions Trends,Yes/No/Partial
+,indicator,EP.1.a,Have the country’s emissions decreased in recent years?,Yes/No
+,metric,EP.1.a.i,What is the country's most recent emissions level?,MtCO2e
+,metric,EP.1.a.ii,What is the country's most recent emissions trend?,%
+,indicator,EP.1.b,Is the most recent 3-year trend aligned with meeting the country's 1.5°C benchmark?,Yes/No
+,indicator,EP.1.c,Is the most recent 3-year trend aligned with meeting the country’s 1.5°C fair share?,Yes/No

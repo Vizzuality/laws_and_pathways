@@ -18,4 +18,5 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'TPI'
   inflect.acronym 'CSV'
   inflect.acronym 'HTML'
+  inflect.acronym 'ASCOR'
 end

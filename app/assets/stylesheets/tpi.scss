@@ -26,8 +26,10 @@
 @import "tpi/navbar";
 @import "tpi/publications";
 @import "tpi/bubble-chart";
+@import "tpi/bubble-chart-countries";
 @import "tpi/charts";
 @import "tpi/base-tooltip";
+@import "tpi/info-tooltip";
 @import "tpi/filters";
 @import "tpi/footer";
 @import "tpi/dropdown-selector";
@@ -37,10 +39,13 @@
 @import "tpi/fixed-navbar";
 @import "tpi/nested-dropdown";
 @import "tpi/banking-question-legend";
+@import "tpi/country-question-legend";
 @import "tpi/latest-information";
 @import "tpi/mq_beta_scores";
 @import "tpi/mq-beta-modal";
-
+@import "tpi/selector";
+@import "tpi/emissions-chart";
+@import "tpi/ascor-benchmarks";
 @import "tpi/pages/*";
 @import "tpi/shared/*";
 

@@ -41,6 +41,13 @@
     }
   }
 
+  &__beta-button {
+    &.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
 
   &__beta-button:before {
     content: "";

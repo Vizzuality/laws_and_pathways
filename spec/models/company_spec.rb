@@ -104,4 +104,30 @@ RSpec.describe Company, type: :model do
       end
     end
   end
+
+  describe '#beta_mq_assessments?' do
+    context 'when company has beta MQ assessments' do
+      let(:beta_methodology_version) { MQ::Assessment::BETA_METHODOLOGIES.keys.first }
+      let(:company) do
+        create(:company, mq_assessments: [
+                 build(:mq_assessment, assessment_date: '2012-05-01'),
+                 build(:mq_assessment, assessment_date: '2019-06-01', methodology_version: beta_methodology_version)
+               ])
+      end
+
+      it 'returns true' do
+        expect(company.beta_mq_assessments?).to be_truthy
+      end
+    end
+
+    context 'when company does not have beta MQ assessments' do
+      let(:company) do
+        create(:company, mq_assessments: [build(:mq_assessment, assessment_date: '2012-05-01')])
+      end
+
+      it 'returns false' do
+        expect(company.beta_mq_assessments?).to be_falsey
+      end
+    end
+  end
 end

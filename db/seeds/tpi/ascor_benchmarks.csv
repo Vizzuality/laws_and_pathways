@@ -1,0 +1,51 @@
+﻿Id,Country,Publication date,Emissions metric,Emissions boundary,Units,Benchmark type,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030
+,United States,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark," 6,220.00 "," 5,844.93 "," 5,469.87 "," 5,094.80 "," 4,719.73 "," 4,344.67 "," 3,969.60 "," 3,594.54 "," 3,219.47 "," 2,844.40 "
+,Japan,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark," 1,178.14 "," 1,100.06 "," 1,021.99 ", 943.91 , 865.83 , 787.75 , 709.68 , 631.60 , 553.52 , 475.45 
+,France,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark, 428.52 , 403.82 , 379.12 , 354.42 , 329.72 , 305.02 , 280.32 , 255.62 , 230.92 , 206.22 
+,Italy,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark, 412.00 , 383.75 , 355.51 , 327.26 , 299.02 , 270.77 , 242.53 , 214.28 , 186.04 , 157.79 
+,Egypt,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark, 344.11 , 332.76 , 321.41 , 310.07 , 298.72 , 287.37 , 276.02 , 264.67 , 253.32 , 241.98 
+,Uruguay,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark, 33.38 ,,,,,,,,,
+,Saudi Arabia,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark, 648.67 , 615.11 , 581.55 , 547.99 , 514.43 , 480.87 , 447.31 , 413.75 , 380.19 , 346.63 
+,Australia,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark, 522.71 , 493.15 , 463.59 , 434.02 , 404.46 , 374.90 , 345.34 , 315.77 , 286.21 , 256.65 
+,Mexico,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark, 689.66 , 657.31 , 624.96 , 592.61 , 560.26 , 527.91 , 495.56 , 463.22 , 430.87 , 398.52 
+,China,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark," 14,217.60 "," 13,348.96 "," 12,480.32 "," 11,611.68 "," 10,743.05 "," 9,874.41 "," 9,005.77 "," 8,137.13 "," 7,268.49 "," 6,399.85 "
+,Poland,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark, 403.55 , 379.44 , 355.32 , 331.21 , 307.10 , 282.99 , 258.87 , 234.76 , 210.65 , 186.54 
+,Indonesia,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark, 949.36 , 893.74 , 838.12 , 782.50 , 726.88 , 671.26 , 615.64 , 560.02 , 504.40 , 448.78 
+,Kazakhstan,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark, 351.30 , 331.99 , 312.68 , 293.38 , 274.07 , 254.76 , 235.45 , 216.14 , 196.84 , 177.53 
+,Canada,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark, 688.75 , 645.49 , 602.23 , 558.97 , 515.71 , 472.45 , 429.19 , 385.93 , 342.67 , 299.41 
+,Thailand,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark, 412.89 , 386.48 , 360.08 , 333.67 , 307.27 , 280.86 , 254.46 , 228.05 , 201.65 , 175.24 
+,Chile,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark, 108.52 , 103.62 , 98.72 , 93.82 , 88.92 , 84.02 , 79.12 , 74.22 , 69.32 , 64.43 
+,South Africa,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark, 537.18 , 511.33 , 485.47 , 459.62 , 433.77 , 407.91 , 382.06 , 356.20 , 330.35 , 304.50 
+,Brazil,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark," 1,162.13 "," 1,107.23 "," 1,052.33 ", 997.43 , 942.53 , 887.63 , 832.73 , 777.83 , 722.93 , 668.03 
+,Kenya,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark, 84.33 , 79.69 , 75.04 , 70.40 , 65.75 , 61.11 , 56.46 , 51.82 , 47.17 , 42.53 
+,Morocco,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark, 100.13 , 96.15 , 92.17 , 88.19 , 84.20 , 80.22 , 76.24 , 72.25 , 68.27 , 64.29 
+,Germany,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark, 761.70 , 714.08 , 666.46 , 618.84 , 571.22 , 523.60 , 475.98 , 428.35 , 380.73 , 333.11 
+,United Kingdom,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark, 428.10 , 402.11 , 376.12 , 350.14 , 324.15 , 298.16 , 272.18 , 246.19 , 220.20 , 194.22 
+,India,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark," 3,417.80 "," 3,221.34 "," 3,024.88 "," 2,828.43 "," 2,631.97 "," 2,435.51 "," 2,239.05 "," 2,042.60 "," 1,846.14 "," 1,649.68 "
+,Barbados,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark, 5.26 ,,,,,,,,,
+,Bangladesh,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,National 1.5C benchmark, 175.44 , 165.98 , 156.53 , 147.07 , 137.62 , 128.16 , 118.71 , 109.25 , 99.80 , 90.34 
+,United States,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation," 6,220.00 "," 5,576.06 "," 4,932.11 "," 4,288.17 "," 3,644.22 "," 3,000.28 "," 2,356.34 "," 1,712.39 "," 1,068.45 ", 424.50 
+,Japan,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation," 1,178.14 "," 1,065.02 ", 951.90 , 838.78 , 725.66 , 612.53 , 499.41 , 386.29 , 273.17 , 160.05 
+,France,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation, 428.52 , 392.08 , 355.64 , 319.21 , 282.77 , 246.33 , 209.89 , 173.45 , 137.02 , 100.58 
+,Italy,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation, 412.00 , 376.30 , 340.61 , 304.92 , 269.23 , 233.54 , 197.85 , 162.16 , 126.47 , 90.78 
+,Egypt,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation, 344.11 , 329.99 , 315.86 , 301.74 , 287.61 , 273.49 , 259.36 , 245.24 , 231.11 , 216.99 
+,Uruguay,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation, 33.38 , 32.99 , 32.61 , 32.23 , 31.85 , 31.47 , 31.09 , 30.71 , 30.32 , 29.94 
+,Saudi Arabia,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation, 648.67 , 583.46 , 518.26 , 453.05 , 387.84 , 322.64 , 257.43 , 192.22 , 127.02 , 61.81 
+,Australia,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation, 522.71 , 469.64 , 416.56 , 363.49 , 310.41 , 257.34 , 204.26 , 151.19 , 98.11 , 45.04 
+,Mexico,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation, 689.66 , 635.12 , 580.59 , 526.05 , 471.51 , 416.97 , 362.44 , 307.90 , 253.36 , 198.82 
+,China,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation," 14,217.60 "," 12,826.66 "," 11,435.72 "," 10,044.78 "," 8,653.84 "," 7,262.90 "," 5,871.95 "," 4,481.01 "," 3,090.07 "," 1,699.13 "
+,Poland,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation, 403.55 , 366.09 , 328.63 , 291.18 , 253.72 , 216.26 , 178.80 , 141.34 , 103.88 , 66.43 
+,Indonesia,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation, 949.36 , 890.09 , 830.83 , 771.56 , 712.29 , 653.02 , 593.76 , 534.49 , 475.22 , 415.95 
+,Kazakhstan,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation, 351.30 , 317.17 , 283.03 , 248.90 , 214.77 , 180.63 , 146.50 , 112.37 , 78.23 , 44.10 
+,Canada,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation, 688.75 , 619.02 , 549.29 , 479.56 , 409.83 , 340.10 , 270.37 , 200.64 , 130.91 , 61.18 
+,Thailand,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation, 412.89 , 381.22 , 349.56 , 317.89 , 286.22 , 254.55 , 222.89 , 191.22 , 159.55 , 127.89 
+,Chile,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation, 108.52 , 103.55 , 98.58 , 93.61 , 88.64 , 83.67 , 78.70 , 73.73 , 68.76 , 63.79 
+,South Africa,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation, 537.18 , 490.36 , 443.55 , 396.73 , 349.91 , 303.10 , 256.28 , 209.46 , 162.65 , 115.83 
+,Brazil,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation," 1,162.13 "," 1,067.80 ", 973.47 , 879.15 , 784.82 , 690.49 , 596.16 , 501.83 , 407.50 , 313.18 
+,Kenya,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation, 84.33 , 99.95 , 115.56 , 131.18 , 146.79 , 162.41 , 178.03 , 193.64 , 209.26 , 224.87 
+,Morocco,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation, 100.13 , 105.85 , 111.56 , 117.27 , 122.98 , 128.69 , 134.41 , 140.12 , 145.83 , 151.54 
+,Germany,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation, 761.70 , 689.80 , 617.90 , 546.00 , 474.10 , 402.20 , 330.30 , 258.40 , 186.50 , 114.60 
+,United Kingdom,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation, 428.10 , 391.80 , 355.50 , 319.21 , 282.91 , 246.61 , 210.31 , 174.02 , 137.72 , 101.42 
+,India,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation," 3,417.80 "," 3,248.55 "," 3,079.29 "," 2,910.04 "," 2,740.78 "," 2,571.53 "," 2,402.27 "," 2,233.02 "," 2,063.76 "," 1,894.51 "
+,Barbados,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation, 5.26 , 7.62 , 9.98 , 12.33 , 14.69 , 17.05 , 19.40 , 21.76 , 24.12 , 26.47 
+,Bangladesh,2023-12,Absolute,Production - excluding LULUCF,MtCO₂e,Fair share 1.5C allocation, 175.44 , 205.92 , 236.40 , 266.87 , 297.35 , 327.83 , 358.31 , 388.79 , 419.26 , 449.74 

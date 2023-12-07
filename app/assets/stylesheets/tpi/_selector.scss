@@ -1,0 +1,80 @@
+@import "variables";
+
+.selector__wrapper {
+  .selector__container {
+    min-width: 200px;
+    max-width: 300px;
+
+    .selector__header {
+      border: 1px solid #595b5d;
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      cursor: pointer;
+
+      .selector__value {
+        width: 100%;
+        margin-right: 16px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .chevron-icon {
+        width: 16px;
+        height: 14px;
+      }
+
+      .chevron-icon-rotated {
+        transform: rotate(180deg);
+      }
+    }
+
+    .selector__header--active {
+      border-bottom: none;
+    }
+
+    .selector__options-wrapper {
+      height: 0;
+      overflow: hidden;
+
+      &--open {
+        overflow: visible;
+      }
+
+      .selector__options {
+        z-index: 10;
+        position: relative;
+        border: 1px solid #595b5d;
+        background-color: #fff;
+        padding-block: 10px;
+
+        .selector__option {
+          padding-inline: 16px;
+          color: $ascor-color;
+          font-family: $family-sans-serif;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 20px;
+          padding-block: 10px;
+
+          &.selector__option--selected {
+            background-color: $ascor-background-color;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+          }
+
+          &:hover {
+            background-color: $ascor-background-color;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+
+  .selector__container--active {
+  }
+}

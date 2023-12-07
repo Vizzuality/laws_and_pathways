@@ -1,0 +1,41 @@
+@import "colors";
+@import "typography";
+
+.ascor-benchmarks {
+  height: 500px;
+  margin-top: 24px;
+  .highcharts-graph {
+    stroke-width: 4px !important;
+  }
+  .highcharts-axis-title {
+    font-family: $font-family-regular;
+    background-color: white;
+    font-weight: 600;
+  }
+  &__legend {
+    margin-bottom: 26px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 28px;
+    font-family: $font-family-regular;
+    color: #595b5d;
+    font-size: 12px;
+    &__line {
+      border-top: 4px solid #595b5d;
+      width: 37px;
+      display: inline-block;
+      margin-right: 8px;
+      transform: translateY(-2px);
+
+      &.--targeted-pathway {
+        border-top-style: dashed;
+      }
+    }
+  }
+}
+
+.highcharts-root,
+.highcharts-container {
+  overflow: visible !important;
+}

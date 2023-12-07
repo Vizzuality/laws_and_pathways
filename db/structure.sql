@@ -311,6 +311,229 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: ascor_assessment_indicators; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.ascor_assessment_indicators (
+    id bigint NOT NULL,
+    indicator_type character varying,
+    code character varying,
+    text text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    units_or_response_type character varying
+);
+
+
+--
+-- Name: ascor_assessment_indicators_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.ascor_assessment_indicators_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: ascor_assessment_indicators_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.ascor_assessment_indicators_id_seq OWNED BY public.ascor_assessment_indicators.id;
+
+
+--
+-- Name: ascor_assessment_results; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.ascor_assessment_results (
+    id bigint NOT NULL,
+    assessment_id bigint NOT NULL,
+    indicator_id bigint NOT NULL,
+    answer character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    source character varying,
+    year integer
+);
+
+
+--
+-- Name: ascor_assessment_results_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.ascor_assessment_results_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: ascor_assessment_results_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.ascor_assessment_results_id_seq OWNED BY public.ascor_assessment_results.id;
+
+
+--
+-- Name: ascor_assessments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.ascor_assessments (
+    id bigint NOT NULL,
+    country_id bigint NOT NULL,
+    assessment_date date,
+    publication_date date,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    notes text
+);
+
+
+--
+-- Name: ascor_assessments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.ascor_assessments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: ascor_assessments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.ascor_assessments_id_seq OWNED BY public.ascor_assessments.id;
+
+
+--
+-- Name: ascor_benchmarks; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.ascor_benchmarks (
+    id bigint NOT NULL,
+    country_id bigint NOT NULL,
+    publication_date date,
+    emissions_metric character varying,
+    emissions_boundary character varying,
+    units character varying,
+    benchmark_type character varying,
+    emissions jsonb DEFAULT '{}'::jsonb,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: ascor_benchmarks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.ascor_benchmarks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: ascor_benchmarks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.ascor_benchmarks_id_seq OWNED BY public.ascor_benchmarks.id;
+
+
+--
+-- Name: ascor_countries; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.ascor_countries (
+    id bigint NOT NULL,
+    name character varying,
+    slug character varying,
+    iso character varying,
+    region character varying,
+    wb_lending_group character varying,
+    fiscal_monitor_category character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    type_of_party character varying
+);
+
+
+--
+-- Name: ascor_countries_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.ascor_countries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: ascor_countries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.ascor_countries_id_seq OWNED BY public.ascor_countries.id;
+
+
+--
+-- Name: ascor_pathways; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.ascor_pathways (
+    id bigint NOT NULL,
+    country_id bigint NOT NULL,
+    emissions_metric character varying,
+    emissions_boundary character varying,
+    units character varying,
+    assessment_date date,
+    publication_date date,
+    last_historical_year integer,
+    trend_1_year character varying,
+    trend_3_year character varying,
+    trend_5_year character varying,
+    emissions jsonb DEFAULT '{}'::jsonb,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    trend_source character varying,
+    trend_year integer,
+    recent_emission_level character varying,
+    recent_emission_source character varying,
+    recent_emission_year integer
+);
+
+
+--
+-- Name: ascor_pathways_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.ascor_pathways_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: ascor_pathways_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.ascor_pathways_id_seq OWNED BY public.ascor_pathways.id;
+
+
+--
 -- Name: bank_assessment_indicators; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1770,6 +1993,48 @@ ALTER TABLE ONLY public.admin_users ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: ascor_assessment_indicators id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_assessment_indicators ALTER COLUMN id SET DEFAULT nextval('public.ascor_assessment_indicators_id_seq'::regclass);
+
+
+--
+-- Name: ascor_assessment_results id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_assessment_results ALTER COLUMN id SET DEFAULT nextval('public.ascor_assessment_results_id_seq'::regclass);
+
+
+--
+-- Name: ascor_assessments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_assessments ALTER COLUMN id SET DEFAULT nextval('public.ascor_assessments_id_seq'::regclass);
+
+
+--
+-- Name: ascor_benchmarks id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_benchmarks ALTER COLUMN id SET DEFAULT nextval('public.ascor_benchmarks_id_seq'::regclass);
+
+
+--
+-- Name: ascor_countries id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_countries ALTER COLUMN id SET DEFAULT nextval('public.ascor_countries_id_seq'::regclass);
+
+
+--
+-- Name: ascor_pathways id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_pathways ALTER COLUMN id SET DEFAULT nextval('public.ascor_pathways_id_seq'::regclass);
+
+
+--
 -- Name: bank_assessment_indicators id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2085,6 +2350,54 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 
 --
+-- Name: ascor_assessment_indicators ascor_assessment_indicators_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_assessment_indicators
+    ADD CONSTRAINT ascor_assessment_indicators_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ascor_assessment_results ascor_assessment_results_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_assessment_results
+    ADD CONSTRAINT ascor_assessment_results_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ascor_assessments ascor_assessments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_assessments
+    ADD CONSTRAINT ascor_assessments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ascor_benchmarks ascor_benchmarks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_benchmarks
+    ADD CONSTRAINT ascor_benchmarks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ascor_countries ascor_countries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_countries
+    ADD CONSTRAINT ascor_countries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ascor_pathways ascor_pathways_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_pathways
+    ADD CONSTRAINT ascor_pathways_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: bank_assessment_indicators bank_assessment_indicators_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2389,6 +2702,13 @@ ALTER TABLE ONLY public.tpi_sectors
 
 
 --
+-- Name: assessment_results_on_assessment_id_and_indicator_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX assessment_results_on_assessment_id_and_indicator_id ON public.ascor_assessment_results USING btree (assessment_id, indicator_id);
+
+
+--
 -- Name: index_active_admin_comments_on_author_type_and_author_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2491,6 +2811,62 @@ CREATE UNIQUE INDEX index_admin_users_on_email ON public.admin_users USING btree
 --
 
 CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON public.admin_users USING btree (reset_password_token);
+
+
+--
+-- Name: index_ascor_assessment_results_on_assessment_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_ascor_assessment_results_on_assessment_id ON public.ascor_assessment_results USING btree (assessment_id);
+
+
+--
+-- Name: index_ascor_assessment_results_on_indicator_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_ascor_assessment_results_on_indicator_id ON public.ascor_assessment_results USING btree (indicator_id);
+
+
+--
+-- Name: index_ascor_assessments_on_country_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_ascor_assessments_on_country_id ON public.ascor_assessments USING btree (country_id);
+
+
+--
+-- Name: index_ascor_benchmarks_on_country_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_ascor_benchmarks_on_country_id ON public.ascor_benchmarks USING btree (country_id);
+
+
+--
+-- Name: index_ascor_countries_on_iso; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_ascor_countries_on_iso ON public.ascor_countries USING btree (iso);
+
+
+--
+-- Name: index_ascor_countries_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_ascor_countries_on_name ON public.ascor_countries USING btree (name);
+
+
+--
+-- Name: index_ascor_countries_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_ascor_countries_on_slug ON public.ascor_countries USING btree (slug);
+
+
+--
+-- Name: index_ascor_pathways_on_country_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_ascor_pathways_on_country_id ON public.ascor_pathways USING btree (country_id);
 
 
 --
@@ -3276,6 +3652,14 @@ ALTER TABLE ONLY public.companies
 
 
 --
+-- Name: ascor_benchmarks fk_rails_1b5ff247ca; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_benchmarks
+    ADD CONSTRAINT fk_rails_1b5ff247ca FOREIGN KEY (country_id) REFERENCES public.ascor_countries(id);
+
+
+--
 -- Name: targets fk_rails_1bc68932f6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3337,6 +3721,14 @@ ALTER TABLE ONLY public.geographies
 
 ALTER TABLE ONLY public.litigations
     ADD CONSTRAINT fk_rails_3ad3738b8b FOREIGN KEY (geography_id) REFERENCES public.geographies(id) ON DELETE CASCADE;
+
+
+--
+-- Name: ascor_pathways fk_rails_3d14118f90; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_pathways
+    ADD CONSTRAINT fk_rails_3d14118f90 FOREIGN KEY (country_id) REFERENCES public.ascor_countries(id);
 
 
 --
@@ -3417,6 +3809,14 @@ ALTER TABLE ONLY public.legislations
 
 ALTER TABLE ONLY public.litigation_sides
     ADD CONSTRAINT fk_rails_5ff60f0b08 FOREIGN KEY (litigation_id) REFERENCES public.litigations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: ascor_assessment_results fk_rails_636219043a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_assessment_results
+    ADD CONSTRAINT fk_rails_636219043a FOREIGN KEY (assessment_id) REFERENCES public.ascor_assessments(id);
 
 
 --
@@ -3524,6 +3924,14 @@ ALTER TABLE ONLY public.taggings
 
 
 --
+-- Name: ascor_assessments fk_rails_a3a5356523; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_assessments
+    ADD CONSTRAINT fk_rails_a3a5356523 FOREIGN KEY (country_id) REFERENCES public.ascor_countries(id);
+
+
+--
 -- Name: publications fk_rails_a957b2faea; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3577,6 +3985,14 @@ ALTER TABLE ONLY public.targets
 
 ALTER TABLE ONLY public.data_uploads
     ADD CONSTRAINT fk_rails_e965439ee4 FOREIGN KEY (uploaded_by_id) REFERENCES public.admin_users(id);
+
+
+--
+-- Name: ascor_assessment_results fk_rails_fee6a2c7af; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ascor_assessment_results
+    ADD CONSTRAINT fk_rails_fee6a2c7af FOREIGN KEY (indicator_id) REFERENCES public.ascor_assessment_indicators(id);
 
 
 --
@@ -3736,9 +4152,17 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230622093001'),
 ('20230712074753'),
 ('20230713121501'),
+('20230912074824'),
+('20230912103652'),
+('20230914065509'),
+('20230914100201'),
+('20230915063557'),
+('20230915064402'),
+('20230920083300'),
 ('20230926075145'),
 ('20230927112905'),
 ('20231023101859'),
-('20231023120255');
+('20231023120255'),
+('20231108125346');
 
 

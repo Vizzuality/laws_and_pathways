@@ -1,0 +1,81 @@
+﻿Id,Type,Code,Text,Units or response type
+,pillar,EP,Emission Pathways,
+,area,EP.1,Emission Trends,Yes/No/Partial
+,indicator,EP.1.a,Have the country’s emissions decreased in the last 5 years?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure/No or unsuitable disclosure
+,metric,EP.1.a.i,What is the country's most recent emission level?,MtCO₂e
+,metric,EP.1.a.ii,What is the country's most recent emission trend?,%
+,indicator,EP.1.b,Is the most recent 5-year trend aligned with meeting the country's 1.5°C benchmark?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,indicator,EP.1.c,Is the most recent 5-year trend aligned with meeting the country’s 1.5°C fair share?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,area,EP.2,2030 Targets,Yes/No/Partial
+,indicator,EP.2.a,Has the country set a 2030 emission reduction target?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,metric,EP.2.a.i,What is the target reduction relative to 2019 emissions?,%
+,indicator,EP.2.b,Does the country specify whether and how much carbon credits may contribute to its 2030 target?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,metric,EP.2.b.i,What percentage of the 2030 target will be met using carbon credits?,%
+,indicator,EP.2.c,Is the country’s 2030 target aligned with its 1.5°C benchmark?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,metric,EP.2.c.i,What is the degree of alignment with its 1.5°C benchmark?,%
+,indicator,EP.2.d,Is the country’s 2030 target aligned with its 1.5°C fair share?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,metric,EP.2.d.i,What is the degree of alignment with its 1.5°C fair share?,%
+,area,EP.3,Net Zero Targets,Yes/No/Partial
+,indicator,EP.3.a,Has the country set a net zero CO₂ target?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,metric,EP.3.a.i,In what year is the net zero CO₂ target set?,Year
+,indicator,EP.3.b,Is the country’s net zero CO₂ target aligned with a global 1.5°C scenario? ,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,indicator,EP.3.c,Is the country’s net zero CO₂ target aligned with an accelerated deadline for high-income countries? ,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,pillar,CP,Climate Policies,
+,area,CP.1,Climate Legislation,Yes/No/Partial
+,indicator,CP.1.a,Does the country have a framework climate law or equivalent?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,indicator,CP.1.b,Does the country's framework climate law specify key accountability elements?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,area,CP.2,Carbon Pricing,Yes/No/Partial/Exempt
+,indicator,CP.2.a,Does the country have a carbon pricing system?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,indicator,CP.2.b,Does the country's carbon pricing system(s) cover at least 50% of national GHG emissions?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,metric,CP.2.b.i,What percentage of national GHG emissions is covered by an explicit carbon price?,%
+,indicator,CP.2.c,Is the carbon price at least at the floor of a global carbon price corridor aligned with the Paris Agreement?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,metric,CP.2.c.i,What is the country's most recent explicit carbon price?,US$/tCO₂e 
+,area,CP.3,Fossil Fuels,Yes/No/Partial/Exempt
+,indicator,CP.3.a,Has the country committed to a deadline to phase out fossil fuel subsidies?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,metric,CP.3.a.i,By what year has the country committed to phase out fossil fuel subsidies?,Year
+,indicator,CP.3.b,Does the country publish an inventory of direct fossil fuel subsidies? ,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,metric,CP.3.b.i,How much is spent annually on explicit fossil fuel subsidies as a percentage of GDP?,%
+,metric,CP.3.b.ii,What is the country's most recent 3-year trend in fossil fuel subsidies?,%
+,indicator,CP.3.c,Has the country committed not to approve new coal mines?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,metric,CP.3.c.i,What is the level of coal rents in the country as a percentage of GDP?,%
+,indicator,CP.3.d,Has the country committed not to approve new long-lead-time upstream oil and gas projects?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,metric,CP.3.d.i,What is the level of oil rents in the country as a percentage of GDP?,%
+,metric,CP.3.d.ii,What is the level of natural gas rents in the country as a percentage of GDP?,%
+,area,CP.4,Sectoral Transitions,Yes/No/Partial/Exempt
+,indicator,CP.4.a,Does the country have a long-term multi-sector climate strategy?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,indicator,CP.4.b,Does the country have a law and target on energy efficiency?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,metric,CP.4.b.i,What is the country's energy intensity of primary energy?,MJ/PPP-adjusted GDP
+,indicator,CP.4.c,Has the country established mandatory climate-related disclosure?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,indicator,CP.4.d,Has the country set a net zero electricity target aligned with 1.5°C?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,metric,CP.4.d.i,What percentage of the country’s electricity generation is from low-carbon sources?,%
+,indicator,CP.4.e,Has the country increased its protected areas as a percentage of total land area over the last 5 years?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,metric,CP.4.e.i,What is the amount of protected area in the country as a percentage of total land area?,%
+,area,CP.5,Adaptation,Yes/No/Partial
+,indicator,CP.5.a,Has the country published a National Adaptation Plan?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,indicator,CP.5.b,Does the country regularly publish national climate risk assessments?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,indicator,CP.5.c,Has the country published a Monitoring & Evaluation report on implementing adaptation?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,indicator,CP.5.d,Does the country have a multi-hazard early warning system?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,indicator,CP.5.e,Is the country part of a sovereign catastrophe risk pool?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,area,CP.6,Just Transition,Yes/No/Partial
+,indicator,CP.6.a,"Has the country ratified fundamental human, labour, and Indigenous rights conventions? ",Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,metric,CP.6.a.i,At what percentile is the country's Voice and Accountability estimate?,%
+,indicator,CP.6.b,Does the country have an inclusive and institutionalised approach on just transition?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,indicator,CP.6.c,Does the country have a green jobs strategy?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,indicator,CP.6.d,Does the country integrate just transition into its carbon pricing?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,pillar,CF,Climate Finance,
+,area,CF.1,International Climate Finance,Yes/No/Partial/Exempt
+,indicator,CF.1.a,Does the country contribute at least a proportional share of the $100 billion commitment to climate finance?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,metric,CF.1.a.i,What is the country’s 3-year average climate finance contributions as a % of GDP?,%
+,indicator,CF.1.b,Has the country set a target for further increasing its international climate finance contributions?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,metric,CF.1.b.i,What is the country’s targeted level of international climate finance contributions as a % of GDP?,%
+,area,CF.2,Transparency of Climate Costing,Yes/No/Partial/Exempt
+,indicator,CF.2.a,Has the country disclosed a transparent breakdown of the costs of implementing its Nationally Determined Contribution?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,indicator,CF.2.b,Has the country disclosed a transparent breakdown of the costs of implementing its National Adaptation Plan?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,area,CF.3,Transparency in Climate Spending,Yes/No/Partial
+,indicator,CF.3.a,Has the country disclosed its climate-related expenditures?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,indicator,CF.3.b,Does the country apply climate budget tagging?,Yes/No/Not applicable/Exempt/No data/No or unsuitable disclosure
+,area,CF.4,Renewable Energy Opportunities,
+,metric,CF.4.i,What is the country's prospective solar energy capacity?,MW/GDP
+,metric,CF.4.ii,What is the country’s prospective wind energy capacity?,MW/GDP
+,metric,CF.4.iii,What is the country’s prospective geothermal energy capacity?,MW/GDP
+,metric,CF.4.iv,What is the country’s prospective hydroelectric energy capacity?,MW/GDP
