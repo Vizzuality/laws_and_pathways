@@ -2,6 +2,8 @@ require 'rails_helper'
 
 describe 'ASCOR', type: 'system', site: 'tpi' do
   describe 'all countries page' do
+    let!(:publication) { create(:publication, tpi_sectors: [], tags: [create(:keyword, name: 'ASCOR')]) }
+
     before do
       visit '/ascor'
     end
@@ -30,6 +32,10 @@ describe 'ASCOR', type: 'system', site: 'tpi' do
         expect(page).to have_text('CP 1. Climate Legislation')
         expect(page).to have_text('CF 1. International Climate Finance')
       end
+    end
+
+    it 'shows the publication' do
+      expect(page).to have_text(publication.title)
     end
   end
 
