@@ -148,7 +148,6 @@ const getTooltipText = ({ tooltipContent }) => {
     return `
      <div>
         <p class="bubble-tip-header">${tooltipContent.header}</p>
-        <p class="bubble-tip-text">${tooltipContent.emission_size}</p>
      </div>
     `;
   }
@@ -241,7 +240,7 @@ BubbleChart.propTypes = {
   results: PropTypes.arrayOf(
     PropTypes.shape({
       area: PropTypes.string.isRequired,
-      market_cap_group: PropTypes.string.isRequired,
+      market_cap_group: PropTypes.number.isRequired,
       country_id: PropTypes.number.isRequired,
       country_path: PropTypes.string.isRequired,
       country_name: PropTypes.string.isRequired,
