@@ -10,8 +10,13 @@ import { options } from './options';
 const EmissionsChart = ({ chartData }) => {
   const { data, metadata } = chartData;
 
-  const hasNegative = useMemo(
+  const allNegative = useMemo(
     () => data.every((series) => series.data?.every((point) => point?.y < 0)),
+    [data]
+  );
+
+  const allPositive = useMemo(
+    () => data.every((series) => series.data?.every((point) => point?.y >= 0)),
     [data]
   );
 
@@ -23,11 +28,11 @@ const EmissionsChart = ({ chartData }) => {
           ...options,
           yAxis: {
             ...options.yAxis,
-            min: hasNegative ? null : 0,
-            max: hasNegative ? 0 : null,
+            min: allPositive ? 0 : null,
+            max: allNegative ? 0 : null,
             title: { ...options.yAxis.title, text: metadata.unit }
           },
-          series: data
+          series: data.filter(v => (v.data || []).length > 0)
         }}
       />
     </div>
