@@ -47,6 +47,25 @@ $margin-between-list-items: 20px;
     margin-top: 30px;
     margin-bottom: 30px;
   }
+
+  .attachment {
+    &--preview {
+      //position: relative;
+      //float: left;
+      //margin: 10px 10px 10px 0;
+      text-align: center;
+      max-width: 100%;
+      padding: 0;
+
+      img {
+        margin: 0;
+      }
+    }
+
+    &__caption {
+      display: none;
+    }
+  }
 }
 
 .pages__content {

@@ -15,8 +15,6 @@ class NewsArticleDecorator < Draper::Decorator
   end
 
   def preview_url
-    h.tpi_publication_url(
-      model, {type: 'NewsArticle', host: Rails.configuration.try(:tpi_domain)}.compact
-    )
+    h.show_news_article_tpi_publication_path(model, {host: Rails.configuration.try(:tpi_domain)}.compact)
   end
 end
