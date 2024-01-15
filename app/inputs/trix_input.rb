@@ -3,6 +3,8 @@ class TrixInput < Formtastic::Inputs::StringInput
     input_wrapping do
       editor_tag_params = {
         input: input_html_options[:id],
+        'data-direct-upload-url': Rails.application.routes.url_helpers.rails_direct_uploads_path,
+        'data-blob-url-template': Rails.application.routes.url_helpers.rails_service_blob_path(':signed_id', ':filename'),
         class: 'trix-content'
       }
 
