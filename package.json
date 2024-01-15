@@ -26,6 +26,7 @@
     "@hotwired/stimulus": "^3.1.0",
     "@hotwired/stimulus-webpack-helpers": "^1.0.1",
     "@rails/actioncable": "^6.0.3-3",
+    "@rails/actiontext": "^6.1.7-6",
     "@rails/activestorage": "^6.0.3-3",
     "@rails/ujs": "^6.0.3-3",
     "@rails/webpacker": "^5.2.1",
@@ -63,7 +64,7 @@
     "react_ujs": "^2.6.0",
     "simple-statistics": "^7.1.0",
     "tiny-slider": "^2.9.3",
-    "trix": "^1.2.4",
+    "trix": "^1.2.0",
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {

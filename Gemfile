@@ -18,7 +18,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 gem 'activerecord-import'
 gem 'acts_as_list'
-gem 'activeadmin', '2.9.0' # TODO: update when csv export is fixed, check bom options
+gem 'activeadmin'
 gem 'activeadmin_addons'
 gem 'devise', '>= 4.7.1'
 gem 'cancancan'
