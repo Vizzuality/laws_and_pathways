@@ -16,6 +16,7 @@
 FactoryBot.define do
   factory :news_article do
     title { 'MyString' }
+    short_description { 'MyText' }
     content { 'MyText' }
     tpi_sectors { |a| [a.association(:tpi_sector)] }
     publication_date { '2019-11-29' }

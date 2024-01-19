@@ -32,7 +32,7 @@
       <div class="content__message">
         <p>
           <% if publication.class.name.eql?("NewsArticle") %>
-            <%= truncate(strip_tags(publication.content), length: 100) %>
+            <%= publication.short_description.presence || truncate(strip_tags(publication.content), length: 100) %>
           <% else %>
             <%= publication.short_description %>
           <% end %>

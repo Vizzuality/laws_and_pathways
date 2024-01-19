@@ -30,8 +30,8 @@ class NewsArticle < ApplicationRecord
   validates_presence_of :title, :content, :publication_date
 
   def self.search(query)
-    where('title ilike ? OR content ilike ?',
-          "%#{query}%", "%#{query}%")
+    where('title ilike ? OR content ilike ? OR short_description ilike ?',
+          "%#{query}%", "%#{query}%", "%#{query}%")
   end
 
   def tags_and_sectors
