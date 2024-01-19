@@ -1549,7 +1549,8 @@ CREATE TABLE public.news_articles (
     updated_by_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    is_insight boolean DEFAULT false
+    is_insight boolean DEFAULT false,
+    short_description text
 );
 
 
@@ -4164,6 +4165,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231023101859'),
 ('20231023120255'),
 ('20231108125346'),
-('20231207082211');
+('20231207082211'),
+('20240119084250');
 
 
