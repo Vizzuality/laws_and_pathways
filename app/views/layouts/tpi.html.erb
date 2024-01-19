@@ -43,6 +43,10 @@
 
     <%= stylesheet_link_tag 'tpi' %>
     <%= javascript_pack_tag 'tpi' %>
+
+    <% if Rails.env.production? %>
+      <script defer data-domain="transitionpathwayinitiative.org" src=https://plausible.io/js/script.js></script>
+    <% end %>
   </head>
   <body>
     <%= render "layouts/tpi/fixed-navbar" %>
