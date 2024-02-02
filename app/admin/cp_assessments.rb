@@ -6,8 +6,8 @@ ActiveAdmin.register CP::Assessment do
   decorate_with CP::AssessmentDecorator
 
   permit_params :sector_id, :assessment_date, :publication_date, :cp_assessmentable_id, :last_reported_year,
-                :assumptions, :cp_alignment_2025, :cp_alignment_2035, :cp_alignment_2050,
-                :region, :cp_regional_alignment_2025, :cp_regional_alignment_2035,
+                :assumptions, :cp_alignment_2025, :cp_alignment_2027, :cp_alignment_2035, :cp_alignment_2050,
+                :region, :cp_regional_alignment_2025, :cp_regional_alignment_2027, :cp_regional_alignment_2035,
                 :cp_regional_alignment_2050, :years_with_targets_string, :emissions,
                 cp_matrices_attributes: [:id, :portfolio, :cp_alignment_2025, :cp_alignment_2035, :cp_alignment_2050, :_destroy]
 
@@ -64,9 +64,11 @@ ActiveAdmin.register CP::Assessment do
       row :last_reported_year
       row :cp_alignment_2050
       row :cp_alignment_2025
+      row :cp_alignment_2027
       row :cp_alignment_2035
       row :region
       row :cp_regional_alignment_2025
+      row :cp_regional_alignment_2027
       row :cp_regional_alignment_2035
       row :cp_regional_alignment_2050
       row :years_with_targets
@@ -101,6 +103,7 @@ ActiveAdmin.register CP::Assessment do
     column :sector
     column :cp_alignment_2050
     column :cp_alignment_2025
+    column :cp_alignment_2027
     column :cp_alignment_2035
     column :assessment_date
     column :publication_date
@@ -132,6 +135,7 @@ ActiveAdmin.register CP::Assessment do
 
     if params[:cp_assessmentable_type] == 'Company'
       column :cp_alignment_2025
+      column :cp_alignment_2027
       column :cp_alignment_2035
       column :cp_alignment_2050
       column :cp_regional_alignment_2025

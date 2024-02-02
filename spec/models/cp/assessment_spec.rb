@@ -23,6 +23,8 @@
 #  cp_assessmentable_id       :bigint
 #  sector_id                  :bigint
 #  final_disclosure_year      :integer
+#  cp_alignment_2027          :string
+#  cp_regional_alignment_2027 :string
 #
 
 require 'rails_helper'
@@ -73,9 +75,11 @@ RSpec.describe CP::Assessment, type: :model do
 
   %w[
     cp_alignment_2025
+    cp_alignment_2027
     cp_alignment_2035
     cp_alignment_2050
     cp_regional_alignment_2025
+    cp_regional_alignment_2027
     cp_regional_alignment_2035
     cp_regional_alignment_2050
   ].each do |cp_alignment|
@@ -85,12 +89,12 @@ RSpec.describe CP::Assessment, type: :model do
         expect(subject).to have(1).errors_on(cp_alignment.to_sym)
       end
 
-      it 'should be valid if cp alignment 2050 is nil' do
+      it "should be valid if #{cp_alignment} is nil" do
         subject.send("#{cp_alignment}=", nil)
         expect(subject).to be_valid
       end
 
-      it 'should be valid if cp alignment 2050 is on the list' do
+      it "should be valid if #{cp_alignment} is on the list" do
         subject.send("#{cp_alignment}=", 'Below 2 Degrees')
         expect(subject).to be_valid
       end
