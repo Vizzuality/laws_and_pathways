@@ -2,15 +2,16 @@
 #
 # Table name: news_articles
 #
-#  id               :bigint           not null, primary key
-#  title            :string
-#  content          :text
-#  publication_date :datetime
-#  created_by_id    :bigint
-#  updated_by_id    :bigint
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  is_insight       :boolean          default(FALSE)
+#  id                :bigint           not null, primary key
+#  title             :string
+#  content           :text
+#  publication_date  :datetime
+#  created_by_id     :bigint
+#  updated_by_id     :bigint
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  is_insight        :boolean          default(FALSE)
+#  short_description :text
 #
 
 class NewsArticle < ApplicationRecord
