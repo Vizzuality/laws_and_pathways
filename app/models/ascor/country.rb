@@ -12,8 +12,10 @@
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  type_of_party           :string
+#  visibility_status       :string           default("draft")
 #
 class ASCOR::Country < ApplicationRecord
+  include VisibilityStatus
   extend FriendlyId
 
   REGIONS = [

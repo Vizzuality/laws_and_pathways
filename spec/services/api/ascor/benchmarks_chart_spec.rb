@@ -5,6 +5,7 @@ RSpec.describe Api::ASCOR::BenchmarksChart do
 
   before_all do
     @country = create :ascor_country
+    _draft_country = create(:ascor_country, id: 3, name: 'Draft Country', iso: 'DFT')
 
     create :ascor_pathway,
            country: @country,

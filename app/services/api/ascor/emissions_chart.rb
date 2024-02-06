@@ -32,9 +32,9 @@ module Api
 
       def countries
         @countries ||= if country_ids.blank?
-                         ::ASCOR::Country.where(iso: ::ASCOR::Country::DEFAULT_COUNTRIES)
+                         ::ASCOR::Country.published.where(iso: ::ASCOR::Country::DEFAULT_COUNTRIES)
                        else
-                         ::ASCOR::Country.where(id: country_ids)
+                         ::ASCOR::Country.published.where(id: country_ids)
                        end
       end
 

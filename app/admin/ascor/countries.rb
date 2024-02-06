@@ -4,7 +4,7 @@ ActiveAdmin.register ASCOR::Country do
 
   menu label: 'Countries', parent: 'ASCOR', priority: 1
 
-  permit_params :name, :iso, :region, :wb_lending_group, :fiscal_monitor_category, :type_of_party
+  permit_params :name, :iso, :region, :wb_lending_group, :fiscal_monitor_category, :type_of_party, :visibility_status
 
   filter :iso_contains, label: 'ISO'
   filter :name_contains, label: 'Name'
@@ -18,6 +18,7 @@ ActiveAdmin.register ASCOR::Country do
     column :name
     column 'Country ISO code', :iso
     column :region
+    tag_column :visibility_status
 
     actions
   end
@@ -31,6 +32,7 @@ ActiveAdmin.register ASCOR::Country do
       row 'World Bank lending group', &:wb_lending_group
       row 'International Monetary Fund fiscal monitor category', &:fiscal_monitor_category
       row 'Type of Party to the United Nations Framework Convention on Climate Change', &:type_of_party
+      row :visibility_status
     end
 
     active_admin_comments
@@ -48,6 +50,7 @@ ActiveAdmin.register ASCOR::Country do
                                         label: 'International Monetary Fund fiscal monitor category'
       f.input :type_of_party, as: :select, collection: ASCOR::Country::TYPE_OF_PARTY,
                               label: 'Type of Party to the United Nations Framework Convention on Climate Change'
+      f.input :visibility_status, as: :select, collection: ASCOR::Country::VISIBILITY
     end
 
     f.actions

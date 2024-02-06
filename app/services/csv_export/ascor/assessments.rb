@@ -57,7 +57,8 @@ module CSVExport
       end
 
       def assessments
-        @assessments ||= ::ASCOR::Assessment.joins(:country).includes(:country).order(:assessment_date, 'ascor_countries.name')
+        @assessments ||= ::ASCOR::Assessment.joins(:country).includes(:country)
+          .where(ascor_countries: {visibility_status: 'published'}).order(:assessment_date, 'ascor_countries.name')
       end
 
       def assessment_results

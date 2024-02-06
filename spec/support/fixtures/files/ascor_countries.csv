@@ -1,3 +1,4 @@
-Id,Name,Country ISO code,Region,World Bank lending group,International Monetary Fund fiscal monitor category,Type of Party to the United Nations Framework Convention on Climate Change
-,United States,USA,North America,High-income,Advanced economies,Annex I
-,Japan,JPN,Asia,High-income,Advanced economies,Annex I
+Id,Name,Country ISO code,Region,World Bank lending group,International Monetary Fund fiscal monitor category,Type of Party to the United Nations Framework Convention on Climate Change,Visibility stauts
+,United States,USA,North America,High-income,Advanced economies,Annex I,published
+,Japan,JPN,Asia,High-income,Advanced economies,Annex I,published
+,Poland,PLN,Asia,High-income,Advanced economies,Annex I,draft

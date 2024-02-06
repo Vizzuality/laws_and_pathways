@@ -12,6 +12,7 @@
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  type_of_party           :string
+#  visibility_status       :string           default("draft")
 #
 FactoryBot.define do
   factory :ascor_country, class: 'ASCOR::Country' do
@@ -21,5 +22,6 @@ FactoryBot.define do
     wb_lending_group { 'High-income' }
     fiscal_monitor_category { 'Advanced economies' }
     type_of_party { 'Annex I' }
+    visibility_status { 'published' }
   end
 end
