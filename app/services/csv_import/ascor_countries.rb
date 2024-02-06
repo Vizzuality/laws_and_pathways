@@ -16,6 +16,7 @@ module CSVImport
         if row.header?(:type_of_party_to_the_united_nations_framework_convention_on_climate_change)
           country.type_of_party = row[:type_of_party_to_the_united_nations_framework_convention_on_climate_change]
         end
+        country.visibility_status = row[:visibility_status]&.downcase if row.header?(:visibility_status)
 
         was_new_record = country.new_record?
         any_changes = country.changed?

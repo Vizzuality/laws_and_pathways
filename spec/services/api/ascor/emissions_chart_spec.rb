@@ -6,6 +6,7 @@ RSpec.describe Api::ASCOR::EmissionsChart do
   before_all do
     @usa = create(:ascor_country, id: 1, name: 'USA', iso: 'USA')
     @czechia = create(:ascor_country, id: 2, name: 'Czechia', iso: 'CZE')
+    _draft_country = create(:ascor_country, id: 3, name: 'Draft Country', iso: 'DFT')
 
     create :ascor_pathway,
            country: @usa,

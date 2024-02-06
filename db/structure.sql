@@ -469,7 +469,8 @@ CREATE TABLE public.ascor_countries (
     fiscal_monitor_category character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    type_of_party character varying
+    type_of_party character varying,
+    visibility_status character varying DEFAULT 'draft'::character varying
 );
 
 
@@ -4174,6 +4175,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231108125346'),
 ('20231207082211'),
 ('20240119084250'),
-('20240202090401');
+('20240202090401'),
+('20240206094238');
 
 

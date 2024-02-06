@@ -1460,14 +1460,14 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       ASCOR::Country,
       ascor_countries_csv,
-      {new_records: 1, not_changed_records: 1, rows: 2, updated_records: 0},
+      {new_records: 2, not_changed_records: 1, rows: 3, updated_records: 0},
       custom_uploader: 'ASCORCountries'
     )
     # subsequent import should not create or update any record
     expect_data_upload_results(
       ASCOR::Country,
       ascor_countries_csv,
-      {new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0},
+      {new_records: 0, not_changed_records: 3, rows: 3, updated_records: 0},
       custom_uploader: 'ASCORCountries'
     )
 

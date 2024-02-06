@@ -3,8 +3,8 @@
   default_emissions_metric_filter: 'Absolute',
   emissions_boundary_filter: ASCOR::EmissionsBoundary::VALUES,
   default_emissions_boundary_filter: 'Production - excluding LULUCF',
-  countries: ASCOR::Country.all.sort_by(&:name).map { |c| { id: c.id, iso: c.iso, name: c.name } },
-  default_countries: ASCOR::Country.where(iso: ASCOR::Country::DEFAULT_COUNTRIES).map(&:id),
+  countries: ASCOR::Country.published.all.sort_by(&:name).map { |c| { id: c.id, iso: c.iso, name: c.name } },
+  default_countries: ASCOR::Country.published.where(iso: ASCOR::Country::DEFAULT_COUNTRIES).map(&:id),
   emissions_data_url: emissions_chart_data_tpi_ascor_index_path
 }) %>
 <%= react_component('InfoModal', {
