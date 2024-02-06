@@ -64,5 +64,6 @@ ActiveAdmin.register ASCOR::Country do
     column 'World Bank lending group', humanize_name: false, &:wb_lending_group
     column 'International Monetary Fund fiscal monitor category', humanize_name: false, &:fiscal_monitor_category
     column 'Type of Party to the United Nations Framework Convention on Climate Change', humanize_name: false, &:type_of_party
+    column :visibility_status
   end
 end
