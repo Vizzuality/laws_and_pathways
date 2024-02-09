@@ -44,7 +44,7 @@ ActiveAdmin.register ASCOR::Country do
     f.inputs do
       f.input :name
       f.input :iso, label: 'Country ISO code'
-      f.input :region, as: :select, collection: ASCOR::Country::REGIONS
+      f.input :region
       f.input :wb_lending_group, as: :select, collection: ASCOR::Country::LENDING_GROUPS, label: 'World Bank lending group'
       f.input :fiscal_monitor_category, as: :select, collection: ASCOR::Country::MONITOR_CATEGORIES,
                                         label: 'International Monetary Fund fiscal monitor category'
