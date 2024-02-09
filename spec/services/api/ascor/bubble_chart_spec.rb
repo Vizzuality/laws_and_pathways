@@ -6,7 +6,7 @@ RSpec.describe Api::ASCOR::BubbleChart do
   before_all do
     usa = create(:ascor_country, id: 1, name: 'USA', iso: 'USA')
     japan = create(:ascor_country, id: 2, name: 'Japan', iso: 'JPN')
-    _draft_country = create(:ascor_country, id: 3, name: 'Draft Country', iso: 'DFT')
+    _draft_country = create(:ascor_country, id: 30, name: 'Draft Country', iso: 'DFT')
 
     _indicator_pillar_1 = create(:ascor_assessment_indicator, id: 1, code: 'EP', indicator_type: :pillar,
                                                               text: 'Emissions Performance')
