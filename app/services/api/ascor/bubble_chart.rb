@@ -17,7 +17,7 @@ module Api
         ::ASCOR::AssessmentResult
           .by_date(@assessment_date)
           .of_type(:area)
-          .includes(assessment: :country)
+          .published
           .order(:indicator_id)
           .map do |result|
           {

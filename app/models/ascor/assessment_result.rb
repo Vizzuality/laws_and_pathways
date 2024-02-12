@@ -19,4 +19,5 @@ class ASCOR::AssessmentResult < ApplicationRecord
 
   scope :of_type, ->(type) { includes(:indicator).where(ascor_assessment_indicators: {indicator_type: type}) }
   scope :by_date, ->(date) { includes(:assessment).where(ascor_assessments: {assessment_date: date}) }
+  scope :published, -> { includes(assessment: :country).where(ascor_countries: {visibility_status: 'published'}) }
 end

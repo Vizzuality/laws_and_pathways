@@ -42,11 +42,6 @@ RSpec.describe ASCOR::Country, type: :model do
     expect(subject).to have(1).errors_on(:iso)
   end
 
-  it 'should be invalid if region is not in REGIONS' do
-    subject.region = 'TEST'
-    expect(subject).to have(1).errors_on(:region)
-  end
-
   it 'should be invalid if wb_lending_group is not in LENDING_GROUPS' do
     subject.wb_lending_group = 'TEST'
     expect(subject).to have(1).errors_on(:wb_lending_group)

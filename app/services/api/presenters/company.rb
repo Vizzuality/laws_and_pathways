@@ -36,6 +36,12 @@ module Api
         CP::Alignment.new(name: @company.cp_alignment_2025, sector: @company.sector.name)
       end
 
+      def cp_alignment_2027
+        return unless @company.cp_alignment_2027.present?
+
+        CP::Alignment.new(name: @company.cp_alignment_2027, sector: @company.sector.name)
+      end
+
       def cp_alignment_2035
         return unless @company.cp_alignment_2035.present?
 
@@ -56,6 +62,12 @@ module Api
         return unless @company.cp_regional_alignment_2025.present?
 
         CP::Alignment.new(name: @company.cp_regional_alignment_2025, sector: @company.sector.name)
+      end
+
+      def cp_regional_alignment_2027
+        return unless @company.cp_regional_alignment_2027.present?
+
+        CP::Alignment.new(name: @company.cp_regional_alignment_2027, sector: @company.sector.name)
       end
 
       def cp_regional_alignment_2035

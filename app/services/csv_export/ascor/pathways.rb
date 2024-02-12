@@ -58,6 +58,7 @@ module CSVExport
 
       def pathways
         @pathways ||= ::ASCOR::Pathway.joins(:country).includes(:country)
+          .where(ascor_countries: {visibility_status: 'published'})
           .order(:assessment_date, 'ascor_countries.name')
       end
     end

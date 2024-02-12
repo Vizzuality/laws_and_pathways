@@ -56,7 +56,7 @@ module TPI
     private
 
     def fetch_ascor_countries
-      @countries = ASCOR::Country.all.order(:name)
+      @countries = ASCOR::Country.published.all.order(:name)
       @countries_json = [
         {name: 'All countries', path: tpi_ascor_index_path},
         *@countries.as_json(only: [:name], methods: [:path])
@@ -64,7 +64,9 @@ module TPI
     end
 
     def fetch_ascor_country
-      @country = ASCOR::Country.friendly.find(params[:id])
+      @country = ASCOR::Country.published.friendly.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to tpi_ascor_index_path
     end
 
     def fetch_assessment_date

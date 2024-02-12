@@ -32,7 +32,7 @@ module CSVExport
       private
 
       def countries
-        @countries ||= ::ASCOR::Country.order(:name)
+        @countries ||= ::ASCOR::Country.published.order(:name)
       end
     end
   end

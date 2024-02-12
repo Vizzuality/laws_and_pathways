@@ -10,6 +10,16 @@ RSpec.describe TPI::ASCORController, type: :controller do
   let_it_be(:ascor_benchmark) { create :ascor_benchmark, country: ascor_country }
   let_it_be(:ascor_pathway) { create :ascor_pathway, country: ascor_country }
 
+  let_it_be(:ascor_country_draft) do
+    create :ascor_country, name: 'Poland', iso: 'PLN', visibility_status: 'draft'
+  end
+  let_it_be(:ascor_assessment_draft) { create :ascor_assessment, country: ascor_country_draft }
+  let_it_be(:ascor_assessment_result_draft) do
+    create :ascor_assessment_result, assessment: ascor_assessment_draft, indicator: ascor_assessment_indicator
+  end
+  let_it_be(:ascor_benchmark_draft) { create :ascor_benchmark, country: ascor_country_draft }
+  let_it_be(:ascor_pathway_draft) { create :ascor_pathway, country: ascor_country_draft }
+
   describe 'GET index' do
     subject { get :index }
 
@@ -20,6 +30,12 @@ RSpec.describe TPI::ASCORController, type: :controller do
     subject { get :show, params: {id: ascor_country.slug} }
 
     it { is_expected.to be_successful }
+
+    context 'when country is draft' do
+      subject { get :show, params: {id: ascor_country_draft.slug} }
+
+      it { is_expected.to redirect_to(tpi_ascor_index_path) }
+    end
   end
 
   describe 'GET user download' do

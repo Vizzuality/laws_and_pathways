@@ -5,6 +5,7 @@ RSpec.describe Api::ASCOR::RecentEmissions do
 
   before_all do
     @country = create(:ascor_country, id: 1, name: 'USA', iso: 'USA')
+    _draft_country = create(:ascor_country, id: 30, name: 'Draft Country', iso: 'DFT')
     @assessment_date = Date.new(2019, 1, 1)
 
     create :ascor_pathway,

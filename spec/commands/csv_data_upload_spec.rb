@@ -1272,8 +1272,10 @@ describe 'CSVDataUpload (integration)' do
     )
     expect(assessment.cp_alignment_2050).to eq('No or unsuitable disclosure')
     expect(assessment.cp_alignment_2025).to eq('Paris Pledges')
+    expect(assessment.cp_alignment_2027).to eq('Paris Pledges')
     expect(assessment.cp_alignment_2035).to eq('National Pledges')
     expect(assessment.cp_regional_alignment_2025).to eq('1.5 Degrees')
+    expect(assessment.cp_regional_alignment_2027).to eq('1.5 Degrees')
     expect(assessment.cp_regional_alignment_2035).to eq('2 Degrees')
     expect(assessment.cp_regional_alignment_2050).to eq('International Pledges')
     expect(assessment2.cp_alignment_2050).to eq('Not Aligned')
@@ -1458,14 +1460,14 @@ describe 'CSVDataUpload (integration)' do
     expect_data_upload_results(
       ASCOR::Country,
       ascor_countries_csv,
-      {new_records: 1, not_changed_records: 1, rows: 2, updated_records: 0},
+      {new_records: 2, not_changed_records: 1, rows: 3, updated_records: 0},
       custom_uploader: 'ASCORCountries'
     )
     # subsequent import should not create or update any record
     expect_data_upload_results(
       ASCOR::Country,
       ascor_countries_csv,
-      {new_records: 0, not_changed_records: 2, rows: 2, updated_records: 0},
+      {new_records: 0, not_changed_records: 3, rows: 3, updated_records: 0},
       custom_uploader: 'ASCORCountries'
     )
 

@@ -39,7 +39,8 @@ module CSVExport
       end
 
       def benchmarks
-        @benchmarks ||= ::ASCOR::Benchmark.joins(:country).includes(:country).order('ascor_countries.name')
+        @benchmarks ||= ::ASCOR::Benchmark.joins(:country).includes(:country)
+          .where(ascor_countries: {visibility_status: 'published'}).order('ascor_countries.name')
       end
     end
   end
