@@ -76,7 +76,7 @@ function CPMatrixTable({ data, meta }) {
 
   const columns = [
     {
-      title: 'Bussiness Segment',
+      title: 'Business Segment',
       className: 'vertical-align-center',
       children: [
         {
