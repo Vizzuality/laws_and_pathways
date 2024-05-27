@@ -12,6 +12,7 @@
 #  updated_at        :datetime         not null
 #  is_insight        :boolean          default(FALSE)
 #  short_description :text
+#  is_event          :boolean          default(FALSE)
 #
 
 class NewsArticle < ApplicationRecord
@@ -26,7 +27,9 @@ class NewsArticle < ApplicationRecord
 
   scope :published, -> { where('publication_date <= ?', DateTime.now) }
   scope :insights, -> { where(is_insight: true) }
+  scope :events, -> { where(is_event: true) }
   scope :not_insights, -> { where(is_insight: false) }
+  scope :not_events, -> { where(is_event: false) }
 
   validates_presence_of :title, :content, :publication_date
 

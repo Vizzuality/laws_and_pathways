@@ -21,7 +21,13 @@
 
       <div class="publication__content-type">
         <% if publication.is_a?(NewsArticle) %>
-          <%= publication.is_insight? ? 'Insights' : 'News' %>
+          <% if publication.is_insight? %>
+            Insights
+          <% elsif publication.is_event? %>
+            Events
+          <% else %>
+            News
+          <% end %>
         <% else %>
           Publications
         <% end %>
