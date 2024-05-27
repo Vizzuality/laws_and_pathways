@@ -45,8 +45,6 @@ gem 'appsignal'
 gem 'roo'
 gem 'caxlsx'
 
-gem 'listen', '>= 3.0.5', '< 3.2'
-
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'database_cleaner-active_record'
@@ -81,6 +79,7 @@ group :development do
   gem 'capistrano-rvm'
   gem 'capistrano-yarn'
   gem 'countries' # just to generate country flags using rake task flags:generate
+  gem 'listen', '>= 3.0.5', '< 3.2'
   # gem 'octokit', '~> 4.0' # used for generate flags - maybe could be removed
   gem 'rubocop'
   gem 'rubocop-performance'
