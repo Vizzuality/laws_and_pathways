@@ -184,7 +184,7 @@ const Filters = ({ types, tags, sectors, resultsSize }) => {
       <div className="container publications">
         <div className="filters__wrapper">
           <div className="showing-count">
-            <p>Showing <strong>{resultsCount}</strong> items in <strong>All Publications and news</strong></p>
+            <p>Showing <strong>{resultsCount}</strong> items in <strong>All Publications, news and events</strong></p>
           </div>
           <div className="filters__button is-hidden-touch">
             <button

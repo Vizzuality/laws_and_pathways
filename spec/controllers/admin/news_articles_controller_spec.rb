@@ -38,7 +38,8 @@ RSpec.describe Admin::NewsArticlesController, type: :controller do
           title: 'My amazing title',
           short_description: 'My amazing short description',
           content: 'Test Content',
-          is_insight: true
+          is_insight: true,
+          is_event: true
         )
       end
 
@@ -52,6 +53,7 @@ RSpec.describe Admin::NewsArticlesController, type: :controller do
           expect(g.short_description).to eq(valid_params[:short_description])
           expect(g.content).to eq(valid_params[:content])
           expect(g.is_insight).to be_truthy
+          expect(g.is_event).to be_truthy
         end
       end
 

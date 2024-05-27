@@ -6,7 +6,7 @@ ActiveAdmin.register NewsArticle do
 
   decorate_with NewsArticleDecorator
 
-  permit_params :title, :content, :publication_date, :is_insight,
+  permit_params :title, :content, :publication_date, :is_insight, :is_event,
                 :created_by_id, :updated_by_id, :short_description,
                 :image, :keywords_string, tpi_sector_ids: []
 
@@ -33,6 +33,7 @@ ActiveAdmin.register NewsArticle do
             image_tag(url_for(t.image)) if t.image.present?
           end
           row :is_insight
+          row :is_event
           row :updated_at
           row :updated_by
           row :created_at
@@ -48,6 +49,7 @@ ActiveAdmin.register NewsArticle do
     column :short_description
     column :publication_date
     column :is_insight
+    column :is_event
 
     actions
   end
@@ -61,6 +63,7 @@ ActiveAdmin.register NewsArticle do
     column :keywords, &:keywords_csv
     column :publication_date
     column :is_insight
+    column :is_event
   end
 
   form html: {'data-controller' => 'check-modified'} do |f|
@@ -76,6 +79,7 @@ ActiveAdmin.register NewsArticle do
       f.input :keywords_string, label: 'Keywords', hint: t('hint.tag'), as: :tags, collection: Keyword.pluck(:name)
       f.input :image, as: :file, input_html: {accept: 'image/*'}
       f.input :is_insight
+      f.input :is_event
     end
 
     f.actions

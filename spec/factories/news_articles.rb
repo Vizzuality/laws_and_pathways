@@ -12,6 +12,7 @@
 #  updated_at        :datetime         not null
 #  is_insight        :boolean          default(FALSE)
 #  short_description :text
+#  is_event          :boolean          default(FALSE)
 #
 
 FactoryBot.define do
@@ -23,6 +24,7 @@ FactoryBot.define do
     publication_date { '2019-11-29' }
     image { fixture_file_upload(Rails.root.join('spec', 'support', 'fixtures', 'files', 'test.jpg'), 'jpg') }
     is_insight { false }
+    is_event { false }
 
     association :created_by, factory: :admin_user
     updated_by { created_by }
