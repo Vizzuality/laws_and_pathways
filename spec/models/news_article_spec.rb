@@ -12,6 +12,7 @@
 #  updated_at        :datetime         not null
 #  is_insight        :boolean          default(FALSE)
 #  short_description :text
+#  is_event          :boolean          default(FALSE)
 #
 
 require 'rails_helper'

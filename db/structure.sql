@@ -1558,7 +1558,8 @@ CREATE TABLE public.news_articles (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     is_insight boolean DEFAULT false,
-    short_description text
+    short_description text,
+    is_event boolean DEFAULT false
 );
 
 
@@ -4176,6 +4177,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231207082211'),
 ('20240119084250'),
 ('20240202090401'),
-('20240206094238');
+('20240206094238'),
+('20240527100352');
 
 
