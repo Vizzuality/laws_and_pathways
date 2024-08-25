@@ -22,7 +22,7 @@ module TPI
           combined_aum: page&.contents&.find_by(code: 'combined_aum')&.text || '-',
           sectors_count: TPISector.with_companies.count,
           ascor_countries: ASCOR::Country.count,
-          banks: Bank.count,
+          banks: Bank.count
         }
       }
       @latest_researches = Publication

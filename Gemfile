@@ -18,7 +18,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 gem 'activerecord-import'
 gem 'acts_as_list'
-gem 'activeadmin'
+gem 'activeadmin', '~> 3.2.0'
 gem 'activeadmin_addons'
 gem 'devise', '>= 4.7.1'
 gem 'cancancan'
