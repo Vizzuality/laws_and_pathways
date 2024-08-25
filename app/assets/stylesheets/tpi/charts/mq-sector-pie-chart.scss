@@ -16,7 +16,7 @@ $tpi-pie-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB #9747FF;
       tspan {
         &:not(.highcharts-strong) {
           font-size: $size-7;
-          font-family: $family-sans-serif;
+          font-family: $font-family-bold;
         }
       }
     }

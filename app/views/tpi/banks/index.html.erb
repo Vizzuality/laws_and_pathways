@@ -2,6 +2,12 @@
 <% content_for :page_description, "Compare and assess how prepared the world’s largest banks are for the transition to a low-carbon economy" %>
 
 <div class="banks-index-page">
+  <div class="banks-index-page__info">
+    <div class="container">
+      <div class="title">Banking Tool purpose</div>
+      <p class="description">Lorem ipsum dolor sit amet consectetur. Rutrum aliquam duis pharetra viverra sed. Pharetra aliquam vel ullamcorper et erat nibh aliquam. Adipiscing eu maecenas at accumsan nulla augue aliquet. Ullamcorper scelerisque a nunc tellus sed mi pellentesque.</p>
+    </div>
+  </div>
   <div class="dropdown-selector-wrapper">
     <%= react_component("BankDropdown", {
       banks: @banks_json,

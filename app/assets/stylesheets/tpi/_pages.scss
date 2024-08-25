@@ -130,7 +130,7 @@ $margin-between-list-items: 20px;
 
   &.text-description {
     display: flex;
-    font-family: $family-sans-serif;
+    font-family: $font-family-regular;
 
     .pages__content-logos {
       grid-template-columns: repeat(2, 1fr);
@@ -167,7 +167,7 @@ $margin-between-list-items: 20px;
 
   &.logo-description {
     display: block;
-    font-family: $family-sans-serif;
+    font-family: $font-family-regular;
 
     .pages__content-logos {
       grid-template-columns: repeat(2, 1fr);

@@ -6,7 +6,7 @@ ActiveAdmin.register TPISectorCluster do
 
   menu priority: 8, parent: 'TPI'
 
-  permit_params :name
+  permit_params :name, sector_ids: []
 
   filter :name_contains
 
@@ -24,5 +24,13 @@ ActiveAdmin.register TPISectorCluster do
     id_column
     column :name, &:name_link
     actions
+  end
+
+  form do |f|
+    f.inputs do
+      f.input :name
+      f.input :sectors, as: :check_boxes, collection: TPISector.all.order(:name)
+    end
+    f.actions
   end
 end

@@ -1,6 +1,25 @@
 @import "../variables";
 
 .banks-index-page {
+  &__info {
+    background-color: $blue;
+    padding: 40px 0;
+    border-bottom: 1px solid #FFFFFF1F;
+
+    .title {
+      color: $white;
+      font-size: $size-4;
+      font-family: $font-family-bold;
+      margin-bottom: 25px;
+    }
+
+    .description {
+      color: $white;
+      font-size: $size-6;
+      font-family: $font-family-regular;
+    }
+  }
+
   .banks-header {
     min-height: 100px;
     display: flex;

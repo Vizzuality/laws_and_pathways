@@ -55,7 +55,7 @@ html {
 
 body {
   overflow-x: hidden;
-  font-family: $family-sans-serif;
+  font-family: $font-family-regular;
 
   @include desktop {
     overflow-x: visible;

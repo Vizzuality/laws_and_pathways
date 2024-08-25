@@ -20,14 +20,16 @@ module TPI
             page&.contents&.find_by(code: 'supporters_without_logo')&.text.to_i,
           total_market_cap: page&.contents&.find_by(code: 'total_market_cap')&.text || '-',
           combined_aum: page&.contents&.find_by(code: 'combined_aum')&.text || '-',
-          sectors_count: TPISector.with_companies.count
+          sectors_count: TPISector.with_companies.count,
+          ascor_countries: ASCOR::Country.count,
+          banks: Bank.count,
         }
       }
       @latest_researches = Publication
         .published
         .includes([:image_attachment, :author_image_attachment])
         .order(publication_date: :desc)
-        .take(4)
+        .take(3)
 
       fixed_navbar('Dashboard', admin_root_path)
     end
