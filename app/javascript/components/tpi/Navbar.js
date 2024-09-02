@@ -113,7 +113,7 @@ function renderMenuItem(menuItem, index) {
 }
 
 const NavbarComponent = ({ items, openSearchMode }) => {
-  const [tpi, publications, about, faq, newsletter, search] = items;
+  const [tpi, publications, about, newsletter, search] = items;
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="navbar" role="navigation" aria-label="main navigation">
@@ -188,15 +188,6 @@ const NavbarComponent = ({ items, openSearchMode }) => {
                 {about.content && about.content.map((menuItem, i) => renderMenuItem(menuItem, i))}
               </div>
             </div>
-
-            <a
-              href={faq.path}
-              className={classnames('navbar-item', {
-                'is-active': faq.active
-              })}
-            >
-              {faq.entry}
-            </a>
           </div>
 
           <div className="navbar-end">

@@ -302,7 +302,7 @@
       .images {
         display: flex;
         gap: 20px;
-        margin-top: 10px;
+        margin: 10px 0;
       }
 
       .info {
@@ -369,6 +369,11 @@
     h4, h2,
     .content {
       padding-bottom: $size-4;
+    }
+
+    .content {
+      text-align: justify;
+      text-justify: inter-word;
     }
 
     a {

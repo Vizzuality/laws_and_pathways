@@ -11,7 +11,7 @@
         </p>
       </div>
       <div>
-        <%= link_to 'TPI Ltd', '/supporters', class: 'button is-primary button__hero' %>
+        <%= link_to 'TPI Ltd', '/tpi-ltd', class: 'button is-primary button__hero' %>
         <p class="tpi-home__hero__title__description content">
           Click above to learn more about our history and investor network
         </p>
@@ -84,7 +84,7 @@
             <div class="stat-box__icon"><%= image_tag 'tpi/home/corporate-management-quality.png' %></div>
             <div class="stat-box__content">
               <div class="stat-box__number">Corporate:<br />Management<br />Quality</div>
-              <div class="stat-box__title">TODO</div>
+              <div class="stat-box__title"><%= @home_content[:stats][:corporate_management_quality] %></div>
             </div>
           </div>
 
@@ -92,12 +92,12 @@
             <div class="stat-box__icon"><%= image_tag 'tpi/home/corporate-carbon-performance.png' %></div>
             <div class="stat-box__content">
               <div class="stat-box__number">Corporate:<br />Carbon<br />Performance</div>
-              <div class="stat-box__title">TODO</div>
+              <div class="stat-box__title"><%= @home_content[:stats][:corporate_carbon_performance] %></div>
             </div>
           </div>
 
           <div class="stat-box">
-            <div class="stat-box__icon"><%= image_tag 'tpi/home/location.svg' %></div>
+            <div class="stat-box__icon"><%= image_tag 'tpi/home/ascor.png' %></div>
             <div class="stat-box__content">
               <div class="stat-box__number">Sovereigns:<br />ASCOR</div>
               <div class="stat-box__title"><%= @home_content[:stats][:ascor_countries] %></div>
@@ -122,7 +122,7 @@
           <%= render 'sector_cluster_stat', cluster: @sector_clusters['energy'], icon: 'tpi/home/energy.png' %>
           <%= render 'sector_cluster_stat', cluster: @sector_clusters['transport'], icon: 'tpi/home/transport.png' %>
           <%= render 'sector_cluster_stat', cluster: @sector_clusters['industry'], icon: 'tpi/home/industry.png' %>
-          <%= render 'sector_cluster_stat', cluster: @sector_clusters['food'], icon: 'tpi/home/food.png' %>
+          <%= render 'sector_cluster_stat', cluster: @sector_clusters['consumer-goods'], icon: 'tpi/home/food.png' %>
         </div>
       </div>
     </div>
@@ -141,7 +141,6 @@
           <li>Be part of a global investor community</li>
           <li>Better inform your investment research</li>
           <li>Show your commitment to the low carbon economy</li>
-          <li>Zero cost</li>
         </ul>
       </div>
       <br />
@@ -208,7 +207,7 @@
       <div class="subtitle">The TPI Centre also receives support towards ASCOR from</div>
       <div class="images">
         <img src="<%= asset_path 'tpi/funders/laudes-foundation.png' %>" />
-        <img src="<%= asset_path 'tpi/funders/climateworks.png' %>" />>
+        <img src="<%= asset_path 'tpi/funders/climateworks.png' %>" />
       </div>
       <br />
       <div class="info">If you would like to discuss funding the TPI Centre's work, please <a href="mailto:tpi@lse.ac.uk" class="footer-link">Contact Us</a></div>
@@ -220,14 +219,14 @@
   <div class="container">
     <div class="columns" >
       <div class="column is-5 subscribe__logo is-hidden-touch">
-        <img src="<%= asset_path 'newsletter_background/newsletter img@2x.png' %>" alt="tpi newsletter logo">
+        <img src="<%= asset_path 'newsletter_background/newsletter_img_new.png' %>" alt="tpi newsletter logo">
       </div>
 
       <div class="column is-5-desktop subscribe__container">
         <h2 class="is-size-4 is-hidden-touch">Subscribe to the Newsletter</h2>
         <div class="subscribe-title is-hidden-desktop">
           <div>Subscribe to the TPI newsletter</div>
-          <img src="<%= asset_path 'newsletter_background/newsletter img@2x.png' %>" alt="tpi newsletter logo">
+          <img src="<%= asset_path 'newsletter_background/newsletter_img_new.png' %>" alt="tpi newsletter logo">
         </div>
 
         <p class="content">

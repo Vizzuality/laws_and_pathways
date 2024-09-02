@@ -20,6 +20,8 @@ module TPI
             page&.contents&.find_by(code: 'supporters_without_logo')&.text.to_i,
           total_market_cap: page&.contents&.find_by(code: 'total_market_cap')&.text || '-',
           combined_aum: page&.contents&.find_by(code: 'combined_aum')&.text || '-',
+          corporate_management_quality: page&.contents&.find_by(code: 'corporate_management_quality')&.text || '-',
+          corporate_carbon_performance: page&.contents&.find_by(code: 'corporate_carbon_performance')&.text || '-',
           sectors_count: TPISector.with_companies.count,
           ascor_countries: ASCOR::Country.count,
           banks: Bank.count
