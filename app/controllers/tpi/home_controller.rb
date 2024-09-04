@@ -23,8 +23,8 @@ module TPI
           corporate_management_quality: page&.contents&.find_by(code: 'corporate_management_quality')&.text || '-',
           corporate_carbon_performance: page&.contents&.find_by(code: 'corporate_carbon_performance')&.text || '-',
           sectors_count: TPISector.with_companies.count,
-          ascor_countries: ASCOR::Country.count,
-          banks: Bank.count
+          ascor_countries: ASCOR::Country.published.count,
+          banks: Bank.published.count
         }
       }
       @latest_researches = Publication
