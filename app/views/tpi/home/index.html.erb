@@ -29,16 +29,16 @@
     <div class="container">
       <div class="section-description">
         <%= link_to tpi_sectors_path, class: 'assessment-box' do %>
-          <div class="assessment-box__title"><span>Corporates: CP&nbsp;&&nbsp;MQ</span></div>
+          <div class="assessment-box__title"><span>Corporates <br />CP&nbsp;&&nbsp;MQ</span></div>
         <% end %>
         <%= link_to tpi_corporate_bond_issuers_path, class: 'assessment-box' do %>
-          <div class="assessment-box__title"><span>Corporates: CA100+</span></div>
+          <div class="assessment-box__title"><span>Corporates <br />CA100+</span></div>
         <% end %>
         <%= link_to tpi_banks_path, class: 'assessment-box' do %>
           <div class="assessment-box__title"><span>Banks</span></div>
         <% end %>
         <%= link_to tpi_ascor_index_path, class: 'assessment-box' do %>
-          <div class="assessment-box__title"><span>Sovereigns: ASCOR</span></div>
+          <div class="assessment-box__title"><span>Sovereigns <br />ASCOR</span></div>
         <% end %>
       </div>
     </div>
@@ -115,16 +115,20 @@
       </div>
       <div class="tpi-home__stats-news__stats">
         <h3>
-          CP Sectoral Benchmarks
+          Carbon Performance Sectoral Benchmarks
         </h3>
 
         <div class="stat-boxes">
           <%= render 'sector_cluster_stat', cluster: @sector_clusters['energy'], icon: 'tpi/home/energy.png' %>
           <%= render 'sector_cluster_stat', cluster: @sector_clusters['transport'], icon: 'tpi/home/transport.png' %>
           <%= render 'sector_cluster_stat', cluster: @sector_clusters['industry'], icon: 'tpi/home/industry.png' %>
-          <%= render 'sector_cluster_stat', cluster: @sector_clusters['consumer-goods'], icon: 'tpi/home/food.png' %>
+          <%= render 'sector_cluster_stat', cluster: @sector_clusters['food-producers'], icon: 'tpi/home/food.png' %>
         </div>
       </div>
+    </div>
+
+    <div class="at-glance-note">
+      Assets Under Management (and Advice) are subject to market-price and foreign-exchange fluctuations. As the sum of self-reported data by TPI supporters, they may double-count assets.
     </div>
   </div>
 </section>
@@ -140,7 +144,7 @@
         <ul>
           <li>Be part of a global investor community</li>
           <li>Better inform your investment research</li>
-          <li>Help shape our future direction</li>
+          <li>Help shape the future direction of TPI</li>
           <li>Show your commitment in the transition to a low carbon economy</li>
         </ul>
       </div>
@@ -158,7 +162,7 @@
 <section class="section tpi-home__latest-research">
   <div class="container">
     <h2 class="section-title is-size-5-mobile is-size-2">
-      In The Press
+      Featured News and Analysis
     </h2>
 
     <div class="section-description">
@@ -197,18 +201,12 @@
       Funding Partners
     </h2>
     <div class="section-description">
-      <div class="subtitle">The TPI Centre is supported by</div>
+      <div class="subtitle">TPI Centre is supported by</div>
       <div class="images">
         <img src="<%= asset_path 'tpi/funders/climate-arc.png' %>" />
+        <img src="<%= asset_path 'tpi/funders/fte-russell.png' %>" />
         <img src="<%= asset_path 'tpi/funders/lseg-foundation.png' %>" />
         <img src="<%= asset_path 'tpi/funders/tpi.png' %>" />
-        <img src="<%= asset_path 'tpi/funders/fte-russell.png' %>" />
-      </div>
-      <br />
-      <div class="subtitle">The TPI Centre also receives support towards ASCOR from</div>
-      <div class="images">
-        <img src="<%= asset_path 'tpi/funders/laudes-foundation.png' %>" />
-        <img src="<%= asset_path 'tpi/funders/climateworks.png' %>" />
       </div>
       <br />
       <div class="info">If you would like to discuss funding the TPI Centre's work, please <a href="mailto:tpi@lse.ac.uk" class="footer-link">Contact Us</a></div>

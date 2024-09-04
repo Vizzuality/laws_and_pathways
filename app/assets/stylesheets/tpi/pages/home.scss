@@ -120,9 +120,17 @@
         height: 100px;
         line-height: 70px;
 
+        br {
+          display: none;
+        }
+
         @include from($tablet) {
           height: 200px;
           line-height: 170px;
+
+          br {
+            display: block;
+          }
 
           span {
             display: inline-block;
@@ -158,6 +166,10 @@
       &__first {
         order: -1;
       }
+    }
+
+    .at-glance-note {
+      font-size: $size-6;
     }
 
     .at-glance-container:before {

@@ -66,7 +66,7 @@ const MqBetaModal = ({ enabled, page }) => {
           <div className="modal-title">Management Quality methodology</div>
           <div className="content">
             <p>
-              The TPI Centre has developed an update to its Management Quality
+              TPI Centre has developed an update to its Management Quality
               (MQ) methodology, which is displayed here as a BETA methodology.
             </p>
             <p>
@@ -80,7 +80,8 @@ const MqBetaModal = ({ enabled, page }) => {
             </p>
             <p>
               A report detailing what’s new in the BETA MQ methodology,
-              and a review of its impact on company scoring, can be found <a href={MQ_REPORT_PUBLICATION_LINK} rel="noreferrer" target="_blank">here</a>.
+              and a review of its impact on company scoring, can be found
+              <a href={MQ_REPORT_PUBLICATION_LINK} rel="noreferrer" target="_blank"> here</a>.
             </p>
             <p>
               Carbon Performance assessments are not affected by using this

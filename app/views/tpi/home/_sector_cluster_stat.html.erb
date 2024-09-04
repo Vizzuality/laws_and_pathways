@@ -4,7 +4,8 @@
       <div class="stat-box__icon"><%= image_tag icon %></div>
       <div class="stat-box__content">
         <div class="stat-box__number"><%= cluster.sectors.count %></div>
-        <div class="stat-box__title"><%= cluster.name.titleize %></div>
+        <div class="stat-box__number"><%= cluster.name.titleize %></div>
+
       </div>
     </div>
     <div class="stat-box__sectors"><%= cluster.sectors.map(&:name).join(', ')  %></div>

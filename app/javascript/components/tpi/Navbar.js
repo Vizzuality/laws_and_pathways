@@ -112,8 +112,8 @@ function renderMenuItem(menuItem, index) {
   );
 }
 
-const NavbarComponent = ({ items, openSearchMode }) => {
-  const [tpi, publications, about, newsletter, search] = items;
+const NavbarComponent = ({ items }) => {
+  const [tpi, publications, about, contactUs] = items;
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="navbar" role="navigation" aria-label="main navigation">
@@ -121,14 +121,6 @@ const NavbarComponent = ({ items, openSearchMode }) => {
         <div className="navbar-brand is-hidden-desktop">
           <a href="/" className="navbar-item logo">
             <img src={Logo} alt="Transition Pathway Initiative logo" />
-          </a>
-          <a
-            className="navbar-item"
-            aria-label={search.entry}
-            role="button"
-            onClick={openSearchMode}
-          >
-            {search.hasIcon && <span className="icon icon__search" />}
           </a>
           <a
             role="button"
@@ -192,20 +184,10 @@ const NavbarComponent = ({ items, openSearchMode }) => {
 
           <div className="navbar-end">
             <a
-              href={newsletter.path}
-              className={classnames('navbar-item', {
-                'is-active': newsletter.active
-              })}
+              href={contactUs.path}
+              className="navbar-item"
             >
-              {newsletter.entry}
-            </a>
-            <a
-              className="navbar-item is-hidden-touch"
-              aria-label={search.entry}
-              role="button"
-              onClick={openSearchMode}
-            >
-              {search.hasIcon && <span className="icon icon__search" />}
+              {contactUs.entry}
             </a>
           </div>
 
@@ -250,8 +232,7 @@ NavbarComponent.propTypes = {
       hasIcon: PropTypes.bool,
       className: PropTypes.string
     })
-  ).isRequired,
-  openSearchMode: PropTypes.func.isRequired
+  ).isRequired
 };
 
 const Navbar = ({ items, controls }) => {
