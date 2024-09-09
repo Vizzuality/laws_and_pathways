@@ -45,6 +45,7 @@
     justify-content: space-around;
 
     @include mobile {
+      flex-direction: column;
       font-size: 14px;
     }
 

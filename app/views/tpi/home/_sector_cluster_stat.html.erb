@@ -1,8 +1,13 @@
 <% if cluster.present? %>
-  <div class="stat-box-b <%= local_assigns[:class] %>">
-    <div class="stat-box-b__number"><%= cluster.sectors.count %></div>
-    <div class="stat-box-b__title">Benchmarks for <%= cluster.name.downcase %></div>
-    <%= svg icon %>
-    <div class="stat-box-b__sectors"><%= cluster.sectors.map(&:name).join(', ')  %></div>
+  <div>
+    <div class="stat-box">
+      <div class="stat-box__icon"><%= image_tag icon %></div>
+      <div class="stat-box__content">
+        <div class="stat-box__number"><%= cluster.sectors.count %></div>
+        <div class="stat-box__number"><%= cluster.name.titleize %></div>
+
+      </div>
+    </div>
+    <div class="stat-box__sectors"><%= cluster.sectors.map(&:name).join(', ')  %></div>
   </div>
 <% end %>

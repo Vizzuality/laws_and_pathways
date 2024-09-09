@@ -1,6 +1,44 @@
 @import "../variables";
 
 .banks-index-page {
+  &__info {
+    background-color: $blue;
+    padding: 40px 0 30px 0;
+    border-bottom: 1px solid #FFFFFF1F;
+    text-align: justify;
+
+    strong {
+      color: $white;
+    }
+
+    .title {
+      color: $white;
+      font-size: $size-4;
+      font-family: $font-family-bold;
+      margin-bottom: 20px;
+    }
+
+    .description {
+      color: $white;
+      font-size: $size-6;
+      font-family: $font-family-regular;
+      margin-bottom: 10px
+    }
+
+    ol {
+      color: $white;
+      padding-left: 20px;
+
+      li {
+        padding: 10px 0;
+      }
+
+      li::marker {
+        font-weight: bold;
+      }
+    }
+  }
+
   .banks-header {
     min-height: 100px;
     display: flex;

@@ -3,16 +3,19 @@
 <section class="section tpi-home__hero">
   <div class="background"></div>
   <div class="container">
-    <div class="left-size">
-      <div class="title">
-        <h1 class="is-size-4-mobile is-size-2"><%= @home_content[:intro][:title] %></h1>
-      </div>
-      <div class="description">
-        <p class="content">
-          <%= @home_content[:intro][:text] %>
+    <div class="tpi-home__hero__title">
+      <div>
+        <%= link_to 'TPI Centre', '/overview', class: 'button is-primary button__hero' %>
+        <p class="tpi-home__hero__title__description content">
+          Click above to learn more about our academic research and data
         </p>
       </div>
-      <%= link_to 'About TPI Centre', '/overview', class: 'button is-primary button__hero' %>
+      <div>
+        <%= link_to 'TPI Ltd', '/tpi-ltd', class: 'button is-primary button__hero' %>
+        <p class="tpi-home__hero__title__description content">
+          Click above to learn more about our history and investor network
+        </p>
+      </div>
     </div>
   </div>
 </section>
@@ -20,26 +23,22 @@
 <section class="section tpi-home__assessment-types">
   <div class="container">
     <h2 class="section-title is-size-5-mobile is-size-2">
-      Check out the TPI Centre's online tool
+      Check out TPI Centre's assessment tools
     </h2>
 
     <div class="container">
       <div class="section-description">
-        <%= link_to tpi_sectors_path, class: 'assessment-box publicly-listed-equities' do %>
-          <div class="assessment-box__header">Climate assessments:</div>
-          <div class="assessment-box__title">Publicly listed equities</div>
+        <%= link_to tpi_sectors_path, class: 'assessment-box' do %>
+          <div class="assessment-box__title"><span>Corporates <br />CP&nbsp;&&nbsp;MQ</span></div>
         <% end %>
-        <%= link_to tpi_corporate_bond_issuers_path, class: 'assessment-box corporate-bonds' do %>
-          <div class="assessment-box__header">Climate assessments:</div>
-          <div class="assessment-box__title">Corporate bond issuers</div>
+        <%= link_to tpi_corporate_bond_issuers_path, class: 'assessment-box' do %>
+          <div class="assessment-box__title"><span>Corporates <br />CA100+</span></div>
         <% end %>
-        <%= link_to tpi_banks_path, class: 'assessment-box banks' do %>
-          <div class="assessment-box__header">Climate assessments:</div>
-          <div class="assessment-box__title">Banks</div>
+        <%= link_to tpi_banks_path, class: 'assessment-box' do %>
+          <div class="assessment-box__title"><span>Banks</span></div>
         <% end %>
-        <%= link_to tpi_publications_path(tags: 'ASCOR'), class: 'assessment-box ascor' do %>
-          <div class="assessment-box__header">Climate assessments:</div>
-          <div class="assessment-box__title">Sovereign bond issuers</div>
+        <%= link_to tpi_ascor_index_path, class: 'assessment-box' do %>
+          <div class="assessment-box__title"><span>Sovereigns <br />ASCOR</span></div>
         <% end %>
       </div>
     </div>
@@ -48,171 +47,113 @@
 
 <section class="section tpi-home__stats-news">
   <div class="container">
-    <div class="tpi-home__stats-news__stats">
-      <h2 class="section-title is-size-5-mobile is-size-2">
-        The TPI Centre at a glance
-      </h2>
+    <h2 class="section-title is-size-5-mobile is-size-2">
+      At a glance
+    </h2>
 
-      <div class="section-description">
+    <div class="at-glance-container">
+      <div class="tpi-home__stats-news__stats at-glance-container__first">
         <h3>
-          Supporters
+          Networks
         </h3>
 
         <div class="stat-boxes">
-          <div class="stat-box stat-box--supporters">
-            <div class="stat-box__number"><%= @home_content[:stats][:supporters_count] %></div>
-            <div class="stat-box__title">Supporters</div>
+          <div class="stat-box">
+            <div class="stat-box__icon"><%= image_tag 'tpi/home/supporters.png' %></div>
+            <div class="stat-box__content">
+              <div class="stat-box__number"><%= @home_content[:stats][:supporters_count] %></div>
+              <div class="stat-box__title">Supporters</div>
+            </div>
           </div>
 
-          <div class="stat-box stat-box--combined-aum">
-            <div class="stat-box__number"><%= @home_content[:stats][:combined_aum] %></div>
-            <div class="stat-box__title">AUM</div>
+          <div class="stat-box">
+            <div class="stat-box__icon"><%= image_tag 'tpi/home/aum.png' %></div>
+            <div class="stat-box__content">
+              <div class="stat-box__number"><%= @home_content[:stats][:combined_aum] %></div>
+              <div class="stat-box__title">AUM*</div>
+            </div>
           </div>
         </div>
 
         <h3>
-          Companies
+          Assessed Entities
         </h3>
 
         <div class="stat-boxes">
-          <div class="stat-box stat-box--companies">
-            <div class="stat-box__number"><%= @home_content[:stats][:companies_count] %></div>
-            <div class="stat-box__title">Companies</div>
+          <div class="stat-box">
+            <div class="stat-box__icon"><%= image_tag 'tpi/home/corporate-management-quality.png' %></div>
+            <div class="stat-box__content">
+              <div class="stat-box__number">Corporate:<br />Management<br />Quality</div>
+              <div class="stat-box__title"><%= @home_content[:stats][:corporate_management_quality] %></div>
+            </div>
           </div>
 
-          <div class="stat-box stat-box--sectors">
-            <div class="stat-box__number"><%= @home_content[:stats][:sectors_count] %></div>
-            <div class="stat-box__title">Sectors</div>
+          <div class="stat-box">
+            <div class="stat-box__icon"><%= image_tag 'tpi/home/corporate-carbon-performance.png' %></div>
+            <div class="stat-box__content">
+              <div class="stat-box__number">Corporate:<br />Carbon<br />Performance</div>
+              <div class="stat-box__title"><%= @home_content[:stats][:corporate_carbon_performance] %></div>
+            </div>
           </div>
 
-          <div class="stat-box stat-box--countries">
-            <div class="stat-box__number"><%= @home_content[:stats][:countries_count] %></div>
-            <div class="stat-box__title">Countries</div>
+          <div class="stat-box">
+            <div class="stat-box__icon"><%= image_tag 'tpi/home/ascor.png' %></div>
+            <div class="stat-box__content">
+              <div class="stat-box__number">Sovereigns:<br />ASCOR</div>
+              <div class="stat-box__title"><%= @home_content[:stats][:ascor_countries] %></div>
+            </div>
           </div>
 
-          <div class="stat-box stat-box--market-cap">
-            <div class="stat-box__number"><%= @home_content[:stats][:total_market_cap] %></div>
-            <div class="stat-box__title">Market cap</div>
+          <div class="stat-box">
+            <div class="stat-box__icon"><%= image_tag 'tpi/home/banks.png' %></div>
+            <div class="stat-box__content">
+              <div class="stat-box__number">Banks</div>
+              <div class="stat-box__title"><%= @home_content[:stats][:banks] %></div>
+            </div>
           </div>
         </div>
-
+      </div>
+      <div class="tpi-home__stats-news__stats">
         <h3>
-          Sectoral benchmarks
+          Carbon Performance Sectoral Benchmarks
         </h3>
 
-        <div class="stat-boxes stat-boxes--benchmarks">
-          <%= render 'sector_cluster_stat', cluster: @sector_clusters['energy'], icon: 'tpi/home/electric-factory' %>
-          <%= render 'sector_cluster_stat', cluster: @sector_clusters['transport'], icon: 'tpi/home/transportation' %>
-          <%= render 'sector_cluster_stat', cluster: @sector_clusters['industrials-and-materials'], class: 'stat-box-b--benchmarks', icon: 'tpi/home/construction' %>
+        <div class="stat-boxes">
+          <%= render 'sector_cluster_stat', cluster: @sector_clusters['energy'], icon: 'tpi/home/energy.png' %>
+          <%= render 'sector_cluster_stat', cluster: @sector_clusters['transport'], icon: 'tpi/home/transport.png' %>
+          <%= render 'sector_cluster_stat', cluster: @sector_clusters['industry'], icon: 'tpi/home/industry.png' %>
+          <%= render 'sector_cluster_stat', cluster: @sector_clusters['consumer-goods'], icon: 'tpi/home/food.png' %>
         </div>
       </div>
     </div>
-    <div class="tpi-home__stats-news__news">
-      <h2 class="is-size-5-mobile is-size-2">
-        Follow our latest news
-      </h2>
 
-      <div class="section-description">
-        <div class='sk-ww-linkedin-page-post linkedin-widget' data-embed-id='212274'></div>
-        <script src='https://widgets.sociablekit.com/linkedin-page-posts/widget.js' async defer></script>
-
-        <div class="news-more">
-          <div class="news-more__learn-more">
-            <h3>
-              Learn more
-            </h3>
-
-            <div>
-              <%= link_to tpi_publications_path, class: "with-icon" do %>
-                <i class="icon icon__news"></i>
-                News and publications
-              <% end %>
-
-              <%= link_to tpi_publications_path(tags: 'Event'), class: "with-icon" do %>
-                <i class="icon icon__events"></i>
-                Events
-              <% end %>
-            </div>
-          </div>
-
-          <div class="news-more__social-media">
-            <h3>
-              Social media
-            </h3>
-
-            <div>
-              <a href="https://twitter.com/tp_initiative" class="icon icon__twitter" aria-label="Twitter"></a>
-              <a href="https://www.linkedin.com/company/transition-pathway-initiative-tpi/" class="icon icon__linkedin" aria-label="Linkedin"></a>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="at-glance-note">
+      * Assets Under Management (and Advice) are subject to market-price and foreign-exchange fluctuations. As the sum of self-reported data by TPI supporters, they may double-count assets.
     </div>
   </div>
 </section>
 
-<section class="section tpi-home__case-studies-supporters">
-  <div class="container">
-    <h2 class="section-title is-size-5-mobile is-size-2">
-      Learn how others are using the TPI Centre’s data
-    </h2>
+  <section class="section tpi-home__case-studies-supporters">
+    <div class="container">
+      <h2 class="section-title is-size-5-mobile is-size-2">
+        Become a supporter
+      </h2>
 
-    <div class="section-description columns">
-      <div class="column">
+      <div class="benefits">
+        <span class="subtitle">Benefits</span>
         <ul>
-          <li>
-            <a href="/investors">
-              <span class="has-text-blue-ribbon">Case studies</span> of our data use
-            </a>
-          </li>
-          <li>
-            <a href="/supporters">
-              Our <span class="has-text-blue-ribbon">supporters</span>
-            </a>
-          </li>
-          <li>
-            <a href="/supporters">
-              <span class="has-text-blue-ribbon">Become</span> a supporter
-            </a>
-          </li>
-          <li>
-            <a href="/use-of-the-centre-s-data">
-              <span class="has-text-blue-ribbon">Use of the Centre's data</span>
-            </a>
-          </li>
+          <li>Be part of a global investor community</li>
+          <li>Better inform your investment research</li>
+          <li>Help shape the future direction of TPI</li>
+          <li>Show your commitment in the transition to a low carbon economy</li>
         </ul>
       </div>
-      <div class="column is-9">
-        <div class="slider-container" data-controller="tpi-home-slider">
-          <div class="slider" data-tpi-home-slider-target="items">
-            <% @case_studies.each do |item| %>
-              <div class="case-studies-container">
-                <% tag = item.link.present? ? 'a' : 'div' %>
-                <%
-                  options = if item.link.present?
-                    {
-                      href: item.link,
-                      class: 'case-study is-hoverable',
-                      rel: 'noopener noreferrer',
-                      target: '_blank'
-                    }
-                  else
-                    {
-                      class: 'case-study'
-                    }
-                  end
-                %>
-                <%= content_tag tag, options do %>
-                  <%= image_tag url_for(item.logo) %>
-                  <div class="case-study__title"><%= item.organization %></div>
-                  <div class="case-study__text">
-                    <%= item.text %>
-                  </div>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-        </div>
+      <br />
+      <div class="how-to-join">
+        <span class="subtitle">How to join</span>
+        <p>
+          To become a recognised TPI supporter, please contact <a href="mailto:info@transitionpathwayinitiative.org">info@transitionpathwayinitiative.org</a>
+        </p>
       </div>
     </div>
   </div>
@@ -221,11 +162,11 @@
 <section class="section tpi-home__latest-research">
   <div class="container">
     <h2 class="section-title is-size-5-mobile is-size-2">
-      Hear from our researchers on the TPI Centre’s latest research
+      Featured news and analysis
     </h2>
 
     <div class="section-description">
-      <div class="slider-container" data-controller="tpi-home-slider" data-tpi-home-slider-tablet-items-value="2" data-tpi-home-slider-desktop-items-value="4">
+      <div class="slider-container" data-controller="tpi-home-slider" data-tpi-home-slider-tablet-items-value="2" data-tpi-home-slider-desktop-items-value="3">
         <div class="slider" data-tpi-home-slider-target="items">
           <% @latest_researches.each do |research| %>
             <div>
@@ -257,21 +198,18 @@
 <section class="section tpi-home__funders">
   <div class="container">
     <h2 class="section-title is-size-5-mobile is-size-2">
-      The TPI Centre’s funders
+      Funding partners
     </h2>
     <div class="section-description">
-      <a href="">
+      <div class="subtitle">TPI Centre is supported by</div>
+      <div class="images">
+        <img src="<%= asset_path 'tpi/funders/climate-arc.png' %>" />
+        <img src="<%= asset_path 'tpi/funders/ftse-russell-horizontal.png' %>" />
+        <img src="<%= asset_path 'tpi/funders/lseg-foundation.png' %>" />
         <img src="<%= asset_path 'tpi/funders/tpi.png' %>" />
-      </a>
-      <a href="">
-        <img src="<%= asset_path 'tpi/funders/ciff.png' %>" />
-      </a>
-      <a href="">
-        <img src="<%= asset_path 'tpi/funders/lseg.png' %>" />
-      </a>
-      <a href="">
-        <img src="<%= asset_path 'tpi/funders/ftse-russell.png' %>" />
-      </a>
+      </div>
+      <br />
+      <div class="info">If you would like to discuss funding TPI Centre's work, please <a href="mailto:tpi@lse.ac.uk" class="footer-link">Contact Us</a></div>
     </div>
   </div>
 </section>
@@ -280,18 +218,18 @@
   <div class="container">
     <div class="columns" >
       <div class="column is-5 subscribe__logo is-hidden-touch">
-        <img src="<%= asset_path 'newsletter_background/newsletter img@2x.png' %>" alt="tpi newsletter logo">
+        <img src="<%= asset_path 'newsletter_background/newsletter_img_new.png' %>" alt="tpi newsletter logo">
       </div>
 
       <div class="column is-5-desktop subscribe__container">
-        <h2 class="is-size-4 is-hidden-touch">Subscribe to the TPI newsletter</h2>
+        <h2 class="is-size-4 is-hidden-touch">Subscribe to the newsletter</h2>
         <div class="subscribe-title is-hidden-desktop">
-          <div>Subscribe to the TPI newsletter</div>
-          <img src="<%= asset_path 'newsletter_background/newsletter img@2x.png' %>" alt="tpi newsletter logo">
+          <div>Subscribe to the newsletter</div>
+          <img src="<%= asset_path 'newsletter_background/newsletter_img_new.png' %>" alt="tpi newsletter logo">
         </div>
 
         <p class="content">
-          Receive updates on the TPI, including on latest developments and research findings, by signing-up to our newsletter.
+          Receive monthly updates on all things TPI, including the latest research developments, and when new methodologies and updates will be released on the website. Click below to subscribe
         </p>
 
         <%= link_to 'Subscribe', tpi_newsletter_path, class: 'button is-primary subscribe__button' %>

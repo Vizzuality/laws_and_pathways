@@ -15,10 +15,10 @@
     .partners__title {
       display: flex;
       justify-content: flex-end;
-      font-size: $size-7;
+      font-size: $size-8;
       color: $grey-dark;
       line-height: 0.938rem;
-      margin-bottom: 20px;
+      margin-bottom: 5px;
     }
 
     .partners {
@@ -26,14 +26,6 @@
       align-items: center;
       justify-content: end;
       gap: 30px;
-
-      &__grantham {
-        max-height: 38px;
-      }
-
-      &__lse {
-        max-height: 42px;
-      }
     }
   }
 }

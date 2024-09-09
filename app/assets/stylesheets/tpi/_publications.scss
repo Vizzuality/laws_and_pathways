@@ -86,7 +86,7 @@ $max-lines: 3;
   &__title-text {
     margin-bottom: 20px;
     font-size: 20px !important;
-    font-family: $family-sans-serif-bold;
+    font-family: $font-family-bold;
     color: $dark;
 
     @include desktop {

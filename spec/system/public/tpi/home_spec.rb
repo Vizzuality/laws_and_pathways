@@ -6,6 +6,7 @@ describe 'Home', type: 'system', site: 'tpi' do
   end
 
   it 'loads the page' do
-    expect(page).to have_text('The TPI Global Climate Transition Centre')
+    expect(page).to have_text('TPI Centre')
+    expect(page).to have_text('TPI Ltd')
   end
 end

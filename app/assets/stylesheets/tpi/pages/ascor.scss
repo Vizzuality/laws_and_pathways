@@ -277,7 +277,7 @@ $see-more-width-tablet: 130px;
 
       &__title {
         color: $dark;
-        font-family: $family-sans-serif;
+        font-family: $font-family-regular;
         font-size: 24px !important;
         line-height: 1.7rem;
         font-weight: 400;
@@ -287,7 +287,7 @@ $see-more-width-tablet: 130px;
 
       &__subtitle {
         color: $grey-dark;
-        font-family: $family-sans-serif;
+        font-family: $font-family-regular;
         font-size: 12px;
       }
 
@@ -304,7 +304,7 @@ $see-more-width-tablet: 130px;
       display: flex;
 
       &__title {
-        font-family: $family-sans-serif;
+        font-family: $font-family-regular;
         font-size: 20px !important;
         display: flex;
         align-items: center;
@@ -378,7 +378,7 @@ $see-more-width-tablet: 130px;
       display: flex;
 
       &__title {
-        font-family: $family-sans-serif;
+        font-family: $font-family-regular;
         font-weight: 700;
         font-size: 16px;
         display: flex;
@@ -388,7 +388,7 @@ $see-more-width-tablet: 130px;
       }
 
       &__source {
-        font-family: $family-sans-serif;
+        font-family: $font-family-regular;
         font-size: 14px !important;
         line-height: 40px;
 
@@ -449,7 +449,7 @@ $see-more-width-tablet: 130px;
       }
 
       &__source {
-        font-family: $family-sans-serif;
+        font-family: $font-family-regular;
         font-size: 14px !important;
 
         a {
@@ -574,7 +574,7 @@ $see-more-width-tablet: 130px;
       width: 400px;
 
       h3 {
-        font-family: $family-sans-serif;
+        font-family: $font-family-regular;
         font-size: 24px !important;
         font-weight: 700;
         padding: 20px 0;
