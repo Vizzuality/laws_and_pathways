@@ -269,8 +269,20 @@
     .section-description {
       .tns-item {
         padding-right: 0 !important;
-        border-right: 2px solid $blue-ribbon;
-        height: 300px
+        position: relative;
+      }
+
+      .slider-divider {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 300px;
+        background-color: blue;
+        width: 2px;
+
+        @include mobile {
+          display: none;
+        }
       }
 
       .research-box {

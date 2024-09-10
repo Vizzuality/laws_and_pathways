@@ -32,7 +32,7 @@
           <div class="assessment-box__title"><span>Corporates <br />CP&nbsp;&&nbsp;MQ</span></div>
         <% end %>
         <%= link_to tpi_corporate_bond_issuers_path, class: 'assessment-box' do %>
-          <div class="assessment-box__title"><span>Corporates <br />CA100+</span></div>
+          <div class="assessment-box__title"><span>Bond <br />Issuers</span></div>
         <% end %>
         <%= link_to tpi_banks_path, class: 'assessment-box' do %>
           <div class="assessment-box__title"><span>Banks</span></div>
@@ -168,7 +168,7 @@
     <div class="section-description">
       <div class="slider-container" data-controller="tpi-home-slider" data-tpi-home-slider-tablet-items-value="2" data-tpi-home-slider-desktop-items-value="3">
         <div class="slider" data-tpi-home-slider-target="items">
-          <% @latest_researches.each do |research| %>
+          <% @latest_researches.each_with_index do |research, index| %>
             <div>
               <%= link_to tpi_publication_download_file_path(slug: research.slug), target: '_blank', class: 'research-box' do %>
                 <img src="<%= url_for(research.image) %>" />
@@ -186,6 +186,9 @@
                     <%= research.title %>
                   </div>
                 </div>
+              <% end %>
+              <% if index <= @latest_researches.length - 1 %>
+                <div class="slider-divider">&nbsp;</div>
               <% end %>
             </div>
           <% end %>
@@ -209,7 +212,7 @@
         <img src="<%= asset_path 'tpi/funders/tpi.png' %>" />
       </div>
       <br />
-      <div class="info">If you would like to discuss funding TPI Centre's work, please <a href="mailto:tpi@lse.ac.uk" class="footer-link">Contact Us</a></div>
+      <div class="info">If you would like to discuss funding TPI Centre's work, please <a href="mailto:tpi@lse.ac.uk" class="footer-link">contact us</a></div>
     </div>
   </div>
 </section>
