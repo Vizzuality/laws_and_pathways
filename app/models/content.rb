@@ -36,6 +36,8 @@ class Content < ApplicationRecord
       supporters_without_logo
       combined_aum
       methodology_publication_id
+      corporate_management_quality
+      corporate_carbon_performance
     ].include? code
   end
 
@@ -47,6 +49,8 @@ class Content < ApplicationRecord
       combined_aum
       methodology_description
       methodology_publication_id
+      corporate_management_quality
+      corporate_carbon_performance
     ].include? code
   end
 end
