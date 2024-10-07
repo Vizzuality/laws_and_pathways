@@ -246,23 +246,6 @@
     }
   }
 
-  &__case-studies-supporters {
-    .subtitle {
-      color: $blue-ribbon;
-    }
-
-    ul {
-      list-style: none;
-
-      li:before {
-        content: "\f00c"; /* FontAwesome Unicode */
-        font-family: FontAwesome;
-        display: inline-block;
-        margin-right: 10px;
-      }
-    }
-  }
-
   &__latest-research {
     border-bottom: 1px solid rgba(89, 91, 93, 0.2);
 
