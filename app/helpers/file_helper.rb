@@ -5,4 +5,8 @@ module FileHelper
 
     link_to "Uploaded file: #{file.blob.filename}", rails_blob_path(file), options.merge(target: '_blank')
   end
+
+  def format_of(file)
+    Mime::Type.lookup(file.content_type).symbol
+  end
 end
