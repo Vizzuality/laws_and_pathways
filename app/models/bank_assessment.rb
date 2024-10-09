@@ -11,7 +11,7 @@
 #
 class BankAssessment < ApplicationRecord
   belongs_to :bank
-  has_many :results, class_name: 'BankAssessmentResult'
+  has_many :results, class_name: 'BankAssessmentResult', dependent: :destroy
 
   validates_presence_of :assessment_date
   validates :assessment_date, date_after: Date.new(2010, 12, 31)
