@@ -2,7 +2,7 @@ module TPI
   class HomeController < TPIController
     def index
       @case_studies = CaseStudy.all
-      @sector_clusters = TPISectorCluster.all.group_by(&:slug).transform_values(&:first)
+      @sector_clusters = TPISectorCluster.includes(:sectors).group_by(&:slug).transform_values(&:first)
 
       page = TPIPage.find_by(slug: 'homepage-content')
       @home_content = {
@@ -29,7 +29,7 @@ module TPI
       }
       @latest_researches = Publication
         .published
-        .includes([:image_attachment, :author_image_attachment])
+        .includes([image_attachment: :blob, author_image_attachment: :blob, file_attachment: :blob])
         .order(publication_date: :desc)
         .take(3)
 
