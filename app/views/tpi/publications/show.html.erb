@@ -25,7 +25,7 @@
             <%= @publication.summary&.html_safe %>
           </div>
 
-          <%= link_to 'Download file', tpi_publication_download_file_path(slug: @publication.slug), target: '_blank', class: 'button is-primary' %>
+          <%= link_to 'Download file', tpi_publication_download_file_path(slug: @publication.slug, format: format_of(@publication.file)), target: '_blank', class: 'button is-primary' %>
         </div>
       </div>
     </div>
