@@ -1,6 +1,6 @@
 @import "../variables";
 
-$tape-color: rgba(25,25,25,0.1);
+$tape-color: rgba(25, 25, 25, 0.1);
 
 .sector-page {
   .dropdown-selector-sector-page-wrapper {
@@ -26,7 +26,7 @@ $tape-color: rgba(25,25,25,0.1);
     }
 
     @include until($desktop) {
-      padding: 0 0.75rem;
+      padding-inline: 0 0.75rem;
       font-size: $size-7;
       height: 60px;
       font-family: $font-family-regular;
@@ -60,35 +60,52 @@ $tape-color: rgba(25,25,25,0.1);
     margin-top: 50px;
 
     .sector-level {
-      display: flex;
-      flex-direction: column;
-
-      padding-bottom: 0;
+      &.column {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        padding-bottom: 0;
+      }
 
       &:not(:last-child) {
-        border-right: 5px dotted $tape-color;
+        border-right: 2px dashed $tape-color;
       }
 
       &__title {
         position: relative;
-        height: 60px;
-        margin-bottom: 50px;
+        margin-bottom: 20px;
+        h5 {
+          font-size: 16px;
+          line-height: 20px;
+          font-weight: 700;
+          margin-bottom: 6px;
+        }
+        p {
+          font-size: 12px;
+          line-height: 18px;
+          color: $grey-dark;
+        }
       }
 
       &__companies {
-        flex: 1;
         line-height: 1.25;
+        // height: 150px;
 
-        padding: 12px 24px;
         color: white;
 
-        a {
-          color: white;
+        display: flex;
+        align-items: end;
+
+        > div:first-child {
+          width: 100%;
+          text-align: center;
+          padding-top: 20px;
+          font-size: 32px;
+          font-weight: 700;
+          cursor: pointer;
         }
 
-        li {
-          padding: 3px 0;
-        }
+
 
         .mq-level-trend {
           @include mq-level-trend(20px);
@@ -129,14 +146,14 @@ $tape-color: rgba(25,25,25,0.1);
     justify-content: space-between;
     margin-bottom: 15px;
 
-    >p {
+    > p {
       display: none;
     }
 
     @include until($desktop) {
       display: block;
 
-      >p {
+      > p {
         display: block;
         margin-top: 15px;
         font-size: $size-6;
@@ -147,7 +164,7 @@ $tape-color: rgba(25,25,25,0.1);
         display: block;
         color: $grey-dark;
         font-size: $size-5;
-        margin-top:  20px;
+        margin-top: 20px;
         max-width: 280px;
 
         #show-by-dropdown-placeholder {
@@ -167,5 +184,57 @@ $tape-color: rgba(25,25,25,0.1);
     #show-by-dropdown-placeholder {
       margin-left: 10px;
     }
+  }
+}
+
+.sector-level__popover {
+  z-index: 10;
+  background-color: $white;
+  border: 1.5px solid $black;
+  padding: 20px;
+  font-size: 14px;
+  width: 430px;
+  max-width: 430px;
+  min-width: 400px;
+  color: black;
+
+  h4 {
+    color: $blue-dark;
+    font-size: 12px !important;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+  p {
+    font-size: 12px;
+    line-height: 18px;
+    color: $grey-dark;
+  }
+  &_header {
+    font-size: 20px !important;
+    line-height: 24px;
+    font-weight: 700;
+    margin-block: 8px 20px;
+  }
+  &_text {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-block: 12px;
+    font-size: 16px;
+    max-height: 200px;
+    overflow-y: auto;
+    gap: 12px 20px;
+    padding-left: 2rem;
+  }
+  &_list_item {
+    a {
+      text-decoration: underline;
+      color: black;
+    }
+  }
+  button {
+    float: right;
+    margin-top: 20px;
+    height: 40px !important;
+    width: 62px !important;
   }
 }

@@ -7,6 +7,14 @@ $cell-height: 80px;
 $cell-height-banks: 100px;
 $legend-image-width: 60px;
 
+.mq-sector-pie-chart-title {
+  display: flex;
+  gap: 8px;
+  color: $blue-darker;
+  margin-top: 28px;
+  line-height: 20px;
+}
+
 .bubble-chart__container {
   width: 100%;
   padding: 50px 0;
@@ -63,10 +71,58 @@ $legend-image-width: 60px;
 
 .bubble-chart_circle {
   circle:hover {
-    stroke-width: 14;
-    stroke: $black;
+    stroke-width: 2;
+    stroke: #FFDD49;
   }
 }
+.bubble-chart_tooltip {
+  z-index: 10;
+  background-color: $white;
+  border: 1.5px solid $black;
+  padding: 20px;
+  font-size: 14px;
+  width: max-content;
+  max-width: 430px;
+  min-width: 400px;
+
+  h4 {
+    color: $blue-dark;
+    font-size: 12px !important;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+  &_header {
+    font-size: 20px !important;
+    line-height: 24px;
+    font-weight: 700;
+    margin-block: 8px 20px;
+  }
+  &_text {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-block: 12px;
+    font-size: 16px;
+    max-height: 200px;
+    overflow-y: auto;
+    gap: 12px 20px;
+
+    .bubble-chart_tooltip_list_item {
+      margin-left: 20px;
+      a {
+        text-decoration: underline;
+        color: black;
+      }
+    }
+
+  }
+  button {
+    float: right;
+    margin-top: 20px;
+    height: 40px !important;
+    width: 62px !important;
+  }
+}
+
 
 .bubble-tip {
   font-size: 14px;
@@ -115,6 +171,10 @@ $legend-image-width: 60px;
   }
 }
 
+.bubble-chart_circle {
+  cursor: pointer;
+}
+
 .bubble-chart__title {
   color: $grey-dark;
   font-size: $size-6;
@@ -139,14 +199,15 @@ $legend-image-width: 60px;
 .bubble-chart__legend-titles-container {
   position: absolute;
   color: $dark;
-  left: calc(#{$legend-image-width} + 10px);
-  top: -10px;
+  left: calc(#{$legend-image-width} + 6px);
+  top: -7.5px;
 }
 
 .bubble-chart__legend-title {
   font-size: 12px;
+  line-height: 15px;
   font-family: $font-family-regular;
-  margin: 2px 0;
+  // margin: 2px 0;
   display: block;
 }
 

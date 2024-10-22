@@ -5,7 +5,11 @@ $tpi-level-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB #9747FF;
 
 .mobile_bubble-chart__container {
   margin: 0 -0.75rem;
-  padding: 50px 0 0;
+  padding: 0;
+  
+  .mq-sector-pie-chart-title {
+    margin: 16px 12px 20px 12px;
+  }
 
   .accordions-list {
     color: $white;
@@ -72,10 +76,11 @@ $tpi-level-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB #9747FF;
   .go-to-button__container {
     padding-top: 1.5rem;
     text-align: center;
-    width: 100%;
-
+    margin-inline: 12px;
+    
     a {
       border-width: 2px;
+      width: 100%;
       font-size: $size-5;
       border-radius: 0;
       height: 30px;
