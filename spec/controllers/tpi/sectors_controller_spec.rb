@@ -254,4 +254,28 @@ RSpec.describe TPI::SectorsController, type: :controller do
       end
     end
   end
+
+  describe 'POST send_download_file_info_email' do
+    subject { post :send_download_file_info_email, params: data }
+    let(:data) do
+      {
+        email: 'test@test.test',
+        job_title: 'job_title',
+        forename: 'forename',
+        surname: 'surname',
+        location: 'location',
+        organisation: 'organisation',
+        purposes: %w[purposes1 purposes2]
+      }
+    end
+
+    it 'returns ok status' do
+      subject
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'sends email' do
+      expect { subject }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
+  end
 end

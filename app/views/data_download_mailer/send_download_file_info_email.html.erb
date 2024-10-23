@@ -1,0 +1,15 @@
+<h1>Following user downloaded data from TPI website</h1>
+
+<p><strong>Email:</strong> <%= @data[:email] %></p>
+<p><strong>Job Title:</strong> <%= @data[:job_title] %></p>
+<p><strong>Forename:</strong> <%= @data[:forename] %></p>
+<p><strong>Surname:</strong> <%= @data[:surname] %></p>
+<p><strong>Location:</strong> <%= @data[:location] %></p>
+<p><strong>Organisation:</strong> <%= @data[:organisation] %></p>
+
+<h2>Purposes</h2>
+<ul>
+  <% Array.wrap(@data[:purposes]).each do |purpose| %>
+    <li><%= purpose %></li>
+  <% end %>
+</ul>

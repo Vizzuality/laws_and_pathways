@@ -78,6 +78,11 @@ module TPI
       render json: data.chart_json
     end
 
+    def send_download_file_info_email
+      DataDownloadMailer.send_download_file_info_email(permitted_email_params).deliver_now
+      head :ok
+    end
+
     def user_download_all
       send_user_download_file(
         Company.published.select(:id).where(sector_id: @sectors.pluck(:id)),
@@ -162,6 +167,10 @@ module TPI
       else
         Company.published.active
       end
+    end
+
+    def permitted_email_params
+      params.permit(:email, :job_title, :forename, :surname, :location, :organisation, purposes: [])
     end
   end
 end
