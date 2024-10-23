@@ -4,6 +4,7 @@ import Select, { components } from 'react-select';
 
 import chevronDownIconBlack from 'images/icon_chevron_dark/chevron_down_black-1.svg';
 import chevronUpIconBlack from 'images/icon_chevron_dark/chevron-up.svg';
+import hoverIcon from 'images/icons/hover-cursor.svg';
 
 const LEVELS_SUBTITLES = {
   0: 'Unaware',
@@ -75,6 +76,12 @@ const CompaniesAccordion = ({ levels, by_sector }) => {
 
   return (
     <div className="mobile_bubble-chart__container is-hidden-desktop">
+      <div className="mq-sector-pie-chart-title">
+        <img src={hoverIcon} alt="Hover icon" />
+        <p>
+          <span>Click to see the detailed list of companies for each sector.</span>
+        </p>
+      </div>
       {by_sector && (
         <Select
           options={selectOptions}

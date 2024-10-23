@@ -1,60 +1,130 @@
-@import '../variables';
+@import "../variables";
 
-$tpi-pie-chart-colors: #86A9F9 #5587F7 #2465F5 #0A4BDC #083AAB #9747FF;
+$tpi-pie-chart-colors: #86a9f9 #5587f7 #2465f5 #0a4bdc #083aab #9747ff;
 
-.chart--mq-sector-pie-chart {
-  margin: 0 auto;
-  min-height: 400px;
-  display: flex;
-  align-items: center;
+.mq-sector-pie-chart {
+  margin-top: 16px;
+  margin-bottom: 60px;
+  .mq-sector-pie-chart-title {
+    display: flex;
+    gap: 8px;
+    color: $blue-darker;
 
-  // remove overflow hidden from the chart
-  div[data-highcharts-chart], .highcharts-container, svg {
-    overflow: unset !important;
+    .--mobile {
+      display: none;
+      @include until($desktop) {
+        display: inline-block;
+      }
+    }
+    .--desktop {
+      display: inline-block;
+      @include until($desktop) {
+        display: none;
+      }
+    }
 
+  }
+
+  .chart--mq-sector-pie-chart {
+    min-height: 320px;
+    width: 850px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
     @include until($desktop) {
-      tspan {
-        &:not(.highcharts-strong) {
-          font-size: $size-7;
-          font-family: $font-family-bold;
+      gap: 32px;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .highcharts-container {
+      width: 320px;
+      @include until($desktop) {
+        width: 290px;
+      }
+    }
+    // remove overflow hidden from the chart
+    div[data-highcharts-chart],
+    .highcharts-container,
+    svg {
+      overflow: unset !important;
+
+      @include until($desktop) {
+        tspan {
+          &:not(.highcharts-strong) {
+            font-size: $size-7;
+            font-family: $font-family-bold;
+          }
         }
       }
     }
-  }
 
-  @for $i from 1 through length($tpi-pie-chart-colors) {
-    $color: nth($tpi-pie-chart-colors, $i);
-    .highcharts-color-#{$i - 1} {
-      fill: $color;
-      stroke: $color;
-    }
-  }
-
-  .highcharts-data-label {
-    font-size: 1rem;
-    font-family: $font-family-bold;
-    font-weight: unset;
-  }
-
-  .highcharts-data-label-connector {
-    stroke: $black;
-    fill: none;
-  }
-
-  .chart-title {
-    font-family: $font-family-regular;
-    font-size: 16px;
-
-    .companies-size {
-      font-size: 36px;
-      font-family: $font-family-bold;
+    @for $i from 1 through length($tpi-pie-chart-colors) {
+      $color: nth($tpi-pie-chart-colors, $i);
+      .highcharts-color-#{$i - 1} {
+        fill: $color;
+        stroke: $color;
+      }
     }
 
-    @include until($desktop) {
-      font-size: 14px;
-
+    .chart--mq-sector-pie-chart-title {
+      font-family: $font-family-regular;
+      font-size: 16px;
+      text-align: center;
+      transform: translateY(-16px);
+      
       .companies-size {
-        font-size: 24px;
+        font-size: 36px;
+        line-height: 40px;
+        font-family: $font-family-bold;
+      }
+      &.--selected {
+        transform: translateY(-35%);
+      }
+
+      @include until($desktop) {
+        font-size: 14px;
+
+        .companies-size {
+          font-size: 24px;
+        }
+      }
+    }
+
+    .chart-legends {
+      display: grid;
+      width: 372px;
+      grid-template-rows: repeat(3, min-content);
+      grid-auto-flow: column;
+      column-gap: 80px;
+      row-gap: 20px;
+      @include until($desktop) {
+        column-gap: 32px;
+        width: auto;
+      }
+      .chart-legend-item {
+        display: flex;
+        gap: 8px;
+        .chart-legend-item__name {
+          .chart-legend-item__color {
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+          }
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 16px;
+          font-family: $font-family-bold;
+        }
+        .chart-legend-item__value {
+          margin-left: 20px;
+          margin-top: 4px;
+          font-size: 12px;
+          font-family: $font-family-regular;
+          min-width: max-content;
+        }
       }
     }
   }

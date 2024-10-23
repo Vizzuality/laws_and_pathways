@@ -43,7 +43,20 @@
       margin-top: 30px;
     }
 
+    h3.title-blue {
+      color: $blue;
+      font-weight: bold;
+      line-height: 40px;
+      margin-bottom: 80px;
+    }
+
     @include until($desktop) {
+      h3.title-blue {
+        font-size: $size-4 !important;
+        line-height: 28px;
+        margin-bottom: 80px;
+      }
+
       h4 {
         font-size: $size-5 !important;
       }

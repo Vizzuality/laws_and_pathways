@@ -67,30 +67,10 @@
 
     <%= react_component("charts/bubble/CompaniesAccordion", { levels: @companies_by_levels, by_sector: false }) %>
 
-    <div class="sector-level-overview is-hidden-touch columns">
-      <% @companies_by_levels.each do |level, companies| -%>
-        <div class="sector-level column">
-          <div class="sector-level__title">
-            <h5>Level <%= level.to_i === 5 ? "#{level} [BETA]" : level %></h5>
-            <p><%= t("tpi.company.level_description_short.#{level.to_i}") %></p>
-          </div>
-          <div class="sector-level__companies level<%= level.to_i %>">
-            <ul>
-              <% companies.each do |company| %>
-                <li>
-                  <%= link_to company[:name], tpi_company_path(company[:id]) %>
-                  <%= render 'tpi/companies/mq_level_trend', level: company[:level], status: company[:status] %>
-                </li>
-              <% end %>
+    <h4>Number and Detailed Companies Lists by Management Quality </h4>
 
-              <% unless companies.any? %>
-                <li>No companies</li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
-      <% end %>
-    </div>
+    <%= react_component('charts/mq-sector-bar', { data:  @companies_by_levels, sector: @sector.name }) %>
+
   </section>
 
   <% if any_cp_assessment? %>
