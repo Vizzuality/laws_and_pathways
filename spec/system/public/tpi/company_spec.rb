@@ -10,12 +10,12 @@ describe 'Company Page', type: 'system', site: 'tpi' do
   end
 
   it 'does not show BETA scores by default' do
-    expect(page).not_to have_text('Level 5 [BETA]')
+    expect(page).not_to have_text('Level 5')
   end
 
   it 'allows to show BETA scores' do
     with_mq_beta_scores do
-      expect(page).to have_text('Level 5 [BETA]')
+      expect(page).to have_text('Level 5')
     end
   end
 

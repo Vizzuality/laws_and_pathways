@@ -32,14 +32,14 @@ module CapybaraHelpers
 
   def with_mq_beta_scores
     within '.mq-beta-scores' do
-      click_on 'BETA'
+      click_on 'Current V5.0'
     end
     within '.modal-content' do
       click_on 'Proceed'
     end
     yield
     within '.mq-beta-scores' do
-      click_on 'Current'
+      click_on 'V4.0'
     end
   end
 
