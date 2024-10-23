@@ -11,22 +11,14 @@
     <div class="container is-hidden-touch">
       <div class="mq-beta-scores">
         <%= render 'tpi/shared/mq_beta_scores', has_data: @company.beta_mq_assessments? %>
-        <div>
-          <a href="#management-quality" class="link with-icon is-pulled-left">
-            <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
-            Go to Management Quality
-          </a>
-          <% if @company_presenter.cp_assessments.any? %>
-            <a href="#carbon-performance" class="link with-icon is-pulled-left">
-              <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
-              Go to Carbon Performance
-            </a>
-          <% end %>
-        </div>
         <div class="mq-beta-scores__download-button">
+          <%= link_to user_download_methodology_tpi_sectors_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
+            <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
+            Download Methodology
+          <% end %>
           <%= link_to user_download_all_tpi_sectors_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
             <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
-            Download data
+            Download CP & MQ Data
           <% end %>
         </div>
       </div>
@@ -34,16 +26,6 @@
     <div class="container is-hidden-desktop">
       <div class="mq-beta-scores is-hidden-desktop">
         <%= render 'tpi/shared/mq_beta_scores', has_data: @company.beta_mq_assessments? %>
-        <div>
-          <a href="#management-quality" class="link with-icon is-pulled-left">
-            Management Quality
-          </a>
-          <% if @company_presenter.cp_assessments.any? %>
-            <a href="#carbon-performance" class="link with-icon is-pulled-left">
-              Carbon Performance
-            </a>
-          <% end %>
-        </div>
       </div>
     </div>
   </div>
@@ -237,6 +219,7 @@
       </div>
     </section>
   <% end %>
+
   <% if @company.latest_information.present? %>
     <%= react_component("LatestInformation", { name: @company.name, latestInformation: @company.latest_information }) %>
   <% end %>

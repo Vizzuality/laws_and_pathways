@@ -92,6 +92,13 @@ module TPI
       )
     end
 
+    def user_download_methodology
+      user_guide = File.binread(Rails.root.join('public', 'tpi', 'export_support', 'User guide TPI files.xlsx'))
+      render zip: {
+        'User guide TPI files.xlsx' => user_guide
+      }, filename: "TPI Methodology - #{Time.now.strftime('%d%m%Y')}"
+    end
+
     private
 
     def any_cp_assessment?

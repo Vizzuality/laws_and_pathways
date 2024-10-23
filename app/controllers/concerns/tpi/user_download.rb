@@ -26,14 +26,12 @@ module TPI
       cp_assessments_csv = CSVExport::User::CompanyCPAssessments.new(cp_assessments).call
       cp_assessments_regional_csv = CSVExport::User::CompanyCPAssessmentsRegional.new(cp_assessments).call
       sector_benchmarks_csv = CSVExport::User::CPBenchmarks.new(cp_benchmarks).call
-      user_guide = File.binread(Rails.root.join('public', 'tpi', 'export_support', 'User guide TPI files.xlsx'))
 
       files = (mq_assessments_files || {}).merge(
         'Company_Latest_Assessments.csv' => latest_cp_assessments_csv,
         "CP_Assessments_#{timestamp}.csv" => cp_assessments_csv,
         "CP_Assessments_Regional_#{timestamp}.csv" => cp_assessments_regional_csv,
-        "Sector_Benchmarks_#{timestamp}.csv" => sector_benchmarks_csv,
-        'User guide TPI files.xlsx' => user_guide
+        "Sector_Benchmarks_#{timestamp}.csv" => sector_benchmarks_csv
       )
       if ENV['MQ_BETA_ENABLED'].to_s == 'true'
         files = files.merge 'Company_Latest_Assessments_5.0.csv' => latest_cp_assessments_beta_csv
