@@ -2,5 +2,5 @@
 Mailjet.configure do |config|
   config.api_key = ENV['SMTP_API_KEY']
   config.secret_key = ENV['SMTP_API_SECRET']
-  config.default_from = ENV['SMTP_DEFAULT_FROM']
+  config.default_from = ENV.fetch('SMTP_DEFAULT_FROM', 'from@example.com')
 end

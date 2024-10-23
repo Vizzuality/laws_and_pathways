@@ -10,7 +10,7 @@ RSpec.describe DataDownloadMailer, type: :mailer do
         surname: 'surname',
         location: 'location',
         organisation: 'organisation',
-        purposes: ['purpose1', 'purpose2']
+        purposes: %w[purpose1 purpose2]
       }
     }
     let(:mail) { DataDownloadMailer.send_download_file_info_email data }
@@ -18,7 +18,7 @@ RSpec.describe DataDownloadMailer, type: :mailer do
     it 'renders the headers' do
       expect(mail.subject).to eq('TPI data has been downloaded')
       expect(mail.to).to eq(['martintomas.it@gmail.com'])
-      expect(mail.from).to eq([ENV['SMTP_DEFAULT_FROM']].reject(&:blank?))
+      expect(mail.from).to eq([ENV.fetch('SMTP_DEFAULT_FROM', 'from@example.com')])
 
       expect(mail.body.encoded).to include('test@test.test')
       expect(mail.body.encoded).to include('job_title')
