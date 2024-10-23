@@ -22,7 +22,7 @@ module MQ
 
     LEVELS = %w[0 1 2 3 4 4STAR 5 5STAR].freeze
     BETA_METHODOLOGIES = { # taken into account only when beta is enabled
-      5 => {levels: %w[5], highlight_questions: %w[18]}
+      5 => {levels: %w[5], highlight_questions: %w[]}
     }.freeze
     BETA_LEVELS = BETA_METHODOLOGIES.map { |_k, v| v[:levels] }.flatten.freeze
 

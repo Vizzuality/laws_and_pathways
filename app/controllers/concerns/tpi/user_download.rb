@@ -12,10 +12,8 @@ module TPI
         .includes(sector: [:cp_units])
 
       mq_assessments_files = mq_assessments_by_methodology.map do |methodology, assessments|
-        is_beta_methodology = MQ::Assessment::BETA_METHODOLOGIES.include? methodology
-        name = is_beta_methodology ? "#{methodology}_BETA_#{timestamp}" : "#{methodology}_#{timestamp}"
         {
-          "MQ_Assessments_Methodology_#{name}.csv" => CSVExport::User::MQAssessments.new(assessments).call
+          "MQ_Assessments_Methodology_#{methodology}_#{timestamp}.csv" => CSVExport::User::MQAssessments.new(assessments).call
         }
       end.reduce(&:merge)
 
@@ -38,7 +36,7 @@ module TPI
         'User guide TPI files.xlsx' => user_guide
       )
       if ENV['MQ_BETA_ENABLED'].to_s == 'true'
-        files = files.merge 'Company_Latest_Assessments_BETA_5.0.csv' => latest_cp_assessments_beta_csv
+        files = files.merge 'Company_Latest_Assessments_5.0.csv' => latest_cp_assessments_beta_csv
       end
       render zip: files.compact, filename: "#{filename} - #{timestamp}"
     end

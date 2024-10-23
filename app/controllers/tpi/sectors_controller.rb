@@ -2,6 +2,7 @@ module TPI
   class SectorsController < TPIController
     include UserDownload
 
+    before_action :enable_beta_mq_assessments
     before_action :fetch_companies, only: [:show, :index]
     before_action :fetch_sectors, only: [:show, :index, :user_download_all]
     before_action :fetch_sector, only: [:show, :user_download]

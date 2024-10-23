@@ -2,6 +2,7 @@ module TPI
   class CompaniesController < TPIController
     include UserDownload
 
+    before_action :enable_beta_mq_assessments
     before_action :fetch_company
     before_action :redirect_if_numeric_or_historic_slug, only: [:show]
     before_action :fetch_cp_assessment, only: [:show, :cp_assessment, :emissions_chart_data]
