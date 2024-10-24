@@ -1,4 +1,4 @@
-<h1>Following user downloaded data from TPI website</h1>
+<h2>Following user downloaded data from TPI website</h2>
 
 <p><strong>Email:</strong> <%= @data[:email] %></p>
 <p><strong>Job Title:</strong> <%= @data[:job_title] %></p>
@@ -7,7 +7,7 @@
 <p><strong>Location:</strong> <%= @data[:location] %></p>
 <p><strong>Organisation:</strong> <%= @data[:organisation] %></p>
 
-<h2>Purposes</h2>
+<h3>Purposes</h3>
 <ul>
   <% Array.wrap(@data[:purposes]).each do |purpose| %>
     <li><%= purpose %></li>

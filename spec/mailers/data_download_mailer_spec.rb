@@ -17,7 +17,7 @@ RSpec.describe DataDownloadMailer, type: :mailer do
 
     it 'renders the headers' do
       expect(mail.subject).to eq('TPI data has been downloaded')
-      expect(mail.to).to eq(['martintomas.it@gmail.com'])
+      expect(mail.to).to eq(['tpi@lse.ac.uk'])
       expect(mail.from).to eq([ENV.fetch('SMTP_DEFAULT_FROM', 'from@example.com')])
 
       expect(mail.body.encoded).to include('test@test.test')
