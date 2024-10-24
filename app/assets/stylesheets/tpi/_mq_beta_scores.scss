@@ -64,6 +64,9 @@
   &__download-button {
     flex-grow: 4;
     text-align: right;
+    display: flex;
+    gap: 5px;
+    justify-content: end;
 
     .button {
       background-color: $blue;

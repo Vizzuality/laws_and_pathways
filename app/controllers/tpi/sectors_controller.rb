@@ -2,6 +2,7 @@ module TPI
   class SectorsController < TPIController
     include UserDownload
 
+    before_action :enable_beta_mq_assessments
     before_action :fetch_companies, only: [:show, :index]
     before_action :fetch_sectors, only: [:show, :index, :user_download_all]
     before_action :fetch_sector, only: [:show, :user_download]
@@ -77,6 +78,11 @@ module TPI
       render json: data.chart_json
     end
 
+    def send_download_file_info_email
+      DataDownloadMailer.send_download_file_info_email(permitted_email_params).deliver_now
+      head :ok
+    end
+
     def user_download_all
       send_user_download_file(
         Company.published.select(:id).where(sector_id: @sectors.pluck(:id)),
@@ -89,6 +95,13 @@ module TPI
         @sector.companies.published.select(:id),
         "TPI sector data - #{@sector.name}"
       )
+    end
+
+    def user_download_methodology
+      user_guide = File.binread(Rails.root.join('public', 'tpi', 'export_support', 'User guide TPI files.xlsx'))
+      render zip: {
+        'User guide TPI files.xlsx' => user_guide
+      }, filename: "TPI Methodology - #{Time.now.strftime('%d%m%Y')}"
     end
 
     private
@@ -154,6 +167,10 @@ module TPI
       else
         Company.published.active
       end
+    end
+
+    def permitted_email_params
+      params.permit(:email, :job_title, :forename, :surname, :location, :organisation, purposes: [])
     end
   end
 end

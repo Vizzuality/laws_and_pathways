@@ -155,10 +155,9 @@ RSpec.describe TPI::SectorsController, type: :controller do
         expect(entries_names).to include("CP_Assessments_#{timestamp}.csv")
         expect(entries_names).to include("CP_Assessments_Regional_#{timestamp}.csv")
         expect(entries_names).to include('Company_Latest_Assessments.csv')
-        expect(entries_names).to include('Company_Latest_Assessments_BETA_5.0.csv')
+        expect(entries_names).to include('Company_Latest_Assessments_5.0.csv')
         expect(entries_names).to include("MQ_Assessments_Methodology_1_#{timestamp}.csv")
-        expect(entries_names).to include("MQ_Assessments_Methodology_5_BETA_#{timestamp}.csv")
-        expect(entries_names).to include('User guide TPI files.xlsx')
+        expect(entries_names).to include("MQ_Assessments_Methodology_5_#{timestamp}.csv")
 
         expect(entries_csv_json["Sector_Benchmarks_#{timestamp}.csv"])
           .to match_snapshot('tpi_single_sector_user_download_zip_sector_benchmarks_csv')
@@ -168,11 +167,11 @@ RSpec.describe TPI::SectorsController, type: :controller do
           .to match_snapshot('tpi_single_sector_user_download_cp_assessments_regional_csv')
         expect(entries_csv_json['Company_Latest_Assessments.csv'])
           .to match_snapshot('tpi_single_sector_user_company_latest_assessments_csv')
-        expect(entries_csv_json['Company_Latest_Assessments_BETA_5.0.csv'])
+        expect(entries_csv_json['Company_Latest_Assessments_5.0.csv'])
           .to match_snapshot('tpi_single_sector_user_company_latest_assessments_beta_5.0_csv')
         expect(entries_csv_json["MQ_Assessments_Methodology_1_#{timestamp}.csv"])
           .to match_snapshot('tpi_single_sector_user_mq_assessments_methodology_1_csv')
-        expect(entries_csv_json["MQ_Assessments_Methodology_5_BETA_#{timestamp}.csv"])
+        expect(entries_csv_json["MQ_Assessments_Methodology_5_#{timestamp}.csv"])
           .to match_snapshot('tpi_single_sector_user_mq_assessments_methodology_5_beta_csv')
       end
     end
@@ -207,10 +206,9 @@ RSpec.describe TPI::SectorsController, type: :controller do
         expect(entries_names).to include("Sector_Benchmarks_#{timestamp}.csv")
         expect(entries_names).to include("CP_Assessments_#{timestamp}.csv")
         expect(entries_names).to include('Company_Latest_Assessments.csv')
-        expect(entries_names).to include('Company_Latest_Assessments_BETA_5.0.csv')
+        expect(entries_names).to include('Company_Latest_Assessments_5.0.csv')
         expect(entries_names).to include("MQ_Assessments_Methodology_1_#{timestamp}.csv")
-        expect(entries_names).to include("MQ_Assessments_Methodology_5_BETA_#{timestamp}.csv")
-        expect(entries_names).to include('User guide TPI files.xlsx')
+        expect(entries_names).to include("MQ_Assessments_Methodology_5_#{timestamp}.csv")
 
         expect(entries_csv_json["Sector_Benchmarks_#{timestamp}.csv"])
           .to match_snapshot('tpi_all_sectors_user_download_zip_sector_benchmarks_csv')
@@ -218,13 +216,66 @@ RSpec.describe TPI::SectorsController, type: :controller do
           .to match_snapshot('tpi_all_sectors_user_download_cp_assessments_csv')
         expect(entries_csv_json['Company_Latest_Assessments.csv'])
           .to match_snapshot('tpi_all_sectors_user_company_latest_assessments_csv')
-        expect(entries_csv_json['Company_Latest_Assessments_BETA_5.0.csv'])
+        expect(entries_csv_json['Company_Latest_Assessments_5.0.csv'])
           .to match_snapshot('tpi_all_sectors_user_company_latest_assessments_beta_5.0_csv')
         expect(entries_csv_json["MQ_Assessments_Methodology_1_#{timestamp}.csv"])
           .to match_snapshot('tpi_all_sectors_user_mq_assessments_methodology_1_csv')
-        expect(entries_csv_json["MQ_Assessments_Methodology_5_BETA_#{timestamp}.csv"])
+        expect(entries_csv_json["MQ_Assessments_Methodology_5_#{timestamp}.csv"])
           .to match_snapshot('tpi_all_sectors_user_mq_assessments_methodology_5_beta_csv')
       end
+    end
+  end
+
+  describe 'GET user download methodology' do
+    subject { get :user_download_methodology }
+
+    it { is_expected.to be_successful }
+
+    it 'returns zip file' do
+      subject
+      expect(response.content_type).to eq('application/zip')
+    end
+
+    describe 'zip file' do
+      it 'has proper content' do
+        subject
+
+        entries_names = []
+        entries_csv_json = {}
+        zip_io = StringIO.new(response.body)
+        Zip::File.open_buffer(zip_io) do |zipfile|
+          zipfile.each do |entry|
+            entries_names << entry.name
+            entries_csv_json[entry.name] = parse_csv_to_json(entry.get_input_stream.read) if entry.name.ends_with?('.csv')
+          end
+        end
+
+        expect(entries_names).to include('User guide TPI files.xlsx')
+      end
+    end
+  end
+
+  describe 'POST send_download_file_info_email' do
+    subject { post :send_download_file_info_email, params: data }
+    let(:data) do
+      {
+        email: 'test@test.test',
+        job_title: 'job_title',
+        forename: 'forename',
+        surname: 'surname',
+        location: 'location',
+        organisation: 'organisation',
+        purposes: %w[purposes1 purposes2]
+      }
+    end
+
+    it 'returns ok status' do
+      subject
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'sends email' do
+      expect { subject }.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
   end
 end
