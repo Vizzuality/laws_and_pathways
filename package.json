@@ -38,6 +38,7 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "bulma": "^0.8.0",
     "classnames": "^2.2.6",
+    "country-list": "^2.3.0",
     "d3-array": "^2.5.0",
     "d3-force": "^2.0.1",
     "d3-format": "^1.4.3",

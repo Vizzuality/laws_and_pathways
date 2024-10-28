@@ -1,9 +1,9 @@
 @import "colors";
 @import "typography";
 
-$tape-height: 8px;
+$tape-height: 1px;
 $tape-color: rgba(25, 25, 25, 0.1);
-$cell-height: 80px;
+$cell-height: 60px;
 $cell-height-banks: 100px;
 $legend-image-width: 60px;
 
@@ -13,18 +13,18 @@ $legend-image-width: 60px;
   color: $blue-darker;
   margin-top: 28px;
   line-height: 20px;
+  margin-bottom: 20px;
 }
 
 .bubble-chart__container {
   width: 100%;
-  padding: 50px 0;
   /* CSS GRID */
   display: grid;
   grid-row-gap: 4px;
   align-items: center;
 
   &--sectors {
-    grid-template-rows: 150px auto;
+    grid-template-rows: 144px auto;
 
     .last {
       border-right: none;
@@ -46,14 +46,13 @@ $legend-image-width: 60px;
   height: $cell-height;
   display: flex;
   align-items: center;
-  border-right: calc(#{$tape-height / 2}) dotted $tape-color;
 
   & > *:first-child {
     margin: auto;
     z-index: 1;
   }
 
-  &::before {
+  &::after {
     background-color: $tape-color;
     content: "";
     position: absolute;
@@ -72,13 +71,13 @@ $legend-image-width: 60px;
 .bubble-chart_circle {
   circle:hover {
     stroke-width: 2;
-    stroke: #FFDD49;
+    stroke: $yellow;
   }
 }
 .bubble-chart_tooltip {
   z-index: 10;
   background-color: $white;
-  border: 1.5px solid $black;
+  border: 1.25px solid $black;
   padding: 20px;
   font-size: 14px;
   width: max-content;
@@ -98,15 +97,15 @@ $legend-image-width: 60px;
     margin-block: 8px 20px;
   }
   &_text {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    columns: 2;
     margin-block: 12px;
     font-size: 16px;
     max-height: 200px;
     overflow-y: auto;
-    gap: 12px 20px;
-
+    column-gap: 40px;
+  
     .bubble-chart_tooltip_list_item {
+      margin-top: 12px;
       margin-left: 20px;
       a {
         text-decoration: underline;
@@ -115,11 +114,12 @@ $legend-image-width: 60px;
     }
 
   }
-  button {
+  .button.is-secondary.is-small {
     float: right;
     margin-top: 20px;
     height: 40px !important;
     width: 62px !important;
+    min-width: auto;
   }
 }
 
@@ -214,14 +214,15 @@ $legend-image-width: 60px;
 .bubble-chart__level {
   border-right: calc(#{$tape-height / 2}) dotted $tape-color;
   position: relative;
-  height: 100%;
-  padding-left: 20px;
+  height: 20%;
+
 }
 
 .bubble-chart__container--sectors {
   .bubble-chart__level-container {
     position: absolute;
     top: 20%;
+    padding-inline: 16px 10px;
   }
 
   .bubble-chart__level-title {
@@ -259,5 +260,5 @@ $legend-image-width: 60px;
 .bubble-chart__row-link {
   color: $blue-dark;
   text-align: right;
-  padding-right: 50px;
+  padding-right: 16px;
 }

@@ -3,20 +3,26 @@
   flex-wrap: wrap;
   flex-direction: row;
 
-  @include until($desktop) {
-    flex-direction: column;
-  }
-
   &__container {
     display: flex;
-    border: 1px solid $white;
     padding: 4px 4px 4px 14px;
+    flex-wrap: wrap;
+    @include until($desktop) {
+      padding: 0;
+      width: 100%;
+      margin-inline: 12px;
+    }
   }
 
   &__text {
     color: $white;
     line-height: 40px;
     margin-right: 10px;
+    @include until($desktop) {
+      flex-direction: column;
+      width: 100%;
+      // padding-inline: 12px;
+    }
   }
 
   &__divider {
@@ -27,13 +33,34 @@
     }
   }
 
+  a {
+    padding: 10px 12px;
+    &.button:not(.active):hover {
+      text-decoration: underline;
+      background-color: transparent;
+    }
+    &:first-of-type {
+      order: 3;
+      margin-right: 12px;
+    }
+  }
+
 
   .button {
-    background-color: rgba($white ,0.2);
-
+    @include until($desktop) {
+      width: 50%;
+      height: 40px;
+      margin-right: 0;
+    }
     &.active {
-      background-color: $white;
-      color: $blue-dark;
+      background-color: $blue-dark;
+      transform: translateY(1px);
+      color: $white;
+      @include until($desktop) {
+        background-color: $white;
+        color: $blue;
+        border-color: transparent;
+      }
     }
 
     &:last-child {
@@ -42,23 +69,12 @@
   }
 
   &__beta-button {
+    order: 2;
     &.disabled {
       opacity: 0.5;
       cursor: not-allowed;
       pointer-events: none;
     }
-  }
-
-  &__beta-button:before {
-    content: "";
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    margin-right: 5px;
-    display: inline-block;
-    background-color: $tpi-level5-background-color;
-    vertical-align: middle;
-    border: 1px solid $white;
   }
 
   &__download-button {
@@ -73,7 +89,26 @@
     }
 
     @include until($desktop) {
-      margin-bottom: 10px;
+      background-color: #fff;
+      padding-inline: 12px;
+      padding-block: 40px;
+      flex-direction: column;
+      .button {
+        background-color: $white;
+        color: $blue !important;
+        border-color: $blue !important;
+        width: 100%;
+        &::before {
+          content: ' ';
+          width: 16px;
+          height: 16px;
+          background-image: image-url("tpi/icons/download.svg");
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain;
+        }
+        
+      }
     }
   }
 }

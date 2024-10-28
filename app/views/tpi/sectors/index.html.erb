@@ -15,14 +15,12 @@
       <div class="mq-beta-scores">
         <%= render 'tpi/shared/mq_beta_scores', has_data: true %>
         <div class="mq-beta-scores__download-button">
+          <%= react_component('DownloadFormModal') %>
           <%= link_to user_download_methodology_tpi_sectors_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
             <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
             Download Methodology
           <% end %>
-          <%= link_to user_download_all_tpi_sectors_path, class: 'button is-primary with-icon with-border' do %>
-            <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
-            Download CP & MQ Data
-          <% end %>
+          
         </div>
       </div>
     </div>

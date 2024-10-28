@@ -86,7 +86,7 @@ function Bar({ level, companies, sector, height }) {
         </div>
 
         {isOpen && (
-        <FloatingFocusManager context={context} modal={false}>
+        <FloatingFocusManager initialFocus={-1} context={context} modal={false}>
           <div
             ref={refs.setFloating}
             style={floatingStyles}
@@ -106,7 +106,7 @@ function Bar({ level, companies, sector, height }) {
                   key={i}
                 >
                   <a
-                    href={company.url}
+                    href={`/companies/${company.slug}`}
                     target="_blank"
                     rel="noreferrer"
                   >

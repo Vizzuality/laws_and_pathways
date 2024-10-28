@@ -65,7 +65,7 @@ const SingleCell = ({ width, height, data, uniqueKey }) => {
           transform={`translate(${width / 2}, ${height / 2})`}
         >
           <circle r={radius} fill={data.color} />
-          <text textAnchor="middle" alignmentBaseline="central" fill="white" fontSize="14px">
+          <text textAnchor="middle" alignmentBaseline="central" fill="white" fontWeight={700} fontSize="14px">
             {data.value}
           </text>
         </g>

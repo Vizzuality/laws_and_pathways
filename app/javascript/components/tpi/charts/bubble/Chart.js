@@ -13,8 +13,8 @@ const COMPANIES_MARKET_CAP_GROUPS = {
   '1-10': 3 * SCALE
 };
 
-const SINGLE_CELL_SVG_WIDTH = 120 * SCALE;
-const SINGLE_CELL_SVG_HEIGHT = 80 * SCALE;
+const SINGLE_CELL_SVG_WIDTH = 144;
+const SINGLE_CELL_SVG_HEIGHT = 60;
 
 const LEVELS_COLORS = [
   '#86A9F9',
@@ -109,6 +109,8 @@ const BubbleChart = ({ levels, sectors }) => {
 
   const levelsSignature = levels && Object.keys(levels[Object.keys(levels)[0]]);
 
+  const GRID_HEIGHT = parsedData.length * SINGLE_CELL_SVG_HEIGHT + 150;
+
   return (
     <div className="is-hidden-touch">
       <div className="mq-sector-pie-chart-title">
@@ -121,7 +123,7 @@ const BubbleChart = ({ levels, sectors }) => {
       <div
         className="bubble-chart__container bubble-chart__container--sectors"
         style={{
-          gridTemplateColumns: `repeat(${levelsSignature.length + 1}, 1fr)`
+          gridTemplateColumns: `repeat(${levelsSignature.length + 1}, ${SINGLE_CELL_SVG_WIDTH}px)`
         }}
       >
         <div className="bubble-chart__legend-container">
@@ -162,6 +164,19 @@ const BubbleChart = ({ levels, sectors }) => {
                 {LEVELS_SUBTITLES[el]}
               </div>
             </div>
+            { i > 0
+              && <svg xmlns="http://www.w3.org/2000/svg" width="2" height={GRID_HEIGHT} viewBox={`0 0 2 ${GRID_HEIGHT}`} fill="none">
+                <line
+                  x1="1"
+                  y1="0.984375"
+                  x2="1"
+                  y2="1050"
+                  stroke="#D8D8D8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeDasharray="8 4"
+                />
+                 </svg>}
           </div>
         ))}
         {parsedData.map((dataRow) => (
@@ -172,6 +187,22 @@ const BubbleChart = ({ levels, sectors }) => {
             key={dataRow.sector}
           />
         ))}
+        {/* <div className='bubble-chart__grid' style={{ position: "initial", display: "flex" }}>
+          {levelsSignature.map((dataRow) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="2" height="1010" viewBox="0 0 2 1010" fill="none">
+              <line
+                x1="1"
+                y1="0.984375"
+                x2="1"
+                y2="1009.34"
+                stroke="#D8D8D8"
+              // strokeLinecap="round"
+              // strokeLinejoin="round"
+                strokeDasharray="2 8"
+              />
+            </svg>
+          ))}
+        </div> */}
       </div>
     </div>
   );
