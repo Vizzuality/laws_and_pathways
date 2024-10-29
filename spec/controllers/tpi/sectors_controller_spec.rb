@@ -158,6 +158,7 @@ RSpec.describe TPI::SectorsController, type: :controller do
         expect(entries_names).to include('Company_Latest_Assessments_5.0.csv')
         expect(entries_names).to include("MQ_Assessments_Methodology_1_#{timestamp}.csv")
         expect(entries_names).to include("MQ_Assessments_Methodology_5_#{timestamp}.csv")
+        expect(entries_names).to include('User guide TPI files.xlsx')
 
         expect(entries_csv_json["Sector_Benchmarks_#{timestamp}.csv"])
           .to match_snapshot('tpi_single_sector_user_download_zip_sector_benchmarks_csv')
@@ -209,6 +210,7 @@ RSpec.describe TPI::SectorsController, type: :controller do
         expect(entries_names).to include('Company_Latest_Assessments_5.0.csv')
         expect(entries_names).to include("MQ_Assessments_Methodology_1_#{timestamp}.csv")
         expect(entries_names).to include("MQ_Assessments_Methodology_5_#{timestamp}.csv")
+        expect(entries_names).to include('User guide TPI files.xlsx')
 
         expect(entries_csv_json["Sector_Benchmarks_#{timestamp}.csv"])
           .to match_snapshot('tpi_all_sectors_user_download_zip_sector_benchmarks_csv')
@@ -233,25 +235,7 @@ RSpec.describe TPI::SectorsController, type: :controller do
 
     it 'returns zip file' do
       subject
-      expect(response.content_type).to eq('application/zip')
-    end
-
-    describe 'zip file' do
-      it 'has proper content' do
-        subject
-
-        entries_names = []
-        entries_csv_json = {}
-        zip_io = StringIO.new(response.body)
-        Zip::File.open_buffer(zip_io) do |zipfile|
-          zipfile.each do |entry|
-            entries_names << entry.name
-            entries_csv_json[entry.name] = parse_csv_to_json(entry.get_input_stream.read) if entry.name.ends_with?('.csv')
-          end
-        end
-
-        expect(entries_names).to include('User guide TPI files.xlsx')
-      end
+      expect(response.content_type).to eq('application/pdf')
     end
   end
 
