@@ -76,7 +76,10 @@ function MQSectorChart({ dataUrl }) {
                         style={{ backgroundColor: options.colors[index] }}
                       />
                       <p>Level {item.name}</p>
-                      <InfoTooltip content={LEVELS_SUBTITLES[index]} />
+                      <InfoTooltip
+                        content={LEVELS_SUBTITLES[index]}
+                        trigger={<span className="button is-secondary is-info" type="button">?</span>}
+                      />
                     </div>
                     <p className="chart-legend-item__value">
                       {item.value} {item.value === 1 ? 'company' : 'companies'} - {item.percentage}%

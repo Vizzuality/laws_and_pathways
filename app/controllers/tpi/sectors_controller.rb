@@ -170,7 +170,7 @@ module TPI
     end
 
     def permitted_email_params
-      params.permit(:email, :job_title, :forename, :surname, :location, :organisation, purposes: [])
+      params.permit(:email, :job_title, :forename, :surname, :location, :organisation, :other_purpose, purposes: [])
     end
   end
 end

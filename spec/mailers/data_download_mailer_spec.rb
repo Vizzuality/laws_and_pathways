@@ -10,7 +10,8 @@ RSpec.describe DataDownloadMailer, type: :mailer do
         surname: 'surname',
         location: 'location',
         organisation: 'organisation',
-        purposes: %w[purpose1 purpose2]
+        purposes: %w[purpose1 purpose2 other_purpose_checkbox],
+        other_purpose: 'other_purpose'
       }
     }
     let(:mail) { DataDownloadMailer.send_download_file_info_email data }
@@ -28,6 +29,7 @@ RSpec.describe DataDownloadMailer, type: :mailer do
       expect(mail.body.encoded).to include('organisation')
       expect(mail.body.encoded).to include('purpose1')
       expect(mail.body.encoded).to include('purpose2')
+      expect(mail.body.encoded).to include('other_purpose')
     end
   end
 end

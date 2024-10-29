@@ -9,6 +9,9 @@ div[data-react-class=BaseTooltip] {
 
 .base-tooltip {
   position: relative;
+  >div:first-child {
+    height: auto;
+  }
 
   &__default-trigger {
     font-family: $font-family-bold;

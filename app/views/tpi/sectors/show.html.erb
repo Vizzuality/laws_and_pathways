@@ -15,13 +15,12 @@
       <div class="mq-beta-scores">
         <%= render 'tpi/shared/mq_beta_scores', has_data: true %>
         <div class="mq-beta-scores__download-button">
+          <%= react_component('DownloadFormModal', {
+            downloadUrl: user_download_tpi_sector_path(@sector)
+          }) %>
           <%= link_to user_download_methodology_tpi_sectors_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
             <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
             Download Methodology
-          <% end %>
-          <%= link_to user_download_tpi_sector_path(@sector), class: 'button is-primary is-pulled-right with-icon with-border' do %>
-            <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
-            Download CP & MQ Data
           <% end %>
         </div>
       </div>
@@ -29,16 +28,6 @@
     <div class="container is-hidden-desktop">
       <div class="mq-beta-scores">
         <%= render 'tpi/shared/mq_beta_scores', has_data: true %>
-        <div>
-          <a href="#management-quality" class="link with-icon is-pulled-left">
-            Management Quality
-          </a>
-          <% if any_cp_assessment? %>
-            <a href="#carbon-performance" class="link with-icon is-pulled-left">
-              Carbon Performance
-            </a>
-          <% end %>
-        </div>
       </div>
     </div>
   </div>
@@ -52,9 +41,8 @@
 
     <%= react_component('charts/mq-sector-pie', { dataUrl: levels_chart_data_tpi_sector_path(@sector.id) }) %>
 
-    <%= react_component("charts/bubble/CompaniesAccordion", { levels: @companies_by_levels, by_sector: false }) %>
-
     <h4>Number and Detailed Companies Lists by Management Quality </h4>
+    <%= react_component("charts/bubble/CompaniesAccordion", { levels: @companies_by_levels, by_sector: false }) %>
 
     <%= react_component('charts/mq-sector-bar', { data:  @companies_by_levels, sector: @sector.name }) %>
 

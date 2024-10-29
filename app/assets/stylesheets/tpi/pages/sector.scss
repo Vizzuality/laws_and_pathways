@@ -23,13 +23,18 @@ $tape-color: rgba(25, 25, 25, 0.1);
       color: white;
       line-height: 40px;
       margin-right: 10px;
+      @include until($desktop) {
+        margin-right: 0;
+      }
     }
 
     @include until($desktop) {
-      padding-inline: 0 0.75rem;
+      padding-inline: 0 !important;
       font-size: $size-7;
-      height: 60px;
+      height: auto;
+      padding-top: 40px;
       font-family: $font-family-regular;
+      
     }
   }
 
@@ -89,13 +94,10 @@ $tape-color: rgba(25, 25, 25, 0.1);
 
       &__companies {
         line-height: 1.25;
-        // height: 150px;
-
         color: white;
-
         display: flex;
         align-items: end;
-
+        
         > div:first-child {
           width: 100%;
           text-align: center;
@@ -103,6 +105,9 @@ $tape-color: rgba(25, 25, 25, 0.1);
           font-size: 32px;
           font-weight: 700;
           cursor: pointer;
+          &:hover {
+            border: 2px solid $yellow;
+          }
         }
 
 
@@ -145,6 +150,7 @@ $tape-color: rgba(25, 25, 25, 0.1);
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
+    padding-top: 50px;
 
     > p {
       display: none;
@@ -190,7 +196,7 @@ $tape-color: rgba(25, 25, 25, 0.1);
 .sector-level__popover {
   z-index: 10;
   background-color: $white;
-  border: 1.5px solid $black;
+  border: 1.25px solid $black;
   padding: 20px;
   font-size: 14px;
   width: 430px;
@@ -216,25 +222,25 @@ $tape-color: rgba(25, 25, 25, 0.1);
     margin-block: 8px 20px;
   }
   &_text {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    columns: 2;
     margin-block: 12px;
     font-size: 16px;
     max-height: 200px;
     overflow-y: auto;
-    gap: 12px 20px;
-    padding-left: 2rem;
+    column-gap: 40px;
   }
   &_list_item {
+    margin-left: 20px;
     a {
       text-decoration: underline;
       color: black;
     }
   }
-  button {
+  .button.is-secondary.is-small {
     float: right;
     margin-top: 20px;
     height: 40px !important;
     width: 62px !important;
+    min-width: auto;
   }
 }

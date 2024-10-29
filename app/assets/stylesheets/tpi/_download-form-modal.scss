@@ -1,0 +1,136 @@
+@import "colors";
+@import "typography";
+
+.download {
+  button {
+    margin-right: 10px;
+  }
+}
+.download-form {
+  > * {
+    margin-bottom: 20px;
+  }
+  h2 {
+    font-size: 20px !important;
+    font-weight: bold;
+  }
+  .--mandatory {
+    color: $red;
+  }
+  .content {
+    input[type="text"] {
+      height: 40px;
+      width: 100%;
+      padding-inline: 10px;
+      border-radius: 0;
+      border: 1px solid #191919;
+      &::placeholder {
+        color: #595b5d;
+        font-size: 12px;
+      }
+    }
+    .text-inputs {
+      margin-bottom: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      @include until($breakpoint-desktop) {
+        grid-template-columns: 1fr;
+      }
+      label {
+        display: block;
+        line-height: 24px;
+        margin-bottom: 9px;
+      }
+      .selector__container {
+        list-style: none;
+        margin: 0;
+        .selector__header {
+          height: 40px;
+        }
+        .selector__input {
+          border: 0;
+          background-color: $white !important; 
+        }
+        .selector__value {
+          font-size: 14px;
+        }
+        .selector__options {
+          margin: 0;
+          transform: translateY(-4px);
+          list-style: none;
+          max-height: 300px;
+          overflow-y: auto;
+          .selector__option {
+            font-size: 14px;
+            padding-block: 5px;
+          }
+        }
+      }
+      &.--full {
+        .content__input {
+          column-span: 2;
+        }
+      }
+    }
+    .checkbox-inputs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px 20px;
+      margin-bottom: 16px;
+      .content__input {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        gap: 12px;
+
+        input {
+          width: 24px;
+          height: 24px;
+          border-radius: 0;
+          display: flex;
+         justify-content: center;
+            align-items: center;
+          border: 2px solid $grey-dark;
+          appearance: none;
+          -webkit-appearance: none;
+          &::before {
+            content: "";
+            width: 12px;
+            height: 12px;
+            display: block;
+            transform: scale(0);
+            background-color: $blue;
+          }
+          &:checked {
+            &::before {
+              transform: scale(1);
+            }
+          }
+        }
+      }
+    }
+  }
+  .other-purposes-text {
+    &.hidden {
+        display: none;
+    }
+  }
+  .error {
+    color: $red;
+    font-size: 12px;
+    margin-top: 10px;
+  }
+  .form-buttons {
+    margin-top: 20px;
+    width: 50%;
+    display: flex;
+    gap: 8px;
+    button {
+      min-width: auto !important;
+    }
+    .is-primary {
+      flex-grow: 1;
+    }
+  }
+}
