@@ -15,7 +15,7 @@
           <%= react_component('DownloadFormModal', {
             downloadUrl: user_download_all_tpi_sectors_path
           }) %>
-          <%= link_to user_download_methodology_tpi_sectors_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
+          <%= button_to user_download_methodology_tpi_sectors_path, class: 'button is-primary is-pulled-right with-icon with-border', method: :get do %>
             <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
             Methodology
           <% end %>

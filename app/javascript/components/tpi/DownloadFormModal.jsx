@@ -6,6 +6,7 @@ import { Modal } from './Modal';
 import { OverlayProvider } from '@react-aria/overlays';
 import Select from './Select';
 import classNames from 'classnames';
+import downloadIcon from 'images/icons/download.svg';
 
 const Field = ({ label, name, value, onChange, type, required, error, placeholder, children }) => {
   const ref = useRef(null);
@@ -138,7 +139,7 @@ function DownloadFormModal({ downloadUrl }) {
   return (
     <div className="download">
       <button type="button" onClick={() => setShowModal(true)} className="button is-primary with-icon with-border">
-        <img src="/assets/icons/download.svg" alt="download icon" />
+        <img src={downloadIcon} alt="download icon" />
         CP & MQ Data
       </button>
 
