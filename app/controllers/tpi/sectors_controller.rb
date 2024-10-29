@@ -98,10 +98,10 @@ module TPI
     end
 
     def user_download_methodology
-      user_guide = File.binread(Rails.root.join('public', 'tpi', 'export_support', 'User guide TPI files.xlsx'))
-      render zip: {
-        'User guide TPI files.xlsx' => user_guide
-      }, filename: "TPI Methodology - #{Time.now.strftime('%d%m%Y')}"
+      file_path = Rails.root.join(
+        'public', 'static_files', 'TPI’s methodology report. Management Quality and Carbon Performance.pdf'
+      )
+      send_file file_path, type: 'application/pdf', disposition: 'attachment'
     end
 
     private

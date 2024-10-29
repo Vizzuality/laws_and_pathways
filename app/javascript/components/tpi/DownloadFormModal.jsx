@@ -139,7 +139,7 @@ function DownloadFormModal({ downloadUrl }) {
     <div className="download">
       <button type="button" onClick={() => setShowModal(true)} className="button is-primary with-icon with-border">
         <img src="/assets/icons/download.svg" alt="download icon" />
-        Download CP & MQ Data
+        CP & MQ Data
       </button>
 
       <OverlayProvider>

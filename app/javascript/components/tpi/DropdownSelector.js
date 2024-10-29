@@ -73,9 +73,9 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
   );
 
   const handleOptionClick = (option) => {
-    const url = isFilterBySector ? '/sectors/' : '/companies/';
+    const url = isFilterBySector ? '/corporates/' : '/companies/';
     setIsOpen(false);
-    if (!(window.location.pathname === '/sectors/' && option.id === 'all-sectors')) {
+    if (!(window.location.pathname === '/corporates/' && option.id === 'all-sectors')) {
       window.open(`${url}${option.slug}`, '_self');
     }
   };
