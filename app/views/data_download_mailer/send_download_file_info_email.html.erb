@@ -10,6 +10,10 @@
 <h3>Purposes</h3>
 <ul>
   <% Array.wrap(@data[:purposes]).each do |purpose| %>
-    <li><%= purpose %></li>
+    <% if purpose == "other_purpose_checkbox" %>
+      <li><strong>Other:</strong> <%= @data[:other_purpose] %></li>
+    <% else %>
+      <li><%= purpose %></li>
+    <% end %>
   <% end %>
 </ul>

@@ -80,7 +80,7 @@ const initialFormValues = {
   other_purpose: ''
 };
 
-function DownloadFormModal() {
+function DownloadFormModal({ downloadUrl }) {
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(null);
   const [formValues, setFormValues] = useState(initialFormValues);
@@ -271,7 +271,7 @@ function DownloadFormModal() {
                     onChange={handleChange}
                   />
                 </div>
-                <a hidden ref={downloadLinkRef} href="/sectors/2/user_download" target="_blank" rel="noreferrer">
+                <a hidden ref={downloadLinkRef} href={downloadUrl} rel="noreferrer">
                   <button type="button">Click</button>
                 </a>
                 <input required type="hidden" name="purposes" value={formValues.purposes} />
@@ -290,5 +290,9 @@ function DownloadFormModal() {
     </div>
   );
 }
+
+DownloadFormModal.propTypes = {
+  downloadUrl: PropTypes.string.isRequired
+};
 
 export default DownloadFormModal;
