@@ -98,9 +98,13 @@ module TPI
     end
 
     def user_download_methodology
-      file_path = Rails.root.join(
-        'public', 'static_files', 'TPI’s methodology report. Management Quality and Carbon Performance.pdf'
-      )
+      file_path = if session[:enable_beta_mq_assessments]
+                    Rails.root.join(
+                      'public', 'static_files', 'TPI’s methodology report. Management Quality and Carbon Performance.pdf'
+                    )
+                  else
+                    Rails.root.join('public', 'static_files', 'Methodology and Indicator Report v4.0_final draft.pdf')
+                  end
       send_file file_path, type: 'application/pdf', disposition: 'attachment'
     end
 
