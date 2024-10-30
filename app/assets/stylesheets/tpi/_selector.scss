@@ -12,6 +12,10 @@
       justify-content: space-between;
       cursor: pointer;
 
+      .selector__input {
+        border: 0;
+      }
+
       .selector__value {
         width: 100%;
         margin-right: 16px;

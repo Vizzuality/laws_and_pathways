@@ -15,12 +15,15 @@
       color: white;
       line-height: 40px;
       margin-right: 10px;
+      @include until($desktop) {
+        margin-right: 0;
+      }
     }
 
     @include until($desktop) {
-      padding: 0 0.75rem;
+      padding-inline: 0 !important;
       font-size: $size-7;
-      height: 60px;
+      height: auto;
       font-family: $font-family-regular;
     }
   }
@@ -35,6 +38,9 @@
 
   .summary-boxes {
     margin-top: 1.5rem;
+    @include until($desktop) {
+      margin-top: 0;
+    }
   }
 
   .summary-box {
