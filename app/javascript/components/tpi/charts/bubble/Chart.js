@@ -109,7 +109,7 @@ const BubbleChart = ({ levels, sectors }) => {
 
   const levelsSignature = levels && Object.keys(levels[Object.keys(levels)[0]]);
 
-  const GRID_HEIGHT = parsedData.length * SINGLE_CELL_SVG_HEIGHT + 150;
+  const GRID_HEIGHT = parsedData.length * SINGLE_CELL_SVG_HEIGHT + 120;
 
   return (
     <div className="is-hidden-touch">
@@ -170,7 +170,7 @@ const BubbleChart = ({ levels, sectors }) => {
                   x1="1"
                   y1="0.984375"
                   x2="1"
-                  y2="1050"
+                  y2={GRID_HEIGHT}
                   stroke="#D8D8D8"
                   strokeLinecap="round"
                   strokeLinejoin="round"

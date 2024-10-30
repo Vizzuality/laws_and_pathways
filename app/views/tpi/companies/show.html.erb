@@ -31,7 +31,7 @@
 
   <% if @company.cp_alignment_region.present? %>
     <section class="container change-view">
-      <div class="buttons has-addons" style="justify-content: flex-end;">
+      <div class="buttons has-addons">
         <%= link_to "Global benchmarks", {view: nil}, class: "button #{!regional_view ? 'is-primary' : 'is-secondary'}" %>
         <%= link_to "Regional benchmarks", {view: 'regional'}, class: "button #{regional_view ? 'is-primary' : 'is-secondary'}" %>
       </div>
