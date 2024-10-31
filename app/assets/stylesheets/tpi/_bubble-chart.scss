@@ -21,6 +21,7 @@ $legend-image-width: 60px;
   /* CSS GRID */
   display: grid;
   align-items: center;
+  justify-content: center;
 
   &--sectors {
     grid-template-rows: 144px auto;
@@ -58,12 +59,6 @@ $legend-image-width: 60px;
     top: calc(50% - #{$tape-height / 2});
     height: $tape-height;
     width: calc(100% + #{$tape-height / 2});
-  }
-}
-
-.bubble-chart__container--banks {
-  .bubble-chart__cell {
-    height: $cell-height-banks;
   }
 }
 
@@ -155,6 +150,22 @@ $legend-image-width: 60px;
 }
 
 .bubble-chart__container--banks {
+  .bubble-chart__cell {
+    height: $cell-height-banks;
+    border-left: 4px dotted rgba(25, 25, 25, 0.1);
+    &:first-of-type {
+      border-left: none;
+    }
+    &::after {
+      background-color: rgba(25, 25, 25, 0.1);
+      content: "";
+      position: absolute;
+      top: calc(50% - 4px);
+      height: 8px;
+      width: calc(100% + 4px);
+    }
+  }
+
   .bubble-chart__title-container {
     position: absolute;
     top: -50px;
@@ -167,6 +178,20 @@ $legend-image-width: 60px;
     transform: translateX(100%);
     font-size: 16px;
     font-weight: bold;
+  }
+  .bubble-chart__level-title {
+    font-family: $font-family-bold;
+    font-size: 12px;
+    color: $black;
+  }
+
+  .bubble-chart__level {
+    text-align: center;
+    padding-left: 0px;
+  }
+
+  .bubble-chart__legend-container + .bubble-chart__level {
+    text-align: left;
   }
 }
 
@@ -228,26 +253,6 @@ $legend-image-width: 60px;
     font-family: $font-family-bold;
     font-size: 16px;
     color: $black;
-  }
-}
-
-.bubble-chart__container--banks {
-  .bubble-chart__level-title {
-    font-family: $font-family-bold;
-    font-size: 12px;
-    color: $black;
-  }
-
-  .bubble-chart__level {
-    text-align: center;
-  }
-
-  .bubble-chart__legend-container + .bubble-chart__level {
-    text-align: left;
-  }
-
-  .bubble-chart__level {
-    padding-left: 0px;
   }
 }
 

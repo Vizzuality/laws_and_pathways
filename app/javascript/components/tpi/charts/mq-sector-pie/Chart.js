@@ -78,7 +78,7 @@ function MQSectorChart({ dataUrl }) {
                       <p>Level {item.name}</p>
                       <InfoTooltip
                         content={LEVELS_SUBTITLES[index]}
-                        trigger={<span className="button is-secondary is-info" type="button">?</span>}
+                        trigger={<span className="button is-secondary is-info" type="button">i</span>}
                       />
                     </div>
                     <p className="chart-legend-item__value">

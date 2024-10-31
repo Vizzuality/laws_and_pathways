@@ -2,10 +2,10 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+  align-items: center;
 
   &__container {
     display: flex;
-    padding: 4px 4px 4px 14px;
     flex-wrap: wrap;
     @include until($desktop) {
       padding: 0;
@@ -47,6 +47,8 @@
 
 
   .button {
+    height: 36px !important;
+
     @include until($desktop) {
       width: 50%;
       height: 40px;
@@ -86,6 +88,7 @@
 
     .button {
       background-color: $blue;
+      height: 36px !important;
     }
 
     @include until($desktop) {

@@ -60,7 +60,7 @@
 
   .dropdown-selector-wrapper {
     background-color: $blue;
-
+    transform: translateY(-1px);
     .dropdown-selector__container {
       @include desktop {
         padding: $container-top-padding $container-side-padding 40px $container-side-padding;
