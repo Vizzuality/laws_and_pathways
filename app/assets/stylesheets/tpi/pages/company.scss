@@ -14,10 +14,14 @@
 
   .companies-header {
     background: $blue;
-
-    height: 100px;
+    // height: 100px;
+    min-height: 76px;
     display: flex;
     align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    transform: translateY(-1px);
 
     a {
       color: white;
@@ -33,6 +37,7 @@
       font-size: $size-7;
       height: auto;
       font-family: $font-family-regular;
+      min-height: 76px;
     }
   }
 

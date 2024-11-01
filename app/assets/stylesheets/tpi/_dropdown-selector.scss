@@ -91,7 +91,7 @@ $header-height-mobile: 60px;
   left: calc(-1 * #{$box-shadow});
   width: calc(100% + (2 * #{$box-shadow})); // 60px = 2 x 30px for box shadow from left and right
   margin-top: 20px;
-  z-index: 1;
+  z-index: 15;
   overflow: hidden;
 }
 

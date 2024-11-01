@@ -44,11 +44,11 @@ describe 'Sector', type: 'system', site: 'tpi' do
     it 'loads all elements' do
       # bubble chart loads
       within '.chart--mq-sector-pie-chart' do
-        expect(page).to have_text('Level 0 ? 0 companies', normalize_ws: true) # Level 0 0 companies
-        expect(page).to have_text('Level 1 ? 2 companies', normalize_ws: true) # Level 1 2 companies
-        expect(page).to have_text('Level 2 ? 0 companies', normalize_ws: true) # Level 2 0 companies
-        expect(page).to have_text('Level 3 ? 2 companies', normalize_ws: true) # Level 3 2 companies
-        expect(page).to have_text('Level 4 ? 1 company', normalize_ws: true) # Level 4 1 company
+        expect(page).to have_text('Level 0 i 0 companies', normalize_ws: true) # Level 0 0 companies
+        expect(page).to have_text('Level 1 i 2 companies', normalize_ws: true) # Level 1 2 companies
+        expect(page).to have_text('Level 2 i 0 companies', normalize_ws: true) # Level 2 0 companies
+        expect(page).to have_text('Level 3 i 2 companies', normalize_ws: true) # Level 3 2 companies
+        expect(page).to have_text('Level 4 i 1 company', normalize_ws: true) # Level 4 1 company
         expect(page).to have_text('Level 5')
         expect(page).to have_selector('.companies-size', text: '5')
       end

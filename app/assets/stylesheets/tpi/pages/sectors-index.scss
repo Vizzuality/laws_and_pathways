@@ -3,9 +3,14 @@
 .sectors-index-page {
   .sectors-header {
     background: $blue;
-    min-height: 100px;
+    min-height: 76px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    transform: translateY(-1px);
 
     a {
       color: white;
@@ -24,9 +29,9 @@
     @include until($desktop) {
       padding: 0;
       font-size: $size-7;
-      min-height: 60px;
+      height: auto;
       font-family: $font-family-regular;
-      // transform: translateY(-1px);
+      min-height: 76px;
     }
   }
 
@@ -49,6 +54,7 @@
       font-weight: bold;
       line-height: 40px;
       margin-bottom: 80px;
+      font-size: 28px !important;
     }
 
     @include until($desktop) {
