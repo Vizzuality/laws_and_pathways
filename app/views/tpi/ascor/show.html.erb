@@ -20,7 +20,7 @@
             theme: 'ascor',
             url: show_assessment_tpi_ascor_path(@country),
             data: @country.assessments.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
-            selected: @assessment_date
+            selected: @assessment.id
           }) %>
         </div>
       </div>

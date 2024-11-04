@@ -31,7 +31,7 @@ module TPI
     def index_emissions_assessment; end
 
     def show_assessment
-      @assessment = ASCOR::Assessment.find params[:assessment_id]
+      @assessment = @country.assessments.find params[:assessment_id]
       @assessment_date = @assessment.assessment_date
       @recent_emissions = Api::ASCOR::RecentEmissions.new(@assessment_date, @country).call
     end
