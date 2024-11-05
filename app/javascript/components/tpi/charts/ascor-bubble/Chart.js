@@ -9,7 +9,7 @@ import ChartMobile from './chart-mobile';
 
 const DESKTOP_MIN_WIDTH = 992;
 
-const SCALE = 1;
+const SCALE = 0.5;
 
 // radius of bubbles
 const COMPANIES_MARKET_CAP_GROUPS = {
