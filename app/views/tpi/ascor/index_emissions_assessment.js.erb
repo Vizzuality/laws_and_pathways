@@ -3,5 +3,5 @@
     const newUrl = new URL(window.location.href);
     newUrl.searchParams.set('emissions_assessment_date', "<%= @emissions_assessment_date %>");
     window.history.replaceState({}, '', newUrl.href);
-    ReactRailsUJS.mountComponents('#emissions-charts');
+    ReactRailsUJS.mountComponents('#emissions-chart');
 })();
