@@ -1,7 +1,0 @@
-(function () {
-    document.getElementById('assessment').innerHTML = "<%= j render('assessment') %>";
-    const newUrl = new URL(window.location.href);
-    newUrl.searchParams.set('assessment_date', <%= @assessment_date %>);
-    window.history.replaceState({}, '', newUrl.href);
-    ReactRailsUJS.mountComponents('#assessment');
-})();
