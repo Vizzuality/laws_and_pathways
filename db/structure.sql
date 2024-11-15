@@ -818,7 +818,8 @@ CREATE TABLE public.cp_assessments (
     sector_id bigint,
     final_disclosure_year integer,
     cp_alignment_2027 character varying,
-    cp_regional_alignment_2027 character varying
+    cp_regional_alignment_2027 character varying,
+    assessment_date_flag character varying
 );
 
 
@@ -4178,6 +4179,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240119084250'),
 ('20240202090401'),
 ('20240206094238'),
-('20240527100352');
+('20240527100352'),
+('20241115133904');
 
 

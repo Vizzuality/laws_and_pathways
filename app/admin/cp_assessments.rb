@@ -8,7 +8,7 @@ ActiveAdmin.register CP::Assessment do
   permit_params :sector_id, :assessment_date, :publication_date, :cp_assessmentable_id, :last_reported_year,
                 :assumptions, :cp_alignment_2025, :cp_alignment_2027, :cp_alignment_2035, :cp_alignment_2050,
                 :region, :cp_regional_alignment_2025, :cp_regional_alignment_2027, :cp_regional_alignment_2035,
-                :cp_regional_alignment_2050, :years_with_targets_string, :emissions,
+                :cp_regional_alignment_2050, :years_with_targets_string, :emissions, :assessment_date_flag,
                 cp_matrices_attributes: [:id, :portfolio, :cp_alignment_2025, :cp_alignment_2035, :cp_alignment_2050, :_destroy]
 
   filter :assessment_date
@@ -60,6 +60,7 @@ ActiveAdmin.register CP::Assessment do
       end
       row :sector
       row :assessment_date
+      row :assessment_date_flag
       row :publication_date
       row :last_reported_year
       row :cp_alignment_2050
@@ -123,6 +124,7 @@ ActiveAdmin.register CP::Assessment do
       record.sector.name
     end
     column :assessment_date
+    column :assessment_date_flag
     column :publication_date, &:publication_date_csv
     year_columns.map do |year|
       column year do |a|
