@@ -7,6 +7,7 @@ module CSVImport
         assessment = prepare_assessment(row)
 
         assessment.assessment_date = assessment_date(row) if row.header?(:assessment_date)
+        assessment.assessment_date_flag = row[:assessment_date_flag] if row.header?(:assessment_date_flag)
         assessment.publication_date = publication_date(row) if row.header?(:publication_date)
         assessment.assumptions = row[:assumptions].presence if row.header?(:assumptions)
         assessment.emissions = parse_emissions(row) if emission_headers?(row)
@@ -46,7 +47,8 @@ module CSVImport
         CP::Assessment.find_or_initialize_by(
           cp_assessmentable_type: 'Company',
           cp_assessmentable_id: find_company!(row)&.id,
-          assessment_date: assessment_date(row)
+          assessment_date: assessment_date(row),
+          assessment_date_flag: row.header?(:assessment_date_flag) ? row[:assessment_date_flag] : nil
         )
     end
 

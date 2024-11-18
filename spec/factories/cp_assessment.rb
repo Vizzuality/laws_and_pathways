@@ -4,6 +4,7 @@ FactoryBot.define do
     association :sector, factory: :tpi_sector
 
     assessment_date { 1.year.ago }
+    assessment_date_flag { 'current' }
     publication_date { 11.months.ago }
     last_reported_year { 2020 }
 

@@ -1278,7 +1278,9 @@ describe 'CSVDataUpload (integration)' do
     expect(assessment.cp_regional_alignment_2027).to eq('1.5 Degrees')
     expect(assessment.cp_regional_alignment_2035).to eq('2 Degrees')
     expect(assessment.cp_regional_alignment_2050).to eq('International Pledges')
+    expect(assessment.assessment_date_flag).to eq('old')
     expect(assessment2.cp_alignment_2050).to eq('Not Aligned')
+    expect(assessment2.assessment_date_flag).to eq('new')
   end
 
   it 'imports CSV files with Bank CP Assessments data' do
