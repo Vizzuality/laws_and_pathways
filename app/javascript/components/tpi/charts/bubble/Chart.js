@@ -4,17 +4,16 @@ import legendImage from 'images/tpi/sectors-bubble-chart-legend.svg';
 import SingleCell from './SingleCell';
 import hoverIcon from 'images/icons/hover-cursor.svg';
 
-const SCALE = 1;
-
 // radius of bubbles
-const COMPANIES_MARKET_CAP_GROUPS = {
-  '50-70': 10 * SCALE,
-  '11-50': 5 * SCALE,
-  '1-10': 3 * SCALE
-};
+const COMPANIES_MARKET_CAP_GROUPS = [
+  '100+',
+  '51-100',
+  '11-50',
+  '1-10'
+];
 
 const SINGLE_CELL_SVG_WIDTH = 144;
-const SINGLE_CELL_SVG_HEIGHT = 60;
+const SINGLE_CELL_SVG_HEIGHT = 62;
 
 const LEVELS_COLORS = [
   '#86A9F9',
@@ -109,7 +108,7 @@ const BubbleChart = ({ levels, sectors }) => {
 
   const levelsSignature = levels && Object.keys(levels[Object.keys(levels)[0]]);
 
-  const GRID_HEIGHT = parsedData.length * SINGLE_CELL_SVG_HEIGHT + 120;
+  const GRID_HEIGHT = parsedData.length * SINGLE_CELL_SVG_HEIGHT + 100;
 
   return (
     <div className="is-hidden-touch">
@@ -137,7 +136,7 @@ const BubbleChart = ({ levels, sectors }) => {
               alt="Bubble size description"
             />
             <div className="bubble-chart__legend-titles-container">
-              {Object.keys(COMPANIES_MARKET_CAP_GROUPS).map(
+              {COMPANIES_MARKET_CAP_GROUPS.map(
                 (companySize, i) => (
                   <span
                     key={`${companySize}-${i}`}
@@ -187,22 +186,6 @@ const BubbleChart = ({ levels, sectors }) => {
             key={dataRow.sector}
           />
         ))}
-        {/* <div className='bubble-chart__grid' style={{ position: "initial", display: "flex" }}>
-          {levelsSignature.map((dataRow) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width="2" height="1010" viewBox="0 0 2 1010" fill="none">
-              <line
-                x1="1"
-                y1="0.984375"
-                x2="1"
-                y2="1009.34"
-                stroke="#D8D8D8"
-              // strokeLinecap="round"
-              // strokeLinejoin="round"
-                strokeDasharray="2 8"
-              />
-            </svg>
-          ))}
-        </div> */}
       </div>
     </div>
   );
