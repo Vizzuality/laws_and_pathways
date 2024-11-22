@@ -17,9 +17,15 @@ import {
   arrow
 } from '@floating-ui/react';
 
+/** Circle radios for each value range */
+const RANGE = [12, 18, 24, 30];
+/** Value ranges */
+const DOMAIN = [11, 51, 101];
+
 const SingleCell = ({ width, height, data, uniqueKey }) => {
-  const radiusScale = scaleThreshold().domain([10, 50]).range([14, 22, 29]);
-  const radius = radiusScale(data.value);
+  const VALUE = data.value;
+  const radiusScale = scaleThreshold().domain(DOMAIN).range(RANGE);
+  const radius = radiusScale(VALUE);
 
   const [isOpen, setIsOpen] = useState(false);
   const arrowRef = useRef(null);
@@ -51,13 +57,13 @@ const SingleCell = ({ width, height, data, uniqueKey }) => {
 
   const headingId = useId();
 
-  if (!data.value) {
+  if (!VALUE) {
     return null;
   }
 
   return (
     <Fragment>
-      <svg id={uniqueKey} width="100%" height="100%" viewBox={`0 0 ${width} ${height}`}>
+      <svg id={uniqueKey} width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
         <g
           ref={refs.setReference}
           {...getReferenceProps()}
@@ -66,7 +72,7 @@ const SingleCell = ({ width, height, data, uniqueKey }) => {
         >
           <circle r={radius} fill={data.color} />
           <text textAnchor="middle" alignmentBaseline="central" fill="white" fontWeight={700} fontSize="14px">
-            {data.value}
+            {VALUE}
           </text>
         </g>
       </svg>
@@ -82,7 +88,7 @@ const SingleCell = ({ width, height, data, uniqueKey }) => {
         >
           <h4>{data.tooltipContent.title}</h4>
           <h3 className="bubble-chart_tooltip_header">{data.tooltipContent.level}</h3>
-          <p>{data.value} {data.value === 1 ? 'company' : 'companies'}</p>
+          <p>{VALUE} {VALUE === 1 ? 'company' : 'companies'}</p>
           <ol className="bubble-chart_tooltip_text">
             {data.tooltipContent.companies.map(company => (
               <li className="bubble-chart_tooltip_list_item" key={company.name}>

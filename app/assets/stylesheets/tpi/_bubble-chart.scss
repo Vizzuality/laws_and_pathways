@@ -217,19 +217,20 @@ $legend-image-width: 60px;
 }
 
 .bubble-chart__legend-image {
-  width: 60px;
+  width: 64px;
+  height: 67px;
 }
 
 .bubble-chart__legend-titles-container {
   position: absolute;
   color: $dark;
   left: calc(#{$legend-image-width} + 6px);
-  top: -7.5px;
+  top: -10px;
 }
 
 .bubble-chart__legend-title {
   font-size: 12px;
-  line-height: 15px;
+  line-height: 13px;
   font-family: $font-family-regular;
   // margin: 2px 0;
   display: block;
