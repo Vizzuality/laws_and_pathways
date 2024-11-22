@@ -1,7 +1,6 @@
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
-SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -9,6 +8,13 @@ SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
+
+--
+-- Name: public; Type: SCHEMA; Schema: -; Owner: -
+--
+
+-- *not* creating schema, since initdb creates it
+
 
 --
 -- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
@@ -85,8 +91,6 @@ CREATE FUNCTION public.target_tsv_trigger() RETURNS trigger
 
 
 SET default_tablespace = '';
-
-SET default_table_access_method = heap;
 
 --
 -- Name: active_admin_comments; Type: TABLE; Schema: public; Owner: -
@@ -3601,21 +3605,21 @@ CREATE UNIQUE INDEX index_tpi_sectors_on_slug ON public.tpi_sectors USING btree 
 -- Name: legislations tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.legislations FOR EACH ROW EXECUTE FUNCTION public.legislation_tsv_trigger();
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.legislations FOR EACH ROW EXECUTE PROCEDURE public.legislation_tsv_trigger();
 
 
 --
 -- Name: litigations tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.litigations FOR EACH ROW EXECUTE FUNCTION public.litigation_tsv_trigger();
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.litigations FOR EACH ROW EXECUTE PROCEDURE public.litigation_tsv_trigger();
 
 
 --
 -- Name: targets tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.targets FOR EACH ROW EXECUTE FUNCTION public.target_tsv_trigger();
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.targets FOR EACH ROW EXECUTE PROCEDURE public.target_tsv_trigger();
 
 
 --
@@ -4177,5 +4181,4 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240206094238'),
 ('20240527100352'),
 ('20241115133904');
-
 
