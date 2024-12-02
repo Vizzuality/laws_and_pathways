@@ -44,6 +44,7 @@ gem 'react-rails'
 gem 'appsignal'
 gem 'roo'
 gem 'caxlsx'
+gem 'mailjet'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

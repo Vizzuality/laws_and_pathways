@@ -1,74 +1,134 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { range } from 'd3-array';
-import { select } from 'd3-selection';
-import * as d3 from 'd3-force';
+import { scaleThreshold } from 'd3-scale';
+import {
+  useFloating,
+  autoUpdate,
+  offset,
+  flip,
+  shift,
+  useDismiss,
+  useRole,
+  useClick,
+  useInteractions,
+  FloatingFocusManager,
+  useId,
+  FloatingArrow,
+  arrow
+} from '@floating-ui/react';
 
-const SingleCell = ({ width, height, handleNodeClick, data, uniqueKey, showTooltip, hideTooltip }) => {
-  const computizedKey = uniqueKey.split(' ').join('_');
-  const key = `${computizedKey.replace(/[&]/g, '_')}-${(Math.random() * 100).toFixed()}`;
+/** Circle radios for each value range */
+const RANGE = [12, 18, 24, 30];
+/** Value ranges */
+const DOMAIN = [11, 51, 101];
 
-  const nodes = range(data.length).map(function (index) {
-    return {
-      color: data[index].color,
-      tooltipContent: data[index].tooltipContent,
-      path: data[index].path,
-      radius: data[index].value / 2 // 50% of radius to fit all bubbles
-    };
+const SingleCell = ({ width, height, data, uniqueKey }) => {
+  const VALUE = data.value;
+  const radiusScale = scaleThreshold().domain(DOMAIN).range(RANGE);
+  const radius = radiusScale(VALUE);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const arrowRef = useRef(null);
+
+  const { refs, floatingStyles, context } = useFloating({
+    open: isOpen,
+    placement: 'right',
+    onOpenChange: setIsOpen,
+    middleware: [
+      offset(10),
+      flip({ fallbackAxisSideDirection: 'end' }),
+      shift(),
+      arrow({
+        element: arrowRef
+      })
+    ],
+    whileElementsMounted: autoUpdate
   });
 
-  const simulation = () => {
-    d3.forceSimulation(nodes)
-      .force('charge', d3.forceManyBody().strength(3))
-      .force('y', d3.forceY().y(0))
-      .force('collision',
-        d3.forceCollide().radius(function (d) {
-          return d.radius + 1;
-        }))
-      .on('tick', ticked);
-  };
+  const click = useClick(context);
+  const dismiss = useDismiss(context);
+  const role = useRole(context);
 
-  const ticked = () => {
-    const u = select(`#${key}`)
-      .select('g')
-      .selectAll('circle')
-      .data(nodes);
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    click,
+    dismiss,
+    role
+  ]);
 
-    u.enter()
-      .append('circle')
-      .attr('r', (d) => d.radius)
-      .style('fill', (d) => d.color)
-      .merge(u)
-      .attr('cx', (d) => d.x)
-      .attr('cy', (d) => d.y)
-      .on('mouseover', (d) => showTooltip(d, u))
-      .on('mouseout', hideTooltip)
-      .on('click', (d) => handleNodeClick(d));
+  const headingId = useId();
 
-    u.exit().remove();
-  };
-
-  simulation();
+  if (!VALUE) {
+    return null;
+  }
 
   return (
     <Fragment>
-      <svg id={key} width="100%" height="100%" viewBox={`0 0 ${width} ${height}`}>
-        <g className="bubble-chart_circle" transform={`translate(${width / 2}, ${height / 2})`} />
+      <svg id={uniqueKey} width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+        <g
+          ref={refs.setReference}
+          {...getReferenceProps()}
+          className="bubble-chart_circle"
+          transform={`translate(${width / 2}, ${height / 2})`}
+        >
+          <circle r={radius} fill={data.color} />
+          <text textAnchor="middle" alignmentBaseline="central" fill="white" fontWeight={700} fontSize="14px">
+            {VALUE}
+          </text>
+        </g>
       </svg>
+
+      {isOpen && (
+      <FloatingFocusManager context={context} modal={false}>
+        <div
+          ref={refs.setFloating}
+          style={floatingStyles}
+          aria-labelledby={headingId}
+          className="bubble-chart_tooltip"
+          {...getFloatingProps()}
+        >
+          <h4>{data.tooltipContent.title}</h4>
+          <h3 className="bubble-chart_tooltip_header">{data.tooltipContent.level}</h3>
+          <p>{VALUE} {VALUE === 1 ? 'company' : 'companies'}</p>
+          <ol className="bubble-chart_tooltip_text">
+            {data.tooltipContent.companies.map(company => (
+              <li className="bubble-chart_tooltip_list_item" key={company.name}>
+                <a href={company.url} target="_blank" rel="noreferrer">{company.name}</a>
+              </li>
+            ))}
+          </ol>
+          <button
+            type="button"
+            style={{ float: 'right' }}
+            onClick={() => {
+              setIsOpen(false);
+            }}
+            className="button is-secondary is-small"
+          >
+            Close
+          </button>
+          <FloatingArrow fill="white" stroke="black" strokeWidth={1} ref={arrowRef} context={context} />
+        </div>
+      </FloatingFocusManager>
+      )}
+
     </Fragment>
   );
 };
 
 SingleCell.propTypes = {
-  showTooltip: PropTypes.func.isRequired,
-  hideTooltip: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  handleNodeClick: PropTypes.func.isRequired,
-  data: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.array
-  ]).isRequired,
+  data: PropTypes.arrayOf({
+    value: PropTypes.number,
+    color: PropTypes.string,
+    tooltipContent: PropTypes.shape({
+      title: PropTypes.string,
+      companies: PropTypes.arrayOf({
+        name: PropTypes.string,
+        url: PropTypes.string
+      })
+    })
+  }).isRequired,
   uniqueKey: PropTypes.string.isRequired
 };
 

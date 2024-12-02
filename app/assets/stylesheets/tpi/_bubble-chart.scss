@@ -1,22 +1,30 @@
 @import "colors";
 @import "typography";
 
-$tape-height: 8px;
+$tape-height: 1px;
 $tape-color: rgba(25, 25, 25, 0.1);
-$cell-height: 80px;
+$cell-height: 60px;
 $cell-height-banks: 100px;
 $legend-image-width: 60px;
 
+.mq-sector-pie-chart-title {
+  display: flex;
+  gap: 8px;
+  color: $blue-darker;
+  margin-top: 28px;
+  line-height: 20px;
+  margin-bottom: 20px;
+}
+
 .bubble-chart__container {
   width: 100%;
-  padding: 50px 0;
   /* CSS GRID */
   display: grid;
-  grid-row-gap: 4px;
   align-items: center;
+  justify-content: center;
 
   &--sectors {
-    grid-template-rows: 150px auto;
+    grid-template-rows: 144px auto;
 
     .last {
       border-right: none;
@@ -38,14 +46,13 @@ $legend-image-width: 60px;
   height: $cell-height;
   display: flex;
   align-items: center;
-  border-right: calc(#{$tape-height / 2}) dotted $tape-color;
 
   & > *:first-child {
     margin: auto;
     z-index: 1;
   }
 
-  &::before {
+  &::after {
     background-color: $tape-color;
     content: "";
     position: absolute;
@@ -55,18 +62,61 @@ $legend-image-width: 60px;
   }
 }
 
-.bubble-chart__container--banks {
-  .bubble-chart__cell {
-    height: $cell-height-banks;
+.bubble-chart_circle {
+  circle:hover {
+    stroke-width: 2;
+    stroke: $yellow;
+  }
+}
+.bubble-chart_tooltip {
+  z-index: 10;
+  background-color: $white;
+  border: 1.25px solid $black;
+  padding: 20px;
+  font-size: 14px;
+  width: max-content;
+  max-width: 430px;
+  min-width: 400px;
+
+  h4 {
+    color: $blue-dark;
+    font-size: 12px !important;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+  &_header {
+    font-size: 20px !important;
+    line-height: 24px;
+    font-weight: 700;
+    margin-block: 8px 20px;
+  }
+  &_text {
+    columns: 2;
+    margin-block: 12px;
+    font-size: 16px;
+    max-height: 200px;
+    overflow-y: auto;
+    column-gap: 40px;
+  
+    .bubble-chart_tooltip_list_item {
+      margin-top: 12px;
+      margin-left: 20px;
+      a {
+        text-decoration: underline;
+        color: black;
+      }
+    }
+
+  }
+  .button.is-secondary.is-small {
+    float: right;
+    margin-top: 20px;
+    height: 40px !important;
+    width: 62px !important;
+    min-width: auto;
   }
 }
 
-.bubble-chart_circle {
-  circle:hover {
-    stroke-width: 14;
-    stroke: $black;
-  }
-}
 
 .bubble-tip {
   font-size: 14px;
@@ -100,6 +150,22 @@ $legend-image-width: 60px;
 }
 
 .bubble-chart__container--banks {
+  .bubble-chart__cell {
+    height: $cell-height-banks;
+    border-left: 4px dotted rgba(25, 25, 25, 0.1);
+    &:first-of-type {
+      border-left: none;
+    }
+    &::after {
+      background-color: rgba(25, 25, 25, 0.1);
+      content: "";
+      position: absolute;
+      top: calc(50% - 4px);
+      height: 8px;
+      width: calc(100% + 4px);
+    }
+  }
+
   .bubble-chart__title-container {
     position: absolute;
     top: -50px;
@@ -113,6 +179,24 @@ $legend-image-width: 60px;
     font-size: 16px;
     font-weight: bold;
   }
+  .bubble-chart__level-title {
+    font-family: $font-family-bold;
+    font-size: 12px;
+    color: $black;
+  }
+
+  .bubble-chart__level {
+    text-align: center;
+    padding-left: 0px;
+  }
+
+  .bubble-chart__legend-container + .bubble-chart__level {
+    text-align: left;
+  }
+}
+
+.bubble-chart_circle {
+  cursor: pointer;
 }
 
 .bubble-chart__title {
@@ -133,60 +217,42 @@ $legend-image-width: 60px;
 }
 
 .bubble-chart__legend-image {
-  width: 60px;
+  width: 64px;
+  height: 67px;
 }
 
 .bubble-chart__legend-titles-container {
   position: absolute;
   color: $dark;
-  left: calc(#{$legend-image-width} + 10px);
+  left: calc(#{$legend-image-width} + 6px);
   top: -10px;
 }
 
 .bubble-chart__legend-title {
   font-size: 12px;
+  line-height: 13px;
   font-family: $font-family-regular;
-  margin: 2px 0;
   display: block;
 }
 
 .bubble-chart__level {
   border-right: calc(#{$tape-height / 2}) dotted $tape-color;
   position: relative;
-  height: 100%;
-  padding-left: 20px;
+  height: 60%;
+
 }
 
 .bubble-chart__container--sectors {
   .bubble-chart__level-container {
     position: absolute;
     top: 20%;
+    padding-inline: 16px 10px;
   }
 
   .bubble-chart__level-title {
     font-family: $font-family-bold;
     font-size: 16px;
     color: $black;
-  }
-}
-
-.bubble-chart__container--banks {
-  .bubble-chart__level-title {
-    font-family: $font-family-bold;
-    font-size: 12px;
-    color: $black;
-  }
-
-  .bubble-chart__level {
-    text-align: center;
-  }
-
-  .bubble-chart__legend-container + .bubble-chart__level {
-    text-align: left;
-  }
-
-  .bubble-chart__level {
-    padding-left: 0px;
   }
 }
 
@@ -198,5 +264,5 @@ $legend-image-width: 60px;
 .bubble-chart__row-link {
   color: $blue-dark;
   text-align: right;
-  padding-right: 50px;
+  padding-right: 16px;
 }

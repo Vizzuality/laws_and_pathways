@@ -7,38 +7,30 @@ describe 'Sector', type: 'system', site: 'tpi' do
     end
 
     it 'loads all elements' do
-      expect(page).to have_text('Management Quality: All sectors')
+      expect(page).to have_text('All sectors')
 
       # pie chart
       within '.chart--mq-sector-pie-chart' do
-        expect(page).not_to have_text('Level 5')
+        expect(page).to have_text('Level 5')
         expect(page).to have_selector('.companies-size', text: '111')
       end
 
       # bubble chart loads
       within '.bubble-chart__container' do
-        expect(page).not_to have_text('Level 5')
-        expect(page).to have_text('Market cap')
+        expect(page).to have_text('Level 5')
         expect(page).to have_text('Autos')
         expect(page).to have_text('Airlines')
       end
-
-      # all sectors chart TODO: read this
-      # within '#cp-performance-all-sectors-chart' do
-      #   expect(page).to have_text('Below 2 Degrees')
-      #   expect(page).to have_text('Aluminium')
-      #   expect(page).to have_text('Cement')
-      # end
     end
 
-    it 'loads also beta scores' do
-      with_mq_beta_scores do
+    it 'load old mq scores' do
+      with_older_mq_scores do
         within '.chart--mq-sector-pie-chart' do
-          expect(page).to have_text('Level 5')
+          expect(page).not_to have_text('Level 5')
         end
 
         within '.bubble-chart__container' do
-          expect(page).to have_text('Level 5')
+          expect(page).not_to have_text('Level 5')
         end
       end
     end
@@ -52,20 +44,20 @@ describe 'Sector', type: 'system', site: 'tpi' do
     it 'loads all elements' do
       # bubble chart loads
       within '.chart--mq-sector-pie-chart' do
-        expect(page).to have_text('Level 00 companies') # Level 0 0 companies
-        expect(page).to have_text('Level 12 companies') # Level 1 2 companies
-        expect(page).to have_text('Level 20 companies') # Level 2 0 companies
-        expect(page).to have_text('Level 32 companies') # Level 3 2 companies
-        expect(page).to have_text('Level 41 companies') # Level 4 1 companies
-        expect(page).not_to have_text('Level 5') # BETA level that is disabled by default
+        expect(page).to have_text('Level 0 i 0 companies', normalize_ws: true) # Level 0 0 companies
+        expect(page).to have_text('Level 1 i 2 companies', normalize_ws: true) # Level 1 2 companies
+        expect(page).to have_text('Level 2 i 0 companies', normalize_ws: true) # Level 2 0 companies
+        expect(page).to have_text('Level 3 i 2 companies', normalize_ws: true) # Level 3 2 companies
+        expect(page).to have_text('Level 4 i 1 company', normalize_ws: true) # Level 4 1 company
+        expect(page).to have_text('Level 5')
         expect(page).to have_selector('.companies-size', text: '5')
       end
     end
 
-    it 'loads also beta scores' do
-      with_mq_beta_scores do
+    it 'switch to older level scores' do
+      with_older_mq_scores do
         within '.chart--mq-sector-pie-chart' do
-          expect(page).to have_text('Level 5')
+          expect(page).not_to have_text('Level 5')
         end
       end
     end

@@ -28,7 +28,7 @@ BaseTooltip.propTypes = {
 
 BaseTooltip.defaultProps = {
   trigger: (
-    <span className="base-tooltip__default-trigger">?</span>
+    <span className="base-tooltip__default-trigger">i</span>
   )
 };
 

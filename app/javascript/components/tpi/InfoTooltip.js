@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 
 const InfoTooltip = ({ trigger, content, html }) => (
-  <span className="base-tooltip">
+  <div className="base-tooltip">
     {html ? <div data-tip={content} dangerouslySetInnerHTML={{ __html: trigger }} /> : <div data-tip={content}>{trigger}</div>}
     <ReactTooltip className="info-tooltip" />
-  </span>
+  </div>
 );
 
 InfoTooltip.propTypes = {
@@ -17,7 +17,7 @@ InfoTooltip.propTypes = {
 
 InfoTooltip.defaultProps = {
   trigger: (
-    <span className="base-tooltip__default-trigger">?</span>
+    <span className="base-tooltip__default-trigger">i</span>
   ),
   html: false
 };

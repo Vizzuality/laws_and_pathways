@@ -31,7 +31,7 @@
   <% assessment.questions_by_level.each do |level, questions| %>
     <div class="mq-assessment-level level<%= level %>">
       <p class="mq-assessment-level__header">
-        Level <%= level.in?(assessment.beta_levels) ? "#{level} [BETA]" : level %>: <%= t("tpi.company.level_description.#{level}") %>
+        Level <%= "#{level}: #{t("tpi.company.level_description.#{level}")}" %>
       </p>
 
       <div class="mq-assessment-answers">

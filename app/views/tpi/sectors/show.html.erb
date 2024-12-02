@@ -1,11 +1,6 @@
 <% content_for :page_title, "#{@sector.name} - Transition Pathway Initiative" %>
 <% content_for :page_description, "Description: Compare and assess how prepared the world’s top companies in the #{@sector.name} sector are for the transition to a low-carbon economy." %>
 
-<%= react_component('MqBetaModal', {
-  enabled: session[:enable_beta_mq_assessments],
-  page: "sector"
-}) %>
-
 <div class="sector-page">
   <div class="dropdown-selector-sector-page-wrapper">
     <%= react_component("DropdownSelector", {
@@ -19,22 +14,13 @@
     <div class="container is-hidden-touch">
       <div class="mq-beta-scores">
         <%= render 'tpi/shared/mq_beta_scores', has_data: true %>
-        <div>
-          <a href="#management-quality" class="link with-icon is-pulled-left">
-            <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
-            Go to Management Quality
-          </a>
-          <% if any_cp_assessment? %>
-            <a href="#carbon-performance" class="link with-icon is-pulled-left">
-              <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" />
-              Go to Carbon Performance
-            </a>
-          <% end %>
-        </div>
         <div class="mq-beta-scores__download-button">
-          <%= link_to user_download_tpi_sector_path(@sector), class: 'button is-primary is-pulled-right with-icon with-border' do %>
+          <%= react_component('DownloadFormModal', {
+            downloadUrl: user_download_tpi_sector_path(@sector)
+          }) %>
+          <%= button_to user_download_methodology_tpi_sectors_path, class: 'button is-primary is-pulled-right with-icon with-border', method: :get do %>
             <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
-            Download data
+            Methodology
           <% end %>
         </div>
       </div>
@@ -42,16 +28,6 @@
     <div class="container is-hidden-desktop">
       <div class="mq-beta-scores">
         <%= render 'tpi/shared/mq_beta_scores', has_data: true %>
-        <div>
-          <a href="#management-quality" class="link with-icon is-pulled-left">
-            Management Quality
-          </a>
-          <% if any_cp_assessment? %>
-            <a href="#carbon-performance" class="link with-icon is-pulled-left">
-              Carbon Performance
-            </a>
-          <% end %>
-        </div>
       </div>
     </div>
   </div>
@@ -65,32 +41,11 @@
 
     <%= react_component('charts/mq-sector-pie', { dataUrl: levels_chart_data_tpi_sector_path(@sector.id) }) %>
 
+    <h4>Number and Detailed Companies Lists by Management Quality </h4>
     <%= react_component("charts/bubble/CompaniesAccordion", { levels: @companies_by_levels, by_sector: false }) %>
 
-    <div class="sector-level-overview is-hidden-touch columns">
-      <% @companies_by_levels.each do |level, companies| -%>
-        <div class="sector-level column">
-          <div class="sector-level__title">
-            <h5>Level <%= level.to_i === 5 ? "#{level} [BETA]" : level %></h5>
-            <p><%= t("tpi.company.level_description_short.#{level.to_i}") %></p>
-          </div>
-          <div class="sector-level__companies level<%= level.to_i %>">
-            <ul>
-              <% companies.each do |company| %>
-                <li>
-                  <%= link_to company[:name], tpi_company_path(company[:id]) %>
-                  <%= render 'tpi/companies/mq_level_trend', level: company[:level], status: company[:status] %>
-                </li>
-              <% end %>
+    <%= react_component('charts/mq-sector-bar', { data:  @companies_by_levels, sector: @sector.name }) %>
 
-              <% unless companies.any? %>
-                <li>No companies</li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
-      <% end %>
-    </div>
   </section>
 
   <% if any_cp_assessment? %>
@@ -108,25 +63,6 @@
         dataUrl: emissions_chart_data_tpi_sector_path(@sector.id),
         unit: @sector.latest_cp_unit&.unit
         }) %>
-    </section>
-  <% end %>
-
-  <% if @publications_and_articles.present? %>
-    <hr>
-
-    <section class="section tpi-sector__promoted-publications">
-      <div class="container">
-        <div class="promoted-publications__title">
-          <div class="promoted-publications__title-text">Publications and news</div>
-
-          <%= link_to 'View all publications and news', tpi_publications_path, class: 'button is-secondary is-hidden-touch' %>
-        </div>
-
-        <%= render "tpi/publications/promoted", publications_and_articles: @publications_and_articles, count: @publications_and_articles.count %>
-        <div class="view-all-btn__container">
-          <a href="/publications" class="button is-secondary is-hidden-desktop">View all news</a>
-        </div>
-      </div>
     </section>
   <% end %>
 </div>

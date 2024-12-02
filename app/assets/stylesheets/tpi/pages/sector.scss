@@ -1,6 +1,6 @@
 @import "../variables";
 
-$tape-color: rgba(25,25,25,0.1);
+$tape-color: rgba(25, 25, 25, 0.1);
 
 .sector-page {
   .dropdown-selector-sector-page-wrapper {
@@ -14,22 +14,29 @@ $tape-color: rgba(25,25,25,0.1);
 
   .sectors-header {
     background: $blue;
-
-    height: 100px;
     display: flex;
     align-items: center;
-
+    min-height: 76px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    transform: translateY(-1px);
+    
     a {
       color: white;
       line-height: 40px;
       margin-right: 10px;
+      @include until($desktop) {
+        margin-right: 0;
+      }
     }
 
     @include until($desktop) {
-      padding: 0 0.75rem;
+      padding-inline: 0 !important;
       font-size: $size-7;
-      height: 60px;
+      height: auto;
       font-family: $font-family-regular;
+      min-height: auto;
     }
   }
 
@@ -60,34 +67,49 @@ $tape-color: rgba(25,25,25,0.1);
     margin-top: 50px;
 
     .sector-level {
-      display: flex;
-      flex-direction: column;
-
-      padding-bottom: 0;
+      &.column {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        padding-bottom: 0;
+      }
 
       &:not(:last-child) {
-        border-right: 5px dotted $tape-color;
+        border-right: 2px dashed $tape-color;
       }
 
       &__title {
         position: relative;
-        height: 60px;
-        margin-bottom: 50px;
+        margin-bottom: 20px;
+        h5 {
+          font-size: 16px;
+          line-height: 20px;
+          font-weight: 700;
+          margin-bottom: 6px;
+        }
+        p {
+          font-size: 12px;
+          line-height: 18px;
+          color: $grey-dark;
+        }
       }
 
       &__companies {
-        flex: 1;
         line-height: 1.25;
-
-        padding: 12px 24px;
         color: white;
+        display: flex;
+        align-items: end;
 
-        a {
-          color: white;
-        }
-
-        li {
-          padding: 3px 0;
+        > div:first-child {
+          width: 100%;
+          text-align: center;
+          padding-top: 20px;
+          font-size: 32px;
+          font-weight: 700;
+          cursor: pointer;
+          &:hover {
+            border: 2px solid $yellow;
+          }
         }
 
         .mq-level-trend {
@@ -128,15 +150,16 @@ $tape-color: rgba(25,25,25,0.1);
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
+    padding-top: 50px;
 
-    >p {
+    > p {
       display: none;
     }
 
     @include until($desktop) {
       display: block;
 
-      >p {
+      > p {
         display: block;
         margin-top: 15px;
         font-size: $size-6;
@@ -147,7 +170,7 @@ $tape-color: rgba(25,25,25,0.1);
         display: block;
         color: $grey-dark;
         font-size: $size-5;
-        margin-top:  20px;
+        margin-top: 20px;
         max-width: 280px;
 
         #show-by-dropdown-placeholder {
@@ -167,5 +190,57 @@ $tape-color: rgba(25,25,25,0.1);
     #show-by-dropdown-placeholder {
       margin-left: 10px;
     }
+  }
+}
+
+.sector-level__popover {
+  z-index: 10;
+  background-color: $white;
+  border: 1.25px solid $black;
+  padding: 20px;
+  font-size: 14px;
+  width: 430px;
+  max-width: 430px;
+  min-width: 400px;
+  color: black;
+
+  h4 {
+    color: $blue-dark;
+    font-size: 12px !important;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+  p {
+    font-size: 12px;
+    line-height: 18px;
+    color: $grey-dark;
+  }
+  &_header {
+    font-size: 20px !important;
+    line-height: 24px;
+    font-weight: 700;
+    margin-block: 8px 20px;
+  }
+  &_text {
+    columns: 2;
+    margin-block: 12px;
+    font-size: 16px;
+    max-height: 200px;
+    overflow-y: auto;
+    column-gap: 40px;
+  }
+  &_list_item {
+    margin-left: 20px;
+    a {
+      text-decoration: underline;
+      color: black;
+    }
+  }
+  .button.is-secondary.is-small {
+    float: right;
+    margin-top: 20px;
+    height: 40px !important;
+    width: 62px !important;
+    min-width: auto;
   }
 }

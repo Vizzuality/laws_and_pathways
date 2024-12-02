@@ -20,7 +20,7 @@ const Select = ({
   value,
   allowSearch,
   placeholder,
-  label
+  required
 }) => {
   const [searchValue, setSearchValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -59,6 +59,7 @@ const Select = ({
 
   const handleOptionClick = (opt) => {
     setIsOpen(false);
+    setSearchValue(opt.value);
     onSelect({ name, value: opt.value, label: opt.label });
   };
 
@@ -144,18 +145,15 @@ const Select = ({
             role="button"
             aria-label={isOpen ? 'Close dropdown' : 'Open dropdown'}
           >
-            {isOpen && allowSearch ? (
-              <input
-                ref={inputEl}
-                className="selector__input"
-                onChange={(e) => setSearchValue(e.target.value)}
-                placeholder="Type or select"
-              />
-            ) : (
-              <span aria-label={label} className="selector__value">
-                {value || placeholder}
-              </span>
-            )}
+            <input
+              ref={inputEl}
+              className="selector__input"
+              onChange={(e) => setSearchValue(e.target.value)}
+              placeholder={placeholder}
+              required={required}
+              name={name}
+              value={isOpen && allowSearch ? searchValue : value}
+            />
             <img
               onClick={() => isOpen && handleCloseDropdown()}
               className={cx('chevron-icon', {
@@ -215,14 +213,15 @@ Select.propTypes = {
   value: PropTypes.string,
   allowSearch: PropTypes.bool,
   placeholder: PropTypes.string,
-  label: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
+  required: PropTypes.bool
 };
 
 Select.defaultProps = {
   value: '',
   allowSearch: false,
-  placeholder: ''
+  placeholder: '',
+  required: false
 };
 
 export default Select;

@@ -2,26 +2,42 @@
   .change-view {
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
+  
+    .buttons {
+      justify-content: end;
+      @include until($desktop) {
+        // flex-direction: column;
+        justify-content: center;
+      }
+    }
   }
 
   .companies-header {
     background: $blue;
-
-    height: 100px;
+    // height: 100px;
+    min-height: 76px;
     display: flex;
     align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    transform: translateY(-1px);
 
     a {
       color: white;
       line-height: 40px;
       margin-right: 10px;
+      @include until($desktop) {
+        margin-right: 0;
+      }
     }
 
     @include until($desktop) {
-      padding: 0 0.75rem;
+      padding-inline: 0 !important;
       font-size: $size-7;
-      height: 60px;
+      height: auto;
       font-family: $font-family-regular;
+      min-height: 76px;
     }
   }
 
@@ -35,6 +51,9 @@
 
   .summary-boxes {
     margin-top: 1.5rem;
+    @include until($desktop) {
+      margin-top: 0;
+    }
   }
 
   .summary-box {
@@ -242,10 +261,6 @@
         padding: $assesment-level-padding;
 
         border-left: 2px solid $hawkes-blue;
-
-        &.level5 {
-          background-color: rgba($tpi-level5-background-color, 0.15);
-        }
 
         &__header {
           font-size: 16px;

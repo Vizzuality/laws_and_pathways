@@ -12,6 +12,7 @@ module TPI
     def index
       @assessment_dates = BankAssessment.select(:assessment_date).distinct.pluck(:assessment_date)
       @publications_and_articles = TPISector.find_by(slug: 'banks')&.publications_and_articles || []
+      @publications_and_articles = @publications_and_articles.select { |pa| pa.publication_date <= Time.current }
       bank_page = TPIPage.find_by(slug: 'banks-content')
       @methodology_description = Content.find_by(
         page: bank_page,

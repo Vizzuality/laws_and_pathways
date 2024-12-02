@@ -58,10 +58,7 @@ export function getOptions({ chartData }) {
           fontSize: '12px'
         },
         useHTML: true,
-        stagger: 0,
-        formatter() {
-          return this.value === 5 ? '5 [BETA]' : this.value;
-        }
+        stagger: 0
       },
       title: {
         text: 'Level',
