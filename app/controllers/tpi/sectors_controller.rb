@@ -167,9 +167,9 @@ module TPI
 
     def companies_scope(params)
       if params[:id]
-        TPISector.tpi_tool.friendly.find(params[:id]).companies.published.active
+        TPISector.tpi_tool.friendly.find(params[:id]).companies.published.active.order(name: :asc)
       else
-        Company.published.active
+        Company.published.active.order(name: :asc)
       end
     end
 
