@@ -73,8 +73,8 @@
               <div class="cp-alignments">
                 <% long_term_header = "Long-term<br/> alignment in #{@company.sector.name.downcase == 'electricity utilities' ? '2040-50' : '2050'}" %>
 
-                <% if @company_presenter.cp_alignment_2027.present? %>
-                  <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2027', alignment: @company_presenter.cp_alignment_2027 %>
+                <% if @company_presenter.cp_alignment_2028.present? %>
+                  <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2028', alignment: @company_presenter.cp_alignment_2028 %>
                 <% else %>
                   <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2025', alignment: @company_presenter.cp_alignment_2025 %>
                 <% end %>
@@ -85,8 +85,8 @@
               <div class="cp-alignments">
                 <% long_term_header = "Long-term<br/> alignment in #{@company.sector.name.downcase == 'electricity utilities' ? '2040-50' : '2050'}" %>
 
-                <% if @company_presenter.cp_regional_alignment_2027.present? %>
-                  <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2027', alignment: @company_presenter.cp_regional_alignment_2027 %>
+                <% if @company_presenter.cp_regional_alignment_2028.present? %>
+                  <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2028', alignment: @company_presenter.cp_regional_alignment_2028 %>
                 <% else %>
                   <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2025', alignment: @company_presenter.cp_regional_alignment_2025 %>
                 <% end %>

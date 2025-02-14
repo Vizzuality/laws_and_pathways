@@ -12,11 +12,13 @@ FactoryBot.define do
     cp_alignment_2050 { 'Paris Pledges' }
     cp_alignment_2025 { 'Paris Pledges' }
     cp_alignment_2027 { 'Paris Pledges' }
+    cp_alignment_2028 { 'Paris Pledges' }
     cp_alignment_2035 { 'Paris Pledges' }
 
     region { 'Europe' }
     cp_regional_alignment_2025 { 'Paris Pledges' }
     cp_regional_alignment_2027 { 'Paris Pledges' }
+    cp_regional_alignment_2028 { 'Paris Pledges' }
     cp_regional_alignment_2035 { 'Paris Pledges' }
     cp_regional_alignment_2050 { 'Paris Pledges' }
 
