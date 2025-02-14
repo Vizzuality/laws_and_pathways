@@ -108,6 +108,7 @@ ActiveAdmin.register CP::Assessment do
     column :cp_alignment_2050
     column :cp_alignment_2025
     column :cp_alignment_2027
+    column :cp_alignment_2028
     column :cp_alignment_2035
     column :assessment_date
     column :publication_date
