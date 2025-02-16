@@ -15,11 +15,13 @@
     <%= f.input :assumptions %>
     <%= f.input :cp_alignment_2025 %>
     <%= f.input :cp_alignment_2027 %>
+    <%= f.input :cp_alignment_2028 %>
     <%= f.input :cp_alignment_2035 %>
     <%= f.input :cp_alignment_2050 %>
     <%= f.input :region, as: :select, collection: CP::Assessment::REGIONS, required: false %>
     <%= f.input :cp_regional_alignment_2025 %>
     <%= f.input :cp_regional_alignment_2027 %>
+    <%= f.input :cp_regional_alignment_2028 %>
     <%= f.input :cp_regional_alignment_2035 %>
     <%= f.input :cp_regional_alignment_2050 %>
     <%= f.input :years_with_targets_string, label: 'Years with targets', as: :tags, hint: 'Type a year and press ENTER. Non integers will be rejected.' %>

@@ -25,6 +25,8 @@
 #  final_disclosure_year      :integer
 #  cp_alignment_2027          :string
 #  cp_regional_alignment_2027 :string
+#  cp_alignment_2028          :string
+#  cp_regional_alignment_2028 :string
 #
 
 module CP
@@ -62,10 +64,12 @@ module CP
     with_options allow_nil: true, allow_blank: true, inclusion: {in: CP::Alignment::ALLOWED_NAMES} do
       validates :cp_alignment_2025
       validates :cp_alignment_2027
+      validates :cp_alignment_2028
       validates :cp_alignment_2035
       validates :cp_alignment_2050
       validates :cp_regional_alignment_2025
       validates :cp_regional_alignment_2027
+      validates :cp_regional_alignment_2028
       validates :cp_regional_alignment_2035
       validates :cp_regional_alignment_2050
     end

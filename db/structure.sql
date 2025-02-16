@@ -10,13 +10,6 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: public; Type: SCHEMA; Schema: -; Owner: -
---
-
--- *not* creating schema, since initdb creates it
-
-
---
 -- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -819,7 +812,9 @@ CREATE TABLE public.cp_assessments (
     final_disclosure_year integer,
     cp_alignment_2027 character varying,
     cp_regional_alignment_2027 character varying,
-    assessment_date_flag character varying
+    assessment_date_flag character varying,
+    cp_alignment_2028 character varying,
+    cp_regional_alignment_2028 character varying
 );
 
 
@@ -4180,4 +4175,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240202090401'),
 ('20240206094238'),
 ('20240527100352'),
-('20241115133904');
+('20241115133904'),
+('20250214160706');
+
+
