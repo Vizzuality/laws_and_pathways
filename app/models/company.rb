@@ -109,4 +109,8 @@ class Company < ApplicationRecord
     where('name ilike ? OR company_comments_internal ilike ?',
           "%#{query}%", "%#{query}%")
   end
+
+  def [](key)
+    send(key)
+  end
 end

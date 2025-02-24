@@ -296,3 +296,10 @@
     padding: 0;
   }
 }
+
+.highcharts-button-box {
+  &.active {
+    background-color: $blue;
+    color: $white;
+  }
+}
