@@ -7,8 +7,7 @@ module Api
           <b>Below 2 Degrees</b> in Paper
         HTML
         '#FFDD49' => <<~HTML,
-          <b>Below 2 Degrees</b> in Airlines, Aluminium, Autos, Cement, Diversified Mining, Electricity Utilities, Food Producers, Oil & Gas, Shipping and<br/>
-          Steel<br/>
+          <b>Below 2 Degrees</b> in Airlines, Aluminium, Autos, Cement, Diversified Mining, Electricity Utilities, Food Producers, Oil & Gas, Shipping and Steel<br/>
           <b>2 Degrees</b> in Paper
         HTML
         '#FF9600' => <<~HTML,
