@@ -64,7 +64,10 @@ export function getOptions(data, sectors) {
       itemMarginTop: 10,
       margin: 50,
       floating: true,
-      maxHeight: 250
+      maxHeight: 250,
+      labelFormatter() {
+        return this.name.replaceAll('<b>', '<b style="font-family: \'BrownTT Bold\'">');
+      }
     },
     plotOptions: {
       column: {
@@ -106,7 +109,7 @@ export function getOptions(data, sectors) {
             <div class="x-value">${xValue}</div>
             <div class="alignment">
               <span class="circle" style="background: ${alignment.color}"></span>
-              ${alignment.name}
+              ${alignment.name.replaceAll('<b>', '').replaceAll('</b>', '')}
             </div>
             <div class="companies">
               ${nrOfCompanies} ${nrOfCompanies === 1 ? 'company' : 'companies'}<br/>

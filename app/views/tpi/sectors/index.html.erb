@@ -22,7 +22,6 @@
             <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
             Methodology
           <% end %>
-          
         </div>
       </div>
     </div>
@@ -38,7 +37,7 @@
       dataUrl: levels_chart_data_tpi_sectors_path
     }) %>
 
-    <h4>Number of Companies by Sector according to Management Quality</h4> 
+    <h4>Number of Companies by Sector according to Management Quality</h4>
     <%= react_component('charts/bubble/Chart', {
       levels: @companies_by_sectors,
       sectors: @sectors_json
