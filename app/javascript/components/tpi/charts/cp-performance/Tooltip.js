@@ -32,7 +32,7 @@ function Tooltip({ xValue, yValues, unit }) {
       <div className="cp-tooltip__targets">
         TARGETS
       </div>
-      {noTargets ? 'The bank has not disclosed any financed emissions reduction target'
+      {noTargets ? 'Financed emissions reduction targets not disclosed'
         : benchmarkValues.map(y => (
           <div key={y.title} className="cp-tooltip__row cp-tooltip__row--targets">
             <span className="cp-tooltip__value-title">
