@@ -1,6 +1,4 @@
-/* eslint-disable react/no-this-in-sfc, no-nested-ternary */
-
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Highcharts from 'highcharts';
@@ -20,46 +18,76 @@ function transformData(data) {
   return newData;
 }
 
+function setButtonsColor(buttons, alignmentKey) {
+  buttons.forEach((button) => {
+    const key = button.attr('data-alignment-key');
+    if (key === alignmentKey) {
+      button.setState(2);
+      return;
+    }
+    button.setState(0);
+  });
+}
+
 function CPPerformanceAllSectors({ dataUrl, sectors }) {
   const { data, error, loading } = useChartData(dataUrl);
   const { isMobile } = useDeviceInfo();
   const noData = !loading && data && data.length === 0;
 
   const [alignmentKey, setAlignmentKey] = useState('cp_alignment_2050');
-
-  const [allButtons, setAllButtons] = useState([]);
+  const [buttons, setButtons] = useState([]);
 
   const allData = transformData(data);
   const selectedData = alignmentKey in allData ? allData[alignmentKey] : [];
 
   const buttonLabels = {
-    cp_alignment_2028: {label: 'Short 2028', order: 0},
-    cp_alignment_2035: {label: 'Medium 2035', order: 1},
-    cp_alignment_2050: {label: 'Long 2050', order: 2}
+    cp_alignment_2028: { label: 'Short 2028', order: 0 },
+    cp_alignment_2035: { label: 'Medium 2035', order: 1 },
+    cp_alignment_2050: { label: 'Long 2050', order: 2 }
   };
+
+  useEffect(() => {
+    setButtonsColor(buttons, alignmentKey);
+  }, [alignmentKey, buttons]);
+
   const highchartsButtonCallback = (chart) => {
-    const buttons = Object.keys(allData)
+    const buttonDefinitions = Object.keys(allData)
       .sort((key1, key2) => buttonLabels[key1].order - buttonLabels[key2].order)
-      .map((key) => ({key, label: buttonLabels[key].label}));
-    buttons.forEach(({key, label}, index) => {
-      const button = chart.renderer.button(label, 750 + index * 100, 230, (event) => {
-        if (allButtons.length > 0) {
-          allButtons[index].attr({fill: 'blue'});
-        }
+      .map((key) => ({ key, label: buttonLabels[key].label }));
+    const newButtons = [];
+    buttonDefinitions.forEach(({ key, label }, index) => {
+      const baseStyle = {
+        width: 200,
+        border: '1px solid black'
+      };
+      const button = chart.renderer.button(label, 750 + index * 100, 230, () => {
         setAlignmentKey(key);
       }, {
-        fill: alignmentKey === key ? 'blue' : 'white',
+        fill: 'white',
         style: {
-          width: 200,
-          border: '1px solid black',
-          color: alignmentKey === key ? 'white' : 'black'
+          ...baseStyle,
+          color: 'black'
         }
-      }, null, null, null, null, true);
+      }, {
+        fill: 'red',
+        style: {
+          ...baseStyle,
+          color: 'black'
+        }
+      }, {
+        fill: 'blue',
+        style: {
+          ...baseStyle,
+          color: 'white'
+        }
+      }, null, null, true);
+      button.attr({ 'data-alignment-key': key });
       button.add();
-      setAllButtons(function (prevState) {
-        return [...prevState, button];
-      });
+      // eslint-disable-next-line dot-notation
+      button['text'].element.addEventListener('click', () => setAlignmentKey(key));
+      newButtons.push(button);
     });
+    setButtons(newButtons);
   };
 
   const options = isMobile ? getMobileOptions(selectedData, sectors) : getOptions(selectedData, sectors);
@@ -70,6 +98,7 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
         <p>Loading...</p>
       ) : (
         <React.Fragment>
+          {/* eslint-disable-next-line no-nested-ternary */}
           {error ? (
             <p>{error}</p>
           ) : noData ? (
