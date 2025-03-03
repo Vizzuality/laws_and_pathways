@@ -37,40 +37,7 @@ module Api
       #     }
       #   ]
       def cp_performance_all_sectors_data
-        all_companies = Company
-          .published
-          .active
-          .includes(:latest_cp_assessment, sector: [:cluster])
-          .select { |c| c.cp_alignment_2050.present? }
-          .reject { |c| CP::Alignment.new(name: c.cp_alignment_2050, sector: c.sector.name).not_assessed? }
-
-        all_sectors = all_companies.map(&:sector).uniq
-        cp_alignment_data = COLOR_DESCRIPTIONS.keys
-          .map { |name| {name => all_sectors.map { |s| {s.name => 0} }.reduce(&:merge)} }
-          .reduce(&:merge)
-
-        all_companies.each do |company|
-          cp_alignment = CP::Alignment.new(name: company.cp_alignment_2050, sector: company.sector.name)
-          alignment_key = cp_alignment.color
-          cp_alignment_data[alignment_key] ||= all_sectors.map { |s| {s.name => 0} }.reduce(&:merge)
-          cp_alignment_data[alignment_key]
-            .merge!(company.sector.name => 1) { |_k, old_v, new_v| old_v + new_v }
-        end
-
-        result = cp_alignment_data.map do |color, data|
-          {
-            name: COLOR_DESCRIPTIONS[color],
-            color: color,
-            data: (data || []).sort_by do |sn, _v|
-              sector = all_sectors.find { |s| s.name == sn }
-              [sector.cluster&.name || 'ZZZ', sector.name] # stupid way to sort null last
-            end.to_a
-          }
-        end
-
-        return [] if result.all? { |r| r[:data].empty? }
-
-        result.reject { |r| r[:data].map(&:second).all?(&:zero?) }
+        cp_performance_all_sectors_by_year(:cp_alignment_2050)
       end
 
       def cp_performance_all_sectors_data_all_years
@@ -89,8 +56,8 @@ module Api
           .published
           .active
           .includes(:latest_cp_assessment, sector: [:cluster])
-          .select { |c| c[year_key].present? }
-          .reject { |c| CP::Alignment.new(name: c[year_key], sector: c.sector.name).not_assessed? }
+          .select { |c| c.public_send(year_key).present? }
+          .reject { |c| CP::Alignment.new(name: c.public_send(year_key), sector: c.sector.name).not_assessed? }
 
         all_sectors = all_companies.map(&:sector).uniq
         cp_alignment_data = COLOR_DESCRIPTIONS.keys
@@ -98,7 +65,7 @@ module Api
           .reduce(&:merge)
 
         all_companies.each do |company|
-          cp_alignment = CP::Alignment.new(name: company[year_key], sector: company.sector.name)
+          cp_alignment = CP::Alignment.new(name: company.public_send(year_key), sector: company.sector.name)
           alignment_key = cp_alignment.color
           cp_alignment_data[alignment_key] ||= all_sectors.map { |s| {s.name => 0} }.reduce(&:merge)
           cp_alignment_data[alignment_key]
