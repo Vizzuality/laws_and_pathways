@@ -22,6 +22,7 @@ Rails.application.routes.draw do
         collection do
           get :levels_chart_data
           get :cp_performance_chart_data
+          get :cp_performance_chart_data_all_years
           get :user_download_all
           get :user_download_methodology
           post :send_download_file_info_email
