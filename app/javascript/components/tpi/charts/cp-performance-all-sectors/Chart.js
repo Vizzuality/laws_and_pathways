@@ -56,35 +56,46 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
       .map((key) => ({ key, label: buttonLabels[key].label }));
     const newButtons = [];
     buttonDefinitions.forEach(({ key, label }, index) => {
+      const buttonWidth = 100;
       const baseStyle = {
-        width: 200,
-        border: '1px solid black'
+        border: '1px solid black',
+        fontFamily: 'BrownTT Bold',
+        fontSize: '0.95rem'
       };
-      const button = chart.renderer.button(label, 750 + index * 100, 230, () => {
+      const button = chart.renderer.button(label, (chart.plotWidth - 3 * buttonWidth) + index * 120, 230, () => {
         setAlignmentKey(key);
       }, {
-        fill: 'white',
+        fill: '#fff',
+        width: buttonWidth,
         style: {
           ...baseStyle,
-          color: 'black'
+          color: '#191919'
         }
       }, {
-        fill: 'red',
+        fill: '#5587F7',
+        width: buttonWidth,
         style: {
           ...baseStyle,
-          color: 'black'
+          color: '#fff'
         }
       }, {
-        fill: 'blue',
+        fill: '#0A4BDC',
+        width: buttonWidth,
         style: {
           ...baseStyle,
-          color: 'white'
+          color: '#fff'
         }
       }, null, null, true);
       button.attr({ 'data-alignment-key': key });
       button.add();
       // eslint-disable-next-line dot-notation
-      button['text'].element.addEventListener('click', () => setAlignmentKey(key));
+      const text = button['text'];
+      text.element.addEventListener('click', () => setAlignmentKey(key));
+      text.element.addEventListener('mouseover', () => {
+        if (button.state !== 2) {
+          button.setState(1);
+        }
+      });
       newButtons.push(button);
     });
     setButtons(newButtons);
@@ -104,11 +115,17 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
           ) : noData ? (
             <p>No data available.</p>
           ) : (
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={options}
-              callback={highchartsButtonCallback}
-            />
+            <>
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={options}
+                callback={highchartsButtonCallback}
+              />
+              <p>1.5 degrees equates to below 2 degrees in paper. Below 2 degrees equates to 2 degrees in paper.
+                National pledges equates to international pledges in airlines and shipping; 2 degrees in food producers; and Paris pledges
+                in paper.
+              </p>
+            </>
           )}
         </React.Fragment>
       )}
