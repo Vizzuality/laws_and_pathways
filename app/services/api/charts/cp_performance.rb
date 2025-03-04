@@ -42,7 +42,7 @@ module Api
 
       def cp_performance_all_sectors_data_all_years
         result = {}
-        [:cp_alignment_2050, :cp_alignment_2035, :cp_alignment_2028].each do |alignment_key|
+        [:cp_alignment_2050, :cp_alignment_2035, :cp_alignment_2027].each do |alignment_key|
           result[alignment_key] = cp_performance_all_sectors_by_year(alignment_key)
         end
 
