@@ -3,19 +3,18 @@ module Api
     class CPPerformance
       COLOR_DESCRIPTIONS = {
         '#00C170' => <<~HTML,
-          1.5 Degrees in electricity, oil & gas, diversified mining, cement, steel, shipping, and aviation<br/>
-          Below 2 Degrees in paper and aluminium<br/>
-          2 Degrees (High Efficiency) in autos
+          <b>1.5 Degrees</b> in Airlines, Aluminium, Autos, Cement, Diversified Mining, Electricity Utilities, Food Producers, Oil & Gas, Shipping and Steel<br/>
+          <b>Below 2 Degrees</b> in Paper
         HTML
         '#FFDD49' => <<~HTML,
-          Below 2 Degrees in electricity, oil & gas, diversified mining, cement, steel, shipping, and aviation<br/>
-          2 Degrees in paper and aluminium<br/>
-          2 Degrees (Shift-Improve) in autos
+          <b>Below 2 Degrees</b> in Airlines, Aluminium, Autos, Cement, Diversified Mining, Electricity Utilities, Food Producers, Oil & Gas, Shipping and Steel<br/>
+          <b>2 Degrees</b> in Paper
         HTML
         '#FF9600' => <<~HTML,
-          National Pledges in electricity, oil & gas, diversified mining, cement, and steel<br/>
-          International Pledges in aviation and shipping<br/>
-          Paris Pledges in autos, paper, and aluminium
+          <b>National Pledges</b> in Aluminium, Autos, Cement, Diversified Mining, Electricity Utilities, Oil & Gas and Steel<br/>
+          <b>International Pledges</b> in Airlines and Shipping<br/>
+          <b>2 Degrees</b> in Food Producers<br/>
+          <b>Paris Pledges</b> in Paper
         HTML
         '#ED3D4A' => 'Not Aligned',
         '#595B5D' => 'No or unsuitable disclosure'
@@ -38,12 +37,27 @@ module Api
       #     }
       #   ]
       def cp_performance_all_sectors_data
+        cp_performance_all_sectors_by_year(:cp_alignment_2050)
+      end
+
+      def cp_performance_all_sectors_data_all_years
+        result = {}
+        [:cp_alignment_2050, :cp_alignment_2035, :cp_alignment_2027].each do |alignment_key|
+          result[alignment_key] = cp_performance_all_sectors_by_year(alignment_key)
+        end
+
+        result
+      end
+
+      private
+
+      def cp_performance_all_sectors_by_year(year_key)
         all_companies = Company
           .published
           .active
           .includes(:latest_cp_assessment, sector: [:cluster])
-          .select { |c| c.cp_alignment_2050.present? }
-          .reject { |c| CP::Alignment.new(name: c.cp_alignment_2050, sector: c.sector.name).not_assessed? }
+          .select { |c| c.public_send(year_key).present? }
+          .reject { |c| CP::Alignment.new(name: c.public_send(year_key), sector: c.sector.name).not_assessed? }
 
         all_sectors = all_companies.map(&:sector).uniq
         cp_alignment_data = COLOR_DESCRIPTIONS.keys
@@ -51,7 +65,7 @@ module Api
           .reduce(&:merge)
 
         all_companies.each do |company|
-          cp_alignment = CP::Alignment.new(name: company.cp_alignment_2050, sector: company.sector.name)
+          cp_alignment = CP::Alignment.new(name: company.public_send(year_key), sector: company.sector.name)
           alignment_key = cp_alignment.color
           cp_alignment_data[alignment_key] ||= all_sectors.map { |s| {s.name => 0} }.reduce(&:merge)
           cp_alignment_data[alignment_key]

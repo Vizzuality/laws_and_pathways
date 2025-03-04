@@ -25,6 +25,8 @@
 #  final_disclosure_year      :integer
 #  cp_alignment_2027          :string
 #  cp_regional_alignment_2027 :string
+#  cp_alignment_2028          :string
+#  cp_regional_alignment_2028 :string
 #
 
 require 'rails_helper'
@@ -76,10 +78,12 @@ RSpec.describe CP::Assessment, type: :model do
   %w[
     cp_alignment_2025
     cp_alignment_2027
+    cp_alignment_2028
     cp_alignment_2035
     cp_alignment_2050
     cp_regional_alignment_2025
     cp_regional_alignment_2027
+    cp_regional_alignment_2028
     cp_regional_alignment_2035
     cp_regional_alignment_2050
   ].each do |cp_alignment|

@@ -78,6 +78,12 @@ module TPI
       render json: data.chart_json
     end
 
+    def cp_performance_chart_data_all_years
+      data = ::Api::Charts::CPPerformance.new.cp_performance_all_sectors_data_all_years
+
+      render json: data.chart_json
+    end
+
     def send_download_file_info_email
       DataDownloadMailer.send_download_file_info_email(permitted_email_params).deliver_now
       head :ok
@@ -167,9 +173,9 @@ module TPI
 
     def companies_scope(params)
       if params[:id]
-        TPISector.tpi_tool.friendly.find(params[:id]).companies.published.active
+        TPISector.tpi_tool.friendly.find(params[:id]).companies.published.active.order(name: :asc)
       else
-        Company.published.active
+        Company.published.active.order(name: :asc)
       end
     end
 

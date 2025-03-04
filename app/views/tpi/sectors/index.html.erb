@@ -22,7 +22,6 @@
             <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
             Methodology
           <% end %>
-          
         </div>
       </div>
     </div>
@@ -30,6 +29,7 @@
 
   <section id="management-quality" class="container">
     <h3 class="title-blue">Explore the distribution of companies across all sectors based on greenhouse gas emissions management and low-carbon transition risks and opportunities.</h3>
+    <h4 class="title-darker-blue">Below you will find the results of the Carbon Performance and Management Quality corporate assessments. These TPI metrics should be treated as complementary – i.e. both Management Quality and Carbon Performance need to be looked at together to better assess the progress that companies are making in the low-carbon transition.</h4>
 
     <h4>Number of Companies by Management Quality</h4>
 
@@ -37,7 +37,7 @@
       dataUrl: levels_chart_data_tpi_sectors_path
     }) %>
 
-    <h4>Number of Companies by Sector according to Management Quality</h4> 
+    <h4>Number of Companies by Sector according to Management Quality</h4>
     <%= react_component('charts/bubble/Chart', {
       levels: @companies_by_sectors,
       sectors: @sectors_json
@@ -50,12 +50,12 @@
   </section>
 
   <section id="carbon-performance" class="container">
-    <h4>Carbon Performance in 2050: All sectors</h4>
+    <h4>Carbon Performance: All sectors</h4>
 
     <p>CP alignment with the Paris agreement benchmarks by sector and cluster (number and % of companies). Please note that this information is not available for all sectors.</p>
 
     <%= react_component('charts/cp-performance-all-sectors', {
-      dataUrl: cp_performance_chart_data_tpi_sectors_path,
+      dataUrl: cp_performance_chart_data_all_years_tpi_sectors_path,
       sectors: TPI::CPPerformanceSectorDecorator.decorate_collection(@sectors).map(&:to_h)
     }) %>
   </section>
