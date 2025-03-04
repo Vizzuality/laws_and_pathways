@@ -153,8 +153,8 @@ export function getOptions(data, sectors) {
 }
 
 export function getMobileOptions(data, sectors) {
-  const desktopOptions = getOptions(data, sectors);
-  return merge({}, desktopOptions, {
+  const descktopOptions = getOptions(data, sectors);
+  return merge({}, descktopOptions, {
     chart: {
       height: 700,
       events: {render() {}}
