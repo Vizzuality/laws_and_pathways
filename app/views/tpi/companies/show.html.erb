@@ -76,7 +76,7 @@
                 <% if @company_presenter.cp_alignment_2028.present? %>
                   <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2028', alignment: @company_presenter.cp_alignment_2028 %>
                 <% else %>
-                  <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2025', alignment: @company_presenter.cp_alignment_2025 %>
+                  <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2027', alignment: @company_presenter.cp_alignment_2027 %>
                 <% end %>
                 <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: @company_presenter.cp_alignment_2035 %>
                 <%= render 'cp_alignment', header: long_term_header, alignment: @company_presenter.cp_alignment_2050 %>
@@ -88,7 +88,7 @@
                 <% if @company_presenter.cp_regional_alignment_2028.present? %>
                   <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2028', alignment: @company_presenter.cp_regional_alignment_2028 %>
                 <% else %>
-                  <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2025', alignment: @company_presenter.cp_regional_alignment_2025 %>
+                  <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2027', alignment: @company_presenter.cp_regional_alignment_2027 %>
                 <% end %>
                 <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: @company_presenter.cp_regional_alignment_2035 %>
                 <%= render 'cp_alignment', header: long_term_header, alignment: @company_presenter.cp_regional_alignment_2050 %>
