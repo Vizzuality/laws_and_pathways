@@ -6,9 +6,10 @@ export function useChartData(dataUrl, params = {}) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
+  const paramSeparator = containsParams(dataUrl) ? '&' : '?';
   const url = isEmpty(params)
     ? dataUrl
-    : `${dataUrl}?${new URLSearchParams(params)}`;
+    : `${dataUrl}${paramSeparator}${new URLSearchParams(params)}`;
 
   useEffect(() => {
     fetch(url)
@@ -28,4 +29,8 @@ export function useChartData(dataUrl, params = {}) {
     error,
     loading
   };
+}
+
+function containsParams(dataUrl) {
+  return dataUrl.includes('?');
 }

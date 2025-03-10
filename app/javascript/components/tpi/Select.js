@@ -30,16 +30,18 @@ const Select = ({
 
   const fuse = useCallback(
     (opt) => {
+      if (!allowSearch) {
+        return opt;
+      }
       const config = {
         shouldSort: true,
         threshold: 0.3,
         keys: ['label']
       };
       const fuzzy = new Fuse(opt, config);
-      const searchResults = fuzzy.search(searchValue);
-      return searchResults;
+      return fuzzy.search(searchValue);
     },
-    [searchValue]
+    [allowSearch, searchValue]
   );
 
   const _options = useMemo(
