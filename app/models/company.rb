@@ -56,6 +56,7 @@ class Company < ApplicationRecord
           class_name: 'CP::Assessment', as: :cp_assessmentable
   has_many :litigation_sides, as: :connected_entity
   has_many :litigations, through: :litigation_sides
+  has_many :company_subsectors
 
   delegate :level, :status, :status_description_short,
            to: :latest_mq_assessment, prefix: :mq, allow_nil: true

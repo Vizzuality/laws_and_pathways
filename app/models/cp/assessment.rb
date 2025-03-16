@@ -21,6 +21,7 @@
 #  cp_regional_alignment_2050 :string
 #  cp_assessmentable_type     :string
 #  cp_assessmentable_id       :bigint
+#  company_subsector_id       :bigint
 #  sector_id                  :bigint
 #  final_disclosure_year      :integer
 #  cp_alignment_2027          :string
@@ -77,6 +78,10 @@ module CP
     accepts_nested_attributes_for :cp_matrices, allow_destroy: true, reject_if: :all_blank
 
     before_validation :prepare_default_values
+
+    def company_subsector
+      CompanySubsector.find(company_subsector_id) if company_subsector_id.present?
+    end
 
     def sector
       super || cp_assessmentable.try(:sector)
