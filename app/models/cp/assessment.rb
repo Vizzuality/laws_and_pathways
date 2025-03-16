@@ -83,6 +83,10 @@ module CP
       CompanySubsector.find(company_subsector_id) if company_subsector_id.present?
     end
 
+    def subsector
+      company_subsector&.subsector
+    end
+
     def sector
       super || cp_assessmentable.try(:sector)
     end

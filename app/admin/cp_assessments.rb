@@ -60,6 +60,7 @@ ActiveAdmin.register CP::Assessment do
         assessment.company.presence || assessment.bank
       end
       row :sector
+      row :subsector
       row :assessment_date
       row :assessment_date_flag
       row :publication_date
@@ -105,6 +106,7 @@ ActiveAdmin.register CP::Assessment do
       assessment.company.presence || assessment.bank
     end
     column :sector
+    column :subsector
     column :cp_alignment_2050
     column :cp_alignment_2025
     column :cp_alignment_2027
