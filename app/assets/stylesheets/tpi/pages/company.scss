@@ -404,7 +404,7 @@
   .assessment-date__container {
     .date-dropdown {
       margin-left: 10px;
-      max-width: 280px;
+      max-width: 400px;
     }
 
     @include until($desktop) {
@@ -416,7 +416,7 @@
 
       .date-dropdown {
         margin-top: 10px;
-        max-width: 200px;
+        max-width: 400px;
         margin-left: 0;
       }
     }

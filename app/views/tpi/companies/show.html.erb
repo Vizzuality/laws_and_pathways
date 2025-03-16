@@ -208,6 +208,7 @@
                 data: @company_presenter.cp_assessments.map do |v|
                   label = v['assessment_date']&.strftime('%d %B %Y')
                   label += " (#{v['assessment_date_flag']})" if v['assessment_date_flag'].present?
+                  label += " (#{v.subsector})" if v.subsector
                   {label: label, value: v['id']}
                 end,
                 selected: params[:cp_assessment_id]
