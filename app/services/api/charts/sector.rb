@@ -134,7 +134,7 @@ module Api
       def emissions_data_from_companies
         @company_scope
           .includes(:latest_cp_assessment, :geography)
-          .map { |company| emissions_data_from_company(company) }
+          .flat_map { |company| emissions_data_from_company(company) }
           .reject { |company_data| company_data[:data].empty? }
       end
 
@@ -157,27 +157,40 @@ module Api
           end.reverse
       end
 
-      def emissions_data_from_company(company)
-        assessment = company.latest_cp_assessment
+      def get_cp_assessments(company)
+        unless company.latest_cp_assessments_by_subsector.present?
+          return [] unless company.latest_cp_assessment.present?
 
-        {
-          name: company.name,
-          company: {
-            id: company.id,
-            name: company.name,
-            region: company.geography.region,
-            geography_id: company.geography_id,
-            geography_name: company.geography.name,
-            market_cap_group: company.market_cap_group
-          },
-          data: emissions_data_as_numbers(assessment&.emissions),
-          zoneAxis: 'x',
-          zones: [{
-            value: (assessment&.last_reported_year&.to_i || 0) + 0.1
-          }, {
-            dashStyle: 'dot'
-          }]
-        }
+          return [company.latest_cp_assessment]
+        end
+
+        company.latest_cp_assessments_by_subsector
+      end
+
+      def emissions_data_from_company(company)
+        assessments_to_process = get_cp_assessments(company)
+
+        assessments_to_process.map do |assessment|
+          graph_name = assessment.company_subsector.present? ? "#{company.name} - #{assessment.company_subsector&.subsector}" : company.name
+          {
+            name: graph_name,
+            company: {
+              id: company.id,
+              name: graph_name,
+              region: company.geography.region,
+              geography_id: company.geography_id,
+              geography_name: company.geography.name,
+              market_cap_group: company.market_cap_group
+            },
+            data: emissions_data_as_numbers(assessment&.emissions),
+            zoneAxis: 'x',
+            zones: [{
+              value: (assessment&.last_reported_year&.to_i || 0) + 0.1
+            }, {
+              dashStyle: 'dot'
+            }]
+          }
+        end
       end
 
       def companies_summary(companies)
