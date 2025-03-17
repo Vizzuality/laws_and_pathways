@@ -60,6 +60,7 @@ ActiveAdmin.register CP::Assessment do
         assessment.company.presence || assessment.bank
       end
       row :sector
+      row :subsector
       row :assessment_date
       row :assessment_date_flag
       row :publication_date
@@ -105,6 +106,7 @@ ActiveAdmin.register CP::Assessment do
       assessment.company.presence || assessment.bank
     end
     column :sector
+    column :subsector
     column :cp_alignment_2050
     column :cp_alignment_2025
     column :cp_alignment_2027
@@ -127,6 +129,11 @@ ActiveAdmin.register CP::Assessment do
     column :sector do |record|
       record.sector.name
     end
+    if params[:cp_assessmentable_type] == 'Company'
+      column :subsector do |record|
+        record.company_subsector&.subsector
+      end
+    end
     column :assessment_date
     column :assessment_date_flag
     column :publication_date, &:publication_date_csv
@@ -146,6 +153,8 @@ ActiveAdmin.register CP::Assessment do
       column :cp_alignment_2035
       column :cp_alignment_2050
       column :cp_regional_alignment_2025
+      column :cp_regional_alignment_2027
+      column :cp_regional_alignment_2028
       column :cp_regional_alignment_2035
       column :cp_regional_alignment_2050
     elsif params[:cp_assessmentable_type] == 'Bank'

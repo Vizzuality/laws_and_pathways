@@ -18,6 +18,13 @@ module Api
         )
       end
 
+      def graph_cp_assessments
+        return graph_cp_assessments_by_region if regional_view?
+        return [@company.latest_cp_assessment] unless subsector_latest_cp_assessments?
+
+        latest_cp_assessments
+      end
+
       def cp_assessments
         assessments = @company.cp_assessments.currently_published
         assessments = assessments.where.not(region: nil) if regional_view?
@@ -96,6 +103,28 @@ module Api
 
       def regional_view?
         @view == 'regional'
+      end
+
+      private
+
+      def subsector_latest_cp_assessments?
+        @company.latest_cp_assessments_by_subsector.present?
+      end
+
+      def subsector_latest_regional_cp_assessments?
+        @company.latest_regional_cp_assessments_by_subsector.present?
+      end
+
+      def graph_cp_assessments_by_region
+        return [@company.latest_cp_assessment_regional] unless subsector_latest_regional_cp_assessments?
+
+        latest_cp_assessments
+      end
+
+      def latest_cp_assessments
+        return @company.latest_regional_cp_assessments_by_subsector if regional_view?
+
+        @company.latest_cp_assessments_by_subsector
       end
     end
   end

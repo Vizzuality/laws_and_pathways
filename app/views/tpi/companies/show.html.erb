@@ -69,30 +69,33 @@
               <small>Number of assessments: <%= @company_presenter.cp_assessments.size %></small>
             </p>
 
-            <% unless regional_view %>
-              <div class="cp-alignments">
-                <% long_term_header = "Long-term<br/> alignment in #{@company.sector.name.downcase == 'electricity utilities' ? '2040-50' : '2050'}" %>
-
-                <% if @company_presenter.cp_alignment_2028.present? %>
-                  <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2028', alignment: @company_presenter.cp_alignment_2028 %>
-                <% else %>
-                  <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2027', alignment: @company_presenter.cp_alignment_2027 %>
-                <% end %>
-                <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: @company_presenter.cp_alignment_2035 %>
-                <%= render 'cp_alignment', header: long_term_header, alignment: @company_presenter.cp_alignment_2050 %>
-              </div>
-            <% else %>
-              <div class="cp-alignments">
-                <% long_term_header = "Long-term<br/> alignment in #{@company.sector.name.downcase == 'electricity utilities' ? '2040-50' : '2050'}" %>
-
-                <% if @company_presenter.cp_regional_alignment_2028.present? %>
-                  <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2028', alignment: @company_presenter.cp_regional_alignment_2028 %>
-                <% else %>
-                  <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2027', alignment: @company_presenter.cp_regional_alignment_2027 %>
-                <% end %>
-                <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: @company_presenter.cp_regional_alignment_2035 %>
-                <%= render 'cp_alignment', header: long_term_header, alignment: @company_presenter.cp_regional_alignment_2050 %>
-              </div>
+            <% @company_presenter.graph_cp_assessments.each do |assessment| %>
+              <% subsector = assessment.company_subsector %>
+              <% if subsector.present? %>
+                <h4 class="subsector"><%= subsector.subsector %></h4>
+              <% end %>
+              <% long_term_header = "Long-term<br/> alignment in #{@company.sector.name.downcase == 'electricity utilities' ? '2040-50' : '2050'}" %>
+              <% unless regional_view %>
+                <div class="cp-alignments">
+                  <% if assessment.cp_alignment_2028.present? %>
+                    <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2028', alignment: assessment.cp_alignment_2028_by_company %>
+                  <% else %>
+                    <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2027', alignment: assessment.cp_alignment_2027_by_company %>
+                  <% end %>
+                  <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: assessment.cp_alignment_2035_by_company %>
+                  <%= render 'cp_alignment', header: long_term_header, alignment: assessment.cp_alignment_2050_by_company %>
+                </div>
+              <% else %>
+                <div class="cp-alignments">
+                  <% if @company_presenter.cp_regional_alignment_2028.present? %>
+                    <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2028', alignment: assessment.cp_regional_alignment_2028_by_company %>
+                  <% else %>
+                    <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2027', alignment: assessment.cp_regional_alignment_2027_by_company %>
+                  <% end %>
+                  <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: assessment.cp_regional_alignment_2035_by_company %>
+                  <%= render 'cp_alignment', header: long_term_header, alignment: assessment.cp_regional_alignment_2050_by_company %>
+                </div>
+              <% end %>
             <% end %>
           </div>
         </a>
@@ -208,6 +211,7 @@
                 data: @company_presenter.cp_assessments.map do |v|
                   label = v['assessment_date']&.strftime('%d %B %Y')
                   label += " (#{v['assessment_date_flag']})" if v['assessment_date_flag'].present?
+                  label += " (#{v.subsector})" if v.subsector
                   {label: label, value: v['id']}
                 end,
                 selected: params[:cp_assessment_id]
