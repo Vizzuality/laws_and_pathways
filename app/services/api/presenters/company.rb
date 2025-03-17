@@ -121,7 +121,11 @@ module Api
       end
 
       def graph_cp_assessments_by_region
-        return [@company.latest_cp_assessment_regional] unless subsector_latest_regional_cp_assessments?
+        unless subsector_latest_regional_cp_assessments?
+          return [] unless @company.latest_cp_assessment_regional.present?
+
+          return [@company.latest_cp_assessment_regional]
+        end
 
         latest_cp_assessments
       end
