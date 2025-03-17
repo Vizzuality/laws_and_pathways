@@ -80,42 +80,52 @@ module CP
     before_validation :prepare_default_values
 
     def cp_alignment_2025_by_company
+      return unless cp_alignment_2025.present?
       CP::Alignment.new(name: cp_alignment_2025, sector: sector&.name)
     end
 
     def cp_alignment_2027_by_company
+      return unless cp_alignment_2027.present?
       CP::Alignment.new(name: cp_alignment_2027, sector: sector&.name)
     end
 
     def cp_alignment_2028_by_company
+      return unless cp_alignment_2028.present?
       CP::Alignment.new(name: cp_alignment_2028, sector: sector&.name)
     end
 
     def cp_alignment_2035_by_company
+      return unless cp_alignment_2035.present?
       CP::Alignment.new(name: cp_alignment_2035, sector: sector&.name)
     end
 
     def cp_alignment_2050_by_company
+      return unless cp_alignment_2050.present?
       CP::Alignment.new(name: cp_alignment_2050, sector: sector&.name)
     end
 
     def cp_regional_alignment_2025_by_company
+      return unless cp_regional_alignment_2025.present?
       CP::Alignment.new(name: cp_regional_alignment_2025, sector: sector&.name)
     end
 
     def cp_regional_alignment_2027_by_company
+      return unless cp_regional_alignment_2027.present?
       CP::Alignment.new(name: cp_regional_alignment_2027, sector: sector&.name)
     end
 
     def cp_regional_alignment_2028_by_company
+      return unless cp_regional_alignment_2028.present?
       CP::Alignment.new(name: cp_regional_alignment_2028, sector: sector&.name)
     end
 
     def cp_regional_alignment_2035_by_company
+      return unless cp_regional_alignment_2035.present?
       CP::Alignment.new(name: cp_regional_alignment_2035, sector: sector&.name)
     end
 
     def cp_regional_alignment_2050_by_company
+      return unless cp_regional_alignment_2050.present?
       CP::Alignment.new(name: cp_regional_alignment_2050, sector: sector&.name)
     end
 
