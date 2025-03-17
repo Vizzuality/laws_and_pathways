@@ -2,7 +2,7 @@
   .change-view {
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
-  
+
     .buttons {
       justify-content: end;
       @include until($desktop) {
@@ -78,6 +78,10 @@
       align-items: center;
       text-align: center;
       justify-content: center;
+
+      .subsector {
+        padding-top: 30px;
+      }
     }
 
     .cp-alignments {
