@@ -41,9 +41,14 @@ module Api
       end
 
       def cp_performance_all_sectors_data_all_years
+        all_companies = Company
+          .published
+          .active
+          .includes(:latest_cp_assessment, sector: [:cluster])
+
         result = {}
         [:cp_alignment_2050, :cp_alignment_2035, :cp_alignment_2027].each do |alignment_key|
-          result[alignment_key] = cp_performance_all_sectors_by_year(alignment_key)
+          result[alignment_key] = cp_performance_all_sectors_by_year(alignment_key, all_companies)
         end
 
         result
@@ -51,20 +56,17 @@ module Api
 
       private
 
-      def cp_performance_all_sectors_by_year(year_key)
-        all_companies = Company
-          .published
-          .active
-          .includes(:latest_cp_assessment, sector: [:cluster])
+      def cp_performance_all_sectors_by_year(year_key, all_companies)
+        filtered_companies = all_companies
           .select { |c| c.public_send(year_key).present? }
           .reject { |c| CP::Alignment.new(name: c.public_send(year_key), sector: c.sector.name).not_assessed? }
 
-        all_sectors = all_companies.map(&:sector).uniq
+        all_sectors = filtered_companies.map(&:sector).uniq
         cp_alignment_data = COLOR_DESCRIPTIONS.keys
           .map { |name| {name => all_sectors.map { |s| {s.name => 0} }.reduce(&:merge)} }
           .reduce(&:merge)
 
-        all_companies.each do |company|
+        filtered_companies.each do |company|
           cp_alignment = CP::Alignment.new(name: company.public_send(year_key), sector: company.sector.name)
           alignment_key = cp_alignment.color
           cp_alignment_data[alignment_key] ||= all_sectors.map { |s| {s.name => 0} }.reduce(&:merge)
