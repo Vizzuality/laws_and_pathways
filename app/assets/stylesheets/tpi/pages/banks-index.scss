@@ -39,6 +39,10 @@
     }
   }
 
+  .no-position {
+    position: static;
+  }
+
   .banks-header {
     min-height: 100px;
     display: flex;
