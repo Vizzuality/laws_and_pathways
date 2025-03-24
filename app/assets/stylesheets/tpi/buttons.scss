@@ -54,6 +54,10 @@ $button-border-width: 4px;
       min-width: 100px;
     }
 
+    &.is-left {
+      margin-right: 10px !important;
+    }
+
     &.is-hovered,
     &:hover {
       background-color: $blue-dark;

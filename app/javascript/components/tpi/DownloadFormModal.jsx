@@ -137,7 +137,7 @@ function DownloadFormModal({ downloadUrl }) {
   };
 
   return (
-    <div className="download">
+    <div>
       <button type="button" onClick={() => setShowModal(true)} className="button is-primary with-icon with-border">
         <img src={downloadIcon} alt="download icon" />
         CP & MQ Data
