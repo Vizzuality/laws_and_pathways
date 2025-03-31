@@ -56,6 +56,7 @@ class Company < ApplicationRecord
           class_name: 'CP::Assessment', as: :cp_assessmentable
   has_many :litigation_sides, as: :connected_entity
   has_many :litigations, through: :litigation_sides
+  has_many :company_subsectors
 
   delegate :level, :status, :status_description_short,
            to: :latest_mq_assessment, prefix: :mq, allow_nil: true
@@ -68,6 +69,36 @@ class Company < ApplicationRecord
   validates_uniqueness_of :slug, :name
 
   scope :active, -> { where(active: true) }
+
+  def latest_cp_assessments_by_subsector
+    return if company_subsectors.empty?
+
+    ordered_cp_assessments = cp_assessments.currently_published.order(assessment_date: :desc)
+    return if ordered_cp_assessments.empty?
+
+    # means the latest assessment is not for subsectors but for general
+    return if ordered_cp_assessments.first.company_subsector_id.blank?
+
+    by_publication = ordered_cp_assessments.group_by(&:publication_date)
+    latest_publication_date = by_publication.keys.max
+
+    by_publication[latest_publication_date].filter { |assessment| assessment.company_subsector_id.present? }
+  end
+
+  def latest_regional_cp_assessments_by_subsector
+    return if company_subsectors.empty?
+
+    ordered_cp_assessments = cp_assessments.currently_published.regional.order(assessment_date: :desc)
+    return if ordered_cp_assessments.empty?
+
+    # means the latest assessment is not for subsectors but for general
+    return if ordered_cp_assessments.first.company_subsector_id.blank?
+
+    by_publication = ordered_cp_assessments.group_by(&:publication_date)
+    latest_publication_date = by_publication.keys.max
+
+    by_publication[latest_publication_date].filter { |assessment| assessment.company_subsector_id.present? }
+  end
 
   def latest_mq_assessment
     return latest_mq_assessment_without_beta_methodologies if show_beta_mq_assessments.blank?

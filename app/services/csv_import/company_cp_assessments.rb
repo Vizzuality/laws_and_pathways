@@ -4,7 +4,7 @@ module CSVImport
 
     def import
       import_each_csv_row(csv) do |row|
-        assessment = prepare_assessment(row)
+        assessment = subsector?(row) ? prepare_assessment_subsector(row) : prepare_assessment(row)
 
         assessment.assessment_date = assessment_date(row) if row.header?(:assessment_date)
         assessment.assessment_date_flag = row[:assessment_date_flag] if row.header?(:assessment_date_flag)
@@ -46,11 +46,32 @@ module CSVImport
 
     private
 
+    def subsector?(row)
+      row.header?(:subsector) && !row[:subsector].nil? && !row[:subsector].empty?
+    end
+
     def prepare_assessment(row)
       find_record_by(:id, row) ||
         CP::Assessment.find_or_initialize_by(
           cp_assessmentable_type: 'Company',
           cp_assessmentable_id: find_company!(row)&.id,
+          assessment_date: assessment_date(row),
+          assessment_date_flag: row.header?(:assessment_date_flag) ? row[:assessment_date_flag] : nil
+        )
+    end
+
+    def prepare_assessment_subsector(row)
+      company_id = find_company!(row)&.id
+      subsector = CompanySubsector.where(company_id: company_id, subsector: row[:subsector]).first
+
+      # fallthru in case the subsector passed doesn't exist
+      return prepare_assessment(row) unless subsector
+
+      find_record_by(:id, row) ||
+        CP::Assessment.find_or_initialize_by(
+          cp_assessmentable_type: 'Company',
+          cp_assessmentable_id: company_id,
+          company_subsector_id: subsector.id,
           assessment_date: assessment_date(row),
           assessment_date_flag: row.header?(:assessment_date_flag) ? row[:assessment_date_flag] : nil
         )

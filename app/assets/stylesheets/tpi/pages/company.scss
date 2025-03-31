@@ -2,7 +2,7 @@
   .change-view {
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
-  
+
     .buttons {
       justify-content: end;
       @include until($desktop) {
@@ -78,6 +78,10 @@
       align-items: center;
       text-align: center;
       justify-content: center;
+
+      .subsector {
+        padding-top: 30px;
+      }
     }
 
     .cp-alignments {
@@ -404,7 +408,7 @@
   .assessment-date__container {
     .date-dropdown {
       margin-left: 10px;
-      max-width: 280px;
+      max-width: 400px;
     }
 
     @include until($desktop) {
@@ -416,7 +420,7 @@
 
       .date-dropdown {
         margin-top: 10px;
-        max-width: 200px;
+        max-width: 400px;
         margin-left: 0;
       }
     }
