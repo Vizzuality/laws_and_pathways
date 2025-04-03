@@ -11,6 +11,7 @@
 #  scenario     :string
 #  region       :string           default("Global"), not null
 #  category     :string           not null
+#  subsector    :string
 #
 
 module CP

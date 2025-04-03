@@ -42,6 +42,7 @@ ActiveAdmin.register CP::Benchmark do
       row :release_date
       row :category
       row :sector
+      row :subsector
       row :scenario
       row :region
       row :created_at
@@ -60,6 +61,7 @@ ActiveAdmin.register CP::Benchmark do
 
     column :id
     column(:sector) { |b| b.sector.name }
+    column :subsector
     column(:release_date) { |b| b.release_date.to_s(:year_month) }
     column :scenario
     column :region
@@ -76,6 +78,7 @@ ActiveAdmin.register CP::Benchmark do
     column :scenario
     column :region
     column :sector
+    column :subsector
     column :release_date
     actions
   end

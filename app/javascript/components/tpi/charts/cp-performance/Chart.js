@@ -33,16 +33,31 @@ function filterByShowValue(companyData, showByValue) {
       return d.company.region === showByValue.replace('by_region_', '');
     }
 
+    if (showByValue.startsWith('by_subsector')) {
+      return d.company.subsector === showByValue.replace('by_subsector_', '');
+    }
+
     return true;
   });
 }
 
-function getDropdownOptions(geographies, regions, marketCapGroups) {
-  return [
+function getDropdownOptions(geographies, regions, marketCapGroups, sector) {
+  const dropDownOptions = [
     {
       value: 'top_10',
       label: 'Top 10 Emitters'
-    },
+    }
+  ];
+  if (sector === 'Coal Mining') {
+    dropDownOptions.push({
+      value: 'subsector',
+      label: 'by Subsector',
+      items: ['Thermal Coal', 'Metallurgical Coal'].map(s => ({ label: s, value: `by_subsector_${s}` }))
+    });
+  }
+
+  return [
+    ...dropDownOptions,
     {
       value: 'market_cap',
       label: 'by Market Cap',
@@ -61,7 +76,7 @@ function getDropdownOptions(geographies, regions, marketCapGroups) {
   ];
 }
 
-function CPPerformance({ dataUrl, companySelector, unit, sectorUrl }) {
+function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }) {
   const { isMobile } = useDeviceInfo();
 
   const { data, error, loading } = useChartData(dataUrl);
@@ -80,8 +95,8 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl }) {
     const regions = [...new Set(companies.map(c => c.region))].sort();
     const marketCapGroups = [...new Set(companies.map(c => c.market_cap_group))];
 
-    return getDropdownOptions(geographies, regions, marketCapGroups);
-  }, [companies]);
+    return getDropdownOptions(geographies, regions, marketCapGroups, sectorName);
+  }, [companies, sectorName]);
   const [selectedShowBy, setSelectedShowBy] = useState(dropdownOptions[0]);
 
   useEffect(() => {
@@ -92,7 +107,7 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl }) {
     );
   }, [companyData, selectedShowBy]);
 
-  const chartData = useParsedChartData(data, companySelector, selectedCompanies);
+  const chartData = useParsedChartData(data, companySelector, selectedCompanies, selectedShowBy);
 
   const subTitle = ((item) => {
     if (item.value === 'top_10') return null;
@@ -151,6 +166,7 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl }) {
 
 CPPerformance.defaultProps = {
   companySelector: true,
+  sectorName: null,
   sectorUrl: null
 };
 
@@ -158,7 +174,8 @@ CPPerformance.propTypes = {
   companySelector: PropTypes.bool,
   dataUrl: PropTypes.string.isRequired,
   unit: PropTypes.string.isRequired,
-  sectorUrl: PropTypes.string
+  sectorUrl: PropTypes.string,
+  sectorName: PropTypes.string
 };
 
 export default CPPerformance;

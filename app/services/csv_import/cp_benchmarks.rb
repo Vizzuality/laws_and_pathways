@@ -42,6 +42,7 @@ module CSVImport
           sector: find_or_create_tpi_sector(row[:sector], categories: [category_klass.to_s]),
           release_date: parse_date(row[:release_date]),
           scenario: row[:scenario],
+          subsector: row[:subsector],
           region: parse_cp_benchmark_region(row[:region])
         )
     end
