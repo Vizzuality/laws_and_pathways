@@ -139,7 +139,12 @@ module Api
       def emissions_data_from_sector_benchmarks
         region = regional_view? ? assessment.region : nil
         sector
-          .latest_benchmarks_for_date(assessment.publication_date, category: @category, region: region)
+          .latest_benchmarks_for_date(
+            assessment.publication_date,
+            category: @category,
+            region: region,
+            subsector: assessment.subsector
+          )
           .sort_by(&:average_emission)
           .map.with_index do |benchmark, index|
             {
@@ -147,6 +152,8 @@ module Api
               color: BENCHMARK_FILL_COLORS[index],
               fillColor: BENCHMARK_FILL_COLORS[index],
               name: benchmark.scenario,
+              sector: sector.name,
+              subsector: benchmark.subsector,
               data: benchmark.emissions.transform_keys(&:to_i)
             }
           end.reverse
