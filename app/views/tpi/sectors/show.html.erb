@@ -61,6 +61,7 @@
 
       <%= react_component('charts/cp-performance', {
         dataUrl: emissions_chart_data_tpi_sector_path(@sector.id),
+        sectorName: @sector.name,
         unit: @sector.latest_cp_unit&.unit
         }) %>
     </section>

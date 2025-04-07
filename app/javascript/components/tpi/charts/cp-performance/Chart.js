@@ -33,11 +33,23 @@ function filterByShowValue(companyData, showByValue) {
       return d.company.region === showByValue.replace('by_region_', '');
     }
 
+    if (showByValue.startsWith('by_subsector')) {
+      return d.company.subsector === showByValue.replace('by_subsector_', '');
+    }
+
     return true;
   });
 }
 
-function getDropdownOptions(geographies, regions, marketCapGroups) {
+function getDropdownOptions(geographies, regions, marketCapGroups, sector) {
+  if (isCoalMining(sector)) {
+    return [{
+      value: 'subsector',
+      label: 'by Subsector',
+      items: ['Thermal Coal', 'Metallurgical Coal'].map(s => ({ label: s, value: `by_subsector_${s}` }))
+    }];
+  }
+
   return [
     {
       value: 'top_10',
@@ -61,7 +73,22 @@ function getDropdownOptions(geographies, regions, marketCapGroups) {
   ];
 }
 
-function CPPerformance({ dataUrl, companySelector, unit, sectorUrl }) {
+function isCoalMining(sectorName) {
+  return sectorName === 'Coal Mining';
+}
+
+function getDefaultOption(dropdownOptions, sectorName) {
+  if (!isCoalMining(sectorName)) {
+    return dropdownOptions[0];
+  }
+
+  const subsector = dropdownOptions.find((opt) => (opt.label === 'by Subsector'));
+  if (!subsector || subsector.items.length === 0) return dropdownOptions[0];
+
+  return subsector.items[0];
+}
+
+function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }) {
   const { isMobile } = useDeviceInfo();
 
   const { data, error, loading } = useChartData(dataUrl);
@@ -69,7 +96,7 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl }) {
 
   const companyData = useMemo(() => data.filter(d => d.company), [data]);
   const companies = useMemo(() => companyData.map(d => d.company), [companyData]);
-  const dropdownOptions = useMemo(() => {
+  const [dropdownOptions, defaultOption] = useMemo(() => {
     const geographies = sortBy(
       uniqBy(
         companies.map(c => ({ id: c.geography_id, name: c.geography_name })),
@@ -80,9 +107,10 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl }) {
     const regions = [...new Set(companies.map(c => c.region))].sort();
     const marketCapGroups = [...new Set(companies.map(c => c.market_cap_group))];
 
-    return getDropdownOptions(geographies, regions, marketCapGroups);
-  }, [companies]);
-  const [selectedShowBy, setSelectedShowBy] = useState(dropdownOptions[0]);
+    const opts = getDropdownOptions(geographies, regions, marketCapGroups, sectorName);
+    return [opts, getDefaultOption(opts, sectorName)];
+  }, [companies, sectorName]);
+  const [selectedShowBy, setSelectedShowBy] = useState(defaultOption);
 
   useEffect(() => {
     setSelectedCompanies(
@@ -92,11 +120,13 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl }) {
     );
   }, [companyData, selectedShowBy]);
 
-  const chartData = useParsedChartData(data, companySelector, selectedCompanies);
+  const chartData = useParsedChartData(data, companySelector, selectedCompanies, selectedShowBy);
 
   const subTitle = ((item) => {
     if (item.value === 'top_10') return null;
     if (item.value.startsWith('market_cap')) return `${item.label} market cap`;
+    if (item.value === 'subsector') return null;
+    if (item.value.startsWith('by_subsector')) return null;
 
     return item.label;
   })(selectedShowBy);
@@ -108,7 +138,7 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl }) {
 
     return ReactDOM.createPortal(
       <NestedDropdown
-        title="Top 10 Emitters"
+        title={selectedShowBy.label}
         subTitle={subTitle}
         items={dropdownOptions}
         onSelect={setSelectedShowBy}
@@ -151,6 +181,7 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl }) {
 
 CPPerformance.defaultProps = {
   companySelector: true,
+  sectorName: null,
   sectorUrl: null
 };
 
@@ -158,7 +189,8 @@ CPPerformance.propTypes = {
   companySelector: PropTypes.bool,
   dataUrl: PropTypes.string.isRequired,
   unit: PropTypes.string.isRequired,
-  sectorUrl: PropTypes.string
+  sectorUrl: PropTypes.string,
+  sectorName: PropTypes.string
 };
 
 export default CPPerformance;

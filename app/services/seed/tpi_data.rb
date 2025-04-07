@@ -184,7 +184,7 @@ module Seed
         ['Aluminium', 'tCO2e / t aluminium', [Company, Bank]],
         ['Autos', 'Average new vehicle emissions (grams of CO2 per kilometre [NEDC])', [Company, Bank]],
         ['Cement', 'Carbon intensity (tonnes of CO2 per tonne of cementitious product)', [Company, Bank]],
-        ['Coal Mining', nil, [Company, Bank]],
+        ['Coal Mining', 'Indexed CO2e emissions (2021 = 100%)', [Company, Bank]],
         ['Consumer Goods', nil, [Company]],
         ['Electricity Utilities', 'Carbon intensity (metric tonnes of CO2 per MWh electricity generation)', [Company]],
         ['Oil & Gas Distribution', nil, [Company]],

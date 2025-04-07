@@ -142,19 +142,25 @@ module Api
         company = @company_scope.first
         return if company.nil?
 
-        company
-          .sector
+        sector = company.sector
+
+        benchmarks = sector
           .latest_released_benchmarks(category: Company, region: 'Global')
           .sort_by(&:average_emission)
-          .map.with_index do |benchmark, index|
-            {
-              type: 'area',
-              color: BENCHMARK_FILL_COLORS[index],
-              fillColor: BENCHMARK_FILL_COLORS[index],
-              name: benchmark.scenario,
-              data: emissions_data_as_numbers(benchmark&.emissions)
-            }
-          end.reverse
+
+        benchmarks.map.with_index do |benchmark, index|
+          has_subsector = benchmark&.subsector.present?
+          name = has_subsector ? "#{benchmark.scenario} - #{benchmark.subsector}" : benchmark.scenario
+          {
+            type: 'area',
+            color: BENCHMARK_FILL_COLORS[index],
+            fillColor: BENCHMARK_FILL_COLORS[index],
+            name: name,
+            data: emissions_data_as_numbers(benchmark&.emissions),
+            sector: sector.name,
+            subsector: benchmark&.subsector
+          }
+        end.reverse
       end
 
       def get_cp_assessments(company)
@@ -171,7 +177,9 @@ module Api
         assessments_to_process = get_cp_assessments(company)
 
         assessments_to_process.map do |assessment|
-          graph_name = assessment.company_subsector.present? ? "#{company.name} - #{assessment.company_subsector&.subsector}" : company.name
+          subsector_present = assessment.company_subsector.present?
+          subsector = subsector_present ? assessment.company_subsector&.subsector : nil
+          graph_name = subsector_present ? "#{company.name} - #{subsector}" : company.name
           {
             name: graph_name,
             company: {
@@ -180,8 +188,10 @@ module Api
               region: company.geography.region,
               geography_id: company.geography_id,
               geography_name: company.geography.name,
-              market_cap_group: company.market_cap_group
+              market_cap_group: company.market_cap_group,
+              subsector: subsector
             },
+            sector: company.sector.name,
             data: emissions_data_as_numbers(assessment&.emissions),
             zoneAxis: 'x',
             zones: [{
