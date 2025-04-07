@@ -48,7 +48,7 @@ function getDropdownOptions(geographies, regions, marketCapGroups, sector) {
       label: 'Top 10 Emitters'
     }
   ];
-  if (sector === 'Coal Mining') {
+  if (isCoalMining(sector)) {
     dropDownOptions.push({
       value: 'subsector',
       label: 'by Subsector',
@@ -76,6 +76,21 @@ function getDropdownOptions(geographies, regions, marketCapGroups, sector) {
   ];
 }
 
+function isCoalMining(sectorName) {
+  return sectorName === 'Coal Mining';
+}
+
+function getDefaultOption(dropdownOptions, sectorName) {
+  if (!isCoalMining(sectorName)) {
+    return dropdownOptions[0];
+  }
+
+  const subsector = dropdownOptions.find((opt) => (opt.label === 'by Subsector'));
+  if (!subsector || subsector.items.length === 0) return dropdownOptions[0];
+
+  return subsector.items[0];
+}
+
 function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }) {
   const { isMobile } = useDeviceInfo();
 
@@ -84,7 +99,7 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }
 
   const companyData = useMemo(() => data.filter(d => d.company), [data]);
   const companies = useMemo(() => companyData.map(d => d.company), [companyData]);
-  const dropdownOptions = useMemo(() => {
+  const [dropdownOptions, defaultOption] = useMemo(() => {
     const geographies = sortBy(
       uniqBy(
         companies.map(c => ({ id: c.geography_id, name: c.geography_name })),
@@ -95,9 +110,10 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }
     const regions = [...new Set(companies.map(c => c.region))].sort();
     const marketCapGroups = [...new Set(companies.map(c => c.market_cap_group))];
 
-    return getDropdownOptions(geographies, regions, marketCapGroups, sectorName);
+    const opts = getDropdownOptions(geographies, regions, marketCapGroups, sectorName);
+    return [opts, getDefaultOption(opts, sectorName)];
   }, [companies, sectorName]);
-  const [selectedShowBy, setSelectedShowBy] = useState(dropdownOptions[0]);
+  const [selectedShowBy, setSelectedShowBy] = useState(defaultOption);
 
   useEffect(() => {
     setSelectedCompanies(
@@ -112,6 +128,8 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }
   const subTitle = ((item) => {
     if (item.value === 'top_10') return null;
     if (item.value.startsWith('market_cap')) return `${item.label} market cap`;
+    if (item.value === 'subsector') return null;
+    if (item.value.startsWith('by_subsector')) return null;
 
     return item.label;
   })(selectedShowBy);
@@ -123,7 +141,7 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }
 
     return ReactDOM.createPortal(
       <NestedDropdown
-        title="Top 10 Emitters"
+        title={selectedShowBy.label}
         subTitle={subTitle}
         items={dropdownOptions}
         onSelect={setSelectedShowBy}
