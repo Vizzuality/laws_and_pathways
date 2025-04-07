@@ -42,22 +42,19 @@ function filterByShowValue(companyData, showByValue) {
 }
 
 function getDropdownOptions(geographies, regions, marketCapGroups, sector) {
-  const dropDownOptions = [
-    {
-      value: 'top_10',
-      label: 'Top 10 Emitters'
-    }
-  ];
   if (isCoalMining(sector)) {
-    dropDownOptions.push({
+    return [{
       value: 'subsector',
       label: 'by Subsector',
       items: ['Thermal Coal', 'Metallurgical Coal'].map(s => ({ label: s, value: `by_subsector_${s}` }))
-    });
+    }];
   }
 
   return [
-    ...dropDownOptions,
+    {
+      value: 'top_10',
+      label: 'Top 10 Emitters'
+    },
     {
       value: 'market_cap',
       label: 'by Market Cap',
