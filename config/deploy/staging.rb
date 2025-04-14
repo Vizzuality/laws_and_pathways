@@ -1,4 +1,4 @@
-server '35.242.181.47', user: 'ubuntu', roles: %w{web app db}, primary: true
+server '34.142.73.162', user: 'ubuntu', roles: %w{web app db}, primary: true
 set :ssh_options, forward_agent: true
 
 set :branch, ENV.fetch('BRANCH') { 'develop' }
