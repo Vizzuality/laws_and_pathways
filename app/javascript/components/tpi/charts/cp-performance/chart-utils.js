@@ -27,12 +27,12 @@ function applyColors(items) {
   return items.map((d, idx) => ({...d, color: COLORS[idx % 10]}));
 }
 
-export const useParsedChartData = (data, companySelector, selectedCompanies, selectedShowBy) => useMemo(
+export const useParsedChartData = (data, companySelector, selectedCompanies, selectedSubsector) => useMemo(
   () => {
     const benchmarks = data.filter(d => {
       const typeMatch = d.type === 'area';
-      if (selectedShowBy?.value.includes('by_subsector')) {
-        return typeMatch && d.subsector === selectedShowBy.value.replace('by_subsector_', '');
+      if (selectedSubsector) {
+        return typeMatch && d.subsector === selectedSubsector.value;
       }
 
       return typeMatch;
@@ -46,5 +46,5 @@ export const useParsedChartData = (data, companySelector, selectedCompanies, sel
     // do not why cloneDeep is needed, but highchart seems to mutate the data
     return cloneDeep([...benchmarks, ...restData]);
   },
-  [data, companySelector, selectedCompanies, selectedShowBy]
+  [data, companySelector, selectedCompanies, selectedSubsector]
 );

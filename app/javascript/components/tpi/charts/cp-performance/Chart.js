@@ -17,10 +17,17 @@ import { useDeviceInfo } from 'components/Responsive';
 import NestedDropdown from 'components/tpi/NestedDropdown';
 import Legend from './Legend';
 
-function filterByShowValue(companyData, showByValue) {
-  if (!showByValue) return companyData;
+function filterBySubsector(companyData, selectedSubsector, sectorName) {
+  if (!selectedSubsector || !isCoalMining(sectorName)) return companyData;
 
-  return companyData.filter(d => {
+  return companyData.filter(d => d.company.subsector === selectedSubsector.value);
+}
+function filterByShowValue(companyData, showByValue, selectedSubsector, sectorName) {
+  const bySubsector = filterBySubsector(companyData, selectedSubsector, sectorName);
+
+  if (!showByValue) return bySubsector;
+
+  return bySubsector.filter(d => {
     if (showByValue.startsWith('market_cap')) {
       return d.company.market_cap_group === showByValue.replace('market_cap_', '');
     }
@@ -33,23 +40,11 @@ function filterByShowValue(companyData, showByValue) {
       return d.company.region === showByValue.replace('by_region_', '');
     }
 
-    if (showByValue.startsWith('by_subsector')) {
-      return d.company.subsector === showByValue.replace('by_subsector_', '');
-    }
-
     return true;
   });
 }
 
-function getDropdownOptions(geographies, regions, marketCapGroups, sector) {
-  if (isCoalMining(sector)) {
-    return [{
-      value: 'subsector',
-      label: 'by Subsector',
-      items: ['Thermal Coal', 'Metallurgical Coal'].map(s => ({ label: s, value: `by_subsector_${s}` }))
-    }];
-  }
-
+function getDropdownOptions(geographies, regions, marketCapGroups) {
   return [
     {
       value: 'top_10',
@@ -73,19 +68,33 @@ function getDropdownOptions(geographies, regions, marketCapGroups, sector) {
   ];
 }
 
+function coalMiningSubsectors() {
+  return [
+    {
+      label: 'Thermal Coal',
+      value: 'Thermal Coal'
+    },
+    {
+      label: 'Metallurgical Coal',
+      value: 'Metallurgical Coal'
+    }
+  ];
+}
+
 function isCoalMining(sectorName) {
   return sectorName === 'Coal Mining';
 }
 
-function getDefaultOption(dropdownOptions, sectorName) {
-  if (!isCoalMining(sectorName)) {
-    return dropdownOptions[0];
+function getDefaultOption(dropdownOptions) {
+  return dropdownOptions[0];
+}
+
+function getDefaultSubsector(sectorName) {
+  if (isCoalMining(sectorName)) {
+    return coalMiningSubsectors()[0];
   }
 
-  const subsector = dropdownOptions.find((opt) => (opt.label === 'by Subsector'));
-  if (!subsector || subsector.items.length === 0) return dropdownOptions[0];
-
-  return subsector.items[0];
+  return null;
 }
 
 function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }) {
@@ -107,29 +116,45 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }
     const regions = [...new Set(companies.map(c => c.region))].sort();
     const marketCapGroups = [...new Set(companies.map(c => c.market_cap_group))];
 
-    const opts = getDropdownOptions(geographies, regions, marketCapGroups, sectorName);
-    return [opts, getDefaultOption(opts, sectorName)];
-  }, [companies, sectorName]);
+    const opts = getDropdownOptions(geographies, regions, marketCapGroups);
+    return [opts, getDefaultOption(opts)];
+  }, [companies]);
   const [selectedShowBy, setSelectedShowBy] = useState(defaultOption);
+  const [selectedSubsector, setSelectedSubsector] = useState(getDefaultSubsector(sectorName));
 
   useEffect(() => {
     setSelectedCompanies(
       ensure10sorted(
-        filterByShowValue(companyData, selectedShowBy.value)
+        filterByShowValue(companyData, selectedShowBy.value, selectedSubsector, sectorName)
       ).map(c => c.name)
     );
-  }, [companyData, selectedShowBy]);
+  }, [companyData, selectedShowBy, selectedSubsector, sectorName]);
 
-  const chartData = useParsedChartData(data, companySelector, selectedCompanies, selectedShowBy);
+  const chartData = useParsedChartData(data, companySelector, selectedCompanies, selectedSubsector);
 
   const subTitle = ((item) => {
     if (item.value === 'top_10') return null;
     if (item.value.startsWith('market_cap')) return `${item.label} market cap`;
-    if (item.value === 'subsector') return null;
-    if (item.value.startsWith('by_subsector')) return null;
 
     return item.label;
   })(selectedShowBy);
+
+  const renderSubsectorDropdown = (sector) => {
+    const element = document.querySelector('#show-by-dropdown-placeholder');
+
+    if (!element) return null;
+    if (!isCoalMining(sector)) return null;
+
+    return ReactDOM.createPortal(
+      <NestedDropdown
+        title="By subsector"
+        subTitle={selectedSubsector.label}
+        items={coalMiningSubsectors()}
+        onSelect={setSelectedSubsector}
+      />,
+      element
+    );
+  };
 
   const renderDropdown = () => {
     const element = document.querySelector('#show-by-dropdown-placeholder');
@@ -151,6 +176,7 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }
 
   return (
     <div className="chart chart--cp-performance">
+      {renderSubsectorDropdown(sectorName)}
       {renderDropdown()}
       <Legend
         chartData={chartData}
