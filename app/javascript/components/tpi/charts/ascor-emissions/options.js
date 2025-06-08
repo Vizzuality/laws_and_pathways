@@ -41,7 +41,15 @@ export const options = {
     title: {
       useHTML: true,
       align: 'high'
-    }
+    },
+    plotLines: [
+      {
+        value: 0,
+        color: 'black',
+        width: 1,
+        zIndex: 5
+      }
+    ]
   },
   credits: {
     enabled: false
