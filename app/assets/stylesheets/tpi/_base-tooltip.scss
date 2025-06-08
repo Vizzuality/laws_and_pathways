@@ -15,8 +15,8 @@ div[data-react-class=BaseTooltip] {
 
   &__default-trigger {
     font-family: $font-family-bold;
-    color: white;
-    background-color: $blue;
+    color: $blue;
+    border: 2px solid $blue;
     padding-top: 2px;
     font-size: 16px;
     height: $default-trigger-size;
@@ -24,12 +24,12 @@ div[data-react-class=BaseTooltip] {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: none;
     outline: none;
     cursor: pointer;
 
     &:hover {
-      background-color: $blue-dark;
+      border-color: $blue-dark;
+      color: $blue-dark;
     }
   }
 
