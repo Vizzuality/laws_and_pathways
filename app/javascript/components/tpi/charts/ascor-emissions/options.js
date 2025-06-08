@@ -90,7 +90,7 @@ export const options = {
     : ''
 }
           </div>
-          <span>${this.y}</span>
+          <span>${Number(this.y).toFixed(2)}</span>
         </div>`;
     },
     style: {
