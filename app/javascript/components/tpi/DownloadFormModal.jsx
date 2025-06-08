@@ -71,6 +71,7 @@ const checkboxInputs = [
 ];
 
 const initialFormValues = {
+  accept_terms: false,
   email: '',
   job_title: '',
   forename: '',
@@ -155,11 +156,21 @@ function DownloadFormModal({ downloadUrl }) {
               I have read the Use of TPI Centre Data and will not use the data for
               commercial purposes unless I have sought prior permission.
             </p>
-            <p className="--mandatory">All
-              fields below are mandatory.
-            </p>
             <div className="content">
               <form onSubmit={handleSubmit}>
+                <div className="checkbox-inputs">
+                  <Field
+                    value={formValues.accept_terms}
+                    onChange={handleChange}
+                    required
+                    label="Accept terms and conditions"
+                    type="checkbox"
+                    name="accept_terms"
+                  />
+                </div>
+                <p className="--mandatory">All
+                  fields below are mandatory.
+                </p>
                 <div className="text-inputs">
                   <Field
                     value={formValues.email}
