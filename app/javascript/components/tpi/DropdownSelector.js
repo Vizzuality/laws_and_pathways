@@ -22,6 +22,8 @@ const FILTER_BY = {
 };
 
 const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 'sector' }) => {
+  // This is a sector that exists in db and has companies attached to it, so hiding it from the FE to avoid breaking something in backend
+  const filteredSectors = sectors.filter((sector) => sector.name !== '0');
   const [searchValue, setSearchValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState(defaultFilter);
@@ -31,7 +33,7 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
   const isFilterBySector = activeFilter === FILTER_BY.SECTOR;
   const isFilterByCompany = activeFilter === FILTER_BY.COMPANY;
 
-  const sectorsWithExtraOption = [{ id: 'all-sectors', name: 'All sectors', slug: '' }, ...sectors];
+  const sectorsWithExtraOption = [{ id: 'all-sectors', name: 'All sectors', slug: '' }, ...filteredSectors];
 
   const fuse = (opt) => {
     const config = {
