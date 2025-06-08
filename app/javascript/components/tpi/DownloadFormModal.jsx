@@ -65,8 +65,11 @@ const checkboxInputs = [
   'engagement',
   'voting',
   'academic_research',
-  'content_creation',
+  'content_creation_commercial',
+  'content_creation_noncommercial',
   'investment',
+  'financial_decision_making',
+  'client_reporting',
   'other_purpose_checkbox'
 ];
 
@@ -251,21 +254,39 @@ function DownloadFormModal({ downloadUrl }) {
                   />
                   <Field
                     onChange={handleChange}
-                    label="General research"
+                    label="Academic research"
                     type="checkbox"
                     name="academic_research"
                   />
                   <Field
                     onChange={handleChange}
-                    label="Product creation"
+                    label="Product/Service creation (commercial)"
                     type="checkbox"
-                    name="content_creation"
+                    name="content_creation_commercial"
                   />
                   <Field
-                    label="Investment universe selection/portfolio construction"
+                    onChange={handleChange}
+                    label="Product/Service creation (non-commercial)"
+                    type="checkbox"
+                    name="content_creation_noncommercial"
+                  />
+                  <Field
+                    label="Input to portfolio construction"
                     type="checkbox"
                     onChange={handleChange}
                     name="investment"
+                  />
+                  <Field
+                    label="Financial decision making"
+                    type="checkbox"
+                    onChange={handleChange}
+                    name="financial_decision_making"
+                  />
+                  <Field
+                    label="Client reporting"
+                    type="checkbox"
+                    onChange={handleChange}
+                    name="client_reporting"
                   />
                   <Field
                     onChange={handleChange}
