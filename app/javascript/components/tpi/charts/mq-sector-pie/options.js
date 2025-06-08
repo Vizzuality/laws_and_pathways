@@ -2,7 +2,7 @@ import merge from 'lodash/merge';
 
 import defaultOptions from '../default-options';
 
-const getDefaultText = (total) => `<span class="companies-size">${total}</span><br /><span class="companies-name">companies`;
+const getDefaultText = (total) => `<span class="companies-size">${total.toLocaleString('en-US')}</span><br /><span class="companies-name">companies`;
 const getSelectedText = (name, y, percentage) => `<span class="companies-size --selected">
   Level ${name}</span><br /><span class="companies-name --selected">${y} companies <br /> ${percentage?.toFixed(1)}%</span>`;
 
