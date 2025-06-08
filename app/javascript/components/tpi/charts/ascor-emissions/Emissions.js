@@ -51,7 +51,7 @@ const Emissions = ({
             zoneAxis: 'x',
             zones: [
               {
-                value: last_historical_year
+                value: last_historical_year ? last_historical_year + 1 : last_historical_year
               },
               {
                 dashStyle: 'dash'
