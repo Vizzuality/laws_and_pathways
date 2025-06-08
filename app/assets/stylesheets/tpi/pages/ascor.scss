@@ -24,6 +24,7 @@ $see-more-width-tablet: 130px;
 
     .dropdown-selector__active-button {
       background-color: $dark;
+      cursor: default;
     }
 
     .dropdown-selector__option {
