@@ -4,6 +4,30 @@
 <% metrics = ASCOR::AssessmentIndicator.metric.order(:id) %>
 
 <%= react_component('AscorQuestionLegend') %>
+<% if pillars.any? %>
+  <div>
+    <input id="show-all" type="checkbox" />
+    <label for="show-all" class="show-all">Show All</label>
+  </div>
+<% end %>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const selectAll = document.getElementById('show-all');
+        const label = document.querySelector('label.show-all');
+        const toggles = document.querySelectorAll('input.toggle');
+
+        function updateLabel() {
+            label.textContent = selectAll.checked ? 'Hide All' : 'Show All';
+        }
+
+        selectAll.addEventListener('change', function() {
+            toggles.forEach(cb => { cb.checked = selectAll.checked; cb.dispatchEvent(new Event('change')); });
+            updateLabel();
+        });
+
+        updateLabel();
+    });
+</script>
 <% pillars.each_with_index do |pillar, i| %>
   <input id="pillar-<%= dom_id(pillar) %>" type="checkbox" class="toggle pillar" />
   <div class="country-assessment__pillar">
