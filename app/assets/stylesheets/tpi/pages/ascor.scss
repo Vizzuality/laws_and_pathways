@@ -657,3 +657,58 @@ $see-more-width-tablet: 130px;
     }
   }
 }
+
+#show-all {
+  position: absolute;
+  left: -9999px;
+}
+
+.show-all {
+  display: inline-block;
+  border: 2px solid #595B5D;
+  border-radius: 0;
+  padding: 8px 16px;
+  cursor: pointer;
+  background: $white;
+  float: right;
+  transition: background 0.2s, border-color 0.2s;
+  font-weight: 500;
+  position: relative;
+  width: 125px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.show-all::after {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 8px;
+  width: 16px;
+  height: 16px;
+  background-image: image-url('icons/chevron-gray.svg');
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  transition: transform 0.2s;
+}
+
+#show-all:checked + .show-all::after {
+  transform: rotate(-180deg);
+}
+
+#show-all:checked + .show-all {
+  background: $white;
+  border-color: $grey-dark;
+}
+
+#show-all:not(:checked) + .show-all::before {
+  content: "Show All";
+  display: none;
+}
+
+#show-all:checked + .show-all::before {
+  content: "Hide All";
+  position: absolute;
+  left: 16px;
+  display: none;
+}
