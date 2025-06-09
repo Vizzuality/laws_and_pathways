@@ -45,6 +45,8 @@ gem 'appsignal'
 gem 'roo'
 gem 'caxlsx'
 gem 'mailjet'
+gem 'ed25519'
+gem 'bcrypt_pbkdf'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

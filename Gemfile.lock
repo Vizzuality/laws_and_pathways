@@ -108,6 +108,7 @@ GEM
       babel-source (>= 4.0, < 6)
       execjs (~> 2.0)
     bcrypt (3.1.18)
+    bcrypt_pbkdf (1.1.1)
     bindex (0.8.1)
     bootsnap (1.12.0)
       msgpack (~> 1.2)
@@ -191,6 +192,7 @@ GEM
       request_store (>= 1.0)
       ruby2_keywords
     draper-cancancan (1.1.1)
+    ed25519 (1.4.0)
     erubi (1.13.0)
     execjs (2.8.1)
     factory_bot (6.2.1)
@@ -564,6 +566,7 @@ DEPENDENCIES
   acts_as_list
   annotate
   appsignal
+  bcrypt_pbkdf
   bootsnap (>= 1.4.2)
   brakeman
   bullet
@@ -586,6 +589,7 @@ DEPENDENCIES
   dotenv-rails
   draper
   draper-cancancan
+  ed25519
   factory_bot_rails
   font-awesome-rails
   friendly_id
