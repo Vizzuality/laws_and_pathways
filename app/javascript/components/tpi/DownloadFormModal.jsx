@@ -152,10 +152,6 @@ function DownloadFormModal({ downloadUrl }) {
         >
           <div className="download-form">
             <h2>Data Disclaimer</h2>
-            <p>
-              I have read the Use of TPI Centre Data and will not use the data for
-              commercial purposes unless I have sought prior permission.
-            </p>
             <div className="content">
               <form onSubmit={handleSubmit}>
                 <div className="checkbox-inputs">
@@ -163,7 +159,15 @@ function DownloadFormModal({ downloadUrl }) {
                     value={formValues.accept_terms}
                     onChange={handleChange}
                     required
-                    label="Accept terms and conditions"
+                    label={
+                      <>
+                        I confirm that I have read the{' '}
+                        <a href="https://www.lse.ac.uk/lse-information/terms-of-use" target="_blank" rel="noopener noreferrer">
+                          Use of TPI Centre Data
+                        </a>
+                        {' '}and will not use the data for commercial purposes unless I have sought prior permission.
+                      </>
+                    }
                     type="checkbox"
                     name="accept_terms"
                   />
