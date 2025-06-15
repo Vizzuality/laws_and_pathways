@@ -82,7 +82,7 @@ const initialFormValues = {
   other_purpose: ''
 };
 
-function DownloadFormModal({ downloadUrl }) {
+function DownloadFormModal({ downloadUrl, title, buttonClass }) {
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(null);
   const [formValues, setFormValues] = useState(initialFormValues);
@@ -139,9 +139,9 @@ function DownloadFormModal({ downloadUrl }) {
 
   return (
     <div>
-      <button type="button" onClick={() => setShowModal(true)} className="button is-primary with-icon with-border">
+      <button type="button" onClick={() => setShowModal(true)} className={buttonClass || 'button is-primary with-icon with-border'}>
         <img src={downloadIcon} alt="download icon" />
-        CP & MQ Data
+        { title || 'Download Data'}
       </button>
 
       <OverlayProvider>
@@ -308,6 +308,8 @@ function DownloadFormModal({ downloadUrl }) {
 }
 
 DownloadFormModal.propTypes = {
+  buttonClass: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   downloadUrl: PropTypes.string.isRequired
 };
 
