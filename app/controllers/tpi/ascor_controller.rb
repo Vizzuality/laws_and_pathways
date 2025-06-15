@@ -57,6 +57,15 @@ module TPI
       }, filename: "TPI ASCOR data - #{Time.now.strftime('%d%m%Y')}"
     end
 
+    def send_download_file_info_email
+      DataDownloadMailer.send_download_file_info_email(
+        permitted_email_params,
+        'gri.ascor@lse.ac.uk',
+        'ASCOR data has been downloaded'
+      ).deliver_now
+      head :ok
+    end
+
     private
 
     def fetch_ascor_countries
@@ -83,6 +92,10 @@ module TPI
 
     def fetch_ascor_assessment_results
       @ascor_assessment_results = Api::ASCOR::BubbleChart.new(@assessment_date).call
+    end
+
+    def permitted_email_params
+      params.permit(:email, :job_title, :forename, :surname, :location, :organisation, :other_purpose, purposes: [])
     end
   end
 end
