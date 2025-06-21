@@ -37,14 +37,17 @@ module Api
 
       def portfolio_values_from(cp_assessment, year)
         CP::Portfolio::NAMES.each_with_object({}) do |portfolio, row|
-          value = cp_assessment&.cp_matrices&.detect { |m| m.portfolio == portfolio }
+          converted_portfolio = CP::Portfolio::NAME_MAP[portfolio]
+          value = cp_assessment&.cp_matrices&.detect { |m| m.portfolio == converted_portfolio }
           row[portfolio] = value&.public_send "cp_alignment_#{year}"
         end
       end
 
       def collect_metadata
-        {sectors: sectors.map(&:name),
-         portfolios: CP::Portfolio::NAMES_WITH_CATEGORIES}
+        {
+          sectors: sectors.map(&:name),
+          portfolios: CP::Portfolio::NAMES_WITH_CATEGORIES,
+        }
       end
 
       def cp_assessments

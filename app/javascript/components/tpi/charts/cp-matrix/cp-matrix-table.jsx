@@ -11,7 +11,7 @@ import { useScrollClasses } from './cp-matrix-table-hooks';
 import chevronDownIconBlack from 'images/icon_chevron_dark/chevron_down_black-1.svg';
 
 const COLORS = {
-  'Not assessable using TPI’s methodology': { color: '#CACBCE' },
+  'Not assessable using the TPI Centre’s methodology': { color: '#CACBCE' },
   'No or unsuitable disclosure': { color: 'grey', line: true },
   'Not Aligned': { color: '#ED3D4A' },
   '1.5 Degrees': { color: '#57BE77' },
