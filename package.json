@@ -6,7 +6,7 @@
     "lint": "run-p lint:rails lint:js",
     "lint:fix": "run-p lint:rails:fix lint:js:fix",
     "lint:js": "eslint app/javascript --ext js --ext jsx",
-    "lint:js:fix": "yarn js:lint --fix",
+    "lint:js:fix": "yarn lint:js --fix",
     "lint:rails": "bundle exec rubocop",
     "lint:rails:fix": "yarn rails:lint -a",
     "test": "run-p test:rails test:sast lint:rails rails:bundle-audit",
