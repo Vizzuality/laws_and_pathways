@@ -8,7 +8,7 @@ import Select from './Select';
 import classNames from 'classnames';
 import downloadIcon from 'images/icons/download.svg';
 
-const Field = ({ label, name, value, onChange, type, required, error, placeholder, children }) => {
+const Field = ({ label, name, value, onChange, type, required, error, placeholder, minLength, children }) => {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -31,12 +31,19 @@ const Field = ({ label, name, value, onChange, type, required, error, placeholde
         id={name}
         value={value}
         placeholder={placeholder}
+        minLength={minLength}
       />
       )}
       {error && <span className="error">{error}</span>}
     </div>
   );
 };
+
+const isValidInput = (value) => /[a-zA-Z0-9]/.test(value.trim());
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+}
 
 Field.propTypes = {
   label: PropTypes.string.isRequired,
@@ -47,6 +54,7 @@ Field.propTypes = {
   error: PropTypes.string,
   required: PropTypes.bool,
   placeholder: PropTypes.string,
+  minLength: PropTypes.number,
   children: PropTypes.node
 };
 
@@ -57,6 +65,7 @@ Field.defaultProps = {
   value: undefined,
   required: false,
   placeholder: '',
+  minLength: 2,
   children: null
 };
 
@@ -87,11 +96,40 @@ function DownloadFormModal({ downloadUrl, title, buttonClass }) {
   const [error, setError] = useState(null);
   const [formValues, setFormValues] = useState(initialFormValues);
 
+  const minLength = 2;
+
+  const isValidLength = (value) => value && value.trim().length >= minLength;
+
   const downloadLinkRef = useRef(null);
   const countryOptions = useMemo(() => getNames()?.map((name) => ({label: name, value: name})), []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!isValidEmail(formValues.email)) {
+      setError('Email is not valid');
+      return;
+    }
+
+    if (!isValidInput(formValues.job_title) || !isValidLength(formValues.job_title)) {
+      setError('Job title must contain at least 2 letters or numbers');
+      return;
+    }
+
+    if (!isValidInput(formValues.forename) || !isValidLength(formValues.forename)) {
+      setError('Forename must contain at least 2 letters or numbers');
+      return;
+    }
+
+    if (!isValidInput(formValues.surname) || !isValidLength(formValues.surname)) {
+      setError('Surname must contain at least 2 letters or numbers');
+      return;
+    }
+
+    if (!isValidInput(formValues.organisation) || !isValidLength(formValues.organisation)) {
+      setError('Organisation must contain at least 2 letters or numbers');
+      return;
+    }
 
     if (formValues.purposes.length === 0) {
       setError('Please select at least one purpose');
@@ -161,7 +199,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass }) {
                     required
                     label={
                       <>
-                        I confirm that I have read the{' '}
+                        By checking this box, I attest that I have read the{' '}
                         <a href="https://www.lse.ac.uk/lse-information/terms-of-use" target="_blank" rel="noopener noreferrer">
                           Use of TPI Centre Data
                         </a>
@@ -180,6 +218,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass }) {
                     value={formValues.email}
                     onChange={handleChange}
                     required
+                    minLength={minLength}
                     label="Email"
                     name="email"
                   />
@@ -187,6 +226,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass }) {
                     value={formValues.job_title}
                     onChange={handleChange}
                     required
+                    minLength={minLength}
                     label="Job title"
                     name="job_title"
                   />
@@ -194,6 +234,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass }) {
                     value={formValues.forename}
                     onChange={handleChange}
                     required
+                    minLength={minLength}
                     label="Forename"
                     name="forename"
                   />
@@ -201,6 +242,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass }) {
                     value={formValues.surname}
                     onChange={handleChange}
                     required
+                    minLength={minLength}
                     label="Surname"
                     name="surname"
                   />
@@ -208,6 +250,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass }) {
                     value={formValues.location}
                     onChange={handleChange}
                     required
+                    minLength={minLength}
                     label="Location"
                     name="location"
                   >
@@ -226,6 +269,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass }) {
                     value={formValues.organisation}
                     onChange={handleChange}
                     required
+                    minLength={minLength}
                     label="Organisation"
                     name="organisation"
                   />
@@ -261,7 +305,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass }) {
                   />
                   <Field
                     onChange={handleChange}
-                    label="Product creation"
+                    label="Product creation and service creation"
                     type="checkbox"
                     name="content_creation"
                   />
