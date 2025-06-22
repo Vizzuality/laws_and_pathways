@@ -43,7 +43,7 @@ const Emissions = ({
             name: countries.find(
               (country) => country.id === Number(countryId)
             ).name,
-            custom: { unit: data.metadata.unit },
+            custom: { unit: data.metadata.unit, lastHistoricalYear: last_historical_year },
             data: Object.entries(emissions).map(([year, value]) => ({
               x: Number(year),
               y: value
