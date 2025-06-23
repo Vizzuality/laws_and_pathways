@@ -12,11 +12,12 @@ export const colors = [
 ];
 
 const tooltipLegendLine = (
-  dashStyle,
+  opts,
+  x,
   color
 ) => `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="4" viewBox="0 0 25 4" fill="none">
-${
-  dashStyle === 'dash'
+  ${
+  opts.zone.dashStyle === 'dash' && x !== opts.series.userOptions.custom.lastHistoricalYear
     ? `<line x1="0" y1="4" x2="25" y2="4" stroke-width="4" stroke="${color}" stroke-dasharray="0 1 8 4" />`
     : `<line x1="0" y1="4" x2="25" y2="4" stroke-width="4" stroke="${color}" />`
 }
@@ -41,7 +42,15 @@ export const options = {
     title: {
       useHTML: true,
       align: 'high'
-    }
+    },
+    plotLines: [
+      {
+        value: 0,
+        color: 'black',
+        width: 1,
+        zIndex: 5
+      }
+    ]
   },
   credits: {
     enabled: false
@@ -83,14 +92,14 @@ export const options = {
     pointFormatter() {
       return `<div class='emissions__chart__tooltip__item'>
           <div>
-            ${tooltipLegendLine(this.zone.dashStyle, this.color)}
-            ${this.series.name}${
-  this.zone.dashStyle === 'dash'
+            ${tooltipLegendLine(this, this.x, this.color)}
+            ${this.series.name} ${
+  this.zone.dashStyle === 'dash' && this.x !== this.series.userOptions.custom.lastHistoricalYear
     ? ' <span class="--target">(target)</span>'
     : ''
 }
           </div>
-          <span>${this.y}</span>
+          <span>${Number(this.y).toFixed(2)}</span>
         </div>`;
     },
     style: {
