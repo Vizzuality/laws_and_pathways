@@ -112,22 +112,22 @@ function DownloadFormModal({ downloadUrl, title, buttonClass }) {
     }
 
     if (!isValidInput(formValues.job_title) || !isValidLength(formValues.job_title)) {
-      setError('Job title must contain at least 2 letters or numbers');
+      setError('Please add your Job title');
       return;
     }
 
     if (!isValidInput(formValues.forename) || !isValidLength(formValues.forename)) {
-      setError('Forename must contain at least 2 letters or numbers');
+      setError('Please add your Forename');
       return;
     }
 
     if (!isValidInput(formValues.surname) || !isValidLength(formValues.surname)) {
-      setError('Surname must contain at least 2 letters or numbers');
+      setError('Please add your Surname');
       return;
     }
 
     if (!isValidInput(formValues.organisation) || !isValidLength(formValues.organisation)) {
-      setError('Organisation must contain at least 2 letters or numbers');
+      setError('Please add your Organisation');
       return;
     }
 
@@ -305,7 +305,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass }) {
                   />
                   <Field
                     onChange={handleChange}
-                    label="Product creation and service creation"
+                    label="Product and service creation"
                     type="checkbox"
                     name="content_creation"
                   />
