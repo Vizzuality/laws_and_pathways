@@ -7,7 +7,7 @@ module CP
       ],
       'Corporate and Commercial Banking' => [
         'General Purpose Finance & Business Lending',
-        'Project Finance'
+        'Project finance'
       ],
       'Investment Banking and Capital Markets' => [
         'Private Debt & Equity',
@@ -30,16 +30,20 @@ module CP
       'Auto Loans (retail)' => 'Auto Loans',
       'Mortgages (retail)' => 'Mortgages',
       'General Purpose Finance & Business Lending' => 'Corporate lending',
-      'Project Finance' => 'Project finance',
-      'Private Debt & Equity' => 'Sales & Trading (market-making for securities & client assets)',
-      'Advisory Services (e.g. M&A)' => 'M&A Advisory',
+      'Project finance' => 'Project finance',
+      # new name
+      'Private Debt & Equity' => 'Private Debt & Equity',
+      # new name
       'Listed Debt & Equity' => 'Listed Debt & Equity',
+      'Advisory Services (e.g. M&A)' => 'M&A Advisory',
       'Debt & Equity Facilitating' => 'Debt & Equity Facilitating',
       'Derivatives & Structured Products' => 'Derivatives',
       'Treasury & Payments' => 'Treasury & Risk Management',
-      'Sales & Trading (including market trading)' => 'Commodities',
+      'Sales & Trading (including market trading)' => 'Sales & Trading (market-making for securities & client assets)',
       'Asset & Wealth Management (including private banking)' => 'All wealth and asset management activities (including private banking) across all asset classes',
+      # new name
       'Insurance' => 'Insurance'
+      # Commodities will no longer be supported
     }.freeze
   end
 end

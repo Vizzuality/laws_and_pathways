@@ -37,8 +37,9 @@ module Api
 
       def portfolio_values_from(cp_assessment, year)
         CP::Portfolio::NAMES.each_with_object({}) do |portfolio, row|
-          converted_portfolio = CP::Portfolio::NAME_MAP[portfolio]
-          value = cp_assessment&.cp_matrices&.detect { |m| m.portfolio == converted_portfolio }
+          old_portfolio = CP::Portfolio::NAME_MAP[portfolio]
+          # keep support for old portfolio names but also support new ones
+          value = cp_assessment&.cp_matrices&.detect { |m| m.portfolio == old_portfolio || m.portfolio == portfolio }
           row[portfolio] = value&.public_send "cp_alignment_#{year}"
         end
       end
