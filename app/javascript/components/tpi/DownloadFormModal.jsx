@@ -96,7 +96,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass }) {
   const [error, setError] = useState(null);
   const [formValues, setFormValues] = useState(initialFormValues);
 
-  const minLength = 2;
+  const minLength = 3;
 
   const isValidLength = (value) => value && value.trim().length >= minLength;
 
@@ -200,7 +200,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass }) {
                     label={
                       <>
                         By checking this box, I attest that I have read the{' '}
-                        <a href="https://www.lse.ac.uk/lse-information/terms-of-use" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.transitionpathwayinitiative.org/use-of-the-centre-s-data" target="_blank" rel="noopener noreferrer">
                           Use of TPI Centre Data
                         </a>
                         {' '}and will not use the data for commercial purposes unless I have sought prior permission.
