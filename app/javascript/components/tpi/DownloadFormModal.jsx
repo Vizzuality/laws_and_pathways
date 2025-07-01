@@ -65,7 +65,7 @@ Field.defaultProps = {
   value: undefined,
   required: false,
   placeholder: '',
-  minLength: 2,
+  minLength: 3,
   children: null
 };
 
