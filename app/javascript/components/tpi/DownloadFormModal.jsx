@@ -8,7 +8,7 @@ import Select from './Select';
 import classNames from 'classnames';
 import downloadIcon from 'images/icons/download.svg';
 
-const Field = ({ label, name, value, onChange, type, required, error, placeholder, children }) => {
+const Field = ({ label, name, value, onChange, type, required, error, placeholder, minLength, children }) => {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -31,12 +31,19 @@ const Field = ({ label, name, value, onChange, type, required, error, placeholde
         id={name}
         value={value}
         placeholder={placeholder}
+        minLength={minLength}
       />
       )}
       {error && <span className="error">{error}</span>}
     </div>
   );
 };
+
+const isValidInput = (value) => /[a-zA-Z0-9]/.test(value.trim());
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+}
 
 Field.propTypes = {
   label: PropTypes.string.isRequired,
@@ -47,6 +54,7 @@ Field.propTypes = {
   error: PropTypes.string,
   required: PropTypes.bool,
   placeholder: PropTypes.string,
+  minLength: PropTypes.number,
   children: PropTypes.node
 };
 
@@ -57,6 +65,7 @@ Field.defaultProps = {
   value: undefined,
   required: false,
   placeholder: '',
+  minLength: 3,
   children: null
 };
 
@@ -71,6 +80,7 @@ const checkboxInputs = [
 ];
 
 const initialFormValues = {
+  accept_terms: false,
   email: '',
   job_title: '',
   forename: '',
@@ -81,16 +91,45 @@ const initialFormValues = {
   other_purpose: ''
 };
 
-function DownloadFormModal({ downloadUrl }) {
+function DownloadFormModal({ downloadUrl, title, buttonClass }) {
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(null);
   const [formValues, setFormValues] = useState(initialFormValues);
+
+  const minLength = 3;
+
+  const isValidLength = (value) => value && value.trim().length >= minLength;
 
   const downloadLinkRef = useRef(null);
   const countryOptions = useMemo(() => getNames()?.map((name) => ({label: name, value: name})), []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!isValidEmail(formValues.email)) {
+      setError('Email is not valid');
+      return;
+    }
+
+    if (!isValidInput(formValues.job_title) || !isValidLength(formValues.job_title)) {
+      setError('Please add your Job title');
+      return;
+    }
+
+    if (!isValidInput(formValues.forename) || !isValidLength(formValues.forename)) {
+      setError('Please add your Forename');
+      return;
+    }
+
+    if (!isValidInput(formValues.surname) || !isValidLength(formValues.surname)) {
+      setError('Please add your Surname');
+      return;
+    }
+
+    if (!isValidInput(formValues.organisation) || !isValidLength(formValues.organisation)) {
+      setError('Please add your Organisation');
+      return;
+    }
 
     if (formValues.purposes.length === 0) {
       setError('Please select at least one purpose');
@@ -138,9 +177,9 @@ function DownloadFormModal({ downloadUrl }) {
 
   return (
     <div>
-      <button type="button" onClick={() => setShowModal(true)} className="button is-primary with-icon with-border">
+      <button type="button" onClick={() => setShowModal(true)} className={buttonClass || 'button is-primary with-icon with-border'}>
         <img src={downloadIcon} alt="download icon" />
-        CP & MQ Data
+        { title || 'Download Data'}
       </button>
 
       <OverlayProvider>
@@ -151,20 +190,35 @@ function DownloadFormModal({ downloadUrl }) {
         >
           <div className="download-form">
             <h2>Data Disclaimer</h2>
-            <p>
-              I have read the Use of TPI Centre Data and will not use the data for
-              commercial purposes unless I have sought prior permission.
-            </p>
-            <p className="--mandatory">All
-              fields below are mandatory.
-            </p>
             <div className="content">
               <form onSubmit={handleSubmit}>
+                <div className="checkbox-inputs">
+                  <Field
+                    value={formValues.accept_terms}
+                    onChange={handleChange}
+                    required
+                    label={
+                      <>
+                        By checking this box, I attest that I have read the{' '}
+                        <a href="https://www.transitionpathwayinitiative.org/use-of-the-centre-s-data" target="_blank" rel="noopener noreferrer">
+                          Use of TPI Centre Data
+                        </a>
+                        {' '}and will not use the data for commercial purposes unless I have sought prior permission.
+                      </>
+                    }
+                    type="checkbox"
+                    name="accept_terms"
+                  />
+                </div>
+                <p className="--mandatory">All
+                  fields below are mandatory.
+                </p>
                 <div className="text-inputs">
                   <Field
                     value={formValues.email}
                     onChange={handleChange}
                     required
+                    minLength={minLength}
                     label="Email"
                     name="email"
                   />
@@ -172,6 +226,7 @@ function DownloadFormModal({ downloadUrl }) {
                     value={formValues.job_title}
                     onChange={handleChange}
                     required
+                    minLength={minLength}
                     label="Job title"
                     name="job_title"
                   />
@@ -179,6 +234,7 @@ function DownloadFormModal({ downloadUrl }) {
                     value={formValues.forename}
                     onChange={handleChange}
                     required
+                    minLength={minLength}
                     label="Forename"
                     name="forename"
                   />
@@ -186,6 +242,7 @@ function DownloadFormModal({ downloadUrl }) {
                     value={formValues.surname}
                     onChange={handleChange}
                     required
+                    minLength={minLength}
                     label="Surname"
                     name="surname"
                   />
@@ -193,6 +250,7 @@ function DownloadFormModal({ downloadUrl }) {
                     value={formValues.location}
                     onChange={handleChange}
                     required
+                    minLength={minLength}
                     label="Location"
                     name="location"
                   >
@@ -211,6 +269,7 @@ function DownloadFormModal({ downloadUrl }) {
                     value={formValues.organisation}
                     onChange={handleChange}
                     required
+                    minLength={minLength}
                     label="Organisation"
                     name="organisation"
                   />
@@ -240,13 +299,13 @@ function DownloadFormModal({ downloadUrl }) {
                   />
                   <Field
                     onChange={handleChange}
-                    label="General research"
+                    label="Academic research"
                     type="checkbox"
                     name="academic_research"
                   />
                   <Field
                     onChange={handleChange}
-                    label="Product creation"
+                    label="Product and service creation"
                     type="checkbox"
                     name="content_creation"
                   />
@@ -293,6 +352,8 @@ function DownloadFormModal({ downloadUrl }) {
 }
 
 DownloadFormModal.propTypes = {
+  buttonClass: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   downloadUrl: PropTypes.string.isRequired
 };
 

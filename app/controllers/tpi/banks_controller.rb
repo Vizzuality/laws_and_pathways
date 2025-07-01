@@ -77,6 +77,15 @@ module TPI
       render json: data.as_json
     end
 
+    def send_download_file_info_email
+      DataDownloadMailer.send_download_file_info_email(
+        permitted_email_params,
+        'gri.banking@lse.ac.uk',
+        'Banking data has been downloaded'
+      ).deliver_now
+      head :ok
+    end
+
     private
 
     def fetch_bank
@@ -131,6 +140,10 @@ module TPI
 
     def redirect_if_numeric_or_historic_slug
       redirect_to tpi_bank_path(@bank.slug), status: :moved_permanently if params[:id] != @bank.slug
+    end
+
+    def permitted_email_params
+      params.permit(:email, :job_title, :forename, :surname, :location, :organisation, :other_purpose, purposes: [])
     end
   end
 end
