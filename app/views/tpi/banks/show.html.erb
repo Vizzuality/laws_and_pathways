@@ -22,10 +22,11 @@
         </div>
       </div>
 
-      <%= link_to user_download_tpi_banks_path, class: 'button is-primary is-pulled-right with-icon with-border' do %>
-        <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
-        Download all banks data
-      <% end %>
+      <%= react_component('DownloadFormModal', {
+        title: 'Download all banks data',
+        buttonClass: 'button is-primary is-pulled-right with-icon with-border',
+        downloadUrl: user_download_tpi_banks_path
+      }) %>
     </div>
   </div>
 
