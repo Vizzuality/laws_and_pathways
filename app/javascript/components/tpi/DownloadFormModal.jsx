@@ -91,7 +91,7 @@ const initialFormValues = {
   other_purpose: ''
 };
 
-function DownloadFormModal({ downloadUrl, title, buttonClass }) {
+function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(null);
   const [formValues, setFormValues] = useState(initialFormValues);
@@ -140,7 +140,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass }) {
       return;
     }
 
-    fetch('/sectors/send_download_file_info_email', {
+    fetch(`/${source}/send_download_file_info_email`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -354,7 +354,8 @@ function DownloadFormModal({ downloadUrl, title, buttonClass }) {
 DownloadFormModal.propTypes = {
   buttonClass: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  downloadUrl: PropTypes.string.isRequired
+  downloadUrl: PropTypes.string.isRequired,
+  source: PropTypes.string.isRequired
 };
 
 export default DownloadFormModal;
