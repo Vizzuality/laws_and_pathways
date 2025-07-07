@@ -80,7 +80,7 @@ module TPI
     def send_download_file_info_email
       DataDownloadMailer.send_download_file_info_email(
         permitted_email_params,
-        'leo.guercio@vizzuality.com',
+        'gri.banking@lse.ac.uk',
         'Banking data has been downloaded'
       ).deliver_now
       head :ok

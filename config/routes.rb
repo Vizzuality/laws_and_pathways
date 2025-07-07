@@ -57,6 +57,7 @@ Rails.application.routes.draw do
           get :index_assessment
           get :average_bank_score_chart_data
           get :user_download
+          post :send_download_file_info_email
         end
       end
 
@@ -69,6 +70,7 @@ Rails.application.routes.draw do
           get :index_emissions_assessment
           get :emissions_chart_data
           get :user_download
+          post :send_download_file_info_email
         end
       end
 
