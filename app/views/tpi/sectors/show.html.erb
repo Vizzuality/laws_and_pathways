@@ -20,7 +20,8 @@
             Methodology
           <% end %>
           <%= react_component('DownloadFormModal', {
-            downloadUrl: user_download_tpi_sector_path(@sector)
+            downloadUrl: user_download_tpi_sector_path(@sector),
+            source: 'sectors',
           }) %>
         </div>
       </div>
