@@ -7,9 +7,9 @@ function Tabs({ selectedTabIndex, setSelectedTabIndex }) {
   return (
     <div className="matrix-tabs">
       {[
-        'Short-term alignment',
-        'Medium-term alignment',
-        'Long-term alignment'
+        'Short-term alignment 2025',
+        'Medium-term alignment 2035',
+        'Long-term alignment 2050'
       ].map((text, index) => (
         <div key={`tab${index}`}>
           <button

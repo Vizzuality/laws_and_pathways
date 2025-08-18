@@ -10,9 +10,10 @@ import chevronIcon from 'images/icon-go-to-arrow.svg';
 import { useScrollClasses } from './cp-matrix-table-hooks';
 import chevronDownIconBlack from 'images/icon_chevron_dark/chevron_down_black-1.svg';
 
+const DEFAULT_COLOR_KEY = 'No or unsuitable disclosure';
 const COLORS = {
   'Not assessable using the TPI Centre’s methodology': { color: '#CACBCE' },
-  'No or unsuitable disclosure': { color: 'grey', line: true },
+  [DEFAULT_COLOR_KEY]: { color: 'grey', line: true },
   'Not Aligned': { color: '#ED3D4A' },
   '1.5 Degrees': { color: '#57BE77' },
   'Below 2 Degrees': { color: '#F9DF65' },
@@ -20,7 +21,20 @@ const COLORS = {
 };
 
 function ColorDot({ value, small }) {
-  if (!value) return null;
+  // If null, show as empty
+  if (!value) {
+    return (
+      <div className="color-dot-container">
+        <span
+          className={cx('color-dot', {
+            line: COLORS[DEFAULT_COLOR_KEY]?.line,
+            small
+          })}
+          style={{ backgroundColor: COLORS[DEFAULT_COLOR_KEY]?.color }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="color-dot-container">
