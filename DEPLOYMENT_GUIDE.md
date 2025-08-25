@@ -1,65 +1,38 @@
 # 🚀 Bank Assessment Indicators Update - Deployment Guide
 
-## 📋 **Pre-Deployment Checklist**
+## 📋 **Overview**
 
-### **1. Code Changes to Deploy**
-- ✅ New CSV file: `db/seeds/tpi/bank_assessment_indicators_new.csv`
-- ✅ Backup & recovery rake tasks
-- ✅ Updated bank assessment indicators structure
-- ✅ CP Matrix 2030 alignment columns (from previous work)
+This guide covers the safe deployment of new bank assessment indicators while preserving all existing data.
 
-### **2. Database Changes**
-- ✅ CP assessment 2030 alignment columns (already migrated)
-- ✅ CP matrix 2030 alignment column (already migrated)
-- 🔄 Bank assessment indicators will be updated via rake task
+### **What We're Doing:**
+- ✅ Adding new bank assessment indicators (v2025)
+- ✅ Preserving existing indicators (v2024) as inactive
+- ✅ Maintaining all existing assessment data
+- ✅ Using updated uniqueness constraint to allow same numbers with different versions
 
-### **3. Files to Include in Deployment**
-```
-app/
-├── lib/tasks/
-│   ├── backup_bank_assessment_data.rake
-│   └── update_bank_assessment_indicators.rake
-├── models/
-│   ├── cp/assessment.rb (schema updated)
-│   ├── cp/matrix.rb (schema updated)
-│   └── bank.rb (delegations updated)
-├── admin/
-│   ├── cp_assessments.rb (admin interface updated)
-│   └── banks.rb (admin interface updated)
-├── views/admin/cp_assessments/
-│   └── _form.html.erb (form updated)
-└── services/
-    ├── csv_import/bank_cp_assessments2030.rb (new)
-    └── csv_export/user/bank_cp_assessments.rb (updated)
+### **Current Data Status:**
+- **38 bank assessments** exist
+- **4,180 assessment results** exist
+- **110 current indicators** exist
+- **All data will be preserved**
 
-db/
-├── seeds/tpi/
-│   └── bank_assessment_indicators_new.csv (new)
-└── backups/ (will be created during deployment)
+## 🚀 **Deployment Steps**
 
-spec/
-├── factories/
-│   ├── cp_assessment.rb (updated)
-│   └── cp_matrices.rb (updated)
-```
-
-## 🚀 **Capistrano Deployment Steps**
-
-### **Phase 1: Deploy Code (Zero Downtime)**
+### **Phase 1: Deploy Code**
 ```bash
-# Deploy the new code without running migrations
+# Deploy the new code
 cap production deploy:code
 
-# Verify code is deployed
+# Verify deployment
 cap production deploy:check
 ```
 
-### **Phase 2: Run Database Migrations**
+### **Phase 2: Run Database Migration**
 ```bash
-# Run any pending migrations
+# Run the migration to add version/active fields and update uniqueness constraint
 cap production deploy:migrate
 
-# Verify migrations
+# Verify migration
 cap production deploy:migrate:status
 ```
 
@@ -74,11 +47,11 @@ cd /var/www/laws_and_pathways/current
 # Create backup of current data
 RAILS_ENV=production bundle exec rails bank_assessment_data:backup
 
-# Preview changes (optional but recommended)
+# Preview changes (optional)
 RAILS_ENV=production bundle exec rails bank_assessment_indicators:preview
 
-# Update indicators with new structure
-RAILS_ENV=production bundle exec rails bank_assessment_indicators:update
+# Run safe update
+RAILS_ENV=production bundle exec rails bank_assessment_indicators:safe_update
 
 # Verify the update
 RAILS_ENV=production bundle exec rails bank_assessment_indicators:count
@@ -89,105 +62,85 @@ RAILS_ENV=production bundle exec rails bank_assessment_indicators:count
 # Check application health
 cap production deploy:check
 
-# Verify admin interface loads
+# Test admin interface
 # Visit: https://your-domain.com/admin/bank_assessment_indicators
 
-# Test a bank assessment view
+# Test bank assessment view
 # Visit: https://your-domain.com/tpi/banks/[bank-slug]
+
+# Check for orphaned results
+RAILS_ENV=production bundle exec rails bank_assessment_indicators:count
 ```
 
-## 🔧 **Additional Changes to Consider**
+## 🔒 **Rollback Process**
 
-### **1. Update Test Data**
-The new indicators will need updated test data. Consider:
-- Updating `spec/factories/bank_assessment_indicators.rb`
-- Updating test fixtures
-- Updating integration tests
-
-### **2. Update CSV Import/Export Services**
-If you have existing bank assessment data, you might need to:
-- Update CSV templates for data import
-- Update export formats
-- Handle data migration for existing assessments
-
-### **3. Update Documentation**
-- Update admin user guides
-- Update API documentation if applicable
-- Update user-facing documentation
-
-## 🚨 **Rollback Plan**
-
-### **If Something Goes Wrong:**
+### **Quick Rollback (if needed):**
 ```bash
 # SSH into production
 cap production deploy:ssh
 cd /var/www/laws_and_pathways/current
 
+# Reset to original indicators
+RAILS_ENV=production bundle exec rails bank_assessment_indicators:reset_to_original
+
+# Verify rollback
+RAILS_ENV=production bundle exec rails bank_assessment_indicators:count
+```
+
+### **Full Restore from Backup:**
+```bash
 # List available backups
 RAILS_ENV=production bundle exec rails bank_assessment_data:list_backups
 
 # Restore from backup
 RAILS_ENV=production bundle exec rails bank_assessment_data:restore[TIMESTAMP]
-
-# Verify restoration
-RAILS_ENV=production bundle exec rails bank_assessment_indicators:count
 ```
 
-### **If Code Rollback is Needed:**
-```bash
-# Rollback to previous release
-cap production deploy:rollback
+## 📊 **What Happens After Safe Update**
 
-# SSH and restore indicators
-cap production deploy:ssh
-cd /var/www/laws_and_pathways/current
-RAILS_ENV=production bundle exec rails bank_assessment_data:restore[TIMESTAMP]
-```
+### **Database State:**
+- **Old indicators**: Marked as inactive (v2024, active: false)
+- **New indicators**: Active (v2025, active: true)
+- **Existing results**: All preserved and accessible
+- **Numbering**: Same numbers can exist in both versions
 
-## 📊 **Monitoring & Verification**
+### **Application Behavior:**
+- **Admin interface**: Shows only active indicators by default
+- **Public pages**: Display only current indicators
+- **CSV exports**: Use only active indicators
+- **All existing functionality**: Continues to work
 
-### **Post-Deployment Checks:**
-1. **Admin Interface**: Verify new indicators appear correctly
-2. **Bank Views**: Check that bank assessment pages load
-3. **Data Integrity**: Verify no orphaned assessment results
-4. **Performance**: Monitor for any performance impacts
-5. **Error Logs**: Check application logs for errors
-
-### **Key URLs to Test:**
-- `/admin/bank_assessment_indicators` - Admin interface
-- `/admin/banks/[id]` - Bank admin page
-- `/tpi/banks/[slug]` - Public bank page
-- `/tpi/banks/[slug]/assessments` - Bank assessments
-
-## 🔒 **Security Considerations**
-
-- **Backup Access**: Ensure backup files are not publicly accessible
-- **Admin Permissions**: Verify admin users can manage new indicators
-- **Data Validation**: Ensure new indicators follow validation rules
-- **Audit Trail**: Consider logging indicator changes
-
-## 📝 **Deployment Checklist**
+## ✅ **Deployment Checklist**
 
 - [ ] Code deployed to production
-- [ ] Database migrations run
+- [ ] Database migration run (version/active fields + uniqueness constraint)
 - [ ] Backup created before update
-- [ ] Indicators updated successfully
+- [ ] Safe update completed successfully
 - [ ] Admin interface verified
 - [ ] Public views tested
-- [ ] Performance monitored
-- [ ] Error logs checked
+- [ ] No orphaned results found
 - [ ] Rollback plan tested
-- [ ] Documentation updated
 
-## 🆘 **Emergency Contacts**
+## 🆘 **If Something Goes Wrong**
 
-- **Database Admin**: [Contact Info]
-- **DevOps Team**: [Contact Info]
-- **Application Support**: [Contact Info]
+1. **Use quick rollback**: `rails bank_assessment_indicators:reset_to_original`
+2. **Restore from backup**: Use the backup created before update
+3. **Check logs**: Look for any error messages
+4. **Verify data**: Use `rails bank_assessment_indicators:count`
 
-## 📚 **Additional Resources**
+## 📚 **Key Files**
 
-- [Backup & Recovery README](db/backups/README.md)
-- [Bank Assessment Indicators Admin](app/admin/bank_assessment_indicators.rb)
-- [Update Rake Tasks](lib/tasks/update_bank_assessment_indicators.rake)
-- [Backup Rake Tasks](lib/tasks/backup_bank_assessment_data.rake)
+- **Migration**: `db/migrate/20250825065000_add_version_to_bank_assessment_indicators.rb`
+- **Rake Tasks**: `lib/tasks/update_bank_assessment_indicators.rake`
+- **Backup Tasks**: `lib/tasks/backup_bank_assessment_data.rake`
+- **New Indicators**: `db/seeds/tpi/bank_assessment_indicators_new.csv`
+
+## 🎯 **Success Criteria**
+
+- ✅ New indicators (v2025) are active and visible
+- ✅ Old indicators (v2024) are inactive but preserved
+- ✅ All existing assessment data remains accessible
+- ✅ Admin interface shows only active indicators by default
+- ✅ Public bank pages display only current indicators
+- ✅ No data loss or orphaned results
+- ✅ Easy rollback capability maintained

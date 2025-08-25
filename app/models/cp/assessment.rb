@@ -135,6 +135,7 @@ module CP
 
     def cp_regional_alignment_2050_by_company
       return unless cp_regional_alignment_2050.present?
+
       CP::Alignment.new(name: cp_regional_alignment_2050, sector: sector&.name)
     end
 

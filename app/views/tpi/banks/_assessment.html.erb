@@ -11,10 +11,30 @@
 </div>
 
 <% areas = assessment.results.of_type("area").order('length(bank_assessment_indicators.number), bank_assessment_indicators.number') %>
+
+<% if areas.empty? %>
+  <%# No active results found, show notice and create virtual areas from active indicators %>
+  <div class="bank-assessment__new-framework-notice">
+    <p><strong>New Assessment Framework</strong> - This bank has not been assessed against the updated framework yet. All indicators below show N/A until assessment is completed.</p>
+  </div>
+  
+  <%# Create virtual areas from active indicators %>
+  <% active_indicators = BankAssessmentIndicator.active.where(indicator_type: 'area').order(:number) %>
+  <% areas = active_indicators.map do |indicator|
+    area = OpenStruct.new(
+      id: "virtual_#{indicator.id}",
+      indicator: indicator,
+      percentage: 0
+    )
+    area.define_singleton_method(:virtual?) { true }
+    area
+  end %>
+<% end %>
+
 <% areas.each do |area| %>
-  <input id="<%= dom_id(area) %>" type="checkbox" class="toggle" />
+  <input id="<%= area.virtual? ? area.id : dom_id(area) %>" type="checkbox" class="toggle" />
   <div class="bank-assessment__area">
-    <div for="<%= dom_id(area) %>" class="bank-assessment__area-header">
+    <div for="<%= area.virtual? ? area.id : dom_id(area) %>" class="bank-assessment__area-header">
       <div class="bank-assessment__area-indicator">
         <small>Area <%= area.indicator.number %></small>
         <h2><%= area.indicator.text %></h2>
@@ -44,16 +64,18 @@
             <div class="bank-assessment__tooltip-text"><%= max_score %>%</div>
           </div>
         </div>
-        <div class="bank-assessment__area-value-progress" style="width: <%= area.percentage.to_i %>%;">
-          <% if area.percentage >= 5 %>
+        <div class="bank-assessment__area-value-progress" style="width: <%= (area.percentage || 0).to_i %>%;">
+          <% if area.percentage && area.percentage >= 5 %>
             <div class="bank-assessment__area-value-value">
               <%= number_with_precision(area.percentage, precision: 1, strip_insignificant_zeros: true) %>%
             </div>
           <% end %>
         </div>
-        <% if area.percentage < 5 %>
+        <% if area.percentage.nil? || area.percentage < 5 %>
           <div class="bank-assessment__area-value-value">
-            <% if area.indicator.is_placeholder %>
+            <% if area.virtual? %>
+              N/A
+            <% elsif area.indicator.is_placeholder %>
               N/A
             <% else %>
               <%= number_with_precision(area.percentage, precision: 1, strip_insignificant_zeros: true) %>%
@@ -66,33 +88,49 @@
           <%= area.indicator.comment %>
         </div>
       <% end %>
-      <label class="bank-assessment__more" for="<%= dom_id(area) %>">
+      <label class="bank-assessment__more" for="<%= area.virtual? ? area.id : dom_id(area) %>">
       </label>
     </div>
 
     <div class="bank-assessment__area-content">
-      <% sub_areas = assessment.child_indicators(area, "sub_area") %>
-
-      <% if sub_areas.any? %>
-        <% sub_areas.each do |sub_area| %>
-          <input id="<%= dom_id(sub_area) %>" type="checkbox" class="toggle" checked />
-          <div class="bank-assessment__sub-area">
-            <div class="bank-assessment__sub-area-header">
-              <h3>
-                <%= sub_area.indicator.display_text %>
-              </h3>
-
-              <label class="bank-assessment__more" for="<%= dom_id(sub_area) %>">
-              </label>
-            </div>
-
-            <div class="bank-assessment__sub-area-content">
-              <%= render "indicators", assessment: assessment, area: area, indicators: assessment.child_indicators(sub_area, "indicator") %>
-            </div>
-          </div>
-        <% end %>
+      <% if area.virtual? %>
+        <%# For virtual areas, get indicators directly since there are no sub-areas in the new framework %>
+        <% indicators = BankAssessmentIndicator.active.where(indicator_type: 'indicator').select { |i| i.number.start_with?("#{area.indicator.number}.") } %>
+        <% indicators = indicators.map do |indicator|
+          indicator_obj = OpenStruct.new(
+            id: "virtual_#{indicator.id}",
+            indicator: indicator,
+            percentage: nil,
+            answer: 'N/A'
+          )
+          indicator_obj.define_singleton_method(:virtual?) { true }
+          indicator_obj
+        end %>
+        <%= render "indicators", assessment: assessment, area: area, indicators: indicators %>
       <% else %>
-        <%= render "indicators", assessment: assessment, area: area, indicators: assessment.child_indicators(area, "indicator") %>
+        <% sub_areas = assessment.child_indicators(area, "sub_area") %>
+
+        <% if sub_areas.any? %>
+          <% sub_areas.each do |sub_area| %>
+            <input id="<%= dom_id(sub_area) %>" type="checkbox" class="toggle" checked />
+            <div class="bank-assessment__sub-area">
+              <div class="bank-assessment__sub-area-header">
+                <h3>
+                  <%= sub_area.indicator.display_text %>
+                </h3>
+
+                <label class="bank-assessment__more" for="<%= dom_id(sub_area) %>">
+                </label>
+              </div>
+
+              <div class="bank-assessment__sub-area-content">
+                <%= render "indicators", assessment: assessment, area: area, indicators: assessment.child_indicators(sub_area, "indicator") %>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <%= render "indicators", assessment: assessment, area: area, indicators: assessment.child_indicators(area, "indicator") %>
+        <% end %>
       <% end %>
     </div>
   </div>

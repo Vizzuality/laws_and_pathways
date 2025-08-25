@@ -106,6 +106,7 @@ module TPI
       @results = BankAssessmentResult
         .by_date(@date)
         .of_type(:area)
+        .with_active_indicators  # Use only active indicators
         .includes(assessment: :bank)
         .order('length(bank_assessment_indicators.number), bank_assessment_indicators.number')
         .map do |result|

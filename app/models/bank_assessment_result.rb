@@ -19,8 +19,21 @@ class BankAssessmentResult < ApplicationRecord
   validates_presence_of :percentage, if: -> { indicator.percentage_indicator? }
   validates :answer, inclusion: {in: ANSWERS}, if: -> { indicator.answer_indicator? }
 
-  scope :of_type, ->(type) { includes(:indicator).where(bank_assessment_indicators: {indicator_type: type}) }
+  # Use only active indicators by default
+  scope :of_type, ->(type) {
+    includes(:indicator)
+      .where(bank_assessment_indicators: {indicator_type: type, active: true})
+  }
+
+  # Scope for all results (including inactive indicators)
+  scope :of_type_all, ->(type) {
+    includes(:indicator)
+      .where(bank_assessment_indicators: {indicator_type: type})
+  }
+
   scope :by_date, ->(date) { includes(:assessment).where(bank_assessments: {assessment_date: date}) }
+  scope :with_active_indicators, -> { joins(:indicator).where(bank_assessment_indicators: {active: true}) }
+  scope :with_version, ->(version) { joins(:indicator).where(bank_assessment_indicators: {version: version}) }
 
   def value=(val)
     self.answer = val if indicator.answer_indicator?

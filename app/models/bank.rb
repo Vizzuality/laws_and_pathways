@@ -60,4 +60,26 @@ class Bank < ApplicationRecord
   def path
     Rails.application.routes.url_helpers.tpi_bank_path(slug)
   end
+
+  def latest_assessment
+    assessments.order(assessment_date: :desc).first
+  end
+
+  def latest_assessment_with_active_indicators
+    assessments.joins(:results)
+      .joins('JOIN bank_assessment_indicators ON ' \
+             'bank_assessment_indicators.id = bank_assessment_results.bank_assessment_indicator_id')
+      .where(bank_assessment_indicators: {active: true})
+      .order(assessment_date: :desc)
+      .first
+  end
+
+  def assessments_with_active_indicators
+    assessments.joins(:results)
+      .joins('JOIN bank_assessment_indicators ON ' \
+             'bank_assessment_indicators.id = bank_assessment_results.bank_assessment_indicator_id')
+      .where(bank_assessment_indicators: {active: true})
+      .distinct
+      .order(assessment_date: :desc)
+  end
 end

@@ -58,3 +58,5 @@ TODO.md
 # R project files
 .Rproj.user
 *.Rproj
+
+./db/backups/bank_assessment_data/*

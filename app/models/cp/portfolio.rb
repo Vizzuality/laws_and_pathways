@@ -19,7 +19,7 @@ module CP
         'Sales & Trading (including market trading)'
       ],
       'Asset & Wealth Management' => [
-        'Asset & Wealth Management (including private banking)',
+        'Asset & Wealth Management (including private banking)'
       ],
       'Insurance' => [
         'Insurance'
@@ -40,7 +40,8 @@ module CP
       'Derivatives & Structured Products' => 'Derivatives',
       'Treasury & Payments' => 'Treasury & Risk Management',
       'Sales & Trading (including market trading)' => 'Sales & Trading (market-making for securities & client assets)',
-      'Asset & Wealth Management (including private banking)' => 'All wealth and asset management activities (including private banking) across all asset classes',
+      'Asset & Wealth Management (including private banking)' => 'All wealth and asset management activities ' \
+                                                                 '(including private banking) across all asset classes',
       # new name
       'Insurance' => 'Insurance'
       # Commodities will no longer be supported

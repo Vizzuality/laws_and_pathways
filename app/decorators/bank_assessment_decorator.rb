@@ -18,6 +18,12 @@ class BankAssessmentDecorator < Draper::Decorator
   end
 
   def results
+    # Use only active indicators by default
+    model.results.joins(:indicator).where(bank_assessment_indicators: {active: true}).order('bank_assessment_indicators.number')
+  end
+
+  def all_results
+    # Method to get all results (including inactive indicators)
     model.results.includes(:indicator).order('bank_assessment_indicators.number')
   end
 end
