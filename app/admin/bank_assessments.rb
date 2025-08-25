@@ -43,15 +43,17 @@ ActiveAdmin.register BankAssessment do
       end
     end
 
-    # Optional: Show all results (including inactive indicators)
+    # Show all results (including inactive indicators) - use the original model to avoid decorator filtering
     panel 'All Questions (Including Inactive Indicators)' do
-      all_results = resource.results.includes(:indicator).order('bank_assessment_indicators.number')
+      # Get the original model from the decorator to avoid filtering
+      original_assessment = resource.model
+      all_results = original_assessment.results.includes(:indicator).order('bank_assessment_indicators.number')
 
       if all_results.any?
-        table_for all_results.decorate do
+        table_for all_results do
           column(:number) { |r| r.indicator.number }
           column(:display_text) { |r| r.indicator.display_text }
-          column(:value)
+          column(:value) { |r| r.percentage || r.answer }
           column(:version) { |r| r.indicator.version }
           column(:active) { |r| r.indicator.active? ? 'Yes' : 'No' }
         end
