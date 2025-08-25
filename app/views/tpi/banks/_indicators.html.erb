@@ -6,7 +6,7 @@
       </h4>
       <div class="bank-assessment__indicator-value">
         <div>
-          <% if indicator.virtual? %>
+          <% if indicator.respond_to?(:virtual?) && indicator.virtual? %>
             N/A
           <% elsif indicator.indicator.is_placeholder %>
             N/A
@@ -20,16 +20,17 @@
     </div>
 
     <div class="bank-assessment__sub-indicators">
-      <% if indicator.virtual? %>
+      <% if indicator.respond_to?(:virtual?) && indicator.virtual? %>
         <%# For virtual indicators, get sub-indicators directly from the database %>
         <% sub_indicators = BankAssessmentIndicator.active.where(indicator_type: 'sub_indicator').select { |si| si.number.start_with?("#{indicator.indicator.number}.") } %>
         <% sub_indicators = sub_indicators.map do |sub_indicator|
-          OpenStruct.new(
+          sub_indicator_obj = OpenStruct.new(
             id: "virtual_#{sub_indicator.id}",
             indicator: sub_indicator,
-            answer: 'N/A',
-            virtual: true
+            answer: 'N/A'
           )
+          sub_indicator_obj.define_singleton_method(:virtual?) { true }
+          sub_indicator_obj
         end %>
       <% else %>
         <% sub_indicators = assessment.child_indicators(indicator, "sub_indicator") %>
@@ -38,8 +39,7 @@
       <% sub_indicators.each do |sub_indicator| %>
         <div class="bank-assessment__sub-indicator">
           <div class="bank-assessment__sub-indicator-answer-wrapper">
-            <span class="bank-assessment__sub-indicator-answer bank-assessment__sub-indicator-answer--<%= (sub_indicator.answer || 'N/A').parameterize %>">
-              <%= sub_indicator.virtual? ? 'N/A' : (sub_indicator.answer || 'N/A') %>
+            <span class="bank-assessment__sub-indicator-answer bank-assessment__sub-indicator-answer--<%= (sub_indicator.respond_to?(:virtual?) && sub_indicator.virtual? ? 'not-applicable' : (sub_indicator.answer || 'not-applicable')).parameterize %>">
             </span>
           </div>
           <div class="bank-assessment__sub-indicator-answer-text">

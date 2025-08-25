@@ -32,9 +32,9 @@
 <% end %>
 
 <% areas.each do |area| %>
-  <input id="<%= area.virtual? ? area.id : dom_id(area) %>" type="checkbox" class="toggle" />
+  <input id="<%= area.respond_to?(:virtual?) && area.virtual? ? area.id : dom_id(area) %>" type="checkbox" class="toggle" />
   <div class="bank-assessment__area">
-    <div for="<%= area.virtual? ? area.id : dom_id(area) %>" class="bank-assessment__area-header">
+    <div for="<%= area.respond_to?(:virtual?) && area.virtual? ? area.id : dom_id(area) %>" class="bank-assessment__area-header">
       <div class="bank-assessment__area-indicator">
         <small>Area <%= area.indicator.number %></small>
         <h2><%= area.indicator.text %></h2>
@@ -73,7 +73,7 @@
         </div>
         <% if area.percentage.nil? || area.percentage < 5 %>
           <div class="bank-assessment__area-value-value">
-            <% if area.virtual? %>
+            <% if area.respond_to?(:virtual?) && area.virtual? %>
               N/A
             <% elsif area.indicator.is_placeholder %>
               N/A
@@ -88,12 +88,12 @@
           <%= area.indicator.comment %>
         </div>
       <% end %>
-      <label class="bank-assessment__more" for="<%= area.virtual? ? area.id : dom_id(area) %>">
+      <label class="bank-assessment__more" for="<%= area.respond_to?(:virtual?) && area.virtual? ? area.id : dom_id(area) %>">
       </label>
     </div>
 
     <div class="bank-assessment__area-content">
-      <% if area.virtual? %>
+      <% if area.respond_to?(:virtual?) && area.virtual? %>
         <%# For virtual areas, get indicators directly since there are no sub-areas in the new framework %>
         <% indicators = BankAssessmentIndicator.active.where(indicator_type: 'indicator').select { |i| i.number.start_with?("#{area.indicator.number}.") } %>
         <% indicators = indicators.map do |indicator|
@@ -123,7 +123,7 @@
                 </label>
               </div>
 
-              <div class="bank-assessment__sub-area-content">
+              <div class="bank-assessment__area-content">
                 <%= render "indicators", assessment: assessment, area: area, indicators: assessment.child_indicators(sub_area, "indicator") %>
               </div>
             </div>

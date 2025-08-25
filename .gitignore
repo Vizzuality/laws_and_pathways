@@ -59,4 +59,4 @@ TODO.md
 .Rproj.user
 *.Rproj
 
-./db/backups/bank_assessment_data/*
+/db/backups/bank_assessment_data/*
