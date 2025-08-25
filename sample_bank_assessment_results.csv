@@ -1,0 +1,12 @@
+bank_id,assessment_date,indicator_type,indicator_number,indicator_text,answer,percentage,comment
+2,2025-01-15,area,1,Net zero commitment,,,
+2,2025-01-15,indicator,1.1,Has the bank committed to achieve net-zero emissions from its financed and facilitated emissions by 2050 or sooner, consistent with a 1.5°C scenario?,,,
+2,2025-01-15,sub_indicator,1.1.a,Has the bank committed to achieving net zero financed/facilitated emissions by 2050 or sooner?,Yes,,
+2,2025-01-15,sub_indicator,1.1.b,Has the bank disclosed what on- and off-balance sheet activities OR what proportion of total financed/facilitated emissions are covered by its net zero commitment?,Yes,,
+2,2025-01-15,sub_indicator,1.1.c,Does the bank's net-zero emissions commitment cover all material on- and off-balance sheet activities OR explicitly commit to doing so once methodologies are developed?,Yes,,
+2,2025-01-15,sub_indicator,1.1.d,If the bank has committed to covering all material on- and off-balance sheet activities in its net zero commitment, has the bank disclosed over what timeframe?,Yes,,
+2,2025-01-15,area,2,Targets,,,
+2,2025-01-15,indicator,2.1,Has the bank set short-, medium- and long-term targets for reducing its financed/facilitated emissions, consistent with a 1.5°C pathway?,,,
+2,2025-01-15,sub_indicator,2.1.a,Has the bank set a short-term sectoral target(s) for reducing its material financed/facilitated emissions (from the year of assessment to 2030)?,Yes,,
+2,2025-01-15,sub_indicator,2.1.b,Has the bank set a medium-term sectoral target(s) for reducing its material financed/facilitated emissions between 2030 and 2035?,Yes,,
+2,2025-01-15,sub_indicator,2.1.c,Has the bank set a long-term sectoral target(s) for reducing its material financed and facilitated emissions between 2036 and 2050?,Yes,,
