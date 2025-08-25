@@ -18,6 +18,7 @@ FactoryBot.define do
     portfolio { 'Mortgages' }
     cp_alignment_2050 { 'Paris Pledges' }
     cp_alignment_2025 { 'Paris Pledges' }
+    cp_alignment_2030 { 'Paris Pledges' }
     cp_alignment_2035 { 'Paris Pledges' }
   end
 end

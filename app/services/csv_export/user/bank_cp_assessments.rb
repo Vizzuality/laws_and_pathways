@@ -1,7 +1,7 @@
 module CSVExport
   module User
     class BankCPAssessments
-      YEARS = %w[2025 2035 2050].freeze
+      YEARS = %w[2025 2030 2035 2050].freeze
 
       def call
         # BOM UTF-8

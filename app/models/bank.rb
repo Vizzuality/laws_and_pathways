@@ -32,8 +32,10 @@ class Bank < ApplicationRecord
   has_one :latest_cp_assessment_regional, -> { currently_published.regional.order(assessment_date: :desc) },
           class_name: 'CP::Assessment', as: :cp_assessmentable
 
-  delegate :cp_alignment_2025, :cp_alignment_2050, :cp_alignment_2035,
-           :cp_regional_alignment_2050, :cp_regional_alignment_2025, :cp_regional_alignment_2035,
+  delegate :cp_alignment_2025, :cp_alignment_2027, :cp_alignment_2028, :cp_alignment_2030, :cp_alignment_2035, :cp_alignment_2050,
+           :cp_regional_alignment_2025, :cp_regional_alignment_2027,
+           :cp_regional_alignment_2028, :cp_regional_alignment_2030, :cp_regional_alignment_2035,
+           :cp_regional_alignment_2050,
            to: :latest_cp_assessment, allow_nil: true
 
   validates_presence_of :name, :slug, :isin, :market_cap_group

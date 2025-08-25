@@ -96,6 +96,7 @@ ActiveAdmin.register Bank do
                     attributes_table_for a.cp_matrices do
                       row :portfolio
                       row :cp_alignment_2025
+                      row :cp_alignment_2030
                       row :cp_alignment_2035
                       row :cp_alignment_2050
                     end

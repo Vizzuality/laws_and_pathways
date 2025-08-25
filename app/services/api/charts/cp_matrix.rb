@@ -16,7 +16,7 @@ module Api
       def collect_data
         return [] unless cp_assessmentable.present?
 
-        %w[2025 2035 2050].each_with_object({}) do |year, result|
+        %w[2030 2035 2050].each_with_object({}) do |year, result|
           result[year] = sectors.each_with_object({}) do |sector, section|
             cp_assessment = cp_assessments[[cp_assessmentable, sector]]&.first
             portfolio_values = portfolio_values_from cp_assessment, year
@@ -47,7 +47,7 @@ module Api
       def collect_metadata
         {
           sectors: sectors.map(&:name),
-          portfolios: CP::Portfolio::NAMES_WITH_CATEGORIES,
+          portfolios: CP::Portfolio::NAMES_WITH_CATEGORIES
         }
       end
 
