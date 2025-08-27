@@ -92,8 +92,7 @@ module Api
                                 .where(cp_assessmentable: cp_assessmentable)
                                 .where(assessment_date: date)
                                 .currently_published
-                              records
-                                .sort_by { |a| [a.cp_assessmentable.try(:name), a.sector.name] }
+                              records.sort_by { |a| [a.cp_assessmentable.try(:name), a.sector.name] }
                                 .group_by { |a| [a.cp_assessmentable, a.sector] }
                             else
                               Queries::TPI::LatestCPAssessmentsQuery
