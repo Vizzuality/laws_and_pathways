@@ -16,6 +16,7 @@ module CSVExport
               bank.name,
               assessment.region,
               sector.name,
+              assessment.subsector&.name,
               assessment.assessment_date,
               assessment.publication_date,
               emissions_all_years.map { |year| assessment.emissions[year] },
@@ -38,6 +39,7 @@ module CSVExport
           'Bank Name',
           'Region',
           'Sector',
+          'Subsector',
           'Assessment Date',
           'Publication Date'
         ] +

@@ -47,6 +47,30 @@ module CSVImport
     end
 
     def prepare_assessment(row)
+      if row[:subsector].present?
+        prepare_assessment_subsector(row)
+      else
+        prepare_assessment_general(row)
+      end
+    end
+
+    def prepare_assessment_subsector(row)
+      bank_id = find_bank!(row)&.id
+      sector = find_or_create_tpi_sector(row[:sector], categories: [Bank])
+      subsector = Subsector.find_or_create_by(sector: sector, name: row[:subsector])
+
+      find_record_by(:id, row) ||
+        CP::Assessment.find_or_initialize_by(
+          cp_assessmentable_type: 'Bank',
+          cp_assessmentable_id: bank_id,
+          subsector: subsector,
+          assessment_date: assessment_date(row),
+          sector: sector,
+          region: parse_cp_benchmark_region(row[:region])
+        )
+    end
+
+    def prepare_assessment_general(row)
       find_record_by(:id, row) ||
         CP::Assessment.find_or_initialize_by(
           cp_assessmentable_type: 'Bank',

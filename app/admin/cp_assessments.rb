@@ -10,7 +10,7 @@ ActiveAdmin.register CP::Assessment do
                 :cp_alignment_2050,
                 :region, :cp_regional_alignment_2025, :cp_regional_alignment_2027, :cp_regional_alignment_2028,
                 :cp_regional_alignment_2030, :cp_regional_alignment_2035, :cp_regional_alignment_2050, :years_with_targets_string,
-                :emissions,
+                :emissions, :company_subsector_id, :subsector_id,
                 :assessment_date_flag,
                 cp_matrices_attributes: [:id, :portfolio, :cp_alignment_2025, :cp_alignment_2035, :cp_alignment_2050, :_destroy]
 
@@ -111,7 +111,13 @@ ActiveAdmin.register CP::Assessment do
       assessment.company.presence || assessment.bank
     end
     column :sector
-    column :subsector
+    column :subsector do |record|
+      if record.subsector_id.present?
+        record.subsector&.name
+      elsif record.cp_assessmentable_type == 'Company' && record.company_subsector_id.present?
+        record.company_subsector&.subsector
+      end
+    end
     column :cp_alignment_2050
     column :cp_alignment_2025
     column :cp_alignment_2027
@@ -138,6 +144,10 @@ ActiveAdmin.register CP::Assessment do
     if params[:cp_assessmentable_type] == 'Company'
       column :subsector do |record|
         record.company_subsector&.subsector
+      end
+    elsif params[:cp_assessmentable_type] == 'Bank'
+      column :subsector do |record|
+        record.subsector&.name
       end
     end
     column :assessment_date
@@ -190,7 +200,7 @@ ActiveAdmin.register CP::Assessment do
     end
 
     def scoped_collection
-      query = super.includes(:company, :bank, :cp_matrices, :sector)
+      query = super.includes(:company, :bank, :cp_matrices, :sector, :subsector)
       query = query.where(cp_assessmentable_type: params[:cp_assessmentable_type]) if params[:cp_assessmentable_type].present?
       query
     end

@@ -20,11 +20,31 @@ module Api
           result[year] = sectors.each_with_object({}) do |sector, section|
             cp_assessment = cp_assessments[[cp_assessmentable, sector]]&.first
             portfolio_values = portfolio_values_from cp_assessment, year
-            section[sector.name] = {
-              assumptions: assumption_for(cp_assessment&.assumptions),
-              portfolio_values: portfolio_values,
-              has_emissions: cp_assessment&.emissions&.present?
-            }
+
+            # Get all subsectors for this sector
+            sector_subsectors = sector.subsectors
+
+            if sector_subsectors.any?
+              # Create entries for each subsector
+              sector_subsectors.each do |subsector|
+                # Find the specific CP assessment for this subsector if it exists
+                subsector_assessment = cp_assessments[[cp_assessmentable, sector]]&.find { |a| a.subsector_id == subsector.id }
+                subsector_portfolio_values = portfolio_values_from subsector_assessment, year
+
+                section["#{sector.name} - #{subsector.name}"] = {
+                  assumptions: assumption_for(subsector_assessment&.assumptions),
+                  portfolio_values: subsector_portfolio_values,
+                  has_emissions: subsector_assessment&.emissions&.present?
+                }
+              end
+            else
+              # No subsectors, use sector name directly
+              section[sector.name] = {
+                assumptions: assumption_for(cp_assessment&.assumptions),
+                portfolio_values: portfolio_values,
+                has_emissions: cp_assessment&.emissions&.present?
+              }
+            end
           end
         end
       end
@@ -45,8 +65,20 @@ module Api
       end
 
       def collect_metadata
+        sector_names = sectors.flat_map do |sector|
+          sector_subsectors = sector.subsectors
+
+          if sector_subsectors.any?
+            # Create names for each subsector
+            sector_subsectors.map { |subsector| "#{sector.name} - #{subsector.name}" }
+          else
+            # No subsectors, use sector name directly
+            [sector.name]
+          end
+        end
+
         {
-          sectors: sectors.map(&:name),
+          sectors: sector_names,
           portfolios: CP::Portfolio::NAMES_WITH_CATEGORIES
         }
       end
