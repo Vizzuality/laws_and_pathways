@@ -9,7 +9,7 @@
 # updated_at :datetime         not null
 #
 class Subsector < ApplicationRecord
-  belongs_to :sector, class_name: 'TPISector'
+  belongs_to :sector, class_name: 'TPISector', foreign_key: 'sector_id'
   has_many :cp_assessments
 
   validates :name, presence: true
