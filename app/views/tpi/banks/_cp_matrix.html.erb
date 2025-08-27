@@ -3,7 +3,20 @@
     Carbon Performance Alignment Matrix
   </h3>
   <p style="margin: 25px 0" class="cp_assessments_description">To view Carbon Performance pathway, access the chart by clicking the arrow available next to each sector.</p>
+  <div class="cp-matrix-assessment-date">
+    <div class="caption">CP Assessment Date:</div>
+    <div class="date-dropdown">
+      <%= react_component('RemoteDropdown', {
+        name: 'cp_assessment_date',
+        remote: true,
+        theme: 'blue',
+        url: cp_matrix_data_tpi_bank_path(bank),
+        data: bank.cp_assessments.order(assessment_date: :desc).pluck(:assessment_date).uniq.map { |d| {label: d&.strftime('%d %B %Y'), value: d} },
+        selected: params[:cp_assessment_date]
+      }) %>
+    </div>
+  </div>
   <%= react_component('charts/cp-matrix', {
-    data: cp_matrix_data_tpi_bank_path(bank),
+    data: cp_matrix_data_tpi_bank_path(bank, cp_assessment_date: params[:cp_assessment_date]),
   }) %>
 </div>

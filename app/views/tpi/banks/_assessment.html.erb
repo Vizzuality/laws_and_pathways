@@ -14,10 +14,10 @@
 
 <% if areas.empty? %>
   <%# No active results found, show notice and create virtual areas from active indicators %>
-  <div class="bank-assessment__new-framework-notice">
-    <p><strong>New Assessment Framework</strong> - This bank has not been assessed against the updated framework yet. All indicators below show N/A until assessment is completed.</p>
-  </div>
-  
+  <h3 class="cp_assessments_title" style="margin: 25px 0">
+    Net Zero Banking Assessment Framework
+  </h3>  
+
   <%# Create virtual areas from active indicators %>
   <% active_indicators = BankAssessmentIndicator.active.where(indicator_type: 'area').order(:number) %>
   <% areas = active_indicators.map do |indicator|

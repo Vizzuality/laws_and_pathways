@@ -576,6 +576,30 @@ $see-more-width-tablet: 130px;
     }
   }
 
+  .cp-matrix-assessment-date {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0 15px 0;
+
+    .caption {
+      color: $dark;
+    }
+
+    .date-dropdown {
+      max-width: 400px;
+    }
+
+    @include until($desktop) {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .date-dropdown {
+        max-width: 100%;
+      }
+    }
+  }
+
   section {
     @include until($desktop) {
       &.summary-boxes {

@@ -134,7 +134,7 @@ namespace :bank_assessment_data do
 
     # Confirm restoration
     print 'This will overwrite current data. Are you sure? (yes/no): '
-    confirmation = STDIN.gets.chomp.downcase
+    confirmation = $stdin.gets.chomp.downcase
 
     unless confirmation == 'yes'
       puts 'Restoration cancelled.'
@@ -165,7 +165,7 @@ namespace :bank_assessment_data do
 
       if indicator.save
         indicators_restored += 1
-        print '.' if indicators_restored % 10 == 0
+        print '.' if (indicators_restored % 10).zero?
       else
         puts "\nError restoring indicator #{row['Number']}: #{indicator.errors.full_messages.join(', ')}"
       end
@@ -190,7 +190,7 @@ namespace :bank_assessment_data do
 
       if result.save
         results_restored += 1
-        print '.' if results_restored % 50 == 0
+        print '.' if (results_restored % 50).zero?
       else
         puts "\nError restoring result #{row['Id']}: #{result.errors.full_messages.join(', ')}"
       end

@@ -1,10 +1,11 @@
 module Api
   module Charts
     class CPMatrix
-      attr_accessor :cp_assessmentable
+      attr_accessor :cp_assessmentable, :selected_assessment_date
 
-      def initialize(cp_assessmentable)
+      def initialize(cp_assessmentable, selected_assessment_date = nil)
         @cp_assessmentable = cp_assessmentable
+        @selected_assessment_date = selected_assessment_date.presence
       end
 
       def matrix_data
@@ -84,8 +85,20 @@ module Api
       end
 
       def cp_assessments
-        @cp_assessments ||= Queries::TPI::LatestCPAssessmentsQuery
-          .new(category: cp_assessmentable_type, cp_assessmentable: cp_assessmentable).call
+        @cp_assessments ||= if selected_assessment_date.present?
+                              date = parse_date(selected_assessment_date)
+                              records = CP::Assessment
+                                .includes(:cp_assessmentable, :sector, :cp_matrices)
+                                .where(cp_assessmentable: cp_assessmentable)
+                                .where(assessment_date: date)
+                                .currently_published
+                              records
+                                .sort_by { |a| [a.cp_assessmentable.try(:name), a.sector.name] }
+                                .group_by { |a| [a.cp_assessmentable, a.sector] }
+                            else
+                              Queries::TPI::LatestCPAssessmentsQuery
+                                .new(category: cp_assessmentable_type, cp_assessmentable: cp_assessmentable).call
+                            end
       end
 
       def sectors
@@ -94,6 +107,14 @@ module Api
 
       def cp_assessmentable_type
         cp_assessmentable.class.to_s
+      end
+
+      def parse_date(value)
+        return value if value.is_a?(Date)
+
+        Date.parse(value.to_s)
+      rescue ArgumentError
+        nil
       end
     end
   end

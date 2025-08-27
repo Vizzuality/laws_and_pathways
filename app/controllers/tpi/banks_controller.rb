@@ -72,7 +72,7 @@ module TPI
     # Type:     table
     # On pages: :show
     def cp_matrix_data
-      data = ::Api::Charts::CPMatrix.new(@bank).matrix_data
+      data = ::Api::Charts::CPMatrix.new(@bank, params[:cp_assessment_date]).matrix_data
 
       render json: data.as_json
     end
