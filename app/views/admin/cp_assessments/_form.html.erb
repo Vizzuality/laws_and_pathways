@@ -8,6 +8,7 @@
                 selected: "#{resource.cp_assessmentable_type}::#{resource.cp_assessmentable_id}"
     %>
     <%= f.input :sector, collection: TPISector.tpi_tool %>
+    <%= f.input :subsector, collection: Subsector.all %>
     <%= f.input :assessment_date %>
     <%= f.input :assessment_date_flag %>
     <%= f.input :publication_date %>

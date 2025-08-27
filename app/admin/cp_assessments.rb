@@ -5,7 +5,7 @@ ActiveAdmin.register CP::Assessment do
 
   decorate_with CP::AssessmentDecorator
 
-  permit_params :sector_id, :assessment_date, :publication_date, :cp_assessmentable_id, :last_reported_year,
+  permit_params :sector_id, :subsector_id, :assessment_date, :publication_date, :cp_assessmentable_id, :last_reported_year,
                 :assumptions, :cp_alignment_2025, :cp_alignment_2027, :cp_alignment_2028, :cp_alignment_2030, :cp_alignment_2035,
                 :cp_alignment_2050,
                 :region, :cp_regional_alignment_2025, :cp_regional_alignment_2027, :cp_regional_alignment_2028,
@@ -189,10 +189,41 @@ ActiveAdmin.register CP::Assessment do
   controller do
     before_action :fix_region
 
-    before_save do |record|
+    def create
+      build_resource
+      resource.assign_attributes(permitted_params[:cp_assessment])
+
       if params['cp_assessment']['cp_assessmentable_id'].present?
-        record.cp_assessmentable_type, record.cp_assessmentable_id = params['cp_assessment']['cp_assessmentable_id'].split('::')
+        resource.cp_assessmentable_type, resource.cp_assessmentable_id =
+          params['cp_assessment']['cp_assessmentable_id'].split('::')
       end
+
+      sector_id = params.dig('cp_assessment', 'sector_id')
+      subsector_id = params.dig('cp_assessment', 'subsector_id')
+      unless subsector_id.blank? || subsector_belongs_to_sector?(sector_id, subsector_id)
+        resource.errors.add(:subsector, "doesn't belong to the selected sector")
+        render :new and return
+      end
+
+      super
+    end
+
+    def update
+      resource.assign_attributes(permitted_params[:cp_assessment])
+
+      if params['cp_assessment']['cp_assessmentable_id'].present?
+        resource.cp_assessmentable_type, resource.cp_assessmentable_id =
+          params['cp_assessment']['cp_assessmentable_id'].split('::')
+      end
+
+      sector_id = params.dig('cp_assessment', 'sector_id')
+      subsector_id = params.dig('cp_assessment', 'subsector_id')
+      unless subsector_id.blank? || subsector_belongs_to_sector?(sector_id, subsector_id)
+        resource.errors.add(:subsector, "doesn't belong to the selected sector")
+        render :edit and return
+      end
+
+      super
     end
 
     def fix_region
@@ -203,6 +234,28 @@ ActiveAdmin.register CP::Assessment do
       query = super.includes(:company, :bank, :cp_matrices, :sector, :subsector)
       query = query.where(cp_assessmentable_type: params[:cp_assessmentable_type]) if params[:cp_assessmentable_type].present?
       query
+    end
+
+    private
+
+    def subsector_belongs_to_sector?(sector_id, subsector_id)
+      return false if sector_id.blank? || subsector_id.blank?
+
+      sector = TPISector.find_by(id: sector_id)
+      subsector = Subsector.find_by(id: subsector_id)
+
+      return false unless sector && subsector
+
+      sector.subsectors.include?(subsector)
+    end
+
+    def validate_subsector_belongs_to_sector
+      sector_id = params.dig('cp_assessment', 'sector_id')
+      subsector_id = params.dig('cp_assessment', 'subsector_id')
+
+      return unless subsector_id.present? && !subsector_belongs_to_sector?(sector_id, subsector_id)
+
+      resource.errors.add(:subsector, "doesn't belong to the selected sector")
     end
   end
 end
