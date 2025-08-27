@@ -12,7 +12,8 @@ ActiveAdmin.register CP::Assessment do
                 :cp_regional_alignment_2030, :cp_regional_alignment_2035, :cp_regional_alignment_2050, :years_with_targets_string,
                 :emissions, :company_subsector_id, :subsector_id,
                 :assessment_date_flag,
-                cp_matrices_attributes: [:id, :portfolio, :cp_alignment_2025, :cp_alignment_2035, :cp_alignment_2050, :_destroy]
+                cp_matrices_attributes: [:id, :portfolio, :cp_alignment_2025,
+                                         :cp_alignment_2030, :cp_alignment_2035, :cp_alignment_2050, :_destroy]
 
   filter :assessment_date
   filter :publication_date, as: :select, collection: proc { CP::Assessment.all_publication_dates }

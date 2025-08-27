@@ -20,11 +20,9 @@ module Api
         %w[2030 2035 2050].each_with_object({}) do |year, result|
           result[year] = sectors.each_with_object({}) do |sector, section|
             cp_assessment = cp_assessments[[cp_assessmentable, sector]]&.first
-            portfolio_values = portfolio_values_from cp_assessment, year
 
             # Get all subsectors for this sector
             sector_subsectors = sector.subsectors
-
             if sector_subsectors.any?
               # Create entries for each subsector
               sector_subsectors.each do |subsector|
@@ -39,6 +37,7 @@ module Api
                 }
               end
             else
+              portfolio_values = portfolio_values_from cp_assessment, year
               # No subsectors, use sector name directly
               section[sector.name] = {
                 assumptions: assumption_for(cp_assessment&.assumptions),
@@ -88,15 +87,27 @@ module Api
         @cp_assessments ||= if selected_assessment_date.present?
                               date = parse_date(selected_assessment_date)
                               records = CP::Assessment
-                                .includes(:cp_assessmentable, :sector, :cp_matrices)
+                                .includes(:cp_assessmentable, :sector, :subsector, :cp_matrices)
                                 .where(cp_assessmentable: cp_assessmentable)
                                 .where(assessment_date: date)
                                 .currently_published
-                              records.sort_by { |a| [a.cp_assessmentable.try(:name), a.sector.name] }
+                              records
+                                .sort_by { |a| [a.cp_assessmentable.try(:name), a.sector.name] }
                                 .group_by { |a| [a.cp_assessmentable, a.sector] }
                             else
-                              Queries::TPI::LatestCPAssessmentsQuery
-                                .new(category: cp_assessmentable_type, cp_assessmentable: cp_assessmentable).call
+                              records = CP::Assessment
+                                .includes(:cp_assessmentable, :sector, :subsector, :cp_matrices)
+                                .where(cp_assessmentable: cp_assessmentable)
+                                .order(assessment_date: :desc)
+                                .currently_published
+
+                              latest = latest_per_sector_and_subsector(records)
+
+                              @selected_assessment_date = latest.first&.assessment_date
+
+                              latest
+                                .sort_by { |a| [a.cp_assessmentable.try(:name), a.sector.name] }
+                                .group_by { |a| [a.cp_assessmentable, a.sector] }
                             end
       end
 
@@ -114,6 +125,11 @@ module Api
         Date.parse(value.to_s)
       rescue ArgumentError
         nil
+      end
+
+      def latest_per_sector_and_subsector(records)
+        grouped = records.group_by { |a| [a.sector_id, a.subsector_id] }
+        grouped.values.map { |assessments| assessments.max_by { |a| a.assessment_date || Date.new(0) } }
       end
     end
   end
