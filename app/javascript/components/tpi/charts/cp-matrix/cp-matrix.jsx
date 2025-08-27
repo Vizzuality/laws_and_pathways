@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useChartData } from '../hooks';
 import CPMatrixTable from './cp-matrix-table';
@@ -33,7 +33,17 @@ Tabs.propTypes = {
 };
 
 function CPMatrix({ data: dataUrl }) {
-  const { data, error, loading } = useChartData(dataUrl);
+  const [params, setParams] = useState({});
+
+  useEffect(() => {
+    const select = document.querySelector('select[name="cp_assessment_date"]');
+    const onChange = () => setParams(select?.value ? { cp_assessment_date: select.value } : {});
+    onChange();
+    select?.addEventListener('change', onChange);
+    return () => select?.removeEventListener('change', onChange);
+  }, []);
+
+  const { data, error, loading } = useChartData(dataUrl, params);
   const { meta, data: chartData } = data || {};
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   if (loading) return <p>Loading...</p>;
