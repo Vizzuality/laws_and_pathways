@@ -1,7 +1,9 @@
 (function () {
   document.getElementById('assessment-charts').innerHTML = "<%= j render('index_charts') %>";
   const newUrl = new URL(window.location.href);
-  newUrl.searchParams.set('assessment_date', <%= @date %>);
+  newUrl.searchParams.set('assessment_date', "<%= @date %>");
   window.history.replaceState({}, '', newUrl.href);
   ReactRailsUJS.mountComponents('#assessment-charts');
 })();
+
+
