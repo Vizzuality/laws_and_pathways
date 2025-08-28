@@ -10,26 +10,22 @@
   </div>
 </div>
 
-<% areas = assessment.results.of_type("area").order('length(bank_assessment_indicators.number), bank_assessment_indicators.number') %>
-
-<% if areas.empty? %>
-  <%# No active results found, show notice and create virtual areas from active indicators %>
-  <h3 class="cp_assessments_title" style="margin: 25px 0">
-    Net Zero Banking Assessment Framework
-  </h3>  
-
-  <%# Create virtual areas from active indicators %>
-  <% active_indicators = BankAssessmentIndicator.active.where(indicator_type: 'area').order(:number) %>
-  <% areas = active_indicators.map do |indicator|
-    area = OpenStruct.new(
+<% area_results = assessment.results.of_type("area").order('length(bank_assessment_indicators.number), bank_assessment_indicators.number') %>
+<% active_area_indicators = BankAssessmentIndicator.active.where(indicator_type: 'area').order(Arel.sql('length(number), number')) %>
+<% areas = active_area_indicators.map do |indicator|
+  result = area_results.find { |r| r.indicator.id == indicator.id }
+  if result
+    result
+  else
+    obj = OpenStruct.new(
       id: "virtual_#{indicator.id}",
       indicator: indicator,
-      percentage: 0
+      percentage: nil
     )
-    area.define_singleton_method(:virtual?) { true }
-    area
-  end %>
-<% end %>
+    obj.define_singleton_method(:virtual?) { true }
+    obj
+  end
+end %>
 
 <% areas.each do |area| %>
   <input id="<%= area.respond_to?(:virtual?) && area.virtual? ? area.id : dom_id(area) %>" type="checkbox" class="toggle" />
@@ -94,19 +90,49 @@
 
     <div class="bank-assessment__area-content">
       <% if area.respond_to?(:virtual?) && area.virtual? %>
-        <%# For virtual areas, get indicators directly since there are no sub-areas in the new framework %>
-        <% indicators = BankAssessmentIndicator.active.where(indicator_type: 'indicator').select { |i| i.number.start_with?("#{area.indicator.number}.") } %>
-        <% indicators = indicators.map do |indicator|
-          indicator_obj = OpenStruct.new(
-            id: "virtual_#{indicator.id}",
-            indicator: indicator,
-            percentage: nil,
-            answer: 'N/A'
-          )
-          indicator_obj.define_singleton_method(:virtual?) { true }
-          indicator_obj
-        end %>
-        <%= render "indicators", assessment: assessment, area: area, indicators: indicators %>
+        <% sub_areas = BankAssessmentIndicator.active.where(indicator_type: 'sub_area').where('number LIKE ?', "#{area.indicator.number}.%").order(Arel.sql('length(number), number')) %>
+        <% if sub_areas.any? %>
+          <% sub_areas.each do |sub_area| %>
+            <% sub_area_obj = OpenStruct.new(id: "virtual_#{sub_area.id}", indicator: sub_area) %>
+            <% indicators = BankAssessmentIndicator.active.where(indicator_type: 'indicator').where('number LIKE ?', "#{sub_area.number}.%").order(Arel.sql('length(number), number')) %>
+            <% indicators = indicators.map do |indicator|
+              indicator_obj = OpenStruct.new(
+                id: "virtual_#{indicator.id}",
+                indicator: indicator,
+                percentage: nil,
+                answer: 'N/A'
+              )
+              indicator_obj.define_singleton_method(:virtual?) { true }
+              indicator_obj
+            end %>
+            <input id="<%= sub_area_obj.id %>" type="checkbox" class="toggle" checked />
+            <div class="bank-assessment__sub-area">
+              <div class="bank-assessment__sub-area-header">
+                <h3>
+                  <%= sub_area_obj.indicator.display_text %>
+                </h3>
+                <label class="bank-assessment__more" for="<%= sub_area_obj.id %>">
+                </label>
+              </div>
+              <div class="bank-assessment__area-content">
+                <%= render "indicators", assessment: assessment, area: area, indicators: indicators %>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <% indicators = BankAssessmentIndicator.active.where(indicator_type: 'indicator').where('number LIKE ?', "#{area.indicator.number}.%").order(Arel.sql('length(number), number')) %>
+          <% indicators = indicators.map do |indicator|
+            indicator_obj = OpenStruct.new(
+              id: "virtual_#{indicator.id}",
+              indicator: indicator,
+              percentage: nil,
+              answer: 'N/A'
+            )
+            indicator_obj.define_singleton_method(:virtual?) { true }
+            indicator_obj
+          end %>
+          <%= render "indicators", assessment: assessment, area: area, indicators: indicators %>
+        <% end %>
       <% else %>
         <% sub_areas = assessment.child_indicators(area, "sub_area") %>
 

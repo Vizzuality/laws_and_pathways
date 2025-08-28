@@ -20,22 +20,23 @@
     </div>
 
     <div class="bank-assessment__sub-indicators">
-      <% if indicator.respond_to?(:virtual?) && indicator.virtual? %>
-        <%# For virtual indicators, get sub-indicators directly from the database %>
-        <% sub_indicators = BankAssessmentIndicator.active.where(indicator_type: 'sub_indicator').select { |si| si.number.start_with?("#{indicator.indicator.number}.") } %>
-        <% sub_indicators = sub_indicators.map do |sub_indicator|
-          sub_indicator_obj = OpenStruct.new(
-            id: "virtual_#{sub_indicator.id}",
-            indicator: sub_indicator,
+      <% active_sub_indicators = BankAssessmentIndicator.active.where(indicator_type: 'sub_indicator').where('number LIKE ?', "#{indicator.indicator.number}.%").order(Arel.sql('length(number), number')) %>
+      <% existing_sub_results = assessment.child_indicators(indicator, "sub_indicator") %>
+      <% sub_indicators = active_sub_indicators.map do |si|
+        existing = existing_sub_results.find { |r| r.indicator.id == si.id }
+        if existing
+          existing
+        else
+          obj = OpenStruct.new(
+            id: "virtual_#{si.id}",
+            indicator: si,
             answer: 'N/A'
           )
-          sub_indicator_obj.define_singleton_method(:virtual?) { true }
-          sub_indicator_obj
-        end %>
-      <% else %>
-        <% sub_indicators = assessment.child_indicators(indicator, "sub_indicator") %>
-      <% end %>
-      
+          obj.define_singleton_method(:virtual?) { true }
+          obj
+        end
+      end %>
+
       <% sub_indicators.each do |sub_indicator| %>
         <div class="bank-assessment__sub-indicator">
           <div class="bank-assessment__sub-indicator-answer-wrapper">
