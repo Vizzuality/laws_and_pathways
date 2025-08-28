@@ -6,7 +6,11 @@
   results: @results,
   disabled_bubbles_areas: BankAssessmentIndicator.area.where(is_placeholder: true).pluck(:text)
 }) %>
+<% if @results.present? %>
 <%= react_component('charts/bank-bubble/CompaniesAccordion', {
   results: @results,
   disabled_bubbles_areas: BankAssessmentIndicator.area.where(is_placeholder: true).pluck(:text)
 }) %>
+<% else %>
+<div class="no-data" style="padding-top: 12px;">No data available for the selected date.</div>
+<% end %>
