@@ -39,7 +39,7 @@ module TPI
     def assessment; end
 
     def average_bank_score_chart_data
-      data = ::Api::Charts::AverageBankScore.new.average_bank_score_data
+      data = ::Api::Charts::AverageBankScore.new.average_bank_score_data(params[:assessment_date])
 
       render json: data.chart_json
     end
