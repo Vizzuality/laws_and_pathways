@@ -43,13 +43,18 @@ namespace :bank_assessment_indicators do
     if File.exist?(csv_file)
       require 'csv'
 
-      CSV.foreach(csv_file, headers: true, header_converters: :symbol) do |row|
-        next if row[:type].blank? || row[:number].blank? || row[:text].blank?
+      CSV.foreach(csv_file, headers: true, header_converters: :symbol, encoding: 'bom|utf-8', col_sep: ',', quote_char: '"',
+                            liberal_parsing: true, skip_blanks: true) do |row|
+        type = row[:type]&.downcase
+        number = row[:number]
+        text = row.fields[3..]&.join(',')&.strip
+        text = text&.gsub(/\A"|"\z/, '')
+        next if type.blank? || number.blank? || text.blank?
 
         indicator = BankAssessmentIndicator.new(
-          indicator_type: row[:type].downcase,
-          number: row[:number],
-          text: row[:text],
+          indicator_type: type,
+          number: number,
+          text: text,
           version: '2025',
           active: true
         )
@@ -97,7 +102,7 @@ namespace :bank_assessment_indicators do
     if existing_results.zero?
       puts "\nNo existing results found. Proceeding with normal update..."
       Rake::Task['bank_assessment_indicators:update'].invoke
-      return
+      next
     end
 
     puts "\n🔒 SAFE MODE: Preserving existing data..."
@@ -117,13 +122,18 @@ namespace :bank_assessment_indicators do
 
       new_indicators_created = 0
 
-      CSV.foreach(csv_file, headers: true, header_converters: :symbol) do |row|
-        next if row[:type].blank? || row[:number].blank? || row[:text].blank?
+      CSV.foreach(csv_file, headers: true, header_converters: :symbol, encoding: 'bom|utf-8', col_sep: ',', quote_char: '"',
+                            liberal_parsing: true, skip_blanks: true) do |row|
+        type = row[:type]&.downcase
+        number = row[:number]
+        text = row.fields[3..]&.join(',')&.strip
+        text = text&.gsub(/\A"|"\z/, '')
+        next if type.blank? || number.blank? || text.blank?
 
         indicator = BankAssessmentIndicator.new(
-          indicator_type: row[:type].downcase,
-          number: row[:number],
-          text: row[:text],
+          indicator_type: type,
+          number: number,
+          text: text,
           version: '2025',
           active: true
         )
@@ -176,7 +186,7 @@ namespace :bank_assessment_indicators do
     if existing_results.zero?
       puts "\nNo existing results found. Proceeding with normal update..."
       Rake::Task['bank_assessment_indicators:update'].invoke
-      return
+      next
     end
 
     puts "\n🔒 ALTERNATIVE SAFE MODE: Using different numbering scheme..."
@@ -196,25 +206,30 @@ namespace :bank_assessment_indicators do
       puts 'Importing new indicators with modified numbering...'
       new_indicators_created = 0
 
-      CSV.foreach(csv_file, headers: true, header_converters: :symbol) do |row|
-        next if row[:type].blank? || row[:number].blank? || row[:text].blank?
+      CSV.foreach(csv_file, headers: true, header_converters: :symbol, encoding: 'bom|utf-8', col_sep: ',', quote_char: '"',
+                            liberal_parsing: true, skip_blanks: true) do |row|
+        type = row[:type]&.downcase
+        number = row[:number]
+        text = row.fields[3..]&.join(',')&.strip
+        text = text&.gsub(/\A"|"\z/, '')
+        next if type.blank? || number.blank? || text.blank?
 
         # Modify numbering to avoid conflicts
-        new_number = case row[:type].downcase
+        new_number = case type
                      when 'area'
-                       "A#{row[:number]}"
+                       "A#{number}"
                      when 'indicator'
-                       "I#{row[:number]}"
+                       "I#{number}"
                      when 'sub_indicator'
-                       "S#{row[:number]}"
+                       "S#{number}"
                      else
-                       "X#{row[:number]}"
+                       "X#{number}"
                      end
 
         indicator = BankAssessmentIndicator.new(
-          indicator_type: row[:type].downcase,
+          indicator_type: type,
           number: new_number,
-          text: row[:text],
+          text: text,
           version: '2025',
           active: true
         )
@@ -323,7 +338,7 @@ namespace :bank_assessment_indicators do
 
     if orphaned_count.zero?
       puts 'No orphaned results found. All good!'
-      return
+      next
     end
 
     puts "Found #{orphaned_count} orphaned results"
@@ -353,7 +368,7 @@ namespace :bank_assessment_indicators do
 
     if old_indicators.zero?
       puts 'No old indicators found to restore. Nothing to do.'
-      return
+      next
     end
 
     print 'Do you want to restore old indicators and remove new ones? (yes/no): '
@@ -383,7 +398,7 @@ namespace :bank_assessment_indicators do
 
     if assessment.nil?
       puts 'No bank assessments found. Please create one first.'
-      return
+      next
     end
 
     puts "Using assessment: #{assessment.bank.name} (#{assessment.assessment_date})"
@@ -393,7 +408,7 @@ namespace :bank_assessment_indicators do
 
     if active_areas.empty?
       puts 'No active area indicators found.'
-      return
+      next
     end
 
     puts "Found #{active_areas.count} active area indicators"

@@ -91,24 +91,26 @@ module Api
                                 .where(cp_assessmentable: cp_assessmentable)
                                 .where(assessment_date: date)
                                 .currently_published
-                              records
-                                .sort_by { |a| [a.cp_assessmentable.try(:name), a.sector.name] }
-                                .group_by { |a| [a.cp_assessmentable, a.sector] }
                             else
+                              latest_date = CP::Assessment
+                                .where(cp_assessmentable: cp_assessmentable)
+                                .currently_published
+                                .maximum(:assessment_date)
+
+                              @selected_assessment_date = latest_date
+
+                              return {} if latest_date.nil?
+
                               records = CP::Assessment
                                 .includes(:cp_assessmentable, :sector, :subsector, :cp_matrices)
                                 .where(cp_assessmentable: cp_assessmentable)
-                                .order(assessment_date: :desc)
+                                .where(assessment_date: latest_date)
                                 .currently_published
 
-                              latest = latest_per_sector_and_subsector(records)
-
-                              @selected_assessment_date = latest.first&.assessment_date
-
-                              latest
-                                .sort_by { |a| [a.cp_assessmentable.try(:name), a.sector.name] }
-                                .group_by { |a| [a.cp_assessmentable, a.sector] }
                             end
+        records
+          .sort_by { |a| [a.cp_assessmentable.try(:name), a.sector.name] }
+          .group_by { |a| [a.cp_assessmentable, a.sector] }
       end
 
       def sectors
@@ -125,11 +127,6 @@ module Api
         Date.parse(value.to_s)
       rescue ArgumentError
         nil
-      end
-
-      def latest_per_sector_and_subsector(records)
-        grouped = records.group_by { |a| [a.sector_id, a.subsector_id] }
-        grouped.values.map { |assessments| assessments.max_by { |a| a.assessment_date || Date.new(0) } }
       end
     end
   end
