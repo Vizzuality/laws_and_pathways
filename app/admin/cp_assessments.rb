@@ -45,6 +45,10 @@ ActiveAdmin.register CP::Assessment do
                 new_admin_data_upload_path(data_upload: {uploader: 'BankCPAssessments2025'})
       end
       li do
+        link_to '<strong>Upload</strong> Bank CPAssessments 2030'.html_safe,
+                new_admin_data_upload_path(data_upload: {uploader: 'BankCPAssessments2030'})
+      end
+      li do
         link_to '<strong>Upload</strong> Bank CPAssessments 2035'.html_safe,
                 new_admin_data_upload_path(data_upload: {uploader: 'BankCPAssessments2035'})
       end

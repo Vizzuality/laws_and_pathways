@@ -27,6 +27,7 @@ class DataUpload < ApplicationRecord
     'Company Carbon Performance Benchmarks' => 'CompanyCPBenchmarks',
     'Bank Carbon Performance Benchmarks' => 'BankCPBenchmarks',
     'Bank Carbon Performance Assessments 2025' => 'BankCPAssessments2025',
+    'Bank Carbon Performance Assessments 2030' => 'BankCPAssessments2030',
     'Bank Carbon Performance Assessments 2035' => 'BankCPAssessments2035',
     'Bank Carbon Performance Assessments 2050' => 'BankCPAssessments2050',
     'Companies' => 'Companies',
