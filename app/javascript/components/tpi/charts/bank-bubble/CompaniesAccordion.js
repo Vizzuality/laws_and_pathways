@@ -82,7 +82,7 @@ const CompaniesAccordion = ({ results, disabled_bubbles_areas }) => {
     }
   });
 
-  const activeArea = disabled_bubbles_areas.includes(activeOption?.value)
+  const activeArea = disabled_bubbles_areas.includes(activeOption.value)
     ? Array.from({ length: ranges.length }, () => [])
     : parsedData[activeOption.value];
 
