@@ -10,7 +10,7 @@
     {
       name: sector.name,
       assessment: cp_assessment,
-      dataUrl: emissions_chart_data_tpi_bank_path(bank, sector_id: sector.id),
+      dataUrl: emissions_chart_data_tpi_bank_path(@bank, sector_id: sector.id),
       unit: cp_assessment&.unit
     }
   }.select { |sector| sector[:assessment].present? && sector[:assessment].emissions.present? } %>

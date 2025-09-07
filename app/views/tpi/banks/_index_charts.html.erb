@@ -1,15 +1,15 @@
 <%= react_component('charts/average-bank-score', {
   dataUrl: average_bank_score_chart_data_tpi_banks_path(assessment_date: @date),
-  disabled_areas: BankAssessmentIndicator.area.where(is_placeholder: true).map { |area| "#{area.number}. #{area.text}" }
+  disabled_areas: BankAssessmentIndicator.by_version(@version).area.where(is_placeholder: true).map { |area| "#{area.number}. #{area.text}" }
 }) %>
 <%= react_component('charts/bank-bubble/Chart', {
   results: @results,
-  disabled_bubbles_areas: BankAssessmentIndicator.area.where(is_placeholder: true).pluck(:text)
+  disabled_bubbles_areas: BankAssessmentIndicator.by_version(@version).area.where(is_placeholder: true).pluck(:text)
 }) %>
 <% if @results.present? %>
 <%= react_component('charts/bank-bubble/CompaniesAccordion', {
   results: @results,
-  disabled_bubbles_areas: BankAssessmentIndicator.area.where(is_placeholder: true).pluck(:text)
+  disabled_bubbles_areas: BankAssessmentIndicator.by_version(@version).area.where(is_placeholder: true).pluck(:text)
 }) %>
 <% else %>
 <div class="no-data" style="padding-top: 12px;">No data available for the selected date.</div>

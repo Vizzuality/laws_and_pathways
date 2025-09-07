@@ -61,6 +61,19 @@ class Bank < ApplicationRecord
     Rails.application.routes.url_helpers.tpi_bank_path(slug)
   end
 
+  # Get assessments that have actual data (oldest first)
+  def assessments_with_data
+    assessments.joins(:results)
+      .joins('JOIN bank_assessment_indicators ON bank_assessment_indicators.id = bank_assessment_results.bank_assessment_indicator_id')
+      .where('bank_assessment_indicators.version = CASE
+        WHEN bank_assessments.assessment_date >= ? THEN ?
+        WHEN bank_assessments.assessment_date >= ? THEN ?
+        ELSE ?
+      END', Date.new(2025, 1, 1), '2025', Date.new(2024, 1, 1), '2024', '2024')
+      .distinct
+      .order(:assessment_date)
+  end
+
   def latest_assessment
     assessments.order(assessment_date: :desc).first
   end

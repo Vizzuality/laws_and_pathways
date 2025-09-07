@@ -95,19 +95,26 @@ module Api
                                 .sort_by { |a| [a.cp_assessmentable.try(:name), a.sector.name] }
                                 .group_by { |a| [a.cp_assessmentable, a.sector] }
                             else
-                              records = CP::Assessment
-                                .includes(:cp_assessmentable, :sector, :subsector, :cp_matrices)
+                              # Default to oldest assessment date
+                              oldest_date = CP::Assessment
                                 .where(cp_assessmentable: cp_assessmentable)
-                                .order(assessment_date: :desc)
                                 .currently_published
+                                .order(:assessment_date)
+                                .pluck(:assessment_date)
+                                .first
 
-                              latest = latest_per_sector_and_subsector(records)
-
-                              @selected_assessment_date = latest.first&.assessment_date
-
-                              latest
-                                .sort_by { |a| [a.cp_assessmentable.try(:name), a.sector.name] }
-                                .group_by { |a| [a.cp_assessmentable, a.sector] }
+                              if oldest_date.present?
+                                records = CP::Assessment
+                                  .includes(:cp_assessmentable, :sector, :subsector, :cp_matrices)
+                                  .where(cp_assessmentable: cp_assessmentable)
+                                  .where(assessment_date: oldest_date)
+                                  .currently_published
+                                records
+                                  .sort_by { |a| [a.cp_assessmentable.try(:name), a.sector.name] }
+                                  .group_by { |a| [a.cp_assessmentable, a.sector] }
+                              else
+                                {}
+                              end
                             end
       end
 

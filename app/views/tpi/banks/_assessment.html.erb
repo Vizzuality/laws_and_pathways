@@ -14,8 +14,8 @@
 </div>
 
 <% area_results = assessment.results.of_type("area").order('length(bank_assessment_indicators.number), bank_assessment_indicators.number') %>
-<% active_area_indicators = BankAssessmentIndicator.active.where(indicator_type: 'area').order(Arel.sql('length(number), number')) %>
-<% areas = active_area_indicators.map do |indicator|
+<% version_area_indicators = BankAssessmentIndicator.by_version(assessment.indicator_version).where(indicator_type: 'area').order(Arel.sql('length(number), number')) %>
+<% areas = version_area_indicators.map do |indicator|
   result = area_results.find { |r| r.indicator.id == indicator.id }
   if result
     result
@@ -93,11 +93,11 @@ end %>
 
     <div class="bank-assessment__area-content">
       <% if area.respond_to?(:virtual?) && area.virtual? %>
-        <% sub_areas = BankAssessmentIndicator.active.where(indicator_type: 'sub_area').where('number LIKE ?', "#{area.indicator.number}.%").order(Arel.sql('length(number), number')) %>
+        <% sub_areas = BankAssessmentIndicator.by_version(assessment.indicator_version).where(indicator_type: 'sub_area').where('number LIKE ?', "#{area.indicator.number}.%").order(Arel.sql('length(number), number')) %>
         <% if sub_areas.any? %>
           <% sub_areas.each do |sub_area| %>
             <% sub_area_obj = OpenStruct.new(id: "virtual_#{sub_area.id}", indicator: sub_area) %>
-            <% indicators = BankAssessmentIndicator.active.where(indicator_type: 'indicator').where('number LIKE ?', "#{sub_area.number}.%").order(Arel.sql('length(number), number')) %>
+            <% indicators = BankAssessmentIndicator.by_version(assessment.indicator_version).where(indicator_type: 'indicator').where('number LIKE ?', "#{sub_area.number}.%").order(Arel.sql('length(number), number')) %>
             <% indicators = indicators.map do |indicator|
               indicator_obj = OpenStruct.new(
                 id: "virtual_#{indicator.id}",
@@ -123,7 +123,7 @@ end %>
             </div>
           <% end %>
         <% else %>
-          <% indicators = BankAssessmentIndicator.active.where(indicator_type: 'indicator').where('number LIKE ?', "#{area.indicator.number}.%").order(Arel.sql('length(number), number')) %>
+          <% indicators = BankAssessmentIndicator.by_version(assessment.indicator_version).where(indicator_type: 'indicator').where('number LIKE ?', "#{area.indicator.number}.%").order(Arel.sql('length(number), number')) %>
           <% indicators = indicators.map do |indicator|
             indicator_obj = OpenStruct.new(
               id: "virtual_#{indicator.id}",

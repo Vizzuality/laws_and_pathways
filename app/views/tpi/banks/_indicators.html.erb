@@ -20,9 +20,9 @@
     </div>
 
     <div class="bank-assessment__sub-indicators">
-      <% active_sub_indicators = BankAssessmentIndicator.active.where(indicator_type: 'sub_indicator').where('number LIKE ?', "#{indicator.indicator.number}.%").order(Arel.sql('length(number), number')) %>
+      <% version_sub_indicators = BankAssessmentIndicator.by_version(assessment.indicator_version).where(indicator_type: 'sub_indicator').where('number LIKE ?', "#{indicator.indicator.number}.%").order(Arel.sql('length(number), number')) %>
       <% existing_sub_results = assessment.child_indicators(indicator, "sub_indicator") %>
-      <% sub_indicators = active_sub_indicators.map do |si|
+      <% sub_indicators = version_sub_indicators.map do |si|
         existing = existing_sub_results.find { |r| r.indicator.id == si.id }
         if existing
           existing

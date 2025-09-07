@@ -10,7 +10,7 @@ module TPI
     helper_method :child_indicators
 
     def index
-      @assessment_dates = BankAssessment.select(:assessment_date).distinct.pluck(:assessment_date)
+      @assessment_dates = BankAssessment.dates_with_data
       @publications_and_articles = TPISector.find_by(slug: 'banks')&.publications_and_articles || []
       @publications_and_articles = @publications_and_articles.select { |pa| pa.publication_date <= Time.current }
       bank_page = TPIPage.find_by(slug: 'banks-content')
@@ -102,11 +102,12 @@ module TPI
 
     def fetch_results
       @date = params[:assessment_date]
-      @date = BankAssessment.maximum(:assessment_date) unless @date.present?
+      @date = BankAssessment.dates_with_data.first unless @date.present?
+      @version = determine_version_for_date(@date)
       @results = BankAssessmentResult
         .by_date(@date)
         .of_type(:area)
-        .with_active_indicators  # Use only active indicators
+        .with_version(@version)
         .includes(assessment: :bank)
         .order('length(bank_assessment_indicators.number), bank_assessment_indicators.number')
         .map do |result|
@@ -125,7 +126,7 @@ module TPI
       @assessment = if params[:assessment_id].present?
                       @bank.assessments.find(params[:assessment_id])
                     else
-                      @bank.latest_assessment
+                      @bank.assessments_with_data.first
                     end
       @assessment_presenter = BankAssessmentPresenter.new(@assessment)
     end
@@ -145,6 +146,16 @@ module TPI
 
     def permitted_email_params
       params.permit(:email, :job_title, :forename, :surname, :location, :organisation, :other_purpose, purposes: [])
+    end
+
+    def determine_version_for_date(date)
+      return '2024' if date.blank?
+
+      # Convert string to Date if needed
+      parsed_date = date.is_a?(String) ? Date.parse(date) : date
+      return '2025' if parsed_date >= Date.new(2025, 1, 1)
+      return '2024' if parsed_date >= Date.new(2024, 1, 1)
+      '2024'
     end
   end
 end

@@ -2,7 +2,7 @@ module TPI
   class BankAssessmentPresenter
     attr_reader :assessment
 
-    delegate :results, to: :assessment
+    delegate :results, :indicator_version, to: :assessment
 
     def initialize(assessment)
       @assessment = assessment
@@ -26,7 +26,7 @@ module TPI
       @average_bank_score ||= BankAssessmentResult
         .by_date(@assessment.assessment_date)
         .of_type(:area)
-        .with_active_indicators  # Use only active indicators
+        .with_version(@assessment.indicator_version)
         .group(:text)
         .average(:percentage)
         .transform_values(&:to_f)
@@ -36,7 +36,7 @@ module TPI
       @max_bank_score ||= BankAssessmentResult
         .by_date(@assessment.assessment_date)
         .of_type(:area)
-        .with_active_indicators  # Use only active indicators
+        .with_version(@assessment.indicator_version)
         .group(:text)
         .maximum(:percentage)
     end

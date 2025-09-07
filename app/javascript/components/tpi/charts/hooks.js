@@ -12,6 +12,12 @@ export function useChartData(dataUrl, params = {}) {
     : `${dataUrl}${paramSeparator}${new URLSearchParams(params)}`;
 
   useEffect(() => {
+    if (!dataUrl) {
+      setLoading(false);
+      setError('No data URL provided');
+      return;
+    }
+
     fetch(url)
       .then((r) => r.json())
       .then((chartData) => {
@@ -22,7 +28,7 @@ export function useChartData(dataUrl, params = {}) {
         setLoading(false);
         setError('Error while loading the data');
       });
-  }, [url]);
+  }, [url, dataUrl]);
 
   return {
     data,
@@ -32,5 +38,5 @@ export function useChartData(dataUrl, params = {}) {
 }
 
 function containsParams(dataUrl) {
-  return dataUrl.includes('?');
+  return dataUrl && dataUrl.includes('?');
 }
