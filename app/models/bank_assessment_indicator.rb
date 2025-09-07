@@ -27,7 +27,7 @@ class BankAssessmentIndicator < ApplicationRecord
   scope :legacy, -> { by_version('2024') }
 
   def text_with_number
-    return "#{number.chars.last}. #{text}" if answer_indicator?
+    return "#{number[-1]}. #{text}" if answer_indicator?
     return "#{number}: #{text}" if sub_area? || indicator?
 
     "#{number}. #{text}"

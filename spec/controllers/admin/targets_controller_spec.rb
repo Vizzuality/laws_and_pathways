@@ -197,7 +197,7 @@ RSpec.describe Admin::TargetsController, type: :controller, factory_default: :ke
       subject { delete :destroy, params: {id: target.id} }
 
       before do
-        expect(::Command::Destroy::Target).to receive(:new).and_return(command)
+        expect(Command::Destroy::Target).to receive(:new).and_return(command)
         expect(command).to receive(:call).and_return(nil)
       end
 

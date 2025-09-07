@@ -19,6 +19,7 @@ class BankAssessment < ApplicationRecord
   def indicator_version
     return '2025' if assessment_date >= Date.new(2025, 1, 1)
     return '2024' if assessment_date >= Date.new(2024, 1, 1)
+
     '2024'
   end
 
@@ -55,7 +56,9 @@ class BankAssessment < ApplicationRecord
   # Class method to get assessment dates that have actual data (oldest first)
   def self.dates_with_data
     joins(:results)
-      .joins('JOIN bank_assessment_indicators ON bank_assessment_indicators.id = bank_assessment_results.bank_assessment_indicator_id')
+      .joins(
+        'JOIN bank_assessment_indicators ON bank_assessment_indicators.id = bank_assessment_results.bank_assessment_indicator_id'
+      )
       .where('bank_assessment_indicators.version = CASE
         WHEN bank_assessments.assessment_date >= ? THEN ?
         WHEN bank_assessments.assessment_date >= ? THEN ?

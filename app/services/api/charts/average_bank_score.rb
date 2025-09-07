@@ -39,6 +39,7 @@ module Api
         parsed_date = date.is_a?(String) ? Date.parse(date) : date
         return '2025' if parsed_date >= Date.new(2025, 1, 1)
         return '2024' if parsed_date >= Date.new(2024, 1, 1)
+
         '2024'
       end
     end

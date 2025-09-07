@@ -234,7 +234,7 @@ ActiveAdmin.register Company do
     end
 
     def destroy
-      destroy_command = ::Command::Destroy::Company.new(resource.object)
+      destroy_command = Command::Destroy::Company.new(resource.object)
 
       message = if destroy_command.call
                   {notice: 'Successfully deleted selected Company'}

@@ -150,7 +150,7 @@ RSpec.describe Admin::CompaniesController, type: :controller do
       subject { delete :destroy, params: {id: company.id} }
 
       before do
-        expect(::Command::Destroy::Company).to receive(:new).and_return(command)
+        expect(Command::Destroy::Company).to receive(:new).and_return(command)
         expect(command).to receive(:call).and_return(nil)
       end
 

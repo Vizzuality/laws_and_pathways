@@ -79,7 +79,7 @@ RSpec.describe Admin::ThemeTypesController, type: :controller do
       subject { delete :destroy, params: {id: theme_type.id} }
 
       before do
-        expect(::Command::Destroy::ThemeType).to receive(:new).and_return(command)
+        expect(Command::Destroy::ThemeType).to receive(:new).and_return(command)
         expect(command).to receive(:call).and_return(nil)
       end
 

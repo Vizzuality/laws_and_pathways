@@ -133,7 +133,7 @@ ActiveAdmin.register Legislation do
   can_batch_destroy = proc { can?(:destroy, Legislation) }
 
   batch_action :publish, priority: 1, if: can_batch_publish do |ids|
-    publish_command = ::Command::Batch::Publish.new(scoped_collection, ids)
+    publish_command = Command::Batch::Publish.new(scoped_collection, ids)
 
     message = if publish_command.call.present?
                 {notice: "Successfully published #{ids.count} Laws"}
@@ -145,7 +145,7 @@ ActiveAdmin.register Legislation do
   end
 
   batch_action :archive, priority: 1, if: can_batch_archive do |ids|
-    archive_command = ::Command::Batch::Archive.new(scoped_collection, ids)
+    archive_command = Command::Batch::Archive.new(scoped_collection, ids)
 
     message = if archive_command.call.present?
                 {notice: "Successfully archived #{ids.count} Laws"}

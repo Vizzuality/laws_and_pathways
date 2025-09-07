@@ -97,7 +97,7 @@ RSpec.describe Admin::InstrumentsController, type: :controller do
       subject { delete :destroy, params: {id: instrument.id} }
 
       before do
-        expect(::Command::Destroy::Instrument).to receive(:new).and_return(command)
+        expect(Command::Destroy::Instrument).to receive(:new).and_return(command)
         expect(command).to receive(:call).and_return(nil)
       end
 
