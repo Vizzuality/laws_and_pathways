@@ -11,14 +11,20 @@
           MQ Assessment Date:
         </div>
         <div class="date-dropdown">
-          <%= react_component('RemoteDropdown', {
-            name: 'assessment_id',
-            remote: true,
-            theme: 'blue',
-            url: assessment_tpi_bank_path(@bank),
-            data: @bank.assessments_with_data.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
-            selected: params[:assessment_id] || @bank.assessments_with_data.first&.id
-            }) %>
+          <% if @bank.assessments_with_data.any? %>
+            <%= react_component('RemoteDropdown', {
+              name: 'assessment_id',
+              remote: true,
+              theme: 'blue',
+              url: assessment_tpi_bank_path(@bank),
+              data: @bank.assessments_with_data.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
+              selected: params[:assessment_id] || @bank.assessments_with_data.first&.id
+              }) %>
+          <% else %>
+            <div class="no-assessments-message" style="padding: 8px 12px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; color: #666;">
+              No assessments available
+            </div>
+          <% end %>
         </div>
       </div>
 
@@ -71,11 +77,9 @@
     </section>
   <% end %>
 
-  <% if @assessment.present? %>
-    <section class="container bank-assessment" id="assessment">
-      <%= render 'assessment', assessment: @assessment_presenter %>
-    </section>
-  <% end %>
+  <section class="container bank-assessment" id="assessment">
+    <%= render 'assessment', assessment: @assessment_presenter %>
+  </section>
 
   <% if @bank.latest_information.present? %>
     <%= react_component("LatestInformation", { name: @bank.name, latestInformation: @bank.latest_information }) %>

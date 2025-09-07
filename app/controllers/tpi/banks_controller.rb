@@ -128,6 +128,10 @@ module TPI
                     else
                       @bank.assessments_with_data.first
                     end
+
+      # If no assessment exists, create a virtual one for display purposes
+      @assessment = create_virtual_assessment if @assessment.nil?
+
       @assessment_presenter = BankAssessmentPresenter.new(@assessment)
     end
 
@@ -146,6 +150,48 @@ module TPI
 
     def permitted_email_params
       params.permit(:email, :job_title, :forename, :surname, :location, :organisation, :other_purpose, purposes: [])
+    end
+
+    def create_virtual_assessment
+      # Create a virtual assessment object for banks without assessments
+      # This allows the view to display the framework structure with empty indicators
+      virtual_assessment = OpenStruct.new(
+        id: "virtual_#{@bank.id}",
+        bank: @bank,
+        assessment_date: Date.current,
+        notes: nil,
+        indicator_version: '2025' # Use latest version for virtual assessments
+      )
+
+      # Create a virtual results object that responds to of_type method
+      virtual_results = OpenStruct.new
+
+      # Create a chainable empty result set
+      empty_result_set = OpenStruct.new
+      empty_result_set.define_singleton_method(:order) { |*_args| self }
+      empty_result_set.define_singleton_method(:find) { nil }
+      empty_result_set.define_singleton_method(:empty?) { true }
+      empty_result_set.define_singleton_method(:any?) { false }
+      empty_result_set.define_singleton_method(:length) { 0 }
+      empty_result_set.define_singleton_method(:count) { 0 }
+
+      virtual_results.define_singleton_method(:of_type) { |_type| empty_result_set }
+      virtual_results.define_singleton_method(:order) { |*_args| self }
+      virtual_results.define_singleton_method(:find) { nil }
+      virtual_results.define_singleton_method(:empty?) { true }
+      virtual_results.define_singleton_method(:any?) { false }
+
+      virtual_assessment.results = virtual_results
+
+      # Add methods that the presenter expects
+      virtual_assessment.define_singleton_method(:results_by_indicator_type) { {} }
+      virtual_assessment.define_singleton_method(:all_results_by_indicator_type) { {} }
+      virtual_assessment.define_singleton_method(:active_results?) { false }
+      virtual_assessment.define_singleton_method(:legacy_results?) { false }
+      virtual_assessment.define_singleton_method(:child_indicators) { |_result, _type| [] }
+      virtual_assessment.define_singleton_method(:virtual?) { true }
+
+      virtual_assessment
     end
 
     def determine_version_for_date(date)
