@@ -2,13 +2,22 @@
   <div class="container">
     <div class="columns">
       <div class="column is-3 logo">
-        <%= link_to tpi_root_path do %>
-          <img
-            src="<%= asset_path 'logo/TPI_logo@2x.png' %>"
-            class="banner__logo"
-            alt="Transition Pathway Initiative Logo"
-          />
-        <% end %>
+        <div class="banner__logos-left">
+          <%= link_to tpi_root_path do %>
+            <img
+              src="<%= asset_path 'logo/tpi_transition_logo_2025.png' %>"
+              class="banner__logo"
+              alt="TPI Transition Logo"
+            />
+          <% end %>
+          <%= link_to "https://www.lse.ac.uk/global-school-of-sustainability" do %>
+            <img
+              src="<%= asset_path 'logo/lse_logo_2025.png' %>"
+              class="banner__logo"
+              alt="The London School of Economics and Political Sciences"
+            />
+          <% end %>
+        </div>
       </div>
       <%= content_for?(:hosted_by) ? content_for(:hosted_by) : render('layouts/tpi/hosted_by') %>
     </div>
