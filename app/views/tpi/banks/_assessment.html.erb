@@ -2,6 +2,29 @@
 <h3 class="cp_assessments_title" style="margin: 25px 0">
   Net Zero Banking Assessment Framework
 </h3>
+
+<div class="bank-assessment__date-selector" style="margin: 20px 0; display: flex; align-items: center; gap: 15px;">
+  <div class="caption" style="font-weight: 500; color: #333;">
+    Assessment Date:
+  </div>
+  <div class="date-dropdown">
+    <% if assessment.assessment.bank.assessments_with_data.any? %>
+      <%= react_component('RemoteDropdown', {
+        name: 'assessment_id',
+        remote: true,
+        theme: 'blue',
+        url: assessment_tpi_bank_path(assessment.assessment.bank),
+        data: assessment.assessment.bank.assessments_with_data.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
+        selected: params[:assessment_id] || assessment.assessment.bank.assessments_with_data.first&.id
+        }) %>
+    <% else %>
+      <div class="no-assessments-message" style="padding: 8px 12px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; color: #666;">
+        No assessments available
+      </div>
+    <% end %>
+  </div>
+</div>
+
 <div class="bank-assessment__indicators-legend">
   <div>
     <%= svg "icons/white-chevron-down", class: 'svg-chevron-average' %>
