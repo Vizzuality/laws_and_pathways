@@ -3,14 +3,28 @@ import PropTypes from 'prop-types';
 import { useChartData } from '../hooks';
 import CPMatrixTable from './cp-matrix-table';
 
-function Tabs({ selectedTabIndex, setSelectedTabIndex }) {
+function Tabs({ selectedTabIndex, setSelectedTabIndex, assessmentDate }) {
+  // Determine alignment years based on assessment date
+  const getAlignmentYears = (date) => {
+    if (!date) return ['2030', '2035', '2050'];
+
+    const year = new Date(date).getFullYear();
+    if (year < 2025) {
+      return ['2025', '2035', '2050'];
+    }
+    return ['2030', '2035', '2050'];
+  };
+
+  const alignmentYears = getAlignmentYears(assessmentDate);
+  const tabLabels = [
+    `Short-term alignment ${alignmentYears[0]}`,
+    `Medium-term alignment ${alignmentYears[1]}`,
+    `Long-term alignment ${alignmentYears[2]}`
+  ];
+
   return (
     <div className="matrix-tabs">
-      {[
-        'Short-term alignment 2030',
-        'Medium-term alignment 2035',
-        'Long-term alignment 2050'
-      ].map((text, index) => (
+      {tabLabels.map((text, index) => (
         <div key={`tab${index}`}>
           <button
             className={`button tab ${
@@ -29,15 +43,25 @@ function Tabs({ selectedTabIndex, setSelectedTabIndex }) {
 
 Tabs.propTypes = {
   selectedTabIndex: PropTypes.number.isRequired,
-  setSelectedTabIndex: PropTypes.func.isRequired
+  setSelectedTabIndex: PropTypes.func.isRequired,
+  assessmentDate: PropTypes.string
+};
+
+Tabs.defaultProps = {
+  assessmentDate: null
 };
 
 function CPMatrix({ data: dataUrl }) {
   const [params, setParams] = useState({});
+  const [assessmentDate, setAssessmentDate] = useState(null);
 
   useEffect(() => {
     const select = document.querySelector('select[name="cp_assessment_date"]');
-    const onChange = () => setParams(select?.value ? { cp_assessment_date: select.value } : {});
+    const onChange = () => {
+      const newParams = select?.value ? { cp_assessment_date: select.value } : {};
+      setParams(newParams);
+      setAssessmentDate(select?.value || null);
+    };
     onChange();
     select?.addEventListener('change', onChange);
     return () => select?.removeEventListener('change', onChange);
@@ -54,6 +78,7 @@ function CPMatrix({ data: dataUrl }) {
       <Tabs
         selectedTabIndex={selectedTabIndex}
         setSelectedTabIndex={setSelectedTabIndex}
+        assessmentDate={assessmentDate}
       />
       <CPMatrixTable data={tableData} meta={meta} />
     </div>

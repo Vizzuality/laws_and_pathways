@@ -17,7 +17,9 @@ module Api
       def collect_data
         return [] unless cp_assessmentable.present?
 
-        %w[2030 2035 2050].each_with_object({}) do |year, result|
+        # Determine alignment years based on assessment date
+        alignment_years = determine_alignment_years
+        alignment_years.each_with_object({}) do |year, result|
           result[year] = sectors.each_with_object({}) do |sector, section|
             cp_assessment = cp_assessments[[cp_assessmentable, sector]]&.first
 
@@ -137,6 +139,22 @@ module Api
       def latest_per_sector_and_subsector(records)
         grouped = records.group_by { |a| [a.sector_id, a.subsector_id] }
         grouped.values.map { |assessments| assessments.max_by { |a| a.assessment_date || Date.new(0) } }
+      end
+
+      def determine_alignment_years
+        if selected_assessment_date.present?
+          date = parse_date(selected_assessment_date)
+          year = date&.year
+
+          if year && year < 2025
+            %w[2025 2035 2050]
+          else
+            %w[2030 2035 2050]
+          end
+        else
+          # Default to 2025+ alignment years
+          %w[2030 2035 2050]
+        end
       end
     end
   end
