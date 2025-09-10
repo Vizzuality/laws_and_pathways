@@ -6,11 +6,11 @@
 
 .tpi__banner {
   .banner {
-    height: 130px;
+    height: 90px;
     display: flex;
     align-items: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 7px;
+    padding-bottom: 5px;
 
     .banner__logos-left {
       display: flex;
@@ -39,10 +39,11 @@
       align-items: center;
       justify-content: end;
       gap: 30px;
+      margin-top: 8px;
 
       .partners__tpi {
-        max-height: 80px !important;
-        max-width: 200px !important;
+        max-height: 60px !important;
+        max-width: 150px !important;
         width: auto !important;
         height: auto !important;
       }
