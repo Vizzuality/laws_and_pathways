@@ -11,8 +11,8 @@
         remote: true,
         theme: 'blue',
         url: cp_matrix_data_tpi_bank_path(bank),
-        data: bank.cp_assessments.order(:assessment_date).currently_published.pluck(:assessment_date).uniq.map { |d| {label: d&.strftime('%d %B %Y'), value: d} },
-        selected: params[:cp_assessment_date] || bank.cp_assessments.order(:assessment_date).currently_published.pluck(:assessment_date).uniq.first
+        data: bank.cp_assessments.order(assessment_date: :desc).currently_published.pluck(:assessment_date).uniq.map { |d| {label: d&.strftime('%d %B %Y'), value: d} },
+        selected: params[:cp_assessment_date] || bank.cp_assessments.order(assessment_date: :desc).currently_published.pluck(:assessment_date).uniq.first
       }) %>
     </div>
   </div>

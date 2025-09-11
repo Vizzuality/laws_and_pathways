@@ -53,7 +53,7 @@ class BankAssessment < ApplicationRecord
     results.joins(:indicator).where(bank_assessment_indicators: {version: indicator_version}).exists?
   end
 
-  # Class method to get assessment dates that have actual data (oldest first)
+  # Class method to get assessment dates that have actual data (newest first)
   def self.dates_with_data
     joins(:results)
       .joins(
@@ -66,7 +66,7 @@ class BankAssessment < ApplicationRecord
       END', Date.new(2025, 1, 1), '2025', Date.new(2024, 1, 1), '2024', '2024')
       .select(:assessment_date)
       .distinct
-      .order(:assessment_date)
+      .order(assessment_date: :desc)
       .pluck(:assessment_date)
   end
 end
