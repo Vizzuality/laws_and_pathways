@@ -45,6 +45,10 @@ ActiveAdmin.register CP::Assessment do
                 new_admin_data_upload_path(data_upload: {uploader: 'BankCPAssessments2025'})
       end
       li do
+        link_to '<strong>Upload</strong> Bank CPAssessments 2027'.html_safe,
+                new_admin_data_upload_path(data_upload: {uploader: 'BankCPAssessments2027'})
+      end
+      li do
         link_to '<strong>Upload</strong> Bank CPAssessments 2030'.html_safe,
                 new_admin_data_upload_path(data_upload: {uploader: 'BankCPAssessments2030'})
       end
@@ -94,7 +98,7 @@ ActiveAdmin.register CP::Assessment do
     panel 'CP Matrix values' do
       table_for resource.cp_matrices do
         column :portfolio
-        column :cp_alignment_2025
+        column :cp_alignment_2027
         column :cp_alignment_2030
         column :cp_alignment_2035
         column :cp_alignment_2050

@@ -10,7 +10,7 @@ function Tabs({ selectedTabIndex, setSelectedTabIndex, assessmentDate }) {
 
     const year = new Date(date).getFullYear();
     if (year < 2025) {
-      return ['2025', '2035', '2050'];
+      return ['2027', '2035', '2050'];
     }
     return ['2030', '2035', '2050'];
   };

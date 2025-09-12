@@ -147,7 +147,7 @@ module Api
           year = date&.year
 
           if year && year < 2025
-            %w[2025 2035 2050]
+            %w[2027 2035 2050]
           else
             %w[2030 2035 2050]
           end
