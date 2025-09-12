@@ -286,4 +286,17 @@ $mobile-indent: 1rem;
       max-height: 42px;
     }
   }
+
+  .logo-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    .logo-item {
+      img {
+        max-height: 45px;
+        width: auto;
+      }
+    }
+  }
 }
