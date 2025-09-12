@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import Logo from 'images/logo/TPI_logo.svg';
-import GranthamLogo from 'images/logo/RICCE_logo.svg';
-import LSELogo from 'images/logo/LSE_logo.svg';
+import TPITransitionLogo from 'images/logo/tpi_transition_logo_2025.png';
+import LSELogo from 'images/logo/lse_logo_2025.png';
 
 const ESCAPE_KEY = 27;
 const ENTER_KEY = 13;
@@ -119,9 +119,14 @@ const NavbarComponent = ({ items }) => {
     <div className="navbar" role="navigation" aria-label="main navigation">
       <div className="container">
         <div className="navbar-brand is-hidden-desktop">
-          <a href="/" className="navbar-item logo">
-            <img src={Logo} alt="Transition Pathway Initiative logo" />
-          </a>
+          <div className="navbar-item logo-group">
+            <a href="/" className="logo-item">
+              <img src={TPITransitionLogo} alt="TPI Transition logo" />
+            </a>
+            <a href="https://www.lse.ac.uk/global-school-of-sustainability" className="logo-item">
+              <img src={LSELogo} alt="The London School of Economics and Political Sciences" />
+            </a>
+          </div>
           <a
             role="button"
             className={classnames('navbar-burger', {'is-active': isOpen})}
@@ -192,21 +197,12 @@ const NavbarComponent = ({ items }) => {
           </div>
 
           <div className="partners__container is-hidden-desktop">
-            <p className="partners__title">Hosted by:</p>
-
             <div className="partners">
-              <a href="http://www.lse.ac.uk/">
+              <a href="/">
                 <img
-                  src={LSELogo}
-                  alt="The London School of Economics and Political Sciences"
-                  className="partners__lse"
-                />
-              </a>
-              <a href="http://www.lse.ac.uk/GranthamInstitute/">
-                <img
-                  src={GranthamLogo}
-                  alt="Grantham Research Institute on Climate Change and the Environment"
-                  className="partners__grantham"
+                  src={Logo}
+                  alt="Transition Pathway Initiative Logo"
+                  className="partners__tpi"
                 />
               </a>
             </div>
