@@ -294,8 +294,16 @@ $mobile-indent: 1rem;
 
     .logo-item {
       img {
-        max-height: 45px;
+        max-height: 40px;
         width: auto;
+      }
+
+      &:first-child img {
+        max-height: 35px;
+      }
+
+      &:last-child img {
+        max-height: 52px;
       }
     }
   }
