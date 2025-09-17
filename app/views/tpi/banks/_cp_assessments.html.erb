@@ -20,13 +20,15 @@
     assessment.emissions.present? && 
     assessment.years_with_targets.present? && 
     assessment.years_with_targets.any? &&
-    ![
-      assessment.cp_alignment_2025,
-      assessment.cp_alignment_2027,
-      assessment.cp_alignment_2030,
-      assessment.cp_alignment_2035,
-      assessment.cp_alignment_2050
-    ].compact.any? { |alignment| alignment&.downcase&.include?('not assessable') }
+    !assessment.cp_matrices.any? do |matrix|
+      [
+        matrix.cp_alignment_2025,
+        matrix.cp_alignment_2027,
+        matrix.cp_alignment_2030,
+        matrix.cp_alignment_2035,
+        matrix.cp_alignment_2050
+      ].compact.any? { |alignment| alignment&.downcase&.include?('not assessable') }
+    end
   } %>
 <% if cp_sectors.any? %>
   <div style="margin: 25px 0">
