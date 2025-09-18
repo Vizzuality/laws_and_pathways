@@ -1,0 +1,18 @@
+<h3 class="cp_assessments_title" style="margin: 25px 0">
+  Carbon performance of <%= bank_name %>
+</h3>
+<p>
+  The sectoral means are computed from the company data in TPI's Carbon Performance Assessments.
+</p>
+<% if cp_sectors.any? %>
+  <div style="margin: 25px 0">
+    <%= react_component('charts/cp-performance/MultipleChart', {
+      sectors: cp_sectors
+    }) %>
+  </div>
+<% else %>
+  <div style="margin: 25px 0; padding: 20px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; text-align: center; color: #666;">
+    <p>No sector performance data available. This bank has not set assessable targets for any sectors.</p>
+    <p><small>Note: Sectors with targets labeled as "not assessable" are not displayed.</small></p>
+  </div>
+<% end %>

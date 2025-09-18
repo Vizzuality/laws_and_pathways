@@ -1,7 +1,7 @@
 /* eslint-disable operator-linebreak */
 /* eslint-disable function-paren-newline */
 /* eslint-disable implicit-arrow-linebreak */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Table from 'rc-table';
 import ReactTooltip from 'react-tooltip';
@@ -63,6 +63,10 @@ ColorDot.propTypes = {
 function CPMatrixTable({ data, meta }) {
   const [hasScrolled, setHasScrolled] = useState(false);
   useScrollClasses(setHasScrolled, hasScrolled);
+
+  useEffect(() => {
+    ReactTooltip.rebuild();
+  }, [data]);
 
   if (!data) return <div>no data</div>;
 

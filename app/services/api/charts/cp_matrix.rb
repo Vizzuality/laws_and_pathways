@@ -35,7 +35,7 @@ module Api
                 section["#{sector.name} - #{subsector.name}"] = {
                   assumptions: assumption_for(subsector_assessment&.assumptions),
                   portfolio_values: subsector_portfolio_values,
-                  has_emissions: subsector_assessment&.emissions&.present?
+                  has_emissions: subsector_assessment&.emissions&.present? && has_assessable_targets?(subsector_assessment)
                 }
               end
             else
@@ -44,7 +44,7 @@ module Api
               section[sector.name] = {
                 assumptions: assumption_for(cp_assessment&.assumptions),
                 portfolio_values: portfolio_values,
-                has_emissions: cp_assessment&.emissions&.present?
+                has_emissions: cp_assessment&.emissions&.present? && has_assessable_targets?(cp_assessment)
               }
             end
           end
@@ -85,6 +85,22 @@ module Api
         }
       end
 
+      def has_assessable_targets?(assessment)
+        return false unless assessment.present?
+        return false unless assessment.years_with_targets.present? && assessment.years_with_targets.any?
+
+        # Check if any cp_matrices contain "not assessable"
+        assessment.cp_matrices.none? do |matrix|
+          [
+            matrix.cp_alignment_2025,
+            matrix.cp_alignment_2027,
+            matrix.cp_alignment_2030,
+            matrix.cp_alignment_2035,
+            matrix.cp_alignment_2050
+          ].compact.any? { |alignment| alignment&.downcase&.include?('not assessable') }
+        end
+      end
+
       def cp_assessments
         @cp_assessments ||= if selected_assessment_date.present?
                               date = parse_date(selected_assessment_date)
@@ -97,19 +113,20 @@ module Api
                                 .sort_by { |a| [a.cp_assessmentable.try(:name), a.sector.name] }
                                 .group_by { |a| [a.cp_assessmentable, a.sector] }
                             else
-                              # Default to oldest assessment date
-                              oldest_date = CP::Assessment
+                              # Default to newest assessment date (same as ERB template)
+                              newest_date = CP::Assessment
                                 .where(cp_assessmentable: cp_assessmentable)
                                 .currently_published
-                                .order(:assessment_date)
+                                .order(assessment_date: :desc)
                                 .pluck(:assessment_date)
+                                .uniq
                                 .first
 
-                              if oldest_date.present?
+                              if newest_date.present?
                                 records = CP::Assessment
                                   .includes(:cp_assessmentable, :sector, :subsector, :cp_matrices)
                                   .where(cp_assessmentable: cp_assessmentable)
-                                  .where(assessment_date: oldest_date)
+                                  .where(assessment_date: newest_date)
                                   .currently_published
                                 records
                                   .sort_by { |a| [a.cp_assessmentable.try(:name), a.sector.name] }

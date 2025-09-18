@@ -4,13 +4,27 @@
 <p>
   The sectoral means are computed from the company data in TPI’s Carbon Performance Assessments.
 </p>
-<% cp_assessments = Queries::TPI::LatestCPAssessmentsQuery.new(category: Bank, cp_assessmentable: @bank).call %>
+<% 
+  # Use the selected CP assessment date from the matrix, or default to the latest
+  selected_cp_date = params[:cp_assessment_date] || @bank.cp_assessments.order(assessment_date: :desc).currently_published.pluck(:assessment_date).uniq.first
+  cp_assessments = if selected_cp_date
+    # Filter assessments by the selected date
+    assessments_by_date = {}
+    @bank.cp_assessments.where(assessment_date: selected_cp_date).currently_published.each do |assessment|
+      key = [@bank, assessment.sector]
+      assessments_by_date[key] = [assessment]
+    end
+    assessments_by_date
+  else
+    Queries::TPI::LatestCPAssessmentsQuery.new(category: Bank, cp_assessmentable: @bank).call
+  end
+%>
 <% cp_sectors = TPISector.for_category(Bank).order(:name).map { |sector|
    cp_assessment = cp_assessments[[@bank, sector]]&.first
     {
       name: sector.name,
       assessment: cp_assessment,
-      dataUrl: emissions_chart_data_tpi_bank_path(@bank, sector_id: sector.id),
+      dataUrl: emissions_chart_data_tpi_bank_path(@bank, sector_id: sector.id, cp_assessment_date: selected_cp_date),
       unit: cp_assessment&.unit
     }
   }.select { |sector| 

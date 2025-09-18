@@ -74,7 +74,55 @@ module TPI
     def cp_matrix_data
       data = ::Api::Charts::CPMatrix.new(@bank, params[:cp_assessment_date]).matrix_data
 
-      render json: data.as_json
+      # Also update the Carbon Performance graphs section
+      selected_cp_date = params[:cp_assessment_date] || @bank.cp_assessments.order(assessment_date: :desc).currently_published.pluck(:assessment_date).uniq.first
+      cp_assessments = if selected_cp_date
+                         assessments_by_date = {}
+                         @bank.cp_assessments.where(assessment_date: selected_cp_date).currently_published.each do |assessment|
+                           key = [@bank, assessment.sector]
+                           assessments_by_date[key] = [assessment]
+                         end
+                         assessments_by_date
+                       else
+                         Queries::TPI::LatestCPAssessmentsQuery.new(category: Bank, cp_assessmentable: @bank).call
+                       end
+
+      cp_sectors = TPISector.for_category(Bank).order(:name).map do |sector|
+        cp_assessment = cp_assessments[[@bank, sector]]&.first
+        {
+          name: sector.name,
+          assessment: cp_assessment,
+          dataUrl: emissions_chart_data_tpi_bank_path(@bank, sector_id: sector.id, cp_assessment_date: selected_cp_date),
+          unit: cp_assessment&.unit
+        }
+      end.select do |sector|
+        assessment = sector[:assessment]
+
+        assessment.present? &&
+          assessment.emissions.present? &&
+          assessment.years_with_targets.present? &&
+          assessment.years_with_targets.any? &&
+          assessment.cp_matrices.none? do |matrix|
+            [
+              matrix.cp_alignment_2025,
+              matrix.cp_alignment_2027,
+              matrix.cp_alignment_2030,
+              matrix.cp_alignment_2035,
+              matrix.cp_alignment_2050
+            ].compact.any? { |alignment| alignment&.downcase&.include?('not assessable') }
+          end
+      end
+
+      # Render the CP assessments partial
+      cp_assessments_html = render_to_string(
+        partial: 'tpi/banks/cp_assessments_content',
+        locals: {cp_sectors: cp_sectors, bank_name: @bank.name}
+      )
+
+      render json: {
+        **data.as_json,
+        cp_assessments_html: cp_assessments_html
+      }
     end
 
     def send_download_file_info_email
@@ -139,8 +187,9 @@ module TPI
       @cp_assessment = if params[:cp_assessment_id].present?
                          @bank.cp_assessments.find(params[:cp_assessment_id])
                        else
-                         @bank.cp_assessments.where(sector_id: params[:sector_id]).currently_published
-                           .order(assessment_date: :desc).first
+                         scope = @bank.cp_assessments.where(sector_id: params[:sector_id]).currently_published
+                         scope = scope.where(assessment_date: params[:cp_assessment_date]) if params[:cp_assessment_date].present?
+                         scope.order(assessment_date: :desc).first
                        end
     end
 
