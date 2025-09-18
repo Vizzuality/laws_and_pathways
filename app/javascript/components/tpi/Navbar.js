@@ -126,6 +126,9 @@ const NavbarComponent = ({ items }) => {
             <a href="https://www.lse.ac.uk/global-school-of-sustainability" className="logo-item">
               <img src={LSELogo} alt="The London School of Economics and Political Sciences" />
             </a>
+            <a href="/" className="logo-item">
+              <img src={Logo} alt="Transition Pathway Initiative logo" />
+            </a>
           </div>
           <a
             role="button"
@@ -196,17 +199,6 @@ const NavbarComponent = ({ items }) => {
             </a>
           </div>
 
-          <div className="partners__container is-hidden-desktop">
-            <div className="partners">
-              <a href="/">
-                <img
-                  src={Logo}
-                  alt="Transition Pathway Initiative Logo"
-                  className="partners__tpi"
-                />
-              </a>
-            </div>
-          </div>
         </div>
       </div>
     </div>
