@@ -45,7 +45,7 @@ module CSVImport
 
     def update_cp_matrices_for!(assessment, row)
       CP::Portfolio::NAMES.each do |portfolio_name|
-        key = CSV::HeaderConverters[header_converters.first].call portfolio_name
+        key = CSV::HeaderConverters[:symbol].call(portfolio_name)
         next unless row.header? key
 
         cp_alignment = CP::Alignment.format_name(row[key])
