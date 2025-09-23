@@ -29,6 +29,15 @@ module CSVImport
     end
 
     private
+    def required_headers
+      []
+    end
+
+    def header_converters
+      custom = ->(field) { field == 'BankID' ? 'bank_id' : field }
+      [custom, :symbol]
+    end
+
 
     def alignment_key
       raise NotImplementedError
@@ -82,13 +91,21 @@ module CSVImport
     end
 
     def find_bank!(row)
-      return unless row[:bank_id].present?
-
-      bank = Bank.find(row[:bank_id])
-      if bank.name.strip.downcase != row[:bank].strip.downcase
-        puts "!!WARNING!! CHECK YOUR FILE ID DOESN'T MATCH BANK NAME!! #{row[:bank_id]} #{row[:bank]}"
+      if row[:bank_id].present?
+        bank = Bank.find(row[:bank_id])
+        if row.header?(:bank) && row[:bank].present?
+          if bank.name.strip.downcase != row[:bank].strip.downcase
+            puts "!!WARNING!! CHECK YOUR FILE ID DOESN'T MATCH BANK NAME!! #{row[:bank_id]} #{row[:bank]}"
+          end
+        end
+        return bank
       end
-      bank
+
+      if row.header?(:bank) && row[:bank].present?
+        return Bank.find_by!(name: row[:bank])
+      end
+
+      nil
     end
   end
 end
