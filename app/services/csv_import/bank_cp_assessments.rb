@@ -29,6 +29,7 @@ module CSVImport
     end
 
     private
+
     def required_headers
       []
     end
@@ -38,21 +39,31 @@ module CSVImport
       [custom, :symbol]
     end
 
-
     def alignment_key
       raise NotImplementedError
     end
 
     def update_cp_matrices_for!(assessment, row)
       CP::Portfolio::NAMES.each do |portfolio_name|
-        key = CSV::HeaderConverters[:symbol].call(portfolio_name)
-        next unless row.header? key
+        header_keys = portfolio_header_keys_for(portfolio_name)
+        key_in_row = header_keys.find { |k| row.header? k }
+        next unless key_in_row
 
-        cp_alignment = CP::Alignment.format_name(row[key])
+        cp_alignment = CP::Alignment.format_name(row[key_in_row])
         cp_matrix = assessment.cp_matrices.find_or_initialize_by(portfolio: portfolio_name)
         cp_matrix.public_send("#{alignment_key}=", cp_alignment)
         cp_matrix.save!
       end
+    end
+
+    def portfolio_header_keys_for(portfolio_name)
+      base = CSV::HeaderConverters[:symbol].call(portfolio_name)
+      with_year = CSV::HeaderConverters[:symbol].call("#{portfolio_name} #{alignment_year_str}")
+      [base, with_year].uniq
+    end
+
+    def alignment_year_str
+      alignment_key.to_s.split('_').last
     end
 
     def prepare_assessment(row)
@@ -93,17 +104,13 @@ module CSVImport
     def find_bank!(row)
       if row[:bank_id].present?
         bank = Bank.find(row[:bank_id])
-        if row.header?(:bank) && row[:bank].present?
-          if bank.name.strip.downcase != row[:bank].strip.downcase
-            puts "!!WARNING!! CHECK YOUR FILE ID DOESN'T MATCH BANK NAME!! #{row[:bank_id]} #{row[:bank]}"
-          end
+        if row.header?(:bank) && row[:bank].present? && (bank.name.strip.downcase != row[:bank].strip.downcase)
+          puts "!!WARNING!! CHECK YOUR FILE ID DOESN'T MATCH BANK NAME!! #{row[:bank_id]} #{row[:bank]}"
         end
         return bank
       end
 
-      if row.header?(:bank) && row[:bank].present?
-        return Bank.find_by!(name: row[:bank])
-      end
+      return Bank.find_by!(name: row[:bank]) if row.header?(:bank) && row[:bank].present?
 
       nil
     end

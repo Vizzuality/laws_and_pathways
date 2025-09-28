@@ -11,6 +11,7 @@ module CSVImport
       CP::Portfolio::NAMES.each do |portfolio_name|
         cp_matrix = assessment.cp_matrices.find_by(portfolio: portfolio_name)
         next unless cp_matrix
+
         cp_matrix.cp_alignment_2035 = nil
         cp_matrix.cp_alignment_2050 = nil
         cp_matrix.save!
