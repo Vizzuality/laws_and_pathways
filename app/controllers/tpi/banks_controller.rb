@@ -98,19 +98,22 @@ module TPI
       end.select do |sector|
         assessment = sector[:assessment]
 
-        assessment.present? &&
-          assessment.emissions.present? &&
-          assessment.years_with_targets.present? &&
-          assessment.years_with_targets.any? &&
-          assessment.cp_matrices.none? do |matrix|
-            [
-              matrix.cp_alignment_2025,
-              matrix.cp_alignment_2027,
-              matrix.cp_alignment_2030,
-              matrix.cp_alignment_2035,
-              matrix.cp_alignment_2050
-            ].compact.any? { |alignment| alignment&.downcase&.include?('not assessable') }
-          end
+        next false unless assessment.present? && assessment.emissions.present?
+
+        allow_emissions_only = CP::DisplayOverrides.emissions_only_allowed?(bank_name: @bank.name, sector_name: sector[:name])
+
+        has_targets = assessment.years_with_targets.present? && assessment.years_with_targets.any?
+        has_not_assessable = assessment.cp_matrices.any? do |matrix|
+          [
+            matrix.cp_alignment_2025,
+            matrix.cp_alignment_2027,
+            matrix.cp_alignment_2030,
+            matrix.cp_alignment_2035,
+            matrix.cp_alignment_2050
+          ].compact.any? { |alignment| alignment&.downcase&.include?('not assessable') }
+        end
+
+        (has_targets && !has_not_assessable) || allow_emissions_only
       end
 
       # Render the CP assessments partial

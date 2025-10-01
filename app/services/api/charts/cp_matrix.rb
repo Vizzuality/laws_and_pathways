@@ -80,7 +80,7 @@ module Api
         end
 
         {
-          sectors: sector_names,
+          sectors: sector_names.uniq,
           portfolios: CP::Portfolio::NAMES_WITH_CATEGORIES
         }
       end

@@ -1,0 +1,5 @@
+emissions_only_allow:
+  - bank: ING
+    sector: Steel
+
+
