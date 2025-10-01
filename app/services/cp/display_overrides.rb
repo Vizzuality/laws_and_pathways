@@ -18,5 +18,16 @@ module CP
         File.exist?(path) ? YAML.load_file(path) || {} : {}
       end
     end
+
+    def self.suppressed_sector_names
+      Array(load_rules['suppress_sector_names']).map { |s| s.to_s.downcase }
+    end
+
+    def self.filter_sectors(sectors)
+      suppressed = suppressed_sector_names
+      return sectors if suppressed.empty?
+
+      sectors.reject { |sector| suppressed.include?(sector.name.to_s.downcase) }
+    end
   end
 end

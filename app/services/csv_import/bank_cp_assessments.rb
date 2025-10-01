@@ -5,11 +5,14 @@ module CSVImport
     def import
       import_each_csv_row(csv) do |row|
         CP::Assessment.transaction do
+          normalized_sector, normalized_subsector = CP::SectorNormalizer.normalize(row[:sector], row[:subsector])
+          raise ArgumentError, "Unknown sector '#{row[:sector]}'" if row.header?(:sector) && !normalized_sector.present?
+
           assessment = prepare_assessment(row)
 
           assessment.assessment_date = assessment_date(row) if row.header?(:assessment_date)
           assessment.publication_date = publication_date(row) if row.header?(:publication_date)
-          assessment.sector = find_or_create_tpi_sector(row[:sector], categories: [Bank]) if row.header?(:sector)
+          assessment.sector = TPISector.find_by!(name: normalized_sector) if row.header?(:sector)
           assessment.region = parse_cp_benchmark_region(row[:region]) if row.header?(:region)
           assessment.assumptions = row[:assumptions].presence if row.header?(:assumptions)
           assessment.emissions = parse_emissions(row) if emission_headers?(row)
@@ -76,8 +79,14 @@ module CSVImport
 
     def prepare_assessment_subsector(row)
       bank_id = find_bank!(row)&.id
-      sector = find_or_create_tpi_sector(row[:sector], categories: [Bank])
-      subsector = Subsector.find_or_create_by(sector: sector, name: row[:subsector])
+      normalized_sector, normalized_subsector = CP::SectorNormalizer.normalize(row[:sector], row[:subsector])
+      sector = TPISector.find_by!(name: normalized_sector)
+      unless normalized_subsector.present?
+        raise ArgumentError,
+              "Unknown subsector '#{row[:subsector]}' for sector '#{normalized_sector}'"
+      end
+
+      subsector = Subsector.find_by!(sector: sector, name: normalized_subsector)
 
       find_record_by(:id, row) ||
         CP::Assessment.find_or_initialize_by(
@@ -96,7 +105,10 @@ module CSVImport
           cp_assessmentable_type: 'Bank',
           cp_assessmentable_id: find_bank!(row)&.id,
           assessment_date: assessment_date(row),
-          sector: find_or_create_tpi_sector(row[:sector], categories: [Bank]),
+          sector: (if row.header?(:sector)
+                     TPISector.find_by!(name: CP::SectorNormalizer.normalize(row[:sector],
+                                                                             nil).first)
+                   end),
           region: parse_cp_benchmark_region(row[:region])
         )
     end

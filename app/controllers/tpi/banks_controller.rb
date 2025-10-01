@@ -87,7 +87,7 @@ module TPI
                          Queries::TPI::LatestCPAssessmentsQuery.new(category: Bank, cp_assessmentable: @bank).call
                        end
 
-      cp_sectors = TPISector.for_category(Bank).order(:name).map do |sector|
+      cp_sectors = CP::DisplayOverrides.filter_sectors(TPISector.for_category(Bank).order(:name)).map do |sector|
         cp_assessment = cp_assessments[[@bank, sector]]&.first
         {
           name: sector.name,

@@ -138,7 +138,9 @@ module Api
       end
 
       def sectors
-        @sectors ||= TPISector.for_category(cp_assessmentable_type).order(:name)
+        @sectors ||= CP::DisplayOverrides.filter_sectors(
+          TPISector.for_category(cp_assessmentable_type).order(:name)
+        )
       end
 
       def cp_assessmentable_type
