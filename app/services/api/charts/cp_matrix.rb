@@ -32,7 +32,8 @@ module Api
                 subsector_assessment = cp_assessments[[cp_assessmentable, sector]]&.find { |a| a.subsector_id == subsector.id }
                 subsector_portfolio_values = portfolio_values_from subsector_assessment, year
 
-                section["#{sector.name} - #{subsector.name}"] = {
+                label = CP::SectorNormalizer.canonical_label(sector.name, subsector.name)
+                section[label] = {
                   assumptions: assumption_for(subsector_assessment&.assumptions),
                   portfolio_values: subsector_portfolio_values,
                   has_emissions: subsector_assessment&.emissions&.present? && has_assessable_targets?(subsector_assessment)
@@ -41,7 +42,8 @@ module Api
             else
               portfolio_values = portfolio_values_from cp_assessment, year
               # No subsectors, use sector name directly
-              section[sector.name] = {
+              label = CP::SectorNormalizer.canonical_label(sector.name)
+              section[label] = {
                 assumptions: assumption_for(cp_assessment&.assumptions),
                 portfolio_values: portfolio_values,
                 has_emissions: cp_assessment&.emissions&.present? && has_assessable_targets?(cp_assessment)

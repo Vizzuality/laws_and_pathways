@@ -33,5 +33,16 @@ module CP
 
       [sect_key, sub_key]
     end
+
+    def self.alias_names
+      (config['aliases'] || {}).keys.map { |k| k.to_s.downcase }
+    end
+
+    def self.canonical_label(sector_name, subsector_name = nil)
+      sect, sub = normalize(sector_name, subsector_name)
+      return sect unless sub.present?
+
+      "#{sect} - #{sub}"
+    end
   end
 end
