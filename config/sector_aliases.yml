@@ -1,0 +1,13 @@
+aliases:
+  "Coal mining (metallurgical)":
+    sector: "Coal Mining"
+    subsector: "Metallurgical Coal"
+  "Coal mining (thermal)":
+    sector: "Coal Mining"
+    subsector: "Thermal Coal"
+
+allowlist:
+  "Coal Mining":
+    - "Metallurgical Coal"
+    - "Thermal Coal"
+
