@@ -20,29 +20,25 @@ module Api
         # Determine alignment years based on assessment date
         alignment_years = determine_alignment_years
         alignment_years.each_with_object({}) do |year, result|
-          result[year] = sectors.each_with_object({}) do |sector, section|
-            cp_assessment = cp_assessments[[cp_assessmentable, sector]]&.first
+          labels = display_labels_for_selected_assessment_year
+          result[year] = labels.each_with_object({}) do |label, section|
+            base, sub = parse_label(label)
+            sector = all_sectors_by_name[base]
+            next unless sector
 
-            # Get all subsectors for this sector
-            sector_subsectors = sector.subsectors
-            if sector_subsectors.any?
-              # Create entries for each subsector
-              sector_subsectors.each do |subsector|
-                # Find the specific CP assessment for this subsector if it exists
-                subsector_assessment = cp_assessments[[cp_assessmentable, sector]]&.find { |a| a.subsector_id == subsector.id }
-                subsector_portfolio_values = portfolio_values_from subsector_assessment, year
+            if sub.present?
+              subsector = sector.subsectors.find { |s| s.name == sub }
+              subsector_assessment = cp_assessments[[cp_assessmentable, sector]]&.find { |a| a.subsector_id == subsector&.id }
+              subsector_portfolio_values = portfolio_values_from subsector_assessment, year
 
-                label = CP::SectorNormalizer.canonical_label(sector.name, subsector.name)
-                section[label] = {
-                  assumptions: assumption_for(subsector_assessment&.assumptions),
-                  portfolio_values: subsector_portfolio_values,
-                  has_emissions: subsector_assessment&.emissions&.present? && has_assessable_targets?(subsector_assessment)
-                }
-              end
+              section[label] = {
+                assumptions: assumption_for(subsector_assessment&.assumptions),
+                portfolio_values: subsector_portfolio_values,
+                has_emissions: subsector_assessment&.emissions&.present? && has_assessable_targets?(subsector_assessment)
+              }
             else
+              cp_assessment = cp_assessments[[cp_assessmentable, sector]]&.first
               portfolio_values = portfolio_values_from cp_assessment, year
-              # No subsectors, use sector name directly
-              label = CP::SectorNormalizer.canonical_label(sector.name)
               section[label] = {
                 assumptions: assumption_for(cp_assessment&.assumptions),
                 portfolio_values: portfolio_values,
@@ -69,20 +65,8 @@ module Api
       end
 
       def collect_metadata
-        sector_names = sectors.flat_map do |sector|
-          sector_subsectors = sector.subsectors
-
-          if sector_subsectors.any?
-            # Create names for each subsector
-            sector_subsectors.map { |subsector| "#{sector.name} - #{subsector.name}" }
-          else
-            # No subsectors, use sector name directly
-            [sector.name]
-          end
-        end
-
         {
-          sectors: sector_names.uniq,
+          sectors: display_labels_for_selected_assessment_year,
           portfolios: CP::Portfolio::NAMES_WITH_CATEGORIES
         }
       end
@@ -144,6 +128,64 @@ module Api
           TPISector.for_category(cp_assessmentable_type).order(:name)
         )
       end
+
+      def all_sectors_by_name
+        @all_sectors_by_name ||= TPISector.for_category(cp_assessmentable_type).index_by(&:name)
+      end
+
+      def selected_assessment_year
+        date = parse_date(selected_assessment_date) || cp_assessments.values.flatten.map(&:assessment_date).compact.max
+        date&.year
+      end
+
+      def display_labels_for_selected_assessment_year
+        year = selected_assessment_year
+        if year.nil? || year >= 2025
+          SECTORS_FROM_2025
+        else
+          SECTORS_UP_TO_2024
+        end
+      end
+
+      def parse_label(label)
+        parts = label.split(' - ', 2)
+        [parts[0], parts[1]]
+      end
+
+      SECTORS_FROM_2025 = [
+        'Airlines',
+        'Aluminium',
+        'Autos',
+        'Cement',
+        'Chemicals',
+        'Coal Mining - Thermal Coal',
+        'Coal Mining - Metallurgical Coal',
+        'Diversified Mining',
+        'Electric Utilities (Global)',
+        'Electric Utilities (Regional)',
+        'Food',
+        'Oil & Gas',
+        'Paper',
+        'Real Estate',
+        'Shipping',
+        'Steel'
+      ].freeze
+
+      SECTORS_UP_TO_2024 = [
+        'Airlines',
+        'Aluminium',
+        'Autos',
+        'Cement',
+        'Chemicals',
+        'Coal Mining',
+        'Diversified Mining',
+        'Electric Utilities (Global)',
+        'Electric Utilities (Regional)',
+        'Oil & Gas',
+        'Real Estate',
+        'Shipping',
+        'Steel'
+      ].freeze
 
       def cp_assessmentable_type
         cp_assessmentable.class.to_s
