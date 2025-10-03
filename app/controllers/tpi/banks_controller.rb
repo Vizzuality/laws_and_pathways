@@ -90,7 +90,7 @@ module TPI
       cp_sectors = CP::DisplayOverrides.filter_sectors(TPISector.for_category(Bank).order(:name)).map do |sector|
         cp_assessment = cp_assessments[[@bank, sector]]&.first
         {
-          name: sector.name,
+          name: CP::SectorNormalizer.display_label_for_sector(sector.name),
           assessment: cp_assessment,
           dataUrl: emissions_chart_data_tpi_bank_path(@bank, sector_id: sector.id, cp_assessment_date: selected_cp_date),
           unit: cp_assessment&.unit
