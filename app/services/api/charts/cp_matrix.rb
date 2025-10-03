@@ -57,18 +57,18 @@ module Api
       end
 
       def portfolio_values_from(cp_assessment, year)
-        CP::Portfolio::NAMES.each_with_object({}) do |portfolio, row|
-          old_portfolio = CP::Portfolio::NAME_MAP[portfolio]
-          # keep support for old portfolio names but also support new ones
-          value = cp_assessment&.cp_matrices&.detect { |m| m.portfolio == old_portfolio || m.portfolio == portfolio }
-          row[portfolio] = value&.public_send "cp_alignment_#{year}"
+        display_names = display_portfolios_for_year(year).values.flatten
+        display_names.each_with_object({}) do |display_name, row|
+          new_name = CP::Portfolio::NAME_MAP.key(display_name) || display_name
+          value = cp_assessment&.cp_matrices&.detect { |m| m.portfolio == display_name || m.portfolio == new_name }
+          row[display_name] = value&.public_send "cp_alignment_#{year}"
         end
       end
 
       def collect_metadata
         {
           sectors: display_labels_for_selected_assessment_year,
-          portfolios: CP::Portfolio::NAMES_WITH_CATEGORIES
+          portfolios: display_portfolios_for_year(selected_assessment_year)
         }
       end
 
@@ -137,6 +137,16 @@ module Api
       def selected_assessment_year
         date = parse_date(selected_assessment_date) || cp_assessments.values.flatten.map(&:assessment_date).compact.max
         date&.year
+      end
+
+      def display_portfolios_for_year(year)
+        base = CP::Portfolio::NAMES_WITH_CATEGORIES
+        return base if year.nil?
+
+        year_num = year.is_a?(String) ? year.to_i : year.to_i
+        return base if year_num >= 2025
+
+        Hash[base.map { |cat, names| [cat, names.map { |n| CP::Portfolio::NAME_MAP[n] || n }] }]
       end
 
       def display_labels_for_selected_assessment_year
