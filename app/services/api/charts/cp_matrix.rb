@@ -23,11 +23,12 @@ module Api
           labels = display_labels_for_selected_assessment_year
           result[year] = labels.each_with_object({}) do |label, section|
             base, sub = parse_label(label)
-            sector = all_sectors_by_name[base]
+            canon_base, canon_sub = CP::SectorNormalizer.normalize(base, sub)
+            sector = all_sectors_by_name[canon_base]
             next unless sector
 
             if sub.present?
-              subsector = sector.subsectors.find { |s| s.name == sub }
+              subsector = sector.subsectors.find { |s| s.name == (canon_sub || sub) }
               subsector_assessment = cp_assessments[[cp_assessmentable, sector]]&.find { |a| a.subsector_id == subsector&.id }
               subsector_portfolio_values = portfolio_values_from subsector_assessment, year
 
@@ -161,8 +162,8 @@ module Api
         'Coal Mining - Thermal Coal',
         'Coal Mining - Metallurgical Coal',
         'Diversified Mining',
-        'Electric Utilities (Global)',
-        'Electric Utilities (Regional)',
+        'Electricity Utilities (Global)',
+        'Electricity Utilities (Regional)',
         'Food',
         'Oil & Gas',
         'Paper',
@@ -179,8 +180,8 @@ module Api
         'Chemicals',
         'Coal Mining',
         'Diversified Mining',
-        'Electric Utilities (Global)',
-        'Electric Utilities (Regional)',
+        'Electricity Utilities (Global)',
+        'Electricity Utilities (Regional)',
         'Oil & Gas',
         'Real Estate',
         'Shipping',

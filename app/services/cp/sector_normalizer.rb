@@ -40,9 +40,21 @@ module CP
 
     def self.canonical_label(sector_name, subsector_name = nil)
       sect, sub = normalize(sector_name, subsector_name)
-      return sect unless sub.present?
+      display_sect = display_label_for_sector(sect)
+      return display_sect unless sub.present?
 
-      "#{sect} - #{sub}"
+      "#{display_sect} - #{sub}"
+    end
+
+    def self.display_label_for_sector(canonical_sector)
+      case canonical_sector
+      when 'Electric Utilities (Global)'
+        'Electricity Utilities (Global)'
+      when 'Electric Utilities (Regional)'
+        'Electricity Utilities (Regional)'
+      else
+        canonical_sector
+      end
     end
   end
 end
