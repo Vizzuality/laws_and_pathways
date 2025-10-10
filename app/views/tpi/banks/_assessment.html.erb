@@ -114,7 +114,7 @@ end %>
               N/A
             <% elsif area.indicator.is_placeholder %>
               N/A
-            <% elsif area.percentage.to_f == 0.0 %>
+            <% elsif area.indicator.number.to_s.split('.').first == '4' && area.percentage.to_f == 0.0 %>
               N/A
             <% else %>
               <%= number_with_precision(area.percentage, precision: 1, strip_insignificant_zeros: true) %>%
