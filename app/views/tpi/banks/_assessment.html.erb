@@ -8,15 +8,30 @@
     Assessment Date:
   </div>
   <div class="date-dropdown">
-    <% if assessment.assessment.bank.assessments_with_data.any? %>
+    <% bank_assessments = assessment.assessment.bank.assessments.order(assessment_date: :desc) %>
+    <% if bank_assessments.any? %>
+      <% options = bank_assessments.map { |v| {label: v.assessment_date&.strftime('%d %B %Y'), value: v.id.to_s} } %>
+      <% valid_ids = options.map { |o| o[:value].to_s } %>
+      <% preferred = bank_assessments.detect { |a| a.assessment_date && a.assessment_date.year >= 2025 } %>
+      <% fallback_id = (preferred || bank_assessments.first)&.id.to_s %>
+      <% selected_id = valid_ids.include?(params[:assessment_id].to_s) ? params[:assessment_id].to_s : fallback_id %>
       <%= react_component('RemoteDropdown', {
         name: 'assessment_id',
         remote: true,
         theme: 'blue',
         url: assessment_tpi_bank_path(assessment.assessment.bank),
-        data: assessment.assessment.bank.assessments_with_data.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
-        selected: params[:assessment_id] || assessment.assessment.bank.assessments_with_data.first&.id
+        data: options,
+        selected: selected_id
         }) %>
+      <noscript>
+        <form action="<%= assessment_tpi_bank_path(assessment.assessment.bank) %>" method="get">
+          <select name="assessment_id" onchange="this.form.submit()">
+            <% bank_assessments.each do |v| %>
+              <option value="<%= v.id %>" <%= 'selected' if (params[:assessment_id].presence || bank_assessments.first&.id).to_s == v.id.to_s %>><%= v.assessment_date&.strftime('%d %B %Y') %></option>
+            <% end %>
+          </select>
+        </form>
+      </noscript>
     <% else %>
       <div class="no-assessments-message" style="padding: 8px 12px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; color: #666;">
         No assessments available
@@ -99,6 +114,8 @@ end %>
               N/A
             <% elsif area.indicator.is_placeholder %>
               N/A
+            <% elsif area.percentage.to_f == 0.0 %>
+              N/A
             <% else %>
               <%= number_with_precision(area.percentage, precision: 1, strip_insignificant_zeros: true) %>%
             <% end %>
@@ -108,6 +125,11 @@ end %>
       <% if area.indicator.comment.present? %>
         <div class="bank-assessment__area-comment">
           <%= area.indicator.comment %>
+        </div>
+      <% end %>
+      <% if area.indicator.number.to_s.split('.').first == '4' && area.indicator.respond_to?(:version) && area.indicator.version.to_s == '2025' %>
+        <div class="bank-assessment__area-comment">
+          Historical data on banks’ portfolio carbon emissions are not yet available. Consequently, we have not yet been able to assess the banks in this area, but we will do so when the data becomes available.
         </div>
       <% end %>
       <label class="bank-assessment__more" for="<%= area.respond_to?(:virtual?) && area.virtual? ? area.id : dom_id(area) %>">

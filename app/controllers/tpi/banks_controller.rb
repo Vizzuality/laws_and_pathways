@@ -177,7 +177,7 @@ module TPI
       @assessment = if params[:assessment_id].present?
                       @bank.assessments.find(params[:assessment_id])
                     else
-                      @bank.assessments_with_data.first
+                      @bank.assessments_with_data.first || @bank.assessments.order(assessment_date: :desc).first
                     end
 
       # If no assessment exists, create a virtual one for display purposes

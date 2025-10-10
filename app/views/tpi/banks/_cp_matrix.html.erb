@@ -6,14 +6,35 @@
   <div class="cp-matrix-assessment-date">
     <div class="caption">Assessment Date:</div>
     <div class="date-dropdown">
-      <%= react_component('RemoteDropdown', {
-        name: 'cp_assessment_date',
-        remote: true,
-        theme: 'blue',
-        url: cp_matrix_data_tpi_bank_path(bank),
-        data: bank.cp_assessments.order(assessment_date: :desc).currently_published.pluck(:assessment_date).uniq.map { |d| {label: d&.strftime('%d %B %Y'), value: d} },
-        selected: params[:cp_assessment_date] || bank.cp_assessments.order(assessment_date: :desc).currently_published.pluck(:assessment_date).uniq.first
-      }) %>
+      <% filtered_dates = bank.cp_assessments
+        .order(assessment_date: :desc)
+        .currently_published
+        .pluck(:assessment_date)
+        .uniq
+        .select { |d| d && d.year >= 2025 } %>
+      <% if filtered_dates.any? %>
+        <%= react_component('RemoteDropdown', {
+          name: 'cp_assessment_date',
+          remote: true,
+          theme: 'blue',
+          url: cp_matrix_data_tpi_bank_path(bank),
+          data: filtered_dates.map { |d| {label: d&.strftime('%d %B %Y'), value: d} },
+          selected: begin
+            sel = params[:cp_assessment_date]
+            if sel.present? && Date.parse(sel).year >= 2025
+              sel
+            else
+              filtered_dates.first
+            end
+          rescue ArgumentError
+            filtered_dates.first
+          end
+        }) %>
+      <% else %>
+        <div class="no-assessments-message" style="padding: 8px 12px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; color: #666;">
+          No CP assessments from 2025 onward
+        </div>
+      <% end %>
     </div>
   </div>
   <%= react_component('charts/cp-matrix', {

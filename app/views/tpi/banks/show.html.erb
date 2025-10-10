@@ -46,8 +46,17 @@
   </section>
 
   <% if @bank.cp_assessments.exists? %>
+    <% has_2025_cp = @bank.cp_assessments.currently_published.where('assessment_date >= ?', Date.new(2025,1,1)).exists? %>
     <section class="container" id="cp-matrix">
-      <%= render "cp_matrix", bank: @bank %>
+      <% if has_2025_cp %>
+        <%= render "cp_matrix", bank: @bank %>
+      <% else %>
+        <h3 class="cp_assessments_title" style="margin: 25px 0">Carbon Performance Alignment Matrix</h3>
+        <div style="margin: 25px 0; padding: 20px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; color: #666;">
+          <p>No 2025 Carbon Performance assessments available for this bank. The Alignment Matrix is shown for banks with 2025 data.</p>
+          <p><small>The Carbon performance charts below may still display historical emissions where available.</small></p>
+        </div>
+      <% end %>
     </section>
 
     <section class="container" id="cp-assessment">
