@@ -9,11 +9,13 @@
   </div>
   <div class="date-dropdown">
     <% bank_assessments = assessment.assessment.bank.assessments.order(assessment_date: :desc) %>
+    <% grouped_by_date = bank_assessments.group_by(&:assessment_date) %>
+    <% unique_assessments = grouped_by_date.values.map { |arr| arr.detect { |a| a.respond_to?(:results) && a.results.exists? } || arr.first } %>
     <% if bank_assessments.any? %>
-      <% options = bank_assessments.map { |v| {label: v.assessment_date&.strftime('%d %B %Y'), value: v.id.to_s} } %>
+      <% options = unique_assessments.map { |v| {label: v.assessment_date&.strftime('%d %B %Y'), value: v.id.to_s} } %>
       <% valid_ids = options.map { |o| o[:value].to_s } %>
-      <% preferred = bank_assessments.detect { |a| a.assessment_date && a.assessment_date.year >= 2025 } %>
-      <% fallback_id = (preferred || bank_assessments.first)&.id.to_s %>
+      <% preferred = unique_assessments.detect { |a| a.assessment_date && a.assessment_date.year >= 2025 } %>
+      <% fallback_id = (preferred || unique_assessments.first)&.id.to_s %>
       <% selected_id = valid_ids.include?(params[:assessment_id].to_s) ? params[:assessment_id].to_s : fallback_id %>
       <%= react_component('RemoteDropdown', {
         name: 'assessment_id',
