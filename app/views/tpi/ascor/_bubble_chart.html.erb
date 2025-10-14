@@ -1,4 +1,4 @@
-<%= react_component('charts/ascor-bubble/Chart', { results: @ascor_assessment_results }) %>
+<%= react_component('charts/ascor-bubble/Chart', { results: @ascor_assessment_results, assessmentYear: @assessment_date&.year }) %>
 <%= react_component('InfoModal', {
   title: "ASCOR country assessment results",
   text: "<p>Countries are assessed across the ASCOR framework’s topic areas organised into three pillars. The area-level result is Yes if all indicators within the area are assessed as Yes, Partial if some of the indicators within the area are assessed as Yes, and No if all of the indicators within the area are assessed as No. If any indicators within an area are assessed as no data, not applicable or exempt, these indicators are excluded from this area-level evaluation. Area CF.4 does not include any Yes/No indicators and therefore has no area-level result.</p>" \

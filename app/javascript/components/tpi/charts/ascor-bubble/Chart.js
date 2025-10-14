@@ -36,7 +36,7 @@ const AREA_REPLACEMENTS = {
   '2035 Targets': 'Not assessed'
 };
 
-const BubbleChart = ({ results }) => {
+const BubbleChart = ({ results, assessmentYear }) => {
   const tooltipEl = '<div id="bubble-chart-tooltip" class="bubble-tip" hidden style="position:absolute;"></div>';
   useEffect(() => {
     document.body.insertAdjacentHTML('beforeend', tooltipEl);
@@ -103,7 +103,7 @@ const BubbleChart = ({ results }) => {
         </div>
       ) : (
         <div className="bubble-chart__container bubble-chart__container__grid">
-          <ChartRows data={parsedData} isMobile={isMobile} />
+          <ChartRows data={parsedData} isMobile={isMobile} assessmentYear={assessmentYear} />
         </div>
       )}
       <div>
@@ -175,7 +175,7 @@ const hideTooltip = () => {
   tooltip.setAttribute('hidden', true);
 };
 
-const ChartRows = ({ data }) => data?.map((pillar, pillarIndex) => {
+const ChartRows = ({ data, assessmentYear }) => data?.map((pillar, pillarIndex) => {
   const pillarName = pillar.pillar;
   const pillarSpan = pillar.values.length;
   const pillarAcronym = pillarName
@@ -222,10 +222,14 @@ const ChartRows = ({ data }) => data?.map((pillar, pillarIndex) => {
 
             const cleanKey = area.replace(/[^a-zA-Z\-_:.]/g, '');
             const uniqueKey = `${cleanKey}-${areaIndex}-${i}`;
+            const isNotAssessedArea = AREA_REPLACEMENTS[area] === 'Not assessed';
+            const showReplacement = !isNotAssessedArea || (assessmentYear && assessmentYear <= 2024);
+            const replacementText = showReplacement ? AREA_REPLACEMENTS[area] : null;
+
             return (
               <div className="bubble-chart__cell-country" key={uniqueKey}>
-                {AREA_REPLACEMENTS[area] ? (
-                  <span className="--replaced">{AREA_REPLACEMENTS[area]}</span>
+                {replacementText ? (
+                  <span className="--replaced">{replacementText}</span>
                 ) : (
                   ForceLayoutBubbleChart(countriesBubbles, uniqueKey)
                 )}
@@ -249,6 +253,11 @@ BubbleChart.propTypes = {
       result: PropTypes.string.isRequired,
       pillar: PropTypes.string.isRequired
     })
-  ).isRequired
+  ).isRequired,
+  assessmentYear: PropTypes.number
+};
+
+BubbleChart.defaultProps = {
+  assessmentYear: null
 };
 export default BubbleChart;
