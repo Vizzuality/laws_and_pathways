@@ -14,22 +14,46 @@ module Api
       end
 
       def call
-        ::ASCOR::AssessmentResult
+        area_results_by_indicator_id = ::ASCOR::AssessmentResult
           .by_date(@assessment_date)
           .of_type(:area)
           .published
-          .order(:indicator_id)
-          .map do |result|
-          {
-            pillar: pillars[result.indicator.code.split('.').first]&.first&.text,
-            area: result.indicator.text,
-            result: result.answer,
-            country_id: result.assessment.country_id,
-            country_name: result.assessment.country.name,
-            country_path: result.assessment.country.path,
-            market_cap_group: calculate_market_cap_group(result.assessment.country_id)
-          }
+          .includes(:indicator, assessment: :country)
+          .group_by(&:indicator_id)
+
+        output = []
+
+        pillars_in_order.each do |pillar|
+          areas_for_pillar(pillar.code).each do |area|
+            entries = area_results_by_indicator_id[area.id]
+
+            if entries.present?
+              entries.each do |result|
+                output << {
+                  pillar: pillar.text,
+                  area: area.text,
+                  result: result.answer,
+                  country_id: result.assessment.country_id,
+                  country_name: result.assessment.country.name,
+                  country_path: result.assessment.country.path,
+                  market_cap_group: calculate_market_cap_group(result.assessment.country_id)
+                }
+              end
+            else
+              output << {
+                pillar: pillar.text,
+                area: area.text,
+                result: 'N/A',
+                country_id: 0,
+                country_name: '',
+                country_path: '',
+                market_cap_group: 1
+              }
+            end
+          end
         end
+
+        output
       end
 
       private
@@ -41,8 +65,16 @@ module Api
         market_cap_groups.find { |range, _| range.include?(recent_emission_level) }&.last || 1
       end
 
-      def pillars
-        @pillars ||= ::ASCOR::AssessmentIndicator.where(indicator_type: :pillar).group_by(&:code)
+      def pillars_in_order
+        @pillars_in_order ||= ::ASCOR::AssessmentIndicator.where(indicator_type: :pillar).order(:id)
+      end
+
+      def areas_for_pillar(pillar_code)
+        @areas_by_pillar ||= ::ASCOR::AssessmentIndicator
+          .where(indicator_type: :area)
+          .order('length(code), code')
+          .group_by { |i| i.code.split('.').first }
+        @areas_by_pillar[pillar_code] || []
       end
 
       def recent_emission_levels

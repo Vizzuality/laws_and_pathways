@@ -1,6 +1,7 @@
 module ASCORHelper
   def ascor_icon_for(indicator, assessment)
-    value = ascor_assessment_result_for(indicator, assessment).answer.to_s.downcase.tr(' ', '-')
+    result = ascor_assessment_result_for(indicator, assessment)
+    value = result&.answer.to_s.downcase.tr(' ', '-')
     return 'no-data' unless value.in?(%w[yes no partial no-data no-disclosure not-applicable exempt])
 
     value
