@@ -1,5 +1,5 @@
 <% pillars = ASCOR::AssessmentIndicator.pillar.order(:id) %>
-<% areas = ASCOR::AssessmentIndicator.area.order(:id) %>
+<% areas = ASCOR::AssessmentIndicator.area.order('length(code), code') %>
 <% indicators = ASCOR::AssessmentIndicator.indicator.order(:id) %>
 <% metrics = ASCOR::AssessmentIndicator.metric.order(:id) %>
 
