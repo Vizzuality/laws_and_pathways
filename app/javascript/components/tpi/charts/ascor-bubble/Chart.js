@@ -31,8 +31,10 @@ const SINGLE_CELL_SVG_HEIGHT = 100;
 
 let tooltip = null;
 
-const AREA_TO_REPLACE = 'Renewable Energy Opportunities';
-const AREA_TO_REPLACE_VALUE = 'No area-level results';
+const AREA_REPLACEMENTS = {
+  'Renewable Energy Opportunities': 'No area-level results',
+  '2035 Targets': 'Not assessed'
+};
 
 const BubbleChart = ({ results }) => {
   const tooltipEl = '<div id="bubble-chart-tooltip" class="bubble-tip" hidden style="position:absolute;"></div>';
@@ -222,8 +224,8 @@ const ChartRows = ({ data }) => data?.map((pillar, pillarIndex) => {
             const uniqueKey = `${cleanKey}-${areaIndex}-${i}`;
             return (
               <div className="bubble-chart__cell-country" key={uniqueKey}>
-                {area === AREA_TO_REPLACE ? (
-                  <span className="--replaced">{AREA_TO_REPLACE_VALUE}</span>
+                {AREA_REPLACEMENTS[area] ? (
+                  <span className="--replaced">{AREA_REPLACEMENTS[area]}</span>
                 ) : (
                   ForceLayoutBubbleChart(countriesBubbles, uniqueKey)
                 )}
