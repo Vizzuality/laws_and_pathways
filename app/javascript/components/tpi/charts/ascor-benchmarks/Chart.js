@@ -4,7 +4,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { options } from './options';
 
-const Chart = ({ data: { data, metadata } }) => {
+const Chart = ({ data: { data, metadata }, assessmentYear }) => {
   const chartData = useMemo(
     () => [
       {
@@ -52,6 +52,10 @@ const Chart = ({ data: { data, metadata } }) => {
         highcharts={Highcharts}
         options={{
           ...options,
+          xAxis: {
+            ...options.xAxis,
+            max: assessmentYear && assessmentYear >= 2025 ? 2035 : 2030
+          },
           yAxis: {
             ...options.yAxis,
             min: 0,
@@ -79,7 +83,12 @@ Chart.propTypes = {
     metadata: PropTypes.shape({
       unit: PropTypes.string
     })
-  }).isRequired
+  }).isRequired,
+  assessmentYear: PropTypes.number
+};
+
+Chart.defaultProps = {
+  assessmentYear: null
 };
 
 export default Chart;
