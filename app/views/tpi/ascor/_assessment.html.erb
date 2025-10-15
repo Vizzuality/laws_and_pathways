@@ -57,7 +57,7 @@
             <div class="country-assessment__indicators" for="area-<%= dom_id(area) %>">
               <% if ascor_sub_indicators_for(area, indicators).present? %>
                 <%= render 'tpi/ascor/assessment_indicators', area: area, indicators: ascor_sub_indicators_for(area, indicators), metrics: metrics %>
-                <% if area.code == 'EP.2' %>
+                <% if (area.code == 'EP.3' && @assessment.assessment_date.year >= 2025) || (area.code == 'EP.2' && @assessment.assessment_date.year <= 2024) %>
                   <div class="country-assessment__metric-block">
                     <%= render 'tpi/ascor/benchmarks_chart' %>
                   </div>
