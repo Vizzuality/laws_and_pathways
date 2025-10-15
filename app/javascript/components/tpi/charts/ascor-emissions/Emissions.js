@@ -19,7 +19,8 @@ const Emissions = ({
   default_emissions_boundary_filter,
   countries,
   default_countries,
-  emissions_data_url
+  emissions_data_url,
+  assessmentYear
 }) => {
   const [filters, setFilters] = useState({
     emissions_metric: default_emissions_metric_filter,
@@ -72,7 +73,7 @@ const Emissions = ({
         filters={filters}
         onChangeFilters={onChangeFilters}
       />
-      <EmissionsChart chartData={chartData} />
+      <EmissionsChart chartData={chartData} assessmentYear={assessmentYear} />
     </div>
   );
 };
@@ -90,7 +91,12 @@ Emissions.propTypes = {
     })
   ).isRequired,
   default_countries: PropTypes.arrayOf(PropTypes.number).isRequired,
-  emissions_data_url: PropTypes.string.isRequired
+  emissions_data_url: PropTypes.string.isRequired,
+  assessmentYear: PropTypes.number
 };
 
 export default Emissions;
+
+Emissions.defaultProps = {
+  assessmentYear: null
+};
