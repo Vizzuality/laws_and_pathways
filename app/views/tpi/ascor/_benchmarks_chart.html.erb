@@ -1,3 +1,4 @@
 <%= react_component('charts/ascor-benchmarks/Chart', {
-  data: Api::ASCOR::BenchmarksChart.new(@assessment_date, @country.id).call
+  data: Api::ASCOR::BenchmarksChart.new(@assessment_date, @country.id).call,
+  assessmentYear: @assessment_date&.year
 }) %>
