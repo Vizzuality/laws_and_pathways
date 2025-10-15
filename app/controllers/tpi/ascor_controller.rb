@@ -83,11 +83,11 @@ module TPI
     end
 
     def fetch_assessment_date
-      @assessment_date = params[:assessment_date] || ASCOR::Assessment.maximum(:assessment_date)
+      @assessment_date = params[:assessment_date].present? ? Date.parse(params[:assessment_date]) : ASCOR::Assessment.maximum(:assessment_date)
     end
 
     def fetch_emissions_assessment_date
-      @emissions_assessment_date = params[:emissions_assessment_date] || ASCOR::Assessment.maximum(:assessment_date)
+      @emissions_assessment_date = params[:emissions_assessment_date].present? ? Date.parse(params[:emissions_assessment_date]) : ASCOR::Assessment.maximum(:assessment_date)
     end
 
     def fetch_ascor_assessment_results

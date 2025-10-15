@@ -47,8 +47,8 @@
             name: 'assessment_date',
             remote: true,
             url: index_assessment_tpi_ascor_index_path,
-            data: @assessment_dates.map {|v| {label: v&.strftime('%d %B %Y'), value: v}},
-            selected: @assessment_date
+            data: @assessment_dates.map {|v| {label: v&.strftime('%d %B %Y'), value: v&.iso8601}},
+            selected: @assessment_date&.iso8601
           }) %>
         </div>
       </div>
@@ -77,8 +77,8 @@
             name: 'emissions_assessment_date',
             remote: true,
             url: index_emissions_assessment_tpi_ascor_index_path,
-            data: @assessment_dates.map {|v| {label: v&.strftime('%d %B %Y'), value: v}},
-            selected: @emissions_assessment_date
+            data: @assessment_dates.map {|v| {label: v&.strftime('%d %B %Y'), value: v&.iso8601}},
+            selected: @emissions_assessment_date&.iso8601
           }) %>
         </div>
       </div>
