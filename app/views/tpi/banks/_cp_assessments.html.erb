@@ -4,18 +4,58 @@
 <p>
   The sectoral means are computed from the company data in TPI’s Carbon Performance Assessments.
 </p>
-<% cp_assessments = Queries::TPI::LatestCPAssessmentsQuery.new(category: Bank, cp_assessmentable: @bank).call %>
-<% cp_sectors = TPISector.for_category(Bank).order(:name).map { |sector|
+<% 
+  # Use the selected CP assessment date from the matrix, or default to the latest
+  selected_cp_date = params[:cp_assessment_date] || @bank.cp_assessments.order(assessment_date: :desc).currently_published.pluck(:assessment_date).uniq.first
+  cp_assessments = if selected_cp_date
+    # Filter assessments by the selected date
+    assessments_by_date = {}
+    @bank.cp_assessments.where(assessment_date: selected_cp_date).currently_published.each do |assessment|
+      key = [@bank, assessment.sector]
+      assessments_by_date[key] = [assessment]
+    end
+    assessments_by_date
+  else
+    Queries::TPI::LatestCPAssessmentsQuery.new(category: Bank, cp_assessmentable: @bank).call
+  end
+%>
+<% cp_sectors = CP::DisplayOverrides.filter_sectors(TPISector.for_category(Bank).order(:name)).map { |sector|
    cp_assessment = cp_assessments[[@bank, sector]]&.first
     {
-      name: sector.name,
+      name: CP::SectorNormalizer.display_label_for_sector(sector.name),
       assessment: cp_assessment,
-      dataUrl: emissions_chart_data_tpi_bank_path(bank, sector_id: sector.id),
+      dataUrl: emissions_chart_data_tpi_bank_path(@bank, sector_id: sector.id, cp_assessment_date: selected_cp_date),
       unit: cp_assessment&.unit
     }
-  }.select { |sector| sector[:assessment].present? && sector[:assessment].emissions.present? } %>
-<div style="margin: 25px 0">
-  <%= react_component('charts/cp-performance/MultipleChart', {
-    sectors: cp_sectors
-  }) %>
-</div>
+  }.select { |sector| 
+    assessment = sector[:assessment]
+    
+    next false unless assessment.present? && assessment.emissions.present?
+
+    allow_emissions_only = CP::DisplayOverrides.emissions_only_allowed?(bank_name: @bank.name, sector_name: sector[:name])
+
+    has_targets = assessment.years_with_targets.present? && assessment.years_with_targets.any?
+    has_not_assessable = assessment.cp_matrices.any? do |matrix|
+      [
+        matrix.cp_alignment_2025,
+        matrix.cp_alignment_2027,
+        matrix.cp_alignment_2030,
+        matrix.cp_alignment_2035,
+        matrix.cp_alignment_2050
+      ].compact.any? { |alignment| alignment&.downcase&.include?('not assessable') }
+    end
+
+    (has_targets && !has_not_assessable) || allow_emissions_only
+  } %>
+<% if cp_sectors.any? %>
+  <div style="margin: 25px 0">
+    <%= react_component('charts/cp-performance/MultipleChart', {
+      sectors: cp_sectors
+    }) %>
+  </div>
+<% else %>
+  <div style="margin: 25px 0; padding: 20px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; text-align: center; color: #666;">
+    <p>No sector performance data available. This bank has not set assessable targets for any sectors.</p>
+    <p><small>Note: Sectors with targets labeled as "not assessable" are not displayed.</small></p>
+  </div>
+<% end %>

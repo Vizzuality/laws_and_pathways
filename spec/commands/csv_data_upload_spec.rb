@@ -35,11 +35,11 @@ describe 'CSVDataUpload (integration)' do
   end
 
   before do
-    ::Current.admin_user = current_user
+    Current.admin_user = current_user
   end
 
   after do
-    ::Current.admin_user = nil
+    Current.admin_user = nil
   end
 
   describe 'errors handling' do

@@ -26,14 +26,18 @@ module CSVImport
     end
 
     def required_headers
-      [:id, :number, :type, :text]
+      if override_id
+        [:id, :number, :type, :text]
+      else
+        [:number, :type, :text]
+      end
     end
 
     def prepare_indicator(row)
       return prepare_overridden_resource(row) if override_id
 
-      find_record_by(:id, row) ||
-        BankAssessmentIndicator.where(number: row[:number], indicator_type: row[:type]).first ||
+      # When not overriding ID, try to find existing indicator by number and type, or create new one
+      BankAssessmentIndicator.where(number: row[:number], indicator_type: row[:type]).first ||
         resource_klass.new
     end
   end

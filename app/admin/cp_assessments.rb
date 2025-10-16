@@ -5,12 +5,15 @@ ActiveAdmin.register CP::Assessment do
 
   decorate_with CP::AssessmentDecorator
 
-  permit_params :sector_id, :assessment_date, :publication_date, :cp_assessmentable_id, :last_reported_year,
-                :assumptions, :cp_alignment_2025, :cp_alignment_2027, :cp_alignment_2028, :cp_alignment_2035, :cp_alignment_2050,
+  permit_params :sector_id, :subsector_id, :assessment_date, :publication_date, :cp_assessmentable_id, :last_reported_year,
+                :assumptions, :cp_alignment_2025, :cp_alignment_2027, :cp_alignment_2028, :cp_alignment_2030, :cp_alignment_2035,
+                :cp_alignment_2050,
                 :region, :cp_regional_alignment_2025, :cp_regional_alignment_2027, :cp_regional_alignment_2028,
-                :cp_regional_alignment_2035, :cp_regional_alignment_2050, :years_with_targets_string, :emissions,
+                :cp_regional_alignment_2030, :cp_regional_alignment_2035, :cp_regional_alignment_2050, :years_with_targets_string,
+                :emissions, :company_subsector_id, :subsector_id,
                 :assessment_date_flag,
-                cp_matrices_attributes: [:id, :portfolio, :cp_alignment_2025, :cp_alignment_2035, :cp_alignment_2050, :_destroy]
+                cp_matrices_attributes: [:id, :portfolio, :cp_alignment_2025,
+                                         :cp_alignment_2030, :cp_alignment_2035, :cp_alignment_2050, :_destroy]
 
   filter :assessment_date
   filter :publication_date, as: :select, collection: proc { CP::Assessment.all_publication_dates }
@@ -38,8 +41,12 @@ ActiveAdmin.register CP::Assessment do
                 new_admin_data_upload_path(data_upload: {uploader: 'CompanyCPAssessments'})
       end
       li do
-        link_to '<strong>Upload</strong> Bank CPAssessments 2025'.html_safe,
-                new_admin_data_upload_path(data_upload: {uploader: 'BankCPAssessments2025'})
+        link_to '<strong>Upload</strong> Bank CPAssessments 2027'.html_safe,
+                new_admin_data_upload_path(data_upload: {uploader: 'BankCPAssessments2027'})
+      end
+      li do
+        link_to '<strong>Upload</strong> Bank CPAssessments 2030'.html_safe,
+                new_admin_data_upload_path(data_upload: {uploader: 'BankCPAssessments2030'})
       end
       li do
         link_to '<strong>Upload</strong> Bank CPAssessments 2035'.html_safe,
@@ -69,11 +76,13 @@ ActiveAdmin.register CP::Assessment do
       row :cp_alignment_2025
       row :cp_alignment_2027
       row :cp_alignment_2028
+      row :cp_alignment_2030
       row :cp_alignment_2035
       row :region
       row :cp_regional_alignment_2025
       row :cp_regional_alignment_2027
       row :cp_regional_alignment_2028
+      row :cp_regional_alignment_2030
       row :cp_regional_alignment_2035
       row :cp_regional_alignment_2050
       row :years_with_targets
@@ -85,7 +94,8 @@ ActiveAdmin.register CP::Assessment do
     panel 'CP Matrix values' do
       table_for resource.cp_matrices do
         column :portfolio
-        column :cp_alignment_2025
+        column :cp_alignment_2027
+        column :cp_alignment_2030
         column :cp_alignment_2035
         column :cp_alignment_2050
       end
@@ -106,11 +116,18 @@ ActiveAdmin.register CP::Assessment do
       assessment.company.presence || assessment.bank
     end
     column :sector
-    column :subsector
+    column :subsector do |record|
+      if record.subsector_id.present?
+        record.subsector&.name
+      elsif record.cp_assessmentable_type == 'Company' && record.company_subsector_id.present?
+        record.company_subsector&.subsector
+      end
+    end
     column :cp_alignment_2050
     column :cp_alignment_2025
     column :cp_alignment_2027
     column :cp_alignment_2028
+    column :cp_alignment_2030
     column :cp_alignment_2035
     column :assessment_date
     column :publication_date
@@ -133,6 +150,10 @@ ActiveAdmin.register CP::Assessment do
       column :subsector do |record|
         record.company_subsector&.subsector
       end
+    elsif params[:cp_assessmentable_type] == 'Bank'
+      column :subsector do |record|
+        record.subsector&.name
+      end
     end
     column :assessment_date
     column :assessment_date_flag
@@ -150,15 +171,17 @@ ActiveAdmin.register CP::Assessment do
       column :cp_alignment_2025
       column :cp_alignment_2027
       column :cp_alignment_2028
+      column :cp_alignment_2030
       column :cp_alignment_2035
       column :cp_alignment_2050
       column :cp_regional_alignment_2025
       column :cp_regional_alignment_2027
       column :cp_regional_alignment_2028
+      column :cp_regional_alignment_2030
       column :cp_regional_alignment_2035
       column :cp_regional_alignment_2050
     elsif params[:cp_assessmentable_type] == 'Bank'
-      %w[2025 2035 2050].each do |year|
+      %w[2025 2030 2035 2050].each do |year|
         CP::Portfolio::NAMES.each do |portfolio|
           column "#{portfolio} #{year}", humanize_name: false do |record|
             record.cp_matrices.detect { |r| r.portfolio == portfolio }.try(:"cp_alignment_#{year}")
@@ -171,10 +194,41 @@ ActiveAdmin.register CP::Assessment do
   controller do
     before_action :fix_region
 
-    before_save do |record|
+    def create
+      build_resource
+      resource.assign_attributes(permitted_params[:cp_assessment])
+
       if params['cp_assessment']['cp_assessmentable_id'].present?
-        record.cp_assessmentable_type, record.cp_assessmentable_id = params['cp_assessment']['cp_assessmentable_id'].split('::')
+        resource.cp_assessmentable_type, resource.cp_assessmentable_id =
+          params['cp_assessment']['cp_assessmentable_id'].split('::')
       end
+
+      sector_id = params.dig('cp_assessment', 'sector_id')
+      subsector_id = params.dig('cp_assessment', 'subsector_id')
+      unless subsector_id.blank? || subsector_belongs_to_sector?(sector_id, subsector_id)
+        resource.errors.add(:subsector, "doesn't belong to the selected sector")
+        render :new and return
+      end
+
+      super
+    end
+
+    def update
+      resource.assign_attributes(permitted_params[:cp_assessment])
+
+      if params['cp_assessment']['cp_assessmentable_id'].present?
+        resource.cp_assessmentable_type, resource.cp_assessmentable_id =
+          params['cp_assessment']['cp_assessmentable_id'].split('::')
+      end
+
+      sector_id = params.dig('cp_assessment', 'sector_id')
+      subsector_id = params.dig('cp_assessment', 'subsector_id')
+      unless subsector_id.blank? || subsector_belongs_to_sector?(sector_id, subsector_id)
+        resource.errors.add(:subsector, "doesn't belong to the selected sector")
+        render :edit and return
+      end
+
+      super
     end
 
     def fix_region
@@ -182,9 +236,31 @@ ActiveAdmin.register CP::Assessment do
     end
 
     def scoped_collection
-      query = super.includes(:company, :bank, :cp_matrices, :sector)
+      query = super.includes(:company, :bank, :cp_matrices, :sector, :subsector)
       query = query.where(cp_assessmentable_type: params[:cp_assessmentable_type]) if params[:cp_assessmentable_type].present?
       query
+    end
+
+    private
+
+    def subsector_belongs_to_sector?(sector_id, subsector_id)
+      return false if sector_id.blank? || subsector_id.blank?
+
+      sector = TPISector.find_by(id: sector_id)
+      subsector = Subsector.find_by(id: subsector_id)
+
+      return false unless sector && subsector
+
+      sector.subsectors.include?(subsector)
+    end
+
+    def validate_subsector_belongs_to_sector
+      sector_id = params.dig('cp_assessment', 'sector_id')
+      subsector_id = params.dig('cp_assessment', 'subsector_id')
+
+      return unless subsector_id.present? && !subsector_belongs_to_sector?(sector_id, subsector_id)
+
+      resource.errors.add(:subsector, "doesn't belong to the selected sector")
     end
   end
 end

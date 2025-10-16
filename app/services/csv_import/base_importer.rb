@@ -75,36 +75,6 @@ module CSVImport
       [hard_space_converter, strip_converter, unicode_fixer]
     end
 
-    private
-
-    def perform_import
-      import
-    rescue CSVImport::MissingHeader => e
-      warn e.message
-      errors.add(:base, e.message)
-    end
-
-    def rollback
-      import_results[:new_records] = 0
-      import_results[:updated_records] = 0
-      import_results[:not_changed_records] = 0
-
-      raise ActiveRecord::Rollback
-    end
-
-    def check_if_current_user_authorized
-      return unless current_user.present?
-      return if current_user.can?(:create, resource_klass) && current_user.can?(:update, resource_klass)
-
-      errors.add(:base, "User not authorized to import #{resource_klass}")
-    end
-
-    def check_required_headers
-      (required_headers - csv.headers).each do |header|
-        errors.add(:base, "CSV missing header: #{header.to_s.humanize(keep_id_suffix: true)}")
-      end
-    end
-
     def required_headers
       []
     end
@@ -184,6 +154,36 @@ module CSVImport
         import_results[:updated_records] += 1
       else
         import_results[:not_changed_records] += 1
+      end
+    end
+
+    private
+
+    def perform_import
+      import
+    rescue CSVImport::MissingHeader => e
+      warn e.message
+      errors.add(:base, e.message)
+    end
+
+    def rollback
+      import_results[:new_records] = 0
+      import_results[:updated_records] = 0
+      import_results[:not_changed_records] = 0
+
+      raise ActiveRecord::Rollback
+    end
+
+    def check_if_current_user_authorized
+      return unless current_user.present?
+      return if current_user.can?(:create, resource_klass) && current_user.can?(:update, resource_klass)
+
+      errors.add(:base, "User not authorized to import #{resource_klass}")
+    end
+
+    def check_required_headers
+      (required_headers - csv.headers).each do |header|
+        errors.add(:base, "CSV missing header: #{header.to_s.humanize(keep_id_suffix: true)}")
       end
     end
   end

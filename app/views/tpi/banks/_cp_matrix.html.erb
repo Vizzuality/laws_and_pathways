@@ -3,7 +3,68 @@
     Carbon Performance Alignment Matrix
   </h3>
   <p style="margin: 25px 0" class="cp_assessments_description">To view Carbon Performance pathway, access the chart by clicking the arrow available next to each sector.</p>
+  <div class="cp-matrix-assessment-date">
+    <div class="caption">Assessment Date:</div>
+    <div class="date-dropdown">
+      <% filtered_dates = bank.cp_assessments
+        .order(assessment_date: :desc)
+        .currently_published
+        .pluck(:assessment_date)
+        .uniq
+        .select { |d| d && d.year >= 2025 } %>
+      <% if filtered_dates.any? %>
+        <%= react_component('RemoteDropdown', {
+          name: 'cp_assessment_date',
+          remote: true,
+          theme: 'blue',
+          url: cp_matrix_data_tpi_bank_path(bank),
+          data: filtered_dates.map { |d| {label: d&.strftime('%d %B %Y'), value: d} },
+          selected: begin
+            sel = params[:cp_assessment_date]
+            if sel.present? && Date.parse(sel).year >= 2025
+              sel
+            else
+              filtered_dates.first
+            end
+          rescue ArgumentError
+            filtered_dates.first
+          end
+        }) %>
+      <% else %>
+        <div class="no-assessments-message" style="padding: 8px 12px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; color: #666;">
+          No CP assessments from 2025 onward
+        </div>
+      <% end %>
+    </div>
+  </div>
   <%= react_component('charts/cp-matrix', {
-    data: cp_matrix_data_tpi_bank_path(bank),
+    data: cp_matrix_data_tpi_bank_path(bank, cp_assessment_date: params[:cp_assessment_date]),
   }) %>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Listen for successful AJAX responses from the CP assessment date dropdown
+    document.addEventListener('ajax:success', function(event) {
+      const target = event.target;
+      
+      // Check if this is the CP assessment date dropdown
+      if (target.name === 'cp_assessment_date') {
+        const response = event.detail[0];
+        
+        // Update the Carbon Performance graphs section if HTML is provided
+        if (response.cp_assessments_html) {
+          const cpAssessmentSection = document.querySelector('#cp-assessment');
+          if (cpAssessmentSection) {
+            cpAssessmentSection.innerHTML = response.cp_assessments_html;
+            
+            // Reinitialize React components in the updated section
+            if (window.ReactRailsUJS) {
+              window.ReactRailsUJS.mountComponents(cpAssessmentSection);
+            }
+          }
+        }
+      }
+    });
+  });
+</script>

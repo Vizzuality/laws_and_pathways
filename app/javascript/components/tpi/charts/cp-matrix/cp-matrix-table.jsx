@@ -1,7 +1,7 @@
 /* eslint-disable operator-linebreak */
 /* eslint-disable function-paren-newline */
 /* eslint-disable implicit-arrow-linebreak */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Table from 'rc-table';
 import ReactTooltip from 'react-tooltip';
@@ -10,9 +10,10 @@ import chevronIcon from 'images/icon-go-to-arrow.svg';
 import { useScrollClasses } from './cp-matrix-table-hooks';
 import chevronDownIconBlack from 'images/icon_chevron_dark/chevron_down_black-1.svg';
 
+const DEFAULT_COLOR_KEY = 'No or unsuitable disclosure';
 const COLORS = {
-  'Not assessable using TPI’s methodology': { color: '#CACBCE' },
-  'No or unsuitable disclosure': { color: 'grey', line: true },
+  'Not assessable using TPI’s methodology': { color: '#595B5D' },
+  [DEFAULT_COLOR_KEY]: { color: '#595B5D', line: true },
   'Not Aligned': { color: '#ED3D4A' },
   '1.5 Degrees': { color: '#57BE77' },
   'Below 2 Degrees': { color: '#F9DF65' },
@@ -20,7 +21,20 @@ const COLORS = {
 };
 
 function ColorDot({ value, small }) {
-  if (!value) return null;
+  // If null, show as empty
+  if (!value) {
+    return (
+      <div className="color-dot-container">
+        <span
+          className={cx('color-dot', {
+            line: COLORS[DEFAULT_COLOR_KEY]?.line,
+            small
+          })}
+          style={{ backgroundColor: COLORS[DEFAULT_COLOR_KEY]?.color }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="color-dot-container">
@@ -49,6 +63,10 @@ ColorDot.propTypes = {
 function CPMatrixTable({ data, meta }) {
   const [hasScrolled, setHasScrolled] = useState(false);
   useScrollClasses(setHasScrolled, hasScrolled);
+
+  useEffect(() => {
+    ReactTooltip.rebuild();
+  }, [data]);
 
   if (!data) return <div>no data</div>;
 

@@ -171,7 +171,7 @@ RSpec.describe Admin::GeographiesController, type: :controller do
       subject { delete :destroy, params: {id: geography.id} }
 
       before do
-        expect(::Command::Destroy::Geography).to receive(:new).and_return(command)
+        expect(Command::Destroy::Geography).to receive(:new).and_return(command)
         expect(command).to receive(:call).and_return(nil)
       end
 

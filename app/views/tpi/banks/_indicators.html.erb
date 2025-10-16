@@ -6,21 +6,41 @@
       </h4>
       <div class="bank-assessment__indicator-value">
         <div>
-          <% if area.indicator.is_placeholder %>
+          <% if indicator.respond_to?(:virtual?) && indicator.virtual? %>
             N/A
-          <% else %>
+          <% elsif indicator.indicator.is_placeholder %>
+            N/A
+          <% elsif indicator.percentage.present? %>
             <%= number_with_precision(indicator.percentage, precision: 1, strip_insignificant_zeros: true) %>%
+          <% else %>
+            N/A
           <% end %>
         </div>
       </div>
     </div>
 
     <div class="bank-assessment__sub-indicators">
-      <% sub_indicators = assessment.child_indicators(indicator, "sub_indicator") %>
+      <% version_sub_indicators = BankAssessmentIndicator.by_version(assessment.indicator_version).where(indicator_type: 'sub_indicator').where('number LIKE ?', "#{indicator.indicator.number}.%").order(Arel.sql('length(number), number')) %>
+      <% existing_sub_results = assessment.child_indicators(indicator, "sub_indicator") %>
+      <% sub_indicators = version_sub_indicators.map do |si|
+        existing = existing_sub_results.find { |r| r.indicator.id == si.id }
+        if existing
+          existing
+        else
+          obj = OpenStruct.new(
+            id: "virtual_#{si.id}",
+            indicator: si,
+            answer: 'N/A'
+          )
+          obj.define_singleton_method(:virtual?) { true }
+          obj
+        end
+      end %>
+
       <% sub_indicators.each do |sub_indicator| %>
         <div class="bank-assessment__sub-indicator">
           <div class="bank-assessment__sub-indicator-answer-wrapper">
-            <span class="bank-assessment__sub-indicator-answer bank-assessment__sub-indicator-answer--<%= sub_indicator.answer.parameterize %>">
+            <span class="bank-assessment__sub-indicator-answer bank-assessment__sub-indicator-answer--<%= (sub_indicator.respond_to?(:virtual?) && sub_indicator.virtual? ? 'not-applicable' : (sub_indicator.answer || 'not-applicable')).parameterize %>">
             </span>
           </div>
           <div class="bank-assessment__sub-indicator-answer-text">

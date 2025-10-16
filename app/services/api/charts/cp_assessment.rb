@@ -137,14 +137,7 @@ module Api
       end
 
       def emissions_data_from_sector_benchmarks
-        region = regional_view? ? assessment.region : nil
-        sector
-          .latest_benchmarks_for_date(
-            assessment.publication_date,
-            category: @category,
-            region: region,
-            subsector: assessment.subsector
-          )
+        sector_benchmarks_for_chart
           .sort_by(&:average_emission)
           .map.with_index do |benchmark, index|
             {
@@ -157,6 +150,26 @@ module Api
               data: benchmark.emissions.transform_keys(&:to_i)
             }
           end.reverse
+      end
+
+      def sector_benchmarks_for_chart
+        selected_region = regional_view? ? assessment.region : nil
+        initial = sector
+          .latest_benchmarks_for_date(
+            assessment.publication_date,
+            category: @category,
+            region: selected_region,
+            subsector: assessment.subsector
+          )
+        return initial if initial.present?
+
+        sector
+          .latest_benchmarks_for_date(
+            assessment.publication_date,
+            category: @category,
+            region: selected_region,
+            subsector: nil
+          )
       end
 
       # Returns average emissions history for given TPISector.

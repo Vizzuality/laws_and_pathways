@@ -8,6 +8,7 @@
                 selected: "#{resource.cp_assessmentable_type}::#{resource.cp_assessmentable_id}"
     %>
     <%= f.input :sector, collection: TPISector.tpi_tool %>
+    <%= f.input :subsector, collection: Subsector.all %>
     <%= f.input :assessment_date %>
     <%= f.input :assessment_date_flag %>
     <%= f.input :publication_date %>
@@ -16,12 +17,14 @@
     <%= f.input :cp_alignment_2025 %>
     <%= f.input :cp_alignment_2027 %>
     <%= f.input :cp_alignment_2028 %>
+    <%= f.input :cp_alignment_2030 %>
     <%= f.input :cp_alignment_2035 %>
     <%= f.input :cp_alignment_2050 %>
     <%= f.input :region, as: :select, collection: CP::Assessment::REGIONS, required: false %>
     <%= f.input :cp_regional_alignment_2025 %>
     <%= f.input :cp_regional_alignment_2027 %>
     <%= f.input :cp_regional_alignment_2028 %>
+    <%= f.input :cp_regional_alignment_2030 %>
     <%= f.input :cp_regional_alignment_2035 %>
     <%= f.input :cp_regional_alignment_2050 %>
     <%= f.input :years_with_targets_string, label: 'Years with targets', as: :tags, hint: 'Type a year and press ENTER. Non integers will be rejected.' %>
@@ -33,7 +36,8 @@
     <div class="panel-contents padding-20">
       <% f.has_many :cp_matrices, allow_destroy: true, heading: false do |ff| %>
         <% ff.input :portfolio, collection: CP::Portfolio::NAMES %>
-        <% ff.input :cp_alignment_2025 %>
+        <% ff.input :cp_alignment_2027 %>
+        <% ff.input :cp_alignment_2030 %>
         <% ff.input :cp_alignment_2035 %>
         <% ff.input :cp_alignment_2050 %>
       <% end %>

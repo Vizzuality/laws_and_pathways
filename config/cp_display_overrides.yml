@@ -1,0 +1,9 @@
+emissions_only_allow:
+  - bank: ING
+    sector: Steel
+ 
+suppressed_sector_names:
+  - Coal mining (metallurgical)
+  - Coal mining (thermal)
+
+

@@ -42,6 +42,7 @@ module CP
     belongs_to :company, -> { joins(:cp_assessments) }, foreign_key: :cp_assessmentable_id, optional: true
     belongs_to :bank, -> { joins(:cp_assessments) }, foreign_key: :cp_assessmentable_id, optional: true
     belongs_to :sector, class_name: 'TPISector', foreign_key: 'sector_id'
+    belongs_to :subsector, optional: true
 
     has_many :cp_matrices, class_name: 'CP::Matrix', foreign_key: 'cp_assessment_id', inverse_of: :cp_assessment,
                            dependent: :destroy
@@ -135,6 +136,7 @@ module CP
 
     def cp_regional_alignment_2050_by_company
       return unless cp_regional_alignment_2050.present?
+
       CP::Alignment.new(name: cp_regional_alignment_2050, sector: sector&.name)
     end
 
@@ -142,8 +144,12 @@ module CP
       CompanySubsector.find(company_subsector_id) if company_subsector_id.present?
     end
 
-    def subsector
-      company_subsector&.subsector
+    def subsector_name
+      if subsector_id.present?
+        subsector&.name
+      elsif company_subsector_id.present?
+        company_subsector&.subsector
+      end
     end
 
     def sector

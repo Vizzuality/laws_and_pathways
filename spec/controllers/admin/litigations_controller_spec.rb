@@ -263,7 +263,7 @@ RSpec.describe Admin::LitigationsController, type: :controller, factory_default:
       let(:command) { double }
 
       before do
-        expect(::Command::Destroy::Litigation).to receive(:new).and_return(command)
+        expect(Command::Destroy::Litigation).to receive(:new).and_return(command)
         expect(command).to receive(:call).and_return(nil)
       end
 

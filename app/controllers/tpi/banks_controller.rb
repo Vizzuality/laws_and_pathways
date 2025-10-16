@@ -10,7 +10,7 @@ module TPI
     helper_method :child_indicators
 
     def index
-      @assessment_dates = BankAssessment.select(:assessment_date).distinct.pluck(:assessment_date)
+      @assessment_dates = BankAssessment.dates_with_data
       @publications_and_articles = TPISector.find_by(slug: 'banks')&.publications_and_articles || []
       @publications_and_articles = @publications_and_articles.select { |pa| pa.publication_date <= Time.current }
       bank_page = TPIPage.find_by(slug: 'banks-content')
@@ -39,7 +39,7 @@ module TPI
     def assessment; end
 
     def average_bank_score_chart_data
-      data = ::Api::Charts::AverageBankScore.new.average_bank_score_data
+      data = ::Api::Charts::AverageBankScore.new.average_bank_score_data(params[:assessment_date])
 
       render json: data.chart_json
     end
@@ -72,9 +72,69 @@ module TPI
     # Type:     table
     # On pages: :show
     def cp_matrix_data
-      data = ::Api::Charts::CPMatrix.new(@bank).matrix_data
+      data = ::Api::Charts::CPMatrix.new(@bank, params[:cp_assessment_date]).matrix_data
 
-      render json: data.as_json
+      # Also update the Carbon Performance graphs section
+      selected_cp_date = params[:cp_assessment_date] || @bank.cp_assessments.order(assessment_date: :desc).currently_published.pluck(:assessment_date).uniq.first
+      cp_assessments = if selected_cp_date
+                         assessments_by_date = {}
+                         @bank.cp_assessments.where(assessment_date: selected_cp_date).currently_published.each do |assessment|
+                           key = [@bank, assessment.sector]
+                           assessments_by_date[key] = [assessment]
+                         end
+                         assessments_by_date
+                       else
+                         Queries::TPI::LatestCPAssessmentsQuery.new(category: Bank, cp_assessmentable: @bank).call
+                       end
+
+      cp_sectors = CP::DisplayOverrides.filter_sectors(TPISector.for_category(Bank).order(:name)).map do |sector|
+        cp_assessment = cp_assessments[[@bank, sector]]&.first
+        {
+          name: CP::SectorNormalizer.display_label_for_sector(sector.name),
+          assessment: cp_assessment,
+          dataUrl: emissions_chart_data_tpi_bank_path(@bank, sector_id: sector.id, cp_assessment_date: selected_cp_date),
+          unit: cp_assessment&.unit
+        }
+      end.select do |sector|
+        assessment = sector[:assessment]
+
+        next false unless assessment.present? && assessment.emissions.present?
+
+        allow_emissions_only = CP::DisplayOverrides.emissions_only_allowed?(bank_name: @bank.name, sector_name: sector[:name])
+
+        has_targets = assessment.years_with_targets.present? && assessment.years_with_targets.any?
+        has_not_assessable = assessment.cp_matrices.any? do |matrix|
+          [
+            matrix.cp_alignment_2025,
+            matrix.cp_alignment_2027,
+            matrix.cp_alignment_2030,
+            matrix.cp_alignment_2035,
+            matrix.cp_alignment_2050
+          ].compact.any? { |alignment| alignment&.downcase&.include?('not assessable') }
+        end
+
+        (has_targets && !has_not_assessable) || allow_emissions_only
+      end
+
+      # Render the CP assessments partial
+      cp_assessments_html = render_to_string(
+        partial: 'tpi/banks/cp_assessments_content',
+        locals: {cp_sectors: cp_sectors, bank_name: @bank.name}
+      )
+
+      render json: {
+        **data.as_json,
+        cp_assessments_html: cp_assessments_html
+      }
+    end
+
+    def send_download_file_info_email
+      DataDownloadMailer.send_download_file_info_email(
+        permitted_email_params,
+        'gri.banking@lse.ac.uk',
+        'Banking data has been downloaded'
+      ).deliver_now
+      head :ok
     end
 
     def send_download_file_info_email
@@ -102,10 +162,12 @@ module TPI
 
     def fetch_results
       @date = params[:assessment_date]
-      @date = BankAssessment.maximum(:assessment_date) unless @date.present?
+      @date = BankAssessment.dates_with_data.first unless @date.present?
+      @version = determine_version_for_date(@date)
       @results = BankAssessmentResult
         .by_date(@date)
         .of_type(:area)
+        .with_version(@version)
         .includes(assessment: :bank)
         .order('length(bank_assessment_indicators.number), bank_assessment_indicators.number')
         .map do |result|
@@ -124,8 +186,12 @@ module TPI
       @assessment = if params[:assessment_id].present?
                       @bank.assessments.find(params[:assessment_id])
                     else
-                      @bank.latest_assessment
+                      @bank.assessments_with_data.first || @bank.assessments.order(assessment_date: :desc).first
                     end
+
+      # If no assessment exists, create a virtual one for display purposes
+      @assessment = create_virtual_assessment if @assessment.nil?
+
       @assessment_presenter = BankAssessmentPresenter.new(@assessment)
     end
 
@@ -133,8 +199,9 @@ module TPI
       @cp_assessment = if params[:cp_assessment_id].present?
                          @bank.cp_assessments.find(params[:cp_assessment_id])
                        else
-                         @bank.cp_assessments.where(sector_id: params[:sector_id]).currently_published
-                           .order(assessment_date: :desc).first
+                         scope = @bank.cp_assessments.where(sector_id: params[:sector_id]).currently_published
+                         scope = scope.where(assessment_date: params[:cp_assessment_date]) if params[:cp_assessment_date].present?
+                         scope.order(assessment_date: :desc).first
                        end
     end
 
@@ -144,6 +211,59 @@ module TPI
 
     def permitted_email_params
       params.permit(:email, :job_title, :forename, :surname, :location, :organisation, :other_purpose, purposes: [])
+    end
+
+    def create_virtual_assessment
+      # Create a virtual assessment object for banks without assessments
+      # This allows the view to display the framework structure with empty indicators
+      virtual_assessment = OpenStruct.new(
+        id: "virtual_#{@bank.id}",
+        bank: @bank,
+        assessment_date: Date.current,
+        notes: nil,
+        indicator_version: '2025' # Use latest version for virtual assessments
+      )
+
+      # Create a virtual results object that responds to of_type method
+      virtual_results = OpenStruct.new
+
+      # Create a chainable empty result set
+      empty_result_set = OpenStruct.new
+      empty_result_set.define_singleton_method(:order) { |*_args| self }
+      empty_result_set.define_singleton_method(:find) { nil }
+      empty_result_set.define_singleton_method(:empty?) { true }
+      empty_result_set.define_singleton_method(:any?) { false }
+      empty_result_set.define_singleton_method(:length) { 0 }
+      empty_result_set.define_singleton_method(:count) { 0 }
+
+      virtual_results.define_singleton_method(:of_type) { |_type| empty_result_set }
+      virtual_results.define_singleton_method(:order) { |*_args| self }
+      virtual_results.define_singleton_method(:find) { nil }
+      virtual_results.define_singleton_method(:empty?) { true }
+      virtual_results.define_singleton_method(:any?) { false }
+
+      virtual_assessment.results = virtual_results
+
+      # Add methods that the presenter expects
+      virtual_assessment.define_singleton_method(:results_by_indicator_type) { {} }
+      virtual_assessment.define_singleton_method(:all_results_by_indicator_type) { {} }
+      virtual_assessment.define_singleton_method(:active_results?) { false }
+      virtual_assessment.define_singleton_method(:legacy_results?) { false }
+      virtual_assessment.define_singleton_method(:child_indicators) { |_result, _type| [] }
+      virtual_assessment.define_singleton_method(:virtual?) { true }
+
+      virtual_assessment
+    end
+
+    def determine_version_for_date(date)
+      return '2024' if date.blank?
+
+      # Convert string to Date if needed
+      parsed_date = date.is_a?(String) ? Date.parse(date) : date
+      return '2025' if parsed_date >= Date.new(2025, 1, 1)
+      return '2024' if parsed_date >= Date.new(2024, 1, 1)
+
+      '2024'
     end
   end
 end

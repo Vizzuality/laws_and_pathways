@@ -32,8 +32,10 @@ class Bank < ApplicationRecord
   has_one :latest_cp_assessment_regional, -> { currently_published.regional.order(assessment_date: :desc) },
           class_name: 'CP::Assessment', as: :cp_assessmentable
 
-  delegate :cp_alignment_2025, :cp_alignment_2050, :cp_alignment_2035,
-           :cp_regional_alignment_2050, :cp_regional_alignment_2025, :cp_regional_alignment_2035,
+  delegate :cp_alignment_2025, :cp_alignment_2027, :cp_alignment_2028, :cp_alignment_2030, :cp_alignment_2035, :cp_alignment_2050,
+           :cp_regional_alignment_2025, :cp_regional_alignment_2027,
+           :cp_regional_alignment_2028, :cp_regional_alignment_2030, :cp_regional_alignment_2035,
+           :cp_regional_alignment_2050,
            to: :latest_cp_assessment, allow_nil: true
 
   validates_presence_of :name, :slug, :isin, :market_cap_group
@@ -57,5 +59,42 @@ class Bank < ApplicationRecord
 
   def path
     Rails.application.routes.url_helpers.tpi_bank_path(slug)
+  end
+
+  # Get assessments that have actual data (newest first)
+  def assessments_with_data
+    assessments.joins(:results)
+      .joins(
+        'JOIN bank_assessment_indicators ON bank_assessment_indicators.id = bank_assessment_results.bank_assessment_indicator_id'
+      )
+      .where('bank_assessment_indicators.version = CASE
+        WHEN bank_assessments.assessment_date >= ? THEN ?
+        WHEN bank_assessments.assessment_date >= ? THEN ?
+        ELSE ?
+      END', Date.new(2025, 1, 1), '2025', Date.new(2024, 1, 1), '2024', '2024')
+      .distinct
+      .order(assessment_date: :desc)
+  end
+
+  def latest_assessment
+    assessments.order(assessment_date: :desc).first
+  end
+
+  def latest_assessment_with_active_indicators
+    assessments.joins(:results)
+      .joins('JOIN bank_assessment_indicators ON ' \
+             'bank_assessment_indicators.id = bank_assessment_results.bank_assessment_indicator_id')
+      .where(bank_assessment_indicators: {active: true})
+      .order(assessment_date: :desc)
+      .first
+  end
+
+  def assessments_with_active_indicators
+    assessments.joins(:results)
+      .joins('JOIN bank_assessment_indicators ON ' \
+             'bank_assessment_indicators.id = bank_assessment_results.bank_assessment_indicator_id')
+      .where(bank_assessment_indicators: {active: true})
+      .distinct
+      .order(assessment_date: :desc)
   end
 end

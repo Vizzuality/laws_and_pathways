@@ -26,6 +26,7 @@ class TPISector < ApplicationRecord
   has_many :cp_assessments, class_name: 'CP::Assessment', foreign_key: 'sector_id'
   has_many :cp_benchmarks, class_name: 'CP::Benchmark', foreign_key: 'sector_id'
   has_many :cp_units, class_name: 'CP::Unit', foreign_key: 'sector_id', inverse_of: :sector
+  has_many :subsectors, foreign_key: 'sector_id'
 
   has_and_belongs_to_many :publications
   has_and_belongs_to_many :news_articles
@@ -106,5 +107,13 @@ class TPISector < ApplicationRecord
 
   def self.search(query)
     where('name ilike ?', "%#{query}%")
+  end
+
+  def available_subsectors
+    CompanySubsector.joins(:company)
+      .where(companies: {sector_id: id})
+      .distinct
+      .pluck(:subsector)
+      .sort
   end
 end

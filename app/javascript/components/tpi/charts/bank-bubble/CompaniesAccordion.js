@@ -59,10 +59,10 @@ DropdownIndicator.propTypes = {
 };
 
 const CompaniesAccordion = ({ results, disabled_bubbles_areas }) => {
-  const areas = uniq(results.map(r => r.area));
+  const areas = uniq((results || []).map(r => r.area)).filter(Boolean);
   const selectOptions = areas.map((level) => ({label: level, value: level}));
   const [openItems, setOpenItems] = useState([]);
-  const [activeOption, setActiveOption] = useState(selectOptions[0]);
+  const [activeOption, setActiveOption] = useState(selectOptions.length > 0 ? selectOptions[0] : null);
 
   const ranges = SCORE_RANGES.map((range) => `${range.min}-${range.max}%`);
 
@@ -82,9 +82,11 @@ const CompaniesAccordion = ({ results, disabled_bubbles_areas }) => {
     }
   });
 
-  const activeArea = disabled_bubbles_areas.includes(activeOption.value)
-    ? Array.from({ length: ranges.length }, () => [])
-    : parsedData[activeOption.value];
+  const emptyArea = Array.from({ length: ranges.length }, () => []);
+  const selectedValue = activeOption && activeOption.value;
+  const activeArea = selectedValue
+    ? (disabled_bubbles_areas.includes(selectedValue) ? emptyArea : (parsedData[selectedValue] || emptyArea))
+    : emptyArea;
 
   function setOpenItemByIndex(index) {
     setOpenItems(openItems.includes(index) ? openItems.filter(i => i !== index) : [...openItems, index]);

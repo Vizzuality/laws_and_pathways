@@ -1,7 +1,7 @@
 module CSVExport
   module User
     class BankCPAssessments
-      YEARS = %w[2025 2035 2050].freeze
+      YEARS = %w[2025 2030 2035 2050].freeze
 
       def call
         # BOM UTF-8
@@ -16,6 +16,7 @@ module CSVExport
               bank.name,
               assessment.region,
               sector.name,
+              assessment.subsector&.name,
               assessment.assessment_date,
               assessment.publication_date,
               emissions_all_years.map { |year| assessment.emissions[year] },
@@ -38,6 +39,7 @@ module CSVExport
           'Bank Name',
           'Region',
           'Sector',
+          'Subsector',
           'Assessment Date',
           'Publication Date'
         ] +

@@ -62,10 +62,32 @@ ActiveAdmin.register Bank do
                   row :assessment_date
                 end
 
-                table_for a.results do
-                  column(:number) { |r| r.indicator.number }
-                  column(:display_text) { |r| r.indicator.display_text }
-                  column(:value) { |r| r.percentage || r.answer }
+                # Show results for active indicators only
+                active_results = a.results.joins(:indicator).where(bank_assessment_indicators: {active: true})
+
+                if active_results.any?
+                  h4 'Results (Active Indicators Only)'
+                  table_for active_results do
+                    column(:number) { |r| r.indicator.number }
+                    column(:display_text) { |r| r.indicator.display_text }
+                    column(:value) { |r| r.percentage || r.answer }
+                    column(:version) { |r| r.indicator.version }
+                  end
+                else
+                  para 'No results found for active indicators.'
+                end
+
+                # Optional: Show all results
+                all_results = a.results.includes(:indicator).order('bank_assessment_indicators.number')
+                if all_results.count > active_results.count
+                  h4 'All Results (Including Inactive)'
+                  table_for all_results do
+                    column(:number) { |r| r.indicator.number }
+                    column(:display_text) { |r| r.indicator.display_text }
+                    column(:value) { |r| r.percentage || r.answer }
+                    column(:version) { |r| r.indicator.version }
+                    column(:active) { |r| r.indicator.active? ? 'Yes' : 'No' }
+                  end
                 end
               end
             end
@@ -92,13 +114,34 @@ ActiveAdmin.register Bank do
                   panel 'Emissions', style: 'margin: 10px' do
                     render 'admin/cp/emissions_table', emissions: a.emissions
                   end
-                  panel 'Carbon Performance Matrix', style: 'margin: 10px' do
+                  panel 'CP Matrix' do
                     attributes_table_for a.cp_matrices do
-                      row :portfolio
                       row :cp_alignment_2025
+                      row :cp_alignment_2030
                       row :cp_alignment_2035
                       row :cp_alignment_2050
                     end
+                  end
+                end
+
+                panel 'Bank Assessment Indicators' do
+                  # Show only active indicators by default
+                  active_indicators = BankAssessmentIndicator.active.order(:indicator_type, :number)
+
+                  if active_indicators.any?
+                    table_for active_indicators do
+                      column :indicator_type
+                      column :number
+                      column :text
+                      column :version
+                    end
+                  else
+                    para 'No active indicators found.'
+                  end
+
+                  # Add link to manage indicators
+                  para do
+                    link_to 'Manage Bank Assessment Indicators', admin_bank_assessment_indicators_path, class: 'button'
                   end
                 end
               end
