@@ -39,7 +39,11 @@ module CSVExport
       def answer_values_for(assessment)
         ordered_indicators.reject { |i| i.indicator_type == 'pillar' || i.code.in?(%w[EP.1.a.i EP.1.a.ii]) }
           .map do |indicator|
-          assessment_results[[assessment.id, indicator.id]]&.first&.answer
+          if indicator.code.start_with?('EP.3') && assessment.assessment_date&.year && assessment.assessment_date.year <= 2024
+            'Not assessed'
+          else
+            assessment_results[[assessment.id, indicator.id]]&.first&.answer
+          end
         end
       end
 
