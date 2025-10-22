@@ -96,17 +96,29 @@ ActiveAdmin.register ASCOR::Assessment do
 
     ordered.select { |i| i.indicator_type != 'pillar' && !%w[EP.1.a.i EP.1.a.ii].include?(i.code.to_s) }.each do |indicator|
       column "#{indicator.indicator_type} #{indicator.code}", humanize_name: false do |resource|
-        controller.assessment_results[[resource.id, indicator.id]]&.first&.answer
+        if resource.assessment_date&.year && resource.assessment_date.year <= 2024 && indicator.code.to_s.start_with?('EP.3')
+          'Not assessed'
+        else
+          controller.assessment_results[[resource.id, indicator.id]]&.first&.answer
+        end
       end
     end
     ordered.select { |i| i.indicator_type.in?(%w[indicator metric]) }.each do |indicator|
       column "source #{indicator.indicator_type} #{indicator.code}", humanize_name: false do |resource|
-        controller.assessment_results[[resource.id, indicator.id]]&.first&.source
+        if resource.assessment_date&.year && resource.assessment_date.year <= 2024 && indicator.code.to_s.start_with?('EP.3')
+          nil
+        else
+          controller.assessment_results[[resource.id, indicator.id]]&.first&.source
+        end
       end
     end
     ordered.select { |i| i.indicator_type == 'metric' }.each do |indicator|
       column "year #{indicator.indicator_type} #{indicator.code}", humanize_name: false do |resource|
-        controller.assessment_results[[resource.id, indicator.id]]&.first&.year
+        if resource.assessment_date&.year && resource.assessment_date.year <= 2024 && indicator.code.to_s.start_with?('EP.3')
+          nil
+        else
+          controller.assessment_results[[resource.id, indicator.id]]&.first&.year
+        end
       end
     end
     column 'Research Notes', &:notes
