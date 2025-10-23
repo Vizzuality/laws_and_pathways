@@ -12,41 +12,72 @@
     assessments_by_date = {}
     @bank.cp_assessments.where(assessment_date: selected_cp_date).currently_published.each do |assessment|
       key = [@bank, assessment.sector]
-      assessments_by_date[key] = [assessment]
+      assessments_by_date[key] ||= []
+      assessments_by_date[key] << assessment
     end
     assessments_by_date
   else
     Queries::TPI::LatestCPAssessmentsQuery.new(category: Bank, cp_assessmentable: @bank).call
   end
 %>
-<% cp_sectors = CP::DisplayOverrides.filter_sectors(TPISector.for_category(Bank).order(:name)).map { |sector|
-   cp_assessment = cp_assessments[[@bank, sector]]&.first
-    {
-      name: CP::SectorNormalizer.display_label_for_sector(sector.name),
-      assessment: cp_assessment,
-      dataUrl: emissions_chart_data_tpi_bank_path(@bank, sector_id: sector.id, cp_assessment_date: selected_cp_date),
-      unit: cp_assessment&.unit
-    }
-  }.select { |sector| 
-    assessment = sector[:assessment]
-    
-    next false unless assessment.present? && assessment.emissions.present?
+<% cp_sectors = [] %>
+<% CP::DisplayOverrides.filter_sectors(TPISector.for_category(Bank).order(:name)).each do |sector| %>
+  <% assessments_for_sector = cp_assessments[[@bank, sector]] || [] %>
+  <% if sector.name == 'Coal Mining' %>
+    <% subsector_assessments = assessments_for_sector.select { |a| a.subsector_id.present? } %>
+    <% if subsector_assessments.any? %>
+      <% subsector_assessments.each do |a| %>
+        <% cp_sectors << {
+          name: "#{CP::SectorNormalizer.display_label_for_sector(sector.name)} - #{a.subsector_name}",
+          assessment: a,
+          dataUrl: emissions_chart_data_tpi_bank_path(@bank, sector_id: sector.id, cp_assessment_date: selected_cp_date, subsector: a.subsector_name),
+          unit: a&.unit
+        } %>
+      <% end %>
+    <% else %>
+      <% a = assessments_for_sector.first %>
+      <% if a %>
+        <% cp_sectors << {
+          name: CP::SectorNormalizer.display_label_for_sector(sector.name),
+          assessment: a,
+          dataUrl: emissions_chart_data_tpi_bank_path(@bank, sector_id: sector.id, cp_assessment_date: selected_cp_date),
+          unit: a&.unit
+        } %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <% a = assessments_for_sector.first %>
+    <% if a %>
+      <% cp_sectors << {
+        name: CP::SectorNormalizer.display_label_for_sector(sector.name),
+        assessment: a,
+        dataUrl: emissions_chart_data_tpi_bank_path(@bank, sector_id: sector.id, cp_assessment_date: selected_cp_date),
+        unit: a&.unit
+      } %>
+    <% end %>
+  <% end %>
+<% end %>
 
-    allow_emissions_only = CP::DisplayOverrides.emissions_only_allowed?(bank_name: @bank.name, sector_name: sector[:name])
+<% cp_sectors.select! do |sector|
+  assessment = sector[:assessment]
 
-    has_targets = assessment.years_with_targets.present? && assessment.years_with_targets.any?
-    has_not_assessable = assessment.cp_matrices.any? do |matrix|
-      [
-        matrix.cp_alignment_2025,
-        matrix.cp_alignment_2027,
-        matrix.cp_alignment_2030,
-        matrix.cp_alignment_2035,
-        matrix.cp_alignment_2050
-      ].compact.any? { |alignment| alignment&.downcase&.include?('not assessable') }
-    end
+  next false unless assessment.present? && assessment.emissions.present?
 
-    (has_targets && !has_not_assessable) || allow_emissions_only
-  } %>
+  allow_emissions_only = CP::DisplayOverrides.emissions_only_allowed?(bank_name: @bank.name, sector_name: sector[:name])
+
+  has_targets = assessment.years_with_targets.present? && assessment.years_with_targets.any?
+  has_not_assessable = assessment.cp_matrices.any? do |matrix|
+    [
+      matrix.cp_alignment_2025,
+      matrix.cp_alignment_2027,
+      matrix.cp_alignment_2030,
+      matrix.cp_alignment_2035,
+      matrix.cp_alignment_2050
+    ].compact.any? { |alignment| alignment&.downcase&.include?('not assessable') }
+  end
+
+  (has_targets && !has_not_assessable) || allow_emissions_only
+end %>
 <% if cp_sectors.any? %>
   <div style="margin: 25px 0">
     <%= react_component('charts/cp-performance/MultipleChart', {
