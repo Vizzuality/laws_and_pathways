@@ -128,11 +128,8 @@ module TPI
 
       cp_sectors.select! do |sector|
         assessment = sector[:assessment]
-        coal_subsector_chart = sector[:name].to_s.start_with?('Coal Mining - ')
 
-        unless assessment.present? && (assessment.emissions.present? || coal_subsector_chart)
-          next false
-        end
+        next false unless assessment.present? && assessment.emissions.present?
 
         allow_emissions_only = CP::DisplayOverrides.emissions_only_allowed?(bank_name: @bank.name, sector_name: sector[:name])
 
@@ -147,7 +144,7 @@ module TPI
           ].compact.any? { |alignment| alignment&.downcase&.include?('not assessable') }
         end
 
-        coal_subsector_chart || (has_targets && !has_not_assessable) || allow_emissions_only
+        (has_targets && !has_not_assessable) || allow_emissions_only
       end
 
       # Render the CP assessments partial
