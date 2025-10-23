@@ -60,8 +60,11 @@
 
 <% cp_sectors.select! do |sector|
   assessment = sector[:assessment]
+  coal_subsector_chart = sector[:name].to_s.start_with?('Coal Mining - ')
 
-  next false unless assessment.present? && assessment.emissions.present?
+  unless assessment.present? && (assessment.emissions.present? || coal_subsector_chart)
+    next false
+  end
 
   allow_emissions_only = CP::DisplayOverrides.emissions_only_allowed?(bank_name: @bank.name, sector_name: sector[:name])
 
@@ -76,7 +79,7 @@
     ].compact.any? { |alignment| alignment&.downcase&.include?('not assessable') }
   end
 
-  (has_targets && !has_not_assessable) || allow_emissions_only
+  coal_subsector_chart || (has_targets && !has_not_assessable) || allow_emissions_only
 end %>
 <% if cp_sectors.any? %>
   <div style="margin: 25px 0">

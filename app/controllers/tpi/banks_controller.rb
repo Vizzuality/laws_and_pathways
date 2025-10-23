@@ -80,22 +80,53 @@ module TPI
                          assessments_by_date = {}
                          @bank.cp_assessments.where(assessment_date: selected_cp_date).currently_published.each do |assessment|
                            key = [@bank, assessment.sector]
-                           assessments_by_date[key] = [assessment]
+                           assessments_by_date[key] ||= []
+                           assessments_by_date[key] << assessment
                          end
                          assessments_by_date
                        else
                          Queries::TPI::LatestCPAssessmentsQuery.new(category: Bank, cp_assessmentable: @bank).call
                        end
 
-      cp_sectors = CP::DisplayOverrides.filter_sectors(TPISector.for_category(Bank).order(:name)).map do |sector|
-        cp_assessment = cp_assessments[[@bank, sector]]&.first
-        {
-          name: CP::SectorNormalizer.display_label_for_sector(sector.name),
-          assessment: cp_assessment,
-          dataUrl: emissions_chart_data_tpi_bank_path(@bank, sector_id: sector.id, cp_assessment_date: selected_cp_date),
-          unit: cp_assessment&.unit
-        }
-      end.select do |sector|
+      cp_sectors = []
+      CP::DisplayOverrides.filter_sectors(TPISector.for_category(Bank).order(:name)).each do |sector|
+        assessments_for_sector = cp_assessments[[@bank, sector]] || []
+
+        if sector.name == 'Coal Mining'
+          subsector_assessments = assessments_for_sector.select { |a| a.subsector_id.present? }
+          if subsector_assessments.any?
+            subsector_assessments.each do |a|
+              label = "#{CP::SectorNormalizer.display_label_for_sector(sector.name)} - #{a.subsector_name}"
+              cp_sectors << {
+                name: label,
+                assessment: a,
+                dataUrl: emissions_chart_data_tpi_bank_path(@bank, sector_id: sector.id, cp_assessment_date: selected_cp_date, subsector: a.subsector_name),
+                unit: a&.unit
+              }
+            end
+          else
+            a = assessments_for_sector.first
+            next unless a
+            cp_sectors << {
+              name: CP::SectorNormalizer.display_label_for_sector(sector.name),
+              assessment: a,
+              dataUrl: emissions_chart_data_tpi_bank_path(@bank, sector_id: sector.id, cp_assessment_date: selected_cp_date),
+              unit: a&.unit
+            }
+          end
+        else
+          a = assessments_for_sector.first
+          next unless a
+          cp_sectors << {
+            name: CP::SectorNormalizer.display_label_for_sector(sector.name),
+            assessment: a,
+            dataUrl: emissions_chart_data_tpi_bank_path(@bank, sector_id: sector.id, cp_assessment_date: selected_cp_date),
+            unit: a&.unit
+          }
+        end
+      end
+
+      cp_sectors.select! do |sector|
         assessment = sector[:assessment]
 
         next false unless assessment.present? && assessment.emissions.present?
@@ -126,15 +157,6 @@ module TPI
         **data.as_json,
         cp_assessments_html: cp_assessments_html
       }
-    end
-
-    def send_download_file_info_email
-      DataDownloadMailer.send_download_file_info_email(
-        permitted_email_params,
-        'gri.banking@lse.ac.uk',
-        'Banking data has been downloaded'
-      ).deliver_now
-      head :ok
     end
 
     def send_download_file_info_email
@@ -201,6 +223,15 @@ module TPI
                        else
                          scope = @bank.cp_assessments.where(sector_id: params[:sector_id]).currently_published
                          scope = scope.where(assessment_date: params[:cp_assessment_date]) if params[:cp_assessment_date].present?
+                         if params[:subsector].present?
+                           sector = TPISector.find_by(id: params[:sector_id])
+                           if sector
+                             subsector = Subsector.where(sector: sector)
+                                                   .where('lower(name) = ?', params[:subsector].to_s.downcase)
+                                                   .first
+                             scope = scope.where(subsector_id: subsector.id) if subsector
+                           end
+                         end
                          scope.order(assessment_date: :desc).first
                        end
     end

@@ -59,9 +59,12 @@ class TPISector < ApplicationRecord
     cp_units.order('valid_since DESC NULLS LAST').first
   end
 
-  def latest_released_benchmarks(category:, region: nil)
+  def latest_released_benchmarks(category:, region: nil, subsector: nil)
     region ||= 'Global'
-    cp_benchmarks.where(category: category.to_s, region: region).group_by(&:release_date).max&.last || []
+    scope = cp_benchmarks.where(category: category.to_s, region: region)
+    scope = scope.where(subsector: subsector) unless subsector.nil?
+    last = scope.group_by(&:release_date).max
+    last ? last.last : []
   end
 
   def publications_and_articles
