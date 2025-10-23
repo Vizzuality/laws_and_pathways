@@ -159,7 +159,7 @@ module Api
             assessment.publication_date,
             category: @category,
             region: selected_region,
-            subsector: assessment.subsector
+            subsector: assessment.subsector_name
           )
         return initial if initial.present?
 

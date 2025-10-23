@@ -128,8 +128,11 @@ module TPI
 
       cp_sectors.select! do |sector|
         assessment = sector[:assessment]
+        coal_subsector_chart = sector[:name].to_s.start_with?('Coal Mining - ')
 
-        next false unless assessment.present? && assessment.emissions.present?
+        unless assessment.present? && (assessment.emissions.present? || coal_subsector_chart)
+          next false
+        end
 
         allow_emissions_only = CP::DisplayOverrides.emissions_only_allowed?(bank_name: @bank.name, sector_name: sector[:name])
 
@@ -144,7 +147,7 @@ module TPI
           ].compact.any? { |alignment| alignment&.downcase&.include?('not assessable') }
         end
 
-        (has_targets && !has_not_assessable) || allow_emissions_only
+        coal_subsector_chart || (has_targets && !has_not_assessable) || allow_emissions_only
       end
 
       # Render the CP assessments partial
@@ -225,8 +228,12 @@ module TPI
                          scope = scope.where(assessment_date: params[:cp_assessment_date]) if params[:cp_assessment_date].present?
                          if params[:subsector].present?
                            sector = TPISector.find_by(id: params[:sector_id])
-                           subsector = Subsector.find_by(sector: sector, name: params[:subsector]) if sector
-                           scope = scope.where(subsector_id: subsector.id) if subsector
+                           if sector
+                             subsector = Subsector.where(sector: sector)
+                                                   .where('lower(name) = ?', params[:subsector].to_s.downcase)
+                                                   .first
+                             scope = scope.where(subsector_id: subsector.id) if subsector
+                           end
                          end
                          scope.order(assessment_date: :desc).first
                        end
