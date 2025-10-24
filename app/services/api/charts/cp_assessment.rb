@@ -219,12 +219,22 @@ module Api
       end
 
       def sector_all_emissions_for_company
-        CP::Assessment.joins(:sector).where(
-          tpi_sectors: {name: [sector.name, BANK_COMPANY_SECTOR_PAIRS[sector.name]]},
-          publication_date: [..assessment.publication_date],
-          cp_assessmentable_type: Company.to_s,
-          cp_assessmentable_id: Company.published.select(:id)
-        )
+        scope = CP::Assessment
+          .joins(:sector)
+          .where(
+            tpi_sectors: {name: [sector.name, BANK_COMPANY_SECTOR_PAIRS[sector.name]]},
+            publication_date: [..assessment.publication_date],
+            cp_assessmentable_type: Company.to_s,
+            cp_assessmentable_id: Company.published.select(:id)
+          )
+
+        if @category == 'Bank' && assessment.subsector_name.present?
+          scope = scope
+            .joins('INNER JOIN company_subsectors ON company_subsectors.id = cp_assessments.company_subsector_id')
+            .where('LOWER(company_subsectors.subsector) = ?', assessment.subsector_name.downcase)
+        end
+
+        scope
       end
 
       # @return [Integer]
