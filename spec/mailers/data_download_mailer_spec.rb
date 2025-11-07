@@ -10,8 +10,11 @@ RSpec.describe DataDownloadMailer, type: :mailer do
         surname: 'surname',
         location: 'location',
         organisation: 'organisation',
-        purposes: %w[purpose1 purpose2 other_purpose_checkbox],
-        other_purpose: 'other_purpose'
+        organisation_type: 'Asset management & investment & advisory',
+        asset_owner_type: 'Pension funds',
+        use_case: 'Academic use',
+        use_case_description: 'This is a test description of the use case',
+        self_attestation: 'Permitted uses without Authorisation or License'
       }
     }
     let(:mail) { DataDownloadMailer.send_download_file_info_email data }
@@ -27,9 +30,11 @@ RSpec.describe DataDownloadMailer, type: :mailer do
       expect(mail.body.encoded).to include('surname')
       expect(mail.body.encoded).to include('location')
       expect(mail.body.encoded).to include('organisation')
-      expect(mail.body.encoded).to include('purpose1')
-      expect(mail.body.encoded).to include('purpose2')
-      expect(mail.body.encoded).to include('other_purpose')
+      expect(mail.body.encoded).to include('Asset management &amp; investment &amp; advisory')
+      expect(mail.body.encoded).to include('Pension funds')
+      expect(mail.body.encoded).to include('Academic use')
+      expect(mail.body.encoded).to include('This is a test description of the use case')
+      expect(mail.body.encoded).to include('Permitted uses without Authorisation or License')
     end
   end
 end
