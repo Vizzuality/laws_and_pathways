@@ -70,14 +70,41 @@ Field.defaultProps = {
   children: null
 };
 
-const checkboxInputs = [
-  'diligence_research',
-  'engagement',
-  'voting',
-  'academic_research',
-  'content_creation',
-  'investment',
-  'other_purpose_checkbox'
+const organisationTypeOptions = [
+  { label: 'Academia', value: 'Academia' },
+  { label: 'Asset management & investment & advisory', value: 'Asset management & investment & advisory' },
+  { label: 'Asset owner', value: 'Asset owner' },
+  { label: 'Corporate', value: 'Corporate' },
+  { label: 'Consultant & advisory', value: 'Consultant & advisory' },
+  { label: 'Commercial & retail bank', value: 'Commercial & retail bank' },
+  { label: 'Credit reference agency', value: 'Credit reference agency' },
+  { label: 'Financial technology', value: 'Financial technology' },
+  { label: 'Government', value: 'Government' },
+  { label: 'Hedge fund', value: 'Hedge fund' },
+  { label: 'Investment bank', value: 'Investment bank' },
+  { label: 'Media', value: 'Media' },
+  { label: 'NGO', value: 'NGO' },
+  { label: 'Private equity', value: 'Private equity' },
+  { label: 'Wealth management', value: 'Wealth management' },
+  { label: 'Other (please specify)', value: 'Other' }
+];
+
+const assetOwnerSubOptions = [
+  { label: 'Endowments & foundations', value: 'Endowments & foundations' },
+  { label: 'Family offices', value: 'Family offices' },
+  { label: 'Insurance companies', value: 'Insurance companies' },
+  { label: 'Pension funds', value: 'Pension funds' },
+  { label: 'Sovereign wealth funds', value: 'Sovereign wealth funds' }
+];
+
+const useCaseOptions = [
+  { label: 'Academic use', value: 'Academic use' },
+  { label: 'Internal research use (see Terms of Use)', value: 'Internal research use (see Terms of Use)' },
+  { label: 'Engagement with investee companies', value: 'Engagement with investee companies' },
+  { label: 'Media purposes', value: 'Media purposes' },
+  { label: 'Proxy voting', value: 'Proxy voting' },
+  { label: 'Product & service creation', value: 'Product & service creation' },
+  { label: 'Other', value: 'Other' }
 ];
 
 const initialFormValues = {
@@ -88,8 +115,11 @@ const initialFormValues = {
   surname: '',
   location: '',
   organisation: '',
-  purposes: [],
-  other_purpose: ''
+  organisation_type: '',
+  asset_owner_type: '',
+  organisation_type_other: '',
+  use_case: '',
+  use_case_description: ''
 };
 
 function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
@@ -146,12 +176,33 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
       return;
     }
 
-    if (formValues.purposes.length === 0) {
-      setError('Please select at least one purpose');
+    if (!formValues.organisation_type) {
+      setError('Please select an Organisation type');
       return;
     }
-    if (formValues.purposes.includes('other_purpose_checkbox') && !formValues.other_purpose) {
-      setError('Please specify other purposes');
+
+    if (formValues.organisation_type === 'Asset owner' && !formValues.asset_owner_type) {
+      setError('Please select an Asset owner type');
+      return;
+    }
+
+    if (formValues.organisation_type === 'Other' && !formValues.organisation_type_other) {
+      setError('Please specify your organisation type');
+      return;
+    }
+
+    if (!formValues.use_case) {
+      setError('Please select a Use case');
+      return;
+    }
+
+    if (!formValues.use_case_description || formValues.use_case_description.trim().length === 0) {
+      setError('Please provide a description of your use case');
+      return;
+    }
+
+    if (formValues.use_case_description.length > 500) {
+      setError('Use case description must not exceed 500 characters');
       return;
     }
 
@@ -172,22 +223,19 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
   };
 
   const handleChange = (e) => {
-    setFormValues({ ...formValues, [e.target.name]: e.target.value });
-    if (checkboxInputs.includes(e.target.name)) {
-      if (e.target.checked) {
-        setFormValues({
-          ...formValues,
-          purposes: [...formValues.purposes, e.target.name]
-        });
-        setError(null);
-      } else {
-        setFormValues({
-          ...formValues,
-          other_purpose: e.target.name === 'other_purpose_checkbox' ? '' : formValues.other_purpose,
-          purposes: formValues.purposes.filter((item) => item !== e.target.name)
-        });
-      }
+    const { name, value } = e.target;
+    const updatedValues = { ...formValues, [name]: value };
+    
+    if (name === 'organisation_type' && value !== 'Asset owner') {
+      updatedValues.asset_owner_type = '';
     }
+    
+    if (name === 'organisation_type' && value !== 'Other') {
+      updatedValues.organisation_type_other = '';
+    }
+    
+    setFormValues(updatedValues);
+    setError(null);
   };
 
   return (
@@ -237,136 +285,175 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
                 <p className="--mandatory">All
                   fields below are mandatory.
                 </p>
-                <div className="text-inputs">
-                  <Field
-                    value={formValues.email}
-                    onChange={handleChange}
-                    required
-                    minLength={minLength}
-                    label={
-                      <>
-                        Email{' '}
-                        <BaseTooltip
-                          content="If you do not have access to a professional email address, please reach out to tpi@lse.ac.uk."
-                        />
-                      </>
-                    }
-                    name="email"
-                    placeholder="Professional email addresses only"
-                  />
-                  <Field
-                    value={formValues.job_title}
-                    onChange={handleChange}
-                    required
-                    minLength={minLength}
-                    label="Job title"
-                    name="job_title"
-                  />
-                  <Field
-                    value={formValues.forename}
-                    onChange={handleChange}
-                    required
-                    minLength={minLength}
-                    label="Forename"
-                    name="forename"
-                  />
-                  <Field
-                    value={formValues.surname}
-                    onChange={handleChange}
-                    required
-                    minLength={minLength}
-                    label="Surname"
-                    name="surname"
-                  />
-                  <Field
-                    value={formValues.location}
-                    onChange={handleChange}
-                    required
-                    minLength={minLength}
-                    label="Location"
-                    name="location"
-                  >
-                    <Select
-                      name="location"
-                      placeholder="Select country"
-                      onSelect={(e) => handleChange({ target: e })}
-                      value={formValues.location}
-                      label="Select country"
-                      allowSearch
+                <div className="form-section">
+                  <h3 className="form-section__title">Personal Details</h3>
+                  <div className="text-inputs">
+                    <Field
+                      value={formValues.email}
+                      onChange={handleChange}
                       required
-                      options={countryOptions}
+                      minLength={minLength}
+                      label={
+                        <>
+                          Email{' '}
+                          <BaseTooltip
+                            content="If you do not have access to a professional email address, please reach out to tpi@lse.ac.uk."
+                          />
+                        </>
+                      }
+                      name="email"
+                      placeholder="Professional email addresses only"
                     />
-                  </Field>
-                  <Field
-                    value={formValues.organisation}
-                    onChange={handleChange}
-                    required
-                    minLength={minLength}
-                    label="Organisation"
-                    name="organisation"
-                  />
+                    <Field
+                      value={formValues.job_title}
+                      onChange={handleChange}
+                      required
+                      minLength={minLength}
+                      label="Job title"
+                      name="job_title"
+                    />
+                    <Field
+                      value={formValues.forename}
+                      onChange={handleChange}
+                      required
+                      minLength={minLength}
+                      label="Forename"
+                      name="forename"
+                    />
+                    <Field
+                      value={formValues.surname}
+                      onChange={handleChange}
+                      required
+                      minLength={minLength}
+                      label="Surname"
+                      name="surname"
+                    />
+                    <Field
+                      value={formValues.organisation}
+                      onChange={handleChange}
+                      required
+                      minLength={minLength}
+                      label="Organisation name"
+                      name="organisation"
+                    />
+                    <Field
+                      value={formValues.location}
+                      onChange={handleChange}
+                      required
+                      minLength={minLength}
+                      label="Location"
+                      name="location"
+                    >
+                      <Select
+                        name="location"
+                        placeholder="Select country"
+                        onSelect={(e) => handleChange({ target: e })}
+                        value={formValues.location}
+                        label="Select country"
+                        allowSearch
+                        required
+                        options={countryOptions}
+                      />
+                    </Field>
+                  </div>
                 </div>
-                <p>
-                  To help us understand how our data is used, please select your
-                  purpose(s) from the choices below:
-                </p>
-                <div className="checkbox-inputs">
-                  <Field
-                    onChange={handleChange}
-                    label="Due diligence research"
-                    type="checkbox"
-                    name="diligence_research"
-                  />
-                  <Field
-                    onChange={handleChange}
-                    label="Engagement"
-                    type="checkbox"
-                    name="engagement"
-                  />
-                  <Field
-                    onChange={handleChange}
-                    label="Proxy voting"
-                    type="checkbox"
-                    name="voting"
-                  />
-                  <Field
-                    onChange={handleChange}
-                    label="Academic research"
-                    type="checkbox"
-                    name="academic_research"
-                  />
-                  <Field
-                    onChange={handleChange}
-                    label="Product and service creation"
-                    type="checkbox"
-                    name="content_creation"
-                  />
-                  <Field
-                    label="Investment universe selection/portfolio construction"
-                    type="checkbox"
-                    onChange={handleChange}
-                    name="investment"
-                  />
-                  <Field
-                    onChange={handleChange}
-                    label="Other (please specify)"
-                    name="other_purpose_checkbox"
-                    type="checkbox"
-                  />
+                <div className="form-section">
+                  <h3 className="form-section__title">Use case details</h3>
+                  <div className="text-inputs">
+                    <Field
+                      value={formValues.organisation_type}
+                      onChange={handleChange}
+                      required
+                      label="Organisation type"
+                      name="organisation_type"
+                    >
+                      <Select
+                        name="organisation_type"
+                        placeholder="Select organisation type"
+                        onSelect={(e) => handleChange({ target: e })}
+                        value={formValues.organisation_type}
+                        label="Select organisation type"
+                        required
+                        options={organisationTypeOptions}
+                      />
+                    </Field>
+                    {formValues.organisation_type === 'Asset owner' && (
+                      <Field
+                        value={formValues.asset_owner_type}
+                        onChange={handleChange}
+                        required
+                        label="Asset owner type"
+                        name="asset_owner_type"
+                      >
+                        <Select
+                          name="asset_owner_type"
+                          placeholder="Select asset owner type"
+                          onSelect={(e) => handleChange({ target: e })}
+                          value={formValues.asset_owner_type}
+                          label="Select asset owner type"
+                          required
+                          options={assetOwnerSubOptions}
+                        />
+                      </Field>
+                    )}
+                    {formValues.organisation_type === 'Other' && (
+                      <Field
+                        value={formValues.organisation_type_other}
+                        onChange={handleChange}
+                        required
+                        label="Please specify"
+                        name="organisation_type_other"
+                        placeholder="Specify your organisation type"
+                      />
+                    )}
+                    <Field
+                      value={formValues.use_case}
+                      onChange={handleChange}
+                      required
+                      label="Use case"
+                      name="use_case"
+                    >
+                      <Select
+                        name="use_case"
+                        placeholder="Select use case"
+                        onSelect={(e) => handleChange({ target: e })}
+                        value={formValues.use_case}
+                        label="Select use case"
+                        required
+                        options={useCaseOptions}
+                      />
+                    </Field>
+                  </div>
+                  <div className="full-width-field">
+                    <Field
+                      value={formValues.use_case_description}
+                      onChange={handleChange}
+                      required
+                      label="Description of use case"
+                      name="use_case_description"
+                    >
+                      <textarea
+                        name="use_case_description"
+                        id="use_case_description"
+                        value={formValues.use_case_description}
+                        onChange={handleChange}
+                        placeholder="To help us understand how our data are used, please provide more detail on your intended use case, including whether it's directly related to the generation of revenue or commercial compensation."
+                        maxLength={500}
+                        required
+                        rows={4}
+                      />
+                    </Field>
+                    <div className="character-count">
+                      {formValues.use_case_description.length}/500 characters
+                    </div>
+                  </div>
                 </div>
-                <div className={classNames('other-purposes-text', { hidden: !formValues.purposes.includes('other_purpose_checkbox') })}>
-                  <Field
-                    label=""
-                    name="other_purpose"
-                    placeholder="Please, write here other purposes"
-                    value={formValues.other_purpose}
-                    onChange={handleChange}
-                  />
+                <div className="form-section">
+                  <h3 className="form-section__title">Self-attestation of use case</h3>
                 </div>
                 <a hidden ref={downloadLinkRef} href={downloadUrl} rel="noreferrer">
                   <button type="button">Click</button>
                 </a>
-                <input required type="hidden" name="purposes" value={formValues.purposes} />
                 {error && <span className="error">{error}</span>}
                 <div className="form-buttons">
                   <button className="button is-primary" type="submit">Submit</button>
