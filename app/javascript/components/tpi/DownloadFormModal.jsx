@@ -7,6 +7,7 @@ import { OverlayProvider } from '@react-aria/overlays';
 import Select from './Select';
 import classNames from 'classnames';
 import downloadIcon from 'images/icons/download.svg';
+import BaseTooltip from './BaseTooltip';
 
 const Field = ({ label, name, value, onChange, type, required, error, placeholder, minLength, children }) => {
   const ref = useRef(null);
@@ -46,7 +47,7 @@ function isValidEmail(email) {
 }
 
 Field.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.any.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string,
   value: PropTypes.string,
@@ -242,7 +243,14 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
                     onChange={handleChange}
                     required
                     minLength={minLength}
-                    label="Email"
+                    label={
+                      <>
+                        Email{' '}
+                        <BaseTooltip
+                          content="If you do not have access to a professional email address, please reach out to tpi@lse.ac.uk."
+                        />
+                      </>
+                    }
                     name="email"
                   />
                   <Field
