@@ -119,7 +119,8 @@ const initialFormValues = {
   asset_owner_type: '',
   organisation_type_other: '',
   use_case: '',
-  use_case_description: ''
+  use_case_description: '',
+  self_attestation: ''
 };
 
 function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
@@ -203,6 +204,11 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
 
     if (formValues.use_case_description.length > 500) {
       setError('Use case description must not exceed 500 characters');
+      return;
+    }
+
+    if (!formValues.self_attestation) {
+      setError('Please select one of the self-attestation options');
       return;
     }
 
@@ -450,6 +456,54 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
                 </div>
                 <div className="form-section">
                   <h3 className="form-section__title">Self-attestation of use case</h3>
+                  <p>
+                    Based on your understanding of the{' '}
+                    <a href="https://www.lse.ac.uk/lse-information/terms-of-use" target="_blank" rel="noopener noreferrer">
+                      Terms of Use
+                    </a>
+                    , please select one of the boxes below to self-attest your use case.
+                  </p>
+                  <p>
+                    LSE reserves the right to review requests and in the event of a suspected breach of these terms of use may conduct an investigation and take subsequent action to ensure compliance, or authorise its data partners and/or other third parties to do so on its behalf.
+                  </p>
+                  <div className="radio-inputs">
+                    <Field
+                      value={formValues.self_attestation}
+                      onChange={handleChange}
+                      required
+                      label="Uses subject to Authorisation and License"
+                      type="radio"
+                      name="self_attestation"
+                    >
+                      <input
+                        type="radio"
+                        name="self_attestation"
+                        id="self_attestation_authorised"
+                        value="Uses subject to Authorisation and License"
+                        checked={formValues.self_attestation === 'Uses subject to Authorisation and License'}
+                        onChange={handleChange}
+                        required
+                      />
+                    </Field>
+                    <Field
+                      value={formValues.self_attestation}
+                      onChange={handleChange}
+                      required
+                      label="Permitted uses without Authorisation or License"
+                      type="radio"
+                      name="self_attestation"
+                    >
+                      <input
+                        type="radio"
+                        name="self_attestation"
+                        id="self_attestation_permitted"
+                        value="Permitted uses without Authorisation or License"
+                        checked={formValues.self_attestation === 'Permitted uses without Authorisation or License'}
+                        onChange={handleChange}
+                        required
+                      />
+                    </Field>
+                  </div>
                 </div>
                 <a hidden ref={downloadLinkRef} href={downloadUrl} rel="noreferrer">
                   <button type="button">Click</button>
