@@ -98,6 +98,20 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
 
   const minLength = 3;
 
+  const getSourceName = () => {
+    switch (source) {
+      case 'sectors':
+      case 'companies':
+        return 'Carbon Performance';
+      case 'banks':
+        return 'Banking';
+      case 'ascor':
+        return 'ASCOR';
+      default:
+        return 'TPI';
+    }
+  };
+
   const isValidLength = (value) => value && value.trim().length >= minLength;
 
   const downloadLinkRef = useRef(null);
@@ -192,6 +206,15 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
             <h2>Data Disclaimer</h2>
             <div className="content">
               <form onSubmit={handleSubmit}>
+                <div className="disclaimer-text">
+                  <p>
+                    {getSourceName()} data are viewable on the website and can be downloaded without Authorisation or License only for the Permitted Uses listed in the{' '}
+                    <a href="https://www.lse.ac.uk/lse-information/terms-of-use" target="_blank" rel="noopener noreferrer">
+                      Terms of Use
+                    </a>
+                    . You should read the Terms of Use to ensure that you are complying with their requirements.
+                  </p>
+                </div>
                 <div className="checkbox-inputs">
                   <Field
                     value={formValues.accept_terms}
@@ -199,11 +222,11 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
                     required
                     label={
                       <>
-                        By checking this box, I attest that I have read the{' '}
+                        By checking this box, I attest that I have read and understood the{' '}
                         <a href="https://www.transitionpathwayinitiative.org/use-of-the-centre-s-data" target="_blank" rel="noopener noreferrer">
-                          Use of TPI Centre Data
+                          Terms of Use of TPI Centre Data
                         </a>
-                        {' '}and will not use the data for commercial purposes unless I have sought prior permission.
+                        .
                       </>
                     }
                     type="checkbox"

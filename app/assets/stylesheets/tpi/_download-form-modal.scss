@@ -17,6 +17,20 @@
   .--mandatory {
     color: $red;
   }
+  .disclaimer-text {
+    margin-bottom: 20px;
+    p {
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+    a {
+      color: $blue;
+      text-decoration: underline;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
   .content {
     input[type="text"] {
       height: 40px;
