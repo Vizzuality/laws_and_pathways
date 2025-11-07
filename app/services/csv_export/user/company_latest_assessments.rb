@@ -76,7 +76,7 @@ module CSVExport
                 company.name,
                 company.geography.name,
                 company.geography.iso,
-                company.sector.name,
+                company.sector&.name,
                 subsector,
                 company.ca100? ? 'Yes' : 'No',
                 company.market_cap_group,

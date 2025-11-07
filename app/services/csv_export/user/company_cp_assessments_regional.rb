@@ -45,7 +45,7 @@ module CSVExport
               assessment.company.name,
               assessment.company.geography.name,
               assessment.company.geography.iso,
-              assessment.company.sector.name,
+              assessment.company.sector&.name,
               assessment.company.ca100? ? 'Yes' : 'No',
               assessment.company.market_cap_group,
               assessment.company.isin&.tr(',', ';')&.tr(' ', ''),
