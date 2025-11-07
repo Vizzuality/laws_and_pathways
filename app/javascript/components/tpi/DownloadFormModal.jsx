@@ -252,6 +252,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
                       </>
                     }
                     name="email"
+                    placeholder="Professional email addresses only"
                   />
                   <Field
                     value={formValues.job_title}
