@@ -7,7 +7,7 @@ import HighchartsReact from 'highcharts-react-official';
 
 import { options } from './options';
 
-const EmissionsChart = ({ chartData }) => {
+const EmissionsChart = ({ chartData, assessmentYear }) => {
   const { data, metadata } = chartData;
 
   const allNegative = useMemo(
@@ -26,6 +26,10 @@ const EmissionsChart = ({ chartData }) => {
         highcharts={Highcharts}
         options={{
           ...options,
+          xAxis: {
+            ...options.xAxis,
+            max: assessmentYear && assessmentYear >= 2025 ? 2035 : 2030
+          },
           yAxis: {
             ...options.yAxis,
             min: allPositive ? 0 : null,
@@ -54,7 +58,8 @@ EmissionsChart.propTypes = {
     metadata: PropTypes.shape({
       unit: PropTypes.string.isRequired
     })
-  })
+  }),
+  assessmentYear: PropTypes.number
 };
 
 EmissionsChart.defaultProps = {
@@ -63,5 +68,6 @@ EmissionsChart.defaultProps = {
     metadata: {
       unit: ''
     }
-  }
+  },
+  assessmentYear: null
 };

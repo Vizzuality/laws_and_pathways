@@ -1,6 +1,11 @@
 module ASCORHelper
   def ascor_icon_for(indicator, assessment)
-    value = ascor_assessment_result_for(indicator, assessment).answer.to_s.downcase.tr(' ', '-')
+    if indicator.respond_to?(:area?) && indicator.area? && indicator.code == 'EP.3' && assessment.assessment_date.year <= 2024
+      return 'not-applicable'
+    end
+
+    result = ascor_assessment_result_for(indicator, assessment)
+    value = result&.answer.to_s.downcase.tr(' ', '-')
     return 'no-data' unless value.in?(%w[yes no partial no-data no-disclosure not-applicable exempt])
 
     value

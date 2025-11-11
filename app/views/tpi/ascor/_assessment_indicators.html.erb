@@ -4,9 +4,10 @@
       <div class="country-assessment__indicator__title country-assessment__icon country-assessment__icon--<%= ascor_icon_for(indicator, @assessment) %>">
         <%= "#{indicator.code.split('.').last}. #{indicator.text}" %>
       </div>
-      <% if ascor_assessment_result_for(indicator, @assessment).source.present? %>
+      <% result = ascor_assessment_result_for(indicator, @assessment) %>
+      <% if result&.source.present? %>
         <div class="country-assessment__indicator__source">
-          <%= link_to 'Source', ascor_assessment_result_for(indicator, @assessment).source %>
+          <%= link_to 'Source', result.source %>
         </div>
       <% end %>
     </div>

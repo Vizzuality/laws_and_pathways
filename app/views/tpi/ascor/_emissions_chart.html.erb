@@ -5,7 +5,8 @@
   default_emissions_boundary_filter: 'Production - excluding LULUCF',
   countries: ASCOR::Country.published.all.sort_by(&:name).map { |c| { id: c.id, iso: c.iso, name: c.name } },
   default_countries: ASCOR::Country.published.where(iso: ASCOR::Country::DEFAULT_COUNTRIES).map(&:id),
-  emissions_data_url: emissions_chart_data_tpi_ascor_index_path(emissions_assessment_date: @emissions_assessment_date)
+  emissions_data_url: emissions_chart_data_tpi_ascor_index_path(emissions_assessment_date: @emissions_assessment_date),
+  assessmentYear: @emissions_assessment_date&.year
 }) %>
 <%= react_component('InfoModal', {
   title: "Country emission pathways",
