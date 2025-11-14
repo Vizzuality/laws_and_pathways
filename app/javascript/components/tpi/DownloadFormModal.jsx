@@ -264,7 +264,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
                 <div className="disclaimer-text">
                   <p>
                     {getSourceName()} data are viewable on the website and can be downloaded without Authorisation or License only for the Permitted Uses listed in the{' '}
-                    <a href="https://www.lse.ac.uk/lse-information/terms-of-use" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.transitionpathwayinitiative.org/use-of-the-centre-s-data" target="_blank" rel="noopener noreferrer">
                       Terms of Use
                     </a>
                     . You should read the Terms of Use to ensure that you are complying with their requirements.
@@ -458,7 +458,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
                   <h3 className="form-section__title">Self-attestation of use case</h3>
                   <p>
                     Based on your understanding of the{' '}
-                    <a href="https://www.lse.ac.uk/lse-information/terms-of-use" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.transitionpathwayinitiative.org/use-of-the-centre-s-data" target="_blank" rel="noopener noreferrer">
                       Terms of Use
                     </a>
                     , please select one of the boxes below to self-attest your use case.
