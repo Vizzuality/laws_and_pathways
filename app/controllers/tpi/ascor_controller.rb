@@ -60,7 +60,7 @@ module TPI
     def send_download_file_info_email
       DataDownloadMailer.send_download_file_info_email(
         permitted_email_params,
-        'gri.ascor@lse.ac.uk',
+        'tpi.centre.ascor@lse.ac.uk',
         'ASCOR data has been downloaded'
       ).deliver_now
       head :ok

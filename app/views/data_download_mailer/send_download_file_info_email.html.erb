@@ -1,6 +1,6 @@
 <h2>Following user downloaded data from TPI website</h2>
 
-<h3>Personal Details</h3>
+<h3>Personal details</h3>
 <p><strong>Email:</strong> <%= @data[:email] %></p>
 <p><strong>Job Title:</strong> <%= @data[:job_title] %></p>
 <p><strong>Forename:</strong> <%= @data[:forename] %></p>
@@ -8,7 +8,7 @@
 <p><strong>Organisation Name:</strong> <%= @data[:organisation] %></p>
 <p><strong>Location:</strong> <%= @data[:location] %></p>
 
-<h3>Use Case Details</h3>
+<h3>Use case details</h3>
 <p><strong>Organisation Type:</strong> <%= @data[:organisation_type] %></p>
 <% if @data[:asset_owner_type].present? %>
   <p><strong>Asset Owner Type:</strong> <%= @data[:asset_owner_type] %></p>
@@ -20,5 +20,5 @@
 <p><strong>Description of Use Case:</strong></p>
 <p><%= @data[:use_case_description] %></p>
 
-<h3>Self-Attestation of Use Case</h3>
+<h3>Self-attestation of use case</h3>
 <p><strong><%= @data[:self_attestation] %></strong></p>

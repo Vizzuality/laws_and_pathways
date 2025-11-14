@@ -46,6 +46,23 @@ function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 }
 
+const FREE_EMAIL_DOMAINS = [
+  'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'aol.com',
+  'icloud.com', 'mail.com', 'protonmail.com', 'zoho.com', 'yandex.com',
+  'gmx.com', 'inbox.com', 'live.com', 'msn.com', 'yahoo.co.uk',
+  'yahoo.fr', 'yahoo.de', 'yahoo.es', 'yahoo.it', 'yahoo.ca',
+  'hotmail.co.uk', 'hotmail.fr', 'hotmail.de', 'hotmail.es', 'hotmail.it',
+  'outlook.co.uk', 'outlook.fr', 'outlook.de', 'outlook.es', 'outlook.it',
+  'googlemail.com', 'me.com', 'mac.com', 'fastmail.com', 'hushmail.com',
+  'tutanota.com', 'proton.me', 'pm.me', 'cock.li', 'mailfence.com',
+  'posteo.de', 'runbox.com', 'safe-mail.net', 'mail.ru', 'rambler.ru'
+];
+
+function isPersonalEmail(email) {
+  const domain = email.trim().toLowerCase().split('@')[1];
+  return FREE_EMAIL_DOMAINS.includes(domain);
+}
+
 Field.propTypes = {
   label: PropTypes.any.isRequired,
   name: PropTypes.string.isRequired,
@@ -147,13 +164,18 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
   const isValidLength = (value) => value && value.trim().length >= minLength;
 
   const downloadLinkRef = useRef(null);
-  const countryOptions = useMemo(() => getNames()?.map((name) => ({label: name, value: name})), []);
+  const countryOptions = useMemo(() => getNames()?.sort().map((name) => ({label: name, value: name})), []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!isValidEmail(formValues.email)) {
       setError('Email is not valid');
+      return;
+    }
+
+    if (isPersonalEmail(formValues.email)) {
+      setError('Please use a professional/organizational email address. If you do not have access to one, please contact tpi@lse.ac.uk');
       return;
     }
 
@@ -457,7 +479,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
                 <div className="form-section">
                   <h3 className="form-section__title">Self-attestation of use case</h3>
                   <p>
-                    Based on your understanding of the{' '}
+                    After reading the{' '}
                     <a href="https://www.transitionpathwayinitiative.org/use-of-the-centre-s-data" target="_blank" rel="noopener noreferrer">
                       Terms of Use
                     </a>
