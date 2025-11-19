@@ -9,6 +9,7 @@ module CSVExport
         return if @assessments.empty?
 
         headers = [
+          'Company ID',
           'Company Name',
           'Geography',
           'Geography Code',
@@ -40,6 +41,7 @@ module CSVExport
 
           @assessments.each do |assessment|
             csv << [
+              assessment.company.id,
               assessment.company.name,
               assessment.company.geography.name,
               assessment.company.geography.iso,

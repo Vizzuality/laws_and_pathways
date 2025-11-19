@@ -501,6 +501,11 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
                   <p>
                     LSE reserves the right to review requests and in the event of a suspected breach of these terms of use may conduct an investigation and take subsequent action to ensure compliance, or authorise its data partners and/or other third parties to do so on its behalf.
                   </p>
+                  {source === 'mq' && (
+                    <p>
+                      All Management Quality assessments are produced by LSEG, TPI's data partner, using the TPI Centre's methodology. For queries related to Management Quality scores or to discuss licensing for additional use cases, please reach out to tpi_access@lseg.com.
+                    </p>
+                  )}
                   <div className="radio-inputs">
                     <Field
                       value={formValues.self_attestation}

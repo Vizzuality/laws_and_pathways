@@ -11,6 +11,7 @@ module CSVExport
         @assessments = @assessments.where.not(region: nil)
 
         headers = [
+          'Company ID',
           'Company Name',
           'Geography',
           'Geography Code',
@@ -42,6 +43,7 @@ module CSVExport
 
           @assessments.each do |assessment|
             csv << [
+              assessment.company.id,
               assessment.company.name,
               assessment.company.geography.name,
               assessment.company.geography.iso,
