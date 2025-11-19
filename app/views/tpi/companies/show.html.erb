@@ -17,8 +17,16 @@
             Methodology
           <% end %>
           <%= react_component('DownloadFormModal', {
-            downloadUrl: user_download_all_tpi_sectors_path,
-            source: 'companies'
+            title: 'CP Data',
+            buttonClass: 'button is-primary with-icon with-border',
+            downloadUrl: user_download_cp_all_tpi_sectors_path,
+            source: 'cp'
+          }) %>
+          <%= react_component('DownloadFormModal', {
+            title: 'MQ Data',
+            buttonClass: 'button is-primary with-icon with-border',
+            downloadUrl: user_download_mq_all_tpi_sectors_path,
+            source: 'mq'
           }) %>
         </div>
       </div>

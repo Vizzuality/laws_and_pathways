@@ -151,7 +151,10 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
     switch (source) {
       case 'sectors':
       case 'companies':
+      case 'cp':
         return 'Carbon Performance';
+      case 'mq':
+        return 'Management Quality';
       case 'banks':
         return 'Banking';
       case 'ascor':
@@ -234,7 +237,17 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
       return;
     }
 
-    fetch(`/${source}/send_download_file_info_email`, {
+    const getEmailEndpoint = () => {
+      if (source === 'cp') {
+        return '/sectors/send_download_cp_info_email';
+      } else if (source === 'mq') {
+        return '/sectors/send_download_mq_info_email';
+      } else {
+        return `/${source}/send_download_file_info_email`;
+      }
+    };
+
+    fetch(getEmailEndpoint(), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
