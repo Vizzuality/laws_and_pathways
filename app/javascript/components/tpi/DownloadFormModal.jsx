@@ -140,7 +140,7 @@ const initialFormValues = {
   self_attestation: ''
 };
 
-function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
+function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon = false }) {
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(null);
   const [formValues, setFormValues] = useState(initialFormValues);
@@ -282,18 +282,18 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
   return (
     <div>
       <button type="button" onClick={() => setShowModal(true)} className={buttonClass || 'button is-primary with-icon with-border'}>
-        <img src={downloadIcon} alt="download icon" />
+        {showIcon && <img src={downloadIcon} alt="download icon" />}
         { title || 'Download Data'}
       </button>
 
       <OverlayProvider>
         <Modal
-          title="Data Disclaimer"
+          title="Data disclaimer"
           open={showModal}
           onClose={() => setShowModal(false)}
         >
           <div className="download-form">
-            <h2>Data Disclaimer</h2>
+            <h2>Data disclaimer</h2>
             <div className="content">
               <form onSubmit={handleSubmit}>
                 <div className="disclaimer-text">
@@ -327,7 +327,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
                   fields below are mandatory.
                 </p>
                 <div className="form-section">
-                  <h3 className="form-section__title">Personal Details</h3>
+                  <h3 className="form-section__title">Personal details</h3>
                   <div className="text-inputs">
                     <Field
                       value={formValues.email}
@@ -568,7 +568,8 @@ DownloadFormModal.propTypes = {
   buttonClass: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   downloadUrl: PropTypes.string.isRequired,
-  source: PropTypes.string.isRequired
+  source: PropTypes.string.isRequired,
+  showIcon: PropTypes.bool
 };
 
 export default DownloadFormModal;

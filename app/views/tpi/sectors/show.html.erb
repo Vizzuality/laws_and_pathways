@@ -15,19 +15,19 @@
       <div class="mq-beta-scores">
         <%= render 'tpi/shared/mq_beta_scores', has_data: true %>
         <div class="mq-beta-scores__download-button">
-          <%= button_to user_download_methodology_tpi_sectors_path, class: 'button is-primary is-pulled-right with-icon with-border is-left', method: :get do %>
+          <%= button_to user_download_methodology_tpi_sectors_path, class: 'button is-primary is-pulled-right with-icon with-border', method: :get do %>
             <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
             Methodology
           <% end %>
           <%= react_component('DownloadFormModal', {
             title: 'CP Data',
-            buttonClass: 'button is-primary with-icon with-border',
+            buttonClass: 'button is-primary with-border',
             downloadUrl: user_download_cp_tpi_sector_path(@sector),
             source: 'cp'
           }) %>
           <%= react_component('DownloadFormModal', {
             title: 'MQ Data',
-            buttonClass: 'button is-primary with-icon with-border',
+            buttonClass: 'button is-primary with-border',
             downloadUrl: user_download_mq_tpi_sector_path(@sector),
             source: 'mq'
           }) %>
