@@ -190,6 +190,10 @@
         </div>
       </div>
 
+      <div id="mq-assessment-metadata" class="mq-assessment-metadata">
+        <%= render partial: 'mq_assessment_metadata', locals: { assessment: @mq_assessment } %>
+      </div>
+
       <div id="mq-assessment" class="management-quality__content">
 
         <%= render partial: 'mq_assessment', locals: { assessment: @mq_assessment } if @mq_assessment.present? %>

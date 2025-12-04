@@ -8,6 +8,7 @@ ActiveAdmin.register MQ::Assessment do
   actions :all, except: [:new, :create]
 
   permit_params :assessment_date, :publication_date, :company_id, :notes, :level,
+                :fiscal_year, :assessment_type,
                 questions_attributes: [:answer]
 
   filter :assessment_date
@@ -51,6 +52,8 @@ ActiveAdmin.register MQ::Assessment do
       row :level, &:level_tag
       row :assessment_date
       row :publication_date
+      row :fiscal_year
+      row :assessment_type
       row :notes
       row :created_at
       row :updated_at
@@ -87,6 +90,8 @@ ActiveAdmin.register MQ::Assessment do
     column :assessment_date
     column :publication_date, &:publication_date_csv
     column :level
+    column :fiscal_year
+    column :assessment_type
     column :notes
 
     # we can take first assessment questions "schema"

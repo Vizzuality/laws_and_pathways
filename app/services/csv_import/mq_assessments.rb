@@ -13,6 +13,8 @@ module CSVImport
         assessment.assessment_date = assessment_date(row) if row.header?(:assessment_date)
         assessment.publication_date = publication_date(row) if row.header?(:publication_date)
         assessment.level = row[:level].presence if row.header?(:level)
+        assessment.fiscal_year = row[:fiscal_year].presence if row.header?(:fiscal_year)
+        assessment.assessment_type = row[:assessment_type].presence if row.header?(:assessment_type)
         assessment.notes = row[:notes].presence if row.header?(:notes)
         assessment.questions = get_questions(row) if question_headers?(row)
 
@@ -63,7 +65,7 @@ module CSVImport
     end
 
     def publication_date(row)
-      CSVImport::DateUtils.safe_parse!(row[:publication_date], ['%Y-%m'])
+      CSVImport::DateUtils.safe_parse!(row[:publication_date], ['%Y-%m', '%d/%m/%Y'])
     end
 
     def get_questions(row)
