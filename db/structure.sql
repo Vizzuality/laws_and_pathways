@@ -1,4 +1,4 @@
-\restrict e0dSCqsuDT0OFaY9biJGIk13iRzd3Ihvpa32WHSxxFKHwqcrt27CDkr9vOwznKN
+\restrict kcly7TzsYCv74TPrv3ymgDA2zczaarz5ewmeTRpo6BuoOm6MJFNPlAkxF3OqU38
 
 -- Dumped from database version 11.20
 -- Dumped by pg_dump version 16.10 (Ubuntu 16.10-0ubuntu0.24.04.1)
@@ -4394,7 +4394,7 @@ ALTER TABLE ONLY public.companies
 -- PostgreSQL database dump complete
 --
 
-\unrestrict e0dSCqsuDT0OFaY9biJGIk13iRzd3Ihvpa32WHSxxFKHwqcrt27CDkr9vOwznKN
+\unrestrict kcly7TzsYCv74TPrv3ymgDA2zczaarz5ewmeTRpo6BuoOm6MJFNPlAkxF3OqU38
 
 SET search_path TO "$user", public;
 
@@ -4586,6 +4586,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250912094608'),
 ('20251031120000'),
 ('20251031120001'),
-('20251204110115');
+('20251204110115'),
+('20251204154629');
 
 
