@@ -22,7 +22,14 @@ module TPI
         page: bank_page,
         code: 'methodology_publication_id'
       )
-      @methodology_publication = Publication.find_by(id: @methodology_id&.text)
+      @cp_methodology_id = Content.find_by(
+        page: bank_page,
+        code: 'cp_methodology_publication_id'
+      )
+      @methodology_publications = [
+        Publication.find_by(id: @methodology_id&.text),
+        Publication.find_by(id: @cp_methodology_id&.text)
+      ].compact
 
       fixed_navbar('Banks', admin_banks_path)
     end

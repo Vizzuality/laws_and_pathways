@@ -10,7 +10,7 @@ module ResourceAttributes
       :id, :_destroy, :name, :language, :external_url, :type, :file
     ],
     contents: [
-      :id, :_destroy, :title, :text, :content_type
+      :id, :_destroy, :title, :text, :content_type, :code
     ],
     images: [
       :id, :_destroy, :link, :logo, :name

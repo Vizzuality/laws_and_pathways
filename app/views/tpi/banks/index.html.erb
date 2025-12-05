@@ -24,7 +24,7 @@
 
     <div class="banks-header container">
       <div>
-        <% if @methodology_publication.present? %>
+        <% if @methodology_publications.any? %>
           <a href="#methodology" class="link with-icon is-pulled-left">
             <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" class="is-hidden-touch" />
             Methodology
@@ -75,18 +75,18 @@
     </div>
   </section>
 
-  <% if @methodology_publication.present? %>
+  <% if @methodology_publications.any? %>
     <section id="methodology" class="container">
-      <div class="columns">
-        <div class="column pages__content">
+      <div class="columns is-variable is-8 is-align-items-flex-start">
+        <div class="column is-half pages__content">
           <h4>Methodology</h4>
 
           <div>
             <%= @methodology_description&.text&.html_safe %>
           </div>
         </div>
-        <div class="column">
-          <%= render 'tpi/publications/list', publications_and_articles: [@methodology_publication] %>
+        <div class="column is-half" style="padding-top: 0;">
+          <%= render 'tpi/publications/list', publications_and_articles: @methodology_publications %>
         </div>
       </div>
     </section>
