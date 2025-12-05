@@ -1,4 +1,4 @@
-class AddCpMethodologyPublicationIdToBanksContent < ActiveRecord::Migration[6.1]
+class AddCPMethodologyPublicationIdToBanksContent < ActiveRecord::Migration[6.1]
   def up
     bank_page = TPIPage.find_by(slug: 'banks-content')
     return unless bank_page
