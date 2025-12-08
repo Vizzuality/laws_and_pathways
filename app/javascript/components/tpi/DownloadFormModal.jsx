@@ -328,12 +328,12 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon =
                 </p>
                 <div className="form-section">
                   <h3 className="form-section__title">Personal details</h3>
-                  <div className="text-inputs">
-                    <Field
-                      value={formValues.email}
-                      onChange={handleChange}
-                      required
-                      minLength={minLength}
+                <div className="text-inputs">
+                  <Field
+                    value={formValues.email}
+                    onChange={handleChange}
+                    required
+                    minLength={minLength}
                       label={
                         <>
                           Email{' '}
@@ -342,33 +342,33 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon =
                           />
                         </>
                       }
-                      name="email"
+                    name="email"
                       placeholder="Professional email addresses only"
-                    />
-                    <Field
-                      value={formValues.job_title}
-                      onChange={handleChange}
-                      required
-                      minLength={minLength}
-                      label="Job title"
-                      name="job_title"
-                    />
-                    <Field
-                      value={formValues.forename}
-                      onChange={handleChange}
-                      required
-                      minLength={minLength}
-                      label="Forename"
-                      name="forename"
-                    />
-                    <Field
-                      value={formValues.surname}
-                      onChange={handleChange}
-                      required
-                      minLength={minLength}
-                      label="Surname"
-                      name="surname"
-                    />
+                  />
+                  <Field
+                    value={formValues.job_title}
+                    onChange={handleChange}
+                    required
+                    minLength={minLength}
+                    label="Job title"
+                    name="job_title"
+                  />
+                  <Field
+                    value={formValues.forename}
+                    onChange={handleChange}
+                    required
+                    minLength={minLength}
+                    label="Forename"
+                    name="forename"
+                  />
+                  <Field
+                    value={formValues.surname}
+                    onChange={handleChange}
+                    required
+                    minLength={minLength}
+                    label="Surname"
+                    name="surname"
+                  />
                     <Field
                       value={formValues.organisation}
                       onChange={handleChange}
@@ -377,33 +377,33 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon =
                       label="Organisation name"
                       name="organisation"
                     />
-                    <Field
-                      value={formValues.location}
-                      onChange={handleChange}
-                      required
-                      minLength={minLength}
-                      label="Location"
+                  <Field
+                    value={formValues.location}
+                    onChange={handleChange}
+                    required
+                    minLength={minLength}
+                    label="Location"
+                    name="location"
+                  >
+                    <Select
                       name="location"
-                    >
-                      <Select
-                        name="location"
-                        placeholder="Select country"
-                        onSelect={(e) => handleChange({ target: e })}
-                        value={formValues.location}
-                        label="Select country"
-                        allowSearch
-                        required
-                        options={countryOptions}
-                      />
-                    </Field>
+                      placeholder="Select country"
+                      onSelect={(e) => handleChange({ target: e })}
+                      value={formValues.location}
+                      label="Select country"
+                      allowSearch
+                      required
+                      options={countryOptions}
+                    />
+                  </Field>
                   </div>
                 </div>
                 <div className="form-section">
                   <h3 className="form-section__title">Use case details</h3>
                   <div className="text-inputs">
-                    <Field
+                  <Field
                       value={formValues.organisation_type}
-                      onChange={handleChange}
+                    onChange={handleChange}
                       required
                       label="Organisation type"
                       name="organisation_type"
@@ -419,9 +419,9 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon =
                       />
                     </Field>
                     {formValues.organisation_type === 'Asset owner' && (
-                      <Field
+                  <Field
                         value={formValues.asset_owner_type}
-                        onChange={handleChange}
+                    onChange={handleChange}
                         required
                         label="Asset owner type"
                         name="asset_owner_type"
@@ -438,18 +438,18 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon =
                       </Field>
                     )}
                     {formValues.organisation_type === 'Other' && (
-                      <Field
+                  <Field
                         value={formValues.organisation_type_other}
-                        onChange={handleChange}
+                    onChange={handleChange}
                         required
                         label="Please specify"
                         name="organisation_type_other"
                         placeholder="Specify your organisation type"
                       />
                     )}
-                    <Field
+                  <Field
                       value={formValues.use_case}
-                      onChange={handleChange}
+                    onChange={handleChange}
                       required
                       label="Use case"
                       name="use_case"
@@ -466,9 +466,9 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon =
                     </Field>
                   </div>
                   <div className="full-width-field">
-                    <Field
+                  <Field
                       value={formValues.use_case_description}
-                      onChange={handleChange}
+                    onChange={handleChange}
                       required
                       label="Description of use case"
                       name="use_case_description"
@@ -477,7 +477,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon =
                         name="use_case_description"
                         id="use_case_description"
                         value={formValues.use_case_description}
-                        onChange={handleChange}
+                    onChange={handleChange}
                         placeholder="To help us understand how our data are used, please provide more detail on your intended use case, including whether it's directly related to the generation of revenue or commercial compensation."
                         maxLength={500}
                         required
@@ -525,7 +525,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon =
                         required
                       />
                     </Field>
-                    <Field
+                  <Field
                       value={formValues.self_attestation}
                       onChange={handleChange}
                       required
@@ -539,9 +539,9 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon =
                         id="self_attestation_permitted"
                         value="Permitted uses without Authorisation or License"
                         checked={formValues.self_attestation === 'Permitted uses without Authorisation or License'}
-                        onChange={handleChange}
+                    onChange={handleChange}
                         required
-                      />
+                  />
                     </Field>
                   </div>
                 </div>
