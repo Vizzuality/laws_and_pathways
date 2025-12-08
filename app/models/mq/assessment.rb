@@ -15,6 +15,7 @@
 #  methodology_version :integer          not null
 #  fiscal_year         :string
 #  assessment_type     :string
+#  downloadable        :string           default("Yes")
 #
 
 module MQ
@@ -32,6 +33,7 @@ module MQ
     belongs_to :company, inverse_of: :mq_assessments
 
     before_validation :set_default_assessment_type
+    before_validation :normalize_downloadable
 
     scope :latest_first, -> { order(assessment_date: :desc) }
     scope :all_publication_dates, -> { distinct.order(publication_date: :desc).pluck(:publication_date) }
@@ -42,6 +44,7 @@ module MQ
 
     validates :level, inclusion: {in: LEVELS}
     validates :assessment_type, inclusion: {in: ASSESSMENT_TYPES}, allow_nil: true
+    validates :downloadable, inclusion: {in: %w[Yes No]}, allow_nil: true
     validates_presence_of :assessment_date, :publication_date, :level, :methodology_version
     validates :assessment_date, date_after: Date.new(2010, 12, 31)
     validates :publication_date, date_after: Date.new(2010, 12, 31)
@@ -116,6 +119,11 @@ module MQ
 
     def set_default_assessment_type
       self.assessment_type ||= 'Final'
+    end
+
+    def normalize_downloadable
+      self.downloadable = downloadable.to_s.strip.capitalize if downloadable.present?
+      self.downloadable ||= 'Yes'
     end
   end
 end

@@ -7,6 +7,7 @@
     <%= f.input :publication_date %>
     <%= f.input :level, as: :select, collection: MQ::Assessment::LEVELS %>
     <%= f.input :fiscal_year %>
+    <%= f.input :downloadable, as: :select, collection: ['Yes', 'No'] %>
     <%= f.input :notes %>
   <% end %>
 

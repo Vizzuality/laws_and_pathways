@@ -1,4 +1,4 @@
-\restrict R3kHltMlP07Ldn2rnUTx2yGonyl9KGSchOQfeBRBAa2b7TIL5YaGdQvjjVpwzt0
+\restrict cxu0VSRWgbCYel7h0p6IKKWk7S41IRTomA0V0gC3apb7tLmoaBQVmypV9KPdzgG
 
 -- Dumped from database version 11.20
 -- Dumped by pg_dump version 16.10 (Ubuntu 16.10-0ubuntu0.24.04.1)
@@ -1643,7 +1643,8 @@ CREATE TABLE public.mq_assessments (
     discarded_at timestamp without time zone,
     methodology_version integer NOT NULL,
     fiscal_year character varying,
-    assessment_type character varying
+    assessment_type character varying,
+    downloadable character varying DEFAULT 'Yes'::character varying
 );
 
 
@@ -4394,7 +4395,7 @@ ALTER TABLE ONLY public.companies
 -- PostgreSQL database dump complete
 --
 
-\unrestrict R3kHltMlP07Ldn2rnUTx2yGonyl9KGSchOQfeBRBAa2b7TIL5YaGdQvjjVpwzt0
+\unrestrict cxu0VSRWgbCYel7h0p6IKKWk7S41IRTomA0V0gC3apb7tLmoaBQVmypV9KPdzgG
 
 SET search_path TO "$user", public;
 
@@ -4587,6 +4588,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20251031120000'),
 ('20251031120001'),
 ('20251204110115'),
-('20251204154629');
+('20251204154629'),
+('20251208090415');
 
 

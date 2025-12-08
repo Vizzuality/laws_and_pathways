@@ -15,6 +15,7 @@ module CSVImport
         assessment.level = row[:level].presence if row.header?(:level)
         assessment.fiscal_year = row[:fiscal_year].presence if row.header?(:fiscal_year)
         assessment.assessment_type = row[:assessment_type].presence if row.header?(:assessment_type)
+        assessment.downloadable = row[:downloadable].presence if row.header?(:downloadable)
         assessment.notes = row[:notes].presence if row.header?(:notes)
         assessment.questions = get_questions(row) if question_headers?(row)
 
