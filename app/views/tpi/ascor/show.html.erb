@@ -26,10 +26,11 @@
       </div>
 
       <%= react_component('DownloadFormModal', {
-        title: 'Download ASCOR data',
-        buttonClass: 'button is-emphasis is-pulled-right with-icon with-border',
+        title: 'Explore ASCOR data access',
+        buttonClass: 'button is-primary is-pulled-right with-icon with-border',
         downloadUrl: user_download_tpi_ascor_index_path,
-        source: 'ascor'
+        source: 'ascor',
+        showIcon: true
       }) %>
     </div>
   </div>

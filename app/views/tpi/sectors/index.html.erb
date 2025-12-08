@@ -19,16 +19,18 @@
             Methodology
           <% end %>
           <%= react_component('DownloadFormModal', {
-            title: 'CP Data',
-            buttonClass: 'button is-primary with-border',
+            title: 'Explore CP data access',
+            buttonClass: 'button is-primary with-icon with-border',
             downloadUrl: user_download_cp_all_tpi_sectors_path,
-            source: 'cp'
+            source: 'cp',
+            showIcon: true
           }) %>
           <%= react_component('DownloadFormModal', {
-            title: 'MQ Data',
-            buttonClass: 'button is-primary with-border',
+            title: 'Explore MQ data access',
+            buttonClass: 'button is-primary with-icon with-border',
             downloadUrl: user_download_mq_all_tpi_sectors_path,
-            source: 'mq'
+            source: 'mq',
+            showIcon: true
           }) %>
         </div>
       </div>
