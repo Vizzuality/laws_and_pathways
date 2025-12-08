@@ -1,4 +1,4 @@
-\restrict kcly7TzsYCv74TPrv3ymgDA2zczaarz5ewmeTRpo6BuoOm6MJFNPlAkxF3OqU38
+\restrict R3kHltMlP07Ldn2rnUTx2yGonyl9KGSchOQfeBRBAa2b7TIL5YaGdQvjjVpwzt0
 
 -- Dumped from database version 11.20
 -- Dumped by pg_dump version 16.10 (Ubuntu 16.10-0ubuntu0.24.04.1)
@@ -4394,7 +4394,7 @@ ALTER TABLE ONLY public.companies
 -- PostgreSQL database dump complete
 --
 
-\unrestrict kcly7TzsYCv74TPrv3ymgDA2zczaarz5ewmeTRpo6BuoOm6MJFNPlAkxF3OqU38
+\unrestrict R3kHltMlP07Ldn2rnUTx2yGonyl9KGSchOQfeBRBAa2b7TIL5YaGdQvjjVpwzt0
 
 SET search_path TO "$user", public;
 

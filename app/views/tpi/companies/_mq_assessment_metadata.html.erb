@@ -6,16 +6,10 @@
         <span class="mq-assessment-metadata__value"><%= assessment.fiscal_year %></span>
       </div>
     <% end %>
-    <% if assessment.assessment_type.present? %>
+    <% if assessment.publication_date.present? %>
       <div class="mq-assessment-metadata__item">
-        <span class="mq-assessment-metadata__label">Assessment Type:</span>
-        <span class="mq-assessment-metadata__value"><%= assessment.assessment_type %></span>
-      </div>
-    <% end %>
-    <% if assessment.created_at.present? %>
-      <div class="mq-assessment-metadata__item">
-        <span class="mq-assessment-metadata__label">Upload Date:</span>
-        <span class="mq-assessment-metadata__value"><%= assessment.created_at.strftime('%d %B %Y') %></span>
+        <span class="mq-assessment-metadata__label">Publication Date:</span>
+        <span class="mq-assessment-metadata__value"><%= assessment.publication_date.strftime('%d %B %Y') %></span>
       </div>
     <% end %>
   </div>
