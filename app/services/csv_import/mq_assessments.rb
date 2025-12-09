@@ -8,8 +8,10 @@ module CSVImport
       import_each_csv_row(csv) do |row|
         assessment = prepare_assessment(row)
 
+        company = find_company!(row) if row.header?(:company_id)
+        assessment.company = company if company.present?
+
         assessment.methodology_version = row[:methodology_version] if row.header?(:methodology_version)
-        assessment.company = find_company!(row) if row.header?(:company_id)
         assessment.assessment_date = assessment_date(row) if row.header?(:assessment_date)
         assessment.publication_date = publication_date(row) if row.header?(:publication_date)
         assessment.level = row[:level].presence if row.header?(:level)
@@ -47,12 +49,17 @@ module CSVImport
     end
 
     def prepare_assessment(row)
-      find_record_by(:id, row) ||
-        MQ::Assessment.find_or_initialize_by(
-          company: find_company!(row),
-          assessment_date: assessment_date(row),
-          methodology_version: row[:methodology_version].to_s
-        )
+      existing = find_record_by(:id, row)
+      return existing if existing
+
+      company = find_company!(row)
+      return MQ::Assessment.new if company.nil?
+
+      MQ::Assessment.find_or_initialize_by(
+        company_id: company.id,
+        assessment_date: assessment_date(row),
+        methodology_version: row[:methodology_version].to_s
+      )
     end
 
     def find_company!(row)
