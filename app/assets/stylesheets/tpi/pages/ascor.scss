@@ -71,6 +71,7 @@ $see-more-width-tablet: 130px;
       align-items: center;
       justify-content: flex-end;
       flex-wrap: wrap;
+      gap: 10px;
 
       &.show-version {
         justify-content: space-between;
