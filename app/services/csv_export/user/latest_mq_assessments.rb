@@ -24,6 +24,7 @@ module CSVExport
           'SEDOL',
           'MQ Publication Date',
           'MQ Assessment Date',
+          'Fiscal Year',
           'Level',
           'Performance Compared to Previous Year',
           *question_headers
@@ -47,6 +48,7 @@ module CSVExport
               company.sedol&.tr(',', ';')&.tr(' ', ''),
               mq_assessment&.publication_date,
               mq_assessment&.assessment_date,
+              mq_assessment&.fiscal_year,
               mq_assessment&.level,
               mq_assessment&.status,
               question_headers.map do |header|
