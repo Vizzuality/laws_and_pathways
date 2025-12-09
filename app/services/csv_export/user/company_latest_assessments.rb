@@ -119,13 +119,17 @@ module CSVExport
       private
 
       def get_latest_mq_assessments_hash(assessments)
-        assessments = assessments.reject(&:beta_methodology?) unless @enable_beta_mq_assessments
         latest_methodology = assessments
           .select { |a| a.methodology_version.present? }
           .max_by(&:methodology_version)&.methodology_version
 
+        return {} unless latest_methodology
+
         assessments.group_by(&:company_id).transform_values do |grouped|
-          grouped.find { |a| a.methodology_version == latest_methodology }
+          matching_methodology = grouped.select { |a| a.methodology_version == latest_methodology }
+          next nil if matching_methodology.empty?
+
+          matching_methodology.max_by { |a| [a.assessment_date, a.publication_date] }
         end
       end
 
