@@ -161,14 +161,14 @@
 
         <div class="is-hidden-touch show-by-dropdown assessment-date__container">
           <div class="caption">
-            Assessment Date:
+            Publication Date:
           </div>
           <div class="date-dropdown">
             <%= react_component('RemoteDropdown', {
               name: 'mq_assessment_id',
               remote: true,
               url: mq_assessment_tpi_company_path(@company),
-              data: hide_mq_assessments_with_same_date(@company_presenter.mq_assessments).map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
+              data: hide_mq_assessments_with_same_date(@company_presenter.mq_assessments).map {|v| {label: v['publication_date']&.strftime('%d %B %Y'), value: v['id']}},
               selected: params[:mq_assessment_id]
             }) %>
           </div>
@@ -179,14 +179,14 @@
       </p>
       <div class="is-hidden-desktop assessment-date__container">
         <div class="caption">
-          Assessment Date:
+          Publication Date:
         </div>
         <div class="date-dropdown">
           <%= react_component('RemoteDropdown', {
             name: 'mq_assessment_id',
             remote: true,
             url: mq_assessment_tpi_company_path(@company),
-            data: @company_presenter.mq_assessments.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
+            data: @company_presenter.mq_assessments.map {|v| {label: v['publication_date']&.strftime('%d %B %Y'), value: v['id']}},
             selected: params[:mq_assessment_id]
           }) %>
         </div>
