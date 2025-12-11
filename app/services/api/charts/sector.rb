@@ -115,7 +115,6 @@ module Api
           )
           .map { |c| update_beta_mq_assessments_visibility c }
           .reject { |c| c.mq_level.nil? }
-          .select { |c| @enable_beta_mq_assessments ? c.latest_mq_assessment.beta_methodology? : true }
           .group_by { |c| c.mq_level.to_i.to_s }
       end
 
@@ -127,7 +126,6 @@ module Api
             :latest_mq_assessment_only_beta_methodologies
           )
           .map { |c| update_beta_mq_assessments_visibility c }
-          .select { |c| @enable_beta_mq_assessments ? c.latest_mq_assessment.beta_methodology? : true }
           .group_by { |company| company.sector.name }
       end
 

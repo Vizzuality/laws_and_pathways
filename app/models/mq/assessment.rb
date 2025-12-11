@@ -25,9 +25,7 @@ module MQ
 
     LEVELS = %w[0 1 2 3 4 4STAR 5 5STAR].freeze
     ASSESSMENT_TYPES = %w[Preliminary Final].freeze
-    BETA_METHODOLOGIES = { # taken into account only when beta is enabled
-      5 => {levels: %w[5], highlight_questions: %w[]}
-    }.freeze
+    BETA_METHODOLOGIES = {}.freeze
     BETA_LEVELS = BETA_METHODOLOGIES.map { |_k, v| v[:levels] }.flatten.freeze
 
     belongs_to :company, inverse_of: :mq_assessments
@@ -59,14 +57,14 @@ module MQ
       company
         .mq_assessments
         .select { |a| a.publication_date <= DateTime.now }
-        .select { |a| a.assessment_date < assessment_date }
+        .select { |a| a.publication_date < publication_date }
         .sort { |a, b| [b.publication_date, b.assessment_date] <=> [a.publication_date, a.assessment_date] }
     end
 
     def status
       return 'new' unless previous.present?
-      return 'up' if level > previous.level && previous.methodology_version == methodology_version
-      return 'down' if level < previous.level && previous.methodology_version == methodology_version
+      return 'up' if level > previous.level
+      return 'down' if level < previous.level
 
       'unchanged'
     end
