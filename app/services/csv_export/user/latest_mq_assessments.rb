@@ -27,7 +27,8 @@ module CSVExport
           'Fiscal Year',
           'Level',
           'Performance Compared to Previous Year',
-          *question_headers
+          *question_headers,
+          'Notes'
         ]
 
         CSV.generate("\xEF\xBB\xBF") do |csv|
@@ -53,7 +54,8 @@ module CSVExport
               mq_assessment&.status,
               question_headers.map do |header|
                 mq_assessment&.find_answer_by_key(header.split('|')[0])
-              end
+              end,
+              mq_assessment&.notes
             ].flatten
           end
         end
