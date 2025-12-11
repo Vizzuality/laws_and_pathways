@@ -503,7 +503,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon =
                   </p>
                   {source === 'mq' && (
                     <p>
-                      All Management Quality assessments are produced by LSEG, TPI's data partner, using the TPI Centre's methodology. For queries related to Management Quality scores or to discuss licensing for additional use cases, please reach out to tpi_access@lseg.com.
+                      All Management Quality assessments are produced by LSEG, TPI's data partner, using the TPI Centre's methodology. For queries related to Management Quality scores or to discuss licensing for additional use cases, please reach out to tpimqaccess@lseg.com
                     </p>
                   )}
                   <div className="radio-inputs">

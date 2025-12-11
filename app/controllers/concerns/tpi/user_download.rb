@@ -45,14 +45,12 @@ module TPI
       cp_assessments_csv = CSVExport::User::CompanyCPAssessments.new(cp_assessments).call
       cp_assessments_regional_csv = CSVExport::User::CompanyCPAssessmentsRegional.new(cp_assessments).call
       sector_benchmarks_csv = CSVExport::User::CPBenchmarks.new(cp_benchmarks).call
-      user_guide = File.binread(Rails.root.join('public', 'tpi', 'export_support', 'User guide TPI files.xlsx'))
 
       files = {
         'Latest_CP_Assessments.csv' => latest_cp_assessments_csv,
         "CP_Assessments_#{timestamp}.csv" => cp_assessments_csv,
         "CP_Assessments_Regional_#{timestamp}.csv" => cp_assessments_regional_csv,
-        "Sector_Benchmarks_#{timestamp}.csv" => sector_benchmarks_csv,
-        'User guide TPI files.xlsx' => user_guide
+        "Sector_Benchmarks_#{timestamp}.csv" => sector_benchmarks_csv
       }
 
       render zip: files.compact, filename: "#{filename} - #{timestamp}"
@@ -70,12 +68,12 @@ module TPI
         }
       end.reduce(&:merge)
 
-      user_guide = File.binread(Rails.root.join('public', 'tpi', 'export_support', 'User guide TPI files.xlsx'))
+      user_guide = File.binread(Rails.root.join('public', 'tpi', 'export_support', 'User guide - Management Quality.xlsx'))
 
       files = {
         'Latest_MQ_Assessments.csv' => latest_mq_assessments_csv
       }.merge(mq_assessments_files || {}).merge(
-        'User guide TPI files.xlsx' => user_guide
+        'User guide - Management Quality.xlsx' => user_guide
       )
 
       render zip: files.compact, filename: "#{filename} - #{timestamp}"
