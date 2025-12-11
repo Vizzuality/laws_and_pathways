@@ -10,14 +10,24 @@
   <div class="companies-header">
     <div class="container is-hidden-touch">
       <div class="mq-beta-scores">
-        <%= render 'tpi/shared/mq_beta_scores', has_data: @company.beta_mq_assessments? %>
         <div class="mq-beta-scores__download-button">
-          <%= button_to user_download_methodology_tpi_sectors_path, class: 'button is-primary is-pulled-right with-icon with-border is-left', method: :get do %>
+          <%= button_to user_download_methodology_tpi_sectors_path, class: 'button is-primary is-pulled-right with-icon with-border', method: :get do %>
             <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
             Methodology
           <% end %>
           <%= react_component('DownloadFormModal', {
-            downloadUrl: user_download_all_tpi_sectors_path
+            title: 'Explore CP data access',
+            buttonClass: 'button is-primary with-icon with-border',
+            downloadUrl: user_download_cp_all_tpi_sectors_path,
+            source: 'cp',
+            showIcon: true
+          }) %>
+          <%= react_component('DownloadFormModal', {
+            title: 'Explore MQ data access',
+            buttonClass: 'button is-primary with-icon with-border',
+            downloadUrl: user_download_mq_all_tpi_sectors_path,
+            source: 'mq',
+            showIcon: true
           }) %>
         </div>
       </div>
@@ -151,14 +161,14 @@
 
         <div class="is-hidden-touch show-by-dropdown assessment-date__container">
           <div class="caption">
-            Assessment Date:
+            Publication Date:
           </div>
           <div class="date-dropdown">
             <%= react_component('RemoteDropdown', {
               name: 'mq_assessment_id',
               remote: true,
               url: mq_assessment_tpi_company_path(@company),
-              data: hide_mq_assessments_with_same_date(@company_presenter.mq_assessments).map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
+              data: hide_mq_assessments_with_same_date(@company_presenter.mq_assessments).map {|v| {label: v['publication_date']&.strftime('%d %B %Y'), value: v['id']}},
               selected: params[:mq_assessment_id]
             }) %>
           </div>
@@ -169,17 +179,21 @@
       </p>
       <div class="is-hidden-desktop assessment-date__container">
         <div class="caption">
-          Assessment Date:
+          Publication Date:
         </div>
         <div class="date-dropdown">
           <%= react_component('RemoteDropdown', {
             name: 'mq_assessment_id',
             remote: true,
             url: mq_assessment_tpi_company_path(@company),
-            data: @company_presenter.mq_assessments.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
+            data: @company_presenter.mq_assessments.map {|v| {label: v['publication_date']&.strftime('%d %B %Y'), value: v['id']}},
             selected: params[:mq_assessment_id]
           }) %>
         </div>
+      </div>
+
+      <div id="mq-assessment-metadata" class="mq-assessment-metadata">
+        <%= render partial: 'mq_assessment_metadata', locals: { assessment: @mq_assessment } %>
       </div>
 
       <div id="mq-assessment" class="management-quality__content">

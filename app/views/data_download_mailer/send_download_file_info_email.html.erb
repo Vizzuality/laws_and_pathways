@@ -1,19 +1,24 @@
 <h2>Following user downloaded data from TPI website</h2>
 
+<h3>Personal details</h3>
 <p><strong>Email:</strong> <%= @data[:email] %></p>
 <p><strong>Job Title:</strong> <%= @data[:job_title] %></p>
 <p><strong>Forename:</strong> <%= @data[:forename] %></p>
 <p><strong>Surname:</strong> <%= @data[:surname] %></p>
+<p><strong>Organisation Name:</strong> <%= @data[:organisation] %></p>
 <p><strong>Location:</strong> <%= @data[:location] %></p>
-<p><strong>Organisation:</strong> <%= @data[:organisation] %></p>
 
-<h3>Purposes</h3>
-<ul>
-  <% Array.wrap(@data[:purposes]).each do |purpose| %>
-    <% if purpose == "other_purpose_checkbox" %>
-      <li><strong>Other:</strong> <%= @data[:other_purpose] %></li>
-    <% else %>
-      <li><%= purpose %></li>
-    <% end %>
-  <% end %>
-</ul>
+<h3>Use case details</h3>
+<p><strong>Organisation Type:</strong> <%= @data[:organisation_type] %></p>
+<% if @data[:asset_owner_type].present? %>
+  <p><strong>Asset Owner Type:</strong> <%= @data[:asset_owner_type] %></p>
+<% end %>
+<% if @data[:organisation_type_other].present? %>
+  <p><strong>Organisation Type (Other):</strong> <%= @data[:organisation_type_other] %></p>
+<% end %>
+<p><strong>Use Case:</strong> <%= @data[:use_case] %></p>
+<p><strong>Description of Use Case:</strong></p>
+<p><%= @data[:use_case_description] %></p>
+
+<h3>Self-attestation of use case</h3>
+<p><strong><%= @data[:self_attestation] %></strong></p>

@@ -426,6 +426,45 @@
     }
   }
 
+  .mq-assessment-metadata {
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    &__row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      align-items: center;
+    }
+
+    &__item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    &__label {
+      color: $grey-dark;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    &__value {
+      color: $black;
+      font-size: 14px;
+    }
+
+    @include until($desktop) {
+      margin-top: 15px;
+      
+      &__row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+    }
+  }
+
   .carbon-performance {
     margin-top: 50px;
     margin-bottom: 50px;

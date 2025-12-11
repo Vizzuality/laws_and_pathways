@@ -11,11 +11,57 @@
     margin-bottom: 20px;
   }
   h2 {
+    color: $blue;
     font-size: 20px !important;
     font-weight: bold;
   }
   .--mandatory {
     color: $red;
+  }
+  .disclaimer-text {
+    margin-bottom: 20px;
+    p {
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+    a {
+      color: $blue;
+      text-decoration: underline;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+  .form-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid $blue;
+    
+    &:first-of-type {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+
+    &__title {
+      color: $blue;
+      font-size: 20px !important;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
+
+    p {
+      margin-bottom: 16px;
+      line-height: 1.5;
+      
+      a {
+        color: $blue;
+        text-decoration: underline;
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
   }
   .content {
     input[type="text"] {
@@ -24,6 +70,19 @@
       padding-inline: 10px;
       border-radius: 0;
       border: 1px solid #191919;
+      &::placeholder {
+        color: #595b5d;
+        font-size: 12px;
+      }
+    }
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 0;
+      border: 1px solid #191919;
+      font-family: inherit;
+      font-size: 14px;
+      resize: vertical;
       &::placeholder {
         color: #595b5d;
         font-size: 12px;
@@ -73,6 +132,21 @@
         }
       }
     }
+    .full-width-field {
+      margin-bottom: 20px;
+      
+      .content__input {
+        width: 100%;
+      }
+    }
+
+    .character-count {
+      text-align: right;
+      font-size: 12px;
+      color: $grey-dark;
+      margin-top: 4px;
+    }
+
     .checkbox-inputs {
       display: flex;
       flex-wrap: wrap;
@@ -108,6 +182,51 @@
               transform: scale(1);
             }
           }
+        }
+      }
+    }
+    .radio-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 16px;
+      .content__input {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        gap: 12px;
+        justify-content: flex-end;
+
+        input[type="radio"] {
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          aspect-ratio: 1 / 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: 2px solid $grey-dark;
+          appearance: none;
+          -webkit-appearance: none;
+          cursor: pointer;
+          &::before {
+            content: "";
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: block;
+            transform: scale(0);
+            background-color: $blue;
+          }
+          &:checked {
+            &::before {
+              transform: scale(1);
+            }
+          }
+        }
+
+        label {
+          cursor: pointer;
         }
       }
     }

@@ -4,8 +4,8 @@ module TPI
 
     before_action :enable_beta_mq_assessments
     before_action :fetch_companies, only: [:show, :index]
-    before_action :fetch_sectors, only: [:show, :index, :user_download_all]
-    before_action :fetch_sector, only: [:show, :user_download]
+    before_action :fetch_sectors, only: [:show, :index, :user_download_all, :user_download_cp_all, :user_download_mq_all]
+    before_action :fetch_sector, only: [:show, :user_download, :user_download_cp, :user_download_mq]
     before_action :redirect_if_numeric_or_historic_slug, only: [:show]
 
     helper_method :any_cp_assessment?
@@ -89,6 +89,24 @@ module TPI
       head :ok
     end
 
+    def send_download_cp_info_email
+      DataDownloadMailer.send_download_file_info_email(
+        permitted_email_params,
+        'tpi.centre@lse.ac.uk',
+        'Carbon Performance data has been downloaded'
+      ).deliver_now
+      head :ok
+    end
+
+    def send_download_mq_info_email
+      DataDownloadMailer.send_download_file_info_email(
+        permitted_email_params,
+        'tpi.centre.management.quality@lse.ac.uk',
+        'Management Quality data has been downloaded'
+      ).deliver_now
+      head :ok
+    end
+
     def user_download_all
       send_user_download_file(
         Company.published.select(:id).where(sector_id: @sectors.pluck(:id)),
@@ -96,10 +114,38 @@ module TPI
       )
     end
 
+    def user_download_cp_all
+      send_cp_user_download_file(
+        Company.published.select(:id).where(sector_id: @sectors.pluck(:id)),
+        'TPI Carbon Performance data - All sectors'
+      )
+    end
+
+    def user_download_mq_all
+      send_mq_user_download_file(
+        Company.published.select(:id).where(sector_id: @sectors.pluck(:id)),
+        'TPI Management Quality data - All sectors'
+      )
+    end
+
     def user_download
       send_user_download_file(
         @sector.companies.published.select(:id),
         "TPI sector data - #{@sector.name}"
+      )
+    end
+
+    def user_download_cp
+      send_cp_user_download_file(
+        @sector.companies.published.select(:id),
+        "TPI Carbon Performance data - #{@sector.name}"
+      )
+    end
+
+    def user_download_mq
+      send_mq_user_download_file(
+        @sector.companies.published.select(:id),
+        "TPI Management Quality data - #{@sector.name}"
       )
     end
 
@@ -133,7 +179,7 @@ module TPI
         .currently_published
         .where(company_id: companies_ids)
         .joins(:company)
-        .order('companies.name ASC, assessment_date DESC')
+        .order('companies.name ASC, publication_date DESC, assessment_date DESC')
         .includes(company: [:sector, :geography, :mq_assessments])
       cp_assessments = CP::Assessment
         .currently_published
@@ -146,6 +192,35 @@ module TPI
       send_tpi_user_file(
         mq_assessments: mq_assessments,
         cp_assessments: cp_assessments,
+        filename: filename
+      )
+    end
+
+    def send_cp_user_download_file(companies_ids, filename)
+      cp_assessments = CP::Assessment
+        .currently_published
+        .companies
+        .where(cp_assessmentable_id: companies_ids)
+        .joins(:company)
+        .order('companies.name ASC, assessment_date DESC')
+        .includes(company: [:geography, sector: [:cp_units]])
+
+      send_tpi_cp_file(
+        cp_assessments: cp_assessments,
+        filename: filename
+      )
+    end
+
+    def send_mq_user_download_file(companies_ids, filename)
+      mq_assessments = MQ::Assessment
+        .currently_published
+        .where(company_id: companies_ids)
+        .joins(:company)
+        .order('companies.name ASC, publication_date DESC, assessment_date DESC')
+        .includes(company: [:sector, :geography, :mq_assessments])
+
+      send_tpi_mq_file(
+        mq_assessments: mq_assessments,
         filename: filename
       )
     end
@@ -180,7 +255,20 @@ module TPI
     end
 
     def permitted_email_params
-      params.permit(:email, :job_title, :forename, :surname, :location, :organisation, :other_purpose, purposes: [])
+      params.permit(
+        :email,
+        :job_title,
+        :forename,
+        :surname,
+        :location,
+        :organisation,
+        :organisation_type,
+        :asset_owner_type,
+        :organisation_type_other,
+        :use_case,
+        :use_case_description,
+        :self_attestation
+      )
     end
   end
 end

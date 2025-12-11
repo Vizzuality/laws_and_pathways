@@ -13,6 +13,9 @@
 #  updated_at          :datetime         not null
 #  discarded_at        :datetime
 #  methodology_version :integer          not null
+#  fiscal_year         :string
+#  assessment_type     :string
+#  downloadable        :string           default("Yes")
 #
 
 module MQ
@@ -21,6 +24,7 @@ module MQ
     include TPICache
 
     LEVELS = %w[0 1 2 3 4 4STAR 5 5STAR].freeze
+    ASSESSMENT_TYPES = %w[Preliminary Final].freeze
     BETA_METHODOLOGIES = { # taken into account only when beta is enabled
       5 => {levels: %w[5], highlight_questions: %w[]}
     }.freeze
@@ -28,7 +32,10 @@ module MQ
 
     belongs_to :company, inverse_of: :mq_assessments
 
-    scope :latest_first, -> { order(assessment_date: :desc) }
+    before_validation :set_default_assessment_type
+    before_validation :normalize_downloadable
+
+    scope :latest_first, -> { order(publication_date: :desc, assessment_date: :desc) }
     scope :all_publication_dates, -> { distinct.order(publication_date: :desc).pluck(:publication_date) }
     scope :all_methodology_versions, -> { distinct.order(methodology_version: :asc).pluck(:methodology_version) }
     scope :currently_published, -> { where('publication_date <= ?', DateTime.now) }
@@ -36,6 +43,8 @@ module MQ
     scope :only_beta_methodologies, -> { where(methodology_version: BETA_METHODOLOGIES.keys) }
 
     validates :level, inclusion: {in: LEVELS}
+    validates :assessment_type, inclusion: {in: ASSESSMENT_TYPES}, allow_nil: true
+    validates :downloadable, inclusion: {in: %w[Yes No]}, allow_nil: true
     validates_presence_of :assessment_date, :publication_date, :level, :methodology_version
     validates :assessment_date, date_after: Date.new(2010, 12, 31)
     validates :publication_date, date_after: Date.new(2010, 12, 31)
@@ -51,7 +60,7 @@ module MQ
         .mq_assessments
         .select { |a| a.publication_date <= DateTime.now }
         .select { |a| a.assessment_date < assessment_date }
-        .sort_by(&:assessment_date)
+        .sort { |a, b| [b.publication_date, b.assessment_date] <=> [a.publication_date, a.assessment_date] }
     end
 
     def status
@@ -104,6 +113,17 @@ module MQ
 
     def beta_levels
       Array.wrap BETA_METHODOLOGIES.dig(methodology_version, :levels)
+    end
+
+    private
+
+    def set_default_assessment_type
+      self.assessment_type ||= 'Final'
+    end
+
+    def normalize_downloadable
+      self.downloadable = downloadable.to_s.strip.capitalize if downloadable.present?
+      self.downloadable ||= 'Yes'
     end
   end
 end

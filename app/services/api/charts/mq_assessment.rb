@@ -20,7 +20,7 @@ module Api
         return [] unless company_mq_assessments.any?
 
         results = company_mq_assessments.map do |a|
-          [a.assessment_date.to_s, a.level.to_i]
+          [a.publication_date.to_s, a.level.to_i]
         end
 
         [
@@ -30,7 +30,7 @@ module Api
           },
           {
             name: 'Current Level',
-            data: [[assessment.assessment_date.to_s, assessment.level.to_i]]
+            data: [[assessment.publication_date.to_s, assessment.level.to_i]]
           },
           {
             name: 'Max Level',
@@ -45,9 +45,9 @@ module Api
         return [] unless company.present?
 
         @company_mq_assessments ||= begin
-          query = company.mq_assessments.currently_published.order(:assessment_date)
+          query = company.mq_assessments.currently_published.order(publication_date: :asc, assessment_date: :asc)
           query = query.without_beta_methodologies unless @enable_beta_mq_assessments
-          hide_mq_assessments_with_same_date query
+          hide_mq_assessments_with_same_publication_date query
         end
       end
 
@@ -58,9 +58,9 @@ module Api
         beta_assessment.beta_levels.last.to_i
       end
 
-      def hide_mq_assessments_with_same_date(assessments)
+      def hide_mq_assessments_with_same_publication_date(assessments)
         result = []
-        assessments.group_by(&:assessment_date).each { |_date, a| result << a.max_by(&:methodology_version) }
+        assessments.group_by(&:publication_date).each { |_date, a| result << a.max_by(&:methodology_version) }
         result
       end
     end

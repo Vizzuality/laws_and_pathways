@@ -7,10 +7,11 @@
 
     <div class="bank-header container">
       <%= react_component('DownloadFormModal', {
-        title: 'Download all banks data',
+        title: 'Explore Banks data access',
         buttonClass: 'button is-primary is-pulled-right with-icon with-border',
         downloadUrl: user_download_tpi_banks_path,
-        source: 'banks'
+        source: 'banks',
+        showIcon: true
       }) %>
     </div>
   </div>

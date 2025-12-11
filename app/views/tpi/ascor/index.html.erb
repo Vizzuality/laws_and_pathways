@@ -9,24 +9,23 @@
     <%= react_component("AscorDropdown", { countries: @countries_json, selectedOption: 'All countries' }) %>
 
     <div class="ascor-header container">
-      <div class="links">
-        <% if @methodology_publication.present? %>
-          <a href="#methodology" class="link with-icon">
-            <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" class="is-hidden-touch" />
-            Methodology
-          </a>
-        <% end %>
-        <a href="#publications" class="link with-icon">
-          <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" class="is-hidden-touch" />
-          Publications
+      <% if @methodology_publication.present? %>
+        <a href="#methodology" class="button is-primary is-pulled-right with-icon with-border">
+          <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
+          Methodology
         </a>
-      </div>
+      <% end %>
+      <a href="#publications" class="button is-primary is-pulled-right with-icon with-border">
+        <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
+        Publications
+      </a>
 
       <%= react_component('DownloadFormModal', {
-        title: 'Download ASCOR data',
-        buttonClass: 'button is-emphasis is-pulled-right with-icon with-border',
+        title: 'Explore ASCOR data access',
+        buttonClass: 'button is-primary is-pulled-right with-icon with-border',
         downloadUrl: user_download_tpi_ascor_index_path,
-        source: 'ascor'
+        source: 'ascor',
+        showIcon: true
       }) %>
     </div>
   </div>

@@ -249,7 +249,10 @@ RSpec.describe TPI::SectorsController, type: :controller do
         surname: 'surname',
         location: 'location',
         organisation: 'organisation',
-        purposes: %w[purposes1 purposes2]
+        organisation_type: 'Asset management & investment & advisory',
+        use_case: 'Academic use',
+        use_case_description: 'This is a test description of the use case',
+        self_attestation: 'Permitted uses without Authorisation or License'
       }
     end
 

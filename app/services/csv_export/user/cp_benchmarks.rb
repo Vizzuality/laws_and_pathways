@@ -16,7 +16,7 @@ module CSVExport
           @cp_benchmarks.each do |benchmark|
             csv << [
               benchmark.benchmark_id,
-              benchmark.sector.name,
+              benchmark.sector&.name,
               benchmark.scenario,
               benchmark.region,
               benchmark.release_date,

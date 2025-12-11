@@ -23,24 +23,23 @@
       }) %>
 
     <div class="banks-header container">
-      <div>
-        <% if @methodology_publications.any? %>
-          <a href="#methodology" class="link with-icon is-pulled-left">
-            <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" class="is-hidden-touch" />
-            Methodology
-          </a>
-        <% end %>
-        <a href="#publications" class="link with-icon is-pulled-left">
-          <img src="<%= asset_path 'icons/arrow-down.svg'%>" alt="arrow down" class="is-hidden-touch" />
-          Publications
+      <% if @methodology_publications.any? %>
+        <a href="#methodology" class="button is-primary is-pulled-right with-icon with-border">
+          <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
+          Methodology
         </a>
-      </div>
+      <% end %>
+      <a href="#publications" class="button is-primary is-pulled-right with-icon with-border">
+        <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
+        Publications
+      </a>
 
       <%= react_component('DownloadFormModal', {
-        title: 'Download all banks data',
+        title: 'Explore Banks data access',
         buttonClass: 'button is-primary is-pulled-right with-icon with-border',
         downloadUrl: user_download_tpi_banks_path,
-        source: 'banks'
+        source: 'banks',
+        showIcon: true
       }) %>
     </div>
   </div>

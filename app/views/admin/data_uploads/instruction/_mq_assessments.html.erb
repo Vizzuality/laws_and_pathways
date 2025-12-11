@@ -84,10 +84,10 @@
         Publication date
       </td>
       <td>
-        Date of publication, Allowed date formats: YYYY-MM
+        Date of publication, Allowed date formats: YYYY-MM, DD/MM/YYYY
       </td>
       <td>
-        2020-03
+        2020-03 or 05/03/2020
       </td>
       <td>
         Required if column present
@@ -105,6 +105,48 @@
       </td>
       <td>
         Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Fiscal year
+      </td>
+      <td>
+        Fiscal year covered by the assessment. Format: YYYY. Displays on company pages for 2025+ assessments.
+      </td>
+      <td>
+        2024
+      </td>
+      <td>
+        Optional
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Assessment type
+      </td>
+      <td>
+        Type of assessment. Automatically defaults to 'Final'. One of: Preliminary, Final. Not shown on UI.
+      </td>
+      <td>
+        Final
+      </td>
+      <td>
+        Optional (auto-defaults to 'Final')
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Downloadable
+      </td>
+      <td>
+        Whether the assessment data is downloadable. Case-insensitive. One of: Yes, No. Defaults to 'Yes'.
+      </td>
+      <td>
+        Yes
+      </td>
+      <td>
+        Optional (defaults to 'Yes')
       </td>
     </tr>
     <tr>

@@ -24,13 +24,19 @@ Rails.application.routes.draw do
           get :cp_performance_chart_data
           get :cp_performance_chart_data_all_years
           get :user_download_all
+          get :user_download_cp_all
+          get :user_download_mq_all
           get :user_download_methodology
           post :send_download_file_info_email
+          post :send_download_cp_info_email
+          post :send_download_mq_info_email
         end
         member do
           get :levels_chart_data
           get :emissions_chart_data
           get :user_download
+          get :user_download_cp
+          get :user_download_mq
         end
       end
 

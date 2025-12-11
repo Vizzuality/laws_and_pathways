@@ -39,7 +39,7 @@ const Row = ({ dataRow, title, sectors }) => {
   return (
     <React.Fragment key={Math.random()}>
       <div className="bubble-chart__row-link">
-        <a href={sector.path}>{title}</a>
+        {sector ? <a href={sector.path}>{title}</a> : <span>{title}</span>}
       </div>
       {dataRow.map((el, i) => {
         const companies = el.map((company) => ({

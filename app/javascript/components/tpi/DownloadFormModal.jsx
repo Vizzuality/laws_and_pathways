@@ -7,6 +7,7 @@ import { OverlayProvider } from '@react-aria/overlays';
 import Select from './Select';
 import classNames from 'classnames';
 import downloadIcon from 'images/icons/download.svg';
+import BaseTooltip from './BaseTooltip';
 
 const Field = ({ label, name, value, onChange, type, required, error, placeholder, minLength, children }) => {
   const ref = useRef(null);
@@ -45,8 +46,25 @@ function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 }
 
+const FREE_EMAIL_DOMAINS = [
+  'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'aol.com',
+  'icloud.com', 'mail.com', 'protonmail.com', 'zoho.com', 'yandex.com',
+  'gmx.com', 'inbox.com', 'live.com', 'msn.com', 'yahoo.co.uk',
+  'yahoo.fr', 'yahoo.de', 'yahoo.es', 'yahoo.it', 'yahoo.ca',
+  'hotmail.co.uk', 'hotmail.fr', 'hotmail.de', 'hotmail.es', 'hotmail.it',
+  'outlook.co.uk', 'outlook.fr', 'outlook.de', 'outlook.es', 'outlook.it',
+  'googlemail.com', 'me.com', 'mac.com', 'fastmail.com', 'hushmail.com',
+  'tutanota.com', 'proton.me', 'pm.me', 'cock.li', 'mailfence.com',
+  'posteo.de', 'runbox.com', 'safe-mail.net', 'mail.ru', 'rambler.ru'
+];
+
+function isPersonalEmail(email) {
+  const domain = email.trim().toLowerCase().split('@')[1];
+  return FREE_EMAIL_DOMAINS.includes(domain);
+}
+
 Field.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.any.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string,
   value: PropTypes.string,
@@ -69,14 +87,41 @@ Field.defaultProps = {
   children: null
 };
 
-const checkboxInputs = [
-  'diligence_research',
-  'engagement',
-  'voting',
-  'academic_research',
-  'content_creation',
-  'investment',
-  'other_purpose_checkbox'
+const organisationTypeOptions = [
+  { label: 'Academia', value: 'Academia' },
+  { label: 'Asset management & investment & advisory', value: 'Asset management & investment & advisory' },
+  { label: 'Asset owner', value: 'Asset owner' },
+  { label: 'Corporate', value: 'Corporate' },
+  { label: 'Consultant & advisory', value: 'Consultant & advisory' },
+  { label: 'Commercial & retail bank', value: 'Commercial & retail bank' },
+  { label: 'Credit reference agency', value: 'Credit reference agency' },
+  { label: 'Financial technology', value: 'Financial technology' },
+  { label: 'Government', value: 'Government' },
+  { label: 'Hedge fund', value: 'Hedge fund' },
+  { label: 'Investment bank', value: 'Investment bank' },
+  { label: 'Media', value: 'Media' },
+  { label: 'NGO', value: 'NGO' },
+  { label: 'Private equity', value: 'Private equity' },
+  { label: 'Wealth management', value: 'Wealth management' },
+  { label: 'Other (please specify)', value: 'Other' }
+];
+
+const assetOwnerSubOptions = [
+  { label: 'Endowments & foundations', value: 'Endowments & foundations' },
+  { label: 'Family offices', value: 'Family offices' },
+  { label: 'Insurance companies', value: 'Insurance companies' },
+  { label: 'Pension funds', value: 'Pension funds' },
+  { label: 'Sovereign wealth funds', value: 'Sovereign wealth funds' }
+];
+
+const useCaseOptions = [
+  { label: 'Academic use', value: 'Academic use' },
+  { label: 'Internal research use (see Terms of Use)', value: 'Internal research use (see Terms of Use)' },
+  { label: 'Engagement with investee companies', value: 'Engagement with investee companies' },
+  { label: 'Media purposes', value: 'Media purposes' },
+  { label: 'Proxy voting', value: 'Proxy voting' },
+  { label: 'Product & service creation', value: 'Product & service creation' },
+  { label: 'Other', value: 'Other' }
 ];
 
 const initialFormValues = {
@@ -87,27 +132,53 @@ const initialFormValues = {
   surname: '',
   location: '',
   organisation: '',
-  purposes: [],
-  other_purpose: ''
+  organisation_type: '',
+  asset_owner_type: '',
+  organisation_type_other: '',
+  use_case: '',
+  use_case_description: '',
+  self_attestation: ''
 };
 
-function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
+function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon = false }) {
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(null);
   const [formValues, setFormValues] = useState(initialFormValues);
 
   const minLength = 3;
 
+  const getSourceName = () => {
+    switch (source) {
+      case 'sectors':
+      case 'companies':
+      case 'cp':
+        return 'Carbon Performance';
+      case 'mq':
+        return 'Management Quality';
+      case 'banks':
+        return 'Banking';
+      case 'ascor':
+        return 'ASCOR';
+      default:
+        return 'TPI';
+    }
+  };
+
   const isValidLength = (value) => value && value.trim().length >= minLength;
 
   const downloadLinkRef = useRef(null);
-  const countryOptions = useMemo(() => getNames()?.map((name) => ({label: name, value: name})), []);
+  const countryOptions = useMemo(() => getNames()?.sort().map((name) => ({label: name, value: name})), []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!isValidEmail(formValues.email)) {
       setError('Email is not valid');
+      return;
+    }
+
+    if (isPersonalEmail(formValues.email)) {
+      setError('Please use a professional/organizational email address. If you do not have access to one, please contact tpi@lse.ac.uk');
       return;
     }
 
@@ -131,16 +202,52 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
       return;
     }
 
-    if (formValues.purposes.length === 0) {
-      setError('Please select at least one purpose');
-      return;
-    }
-    if (formValues.purposes.includes('other_purpose_checkbox') && !formValues.other_purpose) {
-      setError('Please specify other purposes');
+    if (!formValues.organisation_type) {
+      setError('Please select an Organisation type');
       return;
     }
 
-    fetch(`/${source}/send_download_file_info_email`, {
+    if (formValues.organisation_type === 'Asset owner' && !formValues.asset_owner_type) {
+      setError('Please select an Asset owner type');
+      return;
+    }
+
+    if (formValues.organisation_type === 'Other' && !formValues.organisation_type_other) {
+      setError('Please specify your organisation type');
+      return;
+    }
+
+    if (!formValues.use_case) {
+      setError('Please select a Use case');
+      return;
+    }
+
+    if (!formValues.use_case_description || formValues.use_case_description.trim().length === 0) {
+      setError('Please provide a description of your use case');
+      return;
+    }
+
+    if (formValues.use_case_description.length > 500) {
+      setError('Use case description must not exceed 500 characters');
+      return;
+    }
+
+    if (!formValues.self_attestation) {
+      setError('Please select one of the self-attestation options');
+      return;
+    }
+
+    const getEmailEndpoint = () => {
+      if (source === 'cp') {
+        return '/sectors/send_download_cp_info_email';
+      } else if (source === 'mq') {
+        return '/sectors/send_download_mq_info_email';
+      } else {
+        return `/${source}/send_download_file_info_email`;
+      }
+    };
+
+    fetch(getEmailEndpoint(), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -157,41 +264,47 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
   };
 
   const handleChange = (e) => {
-    setFormValues({ ...formValues, [e.target.name]: e.target.value });
-    if (checkboxInputs.includes(e.target.name)) {
-      if (e.target.checked) {
-        setFormValues({
-          ...formValues,
-          purposes: [...formValues.purposes, e.target.name]
-        });
-        setError(null);
-      } else {
-        setFormValues({
-          ...formValues,
-          other_purpose: e.target.name === 'other_purpose_checkbox' ? '' : formValues.other_purpose,
-          purposes: formValues.purposes.filter((item) => item !== e.target.name)
-        });
-      }
+    const { name, value } = e.target;
+    const updatedValues = { ...formValues, [name]: value };
+    
+    if (name === 'organisation_type' && value !== 'Asset owner') {
+      updatedValues.asset_owner_type = '';
     }
+    
+    if (name === 'organisation_type' && value !== 'Other') {
+      updatedValues.organisation_type_other = '';
+    }
+    
+    setFormValues(updatedValues);
+    setError(null);
   };
 
   return (
     <div>
       <button type="button" onClick={() => setShowModal(true)} className={buttonClass || 'button is-primary with-icon with-border'}>
-        <img src={downloadIcon} alt="download icon" />
+        {showIcon && <img src={downloadIcon} alt="download icon" />}
         { title || 'Download Data'}
       </button>
 
       <OverlayProvider>
         <Modal
-          title="Data Disclaimer"
+          title="Data disclaimer"
           open={showModal}
           onClose={() => setShowModal(false)}
         >
           <div className="download-form">
-            <h2>Data Disclaimer</h2>
+            <h2>Data disclaimer</h2>
             <div className="content">
               <form onSubmit={handleSubmit}>
+                <div className="disclaimer-text">
+                  <p>
+                    {getSourceName()} data are viewable on the website and can be downloaded without Authorisation or License only for the Permitted Uses listed in the{' '}
+                    <a href="https://www.transitionpathwayinitiative.org/use-of-the-centre-s-data" target="_blank" rel="noopener noreferrer">
+                      Terms of Use
+                    </a>
+                    . You should read the Terms of Use to ensure that you are complying with their requirements.
+                  </p>
+                </div>
                 <div className="checkbox-inputs">
                   <Field
                     value={formValues.accept_terms}
@@ -199,11 +312,11 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
                     required
                     label={
                       <>
-                        By checking this box, I attest that I have read the{' '}
+                        By checking this box, I attest that I have read and understood the{' '}
                         <a href="https://www.transitionpathwayinitiative.org/use-of-the-centre-s-data" target="_blank" rel="noopener noreferrer">
-                          Use of TPI Centre Data
+                          Terms of Use of TPI Centre Data
                         </a>
-                        {' '}and will not use the data for commercial purposes unless I have sought prior permission.
+                        .
                       </>
                     }
                     type="checkbox"
@@ -213,14 +326,24 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
                 <p className="--mandatory">All
                   fields below are mandatory.
                 </p>
+                <div className="form-section">
+                  <h3 className="form-section__title">Personal details</h3>
                 <div className="text-inputs">
                   <Field
                     value={formValues.email}
                     onChange={handleChange}
                     required
                     minLength={minLength}
-                    label="Email"
+                      label={
+                        <>
+                          Email{' '}
+                          <BaseTooltip
+                            content="If you do not have access to a professional email address, please reach out to tpi@lse.ac.uk."
+                          />
+                        </>
+                      }
                     name="email"
+                      placeholder="Professional email addresses only"
                   />
                   <Field
                     value={formValues.job_title}
@@ -246,6 +369,14 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
                     label="Surname"
                     name="surname"
                   />
+                    <Field
+                      value={formValues.organisation}
+                      onChange={handleChange}
+                      required
+                      minLength={minLength}
+                      label="Organisation name"
+                      name="organisation"
+                    />
                   <Field
                     value={formValues.location}
                     onChange={handleChange}
@@ -265,76 +396,158 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source }) {
                       options={countryOptions}
                     />
                   </Field>
-                  <Field
-                    value={formValues.organisation}
-                    onChange={handleChange}
-                    required
-                    minLength={minLength}
-                    label="Organisation"
-                    name="organisation"
-                  />
+                  </div>
                 </div>
-                <p>
-                  To help us understand how our data is used, please select your
-                  purpose(s) from the choices below:
-                </p>
-                <div className="checkbox-inputs">
+                <div className="form-section">
+                  <h3 className="form-section__title">Use case details</h3>
+                  <div className="text-inputs">
                   <Field
+                      value={formValues.organisation_type}
                     onChange={handleChange}
-                    label="Due diligence research"
-                    type="checkbox"
-                    name="diligence_research"
-                  />
+                      required
+                      label="Organisation type"
+                      name="organisation_type"
+                    >
+                      <Select
+                        name="organisation_type"
+                        placeholder="Select organisation type"
+                        onSelect={(e) => handleChange({ target: e })}
+                        value={formValues.organisation_type}
+                        label="Select organisation type"
+                        required
+                        options={organisationTypeOptions}
+                      />
+                    </Field>
+                    {formValues.organisation_type === 'Asset owner' && (
                   <Field
+                        value={formValues.asset_owner_type}
                     onChange={handleChange}
-                    label="Engagement"
-                    type="checkbox"
-                    name="engagement"
-                  />
+                        required
+                        label="Asset owner type"
+                        name="asset_owner_type"
+                      >
+                        <Select
+                          name="asset_owner_type"
+                          placeholder="Select asset owner type"
+                          onSelect={(e) => handleChange({ target: e })}
+                          value={formValues.asset_owner_type}
+                          label="Select asset owner type"
+                          required
+                          options={assetOwnerSubOptions}
+                        />
+                      </Field>
+                    )}
+                    {formValues.organisation_type === 'Other' && (
                   <Field
+                        value={formValues.organisation_type_other}
                     onChange={handleChange}
-                    label="Proxy voting"
-                    type="checkbox"
-                    name="voting"
-                  />
+                        required
+                        label="Please specify"
+                        name="organisation_type_other"
+                        placeholder="Specify your organisation type"
+                      />
+                    )}
                   <Field
+                      value={formValues.use_case}
                     onChange={handleChange}
-                    label="Academic research"
-                    type="checkbox"
-                    name="academic_research"
-                  />
+                      required
+                      label="Use case"
+                      name="use_case"
+                    >
+                      <Select
+                        name="use_case"
+                        placeholder="Select use case"
+                        onSelect={(e) => handleChange({ target: e })}
+                        value={formValues.use_case}
+                        label="Select use case"
+                        required
+                        options={useCaseOptions}
+                      />
+                    </Field>
+                  </div>
+                  <div className="full-width-field">
                   <Field
+                      value={formValues.use_case_description}
                     onChange={handleChange}
-                    label="Product and service creation"
-                    type="checkbox"
-                    name="content_creation"
-                  />
-                  <Field
-                    label="Investment universe selection/portfolio construction"
-                    type="checkbox"
+                      required
+                      label="Description of use case"
+                      name="use_case_description"
+                    >
+                      <textarea
+                        name="use_case_description"
+                        id="use_case_description"
+                        value={formValues.use_case_description}
                     onChange={handleChange}
-                    name="investment"
-                  />
-                  <Field
-                    onChange={handleChange}
-                    label="Other (please specify)"
-                    name="other_purpose_checkbox"
-                    type="checkbox"
-                  />
+                        placeholder="To help us understand how our data are used, please provide more detail on your intended use case, including whether it's directly related to the generation of revenue or commercial compensation."
+                        maxLength={500}
+                        required
+                        rows={4}
+                      />
+                    </Field>
+                    <div className="character-count">
+                      {formValues.use_case_description.length}/500 characters
+                    </div>
+                  </div>
                 </div>
-                <div className={classNames('other-purposes-text', { hidden: !formValues.purposes.includes('other_purpose_checkbox') })}>
+                <div className="form-section">
+                  <h3 className="form-section__title">Self-attestation of use case</h3>
+                  <p>
+                    After reading the{' '}
+                    <a href="https://www.transitionpathwayinitiative.org/use-of-the-centre-s-data" target="_blank" rel="noopener noreferrer">
+                      Terms of Use
+                    </a>
+                    , please select one of the boxes below to self-attest your use case.
+                  </p>
+                  <p>
+                    LSE reserves the right to review requests and in the event of a suspected breach of these terms of use may conduct an investigation and take subsequent action to ensure compliance, or authorise its data partners and/or other third parties to do so on its behalf.
+                  </p>
+                  {source === 'mq' && (
+                    <p>
+                      All Management Quality assessments are produced by LSEG, TPI's data partner, using the TPI Centre's methodology. For queries related to Management Quality scores or to discuss licensing for additional use cases, please reach out to tpimqaccess@lseg.com
+                    </p>
+                  )}
+                  <div className="radio-inputs">
+                    <Field
+                      value={formValues.self_attestation}
+                      onChange={handleChange}
+                      required
+                      label="Uses subject to Authorisation and License"
+                      type="radio"
+                      name="self_attestation"
+                    >
+                      <input
+                        type="radio"
+                        name="self_attestation"
+                        id="self_attestation_authorised"
+                        value="Uses subject to Authorisation and License"
+                        checked={formValues.self_attestation === 'Uses subject to Authorisation and License'}
+                        onChange={handleChange}
+                        required
+                      />
+                    </Field>
                   <Field
-                    label=""
-                    name="other_purpose"
-                    placeholder="Please, write here other purposes"
-                    value={formValues.other_purpose}
+                      value={formValues.self_attestation}
+                      onChange={handleChange}
+                      required
+                      label="Permitted uses without Authorisation or License"
+                      type="radio"
+                      name="self_attestation"
+                    >
+                      <input
+                        type="radio"
+                        name="self_attestation"
+                        id="self_attestation_permitted"
+                        value="Permitted uses without Authorisation or License"
+                        checked={formValues.self_attestation === 'Permitted uses without Authorisation or License'}
                     onChange={handleChange}
+                        required
                   />
+                    </Field>
+                  </div>
                 </div>
                 <a hidden ref={downloadLinkRef} href={downloadUrl} rel="noreferrer">
                   <button type="button">Click</button>
                 </a>
-                <input required type="hidden" name="purposes" value={formValues.purposes} />
                 {error && <span className="error">{error}</span>}
                 <div className="form-buttons">
                   <button className="button is-primary" type="submit">Submit</button>
@@ -355,7 +568,8 @@ DownloadFormModal.propTypes = {
   buttonClass: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   downloadUrl: PropTypes.string.isRequired,
-  source: PropTypes.string.isRequired
+  source: PropTypes.string.isRequired,
+  showIcon: PropTypes.bool
 };
 
 export default DownloadFormModal;

@@ -32,7 +32,7 @@ class Company < ApplicationRecord
 
   friendly_id :name, use: [:slugged, :history], routes: :default
 
-  MARKET_CAP_GROUPS = %w[small medium large unlisted].freeze
+  MARKET_CAP_GROUPS = %w[small medium large unlisted undefined].freeze
 
   enum market_cap_group: array_to_enum_hash(MARKET_CAP_GROUPS)
 
@@ -42,12 +42,12 @@ class Company < ApplicationRecord
 
   has_many :mq_assessments, class_name: 'MQ::Assessment', inverse_of: :company
   has_one :latest_mq_assessment_without_beta_methodologies, -> {
-    currently_published.without_beta_methodologies.order(assessment_date: :desc)
+    currently_published.without_beta_methodologies.order(publication_date: :desc, assessment_date: :desc)
   }, class_name: 'MQ::Assessment'
   has_one :latest_mq_assessment_only_beta_methodologies, -> {
-    currently_published.only_beta_methodologies.order(assessment_date: :desc)
+    currently_published.only_beta_methodologies.order(publication_date: :desc, assessment_date: :desc)
   }, class_name: 'MQ::Assessment'
-  has_one :latest_mq_assessment, -> { currently_published.order(assessment_date: :desc) }, class_name: 'MQ::Assessment'
+  has_one :latest_mq_assessment, -> { currently_published.order(publication_date: :desc, assessment_date: :desc) }, class_name: 'MQ::Assessment'
   has_many :cp_assessments, class_name: 'CP::Assessment', as: :cp_assessmentable
   has_one :latest_cp_assessment, -> {
                                    currently_published.order(assessment_date: :desc)

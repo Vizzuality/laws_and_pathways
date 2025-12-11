@@ -10,12 +10,12 @@ module CSVExport
 
           cp_assessments.each do |(bank, sector), assessments|
             assessment = assessments&.first
-            next if assessment.blank?
+            next if assessment.blank? || bank.blank?
 
             csv << [
               bank.name,
               assessment.region,
-              sector.name,
+              sector&.name,
               assessment.subsector&.name,
               assessment.assessment_date,
               assessment.publication_date,
