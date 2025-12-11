@@ -12,7 +12,9 @@ const SCALE = 5;
 const COMPANIES_MARKET_CAP_GROUPS = {
   large: 10 * SCALE,
   medium: 5 * SCALE,
-  small: 3 * SCALE
+  small: 3 * SCALE,
+  unlisted: 3 * SCALE,
+  undefined: 3 * SCALE
 };
 
 const SINGLE_CELL_SVG_WIDTH = 120 * SCALE;
