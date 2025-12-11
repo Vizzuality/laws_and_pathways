@@ -122,8 +122,9 @@ module TPI
     end
 
     def user_download_mq_all
+      all_sector_ids = TPISector.companies.pluck(:id)
       send_mq_user_download_file(
-        Company.published.select(:id).where(sector_id: @sectors.pluck(:id)),
+        Company.published.select(:id).where(sector_id: all_sector_ids),
         'TPI Management Quality data - All sectors'
       )
     end
@@ -248,9 +249,9 @@ module TPI
 
     def companies_scope(params)
       if params[:id]
-        TPISector.tpi_tool.friendly.find(params[:id]).companies.published.active.order(name: :asc)
+        TPISector.tpi_tool.friendly.find(params[:id]).companies.published.active.with_latest_mq_v5.order(name: :asc)
       else
-        Company.published.active.order(name: :asc)
+        Company.published.active.with_latest_mq_v5.order(name: :asc)
       end
     end
 

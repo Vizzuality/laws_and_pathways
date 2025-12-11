@@ -3,8 +3,8 @@ module CSVExport
     class LatestMQAssessments
       def initialize(mq_assessments, enable_beta_mq_assessments: false)
         @enable_beta_mq_assessments = enable_beta_mq_assessments
-        @companies = mq_assessments.map(&:company).uniq
         @latest_mq_assessments_hash = get_latest_mq_assessments_hash(mq_assessments)
+        @companies = @latest_mq_assessments_hash.values.compact.map(&:company).uniq
       end
 
       def call
@@ -62,9 +62,24 @@ module CSVExport
       private
 
       def get_latest_mq_assessments_hash(assessments)
-        assessments.group_by(&:company_id).transform_values do |grouped|
-          grouped.max_by { |a| [a.publication_date, a.assessment_date] }
-        end
+        latest_methodology = assessments
+          .select { |a| a.methodology_version.present? }
+          .max_by(&:methodology_version)&.methodology_version
+
+        return {} unless latest_methodology
+
+        latest_publication_date = assessments
+          .select { |a| a.methodology_version == latest_methodology }
+          .max_by(&:publication_date)&.publication_date
+
+        return {} unless latest_publication_date
+
+        assessments
+          .select { |a| a.methodology_version == latest_methodology && a.publication_date == latest_publication_date }
+          .group_by(&:company_id)
+          .transform_values do |grouped|
+            grouped.max_by { |a| [a.publication_date, a.assessment_date] }
+          end
       end
     end
   end
