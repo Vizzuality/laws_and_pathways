@@ -58,6 +58,7 @@ module MQ
         .mq_assessments
         .select { |a| a.publication_date <= DateTime.now }
         .select { |a| a.publication_date < publication_date }
+        .select { |a| a.methodology_version == methodology_version }
         .sort { |a, b| [b.publication_date, b.assessment_date] <=> [a.publication_date, a.assessment_date] }
     end
 

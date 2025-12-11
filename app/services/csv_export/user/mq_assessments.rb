@@ -14,6 +14,7 @@ module CSVExport
                    'Level', 'Performance compared to previous year']
         question_headers = @assessments.first.questions.map(&:csv_column_name)
         headers.concat(question_headers)
+        headers << 'Notes'
 
         # BOM UTF-8
         CSV.generate("\xEF\xBB\xBF") do |csv|
@@ -37,7 +38,8 @@ module CSVExport
               assessment.status,
               assessment.questions.map do |q|
                 assessment.find_answer_by_key(q.key)
-              end
+              end,
+              assessment.notes
             ].flatten
           end
         end
