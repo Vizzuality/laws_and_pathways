@@ -52,10 +52,8 @@ module Api
       end
 
       def max_level
-        beta_assessment = company_mq_assessments.detect(&:beta_methodology?)
-        return 4 unless beta_assessment.present?
-
-        beta_assessment.beta_levels.last.to_i
+        has_v5_assessment = company_mq_assessments.any? { |a| a.methodology_version >= 5 }
+        has_v5_assessment ? 5 : 4
       end
 
       def hide_mq_assessments_with_same_publication_date(assessments)

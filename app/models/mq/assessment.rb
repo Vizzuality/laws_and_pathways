@@ -48,7 +48,7 @@ module MQ
     validates :publication_date, date_after: Date.new(2010, 12, 31)
 
     def previous
-      previous_assessments.last
+      previous_assessments.first
     end
 
     def previous_assessments
