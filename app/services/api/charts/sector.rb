@@ -7,7 +7,8 @@ module Api
         '1' => [],
         '2' => [],
         '3' => [],
-        '4' => []
+        '4' => [],
+        '5' => []
       }.freeze
 
       def initialize(company_scope, enable_beta_mq_assessments: false)
