@@ -62,17 +62,8 @@ module CSVExport
       private
 
       def get_latest_mq_assessments_hash(assessments)
-        latest_methodology = assessments
-          .select { |a| a.methodology_version.present? }
-          .max_by(&:methodology_version)&.methodology_version
-
-        return {} unless latest_methodology
-
         assessments.group_by(&:company_id).transform_values do |grouped|
-          matching_methodology = grouped.select { |a| a.methodology_version == latest_methodology }
-          next nil if matching_methodology.empty?
-
-          matching_methodology.max_by { |a| [a.assessment_date, a.publication_date] }
+          grouped.max_by { |a| [a.publication_date, a.assessment_date] }
         end
       end
     end

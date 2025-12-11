@@ -25,9 +25,7 @@ module MQ
 
     LEVELS = %w[0 1 2 3 4 4STAR 5 5STAR].freeze
     ASSESSMENT_TYPES = %w[Preliminary Final].freeze
-    BETA_METHODOLOGIES = { # taken into account only when beta is enabled
-      5 => {levels: %w[5], highlight_questions: %w[]}
-    }.freeze
+    BETA_METHODOLOGIES = {}.freeze
     BETA_LEVELS = BETA_METHODOLOGIES.map { |_k, v| v[:levels] }.flatten.freeze
 
     belongs_to :company, inverse_of: :mq_assessments
