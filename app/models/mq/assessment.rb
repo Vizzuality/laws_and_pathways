@@ -57,14 +57,14 @@ module MQ
       company
         .mq_assessments
         .select { |a| a.publication_date <= DateTime.now }
-        .select { |a| a.assessment_date < assessment_date }
+        .select { |a| a.publication_date < publication_date }
         .sort { |a, b| [b.publication_date, b.assessment_date] <=> [a.publication_date, a.assessment_date] }
     end
 
     def status
       return 'new' unless previous.present?
-      return 'up' if level > previous.level && previous.methodology_version == methodology_version
-      return 'down' if level < previous.level && previous.methodology_version == methodology_version
+      return 'up' if level > previous.level
+      return 'down' if level < previous.level
 
       'unchanged'
     end
