@@ -10,7 +10,7 @@ module CSVExport
 
         headers = ['Company ID', 'Company Name', 'Geography', 'Geography Code', 'Sector',
                    'CA100 Company?', 'Large/Medium Classification',
-                   'ISINs', 'SEDOL', 'Publication Date', 'Assessment Date',
+                   'ISINs', 'SEDOL', 'Publication Date', 'Assessment Date', 'Fiscal Year',
                    'Level', 'Performance compared to previous year']
         question_headers = @assessments.first.questions.map(&:csv_column_name)
         headers.concat(question_headers)
@@ -32,6 +32,7 @@ module CSVExport
               assessment.company.sedol&.tr(',', ';')&.tr(' ', ''),
               assessment.publication_date,
               assessment.assessment_date,
+              assessment.fiscal_year,
               assessment.level,
               assessment.status,
               assessment.questions.map do |q|

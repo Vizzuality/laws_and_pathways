@@ -69,6 +69,19 @@ class Company < ApplicationRecord
   validates_uniqueness_of :slug, :name
 
   scope :active, -> { where(active: true) }
+  scope :with_latest_mq_v5, -> {
+    latest_v5_pub_date = MQ::Assessment
+      .where(methodology_version: 5)
+      .currently_published
+      .maximum(:publication_date)
+    
+    joins(:mq_assessments)
+      .where(mq_assessments: { 
+        methodology_version: 5, 
+        publication_date: latest_v5_pub_date 
+      })
+      .distinct
+  }
 
   def latest_cp_assessments_by_subsector
     return if company_subsectors.empty?
