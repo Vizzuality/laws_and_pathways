@@ -1,4 +1,4 @@
-\restrict cxu0VSRWgbCYel7h0p6IKKWk7S41IRTomA0V0gC3apb7tLmoaBQVmypV9KPdzgG
+\restrict 9l8PQS5Woy3iANBe6Hy8uLvceXCPkC5wvSKxmXX72m1qdwS3tflEwjFtCwAHEPq
 
 -- Dumped from database version 11.20
 -- Dumped by pg_dump version 16.10 (Ubuntu 16.10-0ubuntu0.24.04.1)
@@ -1289,6 +1289,16 @@ ALTER SEQUENCE public.industries_id_seq OWNED BY public.industries.id;
 
 
 --
+-- Name: industries_tpi_sectors; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.industries_tpi_sectors (
+    industry_id bigint NOT NULL,
+    tpi_sector_id bigint NOT NULL
+);
+
+
+--
 -- Name: instrument_types; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2124,8 +2134,7 @@ CREATE TABLE public.tpi_sectors (
     updated_at timestamp without time zone NOT NULL,
     cluster_id bigint,
     show_in_tpi_tool boolean DEFAULT true NOT NULL,
-    categories character varying[] DEFAULT '{}'::character varying[],
-    industry_id bigint
+    categories character varying[] DEFAULT '{}'::character varying[]
 );
 
 
@@ -3437,6 +3446,20 @@ CREATE UNIQUE INDEX index_industries_on_slug ON public.industries USING btree (s
 
 
 --
+-- Name: index_industries_tpi_sectors_on_industry_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_industries_tpi_sectors_on_industry_id ON public.industries_tpi_sectors USING btree (industry_id);
+
+
+--
+-- Name: index_industries_tpi_sectors_on_tpi_sector_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_industries_tpi_sectors_on_tpi_sector_id ON public.industries_tpi_sectors USING btree (tpi_sector_id);
+
+
+--
 -- Name: index_instrument_types_on_discarded_at; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3934,13 +3957,6 @@ CREATE INDEX index_tpi_sectors_on_cluster_id ON public.tpi_sectors USING btree (
 
 
 --
--- Name: index_tpi_sectors_on_industry_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_tpi_sectors_on_industry_id ON public.tpi_sectors USING btree (industry_id);
-
-
---
 -- Name: index_tpi_sectors_on_name; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -4344,14 +4360,6 @@ ALTER TABLE ONLY public.company_subsectors
 
 
 --
--- Name: tpi_sectors fk_rails_d182d06451; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.tpi_sectors
-    ADD CONSTRAINT fk_rails_d182d06451 FOREIGN KEY (industry_id) REFERENCES public.industries(id);
-
-
---
 -- Name: targets fk_rails_db1f7292db; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4395,7 +4403,7 @@ ALTER TABLE ONLY public.companies
 -- PostgreSQL database dump complete
 --
 
-\unrestrict cxu0VSRWgbCYel7h0p6IKKWk7S41IRTomA0V0gC3apb7tLmoaBQVmypV9KPdzgG
+\unrestrict 9l8PQS5Woy3iANBe6Hy8uLvceXCPkC5wvSKxmXX72m1qdwS3tflEwjFtCwAHEPq
 
 SET search_path TO "$user", public;
 
@@ -4589,6 +4597,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20251031120001'),
 ('20251204110115'),
 ('20251204154629'),
-('20251208090415');
+('20251208090415'),
+('20251212110612');
 
 

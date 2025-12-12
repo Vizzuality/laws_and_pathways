@@ -1,0 +1,70 @@
+================================================================================
+INDUSTRIES CSV IMPORT - QUICK REFERENCE
+================================================================================
+
+FILES PROVIDED:
+---------------
+1. industries_import_example.csv
+   - Basic example with 10 industries
+   - Shows how to link industries to sectors
+
+2. industries_import_with_ids_example.csv  
+   - Example including optional ID column
+   - Use for updating existing industries
+
+3. industries_import_instructions.md
+   - Complete documentation with examples and troubleshooting
+
+HOW TO USE:
+-----------
+1. Go to: Admin Panel → TPI → Industries
+2. Click: "Bulk Upload CSV" button
+3. Select: "Industries" as uploader type
+4. Upload: Your CSV file
+5. Review: Import results
+
+CSV FORMAT:
+-----------
+Required column:
+  • name - Industry name (must be unique)
+
+Optional columns:
+  • id - Database ID (for updates)
+  • sector_names - Semicolon-separated sector names
+
+EXAMPLE CSV:
+------------
+name,sector_names
+Renewable Energy,Electric Utilities;Paper
+Technology,
+Financial Services,Banks;Financials
+
+SECTOR SEPARATOR:
+-----------------
+Use semicolon (;) to separate multiple sectors:
+  Good: Electric Utilities;Paper;Cement
+  Bad:  Electric Utilities,Paper,Cement (comma is the CSV delimiter)
+
+COMMON SECTOR NAMES:
+--------------------
+Airlines, Aluminium, Autos, Banks, Cement, Chemicals, Coal Mining,
+Diversified Mining, Electric Utilities, Financials, Food, Food Producers,
+Oil & Gas, Paper, Shipping, Steel, Technology
+
+(View all sectors in: Admin Panel → TPI → TPI Sectors)
+
+IMPORT BEHAVIOR:
+----------------
+• New industries: Created with provided sectors
+• Existing industries: Updated (sectors replaced)
+• Non-existent sectors: Silently skipped
+• Blank sector_names: Industry created without sectors
+
+TIPS:
+-----
+✓ Test with small file first (2-3 rows)
+✓ Verify sector names match existing sectors
+✓ Save CSV with UTF-8 encoding
+✓ Check import results page for errors
+
+================================================================================

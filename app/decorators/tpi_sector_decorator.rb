@@ -9,6 +9,14 @@ class TPISectorDecorator < Draper::Decorator
     model.cp_units.order('valid_since DESC NULLS LAST').map(&:to_s)
   end
 
+  def industry_links
+    return [] if model.industries.empty?
+
+    model.industries.order(:name).map do |industry|
+      h.link_to industry.name, h.admin_industry_path(industry)
+    end
+  end
+
   def preview_url
     return h.tpi_banks_path({host: Rails.configuration.try(:tpi_domain)}.compact) if slug == 'banks'
 
