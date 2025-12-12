@@ -45,12 +45,14 @@ module TPI
       cp_assessments_csv = CSVExport::User::CompanyCPAssessments.new(cp_assessments).call
       cp_assessments_regional_csv = CSVExport::User::CompanyCPAssessmentsRegional.new(cp_assessments).call
       sector_benchmarks_csv = CSVExport::User::CPBenchmarks.new(cp_benchmarks).call
+      user_guide = File.binread(Rails.root.join('public', 'tpi', 'export_support', 'User guide - TPI Carbon Performance.xlsx'))
 
       files = {
         'Latest_CP_Assessments.csv' => latest_cp_assessments_csv,
         "CP_Assessments_#{timestamp}.csv" => cp_assessments_csv,
         "CP_Assessments_Regional_#{timestamp}.csv" => cp_assessments_regional_csv,
-        "Sector_Benchmarks_#{timestamp}.csv" => sector_benchmarks_csv
+        "Sector_Benchmarks_#{timestamp}.csv" => sector_benchmarks_csv,
+        'User guide - TPI Carbon Performance.xlsx' => user_guide
       }
 
       render zip: files.compact, filename: "#{filename} - #{timestamp}"
