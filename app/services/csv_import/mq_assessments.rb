@@ -73,7 +73,7 @@ module CSVImport
     end
 
     def publication_date(row)
-      CSVImport::DateUtils.safe_parse!(row[:publication_date], ['%Y-%m', '%d/%m/%Y'])
+      CSVImport::DateUtils.safe_parse!(row[:publication_date], ['%Y-%m-%d', '%Y-%m', '%d/%m/%Y'])
     end
 
     def get_questions(row)

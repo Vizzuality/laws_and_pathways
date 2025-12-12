@@ -36,6 +36,7 @@ class DataUpload < ApplicationRecord
     'Events' => 'Events',
     'External Legislations' => 'ExternalLegislations',
     'Geographies' => 'Geographies',
+    'Industries' => 'Industries',
     'Legislations' => 'Legislations',
     'Litigation Sides' => 'LitigationSides',
     'Litigations' => 'Litigations',

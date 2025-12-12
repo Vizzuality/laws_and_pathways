@@ -9,7 +9,7 @@ module CSVExport
         return if @assessments.empty?
 
         headers = ['Company ID', 'Company Name', 'Geography', 'Geography Code', 'Sector',
-                   'CA100 Company?', 'Large/Medium Classification',
+                   'Industries', 'CA100 Company?', 'Large/Medium Classification',
                    'ISINs', 'SEDOL', 'Publication Date', 'Assessment Date', 'Fiscal Year',
                    'Level', 'Performance compared to previous year']
         question_headers = @assessments.first.questions.map(&:csv_column_name)
@@ -27,6 +27,7 @@ module CSVExport
               assessment.company.geography.name,
               assessment.company.geography.iso,
               assessment.company.sector&.name,
+              assessment.company.sector&.industries&.map(&:name)&.join('|'),
               assessment.company.ca100? ? 'Yes' : 'No',
               assessment.company.market_cap_group,
               assessment.company.isin&.tr(',', ';')&.tr(' ', ''),

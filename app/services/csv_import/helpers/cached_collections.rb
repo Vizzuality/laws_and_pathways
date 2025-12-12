@@ -41,6 +41,14 @@ module CSVImport
         @responses ||= new_hash(Response, :titleize)
       end
 
+      def tpi_sectors
+        @tpi_sectors ||= Hash.new do |hash, name|
+          key = name.strip.downcase
+          hash[key] = TPISector.where('lower(name) = ?', key).first unless hash.key?(key)
+          hash[key]
+        end
+      end
+
       def new_hash(klass, format_name = :to_s)
         Hash.new do |hash, keyword|
           key = keyword.strip.downcase

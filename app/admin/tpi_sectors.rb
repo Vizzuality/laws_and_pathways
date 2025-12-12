@@ -6,11 +6,15 @@ ActiveAdmin.register TPISector do
 
   menu priority: 7, parent: 'TPI'
 
-  permit_params :name, :cluster_id, categories: [], cp_units_attributes: [:id, :unit, :valid_since, :_destroy]
+  permit_params :name, :cluster_id, categories: [], industry_ids: [], cp_units_attributes: [:id, :unit, :valid_since, :_destroy]
 
   filter :name_contains
 
   controller do
+    def scoped_collection
+      super.includes(:industries)
+    end
+
     before_save do |record|
       record.categories = record.categories.reject(&:blank?)
     end
@@ -38,6 +42,7 @@ ActiveAdmin.register TPISector do
           row :slug
           row :cluster if resource.show_in_tpi_tool?
           row :categories
+          list_row 'Industries', &:industry_links
           row :show_in_tpi_tool
           row :created_at
           row :updated_at

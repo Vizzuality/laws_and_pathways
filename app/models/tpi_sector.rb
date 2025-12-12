@@ -21,7 +21,6 @@ class TPISector < ApplicationRecord
   friendly_id :name, use: [:slugged, :history], routes: :default
 
   belongs_to :cluster, class_name: 'TPISectorCluster', foreign_key: 'cluster_id', optional: true
-  belongs_to :industry, optional: true
 
   has_many :companies, foreign_key: 'sector_id'
   has_many :cp_assessments, class_name: 'CP::Assessment', foreign_key: 'sector_id'
@@ -29,6 +28,7 @@ class TPISector < ApplicationRecord
   has_many :cp_units, class_name: 'CP::Unit', foreign_key: 'sector_id', inverse_of: :sector
   has_many :subsectors, foreign_key: 'sector_id'
 
+  has_and_belongs_to_many :industries
   has_and_belongs_to_many :publications
   has_and_belongs_to_many :news_articles
 

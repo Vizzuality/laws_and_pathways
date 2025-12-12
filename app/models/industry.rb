@@ -14,7 +14,7 @@ class Industry < ApplicationRecord
 
   friendly_id :name, use: [:slugged, :history], routes: :default
 
-  has_many :tpi_sectors, foreign_key: :industry_id, inverse_of: :industry
+  has_and_belongs_to_many :tpi_sectors
 
   validates_presence_of :name, :slug
   validates_uniqueness_of :name, :slug
