@@ -25,13 +25,15 @@
             source: 'cp',
             showIcon: true
           }) %>
-          <%= react_component('DownloadFormModal', {
-            title: 'Explore MQ data access',
-            buttonClass: 'button is-primary with-icon with-border',
-            downloadUrl: user_download_mq_all_tpi_sectors_path,
-            source: 'mq',
-            showIcon: true
-          }) %>
+          <% if params[:'show-mq'] == 'true' %>
+            <%= react_component('DownloadFormModal', {
+              title: 'Explore MQ data access',
+              buttonClass: 'button is-primary with-icon with-border',
+              downloadUrl: user_download_mq_all_tpi_sectors_path,
+              source: 'mq',
+              showIcon: true
+            }) %>
+          <% end %>
         </div>
       </div>
     </div>
