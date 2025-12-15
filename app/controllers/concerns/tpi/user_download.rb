@@ -70,12 +70,12 @@ module TPI
         }
       end.reduce(&:merge)
 
-      user_guide = File.binread(Rails.root.join('public', 'tpi', 'export_support', 'User guide - Management Quality.xlsx'))
+      user_guide = File.binread(Rails.root.join('public', 'tpi', 'export_support', 'User guide - TPI Management Quality.xlsx'))
 
       files = {
         'Latest_MQ_Assessments.csv' => latest_mq_assessments_csv
       }.merge(mq_assessments_files || {}).merge(
-        'User guide - Management Quality.xlsx' => user_guide
+        'User guide - TPI Management Quality.xlsx' => user_guide
       )
 
       render zip: files.compact, filename: "#{filename} - #{timestamp}"
