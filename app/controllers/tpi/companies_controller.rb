@@ -52,7 +52,7 @@ module TPI
 
     def user_download
       send_tpi_user_file(
-        mq_assessments: @company.mq_assessments.currently_published.order(publication_date: :desc, assessment_date: :desc),
+        mq_assessments: @company.mq_assessments.currently_published.order(publication_date: :desc, methodology_version: :desc, assessment_date: :desc),
         cp_assessments: @company.cp_assessments.currently_published.order(assessment_date: :desc),
         filename: "TPI company data - #{@company.name}"
       )

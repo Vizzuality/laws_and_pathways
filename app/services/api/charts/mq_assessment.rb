@@ -45,7 +45,7 @@ module Api
         return [] unless company.present?
 
         @company_mq_assessments ||= begin
-          query = company.mq_assessments.currently_published.order(publication_date: :asc, assessment_date: :asc)
+          query = company.mq_assessments.currently_published.order(publication_date: :asc, methodology_version: :asc, assessment_date: :asc)
           query = query.without_beta_methodologies unless @enable_beta_mq_assessments
           hide_mq_assessments_with_same_publication_date query
         end

@@ -33,7 +33,7 @@ module MQ
     before_validation :set_default_assessment_type
     before_validation :normalize_downloadable
 
-    scope :latest_first, -> { order(publication_date: :desc, assessment_date: :desc) }
+    scope :latest_first, -> { order(publication_date: :desc, methodology_version: :desc, assessment_date: :desc) }
     scope :all_publication_dates, -> { distinct.order(publication_date: :desc).pluck(:publication_date) }
     scope :all_methodology_versions, -> { distinct.order(methodology_version: :asc).pluck(:methodology_version) }
     scope :currently_published, -> { where('publication_date <= ?', DateTime.now) }
