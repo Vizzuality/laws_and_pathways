@@ -42,12 +42,12 @@ class Company < ApplicationRecord
 
   has_many :mq_assessments, class_name: 'MQ::Assessment', inverse_of: :company
   has_one :latest_mq_assessment_without_beta_methodologies, -> {
-    currently_published.without_beta_methodologies.order(publication_date: :desc, assessment_date: :desc)
+    currently_published.without_beta_methodologies.order(publication_date: :desc, methodology_version: :desc, assessment_date: :desc)
   }, class_name: 'MQ::Assessment'
   has_one :latest_mq_assessment_only_beta_methodologies, -> {
-    currently_published.only_beta_methodologies.order(publication_date: :desc, assessment_date: :desc)
+    currently_published.only_beta_methodologies.order(publication_date: :desc, methodology_version: :desc, assessment_date: :desc)
   }, class_name: 'MQ::Assessment'
-  has_one :latest_mq_assessment, -> { currently_published.order(publication_date: :desc, assessment_date: :desc) }, class_name: 'MQ::Assessment'
+  has_one :latest_mq_assessment, -> { currently_published.order(publication_date: :desc, methodology_version: :desc, assessment_date: :desc) }, class_name: 'MQ::Assessment'
   has_many :cp_assessments, class_name: 'CP::Assessment', as: :cp_assessmentable
   has_one :latest_cp_assessment, -> {
                                    currently_published.order(assessment_date: :desc)
