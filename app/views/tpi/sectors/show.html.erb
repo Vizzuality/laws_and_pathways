@@ -4,8 +4,9 @@
 <div class="sector-page">
   <div class="dropdown-selector-sector-page-wrapper">
     <%= react_component("DropdownSelector", {
-        sectors: @sectors,
+        sectors: @sectors_json,
         companies: TPI::CompanyDecorator.decorate_collection(@companies),
+        industries: @industries_json,
         selectedOption: @sector.name
     }) %>
   </div>

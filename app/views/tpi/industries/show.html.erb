@@ -1,5 +1,5 @@
-<% content_for :page_title, "Tool - Transition Pathway Initiative" %>
-<% content_for :page_description, "The TPI tool is a corporate climate action benchmark which assesses how prepared companies are for the transition to a low-carbon economy." %>
+<% content_for :page_title, "#{@industry.name} - Transition Pathway Initiative" %>
+<% content_for :page_description, "Compare and assess how prepared the world's top companies in the #{@industry.name} industry are for the transition to a low-carbon economy." %>
 
 <div class="sectors-index-page">
   <div class="dropdown-selector-sector-page-wrapper">
@@ -7,7 +7,8 @@
         sectors: @sectors_json,
         companies: TPI::CompanyDecorator.decorate_collection(@companies),
         industries: @industries_json,
-        selectedOption: 'All sectors'
+        selectedOption: @industry.name,
+        defaultFilter: 'industry'
     }) %>
   </div>
 
@@ -19,56 +20,43 @@
             <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
             Methodology
           <% end %>
-          <%= react_component('DownloadFormModal', {
-            title: 'Explore CP data access',
-            buttonClass: 'button is-primary with-icon with-border',
-            downloadUrl: user_download_cp_all_tpi_sectors_path,
-            source: 'cp',
-            showIcon: true
-          }) %>
-          <%= react_component('DownloadFormModal', {
-            title: 'Explore MQ data access',
-            buttonClass: 'button is-primary with-icon with-border',
-            downloadUrl: user_download_mq_all_tpi_sectors_path,
-            source: 'mq',
-            showIcon: true
-          }) %>
         </div>
       </div>
     </div>
   </div>
 
   <section id="management-quality" class="container">
-    <h3 class="title-blue">Explore the distribution of companies across all sectors based on greenhouse gas emissions management and low-carbon transition risks and opportunities.</h3>
+    <h3 class="title-blue">Explore the distribution of companies in the <%= @industry.name %> industry based on greenhouse gas emissions management and low-carbon transition risks and opportunities.</h3>
     <h4 class="title-darker-blue">Below you will find the results of the Carbon Performance and Management Quality corporate assessments. These TPI metrics should be treated as complementary – i.e. both need to be looked at together to better assess the progress that companies are making in the low-carbon transition.</h4>
+
+    <p class="industry-sectors-info" style="margin-bottom: 2rem;">
+      <strong>Sectors included:</strong> <%= @industry_sectors.map(&:name).join(', ') %>
+    </p>
 
     <h4>Number of Companies by Management Quality</h4>
 
-    <%= react_component('charts/mq-sector-pie', {
-      dataUrl: levels_chart_data_tpi_sectors_path
-    }) %>
+    <%= react_component('charts/mq-sector-pie', { dataUrl: levels_chart_data_tpi_industry_path(@industry.id) }) %>
 
     <h4>Number of Companies by Sector according to Management Quality</h4>
     <%= react_component('charts/bubble/Chart', {
       levels: @companies_by_sectors,
-      sectors: @sectors_json,
-      sectorIndustryMap: @sector_industry_map
+      sectors: @industry_sectors_json
     }) %>
 
     <%= react_component("charts/bubble/CompaniesAccordion", {
       levels: @companies_by_sectors,
-      sectors: @sectors_json
+      sectors: @industry_sectors_json
     }) %>
   </section>
 
   <section id="carbon-performance" class="container">
-    <h4>Carbon Performance: All sectors</h4>
+    <h4>Carbon Performance: <%= @industry.name %></h4>
 
     <p>CP alignment with the Paris agreement benchmarks by sector and cluster (number and % of companies). Please note that this information is not available for all sectors.</p>
 
     <%= react_component('charts/cp-performance-all-sectors', {
-      dataUrl: cp_performance_chart_data_all_years_tpi_sectors_path,
-      sectors: TPI::CPPerformanceSectorDecorator.decorate_collection(@sectors).map(&:to_h)
+      dataUrl: cp_performance_chart_data_tpi_industry_path(@industry.id),
+      sectors: TPI::CPPerformanceSectorDecorator.decorate_collection(@industry_sectors).map(&:to_h)
     }) %>
   </section>
 </div>

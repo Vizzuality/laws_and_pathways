@@ -5,6 +5,7 @@ module TPI
     before_action :enable_beta_mq_assessments
     before_action :fetch_companies, only: [:show, :index]
     before_action :fetch_sectors, only: [:show, :index, :user_download_all, :user_download_cp_all, :user_download_mq_all]
+    before_action :fetch_industries, only: [:show, :index]
     before_action :fetch_sector, only: [:show, :user_download, :user_download_cp, :user_download_mq]
     before_action :redirect_if_numeric_or_historic_slug, only: [:show]
 
@@ -237,6 +238,34 @@ module TPI
     def fetch_sectors
       @sectors = TPISector.tpi_tool.with_companies.includes(:cluster).order(:name)
       @sectors_json = @sectors.map { |s| s.as_json(except: [:created_at, :updated_at], methods: [:path]) }
+    end
+
+    def fetch_industries
+      @industries = Industry.joins(:tpi_sectors)
+        .where(tpi_sectors: {id: TPISector.tpi_tool.with_companies.pluck(:id)})
+        .distinct
+        .order(:name)
+      @industries_json = @industries.map do |i|
+        {
+          id: i.id,
+          name: i.name,
+          slug: i.slug,
+          path: tpi_corporate_industry_path(i.slug)
+        }
+      end
+      build_sector_industry_map
+    end
+
+    def build_sector_industry_map
+      @sector_industry_map = {}
+      @industries.each do |industry|
+        industry.tpi_sectors.tpi_tool.each do |sector|
+          @sector_industry_map[sector.name] = {
+            industry_name: industry.name,
+            industry_path: tpi_corporate_industry_path(industry.slug)
+          }
+        end
+      end
     end
 
     def fetch_companies

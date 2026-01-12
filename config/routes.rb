@@ -43,6 +43,14 @@ Rails.application.routes.draw do
       get '/corporates', to: 'sectors#index'
       get '/corporates/:id', to: 'sectors#show'
 
+      resources :industries, only: [:show] do
+        member do
+          get :levels_chart_data
+          get :cp_performance_chart_data
+        end
+      end
+      get '/corporates/industry/:id', to: 'industries#show', as: 'corporate_industry'
+
       resources :companies, only: [:show] do
         member do
           get :emissions_chart_data

@@ -121,6 +121,13 @@
                 <%= @company.geography.name %>
               <% end %>
             </div>
+            <% if @company.sector.industries.any? %>
+              <div class="column">
+                <%= render 'tpi/shared/property', highlight: true, name: 'Industry' do %>
+                  <%= safe_join(@company.sector.industries.order(:name).map { |i| link_to(i.name, tpi_corporate_industry_path(i.slug)) }, ', ') %>
+                <% end %>
+              </div>
+            <% end %>
             <div class="column">
               <%= render 'tpi/shared/property', highlight: true, name: 'Sector' do %>
                 <%= link_to @company.sector.name, tpi_sector_path(@company.sector.slug) %>
