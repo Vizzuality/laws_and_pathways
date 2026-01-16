@@ -9,7 +9,7 @@ module Api
       def summary
         OpenStruct.new(
           name: @company.name,
-          country: @company.geography.name,
+          country: @company.geography&.name,
           sector: @company.sector.name,
           market_cap: @company.market_cap_group.titlecase,
           isin: @company.isin,

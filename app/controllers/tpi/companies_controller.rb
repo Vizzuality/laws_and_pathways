@@ -17,6 +17,19 @@ module TPI
         .order('tpi_sectors.name', :name)
       @companies = TPI::CompanyDecorator.decorate_collection(@companies)
 
+      @industries = Industry.joins(:tpi_sectors)
+        .where(tpi_sectors: {id: TPISector.tpi_tool.with_companies.pluck(:id)})
+        .distinct
+        .order(:name)
+      @industries_json = @industries.map do |i|
+        {
+          id: i.id,
+          name: i.name,
+          slug: i.slug,
+          path: tpi_corporate_industry_path(i.slug)
+        }
+      end
+
       fixed_navbar(
         "Company #{@company.name}",
         admin_company_path(@company)

@@ -20,6 +20,20 @@
             <img src="<%= asset_path 'icons/download.svg'%>" alt="download icon" />
             Methodology
           <% end %>
+          <%= react_component('DownloadFormModal', {
+            title: 'Explore CP data access',
+            buttonClass: 'button is-primary with-icon with-border',
+            downloadUrl: user_download_cp_tpi_industry_path(@industry),
+            source: 'cp',
+            showIcon: true
+          }) %>
+          <%= react_component('DownloadFormModal', {
+            title: 'Explore MQ data access',
+            buttonClass: 'button is-primary with-icon with-border',
+            downloadUrl: user_download_mq_tpi_industry_path(@industry),
+            source: 'mq',
+            showIcon: true
+          }) %>
         </div>
       </div>
     </div>
@@ -29,15 +43,11 @@
     <h3 class="title-blue">Explore the distribution of companies in the <%= @industry.name %> industry based on greenhouse gas emissions management and low-carbon transition risks and opportunities.</h3>
     <h4 class="title-darker-blue">Below you will find the results of the Carbon Performance and Management Quality corporate assessments. These TPI metrics should be treated as complementary – i.e. both need to be looked at together to better assess the progress that companies are making in the low-carbon transition.</h4>
 
-    <p class="industry-sectors-info" style="margin-bottom: 2rem;">
-      <strong>Sectors included:</strong> <%= @industry_sectors.map(&:name).join(', ') %>
-    </p>
-
-    <h4>Number of Companies by Management Quality</h4>
+    <h4>Number of Companies in <%= @industry.name %> by Management Quality</h4>
 
     <%= react_component('charts/mq-sector-pie', { dataUrl: levels_chart_data_tpi_industry_path(@industry.id) }) %>
 
-    <h4>Number of Companies by Sector according to Management Quality</h4>
+    <h4>Number of Companies in <%= @industry.name %> by Sector according to Management Quality</h4>
     <%= react_component('charts/bubble/Chart', {
       levels: @companies_by_sectors,
       sectors: @industry_sectors_json

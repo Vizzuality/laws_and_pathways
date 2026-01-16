@@ -258,11 +258,25 @@ module TPI
 
     def build_sector_industry_map
       @sector_industry_map = {}
-      @industries.each do |industry|
-        industry.tpi_sectors.tpi_tool.each do |sector|
+      
+      Industry.includes(:tpi_sectors).find_each do |industry|
+        industry.tpi_sectors.each do |sector|
           @sector_industry_map[sector.name] = {
             industry_name: industry.name,
             industry_path: tpi_corporate_industry_path(industry.slug)
+          }
+        end
+      end
+
+      all_sectors_in_chart = TPISector.joins(:companies)
+        .where(companies: {id: Company.published.active.with_latest_mq_v5.select(:id)})
+        .distinct
+
+      all_sectors_in_chart.each do |sector|
+        unless @sector_industry_map.key?(sector.name)
+          @sector_industry_map[sector.name] = {
+            industry_name: 'No Industry',
+            industry_path: nil
           }
         end
       end

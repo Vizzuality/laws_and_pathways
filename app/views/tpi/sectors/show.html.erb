@@ -50,6 +50,13 @@
       Distribution of companies in the <strong><%= @sector.name %></strong> sector according to the management of their greenhouse gas emissions and of risks and opportunities related to the low-carbon transition.
     </p>
 
+    <% if @sector.industries.any? %>
+      <p class="sector-industries-info">
+        <strong>Industry:</strong>
+        <%= safe_join(@sector.industries.order(:name).map { |i| link_to(i.name, tpi_corporate_industry_path(i.slug)) }, ', ') %>
+      </p>
+    <% end %>
+
     <%= react_component('charts/mq-sector-pie', { dataUrl: levels_chart_data_tpi_sector_path(@sector.id) }) %>
 
     <h4>Number and Detailed Companies Lists by Management Quality </h4>

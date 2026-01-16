@@ -37,8 +37,8 @@ class Company < ApplicationRecord
   enum market_cap_group: array_to_enum_hash(MARKET_CAP_GROUPS)
 
   belongs_to :sector, class_name: 'TPISector', foreign_key: 'sector_id'
-  belongs_to :geography
-  belongs_to :headquarters_geography, class_name: 'Geography'
+  belongs_to :geography, optional: true
+  belongs_to :headquarters_geography, class_name: 'Geography', optional: true
 
   has_many :mq_assessments, class_name: 'MQ::Assessment', inverse_of: :company
   has_one :latest_mq_assessment_without_beta_methodologies, -> {

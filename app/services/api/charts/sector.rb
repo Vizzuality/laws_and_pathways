@@ -184,9 +184,9 @@ module Api
             company: {
               id: company.id,
               name: graph_name,
-              region: company.geography.region,
+              region: company.geography&.region,
               geography_id: company.geography_id,
-              geography_name: company.geography.name,
+              geography_name: company.geography&.name,
               market_cap_group: company.market_cap_group,
               subsector: subsector
             },

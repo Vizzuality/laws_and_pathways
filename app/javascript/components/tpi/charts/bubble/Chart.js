@@ -41,7 +41,11 @@ const Row = ({ dataRow, title, sectors, industryInfo, showIndustry, hasIndustryC
       {hasIndustryColumn && (
         <div className="bubble-chart__row-industry">
           {showIndustry && industryInfo ? (
-            <a href={industryInfo.industry_path}>{industryInfo.industry_name}</a>
+            industryInfo.industry_path ? (
+              <a href={industryInfo.industry_path}>{industryInfo.industry_name}</a>
+            ) : (
+              <span>{industryInfo.industry_name}</span>
+            )
           ) : null}
         </div>
       )}

@@ -24,8 +24,8 @@ module CSVExport
             csv << [
               assessment.company.id,
               assessment.company.name,
-              assessment.company.geography.name,
-              assessment.company.geography.iso,
+              assessment.company.geography&.name,
+              assessment.company.geography&.iso,
               assessment.company.sector&.name,
               assessment.company.sector&.industries&.map(&:name)&.join('|'),
               assessment.company.ca100? ? 'Yes' : 'No',

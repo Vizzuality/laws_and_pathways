@@ -5,7 +5,7 @@
 
 <div class="company-page" data-controller="companies">
   <div class="dropdown-selector-company-page-wrapper">
-    <%= react_component("DropdownSelector", { sectors: @sectors, companies: @companies, selectedOption: @company.name, defaultFilter: 'company' }) %>
+    <%= react_component("DropdownSelector", { sectors: @sectors, companies: @companies, industries: @industries_json, selectedOption: @company.name, defaultFilter: 'company' }) %>
   </div>
   <div class="companies-header">
     <div class="container is-hidden-touch">
@@ -118,7 +118,7 @@
           <div class="columns">
             <div class="column">
               <%= render 'tpi/shared/property', highlight: false, name: 'Geography', tooltip: t('tpi.tooltips.geography') do %>
-                <%= @company.geography.name %>
+                <%= @company.geography&.name || 'N/A' %>
               <% end %>
             </div>
             <% if @company.sector.industries.any? %>
