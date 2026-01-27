@@ -41,8 +41,8 @@ module CSVExport
             csv << [
               company.id,
               company.name,
-              company.geography.name,
-              company.geography.iso,
+              company.geography&.name,
+              company.geography&.iso,
               company.sector&.name,
               company.sector&.industries&.map(&:name)&.join('|'),
               company.ca100? ? 'Yes' : 'No',

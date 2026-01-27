@@ -65,8 +65,8 @@ module CSVExport
               csv << [
                 company.id,
                 company.name,
-                company.geography.name,
-                company.geography.iso,
+                company.geography&.name,
+                company.geography&.iso,
                 company.sector&.name,
                 subsector,
                 company.ca100? ? 'Yes' : 'No',

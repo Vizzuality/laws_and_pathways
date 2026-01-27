@@ -18,22 +18,34 @@ const ENTER_KEY = 13;
 
 const FILTER_BY = {
   SECTOR: 'sector',
-  COMPANY: 'company'
+  COMPANY: 'company',
+  INDUSTRY: 'industry'
 };
 
-const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 'sector' }) => {
-  // This is a sector that exists in db and has companies attached to it, so hiding it from the FE to avoid breaking something in backend
+const DropdownSelector = ({ sectors, companies, industries = [], selectedOption, defaultFilter = 'sector' }) => {
   const filteredSectors = sectors.filter((sector) => sector.name !== '0');
   const [searchValue, setSearchValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-  const [activeFilter, setActiveFilter] = useState(defaultFilter);
   const inputEl = useRef(null);
   const searchContainer = useRef(null);
 
+  const getInitialFilter = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const filterParam = urlParams.get('filter');
+    if (filterParam === 'industry' && industries.length > 0) {
+      return FILTER_BY.INDUSTRY;
+    }
+    return defaultFilter;
+  };
+
+  const [activeFilter, setActiveFilter] = useState(getInitialFilter);
+
   const isFilterBySector = activeFilter === FILTER_BY.SECTOR;
   const isFilterByCompany = activeFilter === FILTER_BY.COMPANY;
+  const isFilterByIndustry = activeFilter === FILTER_BY.INDUSTRY;
 
   const sectorsWithExtraOption = [{ id: 'all-sectors', name: 'All sectors', slug: '' }, ...filteredSectors];
+  const industriesWithExtraOption = [{ id: 'all-industries', name: 'All industries', slug: '', path: '/corporates/' }, ...industries];
 
   const fuse = (opt) => {
     const config = {
@@ -46,7 +58,12 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
     return searchResults;
   };
 
-  const filteredByOptions = isFilterBySector ? sectorsWithExtraOption : companies;
+  const getFilteredByOptions = () => {
+    if (isFilterBySector) return sectorsWithExtraOption;
+    if (isFilterByIndustry) return industriesWithExtraOption;
+    return companies;
+  };
+  const filteredByOptions = getFilteredByOptions();
   const searchResults = useMemo(() => (searchValue && activeFilter ? fuse(filteredByOptions) : []), [searchValue, activeFilter]);
 
   const options = useMemo(() => (searchValue
@@ -55,12 +72,18 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
 
   const companiesBySector = groupBy(options, 'sector_name');
 
+  const getPlaceholder = () => {
+    if (isFilterByCompany) return 'company';
+    if (isFilterByIndustry) return 'industry';
+    return 'sector';
+  };
+
   const input = () => (
     <input
       ref={inputEl}
       className="dropdown-selector__input"
       onChange={e => setSearchValue(e.target.value)}
-      placeholder={`Type or select ${isFilterByCompany ? 'company' : 'sector'}`}
+      placeholder={`Type or select ${getPlaceholder()}`}
     />
   );
 
@@ -70,13 +93,35 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
     if (inputEl.current) inputEl.current.focus();
   };
 
+  const getHeaderText = () => {
+    const isOnMainPage = window.location.pathname === '/corporates/' || window.location.pathname === '/corporates';
+    if (isOnMainPage && isFilterByIndustry) {
+      return 'All industries';
+    }
+    if (isOnMainPage && isFilterBySector) {
+      return 'All sectors';
+    }
+    return selectedOption;
+  };
+
   const header = () => (
-    <span>{selectedOption}</span>
+    <span>{getHeaderText()}</span>
   );
 
   const handleOptionClick = (option) => {
-    const url = isFilterBySector ? '/corporates/' : '/companies/';
     setIsOpen(false);
+    if (isFilterByIndustry) {
+      if (option.id === 'all-industries') {
+        const isOnMainPage = window.location.pathname === '/corporates/' || window.location.pathname === '/corporates';
+        if (!isOnMainPage) {
+          window.open('/corporates/?filter=industry', '_self');
+        }
+      } else {
+        window.open(option.path, '_self');
+      }
+      return;
+    }
+    const url = isFilterBySector ? '/corporates/' : '/companies/';
     if (!(window.location.pathname === '/corporates/' && option.id === 'all-sectors')) {
       window.open(`${url}${option.slug}`, '_self');
     }
@@ -151,13 +196,26 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
           })}
         >
           <div className="dropdown-selector__buttons">
+            {industries.length > 0 && (
+              <button
+                type="button"
+                onClick={() => (isFilterByIndustry ? () => {} : setFilter(FILTER_BY.INDUSTRY))}
+                className={cx({
+                  'dropdown-selector__button': !isFilterByIndustry,
+                  'dropdown-selector__active-button': isFilterByIndustry,
+                  'dropdown-selector__not-active-opened': !isFilterByIndustry && isOpen
+                })}
+              >
+                Filter by {FILTER_BY.INDUSTRY}
+              </button>
+            )}
             <button
               type="button"
               onClick={() => (isFilterBySector ? () => {} : setFilter(FILTER_BY.SECTOR))}
               className={cx({
-                'dropdown-selector__button': isFilterByCompany,
+                'dropdown-selector__button': !isFilterBySector,
                 'dropdown-selector__active-button': isFilterBySector,
-                'dropdown-selector__not-active-opened': isFilterByCompany && isOpen
+                'dropdown-selector__not-active-opened': !isFilterBySector && isOpen
               })}
             >
               Filter by {FILTER_BY.SECTOR}
@@ -166,9 +224,9 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
               type="button"
               onClick={() => (isFilterByCompany ? () => {} : setFilter(FILTER_BY.COMPANY))}
               className={cx({
-                'dropdown-selector__button': isFilterBySector,
+                'dropdown-selector__button': !isFilterByCompany,
                 'dropdown-selector__active-button': isFilterByCompany,
-                'dropdown-selector__not-active-opened': isFilterBySector && isOpen
+                'dropdown-selector__not-active-opened': !isFilterByCompany && isOpen
               })}
             >
               Filter by {FILTER_BY.COMPANY}
@@ -191,6 +249,21 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
           {isOpen && (
             <div className="dropdown-selector__options-wrapper">
               {isFilterBySector && (
+                <div className="dropdown-selector__options">
+                  {(options.length && options.map((option, i) => (
+                    <div
+                      onClick={() => handleOptionClick(option)}
+                      className="dropdown-selector__option"
+                      key={`${option.name}-${i}`}
+                    >
+                      {option.name}
+                    </div>
+                  ))) || (searchValue.length && !options.length && (
+                    <div>No results found.</div>
+                  ))}
+                </div>
+              )}
+              {isFilterByIndustry && (
                 <div className="dropdown-selector__options">
                   {(options.length && options.map((option, i) => (
                     <div
@@ -241,12 +314,14 @@ const DropdownSelector = ({ sectors, companies, selectedOption, defaultFilter = 
 DropdownSelector.propTypes = {
   sectors: PropTypes.array.isRequired,
   companies: PropTypes.array.isRequired,
+  industries: PropTypes.array,
   selectedOption: PropTypes.string.isRequired,
   defaultFilter: PropTypes.string
 };
 
 DropdownSelector.defaultProps = {
-  defaultFilter: 'sector'
+  defaultFilter: 'sector',
+  industries: []
 };
 
 export default DropdownSelector;

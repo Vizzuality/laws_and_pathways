@@ -47,3 +47,12 @@
     </div>
   <% end %>
 </div>
+
+<% unless assessment.notes.blank? %>
+  <div class="management-quality__notes is-hidden-touch">
+    <h6>TPI notes:</h6>
+    <p>
+      <%= assessment.notes %>
+    </p>
+  </div>
+<% end %>

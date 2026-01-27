@@ -33,11 +33,22 @@ const LEVELS_SUBTITLES = {
   5: 'Transition planning and implementation'
 };
 
-const Row = ({ dataRow, title, sectors }) => {
+const Row = ({ dataRow, title, sectors, industryInfo, showIndustry, hasIndustryColumn }) => {
   const sector = sectors.find((s) => s.name === title);
 
   return (
     <React.Fragment key={Math.random()}>
+      {hasIndustryColumn && (
+        <div className="bubble-chart__row-industry">
+          {showIndustry && industryInfo ? (
+            industryInfo.industry_path ? (
+              <a href={industryInfo.industry_path}>{industryInfo.industry_name}</a>
+            ) : (
+              <span>{industryInfo.industry_name}</span>
+            )
+          ) : null}
+        </div>
+      )}
       <div className="bubble-chart__row-link">
         {sector ? <a href={sector.path}>{title}</a> : <span>{title}</span>}
       </div>
@@ -56,7 +67,6 @@ const Row = ({ dataRow, title, sectors }) => {
             companies
           }
         };
-        // Remove special characters from the key to be able to use d3-select as it uses querySelector
         const cleanKey = title.replace(/[^a-zA-Z0-9\-_:.]/g, '');
         const uniqueKey = `${cleanKey}-${el.length}-${i}`;
 
@@ -83,32 +93,51 @@ const Row = ({ dataRow, title, sectors }) => {
 Row.propTypes = {
   dataRow: PropTypes.array.isRequired,
   title: PropTypes.string.isRequired,
-  sectors: PropTypes.array.isRequired
+  sectors: PropTypes.array.isRequired,
+  industryInfo: PropTypes.object,
+  showIndustry: PropTypes.bool,
+  hasIndustryColumn: PropTypes.bool
 };
 
-const BubbleChart = ({ levels, sectors }) => {
-  /** Parsed data has this format -
-   * [
-   *   { sector: 'Sector1', data: [ [ {}, {}, {} ], [], [], [], [], [] ] },
-   *   { sector: 'Sector2', data: [ [], [], [], [], [], [] ] },
-   *   { sector: 'Sector3', data: [ [], [], [], [], [], [] ] },
-   *   { sector: 'Sector4', data: [ [], [], [], [], [], [] ] },
-   *   { sector: 'Sector5', data: [ [], [], [], [], [], [] ] },
-   *   { sector: 'Sector6', data: [ [], [], [], [], [], [] ] },
-   *   { sector: 'Sector7', data: [ [], [], [], [], [], [] ] },
-   *   { sector: 'Sector8', data: [ [], [], [], [], [], [] ] }
-   * ]
-   */
+Row.defaultProps = {
+  industryInfo: null,
+  showIndustry: false,
+  hasIndustryColumn: false
+};
+
+const BubbleChart = ({ levels, sectors, sectorIndustryMap }) => {
+  const hasIndustryData = sectorIndustryMap && Object.keys(sectorIndustryMap).length > 0;
+
   const parsedData = Object.entries(levels).map(
     ([sectorName, sectorValue]) => ({
       sector: sectorName,
-      data: Object.values(sectorValue)
+      data: Object.values(sectorValue),
+      industryInfo: hasIndustryData ? sectorIndustryMap[sectorName] : null
     })
   );
 
-  const levelsSignature = levels && Object.keys(levels[Object.keys(levels)[0]]);
+  const sortedData = hasIndustryData
+    ? parsedData.sort((a, b) => {
+      const industryA = a.industryInfo?.industry_name || 'ZZZ';
+      const industryB = b.industryInfo?.industry_name || 'ZZZ';
+      if (industryA !== industryB) {
+        return industryA.localeCompare(industryB);
+      }
+      return a.sector.localeCompare(b.sector);
+    })
+    : parsedData;
 
-  const GRID_HEIGHT = parsedData.length * SINGLE_CELL_SVG_HEIGHT + 100;
+  let lastIndustry = null;
+  const dataWithIndustryFlags = sortedData.map((row) => {
+    const currentIndustry = row.industryInfo?.industry_name;
+    const showIndustry = currentIndustry !== lastIndustry;
+    lastIndustry = currentIndustry;
+    return { ...row, showIndustry };
+  });
+
+  const levelsSignature = levels && Object.keys(levels[Object.keys(levels)[0]]);
+  const columnCount = hasIndustryData ? levelsSignature.length + 2 : levelsSignature.length + 1;
+  const GRID_HEIGHT = sortedData.length * SINGLE_CELL_SVG_HEIGHT + 100;
 
   return (
     <div className="is-hidden-touch">
@@ -122,9 +151,16 @@ const BubbleChart = ({ levels, sectors }) => {
       <div
         className="bubble-chart__container bubble-chart__container--sectors"
         style={{
-          gridTemplateColumns: `repeat(${levelsSignature.length + 1}, ${SINGLE_CELL_SVG_WIDTH}px)`
+          gridTemplateColumns: hasIndustryData
+            ? `180px repeat(${levelsSignature.length + 1}, ${SINGLE_CELL_SVG_WIDTH}px)`
+            : `repeat(${levelsSignature.length + 1}, ${SINGLE_CELL_SVG_WIDTH}px)`
         }}
       >
+        {hasIndustryData && (
+          <div className="bubble-chart__industry-header">
+            <span className="bubble-chart__title">Industry</span>
+          </div>
+        )}
         <div className="bubble-chart__legend-container">
           <div className="bubble-chart__title-container">
             <span className="bubble-chart__title">No. of companies</span>
@@ -178,11 +214,14 @@ const BubbleChart = ({ levels, sectors }) => {
                  </svg>}
           </div>
         ))}
-        {parsedData.map((dataRow) => (
+        {dataWithIndustryFlags.map((dataRow) => (
           <Row
             dataRow={dataRow.data}
             title={dataRow.sector}
             sectors={sectors}
+            industryInfo={dataRow.industryInfo}
+            showIndustry={dataRow.showIndustry}
+            hasIndustryColumn={hasIndustryData}
             key={dataRow.sector}
           />
         ))}
@@ -193,6 +232,11 @@ const BubbleChart = ({ levels, sectors }) => {
 
 BubbleChart.propTypes = {
   levels: PropTypes.object.isRequired,
-  sectors: PropTypes.array.isRequired
+  sectors: PropTypes.array.isRequired,
+  sectorIndustryMap: PropTypes.object
+};
+
+BubbleChart.defaultProps = {
+  sectorIndustryMap: null
 };
 export default BubbleChart;

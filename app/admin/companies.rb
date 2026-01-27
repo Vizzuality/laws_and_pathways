@@ -160,10 +160,10 @@ ActiveAdmin.register Company do
     column(:sector) { |c| c.sector.name }
     column :market_cap_group
     column :sedol
-    column(:geography_iso) { |c| c.geography.iso }
-    column(:geography) { |c| c.geography.name }
-    column(:headquarters_geography_iso) { |c| c.headquarters_geography.iso }
-    column(:headquarters_geography) { |c| c.headquarters_geography.name }
+    column(:geography_iso) { |c| c.geography&.iso }
+    column(:geography) { |c| c.geography&.name }
+    column(:headquarters_geography_iso) { |c| c.headquarters_geography&.iso }
+    column(:headquarters_geography) { |c| c.headquarters_geography&.name }
     column :latest_information
     column :company_comments_internal
     column :ca100
@@ -191,8 +191,8 @@ ActiveAdmin.register Company do
       end
 
       columns do
-        column { f.input :geography }
-        column { f.input :headquarters_geography }
+        column { f.input :geography, hint: 'Warning: Leaving this blank is allowed but not recommended' }
+        column { f.input :headquarters_geography, hint: 'Warning: Leaving this blank is allowed but not recommended' }
         column do
           f.input :visibility_status, as: :select
         end

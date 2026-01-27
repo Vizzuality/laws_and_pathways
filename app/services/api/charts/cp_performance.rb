@@ -54,6 +54,21 @@ module Api
         result
       end
 
+      def cp_performance_for_sectors(sector_ids)
+        all_companies = Company
+          .published
+          .active
+          .where(sector_id: sector_ids)
+          .includes(:latest_cp_assessment, sector: [:cluster])
+
+        result = {}
+        [:cp_alignment_2050, :cp_alignment_2035, :cp_alignment_2027].each do |alignment_key|
+          result[alignment_key] = cp_performance_all_sectors_by_year(alignment_key, all_companies)
+        end
+
+        result
+      end
+
       private
 
       def cp_performance_all_sectors_by_year(year_key, all_companies)

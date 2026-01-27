@@ -5,7 +5,7 @@
 
 <div class="company-page" data-controller="companies">
   <div class="dropdown-selector-company-page-wrapper">
-    <%= react_component("DropdownSelector", { sectors: @sectors, companies: @companies, selectedOption: @company.name, defaultFilter: 'company' }) %>
+    <%= react_component("DropdownSelector", { sectors: @sectors, companies: @companies, industries: @industries_json, selectedOption: @company.name, defaultFilter: 'company' }) %>
   </div>
   <div class="companies-header">
     <div class="container is-hidden-touch">
@@ -118,9 +118,16 @@
           <div class="columns">
             <div class="column">
               <%= render 'tpi/shared/property', highlight: false, name: 'Geography', tooltip: t('tpi.tooltips.geography') do %>
-                <%= @company.geography.name %>
+                <%= @company.geography&.name || 'N/A' %>
               <% end %>
             </div>
+            <% if @company.sector.industries.any? %>
+              <div class="column">
+                <%= render 'tpi/shared/property', highlight: true, name: 'Industry' do %>
+                  <%= safe_join(@company.sector.industries.order(:name).map { |i| link_to(i.name, tpi_corporate_industry_path(i.slug)) }, ', ') %>
+                <% end %>
+              </div>
+            <% end %>
             <div class="column">
               <%= render 'tpi/shared/property', highlight: true, name: 'Sector' do %>
                 <%= link_to @company.sector.name, tpi_sector_path(@company.sector.slug) %>
