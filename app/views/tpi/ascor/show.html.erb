@@ -19,7 +19,7 @@
             remote: true,
             theme: 'ascor',
             url: show_assessment_tpi_ascor_path(@country),
-            data: @country.assessments.map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
+            data: @country.assessments.order(assessment_date: :desc).map {|v| {label: v['assessment_date']&.strftime('%d %B %Y'), value: v['id']}},
             selected: @assessment.id
           }) %>
         </div>
@@ -44,14 +44,7 @@
   <% end %>
 
   <div class="container notes">
-    <% if @assessment&.notes.present? %>
-      <h6>Research notes:</h6>
-      <p>
-        <%= @assessment.notes %>
-      </p>
-    <% else %>
-      <span style="display: inline-block"></span>
-    <% end %>
+    <%= render 'notes', assessment: @assessment %>
   </div>
 
   <%= render 'contact' %>

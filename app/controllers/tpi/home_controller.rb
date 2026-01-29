@@ -24,7 +24,7 @@ module TPI
           corporate_carbon_performance: page&.contents&.find_by(code: 'corporate_carbon_performance')&.text || '-',
           sectors_count: TPISector.with_companies.count,
           ascor_countries: ASCOR::Country.published.count,
-          banks: Bank.published.count
+          banks: Bank.assessed_last_year.count
         }
       }
       @latest_researches = Publication

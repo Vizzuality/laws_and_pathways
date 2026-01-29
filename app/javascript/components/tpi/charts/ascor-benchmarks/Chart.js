@@ -4,16 +4,41 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { options } from './options';
 
+const HIGHLIGHT_YEARS = [2030, 2035];
+
 const Chart = ({ data: { data, metadata }, assessmentYear }) => {
   const chartData = useMemo(
     () => [
       {
         name: 'Country emissions pathway',
         custom: { unit: metadata.unit },
-        data: Object.entries(data.emissions).map(([year, value]) => ({
-          x: Number(year),
-          y: value
-        })),
+        marker: {
+          enabled: false,
+          states: {
+            hover: {
+              enabled: true
+            }
+          }
+        },
+        data: Object.entries(data.emissions).map(([year, value]) => {
+          const yearNum = Number(year);
+          const isProjected = yearNum > data.last_historical_year;
+          const isHighlight = isProjected && HIGHLIGHT_YEARS.includes(yearNum);
+          return {
+            x: yearNum,
+            y: value,
+            marker: isHighlight
+              ? {
+                enabled: true,
+                radius: 5,
+                symbol: 'circle',
+                fillColor: '#5454C4',
+                lineWidth: 2,
+                lineColor: '#5454C4'
+              }
+              : { enabled: false }
+          };
+        }),
         zoneAxis: 'x',
         zones: [
           {
@@ -27,10 +52,29 @@ const Chart = ({ data: { data, metadata }, assessmentYear }) => {
       ...data?.benchmarks.map((d) => ({
         custom: { unit: metadata.unit },
         name: d.benchmark_type,
-        data: Object.entries(d.emissions).map(([year, value]) => ({
-          x: Number(year),
-          y: value
-        }))
+        marker: {
+          enabled: false,
+          states: {
+            hover: {
+              enabled: true
+            }
+          }
+        },
+        data: Object.entries(d.emissions).map(([year, value]) => {
+          const yearNum = Number(year);
+          const isHighlight = HIGHLIGHT_YEARS.includes(yearNum);
+          return {
+            x: yearNum,
+            y: value,
+            marker: isHighlight
+              ? {
+                enabled: true,
+                radius: 5,
+                symbol: 'circle'
+              }
+              : { enabled: false }
+          };
+        })
       }))
     ],
     [data, metadata.unit]
@@ -46,6 +90,10 @@ const Chart = ({ data: { data, metadata }, assessmentYear }) => {
         <span>
           <span className="ascor-benchmarks__legend__line --targeted-pathway" />
           Targeted pathway
+        </span>
+        <span>
+          <span className="ascor-benchmarks__legend__marker" />
+          2030/2035 data points
         </span>
       </div>
       <HighchartsReact

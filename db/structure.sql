@@ -1,4 +1,4 @@
-\restrict 9l8PQS5Woy3iANBe6Hy8uLvceXCPkC5wvSKxmXX72m1qdwS3tflEwjFtCwAHEPq
+\restrict G5c1HO0dsZF12ZFGkLYbu89Z6VKAOlr5pGnROfxnFTNdoeyidxlG7cPflkW9mDh
 
 -- Dumped from database version 11.20
 -- Dumped by pg_dump version 16.10 (Ubuntu 16.10-0ubuntu0.24.04.1)
@@ -331,7 +331,8 @@ CREATE TABLE public.ascor_assessment_indicators (
     text text,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    units_or_response_type character varying
+    units_or_response_type character varying,
+    assessment_date date
 );
 
 
@@ -557,7 +558,7 @@ CREATE TABLE public.bank_assessment_indicators (
     updated_at timestamp(6) without time zone NOT NULL,
     comment text,
     is_placeholder boolean DEFAULT false,
-    version character varying DEFAULT '2025'::character varying,
+    version character varying DEFAULT '2024'::character varying,
     active boolean DEFAULT true
 );
 
@@ -4403,7 +4404,7 @@ ALTER TABLE ONLY public.companies
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 9l8PQS5Woy3iANBe6Hy8uLvceXCPkC5wvSKxmXX72m1qdwS3tflEwjFtCwAHEPq
+\unrestrict G5c1HO0dsZF12ZFGkLYbu89Z6VKAOlr5pGnROfxnFTNdoeyidxlG7cPflkW9mDh
 
 SET search_path TO "$user", public;
 
@@ -4598,6 +4599,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20251204110115'),
 ('20251204154629'),
 ('20251208090415'),
-('20251212110612');
+('20251212110612'),
+('20260129093719');
 
 

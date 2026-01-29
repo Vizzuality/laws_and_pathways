@@ -11,7 +11,10 @@ module TPI
 
     def index
       @assessment_dates = BankAssessment.dates_with_data
-      @publications_and_articles = TPISector.find_by(slug: 'banks')&.publications_and_articles || []
+      banks_sector = TPISector.find_by(slug: 'banks')
+      @publications_and_articles = (banks_sector&.publications.to_a + banks_sector&.news_articles.to_a)
+        .sort_by { |p| -p.publication_date.to_i }
+        .first(4)
       @publications_and_articles = @publications_and_articles.select { |pa| pa.publication_date <= Time.current }
       bank_page = TPIPage.find_by(slug: 'banks-content')
       @methodology_description = Content.find_by(

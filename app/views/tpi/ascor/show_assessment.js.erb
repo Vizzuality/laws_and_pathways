@@ -1,5 +1,6 @@
 (function () {
     document.getElementById('assessment').innerHTML = "<%= j render('assessment', assessment: @assessment) %>";
+    document.querySelector('.notes').innerHTML = "<%= j render('notes', assessment: @assessment) %>";
     const newUrl = new URL(window.location.href);
     newUrl.searchParams.set('assessment_id', "<%= @assessment.id %>");
     window.history.replaceState({}, '', newUrl.href);

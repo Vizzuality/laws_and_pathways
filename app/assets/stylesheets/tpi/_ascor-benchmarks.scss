@@ -32,6 +32,14 @@
         border-top-style: dashed;
       }
     }
+    &__marker {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #5454C4;
+      display: inline-block;
+      margin-right: 8px;
+    }
   }
 }
 
