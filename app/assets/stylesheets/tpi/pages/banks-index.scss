@@ -148,4 +148,26 @@
       }
     }
   }
+
+  .tpi-banks__promoted-publications {
+    .publications__grid {
+      @include desktop {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .publication {
+      .publication__avatar {
+        height: 140px;
+      }
+
+      .content__title {
+        font-size: $size-6;
+      }
+
+      .content__message {
+        font-size: $size-7;
+      }
+    }
+  }
 }

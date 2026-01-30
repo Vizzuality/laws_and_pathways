@@ -8,10 +8,11 @@ ActiveAdmin.register ASCOR::AssessmentIndicator do
   filter :code
   filter :text
   filter :indicator_type, as: :check_boxes, collection: ASCOR::AssessmentIndicator::INDICATOR_TYPES
+  filter :assessment_date
 
   data_export_sidebar 'ASCORAssessmentIndicators', display_name: 'ASCOR AssessmentIndicators'
 
-  permit_params :code, :indicator_type, :text
+  permit_params :code, :indicator_type, :text, :assessment_date
 
   show do
     attributes_table do
@@ -20,6 +21,7 @@ ActiveAdmin.register ASCOR::AssessmentIndicator do
       row :indicator_type
       row :text
       row :units_or_response_type
+      row :assessment_date
       row :created_at
       row :updated_at
     end
@@ -35,6 +37,7 @@ ActiveAdmin.register ASCOR::AssessmentIndicator do
       f.input :code
       f.input :text
       f.input :units_or_response_type
+      f.input :assessment_date, as: :datepicker
     end
 
     f.actions
@@ -45,6 +48,7 @@ ActiveAdmin.register ASCOR::AssessmentIndicator do
     column :indicator_type
     column :code
     column :text
+    column :assessment_date
     actions
   end
 
@@ -54,5 +58,6 @@ ActiveAdmin.register ASCOR::AssessmentIndicator do
     column :code
     column :text
     column :units_or_response_type
+    column :assessment_date
   end
 end

@@ -1,0 +1,9 @@
+<% if assessment&.notes.present? %>
+  <h6>Research notes:</h6>
+  <p>
+    <%= assessment.notes %>
+  </p>
+<% else %>
+  <span style="display: inline-block"></span>
+<% end %>
+

@@ -1,7 +1,7 @@
-<% pillars = ASCOR::AssessmentIndicator.pillar.order(:id) %>
-<% areas = ASCOR::AssessmentIndicator.area.order('length(code), code') %>
-<% indicators = ASCOR::AssessmentIndicator.indicator.order(:id) %>
-<% metrics = ASCOR::AssessmentIndicator.metric.order(:id) %>
+<% pillars = ASCOR::AssessmentIndicator.pillar.for_assessment(@assessment).order(:id) %>
+<% areas = ASCOR::AssessmentIndicator.area.for_assessment(@assessment).order('length(code), code') %>
+<% indicators = ASCOR::AssessmentIndicator.indicator.for_assessment(@assessment).order(:id) %>
+<% metrics = ASCOR::AssessmentIndicator.metric.for_assessment(@assessment).order(:id) %>
 
 <%= react_component('AscorQuestionLegend') %>
 <% if pillars.any? %>

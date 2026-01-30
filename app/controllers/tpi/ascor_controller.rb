@@ -7,7 +7,7 @@ module TPI
     before_action :fetch_ascor_assessment_results, only: [:index, :index_assessment]
 
     def index
-      @assessment_dates = ASCOR::Assessment.pluck(:assessment_date).uniq
+      @assessment_dates = ASCOR::Assessment.pluck(:assessment_date).uniq.compact.sort.reverse
       @publications_and_articles = (
         Publication.published.joins(:tags).includes(:tpi_sectors).where(tags: {name: 'ASCOR'}) +
         NewsArticle.published.joins(:tags).where(tags: {name: 'ASCOR'})
@@ -21,7 +21,7 @@ module TPI
     end
 
     def show
-      @assessment = ASCOR::Assessment.find_by country: @country, assessment_date: @assessment_date
+      @assessment = ASCOR::Assessment.includes(results: :indicator).find_by country: @country, assessment_date: @assessment_date
       @recent_emissions = Api::ASCOR::RecentEmissions.new(@assessment_date, @country).call
       fixed_navbar("ASCOR Country #{@country.name}", admin_ascor_country_path(@country.id))
     end
@@ -31,7 +31,7 @@ module TPI
     def index_emissions_assessment; end
 
     def show_assessment
-      @assessment = @country.assessments.find params[:assessment_id]
+      @assessment = @country.assessments.includes(results: :indicator).find params[:assessment_id]
       @assessment_date = @assessment.assessment_date
       @recent_emissions = Api::ASCOR::RecentEmissions.new(@assessment_date, @country).call
     end

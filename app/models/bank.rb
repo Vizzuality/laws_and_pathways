@@ -42,6 +42,9 @@ class Bank < ApplicationRecord
   validates_uniqueness_of :slug, :name
 
   scope :published, -> { all }
+  scope :assessed_last_year, -> {
+    joins(:assessments).where('bank_assessments.assessment_date >= ?', 1.year.ago).distinct
+  }
 
   def should_generate_new_friendly_id?
     name_changed? || super

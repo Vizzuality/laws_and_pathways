@@ -66,15 +66,37 @@ module Api
       end
 
       def pillars_in_order
-        @pillars_in_order ||= ::ASCOR::AssessmentIndicator.where(indicator_type: :pillar).order(:id)
+        @pillars_in_order ||= versioned_indicators.select(&:pillar?).sort_by(&:id)
       end
 
       def areas_for_pillar(pillar_code)
-        @areas_by_pillar ||= ::ASCOR::AssessmentIndicator
-          .where(indicator_type: :area)
-          .order('length(code), code')
+        @areas_by_pillar ||= versioned_indicators
+          .select(&:area?)
+          .sort_by { |i| [i.code.length, i.code] }
           .group_by { |i| i.code.split('.').first }
         @areas_by_pillar[pillar_code] || []
+      end
+
+      def versioned_indicators
+        @versioned_indicators ||= begin
+          # 1. Try exact date match
+          versioned = ::ASCOR::AssessmentIndicator.where(assessment_date: assessment_date).to_a
+          return versioned if versioned.any?
+
+          # 2. Try most recent date <= assessment_date
+          if assessment_date.present?
+            latest_date = ::ASCOR::AssessmentIndicator.where('assessment_date <= ?', assessment_date).maximum(:assessment_date)
+            return ::ASCOR::AssessmentIndicator.where(assessment_date: latest_date).to_a if latest_date.present?
+          end
+
+          # 3. Fall back to indicators with no date
+          no_date = ::ASCOR::AssessmentIndicator.where(assessment_date: nil).to_a
+          return no_date if no_date.any?
+
+          # 4. Last resort: most recent available
+          latest_available = ::ASCOR::AssessmentIndicator.maximum(:assessment_date)
+          ::ASCOR::AssessmentIndicator.where(assessment_date: latest_available).to_a
+        end
       end
 
       def recent_emission_levels

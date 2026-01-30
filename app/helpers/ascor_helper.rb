@@ -16,6 +16,7 @@ module ASCORHelper
   end
 
   def ascor_assessment_result_for(indicator, assessment)
-    assessment.results.find { |r| r.indicator_id == indicator.id }
+    # Match by indicator code instead of ID to support versioned indicators
+    assessment.results.find { |r| r.indicator.code == indicator.code }
   end
 end

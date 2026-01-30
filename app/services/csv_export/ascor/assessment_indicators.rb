@@ -1,7 +1,7 @@
 module CSVExport
   module ASCOR
     class AssessmentIndicators
-      HEADERS = ['Id', 'Type', 'Code', 'Text', 'Units or response type'].freeze
+      HEADERS = ['Id', 'Type', 'Code', 'Text', 'Units or response type', 'Assessment date'].freeze
 
       def call
         # BOM UTF-8
@@ -14,7 +14,8 @@ module CSVExport
               indicator.indicator_type,
               indicator.code,
               indicator.text,
-              indicator.units_or_response_type
+              indicator.units_or_response_type,
+              indicator.assessment_date
             ]
           end
         end
@@ -33,14 +34,20 @@ module CSVExport
         areas_by_pillar = areas.group_by { |a| a.code.to_s.split('.').first }
         indicators_by_area = indicators.group_by { |i| i.code.to_s.split('.')[0..1].join('.') }
         metrics_by_indicator = metrics.group_by { |m| m.code.to_s.split('.')[0..2].join('.') }
+        metrics_by_area = metrics.group_by { |m| m.code.to_s.split('.')[0..1].join('.') }
 
         ordered = []
         pillar_order.each do |pillar_key|
           (areas_by_pillar[pillar_key] || []).each do |area|
             ordered << area
-            (indicators_by_area[area.code.to_s] || []).each do |ind|
-              ordered << ind
-              (metrics_by_indicator[ind.code.to_s] || []).each { |m| ordered << m }
+            area_indicators = indicators_by_area[area.code.to_s] || []
+            if area_indicators.any?
+              area_indicators.each do |ind|
+                ordered << ind
+                (metrics_by_indicator[ind.code.to_s] || []).each { |m| ordered << m }
+              end
+            else
+              (metrics_by_area[area.code.to_s] || []).each { |m| ordered << m }
             end
           end
         end
