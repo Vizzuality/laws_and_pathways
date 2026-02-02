@@ -79,23 +79,9 @@ module Api
 
       def versioned_indicators
         @versioned_indicators ||= begin
-          # 1. Try exact date match
-          versioned = ::ASCOR::AssessmentIndicator.where(assessment_date: assessment_date).to_a
-          return versioned if versioned.any?
-
-          # 2. Try most recent date <= assessment_date
-          if assessment_date.present?
-            latest_date = ::ASCOR::AssessmentIndicator.where('assessment_date <= ?', assessment_date).maximum(:assessment_date)
-            return ::ASCOR::AssessmentIndicator.where(assessment_date: latest_date).to_a if latest_date.present?
-          end
-
-          # 3. Fall back to indicators with no date
-          no_date = ::ASCOR::AssessmentIndicator.where(assessment_date: nil).to_a
-          return no_date if no_date.any?
-
-          # 4. Last resort: most recent available
-          latest_available = ::ASCOR::AssessmentIndicator.maximum(:assessment_date)
-          ::ASCOR::AssessmentIndicator.where(assessment_date: latest_available).to_a
+          # Build a fake assessment object with the date to use for_assessment
+          fake_assessment = OpenStruct.new(assessment_date: assessment_date)
+          ::ASCOR::AssessmentIndicator.for_assessment(fake_assessment).to_a
         end
       end
 
