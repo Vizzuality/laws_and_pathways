@@ -91,10 +91,6 @@ const Chart = ({ data: { data, metadata }, assessmentYear }) => {
           <span className="ascor-benchmarks__legend__line --targeted-pathway" />
           Targeted pathway
         </span>
-        <span>
-          <span className="ascor-benchmarks__legend__marker" />
-          2030/2035 data points
-        </span>
       </div>
       <HighchartsReact
         highcharts={Highcharts}
