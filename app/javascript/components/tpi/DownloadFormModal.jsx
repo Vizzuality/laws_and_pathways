@@ -94,7 +94,7 @@ const organisationTypeOptions = [
   { label: 'Corporate', value: 'Corporate' },
   { label: 'Consultant & advisory', value: 'Consultant & advisory' },
   { label: 'Commercial & retail bank', value: 'Commercial & retail bank' },
-  { label: 'Credit reference agency', value: 'Credit reference agency' },
+  { label: 'Credit rating agency', value: 'Credit rating agency' },
   { label: 'Financial technology', value: 'Financial technology' },
   { label: 'Government', value: 'Government' },
   { label: 'Hedge fund', value: 'Hedge fund' },
