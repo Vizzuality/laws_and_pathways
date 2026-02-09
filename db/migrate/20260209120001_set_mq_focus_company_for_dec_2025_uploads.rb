@@ -1,4 +1,4 @@
-class SetMqFocusCompanyForDec2025Uploads < ActiveRecord::Migration[6.1]
+class SetMQFocusCompanyForDec2025Uploads < ActiveRecord::Migration[6.1]
   def up
     company_ids = MQ::Assessment
       .where(created_at: Date.new(2025, 12, 1)..Date.new(2025, 12, 31).end_of_day)
