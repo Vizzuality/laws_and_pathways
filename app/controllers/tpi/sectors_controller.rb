@@ -57,6 +57,18 @@ module TPI
       render json: data.chart_json
     end
 
+    # Data:     Focus Companies number, grouped by Levels (mq_focus_company only)
+    # Section:  MQ
+    # Type:     pie chart
+    # On pages: :index
+    def focus_levels_chart_data
+      data = ::Api::Charts::Sector.new(
+        focus_companies_scope, enable_beta_mq_assessments: session[:enable_beta_mq_assessments]
+      ).companies_count_by_level
+
+      render json: data.chart_json
+    end
+
     # Data:     Companies emissions
     # Section:  CP
     # Type:     line chart
@@ -106,6 +118,68 @@ module TPI
         'Management Quality data has been downloaded'
       ).deliver_now
       head :ok
+    end
+
+    def submit_mq_download_form
+      form_data = permitted_email_params
+      scenario = determine_mq_scenario(form_data[:organisation_type], form_data[:self_attestation])
+
+      case scenario
+      when 'exempted_10k', 'permitted_2k'
+        token = mq_download_verifier.generate(
+          {
+            scope: params[:download_scope],
+            scope_id: params[:scope_id],
+            scenario: scenario
+          },
+          purpose: :mq_download,
+          expires_in: 7.days
+        )
+        download_url = mq_token_download_url(token: token)
+
+        if scenario == 'exempted_10k'
+          MqDownloadMailer.exempted_use_email(user_email: form_data[:email], download_url: download_url).deliver_now
+        else
+          MqDownloadMailer.permitted_use_email(user_email: form_data[:email], download_url: download_url).deliver_now
+        end
+      when 'authorisation'
+        MqDownloadMailer.authorisation_required_email(user_email: form_data[:email]).deliver_now
+        MqDownloadMailer.lseg_notification_email(form_data: form_data).deliver_now
+      end
+
+      MqDownloadMailer.info_email(form_data: form_data, scenario: scenario).deliver_now
+
+      render json: {scenario: scenario}
+    end
+
+    def mq_token_download
+      payload = mq_download_verifier.verify(params[:token], purpose: :mq_download)
+      scope = payload[:scope] || payload['scope']
+      scope_id = payload[:scope_id] || payload['scope_id']
+      scenario = payload[:scenario] || payload['scenario']
+
+      companies_ids = mq_companies_for_scope(scope, scope_id)
+      filename = mq_filename_for_scope(scope, scope_id)
+
+      if scenario == 'permitted_2k'
+        companies_ids = companies_ids.where(mq_focus_company: true)
+      end
+
+      mq_assessments = MQ::Assessment
+        .currently_published
+        .only_downloadable
+        .where(company_id: companies_ids)
+        .joins(:company)
+        .order('companies.name ASC, publication_date DESC, methodology_version DESC, assessment_date DESC')
+        .includes(company: [:geography, :sector])
+
+      send_tpi_mq_file(
+        mq_assessments: mq_assessments,
+        filename: filename,
+        scenario: scenario
+      )
+    rescue ActiveSupport::MessageVerifier::InvalidSignature
+      render plain: 'This download link is invalid or has expired.', status: :unauthorized
     end
 
     def user_download_all
@@ -179,6 +253,7 @@ module TPI
     def send_user_download_file(companies_ids, filename)
       mq_assessments = MQ::Assessment
         .currently_published
+        .only_downloadable
         .where(company_id: companies_ids)
         .joins(:company)
         .order('companies.name ASC, publication_date DESC, methodology_version DESC, assessment_date DESC')
@@ -216,6 +291,7 @@ module TPI
     def send_mq_user_download_file(companies_ids, filename)
       mq_assessments = MQ::Assessment
         .currently_published
+        .only_downloadable
         .where(company_id: companies_ids)
         .joins(:company)
         .order('companies.name ASC, publication_date DESC, methodology_version DESC, assessment_date DESC')
@@ -225,6 +301,52 @@ module TPI
         mq_assessments: mq_assessments,
         filename: filename
       )
+    end
+
+    def determine_mq_scenario(organisation_type, self_attestation)
+      if organisation_type == 'Academia' || organisation_type == 'Asset owner'
+        'exempted_10k'
+      elsif self_attestation == 'Permitted uses without Authorisation or License'
+        'permitted_2k'
+      else
+        'authorisation'
+      end
+    end
+
+    def mq_download_verifier
+      Rails.application.message_verifier(:mq_download)
+    end
+
+    def mq_token_download_url(token:)
+      "#{request.base_url}/sectors/mq_token_download?token=#{CGI.escape(token)}"
+    end
+
+    def mq_companies_for_scope(scope, scope_id)
+      case scope
+      when 'sector'
+        sector = TPISector.companies.tpi_tool.find(scope_id)
+        sector.companies.published.select(:id)
+      when 'industry'
+        industry = Industry.find(scope_id)
+        sector_ids = industry.tpi_sectors.tpi_tool.pluck(:id)
+        Company.published.where(sector_id: sector_ids).select(:id)
+      else
+        all_sector_ids = TPISector.companies.pluck(:id)
+        Company.published.select(:id).where(sector_id: all_sector_ids)
+      end
+    end
+
+    def mq_filename_for_scope(scope, scope_id)
+      case scope
+      when 'sector'
+        sector = TPISector.companies.tpi_tool.find(scope_id)
+        "TPI Management Quality data - #{sector.name}"
+      when 'industry'
+        industry = Industry.find(scope_id)
+        "TPI Management Quality data - #{industry.name}"
+      else
+        'TPI Management Quality data - All sectors'
+      end
     end
 
     def fetch_sector
@@ -296,6 +418,10 @@ module TPI
       else
         Company.published.active.with_latest_mq_v5.order(name: :asc)
       end
+    end
+
+    def focus_companies_scope
+      Company.published.active.with_latest_mq_v5.where(mq_focus_company: true).order(name: :asc)
     end
 
     def permitted_email_params

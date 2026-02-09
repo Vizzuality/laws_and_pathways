@@ -11,7 +11,8 @@ ActiveAdmin.register Company do
 
   permit_params :name, :isin, :sector_id, :geography_id, :headquarters_geography_id,
                 :ca100, :market_cap_group, :visibility_status, :sedol,
-                :latest_information, :company_comments_internal, :active
+                :latest_information, :company_comments_internal, :active,
+                :mq_focus_company
 
   filter :isin_contains, label: 'ISIN'
   filter :name_contains, label: 'Name'
@@ -19,6 +20,7 @@ ActiveAdmin.register Company do
   filter :sector
   filter :headquarters_geography
   filter :active
+  filter :mq_focus_company
   filter :created_at
   filter :market_cap_group,
          as: :check_boxes,
@@ -54,6 +56,7 @@ ActiveAdmin.register Company do
           row :headquarters_geography
           row :ca100
           row :market_cap_group
+          row :mq_focus_company
           row 'Management Quality Level', &:mq_level_tag
           row :latest_information
           row :company_comments_internal
@@ -148,6 +151,7 @@ ActiveAdmin.register Company do
     column :level, &:mq_level_tag
     column :geography
     column :active
+    column :mq_focus_company
     tag_column :visibility_status
 
     actions
@@ -168,6 +172,7 @@ ActiveAdmin.register Company do
     column :company_comments_internal
     column :ca100
     column :active
+    column :mq_focus_company
     column :visibility_status
   end
 
@@ -199,6 +204,8 @@ ActiveAdmin.register Company do
       end
 
       f.input :active
+
+      f.input :mq_focus_company
 
       f.input :ca100
 

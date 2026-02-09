@@ -2,9 +2,34 @@
 
 $tpi-pie-chart-colors: #86a9f9 #5587f7 #2465f5 #0a4bdc #083aab #9747ff;
 
+.mq-sector-pie-charts-row {
+  display: flex;
+  gap: 40px;
+  margin-top: 16px;
+  margin-bottom: 60px;
+
+  @include until($desktop) {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .mq-sector-pie-chart {
+    flex: 1;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
 .mq-sector-pie-chart {
   margin-top: 16px;
   margin-bottom: 60px;
+
+  .mq-sector-pie-chart__title {
+    font-size: 18px;
+    font-family: $font-family-bold;
+    color: $blue-darker;
+    margin-bottom: 12px;
+  }
   .mq-sector-pie-chart-title {
     display: flex;
     gap: 8px;
@@ -36,6 +61,12 @@ $tpi-pie-chart-colors: #86a9f9 #5587f7 #2465f5 #0a4bdc #083aab #9747ff;
       gap: 32px;
       justify-content: center;
       width: 100%;
+    }
+
+    .mq-sector-pie-charts-row & {
+      width: 100%;
+      justify-content: center;
+      gap: 24px;
     }
 
     .highcharts-container {

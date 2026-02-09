@@ -58,22 +58,23 @@ module TPI
       render zip: files.compact, filename: "#{filename} - #{timestamp}"
     end
 
-    def send_tpi_mq_file(mq_assessments:, filename:)
+    def send_tpi_mq_file(mq_assessments:, filename:, scenario: nil)
       timestamp = Time.now.strftime('%d%m%Y')
+      suffix = scenario == 'exempted_10k' ? '_10K' : ''
       mq_assessments_by_methodology = mq_assessments.group_by(&:methodology_version).sort_by { |k, _| k }
 
       latest_mq_assessments_csv = CSVExport::User::LatestMQAssessments.new(mq_assessments).call
 
       mq_assessments_files = mq_assessments_by_methodology.map do |methodology, assessments|
         {
-          "MQ_Assessments_v#{methodology}_#{timestamp}.csv" => CSVExport::User::MQAssessments.new(assessments).call
+          "MQ_Assessments_v#{methodology}#{suffix}_#{timestamp}.csv" => CSVExport::User::MQAssessments.new(assessments).call
         }
       end.reduce(&:merge)
 
       user_guide = File.binread(Rails.root.join('public', 'tpi', 'export_support', 'User guide - TPI Management Quality.xlsx'))
 
       files = {
-        'Latest_MQ_Assessments.csv' => latest_mq_assessments_csv
+        "Latest_MQ_Assessments#{suffix}.csv" => latest_mq_assessments_csv
       }.merge(mq_assessments_files || {}).merge(
         'User guide - TPI Management Quality.xlsx' => user_guide
       )

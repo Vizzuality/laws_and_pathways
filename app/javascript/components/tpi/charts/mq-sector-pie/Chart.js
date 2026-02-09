@@ -18,7 +18,7 @@ const LEVELS_SUBTITLES = {
   5: 'Transition planning and implementation'
 };
 
-function MQSectorChart({ dataUrl }) {
+function MQSectorChart({ dataUrl, title }) {
   const { data, loading, error } = useChartData(dataUrl);
   const options = getOptions({ chartData: data });
 
@@ -41,6 +41,7 @@ function MQSectorChart({ dataUrl }) {
 
   return (
     <div className="mq-sector-pie-chart">
+      {title && <h4 className="mq-sector-pie-chart__title">{title}</h4>}
       <div className="mq-sector-pie-chart-title">
         <img src={hoverIcon} alt="Hover icon" />
         <p>
@@ -96,7 +97,8 @@ function MQSectorChart({ dataUrl }) {
 }
 
 MQSectorChart.propTypes = {
-  dataUrl: PropTypes.string.isRequired
+  dataUrl: PropTypes.string.isRequired,
+  title: PropTypes.string
 };
 
 export default MQSectorChart;

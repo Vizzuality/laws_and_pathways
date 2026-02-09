@@ -57,6 +57,7 @@ en:
       market_cap: 'Market cap size'
       ISIN: 'International Securities Identification Number'
       SEDOL: 'Stock Exchange Daily Official List'
+      mq_focus_company: "Management Quality focus companies are part of a subset of ~2,000 firms that, because of their large market capitalisation and high emissions, are key for the transition to a low-carbon economy."
       CA100: 'CA100+ assesses the biggest 167 companies in high-emitting sectors'
       mq_header: 'Management quality'
       mq_assessment_date: 'Assessment Date'

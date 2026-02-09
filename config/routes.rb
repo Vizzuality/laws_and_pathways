@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       resources :sectors, only: [:show, :index] do
         collection do
           get :levels_chart_data
+          get :focus_levels_chart_data
           get :cp_performance_chart_data
           get :cp_performance_chart_data_all_years
           get :user_download_all
@@ -30,6 +31,8 @@ Rails.application.routes.draw do
           post :send_download_file_info_email
           post :send_download_cp_info_email
           post :send_download_mq_info_email
+          post :submit_mq_download_form
+          get :mq_token_download
         end
         member do
           get :levels_chart_data

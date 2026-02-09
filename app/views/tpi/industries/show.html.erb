@@ -30,9 +30,10 @@
           <%= react_component('DownloadFormModal', {
             title: 'Explore MQ data access',
             buttonClass: 'button is-primary with-icon with-border',
-            downloadUrl: user_download_mq_tpi_industry_path(@industry),
             source: 'mq',
-            showIcon: true
+            showIcon: true,
+            downloadScope: 'industry',
+            scopeId: @industry.id
           }) %>
         </div>
       </div>

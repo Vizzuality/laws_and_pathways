@@ -29,9 +29,9 @@
           <%= react_component('DownloadFormModal', {
             title: 'Explore MQ data access',
             buttonClass: 'button is-primary with-icon with-border',
-            downloadUrl: user_download_mq_all_tpi_sectors_path,
             source: 'mq',
-            showIcon: true
+            showIcon: true,
+            downloadScope: 'all'
           }) %>
         </div>
       </div>
@@ -42,11 +42,23 @@
     <h3 class="title-blue">Explore the distribution of companies across all sectors based on greenhouse gas emissions management and low-carbon transition risks and opportunities.</h3>
     <h4 class="title-darker-blue">Below you will find the results of the Carbon Performance and Management Quality corporate assessments. These TPI metrics should be treated as complementary – i.e. both need to be looked at together to better assess the progress that companies are making in the low-carbon transition.</h4>
 
-    <h4>Number of Companies by Management Quality</h4>
+    <p>
+      Management Quality assessments for 10,000 companies are shown on the website and updated annually. This full dataset is downloadable for academic and asset owner use. For other permitted use cases, a downloadable subset of 2,000 "focus companies", which are the most impactful to drive the transition to a low-carbon economy, is available as per the TPI Centre's Data <a href="https://www.transitionpathwayinitiative.org/use-of-the-centre-s-data" target="_blank" rel="noopener noreferrer">Terms of Use</a>. Focus companies have been selected based on market capitalisation and emissions [see <a href="/faqs" target="_blank" rel="noopener noreferrer">FAQs</a>] and are clearly marked on the individual company pages. Further information on how to access the data are available in the download form.
+    </p>
+    <p>
+      Management Quality assessments are produced by LSEG, TPI's data partner, using the <% if @methodology_publication %><a href="<%= tpi_publication_path(@methodology_publication) %>">TPI Centre's methodology</a><% else %>TPI Centre's methodology<% end %>. For queries related to Management Quality scores or to discuss licensing for additional use cases, please reach out to <a href="mailto:tpimqaccess@lseg.com">tpimqaccess@lseg.com</a>.
+    </p>
 
-    <%= react_component('charts/mq-sector-pie', {
-      dataUrl: levels_chart_data_tpi_sectors_path
-    }) %>
+    <div class="mq-sector-pie-charts-row">
+      <%= react_component('charts/mq-sector-pie', {
+        dataUrl: focus_levels_chart_data_tpi_sectors_path,
+        title: 'Focus Companies by Management Quality'
+      }) %>
+      <%= react_component('charts/mq-sector-pie', {
+        dataUrl: levels_chart_data_tpi_sectors_path,
+        title: 'All Companies by Management Quality'
+      }) %>
+    </div>
 
     <h4>Number of Companies by Sector according to Management Quality</h4>
     <%= react_component('charts/bubble/Chart', {

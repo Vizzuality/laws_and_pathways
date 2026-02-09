@@ -25,9 +25,9 @@
           <%= react_component('DownloadFormModal', {
             title: 'Explore MQ data access',
             buttonClass: 'button is-primary with-icon with-border',
-            downloadUrl: user_download_mq_all_tpi_sectors_path,
             source: 'mq',
-            showIcon: true
+            showIcon: true,
+            downloadScope: 'all'
           }) %>
         </div>
       </div>
@@ -146,6 +146,11 @@
             <div class="column">
               <%= render 'tpi/shared/property', highlight: false, name: 'SEDOL', tooltip: t('tpi.tooltips.SEDOL') do %>
                 <%= @company.sedol %>
+              <% end %>
+            </div>
+            <div class="column">
+              <%= render 'tpi/shared/property', highlight: false, name: 'MQ focus company', tooltip: t('tpi.tooltips.mq_focus_company') do %>
+                <%= humanize_boolean(@company.mq_focus_company?) %>
               <% end %>
             </div>
             <div class="column">

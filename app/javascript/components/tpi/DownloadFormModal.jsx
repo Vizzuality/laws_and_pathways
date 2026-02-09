@@ -140,10 +140,17 @@ const initialFormValues = {
   self_attestation: ''
 };
 
-function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon = false }) {
+const MQ_SUCCESS_MESSAGES = {
+  permitted_2k: 'Thank you! We\'ve sent an email with a download link for the Management Quality dataset. Please check your inbox.',
+  exempted_10k: 'Thank you! We\'ve sent an email with a download link for the complete Management Quality dataset. Please check your inbox.',
+  authorisation: 'Thank you! Your request has been received. A representative from LSEG, TPI\'s Data Partner, will contact you to discuss licensing requirements.'
+};
+
+function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon = false, downloadScope, scopeId }) {
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(null);
   const [formValues, setFormValues] = useState(initialFormValues);
+  const [mqSuccess, setMqSuccess] = useState(null);
 
   const minLength = 3;
 
@@ -237,11 +244,30 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon =
       return;
     }
 
+    if (source === 'mq') {
+      fetch('/sectors/submit_mq_download_form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+        },
+        body: JSON.stringify({
+          ...formValues,
+          download_scope: downloadScope || 'all',
+          scope_id: scopeId
+        })
+      }).then((response) => response.json()).then((data) => {
+        setMqSuccess(MQ_SUCCESS_MESSAGES[data.scenario] || MQ_SUCCESS_MESSAGES.permitted_2k);
+        setFormValues(initialFormValues);
+      }, () => {
+        setError('Something went wrong. Please try again later.');
+      });
+      return;
+    }
+
     const getEmailEndpoint = () => {
       if (source === 'cp') {
         return '/sectors/send_download_cp_info_email';
-      } else if (source === 'mq') {
-        return '/sectors/send_download_mq_info_email';
       } else {
         return `/${source}/send_download_file_info_email`;
       }
@@ -281,7 +307,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon =
 
   return (
     <div>
-      <button type="button" onClick={() => setShowModal(true)} className={buttonClass || 'button is-primary with-icon with-border'}>
+      <button type="button" onClick={() => { setShowModal(true); setMqSuccess(null); setError(null); }} className={buttonClass || 'button is-primary with-icon with-border'}>
         {showIcon && <img src={downloadIcon} alt="download icon" />}
         { title || 'Download Data'}
       </button>
@@ -290,20 +316,57 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon =
         <Modal
           title="Data disclaimer"
           open={showModal}
-          onClose={() => setShowModal(false)}
+          onClose={() => { setShowModal(false); setMqSuccess(null); }}
         >
+          {mqSuccess ? (
+            <div className="download-form">
+              <h2>Request submitted</h2>
+              <div className="content">
+                <p>{mqSuccess}</p>
+                <div className="form-buttons">
+                  <button className="button is-primary" type="button" onClick={() => { setShowModal(false); setMqSuccess(null); }}>
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
           <div className="download-form">
             <h2>Data disclaimer</h2>
             <div className="content">
               <form onSubmit={handleSubmit}>
                 <div className="disclaimer-text">
-                  <p>
-                    {getSourceName()} data are viewable on the website and can be downloaded without Authorisation or License only for the Permitted Uses listed in the{' '}
-                    <a href="https://www.transitionpathwayinitiative.org/use-of-the-centre-s-data" target="_blank" rel="noopener noreferrer">
-                      Terms of Use
-                    </a>
-                    . You should read the Terms of Use to ensure that you are complying with their requirements.
-                  </p>
+                  {source === 'mq' ? (
+                    <>
+                      <p>
+                        Management Quality data are viewable on the website, and the 2,000-focus company subset
+                        can be downloaded without Authorisation or License only for the Permitted Uses listed in the{' '}
+                        <a href="https://www.transitionpathwayinitiative.org/use-of-the-centre-s-data" target="_blank" rel="noopener noreferrer">
+                          Terms of Use
+                        </a>
+                        . You should read the Terms of Use to ensure that you are complying with their
+                        requirements.
+                      </p>
+                      <br />
+                      <p>
+                        The complete Management Quality dataset of 10,000 companies visible on the website is
+                        available without Authorisation or License for academic and asset owner use. All other
+                        Permitted Use requests will receive the dataset of the 2,000 focus companies, as highlighted on
+                        the website. Outside of these cases, should you need the complete Management Quality
+                        dataset (i.e., 10,000 companies visible on the website), please contact LSEG, TPI&apos;s Data
+                        Partner, at{' '}
+                        <a href="mailto:tpimqaccess@lseg.com">tpimqaccess@lseg.com</a>.
+                      </p>
+                    </>
+                  ) : (
+                    <p>
+                      {getSourceName()} data are viewable on the website and can be downloaded without Authorisation or License only for the Permitted Uses listed in the{' '}
+                      <a href="https://www.transitionpathwayinitiative.org/use-of-the-centre-s-data" target="_blank" rel="noopener noreferrer">
+                        Terms of Use
+                      </a>
+                      . You should read the Terms of Use to ensure that you are complying with their requirements.
+                    </p>
+                  )}
                 </div>
                 <div className="checkbox-inputs">
                   <Field
@@ -491,20 +554,40 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon =
                 </div>
                 <div className="form-section">
                   <h3 className="form-section__title">Self-attestation of use case</h3>
-                  <p>
-                    After reading the{' '}
-                    <a href="https://www.transitionpathwayinitiative.org/use-of-the-centre-s-data" target="_blank" rel="noopener noreferrer">
-                      Terms of Use
-                    </a>
-                    , please select one of the boxes below to self-attest your use case.
-                  </p>
-                  <p>
-                    LSE reserves the right to review requests and in the event of a suspected breach of these terms of use may conduct an investigation and take subsequent action to ensure compliance, or authorise its data partners and/or other third parties to do so on its behalf.
-                  </p>
-                  {source === 'mq' && (
-                    <p>
-                      All Management Quality assessments are produced by LSEG, TPI's data partner, using the TPI Centre's methodology. For queries related to Management Quality scores or to discuss licensing for additional use cases, please reach out to tpimqaccess@lseg.com
-                    </p>
+                  {source === 'mq' ? (
+                    <>
+                      <p>
+                        After reading the{' '}
+                        <a href="https://www.transitionpathwayinitiative.org/use-of-the-centre-s-data" target="_blank" rel="noopener noreferrer">
+                          Terms of Use
+                        </a>
+                        , please select one of the boxes below to self-attest your use
+                        case.
+                      </p>
+                      <p>
+                        LSE reserves the right to review requests and in the event of a suspected breach of these terms
+                        of use may conduct an investigation and take subsequent action to ensure compliance, or
+                        authorise its data partners and/or other third parties to do so on its behalf.
+                      </p>
+                      <p>
+                        Note: By ticking a box, you consent for your data to be shared with LSEG, TPI&apos;s Data Partner,
+                        who may contact you to further discuss your use case and licensing requirements, depending
+                        on the details you&apos;ve provided in the form.
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <p>
+                        After reading the{' '}
+                        <a href="https://www.transitionpathwayinitiative.org/use-of-the-centre-s-data" target="_blank" rel="noopener noreferrer">
+                          Terms of Use
+                        </a>
+                        , please select one of the boxes below to self-attest your use case.
+                      </p>
+                      <p>
+                        LSE reserves the right to review requests and in the event of a suspected breach of these terms of use may conduct an investigation and take subsequent action to ensure compliance, or authorise its data partners and/or other third parties to do so on its behalf.
+                      </p>
+                    </>
                   )}
                   <div className="radio-inputs">
                     <Field
@@ -558,6 +641,7 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon =
               </form>
             </div>
           </div>
+          )}
         </Modal>
       </OverlayProvider>
     </div>
@@ -567,9 +651,11 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon =
 DownloadFormModal.propTypes = {
   buttonClass: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  downloadUrl: PropTypes.string.isRequired,
+  downloadUrl: PropTypes.string,
   source: PropTypes.string.isRequired,
-  showIcon: PropTypes.bool
+  showIcon: PropTypes.bool,
+  downloadScope: PropTypes.string,
+  scopeId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
 export default DownloadFormModal;

@@ -80,6 +80,7 @@ module TPI
     def send_mq_user_download_file(companies_ids, filename)
       mq_assessments = MQ::Assessment
         .currently_published
+        .only_downloadable
         .where(company_id: companies_ids)
         .joins(:company)
         .order('companies.name ASC, publication_date DESC, methodology_version DESC, assessment_date DESC')

@@ -1,0 +1,25 @@
+<h2>MQ Data Access Request – Uses subject to Authorisation and License</h2>
+
+<p>The following user has submitted an MQ data access form selecting "Uses subject to Authorisation and License".</p>
+
+<h3>User details</h3>
+<p><strong>Email:</strong> <%= @data[:email] %></p>
+<p><strong>Forename:</strong> <%= @data[:forename] %></p>
+<p><strong>Surname:</strong> <%= @data[:surname] %></p>
+<p><strong>Organisation:</strong> <%= @data[:organisation] %></p>
+
+<h3>Use case details</h3>
+<p><strong>Organisation Type:</strong> <%= @data[:organisation_type] %></p>
+<% if @data[:asset_owner_type].present? %>
+  <p><strong>Asset Owner Type:</strong> <%= @data[:asset_owner_type] %></p>
+<% end %>
+<% if @data[:organisation_type_other].present? %>
+  <p><strong>Organisation Type (Other):</strong> <%= @data[:organisation_type_other] %></p>
+<% end %>
+<p><strong>Use Case:</strong> <%= @data[:use_case] %></p>
+<p><strong>Description of Use Case:</strong></p>
+<p><%= @data[:use_case_description] %></p>
+
+<h3>Self-attestation</h3>
+<p><strong><%= @data[:self_attestation] %></strong></p>
+

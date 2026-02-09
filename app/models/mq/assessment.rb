@@ -37,6 +37,7 @@ module MQ
     scope :all_publication_dates, -> { distinct.order(publication_date: :desc).pluck(:publication_date) }
     scope :all_methodology_versions, -> { distinct.order(methodology_version: :asc).pluck(:methodology_version) }
     scope :currently_published, -> { where('publication_date <= ?', DateTime.now) }
+    scope :only_downloadable, -> { where(downloadable: 'Yes') }
     scope :without_beta_methodologies, -> { where.not(methodology_version: BETA_METHODOLOGIES.keys) }
     scope :only_beta_methodologies, -> { where(methodology_version: BETA_METHODOLOGIES.keys) }
 
