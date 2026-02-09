@@ -16,6 +16,7 @@ module CSVImport
         company.headquarters_geography = find_geography(row[:headquarters_geography_iso]) if row.header?(:headquarters_geography_iso)
         company.latest_information = row[:latest_information].presence if row.header?(:latest_information)
         company.company_comments_internal = row[:company_comments_internal].presence if row.header?(:company_comments_internal)
+        company.permid = row[:permid].presence if row.header?(:permid)
         company.ca100 = row[:ca100] || false if row.header?(:ca100)
         company.mq_focus_company = row[:mq_focus_company] || false if row.header?(:mq_focus_company)
         company.active = row[:active] || true if row.header?(:active)

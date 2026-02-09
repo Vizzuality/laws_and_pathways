@@ -12,10 +12,11 @@ ActiveAdmin.register Company do
   permit_params :name, :isin, :sector_id, :geography_id, :headquarters_geography_id,
                 :ca100, :market_cap_group, :visibility_status, :sedol,
                 :latest_information, :company_comments_internal, :active,
-                :mq_focus_company
+                :mq_focus_company, :permid
 
   filter :isin_contains, label: 'ISIN'
   filter :name_contains, label: 'Name'
+  filter :permid_contains, label: 'PERMID'
   filter :geography
   filter :sector
   filter :headquarters_geography
@@ -52,6 +53,7 @@ ActiveAdmin.register Company do
           row :sector
           row :isin, &:isin_as_tags
           row :sedol
+          row :permid
           row :geography
           row :headquarters_geography
           row :ca100
@@ -164,6 +166,7 @@ ActiveAdmin.register Company do
     column(:sector) { |c| c.sector.name }
     column :market_cap_group
     column :sedol
+    column :permid
     column(:geography_iso) { |c| c.geography&.iso }
     column(:geography) { |c| c.geography&.name }
     column(:headquarters_geography_iso) { |c| c.headquarters_geography&.iso }
@@ -184,6 +187,7 @@ ActiveAdmin.register Company do
         column { f.input :name }
         column { f.input :isin, as: :tags }
         column { f.input :sedol }
+        column { f.input :permid }
       end
 
       columns do
