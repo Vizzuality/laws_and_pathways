@@ -138,16 +138,16 @@ module TPI
         download_url = mq_token_download_url(token: token)
 
         if scenario == 'exempted_10k'
-          MqDownloadMailer.exempted_use_email(user_email: form_data[:email], download_url: download_url).deliver_now
+          MQDownloadMailer.exempted_use_email(user_email: form_data[:email], download_url: download_url).deliver_now
         else
-          MqDownloadMailer.permitted_use_email(user_email: form_data[:email], download_url: download_url).deliver_now
+          MQDownloadMailer.permitted_use_email(user_email: form_data[:email], download_url: download_url).deliver_now
         end
       when 'authorisation'
-        MqDownloadMailer.authorisation_required_email(user_email: form_data[:email]).deliver_now
-        MqDownloadMailer.lseg_notification_email(form_data: form_data).deliver_now
+        MQDownloadMailer.authorisation_required_email(user_email: form_data[:email]).deliver_now
+        MQDownloadMailer.lseg_notification_email(form_data: form_data).deliver_now
       end
 
-      MqDownloadMailer.info_email(form_data: form_data, scenario: scenario).deliver_now
+      MQDownloadMailer.info_email(form_data: form_data, scenario: scenario).deliver_now
 
       render json: {scenario: scenario}
     end

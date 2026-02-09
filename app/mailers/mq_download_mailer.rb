@@ -1,4 +1,4 @@
-class MqDownloadMailer < ApplicationMailer
+class MQDownloadMailer < ApplicationMailer
   MQ_INFO_RECIPIENT = 'tpi.centre.management.quality@lse.ac.uk'.freeze
   LSEG_RECIPIENT = 'tpimqaccess@lseg.com'.freeze
 
