@@ -74,7 +74,7 @@ const Row = ({ dataRow, title, sectors, industryInfo, showIndustry, hasIndustryC
           <div
             className={`bubble-chart__cell ${
               i === dataRow.length - 1 ? 'last' : ''
-            }`}
+            } ${i > 0 ? 'has-separator' : ''}`}
             key={uniqueKey}
           >
             <SingleCell
@@ -136,8 +136,6 @@ const BubbleChart = ({ levels, sectors, sectorIndustryMap }) => {
   });
 
   const levelsSignature = levels && Object.keys(levels[Object.keys(levels)[0]]);
-  const columnCount = hasIndustryData ? levelsSignature.length + 2 : levelsSignature.length + 1;
-  const GRID_HEIGHT = sortedData.length * SINGLE_CELL_SVG_HEIGHT + 100;
 
   return (
     <div className="is-hidden-touch">
@@ -199,19 +197,7 @@ const BubbleChart = ({ levels, sectors, sectorIndustryMap }) => {
                 {LEVELS_SUBTITLES[el]}
               </div>
             </div>
-            { i > 0
-              && <svg xmlns="http://www.w3.org/2000/svg" width="2" height={GRID_HEIGHT} viewBox={`0 0 2 ${GRID_HEIGHT}`} fill="none">
-                <line
-                  x1="1"
-                  y1="0.984375"
-                  x2="1"
-                  y2={GRID_HEIGHT}
-                  stroke="#D8D8D8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeDasharray="8 4"
-                />
-                 </svg>}
+            
           </div>
         ))}
         {dataWithIndustryFlags.map((dataRow) => (

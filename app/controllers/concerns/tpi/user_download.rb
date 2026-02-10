@@ -66,8 +66,9 @@ module TPI
       latest_mq_assessments_csv = CSVExport::User::LatestMQAssessments.new(mq_assessments).call
 
       mq_assessments_files = mq_assessments_by_methodology.map do |methodology, assessments|
+        version_suffix = methodology >= 5 ? suffix : ''
         {
-          "MQ_Assessments_v#{methodology}#{suffix}_#{timestamp}.csv" => CSVExport::User::MQAssessments.new(assessments).call
+          "MQ_Assessments_v#{methodology}#{version_suffix}_#{timestamp}.csv" => CSVExport::User::MQAssessments.new(assessments).call
         }
       end.reduce(&:merge)
 

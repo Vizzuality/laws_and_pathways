@@ -13,7 +13,7 @@ export function getOptions(data, sectors) {
     // I couldn't make highcharts to use color directly from the chart data so sorting chart data
     // by cp alignment name and then we will use below colors in the right order
     chart: {
-      marginBottom: 80,
+      marginBottom: 160,
       marginTop: 280,
       height: 800,
       type: 'column',
@@ -25,12 +25,17 @@ export function getOptions(data, sectors) {
 
           [...g.querySelectorAll('.generated')].forEach((el) => el.remove());
 
-          const barWidth = this.series[0] && this.series[0].barW; // workaround for having
+          const barWidth = this.series[0] && this.series[0].barW;
 
           const textLabels = [...g.querySelectorAll('text')];
           const chartSectors = this.xAxis[0].categories;
           const usedSectors = sectors.filter(s => chartSectors.includes(s.name));
           const clusters = [...usedSectors.map(s => s.cluster).filter(x => x)];
+
+          const labelY = textLabels.length > 0 ? parseFloat(textLabels[0].getAttribute('y'), 10) : 0;
+          const gBBox = g.getBBox();
+          const labelsBottom = gBBox.y + gBBox.height;
+          const extraOffset = Math.max(0, labelsBottom - labelY);
 
           clusters.forEach((cluster) => {
             const cSectors = sortBy(usedSectors.filter(s => s.cluster === cluster), 'name');
@@ -45,8 +50,8 @@ export function getOptions(data, sectors) {
 
             if (!firstLabel || !lastLabel) return;
 
-            const line = createSVGLineBelowElements(firstLabel, lastLabel, barWidth, 20.5); // .5 offset to have 1px stroke-width
-            const clusterElement = createSVGTextBetweenElements(firstLabel, lastLabel, cluster, 40);
+            const line = createSVGLineBelowElements(firstLabel, lastLabel, barWidth, extraOffset + 10.5);
+            const clusterElement = createSVGTextBetweenElements(firstLabel, lastLabel, cluster, extraOffset + 28);
 
             g.appendChild(line);
             g.appendChild(clusterElement);

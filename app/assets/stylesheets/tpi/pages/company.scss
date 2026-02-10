@@ -62,6 +62,13 @@
     border-bottom: none;
     height: 100%;
 
+    > .columns > .column:nth-last-child(-n+2) {
+      .base-tooltip__content {
+        left: auto;
+        right: 0;
+      }
+    }
+
     h3 {
       font-size: 16px;
       line-height: 20px;

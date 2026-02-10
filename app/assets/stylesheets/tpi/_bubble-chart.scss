@@ -214,6 +214,10 @@ $legend-image-width: 60px;
   .bubble-chart__legend {
     margin-top: 20px;
   }
+
+  .bubble-chart__cell.has-separator {
+    border-left: 1px dashed #D8D8D8;
+  }
 }
 
 .bubble-chart__legend-image {
