@@ -5,11 +5,12 @@ const BaseTooltip = ({ trigger, content }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <span className="base-tooltip">
-      <span
-        onMouseEnter={() => setIsOpen(true)}
-        onMouseLeave={() => setIsOpen(false)}
-      >
+    <span
+      className="base-tooltip"
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+    >
+      <span>
         {trigger}
       </span>
       {isOpen && (
