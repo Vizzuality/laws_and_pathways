@@ -63,7 +63,7 @@ module TPI
       suffix = scenario == 'exempted_10k' ? '_10K' : ''
 
       methodology_versions = mq_assessments.reorder(nil).distinct.pluck(:methodology_version).sort
-      download_includes = {company: [:geography, {sector: :industries}, :mq_assessments]}
+      download_includes = {company: [:geography, {sector: :industries}]}
 
       mq_assessments_files = {}
       latest_version_assessments = []
@@ -73,6 +73,8 @@ module TPI
           .where(methodology_version: methodology)
           .includes(download_includes)
           .to_a
+
+        preload_mq_assessments_for_status(version_assessments)
 
         version_suffix = methodology >= 5 ? suffix : ''
         mq_assessments_files["MQ_Assessments_v#{methodology}#{version_suffix}_#{timestamp}.csv"] =
@@ -92,6 +94,29 @@ module TPI
       )
 
       render zip: files.compact, filename: "#{filename} - #{timestamp}"
+    end
+
+    private
+
+    # Pre-populates the company.mq_assessments association with lightweight records
+    # (excluding the large `questions` JSONB) so that assessment.status can compute
+    # the previous assessment without triggering N+1 queries or loading heavy data.
+    def preload_mq_assessments_for_status(assessments)
+      company_ids = assessments.map(&:company_id).uniq
+      return if company_ids.empty?
+
+      lightweight_assessments = MQ::Assessment
+        .where(company_id: company_ids)
+        .select(:id, :company_id, :publication_date, :methodology_version, :assessment_date, :level, :discarded_at)
+        .to_a
+        .group_by(&:company_id)
+
+      assessments.each do |assessment|
+        company = assessment.company
+        next if company.association(:mq_assessments).loaded?
+
+        company.association(:mq_assessments).target = lightweight_assessments[company.id] || []
+      end
     end
   end
 end

@@ -137,7 +137,7 @@ export function getOptions(data, sectors) {
           return sector.link;
         }
       },
-      categories: data && data.length && data[0].data.map(x => x[0])
+      categories: data && data.length ? data[0].data.map(x => x[0]) : []
     },
     yAxis: {
       title: {
