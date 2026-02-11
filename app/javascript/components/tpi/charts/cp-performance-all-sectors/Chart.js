@@ -41,7 +41,7 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
   const selectedData = alignmentKey in allData ? allData[alignmentKey] : [];
 
   const buttonLabels = {
-    cp_alignment_2027: { label: 'Short 2027', order: 0 },
+    cp_alignment_2030: { label: 'Short 2030', order: 0 },
     cp_alignment_2035: { label: 'Medium 2035', order: 1 },
     cp_alignment_2050: { label: 'Long 2050', order: 2 }
   };
