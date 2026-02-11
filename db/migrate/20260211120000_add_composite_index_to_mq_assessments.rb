@@ -1,4 +1,4 @@
-class AddCompositeIndexToMQAssessments < ActiveRecord::Migration[7.0]
+class AddCompositeIndexToMQAssessments < ActiveRecord::Migration[6.1]
   def change
     add_index :mq_assessments,
       [:discarded_at, :downloadable, :company_id, :methodology_version, :publication_date],
