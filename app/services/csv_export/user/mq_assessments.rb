@@ -12,7 +12,7 @@ module CSVExport
                    'Industries', 'CA100 Company?', 'Large/Medium Classification',
                    'ISINs', 'SEDOL', 'Publication Date', 'Assessment Date', 'Fiscal Year',
                    'Level', 'Performance compared to previous year']
-        question_headers = @assessments.first.questions.map(&:csv_column_name)
+        question_headers = @assessments.find { |a| a.questions.present? }&.questions&.map(&:csv_column_name) || []
         headers.concat(question_headers)
         headers << 'Notes'
 
@@ -37,8 +37,8 @@ module CSVExport
               assessment.fiscal_year,
               assessment.level,
               assessment.status,
-              assessment.questions.map do |q|
-                assessment.find_answer_by_key(q.key)
+              question_headers.map do |header|
+                assessment.find_answer_by_key(header.split('|')[0])
               end,
               assessment.notes
             ].flatten
