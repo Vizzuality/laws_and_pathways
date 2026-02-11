@@ -12,6 +12,11 @@ class MQDownloadMailer < ApplicationMailer
     mail(to: user_email, subject: 'TPI Management Quality Data – Download Link')
   end
 
+  def asset_owner_use_email(user_email:, download_url:)
+    @download_url = download_url
+    mail(to: user_email, subject: 'TPI Management Quality Data – Download Link')
+  end
+
   def authorisation_required_email(user_email:)
     mail(to: user_email, subject: 'TPI Management Quality Data – Access Request Received')
   end

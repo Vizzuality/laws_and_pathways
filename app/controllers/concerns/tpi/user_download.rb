@@ -61,22 +61,33 @@ module TPI
     def send_tpi_mq_file(mq_assessments:, filename:, scenario: nil)
       timestamp = Time.now.strftime('%d%m%Y')
       suffix = scenario == 'exempted_10k' ? '_10K' : ''
-      mq_assessments_by_methodology = mq_assessments.group_by(&:methodology_version).sort_by { |k, _| k }
 
-      latest_mq_assessments_csv = CSVExport::User::LatestMQAssessments.new(mq_assessments).call
+      methodology_versions = mq_assessments.distinct.pluck(:methodology_version).sort
+      download_includes = {company: [:geography, {sector: :industries}, :mq_assessments]}
 
-      mq_assessments_files = mq_assessments_by_methodology.map do |methodology, assessments|
+      mq_assessments_files = {}
+      latest_version_assessments = []
+
+      methodology_versions.each do |methodology|
+        version_assessments = mq_assessments
+          .where(methodology_version: methodology)
+          .includes(download_includes)
+          .to_a
+
         version_suffix = methodology >= 5 ? suffix : ''
-        {
-          "MQ_Assessments_v#{methodology}#{version_suffix}_#{timestamp}.csv" => CSVExport::User::MQAssessments.new(assessments).call
-        }
-      end.reduce(&:merge)
+        mq_assessments_files["MQ_Assessments_v#{methodology}#{version_suffix}_#{timestamp}.csv"] =
+          CSVExport::User::MQAssessments.new(version_assessments).call
+
+        latest_version_assessments = version_assessments if methodology == methodology_versions.last
+      end
+
+      latest_mq_assessments_csv = CSVExport::User::LatestMQAssessments.new(latest_version_assessments).call
 
       user_guide = File.binread(Rails.root.join('public', 'tpi', 'export_support', 'User guide - TPI Management Quality.xlsx'))
 
       files = {
         "Latest_MQ_Assessments#{suffix}.csv" => latest_mq_assessments_csv
-      }.merge(mq_assessments_files || {}).merge(
+      }.merge(mq_assessments_files).merge(
         'User guide - TPI Management Quality.xlsx' => user_guide
       )
 

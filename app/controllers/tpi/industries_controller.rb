@@ -84,7 +84,6 @@ module TPI
         .where(company_id: companies_ids)
         .joins(:company)
         .order('companies.name ASC, publication_date DESC, methodology_version DESC, assessment_date DESC')
-        .includes(company: [:geography, { sector: :industries }])
 
       send_tpi_mq_file(
         mq_assessments: mq_assessments,

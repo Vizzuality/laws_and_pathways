@@ -125,7 +125,7 @@ module TPI
       scenario = determine_mq_scenario(form_data[:organisation_type], form_data[:self_attestation])
 
       case scenario
-      when 'exempted_10k', 'permitted_2k'
+      when 'exempted_10k', 'permitted_2k', 'asset_owner_2k'
         token = mq_download_verifier.generate(
           {
             scope: params[:download_scope],
@@ -137,8 +137,11 @@ module TPI
         )
         download_url = mq_token_download_url(token: token)
 
-        if scenario == 'exempted_10k'
+        case scenario
+        when 'exempted_10k'
           MQDownloadMailer.exempted_use_email(user_email: form_data[:email], download_url: download_url).deliver_now
+        when 'asset_owner_2k'
+          MQDownloadMailer.asset_owner_use_email(user_email: form_data[:email], download_url: download_url).deliver_now
         else
           MQDownloadMailer.permitted_use_email(user_email: form_data[:email], download_url: download_url).deliver_now
         end
@@ -161,7 +164,7 @@ module TPI
       companies_ids = mq_companies_for_scope(scope, scope_id)
       filename = mq_filename_for_scope(scope, scope_id)
 
-      if scenario == 'permitted_2k'
+      if scenario.in?(%w[permitted_2k asset_owner_2k])
         companies_ids = companies_ids.where(mq_focus_company: true)
       end
 
@@ -171,7 +174,6 @@ module TPI
         .where(company_id: companies_ids)
         .joins(:company)
         .order('companies.name ASC, publication_date DESC, methodology_version DESC, assessment_date DESC')
-        .includes(company: [:geography, :sector])
 
       send_tpi_mq_file(
         mq_assessments: mq_assessments,
@@ -295,7 +297,6 @@ module TPI
         .where(company_id: companies_ids)
         .joins(:company)
         .order('companies.name ASC, publication_date DESC, methodology_version DESC, assessment_date DESC')
-        .includes(company: [:geography, { sector: :industries }])
 
       send_tpi_mq_file(
         mq_assessments: mq_assessments,
@@ -304,8 +305,10 @@ module TPI
     end
 
     def determine_mq_scenario(organisation_type, self_attestation)
-      if organisation_type == 'Academia' || organisation_type == 'Asset owner'
+      if organisation_type == 'Academia'
         'exempted_10k'
+      elsif organisation_type == 'Asset owner'
+        'asset_owner_2k'
       elsif self_attestation == 'Permitted uses without Authorisation or License'
         'permitted_2k'
       else

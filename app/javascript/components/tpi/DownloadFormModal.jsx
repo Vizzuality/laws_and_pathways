@@ -143,6 +143,7 @@ const initialFormValues = {
 const MQ_SUCCESS_MESSAGES = {
   permitted_2k: 'Thank you! We\'ve sent an email with a download link for the Management Quality dataset. Please check your inbox.',
   exempted_10k: 'Thank you! We\'ve sent an email with a download link for the complete Management Quality dataset. Please check your inbox.',
+  asset_owner_2k: 'Thank you! We\'ve sent an email with a download link for the Management Quality dataset. Please check your inbox.',
   authorisation: 'Thank you! Your request has been received. A representative from LSEG, TPI\'s Data Partner, will contact you to discuss licensing requirements.'
 };
 
