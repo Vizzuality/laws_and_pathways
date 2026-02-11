@@ -62,7 +62,7 @@ module TPI
       timestamp = Time.now.strftime('%d%m%Y')
       suffix = scenario == 'exempted_10k' ? '_10K' : ''
 
-      methodology_versions = mq_assessments.distinct.pluck(:methodology_version).sort
+      methodology_versions = mq_assessments.reorder(nil).distinct.pluck(:methodology_version).sort
       download_includes = {company: [:geography, {sector: :industries}, :mq_assessments]}
 
       mq_assessments_files = {}
