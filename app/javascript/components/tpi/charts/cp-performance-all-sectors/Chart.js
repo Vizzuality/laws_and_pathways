@@ -52,6 +52,7 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
 
   const highchartsButtonCallback = (chart) => {
     const buttonDefinitions = Object.keys(allData)
+      .filter((key) => key in buttonLabels)
       .sort((key1, key2) => buttonLabels[key1].order - buttonLabels[key2].order)
       .map((key) => ({ key, label: buttonLabels[key].label }));
     const newButtons = [];
