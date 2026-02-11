@@ -111,6 +111,7 @@ module Api
       def companies_grouped_by_latest_assessment_level
         @company_scope
           .includes(
+            :mq_assessments,
             :latest_mq_assessment_without_beta_methodologies,
             :latest_mq_assessment_only_beta_methodologies
           )
@@ -123,6 +124,7 @@ module Api
         @company_scope
           .includes(
             :sector,
+            :mq_assessments,
             :latest_mq_assessment_without_beta_methodologies,
             :latest_mq_assessment_only_beta_methodologies
           )
