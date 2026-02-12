@@ -110,24 +110,29 @@ module Api
 
       def companies_grouped_by_latest_assessment_level
         @company_scope
-          .includes(
+          .preload(
             :latest_mq_assessment_without_beta_methodologies,
             :latest_mq_assessment_only_beta_methodologies
           )
-          .map { |c| update_beta_mq_assessments_visibility c }
+          .to_a
+          .each { |c| update_beta_mq_assessments_visibility c }
           .reject { |c| c.mq_level.nil? }
           .group_by { |c| c.mq_level.to_i.to_s }
       end
 
       def companies_grouped_by_sector
-        @company_scope
-          .includes(
+        companies = @company_scope
+          .preload(
             :sector,
-            :mq_assessments,
             :latest_mq_assessment_without_beta_methodologies,
             :latest_mq_assessment_only_beta_methodologies
           )
-          .map { |c| update_beta_mq_assessments_visibility c }
+          .to_a
+
+        preload_lightweight_mq_assessments(companies)
+
+        companies
+          .each { |c| update_beta_mq_assessments_visibility c }
           .group_by { |company| company.sector.name }
       end
 
@@ -243,6 +248,26 @@ module Api
 
       def keep_only_beta_mq_assessments(companies)
         companies.select { |c| c.latest_mq_assessment.beta_methodology? }
+      end
+
+      # Pre-populates company.mq_assessments with lightweight records (excluding
+      # the large questions JSONB) so that assessment.status/previous_assessments
+      # can run without N+1 queries or heavy memory usage.
+      def preload_lightweight_mq_assessments(companies)
+        company_ids = companies.map(&:id)
+        return if company_ids.empty?
+
+        lightweight = MQ::Assessment
+          .where(company_id: company_ids)
+          .select(:id, :company_id, :publication_date, :methodology_version, :assessment_date, :level, :discarded_at)
+          .to_a
+          .group_by(&:company_id)
+
+        companies.each do |company|
+          next if company.association(:mq_assessments).loaded?
+
+          company.association(:mq_assessments).target = lightweight[company.id] || []
+        end
       end
     end
   end
