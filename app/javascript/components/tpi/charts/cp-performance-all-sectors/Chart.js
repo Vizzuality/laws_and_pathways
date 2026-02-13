@@ -41,7 +41,7 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
   const selectedData = alignmentKey in allData ? allData[alignmentKey] : [];
 
   const buttonLabels = {
-    cp_alignment_2030: { label: 'Short 2030', order: 0 },
+    cp_alignment_2028_2030: { label: 'Short 2028-2030', order: 0 },
     cp_alignment_2035: { label: 'Medium 2035', order: 1 },
     cp_alignment_2050: { label: 'Long 2050', order: 2 }
   };
@@ -55,14 +55,14 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
       .sort((key1, key2) => buttonLabels[key1].order - buttonLabels[key2].order)
       .map((key) => ({ key, label: buttonLabels[key].label }));
     const newButtons = [];
+    const buttonWidth = 130;
     buttonDefinitions.forEach(({ key, label }, index) => {
-      const buttonWidth = 100;
       const baseStyle = {
         border: '1px solid black',
         fontFamily: 'BrownTT Bold',
         fontSize: '0.95rem'
       };
-      const button = chart.renderer.button(label, (chart.plotWidth - 3 * buttonWidth) + index * 120, 230, () => {
+      const button = chart.renderer.button(label, (chart.plotWidth - 3 * buttonWidth) + index * (buttonWidth + 20), 230, () => {
         setAlignmentKey(key);
       }, {
         fill: '#fff',

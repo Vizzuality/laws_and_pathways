@@ -47,7 +47,7 @@ module Api
           .includes(:latest_cp_assessment, sector: [:cluster])
 
         result = {}
-        [:cp_alignment_2050, :cp_alignment_2035, :cp_alignment_2030, :cp_alignment_2027].each do |alignment_key|
+        [:cp_alignment_2050, :cp_alignment_2035, :cp_alignment_2028_2030].each do |alignment_key|
           result[alignment_key] = cp_performance_all_sectors_by_year(alignment_key, all_companies)
         end
 
@@ -62,7 +62,7 @@ module Api
           .includes(:latest_cp_assessment, sector: [:cluster])
 
         result = {}
-        [:cp_alignment_2050, :cp_alignment_2035, :cp_alignment_2030, :cp_alignment_2027].each do |alignment_key|
+        [:cp_alignment_2050, :cp_alignment_2035, :cp_alignment_2028_2030].each do |alignment_key|
           result[alignment_key] = cp_performance_all_sectors_by_year(alignment_key, all_companies)
         end
 
