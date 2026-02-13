@@ -64,6 +64,10 @@ class Company < ApplicationRecord
            :cp_regional_alignment_2050, :cp_regional_alignment_2025, :cp_regional_alignment_2027, :cp_regional_alignment_2028,
            :cp_regional_alignment_2035, to: :latest_cp_assessment, allow_nil: true
 
+  def cp_alignment_2028_2030
+    cp_alignment_2030.presence || cp_alignment_2028
+  end
+
   validates :ca100, inclusion: {in: [true, false]}
   validates_presence_of :name, :slug, :isin, :market_cap_group
   validates_uniqueness_of :slug, :name
