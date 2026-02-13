@@ -105,7 +105,7 @@ ActiveAdmin.register ASCOR::Assessment do
         if resource.assessment_date&.year && resource.assessment_date.year <= 2024 && indicator.code.to_s.start_with?('EP.3')
           'Not assessed'
         else
-          controller.assessment_results[[resource.id, indicator.id]]&.first&.answer
+        controller.assessment_results[[resource.id, indicator.id]]&.first&.answer
         end
       end
     end
@@ -114,7 +114,7 @@ ActiveAdmin.register ASCOR::Assessment do
         if resource.assessment_date&.year && resource.assessment_date.year <= 2024 && indicator.code.to_s.start_with?('EP.3')
           nil
         else
-          controller.assessment_results[[resource.id, indicator.id]]&.first&.source
+        controller.assessment_results[[resource.id, indicator.id]]&.first&.source
         end
       end
     end
@@ -123,7 +123,7 @@ ActiveAdmin.register ASCOR::Assessment do
         if resource.assessment_date&.year && resource.assessment_date.year <= 2024 && indicator.code.to_s.start_with?('EP.3')
           nil
         else
-          controller.assessment_results[[resource.id, indicator.id]]&.first&.year
+        controller.assessment_results[[resource.id, indicator.id]]&.first&.year
         end
       end
     end
