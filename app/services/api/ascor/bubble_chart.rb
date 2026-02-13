@@ -32,13 +32,13 @@ module Api
                 output << {
                   pillar: pillar.text,
                   area: area.text,
-                  result: result.answer,
-                  country_id: result.assessment.country_id,
-                  country_name: result.assessment.country.name,
-                  country_path: result.assessment.country.path,
-                  market_cap_group: calculate_market_cap_group(result.assessment.country_id)
-                }
-              end
+            result: result.answer,
+            country_id: result.assessment.country_id,
+            country_name: result.assessment.country.name,
+            country_path: result.assessment.country.path,
+            market_cap_group: calculate_market_cap_group(result.assessment.country_id)
+          }
+        end
             else
               output << {
                 pillar: pillar.text,

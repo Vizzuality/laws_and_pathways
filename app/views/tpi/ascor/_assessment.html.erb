@@ -40,7 +40,7 @@
       <% ascor_sub_indicators_for(pillar, areas).each do |area| %>
         <% is_ep3_not_applicable = area.code == 'EP.3' && @assessment.assessment_date.year <= 2024 %>
         <% unless is_ep3_not_applicable %>
-          <input id="area-<%= dom_id(area) %>" type="checkbox" class="toggle area" />
+        <input id="area-<%= dom_id(area) %>" type="checkbox" class="toggle area" />
         <% end %>
         <div class="country-assessment__area-block">
           <div class="country-assessment__area">
@@ -49,23 +49,23 @@
               <div><strong><%= area.text %></strong></div>
             </div>
             <% unless is_ep3_not_applicable %>
-              <label class="country-assessment__more" for="area-<%= dom_id(area) %>"></label>
+            <label class="country-assessment__more" for="area-<%= dom_id(area) %>"></label>
             <% end %>
           </div>
 
           <% unless is_ep3_not_applicable %>
-            <div class="country-assessment__indicators" for="area-<%= dom_id(area) %>">
-              <% if ascor_sub_indicators_for(area, indicators).present? %>
-                <%= render 'tpi/ascor/assessment_indicators', area: area, indicators: ascor_sub_indicators_for(area, indicators), metrics: metrics %>
+          <div class="country-assessment__indicators" for="area-<%= dom_id(area) %>">
+            <% if ascor_sub_indicators_for(area, indicators).present? %>
+              <%= render 'tpi/ascor/assessment_indicators', area: area, indicators: ascor_sub_indicators_for(area, indicators), metrics: metrics %>
                 <% if (area.code == 'EP.3' && @assessment.assessment_date.year >= 2025) || (area.code == 'EP.2' && @assessment.assessment_date.year <= 2024) %>
-                  <div class="country-assessment__metric-block">
-                    <%= render 'tpi/ascor/benchmarks_chart' %>
-                  </div>
-                <% end %>
-              <% else %>
-                <%= render 'tpi/ascor/assessment_metrics', metrics: ascor_sub_indicators_for(area, metrics) %>
+                <div class="country-assessment__metric-block">
+                  <%= render 'tpi/ascor/benchmarks_chart' %>
+                </div>
               <% end %>
-            </div>
+            <% else %>
+              <%= render 'tpi/ascor/assessment_metrics', metrics: ascor_sub_indicators_for(area, metrics) %>
+            <% end %>
+          </div>
           <% end %>
         </div>
       <% end %>

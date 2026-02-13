@@ -42,7 +42,7 @@ module CSVExport
           if indicator.code.start_with?('EP.3') && assessment.assessment_date&.year && assessment.assessment_date.year <= 2024
             'Not assessed'
           else
-            assessment_results[[assessment.id, indicator.id]]&.first&.answer
+          assessment_results[[assessment.id, indicator.id]]&.first&.answer
           end
         end
       end

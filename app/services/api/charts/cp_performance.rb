@@ -20,6 +20,8 @@ module Api
         '#595B5D' => 'No or unsuitable disclosure'
       }.freeze
 
+      ALIGNMENT_KEYS = [:cp_alignment_2050, :cp_alignment_2035, :cp_alignment_2028_2030].freeze
+
       # Calculate companies stats grouped by CP alignment in multiple series.
       # Sort order is important, series should be ordered by CP alignment order
       # data in series should be ordered by sectors cluster and then sector name
@@ -37,70 +39,94 @@ module Api
       #     }
       #   ]
       def cp_performance_all_sectors_data
-        cp_performance_all_sectors_by_year(:cp_alignment_2050)
+        company_data = extract_company_data(
+          Company.published.active.includes(:latest_cp_assessment, sector: [:cluster]),
+          [:cp_alignment_2050]
+        )
+        build_alignment_chart(:cp_alignment_2050, company_data)
       end
 
       def cp_performance_all_sectors_data_all_years
-        all_companies = Company
-          .published
-          .active
-          .includes(:latest_cp_assessment, sector: [:cluster])
+        company_data = extract_company_data(
+          Company.published.active.includes(:latest_cp_assessment, sector: [:cluster]),
+          ALIGNMENT_KEYS
+        )
 
         result = {}
-        [:cp_alignment_2050, :cp_alignment_2035, :cp_alignment_2028_2030].each do |alignment_key|
-          result[alignment_key] = cp_performance_all_sectors_by_year(alignment_key, all_companies)
+        ALIGNMENT_KEYS.each do |key|
+          result[key] = build_alignment_chart(key, company_data)
         end
-
         result
       end
 
       def cp_performance_for_sectors(sector_ids)
-        all_companies = Company
-          .published
-          .active
-          .where(sector_id: sector_ids)
-          .includes(:latest_cp_assessment, sector: [:cluster])
+        company_data = extract_company_data(
+          Company.published.active.where(sector_id: sector_ids).includes(:latest_cp_assessment, sector: [:cluster]),
+          ALIGNMENT_KEYS
+        )
 
         result = {}
-        [:cp_alignment_2050, :cp_alignment_2035, :cp_alignment_2028_2030].each do |alignment_key|
-          result[alignment_key] = cp_performance_all_sectors_by_year(alignment_key, all_companies)
+        ALIGNMENT_KEYS.each do |key|
+          result[key] = build_alignment_chart(key, company_data)
         end
-
         result
       end
 
       private
 
-      def cp_performance_all_sectors_by_year(year_key, all_companies)
-        filtered_companies = all_companies
-          .select { |c| c.public_send(year_key).present? }
-          .reject { |c| CP::Alignment.new(name: c.public_send(year_key), sector: c.sector.name).not_assessed? }
+      # Extract only the fields we need from AR objects into lightweight hashes.
+      # Uses find_each to process in batches of 500, so only one batch of heavy
+      # AR objects is in memory at a time — the rest are GC'd after extraction.
+      def extract_company_data(scope, alignment_keys)
+        records = []
+        scope.find_each(batch_size: 500) do |company|
+          alignments = {}
+          alignment_keys.each { |key| alignments[key] = company.public_send(key) }
+          records << {
+            sector_name: company.sector.name,
+            cluster_name: company.sector.cluster&.name,
+            alignments: alignments
+          }
+        end
+        records
+      end
 
-        all_sectors = filtered_companies.map(&:sector).uniq
-        cp_alignment_data = COLOR_DESCRIPTIONS.keys
-          .map { |name| {name => all_sectors.map { |s| {s.name => 0} }.reduce(&:merge)} }
-          .reduce(&:merge)
-
-        filtered_companies.each do |company|
-          cp_alignment = CP::Alignment.new(name: company.public_send(year_key), sector: company.sector.name)
-          alignment_key = cp_alignment.color
-          cp_alignment_data[alignment_key] ||= all_sectors.map { |s| {s.name => 0} }.reduce(&:merge)
-          cp_alignment_data[alignment_key]
-            .merge!(company.sector.name => 1) { |_k, old_v, new_v| old_v + new_v }
+      def build_alignment_chart(alignment_key, company_data)
+        # Filter to companies with a valid, assessed alignment for this key
+        filtered = company_data.select do |c|
+          value = c[:alignments][alignment_key]
+          value.present? && !CP::Alignment.new(name: value, sector: c[:sector_name]).not_assessed?
         end
 
-        result = cp_alignment_data.map do |color, data|
+        return [] if filtered.empty?
+
+        # Build sector→cluster lookup (O(1) instead of O(N) find)
+        sector_cluster = {}
+        filtered.each { |c| sector_cluster[c[:sector_name]] ||= c[:cluster_name] }
+        all_sector_names = sector_cluster.keys
+
+        # Initialize counts — Hash.new(0) avoids creating N intermediate hashes
+        cp_alignment_data = {}
+        COLOR_DESCRIPTIONS.each_key { |color| cp_alignment_data[color] = Hash.new(0) }
+
+        # Count companies per color per sector
+        filtered.each do |company|
+          value = company[:alignments][alignment_key]
+          color = CP::Alignment.new(name: value, sector: company[:sector_name]).color
+          cp_alignment_data[color] ||= Hash.new(0)
+          cp_alignment_data[color][company[:sector_name]] += 1
+        end
+
+        # Build result sorted by cluster then sector name
+        sorted_sectors = all_sector_names.sort_by { |sn| [sector_cluster[sn] || 'ZZZ', sn] }
+
+        result = cp_alignment_data.map do |color, counts|
           {
             name: COLOR_DESCRIPTIONS[color],
             color: color,
-            data: (data || []).sort_by do |sn, _v|
-              sector = all_sectors.find { |s| s.name == sn }
-              [sector.cluster&.name || 'ZZZ', sector.name] # stupid way to sort null last
-            end.to_a
+            data: sorted_sectors.map { |sn| [sn, counts[sn]] }
           }
         end
-
-        return [] if result.all? { |r| r[:data].empty? }
 
         result.reject { |r| r[:data].map(&:second).all?(&:zero?) }
       end
