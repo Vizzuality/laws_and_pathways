@@ -26,13 +26,15 @@
             source: 'cp',
             showIcon: true
           }) %>
-          <%= react_component('DownloadFormModal', {
-            title: 'Explore MQ data access',
-            buttonClass: 'button is-primary with-icon with-border',
-            source: 'mq',
-            showIcon: true,
-            downloadScope: 'all'
-          }) %>
+          <span id="mq-download-form">
+            <%= react_component('DownloadFormModal', {
+              title: 'Explore MQ data access',
+              buttonClass: 'button is-primary with-icon with-border',
+              source: 'mq',
+              showIcon: true,
+              downloadScope: 'all'
+            }) %>
+          </span>
         </div>
       </div>
     </div>
@@ -43,10 +45,10 @@
     <h4 class="title-darker-blue">Below you will find the results of the Carbon Performance and Management Quality corporate assessments. These TPI metrics should be treated as complementary – i.e. both need to be looked at together to better assess the progress that companies are making in the low-carbon transition.</h4>
 
     <p class="title-darker-blue">
-      Management Quality assessments for 10,000 companies are shown on the website and updated annually. This full dataset is downloadable for academic and asset owner use. For other permitted use cases, a downloadable subset of 2,000 "focus companies", which are the most impactful to drive the transition to a low-carbon economy, is available as per the TPI Centre's Data <a href="https://www.transitionpathwayinitiative.org/use-of-the-centre-s-data" target="_blank" rel="noopener noreferrer">Terms of Use</a>. Focus companies have been selected based on market capitalisation and emissions [see <a href="/faqs" target="_blank" rel="noopener noreferrer">FAQs</a>] and are clearly marked on the individual company pages. Further information on how to access the data are available in the download form.
+      The TPI Centre's data are governed by the <a href="https://www.transitionpathwayinitiative.org/use-of-the-centre-s-data" target="_blank" rel="noopener noreferrer">Terms of Use</a>. Management Quality (MQ) assessments for 10,000 companies, as shown below, are updated annually. A subset of 2,000 focus companies has been selected based on market capitalisation and emissions [see <a href="/faqs" target="_blank" rel="noopener noreferrer">FAQs</a>]. Information on how to access the data is available in the <a href="#mq-download-form">download form</a>.
     </p>
     <p class="title-darker-blue">
-      Management Quality assessments are produced by LSEG, TPI's data partner, using the <% if @methodology_publication %><a href="<%= tpi_publication_path(@methodology_publication) %>">TPI Centre's methodology</a><% else %>TPI Centre's methodology<% end %>. For queries related to Management Quality scores or to discuss licensing for additional use cases, please reach out to <a href="mailto:tpimqaccess@lseg.com">tpimqaccess@lseg.com</a>.
+      Please note that more frequently updated MQ assessments are available from TPI's Data Partner, LSEG. To discuss further, please reach out to <a href="mailto:tpimqaccess@lseg.com">tpimqaccess@lseg.com</a>.
     </p>
 
     <div class="mq-sector-pie-charts-row">
