@@ -21,6 +21,14 @@ class MQDownloadMailer < ApplicationMailer
     mail(to: user_email, subject: 'TPI Management Quality Data – Access Request Received')
   end
 
+  def non_professional_email_notice(user_email:)
+    mail(to: user_email, subject: 'TPI Management Quality Data – Access Request')
+  end
+
+  def other_review_email(user_email:)
+    mail(to: user_email, subject: 'TPI Management Quality Data – Access Request Received')
+  end
+
   def lseg_notification_email(form_data:)
     @data = form_data
     mail(to: LSEG_RECIPIENT, subject: 'MQ Data Access Request – Uses subject to Authorisation and License')
@@ -32,4 +40,3 @@ class MQDownloadMailer < ApplicationMailer
     mail(to: MQ_INFO_RECIPIENT, subject: 'Management Quality data access request')
   end
 end
-

@@ -141,10 +141,12 @@ const initialFormValues = {
 };
 
 const MQ_SUCCESS_MESSAGES = {
-  permitted_2k: 'Thank you! We\'ve sent an email with a download link for the Management Quality dataset. Please check your inbox.',
-  exempted_10k: 'Thank you! We\'ve sent an email with a download link for the complete Management Quality dataset. Please check your inbox.',
-  asset_owner_2k: 'Thank you! We\'ve sent an email with a download link for the Management Quality dataset. Please check your inbox.',
-  authorisation: 'Thank you! Your request has been received. A representative from LSEG, TPI\'s Data Partner, will contact you to discuss licensing requirements.'
+  permitted_2k: 'Thank you! We\'ve sent an email with a download link for the Management Quality dataset (2,000 focus companies). Please check your inbox.',
+  exempted_10k: 'Thank you! We\'ve sent an email with a download link for the full Management Quality dataset (10,000 companies). Please check your inbox.',
+  asset_owner_2k: 'Thank you! We\'ve sent an email with a download link for the Management Quality dataset (2,000 focus companies). For the full 10,000-company dataset, please contact LSEG. Please check your inbox.',
+  authorisation: 'Thank you! Your use case details have been forwarded to LSEG, TPI\'s Data Partner. LSEG will review your request and contact you directly to discuss authorisation and licensing.',
+  non_professional_email: 'Thank you! As you provided a personal email address, we\'ve sent you an email with instructions on how to proceed. Please check your inbox.',
+  other_review: 'Thank you! We will evaluate your request and follow up shortly. Please check your inbox.'
 };
 
 function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon = false, downloadScope, scopeId }) {
@@ -340,22 +342,20 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon =
                   {source === 'mq' ? (
                     <>
                       <p>
-                        Management Quality data are viewable on the website, and the 2,000-focus company subset
-                        can be downloaded without Authorisation or License only for the Permitted Uses listed in the{' '}
+                        A set of Management Quality assessments for 2,000 focus companies, which have been selected
+                        based on market capitalisation and emissions, can be downloaded without Authorisation or
+                        License only for the Permitted Uses listed in the{' '}
                         <a href="https://www.transitionpathwayinitiative.org/use-of-the-centre-s-data" target="_blank" rel="noopener noreferrer">
                           Terms of Use
                         </a>
-                        . You should read the Terms of Use to ensure that you are complying with their
-                        requirements.
+                        . You should read these Terms to ensure that you are complying with their requirements.
                       </p>
                       <br />
                       <p>
-                        The complete Management Quality dataset of 10,000 companies visible on the website is
-                        available without Authorisation or License for academic and asset owner use. All other
-                        Permitted Use requests will receive the dataset of the 2,000 focus companies, as highlighted on
-                        the website. Outside of these cases, should you need the complete Management Quality
-                        dataset (i.e., 10,000 companies visible on the website), please contact LSEG, TPI&apos;s Data
-                        Partner, at{' '}
+                        The full Management Quality dataset of 10,000 companies visible on the website is available
+                        without Authorisation or License for academic and asset owner use. Outside of these cases,
+                        should you need the full 10,000-company Management Quality dataset and/or more frequently
+                        updated assessments, please contact TPI&apos;s Data Partner, LSEG, at{' '}
                         <a href="mailto:tpimqaccess@lseg.com">tpimqaccess@lseg.com</a>.
                       </p>
                     </>

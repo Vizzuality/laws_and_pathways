@@ -122,7 +122,7 @@ module TPI
 
     def submit_mq_download_form
       form_data = permitted_email_params
-      scenario = determine_mq_scenario(form_data[:organisation_type], form_data[:self_attestation])
+      scenario = determine_mq_scenario(form_data)
 
       case scenario
       when 'exempted_10k', 'permitted_2k', 'asset_owner_2k'
@@ -148,6 +148,10 @@ module TPI
       when 'authorisation'
         MQDownloadMailer.authorisation_required_email(user_email: form_data[:email]).deliver_now
         MQDownloadMailer.lseg_notification_email(form_data: form_data).deliver_now
+      when 'non_professional_email'
+        MQDownloadMailer.non_professional_email_notice(user_email: form_data[:email]).deliver_now
+      when 'other_review'
+        MQDownloadMailer.other_review_email(user_email: form_data[:email]).deliver_now
       end
 
       MQDownloadMailer.info_email(form_data: form_data, scenario: scenario).deliver_now
@@ -304,16 +308,47 @@ module TPI
       )
     end
 
-    def determine_mq_scenario(organisation_type, self_attestation)
-      if organisation_type == 'Academia'
+    NON_PROFESSIONAL_DOMAINS = %w[
+      gmail.com yahoo.com hotmail.com outlook.com aol.com
+      icloud.com mail.com protonmail.com zoho.com yandex.com
+      gmx.com inbox.com live.com msn.com yahoo.co.uk
+      yahoo.fr yahoo.de yahoo.es yahoo.it yahoo.ca
+      hotmail.co.uk hotmail.fr hotmail.de hotmail.es hotmail.it
+      outlook.co.uk outlook.fr outlook.de outlook.es outlook.it
+      googlemail.com me.com mac.com fastmail.com hushmail.com
+      tutanota.com proton.me pm.me cock.li mailfence.com
+      posteo.de runbox.com safe-mail.net mail.ru rambler.ru
+    ].freeze
+
+    def determine_mq_scenario(form_data)
+      email = form_data[:email].to_s
+      organisation_type = form_data[:organisation_type].to_s
+      use_case = form_data[:use_case].to_s
+      self_attestation = form_data[:self_attestation].to_s
+
+      if non_professional_email?(email)
+        'non_professional_email'
+      elsif self_attestation == 'Uses subject to Authorisation and License' ||
+            use_case == 'Product & service creation'
+        'authorisation'
+      elsif organisation_type == 'Other' || use_case == 'Other'
+        'other_review'
+      elsif use_case == 'Academic use' &&
+            organisation_type.in?(%w[Academia NGO])
         'exempted_10k'
-      elsif organisation_type == 'Asset owner'
+      elsif organisation_type == 'Asset owner' ||
+            (organisation_type == 'NGO' && !use_case.in?(['Academic use', 'Product & service creation']))
         'asset_owner_2k'
       elsif self_attestation == 'Permitted uses without Authorisation or License'
         'permitted_2k'
       else
         'authorisation'
       end
+    end
+
+    def non_professional_email?(email)
+      domain = email.strip.downcase.split('@').last
+      NON_PROFESSIONAL_DOMAINS.include?(domain)
     end
 
     def mq_download_verifier
