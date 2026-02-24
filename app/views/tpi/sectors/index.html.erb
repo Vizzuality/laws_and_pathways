@@ -66,9 +66,10 @@
 
     <p>CP alignment with the Paris agreement benchmarks by sector and cluster (number and % of companies). Please note that this information is not available for all sectors.</p>
 
+    <% cp_sectors = @sectors.reject { |s| Api::Charts::CPPerformance::EXCLUDED_SECTORS.include?(s.name) } %>
     <%= react_component('charts/cp-performance-all-sectors', {
       dataUrl: cp_performance_chart_data_all_years_tpi_sectors_path,
-      sectors: TPI::CPPerformanceSectorDecorator.decorate_collection(@sectors).map(&:to_h)
+      sectors: TPI::CPPerformanceSectorDecorator.decorate_collection(cp_sectors).map(&:to_h)
     }) %>
   </section>
 </div>
