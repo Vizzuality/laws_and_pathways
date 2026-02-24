@@ -12,7 +12,10 @@ module CSVExport
                    'Industries', 'CA100 Company?', 'Large/Medium Classification',
                    'ISINs', 'SEDOL', 'Publication Date', 'Assessment Date', 'Fiscal Year',
                    'Level', 'Performance compared to previous year']
-        question_headers = @assessments.find { |a| a.questions.present? }&.questions&.map(&:csv_column_name) || []
+        question_headers = @assessments
+          .select { |a| a.questions.present? }
+          .max_by { |a| [a.publication_date, a.assessment_date] }
+          &.questions&.map(&:csv_column_name) || []
         headers.concat(question_headers)
         headers << 'Notes'
 

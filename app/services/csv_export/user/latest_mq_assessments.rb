@@ -10,7 +10,10 @@ module CSVExport
       def call
         return if @companies.empty?
 
-        question_headers = @latest_mq_assessments_hash.values.compact.first&.questions&.map(&:csv_column_name) || []
+        question_headers = @latest_mq_assessments_hash.values.compact
+          .select { |a| a.questions.present? }
+          .max_by { |a| [a.publication_date, a.assessment_date] }
+          &.questions&.map(&:csv_column_name) || []
 
         headers = [
           'Company ID',

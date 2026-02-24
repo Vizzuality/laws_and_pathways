@@ -89,19 +89,17 @@ Field.defaultProps = {
 
 const organisationTypeOptions = [
   { label: 'Academia', value: 'Academia' },
-  { label: 'Asset management & investment & advisory', value: 'Asset management & investment & advisory' },
+  { label: 'Asset management (including hedge funds)', value: 'Asset management (including hedge funds)' },
   { label: 'Asset owner', value: 'Asset owner' },
   { label: 'Corporate', value: 'Corporate' },
-  { label: 'Consultant & advisory', value: 'Consultant & advisory' },
-  { label: 'Commercial & retail bank', value: 'Commercial & retail bank' },
+  { label: 'Consultancy & advisory', value: 'Consultancy & advisory' },
+  { label: 'Investment and/or retail bank', value: 'Investment and/or retail bank' },
   { label: 'Credit rating agency', value: 'Credit rating agency' },
   { label: 'Financial technology', value: 'Financial technology' },
   { label: 'Government', value: 'Government' },
-  { label: 'Hedge fund', value: 'Hedge fund' },
   { label: 'Investment bank', value: 'Investment bank' },
   { label: 'Media', value: 'Media' },
   { label: 'NGO', value: 'NGO' },
-  { label: 'Private equity', value: 'Private equity' },
   { label: 'Wealth management', value: 'Wealth management' },
   { label: 'Other (please specify)', value: 'Other' }
 ];
