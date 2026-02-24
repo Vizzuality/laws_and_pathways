@@ -22,6 +22,9 @@ module Api
 
       ALIGNMENT_KEYS = [:cp_alignment_2050, :cp_alignment_2035, :cp_alignment_2028_2030].freeze
 
+      # Sectors excluded from the "All sectors" chart per TPI Centre requirements.
+      EXCLUDED_SECTORS = ['Construction and Materials', 'Oil Refining and Marketing'].freeze
+
       # Calculate companies stats grouped by CP alignment in multiple series.
       # Sort order is important, series should be ordered by CP alignment order
       # data in series should be ordered by sectors cluster and then sector name
@@ -41,34 +44,48 @@ module Api
       def cp_performance_all_sectors_data
         company_data = extract_company_data(
           Company.published.active.includes(:latest_cp_assessment, sector: [:cluster]),
-          [:cp_alignment_2050]
+          [:cp_alignment_2050],
+          excluded_sectors: EXCLUDED_SECTORS
         )
         build_alignment_chart(:cp_alignment_2050, company_data)
       end
 
       def cp_performance_all_sectors_data_all_years
+        # Also extract :cp_alignment_2030 to determine whether the short-term
+        # button should read "2030" or fall back to "2028".
+        extract_keys = ALIGNMENT_KEYS + [:cp_alignment_2030]
         company_data = extract_company_data(
           Company.published.active.includes(:latest_cp_assessment, sector: [:cluster]),
-          ALIGNMENT_KEYS
+          extract_keys,
+          excluded_sectors: EXCLUDED_SECTORS
         )
 
         result = {}
         ALIGNMENT_KEYS.each do |key|
           result[key] = build_alignment_chart(key, company_data)
         end
+
+        has_2030 = company_data.any? { |c| c[:alignments][:cp_alignment_2030].present? }
+        result[:short_term_year] = has_2030 ? 2030 : 2028
+
         result
       end
 
       def cp_performance_for_sectors(sector_ids)
+        extract_keys = ALIGNMENT_KEYS + [:cp_alignment_2030]
         company_data = extract_company_data(
           Company.published.active.where(sector_id: sector_ids).includes(:latest_cp_assessment, sector: [:cluster]),
-          ALIGNMENT_KEYS
+          extract_keys
         )
 
         result = {}
         ALIGNMENT_KEYS.each do |key|
           result[key] = build_alignment_chart(key, company_data)
         end
+
+        has_2030 = company_data.any? { |c| c[:alignments][:cp_alignment_2030].present? }
+        result[:short_term_year] = has_2030 ? 2030 : 2028
+
         result
       end
 
@@ -77,9 +94,11 @@ module Api
       # Extract only the fields we need from AR objects into lightweight hashes.
       # Uses find_each to process in batches of 500, so only one batch of heavy
       # AR objects is in memory at a time — the rest are GC'd after extraction.
-      def extract_company_data(scope, alignment_keys)
+      def extract_company_data(scope, alignment_keys, excluded_sectors: [])
         records = []
         scope.find_each(batch_size: 500) do |company|
+          next if excluded_sectors.include?(company.sector.name)
+
           alignments = {}
           alignment_keys.each { |key| alignments[key] = company.public_send(key) }
           records << {
