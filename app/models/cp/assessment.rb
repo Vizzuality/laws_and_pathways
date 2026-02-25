@@ -98,6 +98,12 @@ module CP
       CP::Alignment.new(name: cp_alignment_2028, sector: sector&.name)
     end
 
+    def cp_alignment_2030_by_company
+      return unless cp_alignment_2030.present?
+
+      CP::Alignment.new(name: cp_alignment_2030, sector: sector&.name)
+    end
+
     def cp_alignment_2035_by_company
       return unless cp_alignment_2035.present?
 
@@ -126,6 +132,12 @@ module CP
       return unless cp_regional_alignment_2028.present?
 
       CP::Alignment.new(name: cp_regional_alignment_2028, sector: sector&.name)
+    end
+
+    def cp_regional_alignment_2030_by_company
+      return unless cp_regional_alignment_2030.present?
+
+      CP::Alignment.new(name: cp_regional_alignment_2030, sector: sector&.name)
     end
 
     def cp_regional_alignment_2035_by_company
