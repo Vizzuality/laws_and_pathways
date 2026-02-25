@@ -23,7 +23,7 @@ module Api
       ALIGNMENT_KEYS = [:cp_alignment_2050, :cp_alignment_2035, :cp_alignment_2028_2030].freeze
 
       # Sectors excluded from the "All sectors" chart per TPI Centre requirements.
-      EXCLUDED_SECTORS = ['Construction and Materials', 'Oil Refining and Marketing'].freeze
+      EXCLUDED_SECTORS = ['Construction and Materials', 'Copper', 'Oil Refining and Marketing'].freeze
 
       # Calculate companies stats grouped by CP alignment in multiple series.
       # Sort order is important, series should be ordered by CP alignment order
@@ -51,12 +51,9 @@ module Api
       end
 
       def cp_performance_all_sectors_data_all_years
-        # Also extract :cp_alignment_2030 to determine whether the short-term
-        # button should read "2030" or fall back to "2028".
-        extract_keys = ALIGNMENT_KEYS + [:cp_alignment_2030]
         company_data = extract_company_data(
           Company.published.active.includes(:latest_cp_assessment, sector: [:cluster]),
-          extract_keys,
+          ALIGNMENT_KEYS,
           excluded_sectors: EXCLUDED_SECTORS
         )
 
@@ -64,28 +61,19 @@ module Api
         [:cp_alignment_2050, :cp_alignment_2035, :cp_alignment_2027].each do |alignment_key|
           result[alignment_key] = cp_performance_all_sectors_by_year(alignment_key, all_companies)
         end
-
-        has_2030 = company_data.any? { |c| c[:alignments][:cp_alignment_2030].present? }
-        result[:short_term_year] = has_2030 ? 2030 : 2028
-
         result
       end
 
       def cp_performance_for_sectors(sector_ids)
-        extract_keys = ALIGNMENT_KEYS + [:cp_alignment_2030]
         company_data = extract_company_data(
           Company.published.active.where(sector_id: sector_ids).includes(:latest_cp_assessment, sector: [:cluster]),
-          extract_keys
+          ALIGNMENT_KEYS
         )
 
         result = {}
         [:cp_alignment_2050, :cp_alignment_2035, :cp_alignment_2027].each do |alignment_key|
           result[alignment_key] = cp_performance_all_sectors_by_year(alignment_key, all_companies)
         end
-
-        has_2030 = company_data.any? { |c| c[:alignments][:cp_alignment_2030].present? }
-        result[:short_term_year] = has_2030 ? 2030 : 2028
-
         result
       end
 

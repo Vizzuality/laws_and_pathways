@@ -40,9 +40,8 @@ function CPPerformanceAllSectors({ dataUrl, sectors }) {
   const allData = transformData(data);
   const selectedData = alignmentKey in allData ? allData[alignmentKey] : [];
 
-  const shortTermYear = allData.short_term_year || 2028;
   const buttonLabels = {
-    cp_alignment_2028_2030: { label: `Short ${shortTermYear}`, order: 0 },
+    cp_alignment_2028_2030: { label: 'Short 2028-2030', order: 0 },
     cp_alignment_2035: { label: 'Medium 2035', order: 1 },
     cp_alignment_2050: { label: 'Long 2050', order: 2 }
   };
