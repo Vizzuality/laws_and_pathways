@@ -53,6 +53,15 @@ module TPI
       stream_publication_file
     end
 
+    def send_download_nzs_info_email
+      DataDownloadMailer.send_download_file_info_email(
+        permitted_email_params,
+        'TPI.Centre.NZS@lse.ac.uk',
+        'NZS data has been downloaded'
+      ).deliver_now
+      head :ok
+    end
+
     private
 
     def stream_publication_file
@@ -96,6 +105,23 @@ module TPI
     def fetch_sectors
       @sectors = (Publication.joins(:tpi_sectors).select('tpi_sectors.name as sector_name').map(&:sector_name) +
        NewsArticle.joins(:tpi_sectors).select('tpi_sectors.name as sector_name').map(&:sector_name)).uniq
+    end
+
+    def permitted_email_params
+      params.permit(
+        :email,
+        :job_title,
+        :forename,
+        :surname,
+        :location,
+        :organisation,
+        :organisation_type,
+        :asset_owner_type,
+        :organisation_type_other,
+        :use_case,
+        :use_case_description,
+        :self_attestation
+      )
     end
   end
 end

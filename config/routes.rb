@@ -96,6 +96,7 @@ Rails.application.routes.draw do
         end
         collection do
           get :partial
+          post :send_download_nzs_info_email
         end
       end
       get '/publications/uploads/:slug', to: 'publications#download_file', as: :publication_download_file
