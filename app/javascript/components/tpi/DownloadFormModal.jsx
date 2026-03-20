@@ -167,6 +167,8 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon =
         return 'Banking';
       case 'ascor':
         return 'ASCOR';
+      case 'nzs':
+        return 'Net Zero Strategies';
       default:
         return 'TPI';
     }
@@ -269,6 +271,8 @@ function DownloadFormModal({ downloadUrl, title, buttonClass, source, showIcon =
     const getEmailEndpoint = () => {
       if (source === 'cp') {
         return '/sectors/send_download_cp_info_email';
+      } else if (source === 'nzs') {
+        return '/publications/send_download_nzs_info_email';
       } else {
         return `/${source}/send_download_file_info_email`;
       }
