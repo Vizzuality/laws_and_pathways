@@ -23,7 +23,7 @@ module Api
       ALIGNMENT_KEYS = [:cp_alignment_2050, :cp_alignment_2035, :cp_alignment_2028_2030].freeze
 
       # Sectors excluded from the "All sectors" chart per TPI Centre requirements.
-      EXCLUDED_SECTORS = ['Construction and Materials', 'Copper', 'Oil Refining and Marketing'].freeze
+      EXCLUDED_SECTORS = ['Construction and Materials', 'Copper', 'Insurance', 'Oil Refining and Marketing'].freeze
 
       # Calculate companies stats grouped by CP alignment in multiple series.
       # Sort order is important, series should be ordered by CP alignment order
