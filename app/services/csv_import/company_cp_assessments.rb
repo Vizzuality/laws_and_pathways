@@ -15,6 +15,7 @@ module CSVImport
         assessment.cp_alignment_2025 = CP::Alignment.format_name(row[:cp_alignment_2025]) if row.header?(:cp_alignment_2025)
         assessment.cp_alignment_2027 = CP::Alignment.format_name(row[:cp_alignment_2027]) if row.header?(:cp_alignment_2027)
         assessment.cp_alignment_2028 = CP::Alignment.format_name(row[:cp_alignment_2028]) if row.header?(:cp_alignment_2028)
+        assessment.cp_alignment_2030 = CP::Alignment.format_name(row[:cp_alignment_2030]) if row.header?(:cp_alignment_2030)
         assessment.cp_alignment_2035 = CP::Alignment.format_name(row[:cp_alignment_2035]) if row.header?(:cp_alignment_2035)
         assessment.cp_alignment_2050 = CP::Alignment.format_name(row[:cp_alignment_2050]) if row.header?(:cp_alignment_2050)
         assessment.region = parse_cp_benchmark_region(row[:region]) if row.header?(:region)
@@ -26,6 +27,9 @@ module CSVImport
         end
         if row.header?(:cp_regional_alignment_2028)
           assessment.cp_regional_alignment_2028 = CP::Alignment.format_name(row[:cp_regional_alignment_2028])
+        end
+        if row.header?(:cp_regional_alignment_2030)
+          assessment.cp_regional_alignment_2030 = CP::Alignment.format_name(row[:cp_regional_alignment_2030])
         end
         if row.header?(:cp_regional_alignment_2035)
           assessment.cp_regional_alignment_2035 = CP::Alignment.format_name(row[:cp_regional_alignment_2035])
