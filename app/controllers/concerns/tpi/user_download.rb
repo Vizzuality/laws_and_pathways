@@ -62,8 +62,12 @@ module TPI
       timestamp = Time.now.strftime('%d%m%Y')
       suffix = scenario == 'exempted_10k' ? '_10K' : ''
 
-      methodology_versions = mq_assessments.reorder(nil).distinct.pluck(:methodology_version).sort
+      methodology_versions = mq_assessments.reorder(nil).distinct.pluck(:methodology_version)
+        .sort_by { |v| Gem::Version.new(v) }
       download_includes = {company: [:geography, {sector: :industries}]}
+
+      beta_versions = MQ::Assessment::BETA_METHODOLOGIES.keys
+      latest_non_beta = methodology_versions.reject { |v| beta_versions.include?(v) }.last
 
       mq_assessments_files = {}
       latest_version_assessments = []
@@ -76,11 +80,11 @@ module TPI
 
         preload_mq_assessments_for_status(version_assessments)
 
-        version_suffix = methodology >= 5 ? suffix : ''
+        version_suffix = methodology.to_f >= 5 ? suffix : ''
         mq_assessments_files["MQ_Assessments_v#{methodology}#{version_suffix}_#{timestamp}.csv"] =
           CSVExport::User::MQAssessments.new(version_assessments).call
 
-        latest_version_assessments = version_assessments if methodology == methodology_versions.last
+        latest_version_assessments = version_assessments if methodology == latest_non_beta
       end
 
       latest_mq_assessments_csv = CSVExport::User::LatestMQAssessments.new(latest_version_assessments).call

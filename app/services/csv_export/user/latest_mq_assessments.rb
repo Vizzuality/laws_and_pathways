@@ -71,7 +71,7 @@ module CSVExport
       def get_latest_mq_assessments_hash(assessments)
         latest_methodology = assessments
           .select { |a| a.methodology_version.present? }
-          .max_by(&:methodology_version)&.methodology_version
+          .max_by { |a| Gem::Version.new(a.methodology_version) }&.methodology_version
 
         return {} unless latest_methodology
 

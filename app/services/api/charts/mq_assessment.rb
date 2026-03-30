@@ -52,13 +52,13 @@ module Api
       end
 
       def max_level
-        has_v5_assessment = company_mq_assessments.any? { |a| a.methodology_version >= 5 }
+        has_v5_assessment = company_mq_assessments.any? { |a| a.methodology_version.to_f >= 5 }
         has_v5_assessment ? 5 : 4
       end
 
       def hide_mq_assessments_with_same_publication_date(assessments)
         result = []
-        assessments.group_by(&:publication_date).each { |_date, a| result << a.max_by(&:methodology_version) }
+        assessments.group_by(&:publication_date).each { |_date, a| result << a.max_by { |x| Gem::Version.new(x.methodology_version) } }
         result
       end
     end

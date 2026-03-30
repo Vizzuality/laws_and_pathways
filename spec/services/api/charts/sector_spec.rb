@@ -41,7 +41,7 @@ RSpec.describe Api::Charts::Sector do
       :mq_assessment,
       company: company3,
       assessment_date: '2020-01-01',
-      level: 3,
+      level: '3',
       methodology_version: beta_methodology_version
     )
     # should be ignored
