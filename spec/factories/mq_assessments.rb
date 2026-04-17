@@ -12,7 +12,7 @@
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  discarded_at        :datetime
-#  methodology_version :integer          not null
+#  methodology_version :string           not null
 #
 
 class QuestionFactoryHelper
@@ -34,7 +34,7 @@ FactoryBot.define do
 
     level { '1' }
     notes { 'Some notes' }
-    methodology_version { 1 }
+    methodology_version { '1' }
 
     questions do
       (1..14).map do |nr|

@@ -12,7 +12,7 @@
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  discarded_at        :datetime
-#  methodology_version :integer          not null
+#  methodology_version :string           not null
 #
 
 require 'rails_helper'
@@ -93,8 +93,8 @@ RSpec.describe MQ::Assessment, type: :model do
     end
 
     it 'should be unchanged if methodology version is different' do
-      create(:mq_assessment, company: company, assessment_date: 12.months.ago, level: '3', methodology_version: 1)
-      current = create(:mq_assessment, company: company, assessment_date: 6.months.ago, level: '2', methodology_version: 2)
+      create(:mq_assessment, company: company, assessment_date: 12.months.ago, level: '3', methodology_version: '1')
+      current = create(:mq_assessment, company: company, assessment_date: 6.months.ago, level: '2', methodology_version: '2')
       expect(current.status).to eq('unchanged')
     end
   end

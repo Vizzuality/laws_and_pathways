@@ -1354,7 +1354,7 @@ describe 'CSVDataUpload (integration)' do
 
     expect(assessment.notes).to eq('notes')
     expect(assessment.level).to eq('2')
-    expect(assessment.methodology_version).to eq(1)
+    expect(assessment.methodology_version).to eq('1')
     expect(assessment.assessment_date).to eq(Date.parse('2018-01-25'))
     expect(assessment.questions[0].question).to eq('Question one, level 0?')
     expect(assessment.questions[0].level).to eq('0')

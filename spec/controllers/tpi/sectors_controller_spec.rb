@@ -37,7 +37,7 @@ RSpec.describe TPI::SectorsController, type: :controller do
       mq_assessments: [
         build(:mq_assessment, assessment_date: '2013-05-01', publication_date: '2013-05-01'),
         build(:mq_assessment, assessment_date: '2014-05-01', publication_date: '2014-05-01'),
-        build(:mq_assessment, methodology_version: 5, assessment_date: '2016-05-01', publication_date: '2015-05-01')
+        build(:mq_assessment, methodology_version: '5', assessment_date: '2016-05-01', publication_date: '2015-05-01')
       ],
       sector: sector1,
       market_cap_group: 'large',
