@@ -37,6 +37,7 @@ Rails.application.routes.draw do
         member do
           get :levels_chart_data
           get :emissions_chart_data
+          get :chemicals_alignment_chart_data
           get :user_download
           get :user_download_cp
           get :user_download_mq

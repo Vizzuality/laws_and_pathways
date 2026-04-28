@@ -69,20 +69,40 @@
 
   <% if any_cp_assessment? %>
     <section id="carbon-performance" class="container">
-      <div class="cp-performance-header">
-        <h4>Carbon Performance: <%= @sector.name %></h4>
-        <p class="is-hidden-desktop"><%= "Carbon Performance alignment of companies in the #{@sector.name} sector with the Paris agreement benchmarks." %></p>
-        <div class="show-by-dropdown">
-          Showing:
-          <div id="show-by-dropdown-placeholder"></div>
+      <% if @sector.name == 'Chemicals' %>
+        <div class="cp-performance-header">
+          <h4>Carbon Performance: <%= @sector.name %></h4>
         </div>
-      </div>
 
-      <%= react_component('charts/cp-performance', {
-        dataUrl: emissions_chart_data_tpi_sector_path(@sector.id),
-        sectorName: @sector.name,
-        unit: @sector.latest_cp_unit&.unit
+        <%= react_component('charts/cp-chemicals-bar', {
+          dataUrl: chemicals_alignment_chart_data_tpi_sector_path(@sector.id)
         }) %>
+
+        <div class="notification chemicals-note" style="margin-top: 1.5rem;">
+          <p>
+            <strong>Note:</strong> Companies in the chemicals sector operate across multiple
+            subsectors (i.e. primary, non-primary, agricultural chemicals), with some spanning
+            more than one. As a result, companies cannot be meaningfully represented within a
+            single comparative graph as in other sectors. To explore company-level data and
+            assessments, please refer to the individual company pages.
+          </p>
+        </div>
+      <% else %>
+        <div class="cp-performance-header">
+          <h4>Carbon Performance: <%= @sector.name %></h4>
+          <p class="is-hidden-desktop"><%= "Carbon Performance alignment of companies in the #{@sector.name} sector with the Paris agreement benchmarks." %></p>
+          <div class="show-by-dropdown">
+            Showing:
+            <div id="show-by-dropdown-placeholder"></div>
+          </div>
+        </div>
+
+        <%= react_component('charts/cp-performance', {
+          dataUrl: emissions_chart_data_tpi_sector_path(@sector.id),
+          sectorName: @sector.name,
+          unit: @sector.latest_cp_unit&.unit
+          }) %>
+      <% end %>
     </section>
   <% end %>
 </div>
