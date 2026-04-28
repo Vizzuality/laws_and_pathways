@@ -69,6 +69,16 @@ module TPI
       render json: data.chart_json
     end
 
+    # Data:     Chemicals sector alignment counts by timeframe
+    # Section:  CP
+    # Type:     bar chart
+    # On pages: :show (Chemicals only)
+    def chemicals_alignment_chart_data
+      data = ::Api::Charts::ChemicalsSector.new(@sector).alignment_data
+
+      render json: data.to_json
+    end
+
     # Data:     Sector Companies numbers, grouped by CP Alignement from given Sector
     # Section:  CP
     # Type:     column chart

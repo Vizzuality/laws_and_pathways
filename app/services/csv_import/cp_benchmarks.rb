@@ -10,6 +10,8 @@ module CSVImport
         benchmark.release_date = parse_date(row[:release_date]) if row.header?(:release_date)
         benchmark.scenario = row[:scenario] if row.header?(:scenario)
         benchmark.region = parse_cp_benchmark_region(row[:region]) if row.header?(:region)
+        benchmark.benchmark_label = row[:benchmark_label] if row.header?(:benchmark_label)
+        benchmark.subsector = row[:technology_type] if row.header?(:technology_type) && !row.header?(:subsector)
         benchmark.emissions = parse_emissions(row) if emission_headers?(row)
 
         was_new_record = benchmark.new_record?
@@ -42,9 +44,17 @@ module CSVImport
           sector: find_or_create_tpi_sector(row[:sector], categories: [category_klass.to_s]),
           release_date: parse_date(row[:release_date]),
           scenario: row[:scenario],
-          subsector: row[:subsector],
+          subsector: resolve_subsector(row),
+          benchmark_label: row.header?(:benchmark_label) ? row[:benchmark_label] : nil,
           region: parse_cp_benchmark_region(row[:region])
         )
+    end
+
+    def resolve_subsector(row)
+      return row[:subsector] if row.header?(:subsector)
+      return row[:technology_type] if row.header?(:technology_type)
+
+      nil
     end
 
     def parse_date(date)

@@ -51,7 +51,15 @@ module CSVImport
     private
 
     def subsector?(row)
-      row.header?(:subsector) && !row[:subsector].nil? && !row[:subsector].empty?
+      subsector_value = resolve_subsector_value(row)
+      !subsector_value.nil? && !subsector_value.empty?
+    end
+
+    def resolve_subsector_value(row)
+      return row[:subsector] if row.header?(:subsector) && row[:subsector].present?
+      return row[:technology_type] if row.header?(:technology_type) && row[:technology_type].present?
+
+      nil
     end
 
     def prepare_assessment(row)
@@ -66,7 +74,7 @@ module CSVImport
 
     def prepare_assessment_subsector(row)
       company_id = find_company!(row)&.id
-      subsector = CompanySubsector.where(company_id: company_id, subsector: row[:subsector]).first
+      subsector = CompanySubsector.where(company_id: company_id, subsector: resolve_subsector_value(row)).first
 
       # fallthru in case the subsector passed doesn't exist
       return prepare_assessment(row) unless subsector

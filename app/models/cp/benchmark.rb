@@ -11,7 +11,8 @@
 #  scenario     :string
 #  region       :string           default("Global"), not null
 #  category     :string           not null
-#  subsector    :string
+#  subsector       :string
+#  benchmark_label :string
 #
 
 module CP
@@ -34,11 +35,18 @@ module CP
     scope :companies, -> { where(category: 'Company') }
     scope :banks, -> { where(category: 'Bank') }
 
+    CHEMICALS_SUBSECTOR_LABELS = [
+      'Primary chemicals',
+      'Non-primary chemicals',
+      'Agricultural chemicals'
+    ].freeze
+
     validates_presence_of :release_date, :scenario, :category
     validates :region, inclusion: {in: REGIONS}
 
     def benchmark_id
       [
+        benchmark_label.presence,
         regional? ? region : nil,
         sector.name,
         release_date

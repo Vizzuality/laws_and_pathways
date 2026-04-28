@@ -1,27 +1,27 @@
 module CSVExport
   module User
-    class CPBenchmarks
+    class ChemicalsCPBenchmarks
       def initialize(cp_benchmarks)
-        @cp_benchmarks = cp_benchmarks
+        @cp_benchmarks = cp_benchmarks.select { |b| b.sector&.name == 'Chemicals' }
       end
 
       def call
-        benchmarks = filtered_benchmarks
-        year_columns = benchmarks.flat_map(&:emissions_all_years).uniq.sort
+        return nil if @cp_benchmarks.empty?
+
+        year_columns = @cp_benchmarks.flat_map(&:emissions_all_years).uniq.sort
         headers = [
-          'Benchmark ID', 'Benchmark Label', 'Sector name', 'Sub-sector',
+          'Benchmark ID', 'Benchmark Label', 'Sector name',
           'Scenario name', 'Region', 'Release date', 'Unit'
         ].concat(year_columns)
 
         CSV.generate("\xEF\xBB\xBF") do |csv|
           csv << headers
 
-          benchmarks.each do |benchmark|
+          @cp_benchmarks.each do |benchmark|
             csv << [
               benchmark.benchmark_id,
               benchmark.benchmark_label,
               benchmark.sector&.name,
-              benchmark.subsector,
               benchmark.scenario,
               benchmark.region,
               benchmark.release_date,
@@ -31,16 +31,6 @@ module CSVExport
               end
             ].flatten
           end
-        end
-      end
-
-      private
-
-      def filtered_benchmarks
-        @cp_benchmarks.reject do |b|
-          b.sector&.name == 'Chemicals' &&
-            b.benchmark_label.present? &&
-            !CP::Benchmark::CHEMICALS_SUBSECTOR_LABELS.include?(b.benchmark_label)
         end
       end
     end
