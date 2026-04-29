@@ -6,7 +6,7 @@ module TPI
     before_action :fetch_companies, only: [:show, :index]
     before_action :fetch_sectors, only: [:show, :index, :user_download_all, :user_download_cp_all, :user_download_mq_all]
     before_action :fetch_industries, only: [:show, :index]
-    before_action :fetch_sector, only: [:show, :user_download, :user_download_cp, :user_download_mq]
+    before_action :fetch_sector, only: [:show, :user_download, :user_download_cp, :user_download_mq, :chemicals_alignment_chart_data]
     before_action :redirect_if_numeric_or_historic_slug, only: [:show]
 
     helper_method :any_cp_assessment?
