@@ -49,12 +49,13 @@ module Api
       end
 
       def latest_assessments
+        published_company_ids = @sector.companies.published.pluck(:id)
+        return [] if published_company_ids.empty?
+
         CP::Assessment
           .currently_published
           .companies
-          .joins(:company)
-          .where(companies: {sector_id: @sector.id})
-          .where(cp_assessmentable_type: 'Company', cp_assessmentable_id: Company.published.select(:id))
+          .where(cp_assessmentable_id: published_company_ids)
           .group_by(&:cp_assessmentable_id)
           .map { |_id, group| group.max_by(&:publication_date) }
       end
