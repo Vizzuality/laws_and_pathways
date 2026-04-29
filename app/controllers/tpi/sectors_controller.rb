@@ -86,7 +86,8 @@ module TPI
     # Type:     bar chart
     # On pages: :show (Chemicals only)
     def chemicals_alignment_chart_data
-      data = ::Api::Charts::ChemicalsSector.new(@sector).alignment_data
+      sector = @sector || TPISector.companies.tpi_tool.friendly.find(params[:id])
+      data = ::Api::Charts::ChemicalsSector.new(sector).alignment_data
 
       render json: data.to_json
     end
