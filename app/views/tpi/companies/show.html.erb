@@ -252,7 +252,9 @@
   <% if @company_presenter.cp_assessments.any? %>
     <section id="carbon-performance" class="carbon-performance container">
       <% subsector_assessments = @company.company_subsectors.any? ? @company_presenter.cp_assessments.group_by(&:subsector_name) : {} %>
-      <% active_subsector = @company.company_subsectors.any? ? (params[:subsector_type] || @cp_assessment&.subsector_name || @company.company_subsectors.first.subsector) : nil %>
+      <% has_subsector_data = subsector_assessments.keys.any? { |k| k.present? } %>
+      <% show_subsector_toggle = @company.company_subsectors.any? %>
+      <% active_subsector = has_subsector_data ? (params[:subsector_type] || @cp_assessment&.subsector_name || @company.company_subsectors.first.subsector) : nil %>
 
       <div class="management-quality__header">
         <h4>
@@ -283,7 +285,7 @@
                 data: cp_dropdown_assessments.map do |v|
                   label = v['assessment_date']&.strftime('%d %B %Y')
                   label += " (#{v['assessment_date_flag']})" if v['assessment_date_flag'].present?
-                  label += " (#{v.subsector_name})" if v.subsector_name.present? && !@company.company_subsectors.any?
+                  label += " (#{v.subsector_name})" if v.subsector_name.present? && !has_subsector_data
                   {label: label, value: v['id']}
                 end,
                 selected: params[:cp_assessment_id] || @cp_assessment&.id
@@ -293,8 +295,8 @@
         </div>
       </div>
 
-      <% if @company.company_subsectors.any? %>
-        <div class="buttons has-addons" style="margin-top: 1rem; margin-bottom: 0.5rem;">
+      <% if show_subsector_toggle %>
+        <div id="subsector-toggle" class="buttons has-addons" style="margin-top: 1rem; margin-bottom: 0.5rem;">
           <% @company.company_subsectors.each do |cs| %>
             <% has_data = subsector_assessments[cs.subsector].present? %>
             <% if has_data %>
@@ -303,7 +305,7 @@
                 remote: true,
                 class: "button #{active_subsector == cs.subsector ? 'is-primary' : 'is-secondary'}" %>
             <% else %>
-              <span class="button is-secondary" style="opacity: 0.5; cursor: not-allowed;" title="No data available">
+              <span class="button is-secondary" style="opacity: 0.5; cursor: not-allowed;" title="No data available yet">
                 <%= cs.subsector %>
               </span>
             <% end %>
