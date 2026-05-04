@@ -13,6 +13,10 @@
     companySelector: false,
     sectorUrl: tpi_sector_path(assessment.company.sector.slug)
     }) %>
+<% else %>
+  <div class="notification" style="text-align: center; padding: 2rem; color: #6b7280; font-style: italic;">
+    No emissions data available for this assessment.
+  </div>
 <% end %>
 
 <% unless assessment.assumptions.blank? %>
