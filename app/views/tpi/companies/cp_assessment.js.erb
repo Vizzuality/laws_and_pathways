@@ -12,13 +12,15 @@
   }
   window.history.replaceState({}, '', newUrl.href);
 
-  // Update subsector toggle button states
-  var buttons = document.querySelectorAll('.buttons.has-addons .button, .buttons.has-addons span.button');
-  buttons.forEach(function(btn) {
-    var btnText = btn.textContent.trim();
-    btn.classList.remove('is-primary', 'is-secondary');
-    btn.classList.add(btnText === subsectorName ? 'is-primary' : 'is-secondary');
-  });
+  var toggle = document.getElementById('subsector-toggle');
+  if (toggle) {
+    var buttons = toggle.querySelectorAll('.button, span.button');
+    buttons.forEach(function(btn) {
+      var btnText = btn.textContent.trim();
+      btn.classList.remove('is-primary', 'is-secondary');
+      btn.classList.add(btnText === subsectorName ? 'is-primary' : 'is-secondary');
+    });
+  }
 
   ReactRailsUJS.mountComponents('#cp-assessment');
 })();
