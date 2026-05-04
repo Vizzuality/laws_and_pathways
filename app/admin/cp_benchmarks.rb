@@ -3,11 +3,13 @@ ActiveAdmin.register CP::Benchmark do
 
   menu parent: 'TPI', priority: 5, label: 'Carbon Performance Benchmarks'
 
-  permit_params :scenario, :category, :sector_id, :release_date, :region, :emissions
+  permit_params :scenario, :category, :sector_id, :release_date, :region, :emissions, :benchmark_label, :subsector
 
   filter :release_date
   filter :sector
   filter :region, as: :select, collection: proc { CP::Benchmark::REGIONS }
+  filter :benchmark_label
+  filter :subsector
 
   scope('Banks') { |scope| scope.where(category: 'Bank') }
   scope('Companies') { |scope| scope.where(category: 'Company') }
@@ -43,6 +45,8 @@ ActiveAdmin.register CP::Benchmark do
       row :category
       row :sector
       row :subsector
+      row :benchmark_label
+      row('Benchmark ID') { |b| b.benchmark_id }
       row :scenario
       row :region
       row :created_at
@@ -62,6 +66,8 @@ ActiveAdmin.register CP::Benchmark do
     column :id
     column(:sector) { |b| b.sector.name }
     column :subsector
+    column :benchmark_label
+    column('Benchmark ID') { |b| b.benchmark_id }
     column(:release_date) { |b| b.release_date.to_s(:year_month) }
     column :scenario
     column :region
@@ -79,6 +85,7 @@ ActiveAdmin.register CP::Benchmark do
     column :region
     column :sector
     column :subsector
+    column :benchmark_label
     column :release_date
     actions
   end
