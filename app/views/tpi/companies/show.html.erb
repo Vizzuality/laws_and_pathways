@@ -80,11 +80,17 @@
             </p>
 
             <% assessments_for_banner = @company_presenter.graph_cp_assessments %>
-            <% if @company.company_subsectors.any? && assessments_for_banner.any? { |a| a.company_subsector.present? } %>
-              <% assessments_by_subsector = assessments_for_banner.index_by { |a| a.company_subsector_id } %>
+            <% if @company.company_subsectors.any? %>
+              <% has_subsector_assessments = assessments_for_banner.any? { |a| a.company_subsector.present? } %>
+              <% if has_subsector_assessments %>
+                <% assessments_by_subsector = assessments_for_banner.index_by { |a| a.company_subsector_id } %>
+              <% else %>
+                <% assessments_by_subsector = {} %>
+              <% end %>
+              <% global_fallback_assessment = has_subsector_assessments ? nil : assessments_for_banner.first %>
               <% @company.company_subsectors.each do |cs| %>
                 <h4 class="subsector"><%= cs.subsector %></h4>
-                <% assessment = assessments_by_subsector[cs.id] %>
+                <% assessment = assessments_by_subsector[cs.id] || (cs.subsector == 'Global' ? global_fallback_assessment : nil) %>
                 <% has_alignment = assessment&.cp_alignment_2027.present? || assessment&.cp_alignment_2028.present? || assessment&.cp_alignment_2030.present? || assessment&.cp_alignment_2035.present? || assessment&.cp_alignment_2050.present? %>
                 <% if !has_alignment %>
                   <p style="font-size: 0.85rem; color: #999; font-style: italic; margin: 0.5rem 0;">No alignment data available</p>
@@ -136,7 +142,7 @@
                   <div class="cp-alignments">
                     <% if assessment.cp_regional_alignment_2030.present? %>
                       <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2030', alignment: assessment.cp_regional_alignment_2030_by_company %>
-                    <% elsif @company_presenter.cp_regional_alignment_2028.present? %>
+                    <% elsif assessment.cp_regional_alignment_2028.present? %>
                       <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2028', alignment: assessment.cp_regional_alignment_2028_by_company %>
                     <% else %>
                       <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2027', alignment: assessment.cp_regional_alignment_2027_by_company %>
