@@ -174,6 +174,9 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }
 
   const options = isMobile ? getMobileOptions({ chartData, unit }) : getOptions({ chartData, unit });
 
+  const filteredCompanyData = filterBySubsector(companyData, selectedSubsector, sectorName);
+  const noSubsectorData = selectedSubsector && hasSubsectorToggle(sectorName) && filteredCompanyData.length === 0;
+
   return (
     <div className="chart chart--cp-performance">
       {renderSubsectorDropdown(sectorName)}
@@ -193,6 +196,10 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }
         <React.Fragment>
           {error ? (
             <p>{error}</p>
+          ) : noSubsectorData ? (
+            <p style={{textAlign: 'center', padding: '2rem', color: '#6b7280', fontStyle: 'italic'}}>
+              No data available for {selectedSubsector.label}. Data for this subsector has not been uploaded yet.
+            </p>
           ) : (
             <HighchartsReact
               highcharts={Highcharts}
