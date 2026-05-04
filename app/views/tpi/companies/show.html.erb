@@ -85,31 +85,36 @@
               <% @company.company_subsectors.each do |cs| %>
                 <h4 class="subsector"><%= cs.subsector %></h4>
                 <% assessment = assessments_by_subsector[cs.id] %>
-                <% long_term_header = "Long-term<br/> alignment in #{@company.sector.name.downcase == 'electricity utilities' ? '2040-50' : '2050'}" %>
-                <% unless regional_view %>
-                  <div class="cp-alignments">
-                    <% if assessment&.cp_alignment_2030.present? %>
-                      <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2030', alignment: assessment.cp_alignment_2030_by_company %>
-                    <% elsif assessment&.cp_alignment_2028.present? %>
-                      <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2028', alignment: assessment.cp_alignment_2028_by_company %>
-                    <% elsif assessment&.cp_alignment_2027.present? %>
-                      <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2027', alignment: assessment.cp_alignment_2027_by_company %>
-                    <% end %>
-                    <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: assessment&.cp_alignment_2035_by_company %>
-                    <%= render 'cp_alignment', header: long_term_header, alignment: assessment&.cp_alignment_2050_by_company %>
-                  </div>
+                <% has_alignment = assessment&.cp_alignment_2027.present? || assessment&.cp_alignment_2028.present? || assessment&.cp_alignment_2030.present? || assessment&.cp_alignment_2035.present? || assessment&.cp_alignment_2050.present? %>
+                <% if !has_alignment %>
+                  <p style="font-size: 0.85rem; color: #999; font-style: italic; margin: 0.5rem 0;">No alignment data available</p>
                 <% else %>
-                  <div class="cp-alignments">
-                    <% if assessment&.cp_regional_alignment_2030.present? %>
-                      <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2030', alignment: assessment.cp_regional_alignment_2030_by_company %>
-                    <% elsif assessment&.cp_regional_alignment_2028.present? %>
-                      <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2028', alignment: assessment.cp_regional_alignment_2028_by_company %>
-                    <% elsif assessment&.cp_regional_alignment_2027.present? %>
-                      <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2027', alignment: assessment.cp_regional_alignment_2027_by_company %>
-                    <% end %>
-                    <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: assessment&.cp_regional_alignment_2035_by_company %>
-                    <%= render 'cp_alignment', header: long_term_header, alignment: assessment&.cp_regional_alignment_2050_by_company %>
-                  </div>
+                  <% long_term_header = "Long-term<br/> alignment in #{@company.sector.name.downcase == 'electricity utilities' ? '2040-50' : '2050'}" %>
+                  <% unless regional_view %>
+                    <div class="cp-alignments">
+                      <% if assessment&.cp_alignment_2030.present? %>
+                        <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2030', alignment: assessment.cp_alignment_2030_by_company %>
+                      <% elsif assessment&.cp_alignment_2028.present? %>
+                        <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2028', alignment: assessment.cp_alignment_2028_by_company %>
+                      <% elsif assessment&.cp_alignment_2027.present? %>
+                        <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2027', alignment: assessment.cp_alignment_2027_by_company %>
+                      <% end %>
+                      <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: assessment&.cp_alignment_2035_by_company %>
+                      <%= render 'cp_alignment', header: long_term_header, alignment: assessment&.cp_alignment_2050_by_company %>
+                    </div>
+                  <% else %>
+                    <div class="cp-alignments">
+                      <% if assessment&.cp_regional_alignment_2030.present? %>
+                        <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2030', alignment: assessment.cp_regional_alignment_2030_by_company %>
+                      <% elsif assessment&.cp_regional_alignment_2028.present? %>
+                        <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2028', alignment: assessment.cp_regional_alignment_2028_by_company %>
+                      <% elsif assessment&.cp_regional_alignment_2027.present? %>
+                        <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2027', alignment: assessment.cp_regional_alignment_2027_by_company %>
+                      <% end %>
+                      <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: assessment&.cp_regional_alignment_2035_by_company %>
+                      <%= render 'cp_alignment', header: long_term_header, alignment: assessment&.cp_regional_alignment_2050_by_company %>
+                    </div>
+                  <% end %>
                 <% end %>
               <% end %>
             <% else %>
