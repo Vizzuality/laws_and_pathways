@@ -2,8 +2,23 @@
   document.getElementById('cp-assessment').innerHTML = "<%= j render('cp_assessment', assessment: @cp_assessment) %>";
   const newUrl = new URL(window.location.href);
   const view = '<%= params[:view] %>';
+  const subsectorName = '<%= @cp_assessment&.subsector_name %>';
   newUrl.searchParams.set('cp_assessment_id', <%= @cp_assessment.id %>);
   if (view.length > 0) newUrl.searchParams.set('view', view);
+  if (subsectorName.length > 0) {
+    newUrl.searchParams.set('subsector_type', subsectorName);
+  } else {
+    newUrl.searchParams.delete('subsector_type');
+  }
   window.history.replaceState({}, '', newUrl.href);
+
+  // Update subsector toggle button states
+  var buttons = document.querySelectorAll('.buttons.has-addons .button, .buttons.has-addons span.button');
+  buttons.forEach(function(btn) {
+    var btnText = btn.textContent.trim();
+    btn.classList.remove('is-primary', 'is-secondary');
+    btn.classList.add(btnText === subsectorName ? 'is-primary' : 'is-secondary');
+  });
+
   ReactRailsUJS.mountComponents('#cp-assessment');
 })();

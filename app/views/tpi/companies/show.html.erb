@@ -258,15 +258,26 @@
         <p class="is-hidden-desktop"><%= "Carbon Performance alignment of companies in the #{@company.name} sector with the Paris agreement benchmarks." %></p>
 
         <% if @company.company_subsectors.any? %>
-          <% active_subsector = params[:subsector_type] || @cp_assessment&.company_subsector&.subsector || @company.company_subsectors.first.subsector %>
+          <% subsector_assessments = @company_presenter.cp_assessments.group_by(&:subsector_name) %>
+          <% active_subsector = params[:subsector_type] || @cp_assessment&.subsector_name || @company.company_subsectors.first.subsector %>
           <div class="buttons has-addons" style="margin-bottom: 0.5rem;">
             <% @company.company_subsectors.each do |cs| %>
-              <%= link_to cs.subsector, {subsector_type: cs.subsector}, class: "button #{active_subsector == cs.subsector ? 'is-primary' : 'is-secondary'}" %>
+              <% has_data = subsector_assessments[cs.subsector].present? %>
+              <% if has_data %>
+                <% first_assessment_id = subsector_assessments[cs.subsector].first.id %>
+                <%= link_to cs.subsector, cp_assessment_tpi_company_path(@company, cp_assessment_id: first_assessment_id),
+                  remote: true,
+                  class: "button #{active_subsector == cs.subsector ? 'is-primary' : 'is-secondary'}" %>
+              <% else %>
+                <span class="button is-secondary" style="opacity: 0.5; cursor: not-allowed;" title="No data available">
+                  <%= cs.subsector %>
+                </span>
+              <% end %>
             <% end %>
           </div>
-          <% if @cp_assessment&.company_subsector.present? %>
+          <% if @cp_assessment&.subsector_name.present? %>
             <p style="font-size: 0.9rem; margin-bottom: 1rem;">
-              The graph shows the company's pathway and the relevant benchmarks for <%= @cp_assessment.company_subsector.subsector.downcase %>.
+              The graph shows the company's pathway and the relevant benchmarks for <%= @cp_assessment.subsector_name.downcase %>.
             </p>
           <% end %>
         <% end %>
@@ -277,7 +288,7 @@
               Assessment Date:
             </div>
 
-            <% active_subsector_type = params[:subsector_type] %>
+            <% active_subsector_type = active_subsector if @company.company_subsectors.any? %>
             <% cp_dropdown_assessments = @company_presenter.cp_assessments.select do |v|
               if active_subsector_type.present?
                 v.subsector_name == active_subsector_type
@@ -285,6 +296,7 @@
                 true
               end
             end %>
+            <% cp_dropdown_assessments = @company_presenter.cp_assessments if cp_dropdown_assessments.empty? %>
             <div class="date-dropdown">
               <%= react_component('RemoteDropdown', {
                 name: 'cp_assessment_id',
@@ -294,7 +306,7 @@
                 data: cp_dropdown_assessments.map do |v|
                   label = v['assessment_date']&.strftime('%d %B %Y')
                   label += " (#{v['assessment_date_flag']})" if v['assessment_date_flag'].present?
-                  label += " (#{v.subsector_name})" if v.subsector_name.present? && active_subsector_type.blank?
+                  label += " (#{v.subsector_name})" if v.subsector_name.present? && !@company.company_subsectors.any?
                   {label: label, value: v['id']}
                 end,
                 selected: params[:cp_assessment_id] || @cp_assessment&.id
