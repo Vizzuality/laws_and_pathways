@@ -299,13 +299,15 @@
         <div id="subsector-toggle" class="buttons has-addons" style="margin-top: 1rem; margin-bottom: 0.5rem;">
           <% @company.company_subsectors.each do |cs| %>
             <% has_data = subsector_assessments[cs.subsector].present? %>
-            <% if has_data %>
-              <% first_assessment_id = subsector_assessments[cs.subsector].first.id %>
-              <%= link_to cs.subsector, cp_assessment_tpi_company_path(@company, cp_assessment_id: first_assessment_id),
+            <% is_global_default = cs.subsector == 'Global' && !has_subsector_data %>
+            <% if has_data || is_global_default %>
+              <% assessment_id = has_data ? subsector_assessments[cs.subsector].first.id : @cp_assessment&.id %>
+              <% is_active = has_subsector_data ? (active_subsector == cs.subsector) : is_global_default %>
+              <%= link_to cs.subsector, cp_assessment_tpi_company_path(@company, cp_assessment_id: assessment_id),
                 remote: true,
-                class: "button #{active_subsector == cs.subsector ? 'is-primary' : 'is-secondary'}" %>
+                class: "button #{is_active ? 'is-primary' : 'is-secondary'}" %>
             <% else %>
-              <span class="button is-secondary" style="opacity: 0.5; cursor: not-allowed;" title="No data available yet">
+              <span class="button" style="background-color: #e8e8e8; color: #999; border-color: #ddd; cursor: not-allowed;" title="No data available for this subsector">
                 <%= cs.subsector %>
               </span>
             <% end %>
