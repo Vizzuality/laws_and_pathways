@@ -43,7 +43,7 @@ export default class extends Controller {
     let youtubeId = '';
     const match = url.replace(/(>|<)/gi, '').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
     if (match[2] !== undefined) {
-      youtubeId = match[2].split(/[^0-9a-z_]/i);
+      youtubeId = match[2].split(/[^0-9a-z_-]/i);
       youtubeId = youtubeId[0];
     } else {
       youtubeId = url;
