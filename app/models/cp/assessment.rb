@@ -161,6 +161,8 @@ module CP
         subsector&.name
       elsif company_subsector_id.present?
         company_subsector&.subsector
+      elsif cp_assessmentable_type == 'Company' && sector&.name == 'Steel'
+        'Global'
       end
     end
 
@@ -195,11 +197,18 @@ module CP
     end
 
     def benchmarks
-      sector.latest_benchmarks_for_date(publication_date, category: cp_assessmentable_type)
+      result = sector.latest_benchmarks_for_date(
+        publication_date,
+        category: cp_assessmentable_type,
+        subsector: subsector_name
+      )
+      return result if result.present?
+
+      sector.latest_benchmarks_for_date(publication_date, category: cp_assessmentable_type, subsector: nil)
     end
 
     def regional_benchmarks
-      sector.latest_benchmarks_for_date(publication_date, category: cp_assessmentable_type, region: region)
+      sector.latest_benchmarks_for_date(publication_date, category: cp_assessmentable_type, region: region, subsector: subsector_name)
     end
   end
 end

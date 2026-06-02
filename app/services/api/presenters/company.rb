@@ -36,6 +36,10 @@ module Api
         assessments.order(assessment_date: :desc)
       end
 
+      def cp_assessments_count
+        cp_assessments.select(:assessment_date).distinct.count
+      end
+
       def mq_assessments
         query = @company.mq_assessments.currently_published.order(publication_date: :desc, methodology_version: :desc, assessment_date: :desc)
         query = query.without_beta_methodologies unless @company.show_beta_mq_assessments
