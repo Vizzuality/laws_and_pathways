@@ -63,7 +63,11 @@ class TPISector < ApplicationRecord
   def latest_released_benchmarks(category:, region: nil, subsector: nil)
     region ||= 'Global'
     scope = cp_benchmarks.where(category: category.to_s, region: region)
-    scope = scope.where(subsector: subsector) unless subsector.nil?
+    scope = if subsector.nil?
+              scope.where(subsector: nil)
+            else
+              scope.where('LOWER(subsector) = LOWER(?)', subsector)
+            end
     last = scope.group_by(&:release_date).max
     last ? last.last : []
   end
@@ -89,7 +93,12 @@ class TPISector < ApplicationRecord
     region ||= 'Global'
     return latest_released_benchmarks(category: category, region: region, subsector: subsector) unless date
 
-    benchmarks = cp_benchmarks.where(category: category.to_s, region: region, subsector: subsector)
+    benchmarks = cp_benchmarks.where(category: category.to_s, region: region)
+    benchmarks = if subsector.nil?
+                   benchmarks.where(subsector: nil)
+                 else
+                   benchmarks.where('LOWER(subsector) = LOWER(?)', subsector)
+                 end
     sector_benchmarks_dates = benchmarks.pluck(:release_date).uniq.sort
 
     last_release_date_before_given_date =

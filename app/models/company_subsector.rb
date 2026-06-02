@@ -16,4 +16,12 @@ class CompanySubsector < ApplicationRecord
                                  }, class_name: 'CP::Assessment'
   has_one :latest_cp_assessment_regional, -> { currently_published.regional.order(assessment_date: :desc) },
           class_name: 'CP::Assessment'
+
+  before_validation :normalize_subsector
+
+  private
+
+  def normalize_subsector
+    self.subsector = subsector&.strip
+  end
 end

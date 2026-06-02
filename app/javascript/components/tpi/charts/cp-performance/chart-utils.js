@@ -32,7 +32,7 @@ export const useParsedChartData = (data, companySelector, selectedCompanies, sel
     const benchmarks = data.filter(d => {
       const typeMatch = d.type === 'area';
       if (selectedSubsector) {
-        return typeMatch && d.subsector === selectedSubsector.value;
+        return typeMatch && d.subsector?.toLowerCase() === selectedSubsector.value.toLowerCase();
       }
 
       return typeMatch;
