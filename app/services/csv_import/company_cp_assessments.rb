@@ -56,10 +56,12 @@ module CSVImport
     end
 
     def resolve_subsector_value(row)
-      return row[:subsector] if row.header?(:subsector) && row[:subsector].present?
-      return row[:technology_type] if row.header?(:technology_type) && row[:technology_type].present?
-
-      nil
+      value = if row.header?(:subsector) && row[:subsector].present?
+                row[:subsector]
+              elsif row.header?(:technology_type) && row[:technology_type].present?
+                row[:technology_type]
+              end
+      value&.strip&.presence
     end
 
     def prepare_assessment(row)
@@ -73,10 +75,19 @@ module CSVImport
     end
 
     def prepare_assessment_subsector(row)
-      company_id = find_company!(row)&.id
-      subsector = CompanySubsector.where(company_id: company_id, subsector: resolve_subsector_value(row)).first
+      company = find_company!(row)
+      company_id = company&.id
+      subsector_value = resolve_subsector_value(row)
 
-      # fallthru in case the subsector passed doesn't exist
+      subsector = CompanySubsector
+        .where(company_id: company_id)
+        .where('LOWER(subsector) = LOWER(?)', subsector_value)
+        .first
+
+      if subsector.nil? && company&.sector&.name == 'Chemicals' && subsector_value.present?
+        subsector = CompanySubsector.find_or_create_by!(company_id: company_id, subsector: subsector_value)
+      end
+
       return prepare_assessment(row) unless subsector
 
       find_record_by(:id, row) ||

@@ -305,11 +305,17 @@
       </div>
 
       <% if show_subsector_toggle %>
+        <% steel_pre_split = @company.sector&.name == 'Steel' && @cp_assessment&.assessment_date&.year.to_i < 2025 %>
         <div id="subsector-toggle" class="buttons has-addons" style="margin-top: 1rem; margin-bottom: 0.5rem;">
           <% @company.company_subsectors.each do |cs| %>
             <% has_data = subsector_assessments[cs.subsector].present? %>
             <% is_global_default = cs.subsector == 'Global' && !has_subsector_data %>
-            <% if has_data || is_global_default %>
+            <% is_pre_split_non_global = steel_pre_split && cs.subsector != 'Global' %>
+            <% if is_pre_split_non_global %>
+              <span class="button disabled" style="background-color: #e8e8e8; color: #999; border-color: #ddd; cursor: not-allowed;" title="No data available for this subsector for pre-2025 assessments">
+                <%= cs.subsector %>
+              </span>
+            <% elsif has_data || is_global_default %>
               <% assessment_id = has_data ? subsector_assessments[cs.subsector].first.id : @cp_assessment&.id %>
               <% is_active = has_subsector_data ? (active_subsector == cs.subsector) : is_global_default %>
               <%= link_to cs.subsector, cp_assessment_tpi_company_path(@company, cp_assessment_id: assessment_id),

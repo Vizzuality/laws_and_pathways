@@ -11,7 +11,7 @@ module CSVImport
         benchmark.scenario = row[:scenario] if row.header?(:scenario)
         benchmark.region = parse_cp_benchmark_region(row[:region]) if row.header?(:region)
         benchmark.benchmark_label = row[:benchmark_label] if row.header?(:benchmark_label)
-        benchmark.subsector = row[:technology_type] if row.header?(:technology_type) && !row.header?(:subsector)
+        benchmark.subsector = row[:technology_type]&.strip if row.header?(:technology_type) && !row.header?(:subsector)
         benchmark.emissions = parse_emissions(row) if emission_headers?(row)
 
         was_new_record = benchmark.new_record?
@@ -51,10 +51,12 @@ module CSVImport
     end
 
     def resolve_subsector(row)
-      return row[:subsector] if row.header?(:subsector)
-      return row[:technology_type] if row.header?(:technology_type)
-
-      nil
+      value = if row.header?(:subsector)
+                row[:subsector]
+              elsif row.header?(:technology_type)
+                row[:technology_type]
+              end
+      value&.strip&.presence
     end
 
     def parse_date(date)

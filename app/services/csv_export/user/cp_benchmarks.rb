@@ -36,11 +36,13 @@ module CSVExport
 
       private
 
+      CHEMICALS_SUBSECTOR_LABELS_DOWNCASED = CP::Benchmark::CHEMICALS_SUBSECTOR_LABELS.map(&:downcase).freeze
+
       def filtered_benchmarks
         @cp_benchmarks.reject do |b|
           b.sector&.name == 'Chemicals' &&
-            b.benchmark_label.present? &&
-            !CP::Benchmark::CHEMICALS_SUBSECTOR_LABELS.include?(b.benchmark_label)
+            b.subsector.present? &&
+            !CHEMICALS_SUBSECTOR_LABELS_DOWNCASED.include?(b.subsector.downcase)
         end
       end
     end

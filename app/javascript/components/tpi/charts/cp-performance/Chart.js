@@ -20,7 +20,7 @@ import Legend from './Legend';
 function filterBySubsector(companyData, selectedSubsector, sectorName) {
   if (!selectedSubsector || !hasSubsectorToggle(sectorName)) return companyData;
 
-  return companyData.filter(d => d.company.subsector === selectedSubsector.value);
+  return companyData.filter(d => d.company.subsector?.toLowerCase() === selectedSubsector.value.toLowerCase());
 }
 function filterByShowValue(companyData, showByValue, selectedSubsector, sectorName) {
   const bySubsector = filterBySubsector(companyData, selectedSubsector, sectorName);

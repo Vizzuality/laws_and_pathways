@@ -153,7 +153,9 @@ module CP
     end
 
     def company_subsector
-      CompanySubsector.find(company_subsector_id) if company_subsector_id.present?
+      return @company_subsector if defined?(@company_subsector)
+
+      @company_subsector = company_subsector_id.present? ? CompanySubsector.find(company_subsector_id) : nil
     end
 
     def subsector_name
@@ -203,6 +205,13 @@ module CP
         subsector: subsector_name
       )
       return result if result.present?
+
+      if subsector_name.present?
+        Rails.logger.warn(
+          "[CP::Assessment#benchmarks] No benchmarks for subsector='#{subsector_name}' " \
+          "sector='#{sector.name}' date=#{publication_date}, falling back to nil subsector"
+        )
+      end
 
       sector.latest_benchmarks_for_date(publication_date, category: cp_assessmentable_type, subsector: nil)
     end
