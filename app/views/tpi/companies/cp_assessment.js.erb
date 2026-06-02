@@ -6,4 +6,35 @@
   if (view.length > 0) newUrl.searchParams.set('view', view);
   window.history.replaceState({}, '', newUrl.href);
   ReactRailsUJS.mountComponents('#cp-assessment');
+
+  var assessmentYear = <%= @cp_assessment.assessment_date&.year || 0 %>;
+  var toggle = document.getElementById('subsector-toggle');
+  if (toggle && assessmentYear < 2025) {
+    var buttons = toggle.querySelectorAll('.button, span.button');
+    buttons.forEach(function(btn) {
+      var btnText = btn.textContent.trim();
+      if (btnText !== 'Global') {
+        btn.classList.add('disabled');
+        btn.style.backgroundColor = '#e8e8e8';
+        btn.style.color = '#999';
+        btn.style.cursor = 'not-allowed';
+        btn.onclick = function() { return false; };
+      } else {
+        btn.classList.remove('disabled');
+        btn.style.backgroundColor = '';
+        btn.style.color = '';
+        btn.style.cursor = '';
+        btn.onclick = null;
+      }
+    });
+  } else if (toggle) {
+    var buttons = toggle.querySelectorAll('.button, span.button');
+    buttons.forEach(function(btn) {
+      btn.classList.remove('disabled');
+      btn.style.backgroundColor = '';
+      btn.style.color = '';
+      btn.style.cursor = '';
+      btn.onclick = null;
+    });
+  }
 })();

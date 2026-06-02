@@ -7,6 +7,7 @@ module TPI
       mq_assessments_by_methodology = mq_assessments.group_by(&:methodology_version)
       cp_benchmarks = CP::Benchmark
         .companies
+        .exportable_for_sector_download
         .joins(:sector)
         .order('tpi_sectors.name ASC, release_date DESC')
         .includes(sector: [:cp_units])
@@ -37,6 +38,7 @@ module TPI
       timestamp = Time.now.strftime('%d%m%Y')
       cp_benchmarks = CP::Benchmark
         .companies
+        .exportable_for_sector_download
         .joins(:sector)
         .order('tpi_sectors.name ASC, release_date DESC')
         .includes(sector: [:cp_units])

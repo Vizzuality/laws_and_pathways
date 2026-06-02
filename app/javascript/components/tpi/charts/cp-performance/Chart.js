@@ -18,7 +18,7 @@ import NestedDropdown from 'components/tpi/NestedDropdown';
 import Legend from './Legend';
 
 function filterBySubsector(companyData, selectedSubsector, sectorName) {
-  if (!selectedSubsector || !isCoalMining(sectorName)) return companyData;
+  if (!selectedSubsector || !hasSubsectorToggle(sectorName)) return companyData;
 
   return companyData.filter(d => d.company.subsector === selectedSubsector.value);
 }
@@ -68,21 +68,24 @@ function getDropdownOptions(geographies, regions, marketCapGroups) {
   ];
 }
 
-function coalMiningSubsectors() {
-  return [
-    {
-      label: 'Thermal Coal',
-      value: 'Thermal Coal'
-    },
-    {
-      label: 'Metallurgical Coal',
-      value: 'Metallurgical Coal'
-    }
-  ];
+const SECTOR_SUBSECTORS = {
+  'Coal Mining': [
+    { label: 'Thermal Coal', value: 'Thermal Coal' },
+    { label: 'Metallurgical Coal', value: 'Metallurgical Coal' }
+  ],
+  'Steel': [
+    { label: 'Global', value: 'Global' },
+    { label: 'Primary Steel', value: 'Primary Steel' },
+    { label: 'Secondary Steel', value: 'Secondary Steel' }
+  ]
+};
+
+function hasSubsectorToggle(sectorName) {
+  return sectorName in SECTOR_SUBSECTORS;
 }
 
-function isCoalMining(sectorName) {
-  return sectorName === 'Coal Mining';
+function getSectorSubsectors(sectorName) {
+  return SECTOR_SUBSECTORS[sectorName] || [];
 }
 
 function getDefaultOption(dropdownOptions) {
@@ -90,8 +93,8 @@ function getDefaultOption(dropdownOptions) {
 }
 
 function getDefaultSubsector(sectorName) {
-  if (isCoalMining(sectorName)) {
-    return coalMiningSubsectors()[0];
+  if (hasSubsectorToggle(sectorName)) {
+    return getSectorSubsectors(sectorName)[0];
   }
 
   return null;
@@ -143,13 +146,13 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }
     const element = document.querySelector('#show-by-dropdown-placeholder');
 
     if (!element) return null;
-    if (!isCoalMining(sector)) return null;
+    if (!hasSubsectorToggle(sector)) return null;
 
     return ReactDOM.createPortal(
       <NestedDropdown
         title="By subsector"
-        subTitle={selectedSubsector.label}
-        items={coalMiningSubsectors()}
+        subTitle={selectedSubsector?.label}
+        items={getSectorSubsectors(sector)}
         onSelect={setSelectedSubsector}
       />,
       element

@@ -76,13 +76,16 @@
           <div class="summary-box summary-box--assessment">
             <h4>Carbon Performance</h4>
             <p>
-              <small>Number of assessments: <%= @company_presenter.cp_assessments.size %></small>
+              <small>Number of assessments: <%= @company_presenter.cp_assessments_count %></small>
             </p>
 
             <% @company_presenter.graph_cp_assessments.each do |assessment| %>
               <% subsector = assessment.company_subsector %>
               <% if subsector.present? %>
-                <h4 class="subsector"><%= subsector.subsector %></h4>
+                <% subsector_class = subsector.subsector == 'Global' ? 'subsector--global' : 'subsector--specific' %>
+                <div class="subsector-banner <%= subsector_class %>">
+                  <h4 class="subsector"><%= subsector.subsector %></h4>
+                </div>
               <% end %>
               <% long_term_header = "Long-term<br/> alignment in #{@company.sector.name.downcase == 'electricity utilities' ? '2040-50' : '2050'}" %>
               <% unless regional_view %>
@@ -246,6 +249,29 @@
           </div>
         </div>
       </div>
+
+      <% if @company.company_subsectors.any? %>
+        <% steel_split_year = 2025 %>
+        <% has_split_data = @company_presenter.cp_assessments.any? { |a|
+             a.assessment_date&.year.to_i >= steel_split_year &&
+             a.company_subsector_id.present? &&
+             a.company_subsector&.subsector != 'Global'
+           } %>
+        <div id="subsector-toggle" class="buttons has-addons" style="margin-bottom: 1rem;">
+          <% @company.company_subsectors.each do |cs| %>
+            <% first_assessment = @company_presenter.cp_assessments.detect { |a| a.subsector_name == cs.subsector } %>
+            <% next unless first_assessment %>
+            <% is_active = @cp_assessment&.subsector_name == cs.subsector %>
+            <% is_disabled = @company.sector.name == 'Steel' && cs.subsector != 'Global' && !has_split_data %>
+            <%= link_to cs.subsector,
+                  cp_assessment_tpi_company_path(@company, cp_assessment_id: first_assessment.id, view: params[:view]),
+                  remote: true,
+                  class: "button #{is_active ? 'is-primary' : 'is-secondary'} #{is_disabled ? 'disabled' : ''}",
+                  style: is_disabled ? 'background-color: #e8e8e8; color: #999; cursor: not-allowed;' : '',
+                  onclick: (is_disabled ? 'return false;' : nil) %>
+          <% end %>
+        </div>
+      <% end %>
 
       <div id="cp-assessment">
         <%= render partial: 'cp_assessment', locals: { assessment: @cp_assessment } %>

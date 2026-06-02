@@ -65,10 +65,14 @@ module CSVImport
     end
 
     def prepare_assessment_subsector(row)
-      company_id = find_company!(row)&.id
-      subsector = CompanySubsector.where(company_id: company_id, subsector: row[:subsector]).first
+      company = find_company!(row)
+      company_id = company&.id
+      subsector = if company&.sector&.name == 'Chemicals'
+                    CompanySubsector.find_or_create_by(company_id: company_id, subsector: row[:subsector])
+                  else
+                    CompanySubsector.where(company_id: company_id, subsector: row[:subsector]).first
+                  end
 
-      # fallthru in case the subsector passed doesn't exist
       return prepare_assessment(row) unless subsector
 
       find_record_by(:id, row) ||

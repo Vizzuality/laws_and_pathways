@@ -12,6 +12,8 @@ module CSVImport
         benchmark.region = parse_cp_benchmark_region(row[:region]) if row.header?(:region)
         benchmark.emissions = parse_emissions(row) if emission_headers?(row)
 
+        validate_chemicals_subsector(row)
+
         was_new_record = benchmark.new_record?
         any_changes = benchmark.changed?
 
@@ -45,6 +47,21 @@ module CSVImport
           subsector: row[:subsector],
           region: parse_cp_benchmark_region(row[:region])
         )
+    end
+
+    def validate_chemicals_subsector(row)
+      return unless row[:sector] == 'Chemicals'
+      return if row[:subsector].blank?
+
+      normalized = row[:subsector].strip.downcase
+
+      unless CP::Benchmark::CHEMICALS_STANDARD_SUBSECTORS.include?(normalized)
+        Rails.logger.warn(
+          "Chemicals benchmark with non-standard subsector: '#{row[:subsector]}'. " \
+          "Expected one of: #{CP::Benchmark::CHEMICALS_STANDARD_SUBSECTORS.join(', ')}. " \
+          "This may be a company-specific benchmark or a typo."
+        )
+      end
     end
 
     def parse_date(date)

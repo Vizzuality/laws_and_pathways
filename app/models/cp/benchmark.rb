@@ -27,6 +27,12 @@ module CP
       non-OECD
     ].freeze
 
+    CHEMICALS_STANDARD_SUBSECTORS = [
+      'primary chemicals',
+      'non-primary chemicals',
+      'agricultural chemicals'
+    ].freeze
+
     belongs_to :sector, class_name: 'TPISector', foreign_key: 'sector_id'
 
     scope :latest_first, -> { order(release_date: :desc) }
@@ -34,13 +40,27 @@ module CP
     scope :companies, -> { where(category: 'Company') }
     scope :banks, -> { where(category: 'Bank') }
 
+    scope :exportable_for_sector_download, -> {
+      chemicals_id = Rails.cache.fetch('chemicals_sector_id', expires_in: 1.hour) do
+        TPISector.find_by(name: 'Chemicals')&.id
+      end
+
+      return all unless chemicals_id
+
+      where.not(sector_id: chemicals_id)
+        .or(
+          where(sector_id: chemicals_id)
+            .where('LOWER(subsector) IN (?) OR subsector IS NULL', CHEMICALS_STANDARD_SUBSECTORS)
+        )
+    }
+
     validates_presence_of :release_date, :scenario, :category
     validates :region, inclusion: {in: REGIONS}
 
     def benchmark_id
       [
         regional? ? region : nil,
-        sector.name,
+        subsector.presence || sector.name,
         release_date
       ].compact.join('_')
     end
