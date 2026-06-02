@@ -90,16 +90,21 @@ class Company < ApplicationRecord
   def latest_cp_assessments_by_subsector
     return if company_subsectors.empty?
 
-    ordered_cp_assessments = cp_assessments.currently_published.order(assessment_date: :desc)
+    ordered_cp_assessments = cp_assessments.currently_published
+      .order(publication_date: :desc, assessment_date: :desc)
     return if ordered_cp_assessments.empty?
-
-    # means the latest assessment is not for subsectors but for general
-    return if ordered_cp_assessments.first.company_subsector_id.blank?
 
     by_publication = ordered_cp_assessments.group_by(&:publication_date)
     latest_publication_date = by_publication.keys.max
+    latest_assessments = by_publication[latest_publication_date]
 
-    by_publication[latest_publication_date].filter { |assessment| assessment.company_subsector_id.present? }
+    has_subsector_data = latest_assessments.any? { |a| a.company_subsector_id.present? }
+
+    if has_subsector_data
+      latest_assessments.select { |a| a.company_subsector_id.present? }
+    else
+      latest_assessments
+    end
   end
 
   def latest_regional_cp_assessments_by_subsector

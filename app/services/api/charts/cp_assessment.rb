@@ -123,8 +123,12 @@ module Api
       end
 
       def emissions_data_from_sector
+        return nil if sector.name == 'Chemicals'
+
         name = if @category == 'Bank'
                  'Sector mean'
+               elsif assessment.subsector_name.present?
+                 "#{assessment.subsector_name} sector mean"
                elsif regional_view?
                  "#{region} #{sector.name} sector mean"
                else
@@ -228,10 +232,15 @@ module Api
             cp_assessmentable_id: Company.published.select(:id)
           )
 
-        if @category == 'Bank' && assessment.subsector_name.present?
+        if assessment.subsector_name.present?
           scope = scope
-            .joins('INNER JOIN company_subsectors ON company_subsectors.id = cp_assessments.company_subsector_id')
-            .where('LOWER(company_subsectors.subsector) = ?', assessment.subsector_name.downcase)
+            .joins('LEFT JOIN company_subsectors ON company_subsectors.id = cp_assessments.company_subsector_id')
+            .where(
+              '(LOWER(company_subsectors.subsector) = ?) OR (cp_assessments.company_subsector_id IS NULL AND ? = ?)',
+              assessment.subsector_name.downcase,
+              assessment.subsector_name,
+              'Global'
+            )
         end
 
         scope
