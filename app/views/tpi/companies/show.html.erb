@@ -80,7 +80,8 @@
             </p>
 
             <% assessments_for_banner = @company_presenter.graph_cp_assessments %>
-            <% if @company.company_subsectors.any? %>
+            <% use_subsector_banner = @company.company_subsectors.any? && @company.sector.name != 'Chemicals' %>
+            <% if use_subsector_banner %>
               <% has_subsector_assessments = assessments_for_banner.any? { |a| a.company_subsector.present? } %>
               <% if has_subsector_assessments %>
                 <% assessments_by_subsector = assessments_for_banner.index_by { |a| a.company_subsector_id } %>
@@ -262,7 +263,7 @@
     <section id="carbon-performance" class="carbon-performance container">
       <% subsector_assessments = @company.company_subsectors.any? ? @company_presenter.cp_assessments.group_by(&:subsector_name) : {} %>
       <% has_subsector_data = subsector_assessments.keys.any? { |k| k.present? } %>
-      <% show_subsector_toggle = @company.company_subsectors.any? %>
+      <% show_subsector_toggle = @company.company_subsectors.any? && @company.sector.name != 'Chemicals' %>
       <% active_subsector = has_subsector_data ? (params[:subsector_type] || @cp_assessment&.subsector_name || @company.company_subsectors.first.subsector) : nil %>
 
       <div class="management-quality__header">

@@ -112,6 +112,39 @@ class TPISector < ApplicationRecord
     benchmarks.where(release_date: release_date).order(:created_at)
   end
 
+  def latest_benchmarks_for_match_key(date, category:, match_key:, region: nil)
+    region ||= 'Global'
+    return cp_benchmarks.none if match_key.blank?
+
+    benchmarks = latest_benchmarks_for_date(date, category: category, region: region, subsector: match_key)
+    return benchmarks if benchmarks.present?
+
+    latest_benchmarks_by_label_for_date(date, category: category, region: region, label: match_key)
+  end
+
+  def latest_benchmarks_by_label_for_date(date, category:, region:, label:)
+    benchmarks = cp_benchmarks.where(category: category.to_s, region: region)
+      .where('LOWER(benchmark_label) = LOWER(?)', label)
+
+    unless date
+      last = benchmarks.group_by(&:release_date).max
+      return last ? last.last : cp_benchmarks.none
+    end
+
+    sector_benchmarks_dates = benchmarks.pluck(:release_date).uniq.sort
+    last_release_date_before_given_date =
+      sector_benchmarks_dates
+        .select { |d| d <= date }
+        .last
+
+    release_date =
+      last_release_date_before_given_date || sector_benchmarks_dates.first
+
+    return cp_benchmarks.none unless release_date
+
+    benchmarks.where(release_date: release_date).order(:created_at)
+  end
+
   def path
     return Rails.application.routes.url_helpers.tpi_banks_path if slug == 'banks'
 
