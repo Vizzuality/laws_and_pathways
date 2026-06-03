@@ -21,6 +21,12 @@ module Api
       def graph_cp_assessments
         return graph_cp_assessments_by_region if regional_view?
 
+        if @company.sector.name == 'Chemicals'
+          return [] unless @company.latest_cp_assessment.present?
+
+          return [@company.latest_cp_assessment]
+        end
+
         unless subsector_latest_cp_assessments?
           return [] unless @company.latest_cp_assessment.present?
 

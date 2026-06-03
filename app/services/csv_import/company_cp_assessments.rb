@@ -56,12 +56,16 @@ module CSVImport
     end
 
     def resolve_subsector_value(row)
-      value = if row.header?(:subsector) && row[:subsector].present?
-                row[:subsector]
-              elsif row.header?(:technology_type) && row[:technology_type].present?
-                row[:technology_type]
-              end
-      value&.strip&.presence
+      if row.header?(:subsector) && row[:subsector].present?
+        return row[:subsector].strip
+      end
+      if row.header?(:benchmark_label) && row[:benchmark_label].present?
+        return row[:benchmark_label].strip
+      end
+      if row.header?(:technology_type) && row[:technology_type].present?
+        return row[:technology_type].strip
+      end
+      nil
     end
 
     def prepare_assessment(row)

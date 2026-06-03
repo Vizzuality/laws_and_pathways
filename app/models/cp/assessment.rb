@@ -199,6 +199,14 @@ module CP
     end
 
     def benchmarks
+      if sector.name == 'Chemicals'
+        return sector.latest_benchmarks_for_match_key(
+          publication_date,
+          category: cp_assessmentable_type,
+          match_key: subsector_name
+        )
+      end
+
       result = sector.latest_benchmarks_for_date(
         publication_date,
         category: cp_assessmentable_type,
@@ -217,6 +225,15 @@ module CP
     end
 
     def regional_benchmarks
+      if sector.name == 'Chemicals'
+        return sector.latest_benchmarks_for_match_key(
+          publication_date,
+          category: cp_assessmentable_type,
+          match_key: subsector_name,
+          region: region
+        )
+      end
+
       sector.latest_benchmarks_for_date(publication_date, category: cp_assessmentable_type, region: region, subsector: subsector_name)
     end
   end

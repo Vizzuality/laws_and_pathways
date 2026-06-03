@@ -104,4 +104,53 @@ RSpec.describe CP::Assessment, type: :model do
       end
     end
   end
+
+  describe '#cp_benchmark_id' do
+    let(:chemicals_sector) { create(:tpi_sector, name: 'Chemicals', categories: %w[Company]) }
+    let(:company_a) { create(:company, sector: chemicals_sector) }
+    let(:company_b) { create(:company, sector: chemicals_sector) }
+    let(:subsector_a) { CompanySubsector.create!(company: company_a, subsector: 'BASF') }
+    let(:subsector_b) { CompanySubsector.create!(company: company_b, subsector: 'Company A') }
+    let(:release_date) { Date.new(2026, 5, 10) }
+    let!(:benchmark_a) do
+      create(:cp_benchmark,
+             sector: chemicals_sector,
+             category: 'Company',
+             scenario: '1.5 Degrees',
+             subsector: 'BASF',
+             benchmark_label: 'BASF',
+             release_date: release_date)
+    end
+    let!(:benchmark_b) do
+      create(:cp_benchmark,
+             sector: chemicals_sector,
+             category: 'Company',
+             scenario: '1.5 Degrees',
+             subsector: 'Company A',
+             benchmark_label: 'Company A',
+             release_date: release_date)
+    end
+    let(:assessment_a) do
+      create(:cp_assessment,
+             sector: chemicals_sector,
+             cp_assessmentable: company_a,
+             company_subsector_id: subsector_a.id,
+             publication_date: release_date,
+             assessment_date: release_date)
+    end
+    let(:assessment_b) do
+      create(:cp_assessment,
+             sector: chemicals_sector,
+             cp_assessmentable: company_b,
+             company_subsector_id: subsector_b.id,
+             publication_date: release_date,
+             assessment_date: release_date)
+    end
+
+    it 'returns per-company benchmark id for Chemicals assessments' do
+      expect(assessment_a.cp_benchmark_id).to eq(benchmark_a.benchmark_id)
+      expect(assessment_b.cp_benchmark_id).to eq(benchmark_b.benchmark_id)
+      expect(assessment_a.cp_benchmark_id).not_to eq(assessment_b.cp_benchmark_id)
+    end
+  end
 end

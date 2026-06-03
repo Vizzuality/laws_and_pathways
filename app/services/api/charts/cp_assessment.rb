@@ -71,7 +71,7 @@ module Api
                  assessment&.emissions&.transform_keys(&:to_i)
                end
         {
-          name: assessment.cp_assessmentable.name,
+          name: company_series_name,
           data: data,
           zoneAxis: 'x',
           zones: [{
@@ -158,22 +158,35 @@ module Api
 
       def sector_benchmarks_for_chart
         selected_region = regional_view? ? assessment.region : nil
-        initial = sector
-          .latest_benchmarks_for_date(
+        match_key = assessment.subsector_name
+
+        if sector.name == 'Chemicals'
+          return sector.latest_benchmarks_for_match_key(
             assessment.publication_date,
             category: @category,
-            region: selected_region,
-            subsector: assessment.subsector_name
+            match_key: match_key,
+            region: selected_region
           )
+        end
+
+        initial = sector.latest_benchmarks_for_date(
+          assessment.publication_date,
+          category: @category,
+          region: selected_region,
+          subsector: match_key
+        )
         return initial if initial.present?
 
-        sector
-          .latest_benchmarks_for_date(
-            assessment.publication_date,
-            category: @category,
-            region: selected_region,
-            subsector: nil
-          )
+        sector.latest_benchmarks_for_date(
+          assessment.publication_date,
+          category: @category,
+          region: selected_region,
+          subsector: nil
+        )
+      end
+
+      def company_series_name
+        sector.name == 'Chemicals' ? 'Company' : assessment.cp_assessmentable.name
       end
 
       # Returns average emissions history for given TPISector.

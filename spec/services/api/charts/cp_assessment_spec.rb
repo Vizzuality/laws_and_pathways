@@ -257,4 +257,76 @@ RSpec.describe Api::Charts::CPAssessment do
       end
     end
   end
+
+  describe 'Chemicals sector' do
+    let(:chemicals_sector) { create(:tpi_sector, name: 'Chemicals', categories: %w[Company]) }
+    let(:company) { create(:company, :published, sector: chemicals_sector, name: 'BASF SE') }
+    let(:company_subsector) { create(:company_subsector, company: company, subsector: 'BASF') }
+    let!(:assessment) do
+      create(:cp_assessment,
+             sector: chemicals_sector,
+             cp_assessmentable: company,
+             company_subsector: company_subsector,
+             publication_date: 3.months.ago,
+             assessment_date: 3.months.ago,
+             last_reported_year: 2018,
+             emissions: {'2017' => 100.0, '2018' => 90.0})
+    end
+
+    before do
+      create(:cp_benchmark,
+             sector: chemicals_sector,
+             category: 'Company',
+             scenario: '1.5 Degrees',
+             subsector: 'BASF',
+             release_date: 6.months.ago,
+             emissions: {'2017' => 80.0, '2018' => 70.0})
+      create(:cp_benchmark,
+             sector: chemicals_sector,
+             category: 'Company',
+             scenario: 'Below 2 Degrees',
+             subsector: 'BASF',
+             release_date: 6.months.ago,
+             emissions: {'2017' => 85.0, '2018' => 75.0})
+      create(:cp_benchmark,
+             sector: chemicals_sector,
+             category: 'Company',
+             scenario: 'National Pledges',
+             subsector: 'BASF',
+             release_date: 6.months.ago,
+             emissions: {'2017' => 90.0, '2018' => 80.0})
+      create(:cp_benchmark,
+             sector: chemicals_sector,
+             category: 'Company',
+             scenario: '1.5 Degrees',
+             subsector: 'Other Co',
+             release_date: 6.months.ago,
+             emissions: {'2017' => 50.0, '2018' => 40.0})
+    end
+
+    subject { described_class.new(assessment, 'global') }
+
+    it 'uses generic company series name and excludes sector mean' do
+      expect(subject.emissions_data.find { |s| s[:name] == 'Company' }).to be_present
+      expect(subject.emissions_data.find { |s| s[:name] == company.name }).to be_nil
+      expect(subject.emissions_data.any? { |s| s[:name]&.include?('sector mean') }).to be false
+    end
+
+    it 'returns only benchmarks matching the company match key' do
+      scenario_names = subject.emissions_data.select { |s| s[:type] == 'area' }.map { |s| s[:name] }
+      expect(scenario_names).to contain_exactly('1.5 Degrees', 'Below 2 Degrees', 'National Pledges')
+    end
+
+    context 'when match key is missing' do
+      let(:company_subsector) { nil }
+
+      before do
+        assessment.update!(company_subsector_id: nil)
+      end
+
+      it 'returns no benchmark areas' do
+        expect(subject.emissions_data.select { |s| s[:type] == 'area' }).to be_empty
+      end
+    end
+  end
 end

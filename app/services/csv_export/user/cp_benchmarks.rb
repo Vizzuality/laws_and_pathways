@@ -39,11 +39,19 @@ module CSVExport
       CHEMICALS_SUBSECTOR_LABELS_DOWNCASED = CP::Benchmark::CHEMICALS_SUBSECTOR_LABELS.map(&:downcase).freeze
 
       def filtered_benchmarks
-        @cp_benchmarks.reject do |b|
-          b.sector&.name == 'Chemicals' &&
-            b.subsector.present? &&
-            !CHEMICALS_SUBSECTOR_LABELS_DOWNCASED.include?(b.subsector.downcase)
+        @cp_benchmarks.select { |b| include_in_sector_benchmarks_export?(b) }
+      end
+
+      def include_in_sector_benchmarks_export?(benchmark)
+        return true unless benchmark.sector&.name == 'Chemicals'
+
+        chemicals_subsector_keys(benchmark).any? do |key|
+          CHEMICALS_SUBSECTOR_LABELS_DOWNCASED.include?(key)
         end
+      end
+
+      def chemicals_subsector_keys(benchmark)
+        [benchmark.subsector, benchmark.benchmark_label].compact.map { |v| v.strip.downcase }.uniq
       end
     end
   end
