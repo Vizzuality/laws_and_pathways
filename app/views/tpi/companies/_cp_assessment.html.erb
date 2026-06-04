@@ -7,11 +7,18 @@
 <% end %>
 
 <% if assessment.emissions.any?  %>
+  <% if assessment.company.sector.name == 'Chemicals' %>
+    <div class="carbon-performance__metric-label">
+      Emissions intensity (tCO2e/US$1,000 (2019))
+    </div>
+  <% end %>
+
   <%= react_component('charts/cp-performance', {
     dataUrl: emissions_chart_data_tpi_company_path(assessment.company, cp_assessment_id: assessment.id, view: params[:view]),
     unit: assessment.unit,
     companySelector: false,
-    sectorUrl: tpi_sector_path(assessment.company.sector.slug)
+    sectorUrl: tpi_sector_path(assessment.company.sector.slug),
+    sectorName: assessment.company.sector.name
     }) %>
 <% else %>
   <div class="notification" style="text-align: center; padding: 2rem; color: #6b7280; font-style: italic;">

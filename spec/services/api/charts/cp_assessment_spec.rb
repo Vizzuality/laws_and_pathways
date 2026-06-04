@@ -329,4 +329,40 @@ RSpec.describe Api::Charts::CPAssessment do
       end
     end
   end
+
+  describe 'decimal formatting' do
+    let(:sector) { create(:tpi_sector, name: 'Test Sector', categories: %w[Company]) }
+    let(:company) { create(:company, :published, sector: sector) }
+    let!(:benchmark) do
+      create(:cp_benchmark,
+             sector: sector,
+             category: 'Company',
+             scenario: '1.5 Degrees',
+             release_date: 6.months.ago,
+             emissions: {'2020' => 123.456789, '2021' => 456.789012})
+    end
+    let(:assessment) do
+      create(:cp_assessment,
+             sector: sector,
+             cp_assessmentable: company,
+             publication_date: 3.months.ago,
+             assessment_date: 3.months.ago,
+             last_reported_year: 2021,
+             emissions: {'2020' => 100.123456, '2021' => 200.987654})
+    end
+
+    subject { described_class.new(assessment, 'global') }
+
+    it 'formats benchmark emissions to 2 decimal places' do
+      benchmark_data = subject.emissions_data.find { |s| s[:type] == 'area' }[:data]
+      expect(benchmark_data[2020]).to eq(123.46)
+      expect(benchmark_data[2021]).to eq(456.79)
+    end
+
+    it 'formats company emissions to 2 decimal places' do
+      company_data = subject.emissions_data.find { |s| s[:name] == company.name }[:data]
+      expect(company_data[2020]).to eq(100.12)
+      expect(company_data[2021]).to eq(200.99)
+    end
+  end
 end
