@@ -194,7 +194,7 @@ module Api
       end
 
       def company_series_name
-        sector.name == 'Chemicals' ? 'Company' : assessment.cp_assessmentable.name
+        assessment.cp_assessmentable.name
       end
 
       # Returns average emissions history for given TPISector.
