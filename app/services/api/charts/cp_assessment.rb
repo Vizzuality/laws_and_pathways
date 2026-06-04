@@ -66,9 +66,9 @@ module Api
       # ]
       def emissions_data_from_assessment
         data = if assessment&.emissions&.size == 1
-                 data_with_marker_settings
+                 format_emissions_data_with_marker_settings(assessment&.emissions)
                else
-                 assessment&.emissions&.transform_keys(&:to_i)
+                 format_emissions_data(assessment&.emissions || {})
                end
         {
           name: company_series_name,
@@ -80,18 +80,6 @@ module Api
             dashStyle: 'dot'
           }]
         }
-      end
-
-      def data_with_marker_settings
-        [{
-          y: assessment&.emissions&.first&.second,
-          x: assessment&.emissions&.first&.first&.to_i,
-          marker: {
-            symbol: 'circle',
-            enabled: true,
-            radius: 3
-          }
-        }]
       end
 
       def years_with_targets
@@ -151,9 +139,29 @@ module Api
               name: benchmark.scenario,
               sector: sector.name,
               subsector: benchmark.subsector,
-              data: benchmark.emissions.transform_keys(&:to_i)
+              data: format_emissions_data(benchmark.emissions)
             }
           end.reverse
+      end
+
+      def format_emissions_data(emissions_hash)
+        emissions_hash.transform_keys(&:to_i).transform_values do |value|
+          value.present? ? value.round(2) : nil
+        end
+      end
+
+      def format_emissions_data_with_marker_settings(emissions_hash)
+        value = emissions_hash.first&.second
+
+        [{
+          y: value.present? ? value.round(2) : nil,
+          x: emissions_hash.first&.first&.to_i,
+          marker: {
+            symbol: 'circle',
+            enabled: true,
+            radius: 3
+          }
+        }]
       end
 
       def sector_benchmarks_for_chart
