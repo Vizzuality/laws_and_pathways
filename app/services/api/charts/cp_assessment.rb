@@ -66,12 +66,12 @@ module Api
       # ]
       def emissions_data_from_assessment
         data = if assessment&.emissions&.size == 1
-                 data_with_marker_settings
+                 format_emissions_data_with_marker_settings(assessment&.emissions)
                else
-                 assessment&.emissions&.transform_keys(&:to_i)
+                 format_emissions_data(assessment&.emissions || {})
                end
         {
-          name: assessment.cp_assessmentable.name,
+          name: company_series_name,
           data: data,
           zoneAxis: 'x',
           zones: [{
@@ -80,18 +80,6 @@ module Api
             dashStyle: 'dot'
           }]
         }
-      end
-
-      def data_with_marker_settings
-        [{
-          y: assessment&.emissions&.first&.second,
-          x: assessment&.emissions&.first&.first&.to_i,
-          marker: {
-            symbol: 'circle',
-            enabled: true,
-            radius: 3
-          }
-        }]
       end
 
       def years_with_targets
@@ -123,8 +111,12 @@ module Api
       end
 
       def emissions_data_from_sector
+        return nil if sector.name == 'Chemicals'
+
         name = if @category == 'Bank'
                  'Sector mean'
+               elsif assessment.subsector_name.present?
+                 "#{assessment.subsector_name} sector mean"
                elsif regional_view?
                  "#{region} #{sector.name} sector mean"
                else
@@ -147,29 +139,62 @@ module Api
               name: benchmark.scenario,
               sector: sector.name,
               subsector: benchmark.subsector,
-              data: benchmark.emissions.transform_keys(&:to_i)
+              data: format_emissions_data(benchmark.emissions)
             }
           end.reverse
       end
 
+      def format_emissions_data(emissions_hash)
+        emissions_hash.transform_keys(&:to_i).transform_values do |value|
+          value.present? ? value.round(2) : nil
+        end
+      end
+
+      def format_emissions_data_with_marker_settings(emissions_hash)
+        value = emissions_hash.first&.second
+
+        [{
+          y: value.present? ? value.round(2) : nil,
+          x: emissions_hash.first&.first&.to_i,
+          marker: {
+            symbol: 'circle',
+            enabled: true,
+            radius: 3
+          }
+        }]
+      end
+
       def sector_benchmarks_for_chart
         selected_region = regional_view? ? assessment.region : nil
-        initial = sector
-          .latest_benchmarks_for_date(
+        match_key = assessment.subsector_name
+
+        if sector.name == 'Chemicals'
+          return sector.latest_benchmarks_for_match_key(
             assessment.publication_date,
             category: @category,
-            region: selected_region,
-            subsector: assessment.subsector_name
+            match_key: match_key,
+            region: selected_region
           )
+        end
+
+        initial = sector.latest_benchmarks_for_date(
+          assessment.publication_date,
+          category: @category,
+          region: selected_region,
+          subsector: match_key
+        )
         return initial if initial.present?
 
-        sector
-          .latest_benchmarks_for_date(
-            assessment.publication_date,
-            category: @category,
-            region: selected_region,
-            subsector: nil
-          )
+        sector.latest_benchmarks_for_date(
+          assessment.publication_date,
+          category: @category,
+          region: selected_region,
+          subsector: nil
+        )
+      end
+
+      def company_series_name
+        assessment.cp_assessmentable.name
       end
 
       # Returns average emissions history for given TPISector.
@@ -228,10 +253,15 @@ module Api
             cp_assessmentable_id: Company.published.select(:id)
           )
 
-        if @category == 'Bank' && assessment.subsector_name.present?
+        if assessment.subsector_name.present?
           scope = scope
-            .joins('INNER JOIN company_subsectors ON company_subsectors.id = cp_assessments.company_subsector_id')
-            .where('LOWER(company_subsectors.subsector) = ?', assessment.subsector_name.downcase)
+            .joins('LEFT JOIN company_subsectors ON company_subsectors.id = cp_assessments.company_subsector_id')
+            .where(
+              '(LOWER(company_subsectors.subsector) = ?) OR (cp_assessments.company_subsector_id IS NULL AND ? = ?)',
+              assessment.subsector_name.downcase,
+              assessment.subsector_name,
+              'Global'
+            )
         end
 
         scope

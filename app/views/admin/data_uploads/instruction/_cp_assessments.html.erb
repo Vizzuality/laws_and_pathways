@@ -1,3 +1,9 @@
+<h3>Chemicals downloads</h3>
+
+<div class="well">
+  CP assessment exports include a Benchmark ID per row derived from that company's Subsector or Benchmark Label match key. Use the same string on the matching company-specific benchmark upload row so each company gets a distinct Benchmark ID (not a shared sector default).
+</div>
+
 <h3>Partial updates limitations</h3>
 
 <div class="well">
@@ -203,6 +209,34 @@
         No or unsuitable disclosure
       </td>
       <td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Subsector
+      </td>
+      <td>
+        Match key for company-specific benchmarks (Chemicals sector). Must match the same string on benchmark upload rows. Also used for Coal and Steel subsector assessments.
+      </td>
+      <td>
+        Primary chemicals
+      </td>
+      <td>
+        Optional; preferred for Chemicals when pairing assessments with benchmarks
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Benchmark Label
+      </td>
+      <td>
+        Alternative match key for Chemicals when Subsector is not provided. Stored on the company subsector record and used to filter benchmarks.
+      </td>
+      <td>
+        BASF
+      </td>
+      <td>
+        Optional; must match Benchmark Label on benchmark rows if Subsector is omitted
       </td>
     </tr>
     <tr>

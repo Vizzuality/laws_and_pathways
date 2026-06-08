@@ -24,12 +24,15 @@ module TPI
       sector_benchmarks_csv = CSVExport::User::CPBenchmarks.new(cp_benchmarks).call
       user_guide = File.binread(Rails.root.join('public', 'tpi', 'export_support', 'User guide TPI files.xlsx'))
 
+      chemicals_benchmarks_csv = CSVExport::User::ChemicalsCPBenchmarks.new(cp_benchmarks).call
+
       files = (mq_assessments_files || {}).merge(
         "CP_Assessments_#{timestamp}.csv" => cp_assessments_csv,
         "CP_Assessments_Regional_#{timestamp}.csv" => cp_assessments_regional_csv,
         "Sector_Benchmarks_#{timestamp}.csv" => sector_benchmarks_csv,
         'User guide TPI files.xlsx' => user_guide
       )
+      files["Chemicals_Benchmarks_#{timestamp}.csv"] = chemicals_benchmarks_csv if chemicals_benchmarks_csv
       render zip: files.compact, filename: "#{filename} - #{timestamp}"
     end
 
@@ -47,6 +50,8 @@ module TPI
       sector_benchmarks_csv = CSVExport::User::CPBenchmarks.new(cp_benchmarks).call
       user_guide = File.binread(Rails.root.join('public', 'tpi', 'export_support', 'User guide - TPI Carbon Performance.xlsx'))
 
+      chemicals_benchmarks_csv = CSVExport::User::ChemicalsCPBenchmarks.new(cp_benchmarks).call
+
       files = {
         'Latest_CP_Assessments.csv' => latest_cp_assessments_csv,
         "CP_Assessments_#{timestamp}.csv" => cp_assessments_csv,
@@ -54,7 +59,7 @@ module TPI
         "Sector_Benchmarks_#{timestamp}.csv" => sector_benchmarks_csv,
         'User guide - TPI Carbon Performance.xlsx' => user_guide
       }
-
+      files["Chemicals_Benchmarks_#{timestamp}.csv"] = chemicals_benchmarks_csv if chemicals_benchmarks_csv
       render zip: files.compact, filename: "#{filename} - #{timestamp}"
     end
 

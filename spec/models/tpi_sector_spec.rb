@@ -84,4 +84,30 @@ RSpec.describe TPISector, type: :model do
       expect(sector.latest_benchmarks_for_date(nil, category: Company.to_s)).to eq([second_benchmark])
     end
   end
+
+  describe '#latest_benchmarks_for_match_key' do
+    let(:sector) { create(:tpi_sector) }
+    let!(:subsector_benchmark) do
+      create(:cp_benchmark,
+             sector: sector,
+             category: Company.to_s,
+             scenario: 'scenario',
+             subsector: 'BASF',
+             release_date: 6.months.ago)
+    end
+
+    it 'falls back to benchmark_label when subsector is not set on benchmarks' do
+      subsector_benchmark.destroy
+      label_benchmark = create(:cp_benchmark,
+                               sector: sector,
+                               category: Company.to_s,
+                               scenario: 'label scenario',
+                               benchmark_label: 'BASF',
+                               subsector: nil,
+                               release_date: 6.months.ago)
+
+      result = sector.latest_benchmarks_for_match_key(3.months.ago, category: Company.to_s, match_key: 'BASF')
+      expect(result).to contain_exactly(label_benchmark)
+    end
+  end
 end

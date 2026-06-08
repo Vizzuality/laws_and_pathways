@@ -153,7 +153,9 @@ module CP
     end
 
     def company_subsector
-      CompanySubsector.find(company_subsector_id) if company_subsector_id.present?
+      return @company_subsector if defined?(@company_subsector)
+
+      @company_subsector = company_subsector_id.present? ? CompanySubsector.find(company_subsector_id) : nil
     end
 
     def subsector_name
@@ -161,6 +163,8 @@ module CP
         subsector&.name
       elsif company_subsector_id.present?
         company_subsector&.subsector
+      elsif cp_assessmentable_type == 'Company' && sector&.name == 'Steel'
+        'Global'
       end
     end
 
@@ -195,11 +199,42 @@ module CP
     end
 
     def benchmarks
-      sector.latest_benchmarks_for_date(publication_date, category: cp_assessmentable_type)
+      if sector.name == 'Chemicals'
+        return sector.latest_benchmarks_for_match_key(
+          publication_date,
+          category: cp_assessmentable_type,
+          match_key: subsector_name
+        )
+      end
+
+      result = sector.latest_benchmarks_for_date(
+        publication_date,
+        category: cp_assessmentable_type,
+        subsector: subsector_name
+      )
+      return result if result.present?
+
+      if subsector_name.present?
+        Rails.logger.warn(
+          "[CP::Assessment#benchmarks] No benchmarks for subsector='#{subsector_name}' " \
+          "sector='#{sector.name}' date=#{publication_date}, falling back to nil subsector"
+        )
+      end
+
+      sector.latest_benchmarks_for_date(publication_date, category: cp_assessmentable_type, subsector: nil)
     end
 
     def regional_benchmarks
-      sector.latest_benchmarks_for_date(publication_date, category: cp_assessmentable_type, region: region)
+      if sector.name == 'Chemicals'
+        return sector.latest_benchmarks_for_match_key(
+          publication_date,
+          category: cp_assessmentable_type,
+          match_key: subsector_name,
+          region: region
+        )
+      end
+
+      sector.latest_benchmarks_for_date(publication_date, category: cp_assessmentable_type, region: region, subsector: subsector_name)
     end
   end
 end

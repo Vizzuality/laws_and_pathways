@@ -76,41 +76,86 @@
           <div class="summary-box summary-box--assessment">
             <h4>Carbon Performance</h4>
             <p>
-              <small>Number of assessments: <%= @company_presenter.cp_assessments.size %></small>
+              <small>Number of assessments: <%= @company_presenter.cp_assessments_count %></small>
             </p>
 
-            <% @company_presenter.graph_cp_assessments.each do |assessment| %>
-              <% subsector = assessment.company_subsector %>
-              <% if subsector.present? %>
-                <h4 class="subsector"><%= subsector.subsector %></h4>
-              <% end %>
-              <% long_term_header = "Long-term<br/> alignment in #{@company.sector.name.downcase == 'electricity utilities' ? '2040-50' : '2050'}" %>
-              <% unless regional_view %>
-                <div class="cp-alignments">
-                  <% if assessment.cp_alignment_2030.present? %>
-                    <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2030', alignment: assessment.cp_alignment_2030_by_company %>
-                  <% elsif assessment.cp_alignment_2028.present? %>
-                    <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2028', alignment: assessment.cp_alignment_2028_by_company %>
-                  <% else %>
-                    <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2027', alignment: assessment.cp_alignment_2027_by_company %>
-                  <% end %>
-                  <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: assessment.cp_alignment_2035_by_company %>
-                  <%= render 'cp_alignment', header: long_term_header, alignment: assessment.cp_alignment_2050_by_company %>
-                </div>
+            <% assessments_for_banner = @company_presenter.graph_cp_assessments %>
+            <% use_subsector_banner = @company.company_subsectors.any? && @company.sector.name != 'Chemicals' %>
+            <% if use_subsector_banner %>
+              <% has_subsector_assessments = assessments_for_banner.any? { |a| a.company_subsector.present? } %>
+              <% if has_subsector_assessments %>
+                <% assessments_by_subsector = assessments_for_banner.index_by { |a| a.company_subsector_id } %>
               <% else %>
-                <div class="cp-alignments">
-                  <% if assessment.cp_regional_alignment_2030.present? %>
-                    <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2030', alignment: assessment.cp_regional_alignment_2030_by_company %>
-                  <% elsif @company_presenter.cp_regional_alignment_2028.present? %>
-                    <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2028', alignment: assessment.cp_regional_alignment_2028_by_company %>
+                <% assessments_by_subsector = {} %>
+              <% end %>
+              <% global_fallback_assessment = has_subsector_assessments ? nil : assessments_for_banner.first %>
+              <% @company.company_subsectors.each do |cs| %>
+                <% subsector_class = cs.subsector == 'Global' ? 'subsector--global' : 'subsector--specific' %>
+                <div class="subsector-banner <%= subsector_class %>">
+                <h4 class="subsector"><%= cs.subsector %></h4>
+                <% assessment = assessments_by_subsector[cs.id] || (cs.subsector == 'Global' ? global_fallback_assessment : nil) %>
+                <% has_alignment = assessment&.cp_alignment_2027.present? || assessment&.cp_alignment_2028.present? || assessment&.cp_alignment_2030.present? || assessment&.cp_alignment_2035.present? || assessment&.cp_alignment_2050.present? %>
+                <% if !has_alignment %>
+                  <p style="font-size: 0.85rem; color: #999; font-style: italic; margin: 0.5rem 0;">No alignment data available</p>
+                <% else %>
+                  <% long_term_header = "Long-term<br/> alignment in #{@company.sector.name.downcase == 'electricity utilities' ? '2040-50' : '2050'}" %>
+                  <% unless regional_view %>
+                    <div class="cp-alignments">
+                      <% if assessment&.cp_alignment_2030.present? %>
+                        <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2030', alignment: assessment.cp_alignment_2030_by_company %>
+                      <% elsif assessment&.cp_alignment_2028.present? %>
+                        <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2028', alignment: assessment.cp_alignment_2028_by_company %>
+                      <% elsif assessment&.cp_alignment_2027.present? %>
+                        <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2027', alignment: assessment.cp_alignment_2027_by_company %>
+                      <% end %>
+                      <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: assessment&.cp_alignment_2035_by_company %>
+                      <%= render 'cp_alignment', header: long_term_header, alignment: assessment&.cp_alignment_2050_by_company %>
+                    </div>
                   <% else %>
-                    <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2027', alignment: assessment.cp_regional_alignment_2027_by_company %>
+                    <div class="cp-alignments">
+                      <% if assessment&.cp_regional_alignment_2030.present? %>
+                        <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2030', alignment: assessment.cp_regional_alignment_2030_by_company %>
+                      <% elsif assessment&.cp_regional_alignment_2028.present? %>
+                        <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2028', alignment: assessment.cp_regional_alignment_2028_by_company %>
+                      <% elsif assessment&.cp_regional_alignment_2027.present? %>
+                        <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2027', alignment: assessment.cp_regional_alignment_2027_by_company %>
+                      <% end %>
+                      <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: assessment&.cp_regional_alignment_2035_by_company %>
+                      <%= render 'cp_alignment', header: long_term_header, alignment: assessment&.cp_regional_alignment_2050_by_company %>
+                    </div>
                   <% end %>
-                  <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: assessment.cp_regional_alignment_2035_by_company %>
-                  <%= render 'cp_alignment', header: long_term_header, alignment: assessment.cp_regional_alignment_2050_by_company %>
+                <% end %>
                 </div>
               <% end %>
-
+            <% else %>
+              <% assessments_for_banner.each do |assessment| %>
+                <% long_term_header = "Long-term<br/> alignment in #{@company.sector.name.downcase == 'electricity utilities' ? '2040-50' : '2050'}" %>
+                <% unless regional_view %>
+                  <div class="cp-alignments">
+                    <% if assessment.cp_alignment_2030.present? %>
+                      <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2030', alignment: assessment.cp_alignment_2030_by_company %>
+                    <% elsif assessment.cp_alignment_2028.present? %>
+                      <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2028', alignment: assessment.cp_alignment_2028_by_company %>
+                    <% else %>
+                      <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2027', alignment: assessment.cp_alignment_2027_by_company %>
+                    <% end %>
+                    <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: assessment.cp_alignment_2035_by_company %>
+                    <%= render 'cp_alignment', header: long_term_header, alignment: assessment.cp_alignment_2050_by_company %>
+                  </div>
+                <% else %>
+                  <div class="cp-alignments">
+                    <% if assessment.cp_regional_alignment_2030.present? %>
+                      <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2030', alignment: assessment.cp_regional_alignment_2030_by_company %>
+                    <% elsif assessment.cp_regional_alignment_2028.present? %>
+                      <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2028', alignment: assessment.cp_regional_alignment_2028_by_company %>
+                    <% else %>
+                      <%= render 'cp_alignment', header: 'Short-term<br/> alignment in 2027', alignment: assessment.cp_regional_alignment_2027_by_company %>
+                    <% end %>
+                    <%= render 'cp_alignment', header: 'Medium-term<br/> alignment in 2035', alignment: assessment.cp_regional_alignment_2035_by_company %>
+                    <%= render 'cp_alignment', header: long_term_header, alignment: assessment.cp_regional_alignment_2050_by_company %>
+                  </div>
+                <% end %>
+              <% end %>
             <% end %>
           </div>
         </a>
@@ -216,6 +261,11 @@
 
   <% if @company_presenter.cp_assessments.any? %>
     <section id="carbon-performance" class="carbon-performance container">
+      <% subsector_assessments = @company.company_subsectors.any? ? @company_presenter.cp_assessments.group_by(&:subsector_name) : {} %>
+      <% has_subsector_data = subsector_assessments.keys.any? { |k| k.present? } %>
+      <% show_subsector_toggle = @company.company_subsectors.any? && @company.sector.name != 'Chemicals' %>
+      <% active_subsector = has_subsector_data ? (params[:subsector_type] || @cp_assessment&.subsector_name || @company.company_subsectors.first.subsector) : nil %>
+
       <div class="management-quality__header">
         <h4>
           Carbon Performance <%= @company.name %>
@@ -228,24 +278,63 @@
               Assessment Date:
             </div>
 
+            <% cp_dropdown_assessments = @company_presenter.cp_assessments.select do |v|
+              if active_subsector.present?
+                v.subsector_name == active_subsector
+              else
+                true
+              end
+            end %>
+            <% cp_dropdown_assessments = @company_presenter.cp_assessments if cp_dropdown_assessments.empty? %>
             <div class="date-dropdown">
               <%= react_component('RemoteDropdown', {
                 name: 'cp_assessment_id',
                 remote: true,
                 url: cp_assessment_tpi_company_path(@company),
                 params: regional_view ? "view=regional" : nil,
-                data: @company_presenter.cp_assessments.map do |v|
+                data: cp_dropdown_assessments.map do |v|
                   label = v['assessment_date']&.strftime('%d %B %Y')
                   label += " (#{v['assessment_date_flag']})" if v['assessment_date_flag'].present?
-                  label += " (#{v.subsector})" if v.subsector
+                  label += " (#{v.subsector_name})" if v.subsector_name.present? && !has_subsector_data
                   {label: label, value: v['id']}
                 end,
-                selected: params[:cp_assessment_id]
+                selected: params[:cp_assessment_id] || @cp_assessment&.id
               }) %>
             </div>
           </div>
         </div>
       </div>
+
+      <% if show_subsector_toggle %>
+        <% steel_pre_split = @company.sector&.name == 'Steel' && @cp_assessment&.assessment_date&.year.to_i < 2025 %>
+        <div id="subsector-toggle" class="buttons has-addons" style="margin-top: 1rem; margin-bottom: 0.5rem;">
+          <% @company.company_subsectors.each do |cs| %>
+            <% has_data = subsector_assessments[cs.subsector].present? %>
+            <% is_global_default = cs.subsector == 'Global' && !has_subsector_data %>
+            <% is_pre_split_non_global = steel_pre_split && cs.subsector != 'Global' %>
+            <% if is_pre_split_non_global %>
+              <span class="button disabled" style="background-color: #e8e8e8; color: #999; border-color: #ddd; cursor: not-allowed;" title="No data available for this subsector for pre-2025 assessments">
+                <%= cs.subsector %>
+              </span>
+            <% elsif has_data || is_global_default %>
+              <% assessment_id = has_data ? subsector_assessments[cs.subsector].first.id : @cp_assessment&.id %>
+              <% is_active = has_subsector_data ? (active_subsector == cs.subsector) : is_global_default %>
+              <%= link_to cs.subsector, cp_assessment_tpi_company_path(@company, cp_assessment_id: assessment_id),
+                remote: true,
+                class: "button #{is_active ? 'is-primary' : 'is-secondary'}" %>
+            <% else %>
+              <span class="button" style="background-color: #e8e8e8; color: #999; border-color: #ddd; cursor: not-allowed;" title="No data available for this subsector">
+                <%= cs.subsector %>
+              </span>
+            <% end %>
+          <% end %>
+        </div>
+        <% if @cp_assessment&.subsector_name.present? %>
+          <p style="font-size: 0.9rem; margin-bottom: 1rem;">
+            The graph shows the company's pathway and the relevant benchmarks for <%= @cp_assessment.subsector_name.downcase %>.
+          </p>
+        <% end %>
+      <% end %>
 
       <div id="cp-assessment">
         <%= render partial: 'cp_assessment', locals: { assessment: @cp_assessment } %>

@@ -2,8 +2,43 @@
   document.getElementById('cp-assessment').innerHTML = "<%= j render('cp_assessment', assessment: @cp_assessment) %>";
   const newUrl = new URL(window.location.href);
   const view = '<%= params[:view] %>';
+  const subsectorName = '<%= @cp_assessment&.subsector_name %>';
+  const assessmentYear = <%= @cp_assessment&.assessment_date&.year || 0 %>;
+  const sectorName = '<%= @cp_assessment&.sector&.name %>';
+  const steelSplitYear = 2025;
+
   newUrl.searchParams.set('cp_assessment_id', <%= @cp_assessment.id %>);
   if (view.length > 0) newUrl.searchParams.set('view', view);
+  if (subsectorName.length > 0) {
+    newUrl.searchParams.set('subsector_type', subsectorName);
+  } else {
+    newUrl.searchParams.delete('subsector_type');
+  }
   window.history.replaceState({}, '', newUrl.href);
+
+  var toggle = document.getElementById('subsector-toggle');
+  if (toggle) {
+    var buttons = toggle.querySelectorAll('.button, span.button');
+    buttons.forEach(function(btn) {
+      var btnText = btn.textContent.trim();
+      btn.classList.remove('is-primary', 'is-secondary');
+      btn.classList.add(btnText === subsectorName ? 'is-primary' : 'is-secondary');
+
+      if (sectorName === 'Steel' && assessmentYear < steelSplitYear && btnText !== 'Global') {
+        btn.classList.add('disabled');
+        btn.style.backgroundColor = '#e8e8e8';
+        btn.style.color = '#999';
+        btn.style.cursor = 'not-allowed';
+        btn.style.pointerEvents = 'none';
+      } else if (btn.tagName.toLowerCase() === 'a') {
+        btn.classList.remove('disabled');
+        btn.style.backgroundColor = '';
+        btn.style.color = '';
+        btn.style.cursor = '';
+        btn.style.pointerEvents = '';
+      }
+    });
+  }
+
   ReactRailsUJS.mountComponents('#cp-assessment');
 })();

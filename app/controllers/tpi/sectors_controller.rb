@@ -6,7 +6,7 @@ module TPI
     before_action :fetch_companies, only: [:show, :index]
     before_action :fetch_sectors, only: [:show, :index, :user_download_all, :user_download_cp_all, :user_download_mq_all]
     before_action :fetch_industries, only: [:show, :index]
-    before_action :fetch_sector, only: [:show, :user_download, :user_download_cp, :user_download_mq]
+    before_action :fetch_sector, only: [:show, :user_download, :user_download_cp, :user_download_mq, :chemicals_alignment_chart_data]
     before_action :redirect_if_numeric_or_historic_slug, only: [:show]
 
     helper_method :any_cp_assessment?
@@ -67,6 +67,17 @@ module TPI
       ).companies_emissions_data
 
       render json: data.chart_json
+    end
+
+    # Data:     Chemicals sector alignment counts by timeframe
+    # Section:  CP
+    # Type:     bar chart
+    # On pages: :show (Chemicals only)
+    def chemicals_alignment_chart_data
+      sector = @sector || TPISector.companies.tpi_tool.friendly.find(params[:id])
+      data = ::Api::Charts::ChemicalsSector.new(sector).alignment_data
+
+      render json: data.to_json
     end
 
     # Data:     Sector Companies numbers, grouped by CP Alignement from given Sector

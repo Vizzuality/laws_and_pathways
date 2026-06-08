@@ -1,3 +1,10 @@
+<h3>Chemicals downloads</h3>
+
+<div class="well">
+  <p><strong>Sector benchmarks</strong> export (ZIP) includes only the three subsector benchmark sets: Primary chemicals, Non-primary chemicals, and Agricultural chemicals (three scenarios each).</p>
+  <p><strong>Chemicals benchmarks</strong> export includes all Chemicals rows, including company-specific benchmarks (e.g. BASF). Use identical Subsector or Benchmark Label on assessment uploads so per-company Benchmark ID in CP assessment exports resolves correctly.</p>
+</div>
+
 <h3>Partial updates limitations</h3>
 
 <div class="well">
@@ -57,6 +64,34 @@
       </td>
       <td>
         Required if column present
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Subsector
+      </td>
+      <td>
+        Match key for company-specific benchmarks (Chemicals sector). Must match the same string on assessment upload rows.
+      </td>
+      <td>
+        Primary chemicals
+      </td>
+      <td>
+        Optional; preferred for Chemicals when pairing benchmarks with assessments
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Benchmark Label
+      </td>
+      <td>
+        Company-specific benchmark identifier. For Chemicals, copied to Subsector when Subsector is blank. Must match Subsector or Benchmark Label on assessment rows.
+      </td>
+      <td>
+        BASF
+      </td>
+      <td>
+        Optional
       </td>
     </tr>
     <tr>

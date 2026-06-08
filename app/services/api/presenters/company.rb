@@ -21,6 +21,12 @@ module Api
       def graph_cp_assessments
         return graph_cp_assessments_by_region if regional_view?
 
+        if @company.sector.name == 'Chemicals'
+          return [] unless @company.latest_cp_assessment.present?
+
+          return [@company.latest_cp_assessment]
+        end
+
         unless subsector_latest_cp_assessments?
           return [] unless @company.latest_cp_assessment.present?
 
@@ -34,6 +40,10 @@ module Api
         assessments = @company.cp_assessments.currently_published
         assessments = assessments.where.not(region: nil) if regional_view?
         assessments.order(assessment_date: :desc)
+      end
+
+      def cp_assessments_count
+        cp_assessments.select(:assessment_date).distinct.count
       end
 
       def mq_assessments

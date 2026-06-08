@@ -63,7 +63,11 @@ class TPISector < ApplicationRecord
   def latest_released_benchmarks(category:, region: nil, subsector: nil)
     region ||= 'Global'
     scope = cp_benchmarks.where(category: category.to_s, region: region)
-    scope = scope.where(subsector: subsector) unless subsector.nil?
+    scope = if subsector.nil?
+              scope.where(subsector: nil)
+            else
+              scope.where('LOWER(subsector) = LOWER(?)', subsector)
+            end
     last = scope.group_by(&:release_date).max
     last ? last.last : []
   end
@@ -89,7 +93,12 @@ class TPISector < ApplicationRecord
     region ||= 'Global'
     return latest_released_benchmarks(category: category, region: region, subsector: subsector) unless date
 
-    benchmarks = cp_benchmarks.where(category: category.to_s, region: region, subsector: subsector)
+    benchmarks = cp_benchmarks.where(category: category.to_s, region: region)
+    benchmarks = if subsector.nil?
+                   benchmarks.where(subsector: nil)
+                 else
+                   benchmarks.where('LOWER(subsector) = LOWER(?)', subsector)
+                 end
     sector_benchmarks_dates = benchmarks.pluck(:release_date).uniq.sort
 
     last_release_date_before_given_date =
@@ -99,6 +108,39 @@ class TPISector < ApplicationRecord
 
     release_date =
       last_release_date_before_given_date || sector_benchmarks_dates.first
+
+    benchmarks.where(release_date: release_date).order(:created_at)
+  end
+
+  def latest_benchmarks_for_match_key(date, category:, match_key:, region: nil)
+    region ||= 'Global'
+    return cp_benchmarks.none if match_key.blank?
+
+    benchmarks = latest_benchmarks_for_date(date, category: category, region: region, subsector: match_key)
+    return benchmarks if benchmarks.present?
+
+    latest_benchmarks_by_label_for_date(date, category: category, region: region, label: match_key)
+  end
+
+  def latest_benchmarks_by_label_for_date(date, category:, region:, label:)
+    benchmarks = cp_benchmarks.where(category: category.to_s, region: region)
+      .where('LOWER(benchmark_label) = LOWER(?)', label)
+
+    unless date
+      last = benchmarks.group_by(&:release_date).max
+      return last ? last.last : cp_benchmarks.none
+    end
+
+    sector_benchmarks_dates = benchmarks.pluck(:release_date).uniq.sort
+    last_release_date_before_given_date =
+      sector_benchmarks_dates
+        .select { |d| d <= date }
+        .last
+
+    release_date =
+      last_release_date_before_given_date || sector_benchmarks_dates.first
+
+    return cp_benchmarks.none unless release_date
 
     benchmarks.where(release_date: release_date).order(:created_at)
   end

@@ -87,9 +87,35 @@ module TPI
                          @company.cp_assessments.find(params[:cp_assessment_id])
                        elsif params[:view] == 'regional'
                          @company.latest_cp_assessment_regional
+                       elsif params[:subsector_type].present?
+                         find_latest_assessment_for_subsector(params[:subsector_type])
                        else
                          @company.latest_cp_assessment
                        end
+    end
+
+    def find_latest_assessment_for_subsector(subsector_type)
+      cs = @company.company_subsectors.find_by(subsector: subsector_type)
+      return @company.latest_cp_assessment unless cs
+
+      by_company_subsector = @company.cp_assessments
+        .currently_published
+        .where(company_subsector_id: cs.id)
+        .order(publication_date: :desc, assessment_date: :desc)
+        .first
+
+      return by_company_subsector if by_company_subsector
+
+      subsector_record = Subsector.find_by(sector: @company.sector, name: subsector_type)
+      if subsector_record
+        @company.cp_assessments
+          .currently_published
+          .where(subsector_id: subsector_record.id)
+          .order(publication_date: :desc, assessment_date: :desc)
+          .first || @company.latest_cp_assessment
+      else
+        @company.latest_cp_assessment
+      end
     end
 
     def fetch_mq_assessment
