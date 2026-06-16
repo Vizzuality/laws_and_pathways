@@ -3,7 +3,7 @@ module TPI
     delegate_all
 
     def cluster
-      model.cluster&.name
+      model.chart_cluster_name
     end
 
     def link

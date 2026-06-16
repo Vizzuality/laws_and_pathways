@@ -3,15 +3,15 @@ module Api
     class CPPerformance
       COLOR_DESCRIPTIONS = {
         '#00C170' => <<~HTML,
-          <b>1.5 Degrees</b> in Airlines, Aluminium, Autos, Cement, Diversified Mining, Electricity Utilities, Food Producers, Oil & Gas, Shipping and Steel<br/>
+          <b>1.5 Degrees</b> in Airlines, Aluminium, Autos, Cement, Chemicals, Diversified Mining, Electricity Utilities, Food Producers, Oil & Gas, Shipping and Steel<br/>
           <b>Below 2 Degrees</b> in Paper
         HTML
         '#FFDD49' => <<~HTML,
-          <b>Below 2 Degrees</b> in Airlines, Aluminium, Autos, Cement, Diversified Mining, Electricity Utilities, Food Producers, Oil & Gas, Shipping and Steel<br/>
+          <b>Below 2 Degrees</b> in Airlines, Aluminium, Autos, Cement, Chemicals, Diversified Mining, Electricity Utilities, Food Producers, Oil & Gas, Shipping and Steel<br/>
           <b>2 Degrees</b> in Paper
         HTML
         '#FF9600' => <<~HTML,
-          <b>National Pledges</b> in Aluminium, Autos, Cement, Diversified Mining, Electricity Utilities, Oil & Gas and Steel<br/>
+          <b>National Pledges</b> in Aluminium, Autos, Cement, Chemicals, Diversified Mining, Electricity Utilities, Oil & Gas and Steel<br/>
           <b>International Pledges</b> in Airlines and Shipping<br/>
           <b>2 Degrees</b> in Food Producers<br/>
           <b>Paris Pledges</b> in Paper
@@ -91,7 +91,7 @@ module Api
           alignment_keys.each { |key| alignments[key] = company.public_send(key) }
           records << {
             sector_name: company.sector.name,
-            cluster_name: company.sector.cluster&.name,
+            cluster_name: company.sector.chart_cluster_name,
             alignments: alignments
           }
         end
