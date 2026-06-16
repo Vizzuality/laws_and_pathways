@@ -162,4 +162,18 @@ class TPISector < ApplicationRecord
       .pluck(:subsector)
       .sort
   end
+
+  def chart_cluster_name
+    return self.class.industrial_materials_cluster_name if name == 'Chemicals'
+
+    cluster&.name
+  end
+
+  def self.industrial_materials_cluster_name
+    reference_sector_names = TPISectorCluster::INDUSTRY_AND_MATERIALS_SECTORS - ['Chemicals']
+
+    joins(:cluster)
+      .where(name: reference_sector_names)
+      .pick('tpi_sector_clusters.name')
+  end
 end
