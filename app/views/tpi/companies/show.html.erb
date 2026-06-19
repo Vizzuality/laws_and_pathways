@@ -89,7 +89,17 @@
                 <% assessments_by_subsector = {} %>
               <% end %>
               <% global_fallback_assessment = has_subsector_assessments ? nil : assessments_for_banner.first %>
-              <% @company.company_subsectors.each do |cs| %>
+              <% sorted_subsectors = @company.company_subsectors.sort_by do |cs|
+                   case cs.subsector.downcase
+                   when 'global' then 0
+                   when /primary/ then 1
+                   when /secondary/ then 2
+                   when /thermal/ then 1
+                   when /metallurgical/ then 2
+                   else 3
+                   end
+                 end %>
+              <% sorted_subsectors.each do |cs| %>
                 <% subsector_class = cs.subsector == 'Global' ? 'subsector--global' : 'subsector--specific' %>
                 <div class="subsector-banner <%= subsector_class %>">
                 <h4 class="subsector"><%= cs.subsector %></h4>
@@ -311,9 +321,21 @@
       </div>
 
       <% if show_subsector_toggle %>
-        <% steel_pre_split = @company.sector&.name == 'Steel' && @cp_assessment&.assessment_date&.year.to_i < 2025 %>
+        <% steel_pre_split = @company.sector&.name == 'Steel' && @cp_assessment&.assessment_date && @cp_assessment.assessment_date < Date.new(2025, 1, 1) %>
+        <% show_toggle_ui = !steel_pre_split %>
+        <% if show_toggle_ui %>
+        <% sorted_toggle_subsectors = @company.company_subsectors.sort_by do |cs|
+             case cs.subsector.downcase
+             when 'global' then 0
+             when /primary/ then 1
+             when /secondary/ then 2
+             when /thermal/ then 1
+             when /metallurgical/ then 2
+             else 3
+             end
+           end %>
         <div id="subsector-toggle" class="buttons has-addons" style="margin-top: 1rem; margin-bottom: 0.5rem;">
-          <% @company.company_subsectors.each do |cs| %>
+          <% sorted_toggle_subsectors.each do |cs| %>
             <% has_data = subsector_assessments[cs.subsector].present? %>
             <% is_global_default = cs.subsector == 'Global' && !has_subsector_data %>
             <% is_pre_split_non_global = steel_pre_split && cs.subsector != 'Global' %>
@@ -334,7 +356,8 @@
             <% end %>
           <% end %>
         </div>
-        <% if @cp_assessment&.subsector_name.present? %>
+        <% end %>
+        <% if @cp_assessment&.subsector_name.present? && show_toggle_ui %>
           <p style="font-size: 0.9rem; margin-bottom: 1rem;">
             The graph shows the company's pathway and the relevant benchmarks for <%= @cp_assessment.subsector_name.downcase %>.
           </p>
