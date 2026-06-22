@@ -102,6 +102,7 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName, 
 
   const { data, error, loading } = useChartData(dataUrl);
   const [selectedCompanies, setSelectedCompanies] = useState([]); // Array of company names
+  const [companiesReady, setCompaniesReady] = useState(!companySelector);
 
   const companyData = useMemo(() => data.filter(d => d.company), [data]);
   const companies = useMemo(() => companyData.map(d => d.company), [companyData]);
@@ -132,6 +133,7 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName, 
         filterByShowValue(companyData, selectedShowBy.value, selectedSubsector, sectorName)
       ).map(c => c.name)
     );
+    if (companySelector && companyData.length > 0) setCompaniesReady(true);
   }, [companyData, selectedShowBy, selectedSubsector, sectorName]);
 
   const chartData = useParsedChartData(data, companySelector, selectedCompanies, selectedSubsector);
@@ -194,7 +196,7 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName, 
         companySelector={companySelector}
         companies={companies}
       />
-      {loading ? (
+      {loading || !companiesReady ? (
         <p>Loading...</p>
       ) : (
         <React.Fragment>
@@ -206,6 +208,7 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName, 
             </p>
           ) : (
             <HighchartsReact
+              key={selectedSubsector?.value || 'default'}
               highcharts={Highcharts}
               options={options}
             />
