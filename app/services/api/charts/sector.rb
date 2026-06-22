@@ -161,6 +161,8 @@ module Api
                        sector.latest_released_benchmarks(category: Company, region: 'Global')
                      end
 
+        benchmarks = benchmarks.select { |b| b.emissions.present? }
+
         benchmarks.sort_by(&:average_emission).map.with_index do |benchmark, index|
           has_subsector = benchmark&.subsector.present?
           name = has_subsector ? "#{benchmark.scenario} - #{benchmark.subsector}" : benchmark.scenario

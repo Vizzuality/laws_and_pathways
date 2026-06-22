@@ -161,6 +161,7 @@ module Api
 
       def emissions_data_from_sector_benchmarks
         sector_benchmarks_for_chart
+          .select { |b| b.emissions.present? }
           .sort_by(&:average_emission)
           .map.with_index do |benchmark, index|
             color = SCENARIO_COLORS[benchmark.scenario] || BENCHMARK_FILL_COLORS[index]
@@ -290,7 +291,7 @@ module Api
       def sector_all_emissions
         @sector_all_emissions = sector_all_emissions_for_company
         @sector_all_emissions = @sector_all_emissions.where(region: region) if regional_view? && @category != 'Bank'
-        @sector_all_emissions.group_by(&:cp_assessmentable_id).flat_map do |_id, cp_assessments|
+        @sector_all_emissions.group_by(&:cp_assessmentable_id).filter_map do |_id, cp_assessments|
           cp_assessments.max_by(&:publication_date)&.emissions&.transform_keys(&:to_i)
         end
       end
