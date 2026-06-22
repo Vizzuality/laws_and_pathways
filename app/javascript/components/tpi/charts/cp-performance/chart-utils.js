@@ -49,14 +49,6 @@ export const useParsedChartData = (data, companySelector, selectedCompanies, sel
         }
         return !d.name?.includes('sector mean');
       });
-      
-      const sectorMean = data.find(d => 
-        d.name?.includes('sector mean') && 
-        d.subsector?.toLowerCase() === selectedSubsector.value.toLowerCase()
-      );
-      if (sectorMean) {
-        restData.push(sectorMean);
-      }
     }
 
     restData = applyColors(restData);

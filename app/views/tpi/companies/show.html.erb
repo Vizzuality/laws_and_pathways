@@ -352,11 +352,6 @@
           <% end %>
         </div>
         <% end %>
-        <% if @cp_assessment&.subsector_name.present? && show_toggle_ui %>
-          <p style="font-size: 0.9rem; margin-bottom: 1rem;">
-            The graph shows the company's pathway and the relevant benchmarks for <%= @cp_assessment.subsector_name.downcase %>.
-          </p>
-        <% end %>
       <% end %>
 
       <div id="cp-assessment">
