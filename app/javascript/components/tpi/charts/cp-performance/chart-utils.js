@@ -32,7 +32,10 @@ export const useParsedChartData = (data, companySelector, selectedCompanies, sel
     const benchmarks = data.filter(d => {
       const typeMatch = d.type === 'area';
       if (selectedSubsector) {
-        return typeMatch && d.subsector?.toLowerCase() === selectedSubsector.value.toLowerCase();
+        const target = selectedSubsector.value.toLowerCase();
+        const sub = d.subsector;
+        if (!sub) return typeMatch && target === 'global';
+        return typeMatch && sub.toLowerCase() === target;
       }
 
       return typeMatch;
@@ -43,9 +46,13 @@ export const useParsedChartData = (data, companySelector, selectedCompanies, sel
       : data.filter(d => d.type !== 'area');
 
     if (selectedSubsector) {
+      const target = selectedSubsector.value.toLowerCase();
       restData = restData.filter(d => {
         if (d.subsector) {
-          return d.subsector.toLowerCase() === selectedSubsector.value.toLowerCase();
+          return d.subsector.toLowerCase() === target;
+        }
+        if (d.company && !d.company.subsector) {
+          return target === 'global';
         }
         return !d.name?.includes('sector mean');
       });
