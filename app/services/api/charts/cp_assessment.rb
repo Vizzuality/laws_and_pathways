@@ -48,7 +48,7 @@ module Api
           years_with_targets
         ].compact.flatten
 
-        if sector.name.in?(['Coal Mining', 'Steel']) && assessment.company.company_subsectors.any?
+        if sector.name.in?(['Coal Mining', 'Steel']) && @category == 'Company' && assessment.company&.company_subsectors&.any?
           assessment.company.company_subsectors.each do |cs|
             sector_mean = emissions_data_from_sector_for_subsector(cs.subsector)
             base_data << sector_mean if sector_mean
@@ -325,6 +325,9 @@ module Api
       end
 
       def sector_all_emissions_for_subsector(subsector_name)
+        @sector_emissions_by_subsector ||= {}
+        return @sector_emissions_by_subsector[subsector_name] if @sector_emissions_by_subsector.key?(subsector_name)
+
         scope = CP::Assessment
           .joins(:sector)
           .joins('LEFT JOIN company_subsectors ON company_subsectors.id = cp_assessments.company_subsector_id')
@@ -343,7 +346,7 @@ module Api
 
         scope = scope.where(region: region) if regional_view? && @category != 'Bank'
 
-        scope.group_by(&:cp_assessmentable_id).flat_map do |_id, cp_assessments|
+        @sector_emissions_by_subsector[subsector_name] = scope.group_by(&:cp_assessmentable_id).filter_map do |_id, cp_assessments|
           cp_assessments.max_by(&:publication_date)&.emissions&.transform_keys(&:to_i)
         end
       end
