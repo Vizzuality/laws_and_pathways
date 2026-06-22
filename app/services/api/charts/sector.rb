@@ -161,22 +161,24 @@ module Api
                        sector.latest_released_benchmarks(category: Company, region: 'Global')
                      end
 
-        benchmarks = benchmarks.select { |b| b.emissions.present? }
+      benchmarks = benchmarks.select { |b| b.emissions.present? }
 
-        benchmarks.sort_by(&:average_emission).map.with_index do |benchmark, index|
-          has_subsector = benchmark&.subsector.present?
-          name = has_subsector ? "#{benchmark.scenario} - #{benchmark.subsector}" : benchmark.scenario
-          color = SCENARIO_COLORS[benchmark.scenario] || BENCHMARK_FILL_COLORS[index]
-          {
-            type: 'area',
-            color: color,
-            fillColor: color,
-            name: name,
-            data: emissions_data_as_numbers(benchmark&.emissions),
-            sector: sector.name,
-            subsector: benchmark&.subsector
-          }
-        end.reverse
+      has_subsectors = sector.name.in?(['Steel', 'Coal Mining'])
+
+      benchmarks.sort_by(&:average_emission).map.with_index do |benchmark, index|
+        sub = benchmark&.subsector.presence || 'Global'
+        name = has_subsectors ? "#{benchmark.scenario} - #{sub}" : benchmark.scenario
+        color = SCENARIO_COLORS[benchmark.scenario] || BENCHMARK_FILL_COLORS[index]
+        {
+          type: 'area',
+          color: color,
+          fillColor: color,
+          name: name,
+          data: emissions_data_as_numbers(benchmark&.emissions),
+          sector: sector.name,
+          subsector: has_subsectors ? sub : nil
+        }
+      end.reverse
       end
 
       def fetch_all_subsector_benchmarks(sector)

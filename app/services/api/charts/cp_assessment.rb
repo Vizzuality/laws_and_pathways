@@ -160,18 +160,21 @@ module Api
       end
 
       def emissions_data_from_sector_benchmarks
+        has_subsectors = sector.name.in?(['Steel', 'Coal Mining'])
+
         sector_benchmarks_for_chart
           .select { |b| b.emissions.present? }
           .sort_by(&:average_emission)
           .map.with_index do |benchmark, index|
             color = SCENARIO_COLORS[benchmark.scenario] || BENCHMARK_FILL_COLORS[index]
+            sub = has_subsectors ? (benchmark.subsector.presence || 'Global') : nil
             {
               type: 'area',
               color: color,
               fillColor: color,
               name: benchmark.scenario,
               sector: sector.name,
-              subsector: benchmark.subsector,
+              subsector: sub,
               data: format_emissions_data(benchmark.emissions)
             }
           end.reverse
