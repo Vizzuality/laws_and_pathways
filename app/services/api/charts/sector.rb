@@ -155,11 +155,13 @@ module Api
 
         sector = company.sector
 
-        benchmarks = sector
-          .latest_released_benchmarks(category: Company, region: 'Global')
-          .sort_by(&:average_emission)
+        benchmarks = if sector.name.in?(['Steel', 'Coal Mining'])
+                       fetch_all_subsector_benchmarks(sector)
+                     else
+                       sector.latest_released_benchmarks(category: Company, region: 'Global')
+                     end
 
-        benchmarks.map.with_index do |benchmark, index|
+        benchmarks.sort_by(&:average_emission).map.with_index do |benchmark, index|
           has_subsector = benchmark&.subsector.present?
           name = has_subsector ? "#{benchmark.scenario} - #{benchmark.subsector}" : benchmark.scenario
           color = SCENARIO_COLORS[benchmark.scenario] || BENCHMARK_FILL_COLORS[index]
@@ -173,6 +175,16 @@ module Api
             subsector: benchmark&.subsector
           }
         end.reverse
+      end
+
+      def fetch_all_subsector_benchmarks(sector)
+        scope = sector.cp_benchmarks.where(category: 'Company', region: 'Global')
+                  .where.not(subsector: nil)
+
+        latest_date = scope.maximum(:release_date)
+        return [] unless latest_date
+
+        scope.where(release_date: latest_date).to_a
       end
 
       def get_cp_assessments(company)
