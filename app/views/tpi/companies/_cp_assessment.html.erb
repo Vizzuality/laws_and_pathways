@@ -6,7 +6,7 @@
   </div>
 <% end %>
 
-<% if assessment.subsector_name.present? && assessment.company.sector.name.in?(['Coal Mining', 'Steel']) %>
+<% if assessment.subsector_name.present? && assessment.company&.sector&.name&.in?(['Coal Mining', 'Steel']) %>
   <p style="font-size: 0.9rem; margin-bottom: 1rem;">
     The graph shows the company's pathway and the relevant benchmarks for <%= assessment.subsector_name.downcase %>.
   </p>
