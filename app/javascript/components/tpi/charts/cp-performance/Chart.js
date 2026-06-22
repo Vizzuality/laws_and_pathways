@@ -97,7 +97,7 @@ function getDefaultSubsector(sectorName) {
   return subsectors.length > 0 ? subsectors[0] : null;
 }
 
-function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }) {
+function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName, subsector }) {
   const { isMobile } = useDeviceInfo();
 
   const { data, error, loading } = useChartData(dataUrl);
@@ -120,7 +120,11 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }
     return [opts, getDefaultOption(opts)];
   }, [companies]);
   const [selectedShowBy, setSelectedShowBy] = useState(defaultOption);
-  const [selectedSubsector, setSelectedSubsector] = useState(getDefaultSubsector(sectorName));
+  const [selectedSubsector, setSelectedSubsector] = useState(
+    companySelector
+      ? getDefaultSubsector(sectorName)
+      : (subsector ? { label: subsector, value: subsector } : null)
+  );
 
   useEffect(() => {
     setSelectedCompanies(
@@ -175,7 +179,7 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }
   const options = isMobile ? getMobileOptions({ chartData, unit }) : getOptions({ chartData, unit });
 
   const filteredCompanyData = filterBySubsector(companyData, selectedSubsector, sectorName);
-  const noSubsectorData = selectedSubsector && hasSubsectorToggle(sectorName) && filteredCompanyData.length === 0;
+  const noSubsectorData = companySelector && selectedSubsector && hasSubsectorToggle(sectorName) && filteredCompanyData.length === 0;
 
   return (
     <div className="chart chart--cp-performance">
@@ -215,7 +219,8 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }
 CPPerformance.defaultProps = {
   companySelector: true,
   sectorName: null,
-  sectorUrl: null
+  sectorUrl: null,
+  subsector: null
 };
 
 CPPerformance.propTypes = {
@@ -223,7 +228,8 @@ CPPerformance.propTypes = {
   dataUrl: PropTypes.string.isRequired,
   unit: PropTypes.string.isRequired,
   sectorUrl: PropTypes.string,
-  sectorName: PropTypes.string
+  sectorName: PropTypes.string,
+  subsector: PropTypes.string
 };
 
 export default CPPerformance;
