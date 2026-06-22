@@ -178,13 +178,26 @@ module Api
       end
 
       def fetch_all_subsector_benchmarks(sector)
-        scope = sector.cp_benchmarks.where(category: 'Company', region: 'Global')
-                  .where.not(subsector: nil)
+        base = sector.cp_benchmarks.where(category: 'Company', region: 'Global')
 
-        latest_date = scope.maximum(:release_date)
-        return [] unless latest_date
+        with_subsector = base.where.not(subsector: nil)
+        without_subsector = base.where(subsector: nil)
 
-        scope.where(release_date: latest_date).to_a
+        latest_with = with_subsector.maximum(:release_date)
+        latest_without = without_subsector.maximum(:release_date)
+
+        results = []
+        results += with_subsector.where(release_date: latest_with).to_a if latest_with
+
+        has_explicit_global = results.any? { |b| b.subsector.downcase == 'global' }
+        if latest_without && !has_explicit_global
+          without_subsector.where(release_date: latest_without).each do |b|
+            b.subsector = 'Global'
+            results << b
+          end
+        end
+
+        results
       end
 
       def get_cp_assessments(company)
