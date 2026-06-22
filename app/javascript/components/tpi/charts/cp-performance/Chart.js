@@ -20,7 +20,13 @@ import Legend from './Legend';
 function filterBySubsector(companyData, selectedSubsector, sectorName) {
   if (!selectedSubsector || !hasSubsectorToggle(sectorName)) return companyData;
 
-  return companyData.filter(d => d.company.subsector?.toLowerCase() === selectedSubsector.value.toLowerCase());
+  const target = selectedSubsector.value.toLowerCase();
+
+  return companyData.filter(d => {
+    const sub = d.company.subsector;
+    if (!sub) return target === 'global';
+    return sub.toLowerCase() === target;
+  });
 }
 function filterByShowValue(companyData, showByValue, selectedSubsector, sectorName) {
   const bySubsector = filterBySubsector(companyData, selectedSubsector, sectorName);
@@ -181,7 +187,8 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName, 
   const options = isMobile ? getMobileOptions({ chartData, unit }) : getOptions({ chartData, unit });
 
   const filteredCompanyData = filterBySubsector(companyData, selectedSubsector, sectorName);
-  const noSubsectorData = companySelector && selectedSubsector && hasSubsectorToggle(sectorName) && filteredCompanyData.length === 0;
+  const hasBenchmarksForSubsector = chartData.some(d => d.type === 'area');
+  const noSubsectorData = companySelector && selectedSubsector && hasSubsectorToggle(sectorName) && filteredCompanyData.length === 0 && !hasBenchmarksForSubsector;
 
   return (
     <div className="chart chart--cp-performance">
