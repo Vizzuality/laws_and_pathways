@@ -100,8 +100,10 @@
                    end
                  end %>
               <% sorted_subsectors.each do |cs| %>
-                <% subsector_class = cs.subsector == 'Global' ? 'subsector--global' : 'subsector--specific' %>
-                <div class="subsector-banner <%= subsector_class %>">
+                <% is_global = cs.subsector == 'Global' %>
+                <% subsector_class = is_global ? 'subsector--global' : 'subsector--specific' %>
+                <% framed_class = (!is_global && @company.sector.name == 'Steel') ? 'subsector--framed' : '' %>
+                <div class="subsector-banner <%= subsector_class %> <%= framed_class %>">
                 <h4 class="subsector"><%= cs.subsector %></h4>
                 <% assessment = assessments_by_subsector[cs.id] || (cs.subsector == 'Global' ? global_fallback_assessment : nil) %>
                 <% has_alignment = assessment&.cp_alignment_2027.present? || assessment&.cp_alignment_2028.present? || assessment&.cp_alignment_2030.present? || assessment&.cp_alignment_2035.present? || assessment&.cp_alignment_2050.present? %>
