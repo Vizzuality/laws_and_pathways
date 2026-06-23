@@ -103,22 +103,32 @@
         }
 
         &.subsector--specific {
-          border: 1px solid #c5d4e8;
-          border-radius: 4px;
-          background-color: #f5f8fc;
-          padding: 0.75rem 1rem;
+          border-left: 4px solid #86A9F9;
 
           .subsector {
-            font-size: 0.875rem;
+            font-size: 0.9375rem;
             font-weight: 500;
-            color: #555;
           }
 
-          .cp-alignments {
-            gap: 8px;
+          &.subsector--framed {
+            border-left: none;
+            border: 1px solid #c5d4e8;
+            border-radius: 4px;
+            background-color: #f5f8fc;
+            padding: 0.75rem 1rem;
 
-            h5 {
-              font-size: 14px !important;
+            .subsector {
+              font-size: 0.875rem;
+              font-weight: 500;
+              color: #555;
+            }
+
+            .cp-alignments {
+              gap: 8px;
+
+              h5 {
+                font-size: 14px !important;
+              }
             }
           }
         }
