@@ -40,5 +40,11 @@
     });
   }
 
+  var dateDropdown = document.getElementById('assessment-date-dropdown');
+  if (dateDropdown) {
+    dateDropdown.innerHTML = "<%= j render('assessment_date_dropdown') %>";
+    ReactRailsUJS.mountComponents('#assessment-date-dropdown');
+  }
+
   ReactRailsUJS.mountComponents('#cp-assessment');
 })();
