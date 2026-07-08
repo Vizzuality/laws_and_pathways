@@ -38,7 +38,9 @@ module TPI
 
     def mq_assessment; end
 
-    def cp_assessment; end
+    def cp_assessment
+      @company_presenter = ::Api::Presenters::Company.new(@company, params[:view])
+    end
 
     # Data:     Company MQ Assessments Levels over the years
     # Section:  MQ
@@ -90,8 +92,19 @@ module TPI
                        elsif params[:subsector_type].present?
                          find_latest_assessment_for_subsector(params[:subsector_type])
                        else
-                         @company.latest_cp_assessment
+                         default_cp_assessment
                        end
+    end
+
+    def default_cp_assessment
+      return @company.latest_cp_assessment unless @company.company_subsectors.exists?
+
+      global = @company.cp_assessments
+        .currently_published
+        .order(assessment_date: :desc)
+        .find { |a| a.subsector_name == 'Global' }
+
+      global || @company.latest_cp_assessment
     end
 
     def find_latest_assessment_for_subsector(subsector_type)

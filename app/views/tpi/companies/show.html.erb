@@ -290,28 +290,8 @@
               Assessment Date:
             </div>
 
-            <% cp_dropdown_assessments = @company_presenter.cp_assessments.select do |v|
-              if active_subsector.present?
-                v.subsector_name == active_subsector
-              else
-                true
-              end
-            end %>
-            <% cp_dropdown_assessments = @company_presenter.cp_assessments if cp_dropdown_assessments.empty? %>
-            <div class="date-dropdown">
-              <%= react_component('RemoteDropdown', {
-                name: 'cp_assessment_id',
-                remote: true,
-                url: cp_assessment_tpi_company_path(@company),
-                params: regional_view ? "view=regional" : nil,
-                data: cp_dropdown_assessments.map do |v|
-                  label = v['assessment_date']&.strftime('%d %B %Y')
-                  label += " (#{v['assessment_date_flag']})" if v['assessment_date_flag'].present?
-                  label += " (#{v.subsector_name})" if v.subsector_name.present? && !has_subsector_data
-                  {label: label, value: v['id']}
-                end,
-                selected: params[:cp_assessment_id] || @cp_assessment&.id
-              }) %>
+            <div id="assessment-date-dropdown">
+              <%= render 'assessment_date_dropdown' %>
             </div>
           </div>
         </div>
