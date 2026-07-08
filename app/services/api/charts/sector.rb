@@ -149,13 +149,19 @@ module Api
 
         sector = company.sector
 
-        benchmarks = sector
-          .latest_released_benchmarks(category: Company, region: 'Global')
-          .sort_by(&:average_emission)
+        benchmarks = if sector.name.in?(['Steel', 'Coal Mining'])
+                       fetch_all_subsector_benchmarks(sector)
+                     else
+                       sector.latest_released_benchmarks(category: Company, region: 'Global')
+                     end
 
-        benchmarks.map.with_index do |benchmark, index|
-          has_subsector = benchmark&.subsector.present?
-          name = has_subsector ? "#{benchmark.scenario} - #{benchmark.subsector}" : benchmark.scenario
+        benchmarks = benchmarks.select { |b| b.emissions.present? }
+
+        has_subsectors = sector.name.in?(['Steel', 'Coal Mining'])
+
+        benchmarks.sort_by(&:average_emission).map.with_index do |benchmark, index|
+          sub = benchmark&.subsector.presence || 'Global'
+          name = has_subsectors ? "#{benchmark.scenario} - #{sub}" : benchmark.scenario
           color = SCENARIO_COLORS[benchmark.scenario] || BENCHMARK_FILL_COLORS[index]
           {
             type: 'area',
@@ -164,9 +170,34 @@ module Api
             name: name,
             data: emissions_data_as_numbers(benchmark&.emissions),
             sector: sector.name,
-            subsector: benchmark&.subsector
+            subsector: has_subsectors ? sub : nil
           }
         end.reverse
+      end
+
+      def fetch_all_subsector_benchmarks(sector)
+        base = sector.cp_benchmarks.where(category: 'Company', region: 'Global')
+
+        with_subsector = base.where.not(subsector: nil)
+        without_subsector = base.where(subsector: nil)
+
+        results = []
+
+        with_subsector.to_a.group_by(&:subsector).each_value do |list|
+          latest = list.map(&:release_date).max
+          results.concat(list.select { |b| b.release_date == latest })
+        end
+
+        has_explicit_global = results.any? { |b| b.subsector.to_s.downcase == 'global' }
+        latest_without = without_subsector.maximum(:release_date)
+        if latest_without && !has_explicit_global
+          without_subsector.where(release_date: latest_without).each do |b|
+            b.subsector = 'Global'
+            results << b
+          end
+        end
+
+        results
       end
 
       def get_cp_assessments(company)

@@ -20,7 +20,13 @@ import Legend from './Legend';
 function filterBySubsector(companyData, selectedSubsector, sectorName) {
   if (!selectedSubsector || !hasSubsectorToggle(sectorName)) return companyData;
 
-  return companyData.filter(d => d.company.subsector?.toLowerCase() === selectedSubsector.value.toLowerCase());
+  const target = selectedSubsector.value.toLowerCase();
+
+  return companyData.filter(d => {
+    const sub = d.company.subsector;
+    if (!sub) return target === 'global';
+    return sub.toLowerCase() === target;
+  });
 }
 function filterByShowValue(companyData, showByValue, selectedSubsector, sectorName) {
   const bySubsector = filterBySubsector(companyData, selectedSubsector, sectorName);
@@ -97,11 +103,12 @@ function getDefaultSubsector(sectorName) {
   return subsectors.length > 0 ? subsectors[0] : null;
 }
 
-function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }) {
+function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName, subsector }) {
   const { isMobile } = useDeviceInfo();
 
   const { data, error, loading } = useChartData(dataUrl);
   const [selectedCompanies, setSelectedCompanies] = useState([]); // Array of company names
+  const [companiesReady, setCompaniesReady] = useState(!companySelector);
 
   const companyData = useMemo(() => data.filter(d => d.company), [data]);
   const companies = useMemo(() => companyData.map(d => d.company), [companyData]);
@@ -120,7 +127,11 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }
     return [opts, getDefaultOption(opts)];
   }, [companies]);
   const [selectedShowBy, setSelectedShowBy] = useState(defaultOption);
-  const [selectedSubsector, setSelectedSubsector] = useState(getDefaultSubsector(sectorName));
+  const [selectedSubsector, setSelectedSubsector] = useState(
+    companySelector
+      ? getDefaultSubsector(sectorName)
+      : (subsector ? { label: subsector, value: subsector } : null)
+  );
 
   useEffect(() => {
     setSelectedCompanies(
@@ -128,6 +139,7 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }
         filterByShowValue(companyData, selectedShowBy.value, selectedSubsector, sectorName)
       ).map(c => c.name)
     );
+    if (companySelector && companyData.length > 0) setCompaniesReady(true);
   }, [companyData, selectedShowBy, selectedSubsector, sectorName]);
 
   const chartData = useParsedChartData(data, companySelector, selectedCompanies, selectedSubsector);
@@ -175,7 +187,8 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }
   const options = isMobile ? getMobileOptions({ chartData, unit }) : getOptions({ chartData, unit });
 
   const filteredCompanyData = filterBySubsector(companyData, selectedSubsector, sectorName);
-  const noSubsectorData = selectedSubsector && hasSubsectorToggle(sectorName) && filteredCompanyData.length === 0;
+  const hasBenchmarksForSubsector = chartData.some(d => d.type === 'area');
+  const noSubsectorData = companySelector && selectedSubsector && hasSubsectorToggle(sectorName) && filteredCompanyData.length === 0 && !hasBenchmarksForSubsector;
 
   return (
     <div className="chart chart--cp-performance">
@@ -190,7 +203,7 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }
         companySelector={companySelector}
         companies={companies}
       />
-      {loading ? (
+      {loading || !companiesReady ? (
         <p>Loading...</p>
       ) : (
         <React.Fragment>
@@ -202,6 +215,7 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }
             </p>
           ) : (
             <HighchartsReact
+              key={selectedSubsector?.value || 'default'}
               highcharts={Highcharts}
               options={options}
             />
@@ -215,7 +229,8 @@ function CPPerformance({ dataUrl, companySelector, unit, sectorUrl, sectorName }
 CPPerformance.defaultProps = {
   companySelector: true,
   sectorName: null,
-  sectorUrl: null
+  sectorUrl: null,
+  subsector: null
 };
 
 CPPerformance.propTypes = {
@@ -223,7 +238,8 @@ CPPerformance.propTypes = {
   dataUrl: PropTypes.string.isRequired,
   unit: PropTypes.string.isRequired,
   sectorUrl: PropTypes.string,
-  sectorName: PropTypes.string
+  sectorName: PropTypes.string,
+  subsector: PropTypes.string
 };
 
 export default CPPerformance;

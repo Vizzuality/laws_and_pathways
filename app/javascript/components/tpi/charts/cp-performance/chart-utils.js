@@ -32,16 +32,33 @@ export const useParsedChartData = (data, companySelector, selectedCompanies, sel
     const benchmarks = data.filter(d => {
       const typeMatch = d.type === 'area';
       if (selectedSubsector) {
-        return typeMatch && d.subsector?.toLowerCase() === selectedSubsector.value.toLowerCase();
+        const target = selectedSubsector.value.toLowerCase();
+        const sub = d.subsector;
+        if (!sub) return typeMatch && target === 'global';
+        return typeMatch && sub.toLowerCase() === target;
       }
 
       return typeMatch;
     });
-    const restData = applyColors(
-      companySelector
-        ? selectedCompanies.map(c => data.find(d => get(d, 'company.name') === c))
-        : data.filter(d => d.type !== 'area')
-    );
+    
+    let restData = companySelector
+      ? selectedCompanies.map(c => data.find(d => get(d, 'company.name') === c))
+      : data.filter(d => d.type !== 'area');
+
+    if (selectedSubsector) {
+      const target = selectedSubsector.value.toLowerCase();
+      restData = restData.filter(d => {
+        if (d.subsector) {
+          return d.subsector.toLowerCase() === target;
+        }
+        if (d.company && !d.company.subsector) {
+          return target === 'global';
+        }
+        return !d.name?.includes('sector mean');
+      });
+    }
+
+    restData = applyColors(restData);
 
     // do not why cloneDeep is needed, but highchart seems to mutate the data
     return cloneDeep([...benchmarks, ...restData]);

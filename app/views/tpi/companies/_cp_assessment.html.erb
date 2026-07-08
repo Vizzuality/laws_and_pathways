@@ -6,13 +6,20 @@
   </div>
 <% end %>
 
+<% if assessment.subsector_name.present? && assessment.company&.sector&.name&.in?(['Coal Mining', 'Steel']) %>
+  <p style="font-size: 0.9rem; margin-bottom: 1rem;">
+    The graph shows the company's pathway and the relevant benchmarks for <%= assessment.subsector_name.downcase %>.
+  </p>
+<% end %>
+
 <% if assessment.emissions.any?  %>
   <%= react_component('charts/cp-performance', {
     dataUrl: emissions_chart_data_tpi_company_path(assessment.company, cp_assessment_id: assessment.id, view: params[:view]),
     unit: assessment.unit || (assessment.company.sector.name == 'Chemicals' ? 'Emissions intensity (tCO2e/US$1,000 (2019))' : nil),
     companySelector: false,
     sectorUrl: tpi_sector_path(assessment.company.sector.slug),
-    sectorName: assessment.company.sector.name
+    sectorName: assessment.company.sector.name,
+    subsector: assessment.subsector_name
     }) %>
 <% else %>
   <div class="notification" style="text-align: center; padding: 2rem; color: #6b7280; font-style: italic;">

@@ -2,6 +2,12 @@ module Api
   module Charts
     class CPAssessment
       BENCHMARK_FILL_COLORS = ['#86A9F9', '#5587F7', '#2465F5', '#0A4BDC', '#083AAB'].freeze
+      SCENARIO_COLORS = {
+        '1.5 Degrees' => '#2465F5',
+        'Below 2 Degrees' => '#5587F7',
+        'National Pledges' => '#86A9F9',
+        'International Pledges' => '#0A4BDC'
+      }.freeze
       BANK_COMPANY_SECTOR_PAIRS = {
         'Electric Utilities (Global)' => 'Electricity Utilities',
         'Electric Utilities (Regional)' => 'Electricity Utilities'
@@ -36,12 +42,23 @@ module Api
       def emissions_data
         return [] unless assessment.present?
 
-        [
+        base_data = [
           emissions_data_from_sector_benchmarks,
           emissions_data_from_assessment,
-          emissions_data_from_sector,
           years_with_targets
         ].compact.flatten
+
+        if sector.name.in?(['Coal Mining', 'Steel']) && @category == 'Company' && assessment.company&.company_subsectors&.any?
+          assessment.company.company_subsectors.each do |cs|
+            sector_mean = emissions_data_from_sector_for_subsector(cs.subsector)
+            base_data << sector_mean if sector_mean
+          end
+        else
+          sector_mean = emissions_data_from_sector
+          base_data << sector_mean if sector_mean
+        end
+
+        base_data
       end
 
       private
@@ -128,17 +145,36 @@ module Api
         }
       end
 
+      def emissions_data_from_sector_for_subsector(subsector_name)
+        return nil if sector.name == 'Chemicals'
+        return nil unless subsector_name.present?
+
+        name = "#{subsector_name} sector mean"
+        emissions = sector_average_emissions_for_subsector(subsector_name)
+
+        {
+          name: name,
+          subsector: subsector_name,
+          data: emissions
+        }
+      end
+
       def emissions_data_from_sector_benchmarks
+        has_subsectors = sector.name.in?(['Steel', 'Coal Mining'])
+
         sector_benchmarks_for_chart
+          .select { |b| b.emissions.present? }
           .sort_by(&:average_emission)
           .map.with_index do |benchmark, index|
+            color = SCENARIO_COLORS[benchmark.scenario] || BENCHMARK_FILL_COLORS[index]
+            sub = has_subsectors ? (benchmark.subsector.presence || 'Global') : nil
             {
               type: 'area',
-              color: BENCHMARK_FILL_COLORS[index],
-              fillColor: BENCHMARK_FILL_COLORS[index],
+              color: color,
+              fillColor: color,
               name: benchmark.scenario,
               sector: sector.name,
-              subsector: benchmark.subsector,
+              subsector: sub,
               data: format_emissions_data(benchmark.emissions)
             }
           end.reverse
@@ -183,6 +219,26 @@ module Api
           region: selected_region,
           subsector: match_key
         )
+
+        if initial.blank? && sector.name.in?(['Steel', 'Coal Mining'])
+          Rails.logger.warn "[CP Assessment] No benchmarks found for #{sector.name} - subsector: #{match_key}, category: #{@category}, region: #{selected_region}, date: #{assessment.publication_date}"
+          
+          fallback = sector.latest_benchmarks_for_date(
+            assessment.publication_date,
+            category: @category,
+            region: selected_region,
+            subsector: nil
+          )
+          
+          if fallback.present?
+            Rails.logger.info "[CP Assessment] Using fallback benchmarks for #{sector.name} (#{fallback.count} benchmarks found)"
+            return fallback
+          end
+          
+          Rails.logger.error "[CP Assessment] No fallback benchmarks available for #{sector.name}"
+          return []
+        end
+
         return initial if initial.present?
 
         sector.latest_benchmarks_for_date(
@@ -238,7 +294,63 @@ module Api
       def sector_all_emissions
         @sector_all_emissions = sector_all_emissions_for_company
         @sector_all_emissions = @sector_all_emissions.where(region: region) if regional_view? && @category != 'Bank'
-        @sector_all_emissions.group_by(&:cp_assessmentable_id).flat_map do |_id, cp_assessments|
+        @sector_all_emissions.group_by(&:cp_assessmentable_id).filter_map do |_id, cp_assessments|
+          cp_assessments.max_by(&:publication_date)&.emissions&.transform_keys(&:to_i)
+        end
+      end
+
+      def sector_average_emissions_for_subsector(subsector_name)
+        years_with_reported_emissions_for_subsector(subsector_name)
+          .map { |year| [year.to_i, sector_average_emission_for_year_and_subsector(year, subsector_name)] }
+          .to_h
+      end
+
+      def sector_average_emission_for_year_and_subsector(year, subsector_name)
+        emissions_for_year = sector_all_emissions_for_subsector(subsector_name)
+          .map { |emissions| emissions[year] }
+          .compact
+        return nil if emissions_for_year.empty?
+
+        (emissions_for_year.sum / emissions_for_year.count).round(2)
+      end
+
+      def years_with_reported_emissions_for_subsector(subsector_name)
+        years = sector_all_emission_years_for_subsector(subsector_name)
+        return [] if years.empty?
+
+        (years.min..assessment_last_reported_year).map.to_a
+      end
+
+      def sector_all_emission_years_for_subsector(subsector_name)
+        sector_all_emissions_for_subsector(subsector_name)
+          .flat_map(&:keys)
+          .map(&:to_i)
+          .uniq
+      end
+
+      def sector_all_emissions_for_subsector(subsector_name)
+        @sector_emissions_by_subsector ||= {}
+        return @sector_emissions_by_subsector[subsector_name] if @sector_emissions_by_subsector.key?(subsector_name)
+
+        scope = CP::Assessment
+          .joins(:sector)
+          .joins('LEFT JOIN company_subsectors ON company_subsectors.id = cp_assessments.company_subsector_id')
+          .where(
+            tpi_sectors: {name: sector.name},
+            publication_date: [..assessment.publication_date],
+            cp_assessmentable_type: Company.to_s,
+            cp_assessmentable_id: Company.published.select(:id)
+          )
+          .where(
+            '(LOWER(company_subsectors.subsector) = ?) OR (cp_assessments.company_subsector_id IS NULL AND ? = ?)',
+            subsector_name.downcase,
+            subsector_name,
+            'Global'
+          )
+
+        scope = scope.where(region: region) if regional_view? && @category != 'Bank'
+
+        @sector_emissions_by_subsector[subsector_name] = scope.group_by(&:cp_assessmentable_id).filter_map do |_id, cp_assessments|
           cp_assessments.max_by(&:publication_date)&.emissions&.transform_keys(&:to_i)
         end
       end

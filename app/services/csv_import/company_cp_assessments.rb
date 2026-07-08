@@ -59,6 +59,14 @@ module CSVImport
       if row.header?(:subsector) && row[:subsector].present?
         return row[:subsector].strip
       end
+
+      company = find_company!(row)
+      assessment_date = assessment_date(row) rescue nil
+
+      if company&.sector&.name == 'Steel' && assessment_date && assessment_date < Date.new(2025, 1, 1)
+        return 'Global'
+      end
+
       if row.header?(:benchmark_label) && row[:benchmark_label].present?
         return row[:benchmark_label].strip
       end
@@ -88,7 +96,7 @@ module CSVImport
         .where('LOWER(subsector) = LOWER(?)', subsector_value)
         .first
 
-      if subsector.nil? && company&.sector&.name == 'Chemicals' && subsector_value.present?
+      if subsector.nil? && company&.sector&.name.in?(['Chemicals', 'Steel', 'Coal Mining']) && subsector_value.present?
         subsector = CompanySubsector.find_or_create_by!(company_id: company_id, subsector: subsector_value)
       end
 
