@@ -1,0 +1,25 @@
+<%
+  presenter = @company_presenter
+  subsector_assessments = @company.company_subsectors.any? ? presenter.cp_assessments.group_by(&:subsector_name) : {}
+  has_subsector_data = subsector_assessments.keys.any? { |k| k.present? }
+  active_subsector = has_subsector_data ? (params[:subsector_type] || @cp_assessment&.subsector_name || @company.company_subsectors.first.subsector) : nil
+  cp_dropdown_assessments = presenter.cp_assessments.select do |v|
+    active_subsector.present? ? v.subsector_name == active_subsector : true
+  end
+  cp_dropdown_assessments = presenter.cp_assessments if cp_dropdown_assessments.empty?
+%>
+<div class="date-dropdown">
+  <%= react_component('RemoteDropdown', {
+    name: 'cp_assessment_id',
+    remote: true,
+    url: cp_assessment_tpi_company_path(@company),
+    params: params[:view] == 'regional' ? "view=regional" : nil,
+    data: cp_dropdown_assessments.map do |v|
+      label = v['assessment_date']&.strftime('%d %B %Y')
+      label += " (#{v['assessment_date_flag']})" if v['assessment_date_flag'].present?
+      label += " (#{v.subsector_name})" if v.subsector_name.present? && !has_subsector_data
+      {label: label, value: v['id']}
+    end,
+    selected: @cp_assessment&.id
+  }) %>
+</div>
