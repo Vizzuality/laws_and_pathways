@@ -167,7 +167,7 @@ module Api
           .sort_by(&:average_emission)
           .map.with_index do |benchmark, index|
             color = SCENARIO_COLORS[benchmark.scenario] || BENCHMARK_FILL_COLORS[index]
-            sub = has_subsectors ? (benchmark.subsector.presence || 'Global') : nil
+            sub = has_subsectors ? (benchmark.subsector.presence || 'Global') : benchmark.subsector
             {
               type: 'area',
               color: color,
