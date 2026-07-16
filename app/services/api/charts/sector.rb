@@ -170,7 +170,7 @@ module Api
             name: name,
             data: emissions_data_as_numbers(benchmark&.emissions),
             sector: sector.name,
-            subsector: has_subsectors ? sub : nil
+            subsector: has_subsectors ? sub : benchmark&.subsector
           }
         end.reverse
       end
