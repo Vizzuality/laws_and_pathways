@@ -8,11 +8,39 @@ import hexToRgba from 'hex-to-rgba';
 
 export const COLORS = ['#595B5D', '#ED3D4A', '#FFDD49', '#440388', '#FF9600', '#B75038', '#86A9F9', '#F78FB3', '#191919', '#F602B4'];
 
+function getAxisYearMax(chartData) {
+  let maxYear = null;
+
+  (chartData || []).forEach((series) => {
+    const data = series.data;
+    if (!data) return;
+
+    const years = Array.isArray(data)
+      ? data.map((point) => {
+        if (Array.isArray(point)) return point[0];
+        if (point && typeof point === 'object') return point.x;
+        return null;
+      })
+      : Object.keys(data).map(Number);
+
+    years.forEach((year) => {
+      if (Number.isFinite(year) && (maxYear === null || year > maxYear)) {
+        maxYear = year;
+      }
+    });
+  });
+
+  return maxYear;
+}
+
 export function getOptions({ chartData, unit }) {
+  const yearMax = getAxisYearMax(chartData);
+
   return {
     chart: {
       height: '500px',
       marginTop: 30,
+      marginRight: 130,
       events: {
         render() {
           // Group area series and add a className only to allow grouped opacity change to 0.3
@@ -71,7 +99,9 @@ export function getOptions({ chartData, unit }) {
         width: 2,
         color: '#191919'
       },
-      maxPadding: 0.15
+      endOnTick: false,
+      maxPadding: 0,
+      ...(yearMax != null ? { max: yearMax } : {})
     },
     title: {
       text: ''
@@ -106,6 +136,7 @@ export function getMobileOptions({ chartData, unit }) {
   return merge({}, desktopOptions, {
     chart: {
       height: 400,
+      marginRight: 20,
       events: {
         render() {
           groupAllAreaSeries();
@@ -127,7 +158,7 @@ export function getMobileOptions({ chartData, unit }) {
       }
     },
     xAxis: {
-      maxPadding: 0.03,
+      maxPadding: 0,
       labels: {
         style: {fontSize: '10px', color: '#0A4BDC'}
       }
@@ -142,6 +173,7 @@ export function getMultipleOptions({ chartData, unit }) {
     chart: { ...options.chart,
       height: 300,
       width: 400,
+      marginRight: 20,
       events: {
         render() {
           // Group area series and add a className only to allow grouped opacity change to 0.3

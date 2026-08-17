@@ -1,13 +1,6 @@
 module Api
   module Charts
     class Sector
-      BENCHMARK_FILL_COLORS = ['#86A9F9', '#5587F7', '#2465F5', '#0A4BDC', '#083AAB'].freeze
-      SCENARIO_COLORS = {
-        '1.5 Degrees' => '#2465F5',
-        'Below 2 Degrees' => '#5587F7',
-        'National Pledges' => '#86A9F9',
-        'International Pledges' => '#0A4BDC'
-      }.freeze
       DEFAULT_EMPTY_LEVELS = {
         '0' => [],
         '1' => [],
@@ -164,11 +157,13 @@ module Api
         benchmarks = benchmarks.select { |b| b.emissions.present? }
 
         has_subsectors = sector.name.in?(['Steel', 'Coal Mining'])
+        benchmarks = benchmarks.sort_by(&:average_emission)
+        colors = CPBenchmarkColors.for_ordered_scenarios(benchmarks.map(&:scenario))
 
-        benchmarks.sort_by(&:average_emission).map.with_index do |benchmark, index|
+        benchmarks.map.with_index do |benchmark, index|
           sub = benchmark&.subsector.presence || 'Global'
           name = has_subsectors ? "#{benchmark.scenario} - #{sub}" : benchmark.scenario
-          color = SCENARIO_COLORS[benchmark.scenario] || BENCHMARK_FILL_COLORS[index]
+          color = colors[index]
           {
             type: 'area',
             color: color,
