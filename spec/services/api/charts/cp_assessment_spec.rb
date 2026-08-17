@@ -368,10 +368,13 @@ RSpec.describe Api::Charts::CPAssessment do
 
     it 'assigns a distinct fill color to each scenario area' do
       areas = subject.emissions_data.select { |s| s[:type] == 'area' }
+      colors_by_name = areas.to_h { |s| [s[:name], s[:color]] }
 
       expect(areas.map { |s| s[:name] }).to contain_exactly('Paris Pledges', '2 Degrees', 'Below 2 Degrees')
-      expect(areas.map { |s| s[:color] }.uniq.size).to eq(3)
-      expect(areas.map { |s| s[:fillColor] }.uniq.size).to eq(3)
+      expect(colors_by_name.values.uniq.size).to eq(3)
+      expect(colors_by_name['Below 2 Degrees']).to eq('#2465F5')
+      expect(colors_by_name['2 Degrees']).to eq('#5587F7')
+      expect(colors_by_name['Paris Pledges']).to eq('#86A9F9')
     end
   end
 
