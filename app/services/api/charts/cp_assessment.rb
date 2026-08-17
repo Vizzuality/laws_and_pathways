@@ -1,13 +1,6 @@
 module Api
   module Charts
     class CPAssessment
-      BENCHMARK_FILL_COLORS = ['#86A9F9', '#5587F7', '#2465F5', '#0A4BDC', '#083AAB'].freeze
-      SCENARIO_COLORS = {
-        '1.5 Degrees' => '#2465F5',
-        'Below 2 Degrees' => '#5587F7',
-        'National Pledges' => '#86A9F9',
-        'International Pledges' => '#0A4BDC'
-      }.freeze
       BANK_COMPANY_SECTOR_PAIRS = {
         'Electric Utilities (Global)' => 'Electricity Utilities',
         'Electric Utilities (Regional)' => 'Electricity Utilities'
@@ -161,23 +154,24 @@ module Api
 
       def emissions_data_from_sector_benchmarks
         has_subsectors = sector.name.in?(['Steel', 'Coal Mining'])
-
-        sector_benchmarks_for_chart
+        benchmarks = sector_benchmarks_for_chart
           .select { |b| b.emissions.present? }
           .sort_by(&:average_emission)
-          .map.with_index do |benchmark, index|
-            color = SCENARIO_COLORS[benchmark.scenario] || BENCHMARK_FILL_COLORS[index]
-            sub = has_subsectors ? (benchmark.subsector.presence || 'Global') : benchmark.subsector
-            {
-              type: 'area',
-              color: color,
-              fillColor: color,
-              name: benchmark.scenario,
-              sector: sector.name,
-              subsector: sub,
-              data: format_emissions_data(benchmark.emissions)
-            }
-          end.reverse
+        colors = CPBenchmarkColors.for_ordered_scenarios(benchmarks.map(&:scenario))
+
+        benchmarks.map.with_index do |benchmark, index|
+          color = colors[index]
+          sub = has_subsectors ? (benchmark.subsector.presence || 'Global') : benchmark.subsector
+          {
+            type: 'area',
+            color: color,
+            fillColor: color,
+            name: benchmark.scenario,
+            sector: sector.name,
+            subsector: sub,
+            data: format_emissions_data(benchmark.emissions)
+          }
+        end.reverse
       end
 
       def format_emissions_data(emissions_hash)

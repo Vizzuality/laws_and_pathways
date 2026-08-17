@@ -330,6 +330,51 @@ RSpec.describe Api::Charts::CPAssessment do
     end
   end
 
+  describe 'Paper sector scenario colors' do
+    let(:paper_sector) { create(:tpi_sector, name: 'Paper', categories: %w[Company]) }
+    let(:company) { create(:company, :published, sector: paper_sector) }
+    let(:assessment) do
+      create(:cp_assessment,
+             sector: paper_sector,
+             cp_assessmentable: company,
+             publication_date: 3.months.ago,
+             assessment_date: 3.months.ago,
+             last_reported_year: 2024,
+             emissions: {'2020' => 0.6, '2024' => 0.55})
+    end
+
+    before do
+      create(:cp_benchmark,
+             sector: paper_sector,
+             category: 'Company',
+             scenario: 'Below 2 Degrees',
+             release_date: 6.months.ago,
+             emissions: {'2020' => 0.4, '2050' => 0.2})
+      create(:cp_benchmark,
+             sector: paper_sector,
+             category: 'Company',
+             scenario: '2 Degrees',
+             release_date: 6.months.ago,
+             emissions: {'2020' => 0.5, '2050' => 0.3})
+      create(:cp_benchmark,
+             sector: paper_sector,
+             category: 'Company',
+             scenario: 'Paris Pledges',
+             release_date: 6.months.ago,
+             emissions: {'2020' => 0.7, '2050' => 0.5})
+    end
+
+    subject { described_class.new(assessment, 'global') }
+
+    it 'assigns a distinct fill color to each scenario area' do
+      areas = subject.emissions_data.select { |s| s[:type] == 'area' }
+
+      expect(areas.map { |s| s[:name] }).to contain_exactly('Paris Pledges', '2 Degrees', 'Below 2 Degrees')
+      expect(areas.map { |s| s[:color] }.uniq.size).to eq(3)
+      expect(areas.map { |s| s[:fillColor] }.uniq.size).to eq(3)
+    end
+  end
+
   describe 'decimal formatting' do
     let(:sector) { create(:tpi_sector, name: 'Test Sector', categories: %w[Company]) }
     let(:company) { create(:company, :published, sector: sector) }
