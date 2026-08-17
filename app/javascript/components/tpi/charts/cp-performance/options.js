@@ -57,6 +57,8 @@ export function getOptions({ chartData, unit }) {
     },
     plotOptions: {
       area: {
+        fillOpacity: 1,
+        lineWidth: 0,
         marker: {
           enabled: false
         },
